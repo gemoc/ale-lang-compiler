@@ -23,6 +23,26 @@
              menubarPath="ale.compiler.ui.menu1/group1">
        </action>
     </objectContribution>
+    <objectContribution
+          id="ale.compiler.ui.contribution2"
+          nameFilter="*.dsl"
+          objectClass="org.eclipse.core.resources.IFile">
+       <menu
+             id="ale.compiler.ui.menu2"
+             label="ALE"
+             path="additions">
+          <separator
+                name="group2">
+          </separator>
+       </menu>
+       <action
+             class="org.eclipse.emf.ecoretools.ale.compiler.ui.GenerateDslImplementation"
+             enablesFor="1"
+             id="ale.compiler.ui.newAction2"
+             label="Generate DSL Implementation"
+             menubarPath="ale.compiler.ui.menu2/group2">
+       </action>
+    </objectContribution>
    </extension>
 
 </plugin>
