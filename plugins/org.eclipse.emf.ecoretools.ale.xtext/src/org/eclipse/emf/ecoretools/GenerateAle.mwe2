@@ -50,6 +50,7 @@ Workflow {
 			    backtrack = true
 			  }
 			}
+			fragment = formatting.Formatter2Fragment2 {}
 		}
 	}
 }

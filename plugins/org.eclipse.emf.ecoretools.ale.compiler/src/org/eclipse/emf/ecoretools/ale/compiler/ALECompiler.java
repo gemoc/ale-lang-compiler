@@ -40,6 +40,16 @@ public class ALECompiler {
 	}
 
 	private void compile(List<ParseResult<ModelUnit>> parsedSemantics) {
-		System.out.println(parsedSemantics);
+		for(ParseResult<ModelUnit> pr: parsedSemantics) {
+			System.out.println(pr.getDiagnostic());
+			System.out.println(pr.getRoot());
+		}
+		
+		/**
+		 * 
+		 * Generate 
+		 * 
+		 * */
 	}
 }
+
