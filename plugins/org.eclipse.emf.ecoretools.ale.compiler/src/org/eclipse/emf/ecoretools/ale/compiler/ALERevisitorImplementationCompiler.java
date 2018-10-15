@@ -14,11 +14,11 @@ import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl;
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage;
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit;
 
-public class ALECompiler {
+public class ALERevisitorImplementationCompiler {
 
 	private IQueryEnvironment queryEnvironment;
 
-	public ALECompiler() {
+	public ALERevisitorImplementationCompiler() {
 		this.queryEnvironment = createQueryEnvironment(false, null);
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE);
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE);
@@ -42,8 +42,14 @@ public class ALECompiler {
 	private void compile(List<ParseResult<ModelUnit>> parsedSemantics) {
 		for(ParseResult<ModelUnit> pr: parsedSemantics) {
 			System.out.println(pr.getDiagnostic());
-			System.out.println(pr.getRoot());
+			ModelUnit root = pr.getRoot();
+			System.out.println(root);
 		}
+		
+		
+		
+		
+		
 		
 		/**
 		 * 

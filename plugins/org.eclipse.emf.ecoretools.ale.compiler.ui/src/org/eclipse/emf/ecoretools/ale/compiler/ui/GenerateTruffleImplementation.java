@@ -11,7 +11,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-public class GenerateRevisitorImplementation implements IObjectActionDelegate {
+public class GenerateTruffleImplementation implements IObjectActionDelegate {
 
 	private final ALERevisitorImplementationCompiler compiler = new ALERevisitorImplementationCompiler();
 

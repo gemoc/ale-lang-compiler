@@ -4,9 +4,10 @@
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
-          id="ale.compiler.ui.contribution1"
-          nameFilter="*.ecore"
-          objectClass="org.eclipse.core.resources.IFile">
+            adaptable="true"
+            id="ale.compiler.ui.contribution1"
+            nameFilter="*.genmodel"
+            objectClass="org.eclipse.core.resources.IFile">
        <menu
              id="ale.compiler.ui.menu1"
              label="ALE"
@@ -36,10 +37,17 @@
           </separator>
        </menu>
        <action
-             class="org.eclipse.emf.ecoretools.ale.compiler.ui.GenerateDslImplementation"
+             class="org.eclipse.emf.ecoretools.ale.compiler.ui.GenerateTruffleImplementation"
              enablesFor="1"
              id="ale.compiler.ui.newAction2"
-             label="Generate DSL Implementation"
+             label="Generate Revisitor Implementation"
+             menubarPath="ale.compiler.ui.menu2/group2">
+       </action>
+       <action
+             class="org.eclipse.emf.ecoretools.ale.compiler.ui.GenerateRevisitorImplementation"
+             enablesFor="1"
+             id="ale.compiler.ui.newAction3"
+             label="Generate Truffle Implementation"
              menubarPath="ale.compiler.ui.menu2/group2">
        </action>
     </objectContribution>

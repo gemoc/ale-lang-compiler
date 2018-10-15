@@ -17,12 +17,15 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import com.google.inject.Inject
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 
 class EcoreUtils {
-	ResourceSet rs
+	@Inject XtextResourceSet rs
 
 	def void resetResourceSet() {
-		rs = new ResourceSetImpl
+		rs = new XtextResourceSet
 	}
 
 	def buildExtendedFactoryNames(List<EClass> classes) {
@@ -75,7 +78,7 @@ class EcoreUtils {
 			val isSuperType = o.key.EAllSuperTypes.exists [
 				it.name == cls.name && it.EPackage.name == cls.EPackage.name
 			]
-			o.key != cls && isSuperType && (o.value == cls || o.value === null)
+			o.key != cls && isSuperType && (o.value === null || o.value == cls || o.value.EAllSuperTypes.contains(cls))
 		]
 
 		return tmp.map[key].toSet.map [ k |
@@ -178,9 +181,9 @@ class EcoreUtils {
 	def GenClass getGenClass(EClass cls, GenModel gm) {
 
 		val allPkgs = gm.allGenPkgs
-		val clsNsUri = cls.EPackage.nsURI
-		val fgm = allPkgs.findFirst [ pk |
-			pk.getEcorePackage.nsURI == clsNsUri
+		val fgm = allPkgs.findFirst [
+//			println('''«getEcorePackage.nsURI» == «cls.EPackage.nsURI»''')
+			getEcorePackage.nsURI == cls.EPackage.nsURI
 		]
 
 		val classes = fgm?.genClasses
@@ -189,12 +192,10 @@ class EcoreUtils {
 			name == cls.name
 		]
 
-		if (ret === null) {
-			println('''Nothing found for «cls» in «gm»''')
-		}
+		if (ret === null)
+			throw new AlexException('''No GenClass for «cls.EPackage.name».«cls.name» in «gm»''')
 
-		ret
-
+		return ret
 	}
 
 	def List<GenPackage> getAllGenPkgs(List<GenModel> gms) {
@@ -228,44 +229,57 @@ class EcoreUtils {
 		]
 	}
 
+	// Assuming there's one EPackage per GenModel
+	def EPackage getEPackage(GenModel gm) {
+		return gm.genPackages.head.getEcorePackage
+	}
+
 	def EPackage loadEPackage(String path) {
-
-		rs = new ResourceSetImpl
-
-		rs.resourceFactoryRegistry.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
+		if (rs === null) {
+			rs = new XtextResourceSet
+		}
+		rs.resourceFactoryRegistry.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl)
 		try {
 
-			if (rs.resources.exists[it.URI.toString == path]) {
-				val r = rs.resources.findFirst[it.URI.toString == path]
-				val ret = r.contents.head as EPackage
-				return ret
+			if (rs.resources.exists[URI.toString == path]) {
+				val r = rs.resources.findFirst[URI.toString == path]
+				return r.contents.head as EPackage
 			}
 
-			val resource = if (path.startsWith("platform:/"))
+			val resource =
+				if (path.startsWith("platform:/"))
 					rs.getResource(URI.createURI(path), true)
 				else if (path.startsWith("/"))
 					rs.getResource(URI::createPlatformResourceURI(path, true), true)
 				else
 					rs.getResource(URI::createFileURI(path), true)
+
 			return resource.contents.head as EPackage
 		} catch (Exception e) {
 			return null
 		}
 	}
 
-	def GenModel loadCorrespondingGenmodel(String path) {
-		if (rs === null)
-			rs = new ResourceSetImpl
+	def GenModel loadGenmodel(String path) {
+		if (rs === null) {
+			rs = new XtextResourceSet
+		}
 		rs.resourceFactoryRegistry.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
-		// FIXME: jajaja, ugly af
 		try {
-			val resource = if (path.startsWith("platform:/"))
-					rs.getResource(URI.createURI('''«path.substring(0, path.length() - 5)»genmodel'''), true)
+
+			if (rs.resources.exists[URI.toString == path]) {
+				val r = rs.resources.findFirst[URI.toString == path]
+				return r.contents.head as GenModel
+			}
+
+			val resource =
+				if (path.startsWith("platform:/"))
+					rs.getResource(URI.createURI(path), true)
 				else if (path.startsWith("/"))
-					rs.getResource(
-						URI.createPlatformResourceURI('''«path.substring(0, path.length() - 5)»genmodel''', true), true)
+					rs.getResource(URI::createPlatformResourceURI(path, true), true)
 				else
-					rs.getResource(URI.createFileURI('''«path.substring(0, path.length() - 5)»genmodel'''), true)
+					rs.getResource(URI::createFileURI(path), true)
+
 			return resource.contents.head as GenModel
 		} catch (Exception e) {
 			return null
