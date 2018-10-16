@@ -2,6 +2,8 @@ package org.eclipse.emf.ecoretools.ale.compiler
 
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
+import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl
 
 class NamingUtils {
 
@@ -23,4 +25,14 @@ class NamingUtils {
 	def String getDenotationName(EClass parent, EClass child) '''«parent.denotationName»_«child.denotationName»'''
 
 	def String getVarName(EClass cls) '''it'''
+	
+	def String getRevisitorImplementationPackage(WorkbenchDsl dsl) {
+		'''«dsl.sourceFileName».impl'''
+	}
+	
+	def String getRevisitorImplementationClass(WorkbenchDsl dsl) {
+		val name = dsl.sourceFileName
+		val camelCased = name.split("\\.").map[it.toFirstUpper].join
+		'''«camelCased»Implementation'''
+	}
 }

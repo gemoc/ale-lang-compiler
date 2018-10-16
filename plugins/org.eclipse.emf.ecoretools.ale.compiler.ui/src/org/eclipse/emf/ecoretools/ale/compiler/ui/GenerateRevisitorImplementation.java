@@ -3,7 +3,10 @@ package org.eclipse.emf.ecoretools.ale.compiler.ui;
 import java.io.FileNotFoundException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecoretools.ale.compiler.ALERevisitorImplementationCompiler;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -24,8 +27,12 @@ public class GenerateRevisitorImplementation implements IObjectActionDelegate {
 	@Override
 	public void run(final IAction action) {
 		try {
-			compiler.compile(this.selectedIFile.getLocation().toOSString());
+			compiler.compile(this.selectedIFile.getLocation().toOSString(),
+					selectedIFile.getProject().getLocation().toFile());
+			selectedIFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (CoreException e) {
 			e.printStackTrace();
 		}
 

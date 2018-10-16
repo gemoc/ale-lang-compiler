@@ -37,14 +37,14 @@
           </separator>
        </menu>
        <action
-             class="org.eclipse.emf.ecoretools.ale.compiler.ui.GenerateTruffleImplementation"
+             class="org.eclipse.emf.ecoretools.ale.compiler.ui.GenerateRevisitorImplementation"
              enablesFor="1"
              id="ale.compiler.ui.newAction2"
              label="Generate Revisitor Implementation"
              menubarPath="ale.compiler.ui.menu2/group2">
        </action>
        <action
-             class="org.eclipse.emf.ecoretools.ale.compiler.ui.GenerateRevisitorImplementation"
+             class="org.eclipse.emf.ecoretools.ale.compiler.ui.GenerateTruffleImplementation"
              enablesFor="1"
              id="ale.compiler.ui.newAction3"
              label="Generate Truffle Implementation"

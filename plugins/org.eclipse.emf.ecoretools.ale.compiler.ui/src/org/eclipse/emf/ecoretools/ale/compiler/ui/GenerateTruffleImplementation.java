@@ -23,11 +23,11 @@ public class GenerateTruffleImplementation implements IObjectActionDelegate {
 
 	@Override
 	public void run(final IAction action) {
-		try {
-			compiler.compile(this.selectedIFile.getLocation().toOSString());
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			//compiler.compile(this.selectedIFile.getLocation().toOSString());
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 
