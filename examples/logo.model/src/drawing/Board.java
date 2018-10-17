@@ -14,13 +14,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Line2D.Float;
 
 import javax.swing.JPanel;
 
-import vmlogo.Segment;
-import vmlogo.Turtle;
+import kmLogo.Segment;
+import kmLogo.Turtle;
 
 public class Board extends JPanel{
 	

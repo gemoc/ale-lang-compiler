@@ -2,7 +2,7 @@ behavior logo;
 
 use logo.example.service.Display;
 
-open class kmLogo.ASM.LogoProgram {
+open class LogoProgram {
 
 	@main
 	def Turtle eval() {
@@ -79,7 +79,7 @@ open class While {
 		while(self.condition.eval(turtle) > 0){
 			self.block.eval(turtle);
 		}
-		result := 0;
+		result := 0.0;
 	}
 }
 
@@ -115,7 +115,7 @@ open class Clear {
 	}
 }
 
-open class kmLogo.ASM.Forward {
+open class Forward {
 	def double eval(Turtle turtle) {
 		double move := self.steps.eval(turtle);
 		turtle.forward(move);
@@ -182,7 +182,7 @@ open class Div {
 			result := self.lhs.eval(turtle) / self.rhs.eval(turtle);
 		}
 		else{
-			result := 0;
+			result := 0.0;
 		}
 	}
 }
@@ -190,10 +190,10 @@ open class Div {
 open class Equals {
 	def double eval(Turtle turtle) {
 		if(self.lhs.eval(turtle) = self.rhs.eval(turtle)){
-			result := 1;
+			result := 1.0;
 		}
 		else{
-			result := 0;
+			result := 0.0;
 		}
 	}
 }
@@ -201,10 +201,10 @@ open class Equals {
 open class Lower {
 	def double eval(Turtle turtle) {
 		if(self.lhs.eval(turtle) < self.rhs.eval(turtle)){
-			result := 1;
+			result := 1.0;
 		}
 		else{
-			result := 0;
+			result := 0.0;
 		}
 	}
 }
@@ -212,10 +212,10 @@ open class Lower {
 open class Greater {
 	def double eval(Turtle turtle) {
 		if(self.lhs.eval(turtle) > self.rhs.eval(turtle)){
-			result := 1;
+			result := 1.0;
 		}
 		else{
-			result := 0;
+			result := 0.0;
 		}
 	}
 }
@@ -256,7 +256,7 @@ open class ProcCall {
 		}
 		turtle.callStack.frames += newFrame;
 		
-		result := 0;
+		result := 0.0;
 		for(instr in self.declaration.instructions){
 			result := instr.eval(turtle);
 		}

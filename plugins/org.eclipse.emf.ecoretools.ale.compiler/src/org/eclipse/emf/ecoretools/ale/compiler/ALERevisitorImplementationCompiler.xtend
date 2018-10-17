@@ -239,7 +239,7 @@ class ALERevisitorImplementationCompiler {
 				addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''')
 		} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 			builderSeed.
-				addStatement('''«body.target.compileExpression».set«body.targetFeature.toFirstUpper»(«body.value.compileExpression»)''')
+				addStatement('''«body.target.compileExpression.escapeDollar».set«body.targetFeature.toFirstUpper»(«body.value.compileExpression.escapeDollar»)''')
 		} else {
 			builderSeed.
 				addStatement('''«body.target.compileExpression».«body.targetFeature» = «body.value.compileExpression»''')
@@ -354,7 +354,7 @@ class ALERevisitorImplementationCompiler {
 						} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 							'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
 						} else {
-							'''«call.arguments.head.compileExpression».«call.arguments.get(1).compileExpression»'''
+							'''«call.arguments.head.compileExpression».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»'''
 
 						}
 					} else if (call.serviceName == 'create') {
@@ -363,12 +363,12 @@ class ALERevisitorImplementationCompiler {
 						val gm = findGenModelFromExpression(e)
 						'''«gm.genPackages.head.qualifiedPackageName».«gm.EPackage.name.toFirstUpper»Factory.eINSTANCE.create«(t.type as EClass).name»()'''
 					} else {
-						
+
 						val t = call.arguments.head.infereType.head
-						if(t instanceof EClassifierType)
+						if (t instanceof EClassifierType)
 							'''rev.$(«call.arguments.head.compileExpression»).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
-						else 
-						'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+						else
+							'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
 					}
 				else
 					'''/*Call «call»*/'''
@@ -457,7 +457,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch String compileExpression(StringLiteral call) {
-		'''"call.value"'''
+		'''"«call.value»"'''
 	}
 
 	def dispatch String compileExpression(TypeLiteral call) {
@@ -518,9 +518,11 @@ class ALERevisitorImplementationCompiler {
 		val gm = stx.value
 
 		if (gm !== null) {
-			val gclass = gm.allGenPkgs.head.genClasses.filter [
-				it.name == e.name && it.genPackage.NSName == (e.eContainer as EPackage).name
-			].head
+			val GenClass gclass = gm.allGenPkgs.map [
+				it.genClasses.filter [
+					it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
+				]
+			].flatten.head
 			val split = gclass.qualifiedInterfaceName.split("\\.")
 			val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
 			val cn = split.last
