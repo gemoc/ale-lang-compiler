@@ -73,6 +73,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtend.lib.annotations.Data
+import com.squareup.javapoet.TypeName
 
 class ALERevisitorImplementationCompiler {
 	val IQueryEnvironment queryEnvironment
@@ -107,9 +108,9 @@ class ALERevisitorImplementationCompiler {
 
 	def void compile(String dslStr, File projectRoot) throws FileNotFoundException {
 		dsl = new WorkbenchDsl(dslStr)
-		if (dsl.allSyntaxes.length > 1) {
-			throw new AlexException('''Cannot compile with more than 1 syntax definition. Please create a main meta-model that references the others.''')
-		}
+//		if (dsl.allSyntaxes.length > 1) {
+//			throw new AlexException('''Cannot compile with more than 1 syntax definition. Please create a main meta-model that references the others.''')
+//		}
 		this.parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 		this.compile(projectRoot)
 	}
@@ -149,44 +150,66 @@ class ALERevisitorImplementationCompiler {
 		val fullInterfaceType = ParameterizedTypeName.get(
 			ClassName.get(syntax.revisitorPackageFqn, syntax.revisitorInterfaceName), typeParams)
 
-		val revisitorInterface = TypeSpec.interfaceBuilder(interfaceName).addSuperinterface(fullInterfaceType).build
+		val revisitorInterface = TypeSpec.interfaceBuilder(interfaceName).addSuperinterface(fullInterfaceType).
+			addModifiers(Modifier.PUBLIC).addMethods(syntax.allClasses.map [
+				MethodSpec.methodBuilder(it.denotationName).returns(
+					ClassName.get('''«dsl.revisitorImplementationPackage».operation''', it.name)).addParameter(
+					it.solveType as TypeName, "it").addStatement('''return new $T(it, this)''',
+					ClassName.get('''«dsl.revisitorImplementationPackage».operation.impl''', '''«it.name»Impl''')).
+					addModifiers(Modifier.DEFAULT, Modifier.PUBLIC).build
+			]).build
 
 		val javaFile = JavaFile.builder(dsl.revisitorImplementationPackage, revisitorInterface).build
 
 		javaFile.writeTo(compileDirectory)
 
 		resolved.forEach [
-			val operationInterface = TypeSpec.interfaceBuilder(it.eCls.name).addSuperinterfaces(eCls.ESuperTypes.map [
-				ClassName.get('''«dsl.revisitorImplementationPackage».operation''', it.name)
-			]).addModifiers(Modifier.PUBLIC).addMethods(it.alexCls?.methods?.map [
-				MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT).
-					returnType(it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
-						ParameterSpec.builder(it.EType.instanceClass, it.name).build
-					]).build
-			] ?: newArrayList).build
-			val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorImplementationPackage».operation''',
-				operationInterface).build
-			operationInterfaceFile.writeTo(compileDirectory)
-
-			val revField = FieldSpec.builder(fullInterfaceType, "rev", Modifier.PRIVATE).build
-
-			val objField = FieldSpec.builder(ClassName.get(getEcoreInterfacesPackage, it.eCls.name), "obj",
-				Modifier.PRIVATE).build
-
-			val operationImplementation = TypeSpec.classBuilder('''«it.eCls.name»Impl''').addSuperinterfaces(
-				#[ClassName.get(operationInterfaceFile.packageName, operationInterface.name)]).addField(revField).
-				addField(objField).addModifiers(Modifier.PUBLIC).addMethod(
-					MethodSpec.constructorBuilder.addParameter(objField.type, "obj").addParameter(revField.type, "rev").
-						addStatement('''this.obj = obj''').addStatement('''this.rev = rev''').build).addModifiers(
-					Modifier.PUBLIC).addMethods(it.alexCls?.methods?.map [
-					MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(
-						it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
-						ParameterSpec.builder(it.EType.instanceClass, it.name).build
-					]).openMethod(it.operationRef.EType).compileBody(it.body).closeMethod(it.operationRef.EType).build
+			try {
+				val operationInterface = TypeSpec.interfaceBuilder(it.eCls.name).addSuperinterfaces(eCls.ESuperTypes.map [
+					ClassName.get('''«dsl.revisitorImplementationPackage».operation''', it.name)
+				]).addModifiers(Modifier.PUBLIC).addMethods(it.alexCls?.methods?.map [
+					MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT).
+						returnType(it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
+							if (it.EType.instanceClass !== null) {
+								ParameterSpec.builder(it.EType.instanceClass, it.name).build
+							} else {
+								ParameterSpec.builder(it.EType.revolveType, it.name).build
+							}
+						]).build
 				] ?: newArrayList).build
-			val operationImplementationFile = JavaFile.
-				builder('''«dsl.revisitorImplementationPackage».operation.impl''', operationImplementation).build
-			operationImplementationFile.writeTo(compileDirectory)
+				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorImplementationPackage».operation''',
+					operationInterface).build
+				operationInterfaceFile.writeTo(compileDirectory)
+
+				val revField = FieldSpec.builder(fullInterfaceType, "rev", Modifier.PRIVATE).build
+
+				val objField = FieldSpec.builder(ClassName.get(getEcoreInterfacesPackage, it.eCls.name), "obj",
+					Modifier.PRIVATE).build
+
+				val operationImplementation = TypeSpec.classBuilder('''«it.eCls.name»Impl''').addSuperinterfaces(
+					#[ClassName.get(operationInterfaceFile.packageName, operationInterface.name)]).addField(revField).
+					addField(objField).addModifiers(Modifier.PUBLIC).addMethod(
+						MethodSpec.constructorBuilder.addParameter(objField.type, "obj").addParameter(revField.type,
+							"rev").addStatement('''this.obj = obj''').addStatement('''this.rev = rev''').addModifiers(
+							Modifier.PUBLIC).build).addModifiers(Modifier.PUBLIC).addMethods(it.alexCls?.methods?.map [
+						MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(
+							it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
+							if (it.EType.instanceClass !== null) {
+								ParameterSpec.builder(it.EType.instanceClass, it.name).build
+							} else {
+								ParameterSpec.builder(it.EType.revolveType, it.name).build
+							}
+						]).openMethod(it.operationRef.EType).compileBody(it.body).closeMethod(it.operationRef.EType).
+							build
+					] ?: newArrayList).build
+				val operationImplementationFile = JavaFile.
+					builder('''«dsl.revisitorImplementationPackage».operation.impl''', operationImplementation).build
+				operationImplementationFile.writeTo(compileDirectory)
+
+			} catch (IllegalArgumentException e) {
+				println(it)
+				e.printStackTrace
+			}
 		]
 	}
 
@@ -316,6 +339,11 @@ class ALERevisitorImplementationCompiler {
 							'''«call.arguments.head.compileExpression».«call.arguments.get(1).compileExpression»'''
 
 						}
+					} else if (call.serviceName == 'create') {
+						val e = call.arguments.get(0)
+						val t = infereType(e).head
+						val gm = findGenModelFromExpression(e)
+						'''«gm.genPackages.head.qualifiedPackageName».«gm.EPackage.name»Factory.create«(t.type as EClass).name»()'''
 					} else
 						'''rev.$$(«call.arguments.head.compileExpression»).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
 				else
@@ -453,5 +481,34 @@ class ALERevisitorImplementationCompiler {
 		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
 		base.getPossibleTypes(exp)
+	}
+
+	def revolveType(EClassifier e) {
+		val stx = dsl.allSyntaxes.filter [
+			it.loadEPackage.allClasses.exists [
+				it.name == e.name && it.EPackage.name == (e.eContainer as EPackage).name
+			]
+		].head
+
+		val gm = stx.replaceAll(".ecore$", ".genmodel").loadGenmodel
+
+		val gclass = gm.allGenPkgs.head.genClasses.filter [
+			it.name == e.name && it.genPackage.NSName == (e.eContainer as EPackage).name
+		].head
+
+		val split = gclass.qualifiedClassName.split("\\.")
+		val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
+		val cn = split.last
+		ClassName.get(pkg, cn)
+	}
+
+	def findGenModelFromExpression(Expression e) {
+		val t = infereType(e).head
+		val stx = dsl.allSyntaxes.filter [
+			it.loadEPackage.allClasses.exists [
+				it.name == (t.type as EClassifier).name && it.EPackage.name == (t.type as EClassifier).EPackage.name
+			]
+		].head
+		stx.replaceAll(".ecore$", ".genmodel").loadGenmodel
 	}
 }

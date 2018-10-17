@@ -35,7 +35,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalAleParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_MULTOP", "RULE_IDENT", "RULE_STRING", "RULE_REAL", "RULE_LETTER", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'def'", "'override'", "'contains'", "'unique'", "'+'", "'-'", "'<='", "'>='", "'!='", "'<>'", "'='", "'=='", "'<'", "'>'", "'select'", "'reject'", "'collect'", "'any'", "'exists'", "'forAll'", "'isUnique'", "'one'", "'sortedBy'", "'closure'", "'behavior'", "';'", "'import'", "'as'", "'\\n;'", "'use'", "'open'", "'class'", "'{'", "'}'", "'extends'", "','", "'('", "')'", "'@'", "':='", "'..'", "'opposite'", "'+='", "'-='", "'for'", "'in'", "'['", "']'", "'if'", "'else'", "'while'", "'switch'", "'default'", "':'", "'case'", "'.'", "'->'", "'|'", "'and'", "'or'", "'xor'", "'implie'", "'not'", "'then'", "'endif'", "'let'", "'true'", "'false'", "'null'", "'Sequence{'", "'OrderedSet{'", "'::'", "'String'", "'Integer'", "'Real'", "'Boolean'", "'Sequence('", "'OrderedSet('"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_MULTOP", "RULE_IDENT", "RULE_STRING", "RULE_REAL", "RULE_LETTER", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'def'", "'override'", "'contains'", "'unique'", "'+'", "'-'", "'<='", "'>='", "'!='", "'<>'", "'='", "'=='", "'<'", "'>'", "'select'", "'reject'", "'collect'", "'any'", "'exists'", "'forAll'", "'isUnique'", "'one'", "'sortedBy'", "'closure'", "'behavior'", "';'", "'import'", "'as'", "'use'", "'open'", "'class'", "'{'", "'}'", "'extends'", "','", "'('", "')'", "'@'", "':='", "'..'", "'opposite'", "'+='", "'-='", "'for'", "'in'", "'['", "']'", "'if'", "'else'", "'while'", "'switch'", "'default'", "':'", "'case'", "'.'", "'->'", "'|'", "'and'", "'or'", "'xor'", "'implie'", "'not'", "'then'", "'endif'", "'let'", "'true'", "'false'", "'null'", "'Sequence{'", "'OrderedSet{'", "'::'", "'String'", "'Integer'", "'Real'", "'Boolean'", "'Sequence('", "'OrderedSet('"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -83,7 +83,6 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
     public static final int T__42=42;
     public static final int T__43=43;
     public static final int T__91=91;
-    public static final int T__92=92;
     public static final int T__90=90;
     public static final int T__19=19;
     public static final int T__15=15;
@@ -3404,10 +3403,10 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt1=2;
             int LA1_0 = input.LA(1);
 
-            if ( (LA1_0==45) ) {
+            if ( (LA1_0==44) ) {
                 alt1=1;
             }
-            else if ( (LA1_0==46) ) {
+            else if ( (LA1_0==45) ) {
                 alt1=2;
             }
             else {
@@ -3874,17 +3873,17 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:1139:1: ( ( rulerForEach ) | ( rulerWhile ) | ( rulerIf ) )
             int alt6=3;
             switch ( input.LA(1) ) {
-            case 59:
+            case 58:
                 {
                 alt6=1;
                 }
                 break;
-            case 65:
+            case 64:
                 {
                 alt6=2;
                 }
                 break;
-            case 63:
+            case 62:
                 {
                 alt6=3;
                 }
@@ -3995,10 +3994,10 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( (LA7_0==61) ) {
+            if ( (LA7_0==60) ) {
                 alt7=1;
             }
-            else if ( (LA7_0==RULE_INT||(LA7_0>=RULE_IDENT && LA7_0<=RULE_REAL)||LA7_0==20||LA7_0==47||LA7_0==51||LA7_0==63||LA7_0==66||LA7_0==77||(LA7_0>=80 && LA7_0<=85)||(LA7_0>=87 && LA7_0<=92)) ) {
+            else if ( (LA7_0==RULE_INT||(LA7_0>=RULE_IDENT && LA7_0<=RULE_REAL)||LA7_0==20||LA7_0==46||LA7_0==50||LA7_0==62||LA7_0==65||LA7_0==76||(LA7_0>=79 && LA7_0<=84)||(LA7_0>=86 && LA7_0<=91)) ) {
                 alt7=2;
             }
             else {
@@ -4267,10 +4266,10 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt10=2;
             int LA10_0 = input.LA(1);
 
-            if ( (LA10_0==66) ) {
+            if ( (LA10_0==65) ) {
                 alt10=1;
             }
-            else if ( (LA10_0==RULE_INT||(LA10_0>=RULE_IDENT && LA10_0<=RULE_REAL)||LA10_0==20||LA10_0==47||LA10_0==51||LA10_0==63||LA10_0==77||(LA10_0>=80 && LA10_0<=85)||(LA10_0>=87 && LA10_0<=92)) ) {
+            else if ( (LA10_0==RULE_INT||(LA10_0>=RULE_IDENT && LA10_0<=RULE_REAL)||LA10_0==20||LA10_0==46||LA10_0==50||LA10_0==62||LA10_0==76||(LA10_0>=79 && LA10_0<=84)||(LA10_0>=86 && LA10_0<=91)) ) {
                 alt10=2;
             }
             else {
@@ -4772,7 +4771,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:1340:1: ( ( ( rule__NonLeftRecExpression__Group_0__0 ) ) | ( ( rule__NonLeftRecExpression__Group_1__0 ) ) | ( ( rule__NonLeftRecExpression__Group_2__0 ) ) | ( ( rule__NonLeftRecExpression__Group_3__0 ) ) | ( ( rule__NonLeftRecExpression__Group_4__0 ) ) | ( ( rule__NonLeftRecExpression__Group_5__0 ) ) | ( ( rule__NonLeftRecExpression__Group_6__0 ) ) )
             int alt13=7;
             switch ( input.LA(1) ) {
-            case 77:
+            case 76:
                 {
                 alt13=1;
                 }
@@ -4786,10 +4785,10 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 {
                 int LA13_3 = input.LA(2);
 
-                if ( (LA13_3==86) ) {
+                if ( (LA13_3==85) ) {
                     alt13=4;
                 }
-                else if ( (LA13_3==EOF||(LA13_3>=RULE_MULTOP && LA13_3<=RULE_IDENT)||(LA13_3>=19 && LA13_3<=28)||LA13_3==40||(LA13_3>=47 && LA13_3<=48)||LA13_3==50||LA13_3==52||LA13_3==54||(LA13_3>=57 && LA13_3<=58)||LA13_3==60||LA13_3==64||(LA13_3>=67 && LA13_3<=71)||(LA13_3>=73 && LA13_3<=76)||(LA13_3>=78 && LA13_3<=79)||(LA13_3>=87 && LA13_3<=92)) ) {
+                else if ( (LA13_3==EOF||(LA13_3>=RULE_MULTOP && LA13_3<=RULE_IDENT)||(LA13_3>=19 && LA13_3<=28)||LA13_3==40||(LA13_3>=46 && LA13_3<=47)||LA13_3==49||LA13_3==51||LA13_3==53||(LA13_3>=56 && LA13_3<=57)||LA13_3==59||LA13_3==63||(LA13_3>=66 && LA13_3<=70)||(LA13_3>=72 && LA13_3<=75)||(LA13_3>=77 && LA13_3<=78)||(LA13_3>=86 && LA13_3<=91)) ) {
                     alt13=3;
                 }
                 else {
@@ -4804,33 +4803,33 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             case RULE_INT:
             case RULE_STRING:
             case RULE_REAL:
-            case 47:
+            case 46:
+            case 80:
             case 81:
             case 82:
             case 83:
             case 84:
-            case 85:
+            case 86:
             case 87:
             case 88:
             case 89:
             case 90:
             case 91:
-            case 92:
                 {
                 alt13=4;
                 }
                 break;
-            case 51:
+            case 50:
                 {
                 alt13=5;
                 }
                 break;
-            case 63:
+            case 62:
                 {
                 alt13=6;
                 }
                 break;
-            case 80:
+            case 79:
                 {
                 alt13=7;
                 }
@@ -5970,32 +5969,32 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:1607:1: ( ( ( rule__TypeLiteral__Group_0__0 ) ) | ( ( rule__TypeLiteral__Group_1__0 ) ) | ( ( rule__TypeLiteral__Group_2__0 ) ) | ( ( rule__TypeLiteral__Group_3__0 ) ) | ( ( rule__TypeLiteral__Group_4__0 ) ) | ( ( rule__TypeLiteral__Group_5__0 ) ) | ( ruleclassifierTypeRule ) | ( ( rule__TypeLiteral__Group_7__0 ) ) )
             int alt18=8;
             switch ( input.LA(1) ) {
-            case 87:
+            case 86:
                 {
                 alt18=1;
                 }
                 break;
-            case 88:
+            case 87:
                 {
                 alt18=2;
                 }
                 break;
-            case 89:
+            case 88:
                 {
                 alt18=3;
                 }
                 break;
-            case 90:
+            case 89:
                 {
                 alt18=4;
                 }
                 break;
-            case 91:
+            case 90:
                 {
                 alt18=5;
                 }
                 break;
-            case 92:
+            case 91:
                 {
                 alt18=6;
                 }
@@ -6005,7 +6004,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 alt18=7;
                 }
                 break;
-            case 47:
+            case 46:
                 {
                 alt18=8;
                 }
@@ -6273,13 +6272,13 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt19=2;
             int LA19_0 = input.LA(1);
 
-            if ( (LA19_0==47||(LA19_0>=87 && LA19_0<=92)) ) {
+            if ( (LA19_0==46||(LA19_0>=86 && LA19_0<=91)) ) {
                 alt19=1;
             }
             else if ( (LA19_0==RULE_IDENT) ) {
                 int LA19_2 = input.LA(2);
 
-                if ( (LA19_2==86) ) {
+                if ( (LA19_2==85) ) {
                     int LA19_3 = input.LA(3);
 
                     if ( (LA19_3==RULE_IDENT) ) {
@@ -6307,7 +6306,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                         throw nvae;
                     }
                 }
-                else if ( (LA19_2==EOF||LA19_2==RULE_IDENT||(LA19_2>=68 && LA19_2<=69)) ) {
+                else if ( (LA19_2==EOF||LA19_2==RULE_IDENT||(LA19_2>=67 && LA19_2<=68)) ) {
                     alt19=2;
                 }
                 else {
@@ -6809,7 +6808,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt21=2;
                 int LA21_0 = input.LA(1);
 
-                if ( (LA21_0==44) ) {
+                if ( (LA21_0==43) ) {
                     alt21=1;
                 }
 
@@ -6911,7 +6910,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt22=2;
                 int LA22_0 = input.LA(1);
 
-                if ( ((LA22_0>=45 && LA22_0<=46)) ) {
+                if ( ((LA22_0>=44 && LA22_0<=45)) ) {
                     alt22=1;
                 }
 
@@ -7215,7 +7214,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:1928:1: ( rule__RImport__Group__3__Impl rule__RImport__Group__4 )
             // InternalAle.g:1929:2: rule__RImport__Group__3__Impl rule__RImport__Group__4
             {
-            pushFollow(FOLLOW_10);
+            pushFollow(FOLLOW_4);
             rule__RImport__Group__3__Impl();
 
             state._fsp--;
@@ -7328,24 +7327,24 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RImport__Group__4__Impl"
-    // InternalAle.g:1962:1: rule__RImport__Group__4__Impl : ( '\\n;' ) ;
+    // InternalAle.g:1962:1: rule__RImport__Group__4__Impl : ( ';' ) ;
     public final void rule__RImport__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalAle.g:1966:1: ( ( '\\n;' ) )
-            // InternalAle.g:1967:1: ( '\\n;' )
+            // InternalAle.g:1966:1: ( ( ';' ) )
+            // InternalAle.g:1967:1: ( ';' )
             {
-            // InternalAle.g:1967:1: ( '\\n;' )
-            // InternalAle.g:1968:2: '\\n;'
+            // InternalAle.g:1967:1: ( ';' )
+            // InternalAle.g:1968:2: ';'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getRImportAccess().getControl000aSemicolonKeyword_4()); 
+               before(grammarAccess.getRImportAccess().getSemicolonKeyword_4()); 
             }
-            match(input,43,FOLLOW_2); if (state.failed) return ;
+            match(input,40,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getRImportAccess().getControl000aSemicolonKeyword_4()); 
+               after(grammarAccess.getRImportAccess().getSemicolonKeyword_4()); 
             }
 
             }
@@ -7422,7 +7421,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRServiceAccess().getUseKeyword_0()); 
             }
-            match(input,44,FOLLOW_2); if (state.failed) return ;
+            match(input,43,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRServiceAccess().getUseKeyword_0()); 
             }
@@ -7620,7 +7619,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2063:1: ( rule__ROpenClass__Group__0__Impl rule__ROpenClass__Group__1 )
             // InternalAle.g:2064:2: rule__ROpenClass__Group__0__Impl rule__ROpenClass__Group__1
             {
-            pushFollow(FOLLOW_11);
+            pushFollow(FOLLOW_10);
             rule__ROpenClass__Group__0__Impl();
 
             state._fsp--;
@@ -7664,7 +7663,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROpenClassAccess().getOpenKeyword_0()); 
             }
-            match(input,45,FOLLOW_2); if (state.failed) return ;
+            match(input,44,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROpenClassAccess().getOpenKeyword_0()); 
             }
@@ -7743,7 +7742,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROpenClassAccess().getClassKeyword_1()); 
             }
-            match(input,46,FOLLOW_2); if (state.failed) return ;
+            match(input,45,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROpenClassAccess().getClassKeyword_1()); 
             }
@@ -7778,7 +7777,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2117:1: ( rule__ROpenClass__Group__2__Impl rule__ROpenClass__Group__3 )
             // InternalAle.g:2118:2: rule__ROpenClass__Group__2__Impl rule__ROpenClass__Group__3
             {
-            pushFollow(FOLLOW_12);
+            pushFollow(FOLLOW_11);
             rule__ROpenClass__Group__2__Impl();
 
             state._fsp--;
@@ -7867,7 +7866,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2144:1: ( rule__ROpenClass__Group__3__Impl rule__ROpenClass__Group__4 )
             // InternalAle.g:2145:2: rule__ROpenClass__Group__3__Impl rule__ROpenClass__Group__4
             {
-            pushFollow(FOLLOW_12);
+            pushFollow(FOLLOW_11);
             rule__ROpenClass__Group__3__Impl();
 
             state._fsp--;
@@ -7915,7 +7914,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt23=2;
             int LA23_0 = input.LA(1);
 
-            if ( (LA23_0==49) ) {
+            if ( (LA23_0==48) ) {
                 alt23=1;
             }
             switch (alt23) {
@@ -7967,7 +7966,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2171:1: ( rule__ROpenClass__Group__4__Impl rule__ROpenClass__Group__5 )
             // InternalAle.g:2172:2: rule__ROpenClass__Group__4__Impl rule__ROpenClass__Group__5
             {
-            pushFollow(FOLLOW_13);
+            pushFollow(FOLLOW_12);
             rule__ROpenClass__Group__4__Impl();
 
             state._fsp--;
@@ -8011,7 +8010,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROpenClassAccess().getLeftCurlyBracketKeyword_4()); 
             }
-            match(input,47,FOLLOW_2); if (state.failed) return ;
+            match(input,46,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROpenClassAccess().getLeftCurlyBracketKeyword_4()); 
             }
@@ -8046,7 +8045,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2198:1: ( rule__ROpenClass__Group__5__Impl rule__ROpenClass__Group__6 )
             // InternalAle.g:2199:2: rule__ROpenClass__Group__5__Impl rule__ROpenClass__Group__6
             {
-            pushFollow(FOLLOW_13);
+            pushFollow(FOLLOW_12);
             rule__ROpenClass__Group__5__Impl();
 
             state._fsp--;
@@ -8096,7 +8095,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt24=2;
                 int LA24_0 = input.LA(1);
 
-                if ( (LA24_0==RULE_INT||LA24_0==RULE_IDENT||(LA24_0>=17 && LA24_0<=18)||LA24_0==47||LA24_0==56||(LA24_0>=87 && LA24_0<=92)) ) {
+                if ( (LA24_0==RULE_INT||LA24_0==RULE_IDENT||(LA24_0>=17 && LA24_0<=18)||LA24_0==46||LA24_0==55||(LA24_0>=86 && LA24_0<=91)) ) {
                     alt24=1;
                 }
 
@@ -8105,7 +8104,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:2213:3: rule__ROpenClass__AttributesAssignment_5
             	    {
-            	    pushFollow(FOLLOW_14);
+            	    pushFollow(FOLLOW_13);
             	    rule__ROpenClass__AttributesAssignment_5();
 
             	    state._fsp--;
@@ -8153,7 +8152,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2225:1: ( rule__ROpenClass__Group__6__Impl rule__ROpenClass__Group__7 )
             // InternalAle.g:2226:2: rule__ROpenClass__Group__6__Impl rule__ROpenClass__Group__7
             {
-            pushFollow(FOLLOW_13);
+            pushFollow(FOLLOW_12);
             rule__ROpenClass__Group__6__Impl();
 
             state._fsp--;
@@ -8203,7 +8202,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt25=2;
                 int LA25_0 = input.LA(1);
 
-                if ( ((LA25_0>=15 && LA25_0<=16)||LA25_0==53) ) {
+                if ( ((LA25_0>=15 && LA25_0<=16)||LA25_0==52) ) {
                     alt25=1;
                 }
 
@@ -8212,7 +8211,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:2240:3: rule__ROpenClass__OperationsAssignment_6
             	    {
-            	    pushFollow(FOLLOW_15);
+            	    pushFollow(FOLLOW_14);
             	    rule__ROpenClass__OperationsAssignment_6();
 
             	    state._fsp--;
@@ -8299,7 +8298,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROpenClassAccess().getRightCurlyBracketKeyword_7()); 
             }
-            match(input,48,FOLLOW_2); if (state.failed) return ;
+            match(input,47,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROpenClassAccess().getRightCurlyBracketKeyword_7()); 
             }
@@ -8378,7 +8377,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROpenClassAccess().getExtendsKeyword_3_0()); 
             }
-            match(input,49,FOLLOW_2); if (state.failed) return ;
+            match(input,48,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROpenClassAccess().getExtendsKeyword_3_0()); 
             }
@@ -8413,7 +8412,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2306:1: ( rule__ROpenClass__Group_3__1__Impl rule__ROpenClass__Group_3__2 )
             // InternalAle.g:2307:2: rule__ROpenClass__Group_3__1__Impl rule__ROpenClass__Group_3__2
             {
-            pushFollow(FOLLOW_16);
+            pushFollow(FOLLOW_15);
             rule__ROpenClass__Group_3__1__Impl();
 
             state._fsp--;
@@ -8547,7 +8546,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt26=2;
                 int LA26_0 = input.LA(1);
 
-                if ( (LA26_0==50) ) {
+                if ( (LA26_0==49) ) {
                     alt26=1;
                 }
 
@@ -8556,7 +8555,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:2347:3: rule__ROpenClass__Group_3_2__0
             	    {
-            	    pushFollow(FOLLOW_17);
+            	    pushFollow(FOLLOW_16);
             	    rule__ROpenClass__Group_3_2__0();
 
             	    state._fsp--;
@@ -8648,7 +8647,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROpenClassAccess().getCommaKeyword_3_2_0()); 
             }
-            match(input,50,FOLLOW_2); if (state.failed) return ;
+            match(input,49,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROpenClassAccess().getCommaKeyword_3_2_0()); 
             }
@@ -8811,7 +8810,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRNewClassAccess().getClassKeyword_0()); 
             }
-            match(input,46,FOLLOW_2); if (state.failed) return ;
+            match(input,45,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRNewClassAccess().getClassKeyword_0()); 
             }
@@ -8846,7 +8845,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2441:1: ( rule__RNewClass__Group__1__Impl rule__RNewClass__Group__2 )
             // InternalAle.g:2442:2: rule__RNewClass__Group__1__Impl rule__RNewClass__Group__2
             {
-            pushFollow(FOLLOW_18);
+            pushFollow(FOLLOW_17);
             rule__RNewClass__Group__1__Impl();
 
             state._fsp--;
@@ -8935,7 +8934,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2468:1: ( rule__RNewClass__Group__2__Impl rule__RNewClass__Group__3 )
             // InternalAle.g:2469:2: rule__RNewClass__Group__2__Impl rule__RNewClass__Group__3
             {
-            pushFollow(FOLLOW_13);
+            pushFollow(FOLLOW_12);
             rule__RNewClass__Group__2__Impl();
 
             state._fsp--;
@@ -8979,7 +8978,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRNewClassAccess().getLeftCurlyBracketKeyword_2()); 
             }
-            match(input,47,FOLLOW_2); if (state.failed) return ;
+            match(input,46,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRNewClassAccess().getLeftCurlyBracketKeyword_2()); 
             }
@@ -9014,7 +9013,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2495:1: ( rule__RNewClass__Group__3__Impl rule__RNewClass__Group__4 )
             // InternalAle.g:2496:2: rule__RNewClass__Group__3__Impl rule__RNewClass__Group__4
             {
-            pushFollow(FOLLOW_13);
+            pushFollow(FOLLOW_12);
             rule__RNewClass__Group__3__Impl();
 
             state._fsp--;
@@ -9064,7 +9063,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt27=2;
                 int LA27_0 = input.LA(1);
 
-                if ( (LA27_0==RULE_INT||LA27_0==RULE_IDENT||(LA27_0>=17 && LA27_0<=18)||LA27_0==47||LA27_0==56||(LA27_0>=87 && LA27_0<=92)) ) {
+                if ( (LA27_0==RULE_INT||LA27_0==RULE_IDENT||(LA27_0>=17 && LA27_0<=18)||LA27_0==46||LA27_0==55||(LA27_0>=86 && LA27_0<=91)) ) {
                     alt27=1;
                 }
 
@@ -9073,7 +9072,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:2510:3: rule__RNewClass__AttributesAssignment_3
             	    {
-            	    pushFollow(FOLLOW_14);
+            	    pushFollow(FOLLOW_13);
             	    rule__RNewClass__AttributesAssignment_3();
 
             	    state._fsp--;
@@ -9121,7 +9120,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2522:1: ( rule__RNewClass__Group__4__Impl rule__RNewClass__Group__5 )
             // InternalAle.g:2523:2: rule__RNewClass__Group__4__Impl rule__RNewClass__Group__5
             {
-            pushFollow(FOLLOW_13);
+            pushFollow(FOLLOW_12);
             rule__RNewClass__Group__4__Impl();
 
             state._fsp--;
@@ -9171,7 +9170,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt28=2;
                 int LA28_0 = input.LA(1);
 
-                if ( ((LA28_0>=15 && LA28_0<=16)||LA28_0==53) ) {
+                if ( ((LA28_0>=15 && LA28_0<=16)||LA28_0==52) ) {
                     alt28=1;
                 }
 
@@ -9180,7 +9179,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:2537:3: rule__RNewClass__OperationsAssignment_4
             	    {
-            	    pushFollow(FOLLOW_15);
+            	    pushFollow(FOLLOW_14);
             	    rule__RNewClass__OperationsAssignment_4();
 
             	    state._fsp--;
@@ -9267,7 +9266,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRNewClassAccess().getRightCurlyBracketKeyword_5()); 
             }
-            match(input,48,FOLLOW_2); if (state.failed) return ;
+            match(input,47,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRNewClassAccess().getRightCurlyBracketKeyword_5()); 
             }
@@ -9302,7 +9301,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2576:1: ( rule__ROperation__Group__0__Impl rule__ROperation__Group__1 )
             // InternalAle.g:2577:2: rule__ROperation__Group__0__Impl rule__ROperation__Group__1
             {
-            pushFollow(FOLLOW_19);
+            pushFollow(FOLLOW_18);
             rule__ROperation__Group__0__Impl();
 
             state._fsp--;
@@ -9352,7 +9351,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt29=2;
                 int LA29_0 = input.LA(1);
 
-                if ( (LA29_0==53) ) {
+                if ( (LA29_0==52) ) {
                     alt29=1;
                 }
 
@@ -9361,7 +9360,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:2591:3: rule__ROperation__TagAssignment_0
             	    {
-            	    pushFollow(FOLLOW_20);
+            	    pushFollow(FOLLOW_19);
             	    rule__ROperation__TagAssignment_0();
 
             	    state._fsp--;
@@ -9409,7 +9408,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2603:1: ( rule__ROperation__Group__1__Impl rule__ROperation__Group__2 )
             // InternalAle.g:2604:2: rule__ROperation__Group__1__Impl rule__ROperation__Group__2
             {
-            pushFollow(FOLLOW_21);
+            pushFollow(FOLLOW_20);
             rule__ROperation__Group__1__Impl();
 
             state._fsp--;
@@ -9587,7 +9586,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2657:1: ( rule__ROperation__Group__3__Impl rule__ROperation__Group__4 )
             // InternalAle.g:2658:2: rule__ROperation__Group__3__Impl rule__ROperation__Group__4
             {
-            pushFollow(FOLLOW_22);
+            pushFollow(FOLLOW_21);
             rule__ROperation__Group__3__Impl();
 
             state._fsp--;
@@ -9676,7 +9675,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2684:1: ( rule__ROperation__Group__4__Impl rule__ROperation__Group__5 )
             // InternalAle.g:2685:2: rule__ROperation__Group__4__Impl rule__ROperation__Group__5
             {
-            pushFollow(FOLLOW_23);
+            pushFollow(FOLLOW_22);
             rule__ROperation__Group__4__Impl();
 
             state._fsp--;
@@ -9720,7 +9719,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROperationAccess().getLeftParenthesisKeyword_4()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROperationAccess().getLeftParenthesisKeyword_4()); 
             }
@@ -9755,7 +9754,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2711:1: ( rule__ROperation__Group__5__Impl rule__ROperation__Group__6 )
             // InternalAle.g:2712:2: rule__ROperation__Group__5__Impl rule__ROperation__Group__6
             {
-            pushFollow(FOLLOW_23);
+            pushFollow(FOLLOW_22);
             rule__ROperation__Group__5__Impl();
 
             state._fsp--;
@@ -9803,7 +9802,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt30=2;
             int LA30_0 = input.LA(1);
 
-            if ( (LA30_0==RULE_IDENT||LA30_0==47||(LA30_0>=87 && LA30_0<=92)) ) {
+            if ( (LA30_0==RULE_IDENT||LA30_0==46||(LA30_0>=86 && LA30_0<=91)) ) {
                 alt30=1;
             }
             switch (alt30) {
@@ -9855,7 +9854,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2738:1: ( rule__ROperation__Group__6__Impl rule__ROperation__Group__7 )
             // InternalAle.g:2739:2: rule__ROperation__Group__6__Impl rule__ROperation__Group__7
             {
-            pushFollow(FOLLOW_18);
+            pushFollow(FOLLOW_17);
             rule__ROperation__Group__6__Impl();
 
             state._fsp--;
@@ -9899,7 +9898,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROperationAccess().getRightParenthesisKeyword_6()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROperationAccess().getRightParenthesisKeyword_6()); 
             }
@@ -10018,7 +10017,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2792:1: ( rule__ROperation__Group_5__0__Impl rule__ROperation__Group_5__1 )
             // InternalAle.g:2793:2: rule__ROperation__Group_5__0__Impl rule__ROperation__Group_5__1
             {
-            pushFollow(FOLLOW_16);
+            pushFollow(FOLLOW_15);
             rule__ROperation__Group_5__0__Impl();
 
             state._fsp--;
@@ -10152,7 +10151,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt31=2;
                 int LA31_0 = input.LA(1);
 
-                if ( (LA31_0==50) ) {
+                if ( (LA31_0==49) ) {
                     alt31=1;
                 }
 
@@ -10161,7 +10160,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:2833:3: rule__ROperation__Group_5_1__0
             	    {
-            	    pushFollow(FOLLOW_17);
+            	    pushFollow(FOLLOW_16);
             	    rule__ROperation__Group_5_1__0();
 
             	    state._fsp--;
@@ -10209,7 +10208,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:2846:1: ( rule__ROperation__Group_5_1__0__Impl rule__ROperation__Group_5_1__1 )
             // InternalAle.g:2847:2: rule__ROperation__Group_5_1__0__Impl rule__ROperation__Group_5_1__1
             {
-            pushFollow(FOLLOW_21);
+            pushFollow(FOLLOW_20);
             rule__ROperation__Group_5_1__0__Impl();
 
             state._fsp--;
@@ -10253,7 +10252,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROperationAccess().getCommaKeyword_5_1_0()); 
             }
-            match(input,50,FOLLOW_2); if (state.failed) return ;
+            match(input,49,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROperationAccess().getCommaKeyword_5_1_0()); 
             }
@@ -10416,7 +10415,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRTagAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,53,FOLLOW_2); if (state.failed) return ;
+            match(input,52,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRTagAccess().getCommercialAtKeyword_0()); 
             }
@@ -10708,7 +10707,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3008:1: ( rule__RAttribute__Group__0__Impl rule__RAttribute__Group__1 )
             // InternalAle.g:3009:2: rule__RAttribute__Group__0__Impl rule__RAttribute__Group__1
             {
-            pushFollow(FOLLOW_21);
+            pushFollow(FOLLOW_20);
             rule__RAttribute__Group__0__Impl();
 
             state._fsp--;
@@ -10808,7 +10807,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3035:1: ( rule__RAttribute__Group__1__Impl rule__RAttribute__Group__2 )
             // InternalAle.g:3036:2: rule__RAttribute__Group__1__Impl rule__RAttribute__Group__2
             {
-            pushFollow(FOLLOW_21);
+            pushFollow(FOLLOW_20);
             rule__RAttribute__Group__1__Impl();
 
             state._fsp--;
@@ -10908,7 +10907,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3062:1: ( rule__RAttribute__Group__2__Impl rule__RAttribute__Group__3 )
             // InternalAle.g:3063:2: rule__RAttribute__Group__2__Impl rule__RAttribute__Group__3
             {
-            pushFollow(FOLLOW_21);
+            pushFollow(FOLLOW_20);
             rule__RAttribute__Group__2__Impl();
 
             state._fsp--;
@@ -10956,7 +10955,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt34=2;
             int LA34_0 = input.LA(1);
 
-            if ( (LA34_0==56) ) {
+            if ( (LA34_0==55) ) {
                 alt34=1;
             }
             switch (alt34) {
@@ -11097,7 +11096,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3116:1: ( rule__RAttribute__Group__4__Impl rule__RAttribute__Group__5 )
             // InternalAle.g:3117:2: rule__RAttribute__Group__4__Impl rule__RAttribute__Group__5
             {
-            pushFollow(FOLLOW_24);
+            pushFollow(FOLLOW_23);
             rule__RAttribute__Group__4__Impl();
 
             state._fsp--;
@@ -11186,7 +11185,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3143:1: ( rule__RAttribute__Group__5__Impl rule__RAttribute__Group__6 )
             // InternalAle.g:3144:2: rule__RAttribute__Group__5__Impl rule__RAttribute__Group__6
             {
-            pushFollow(FOLLOW_24);
+            pushFollow(FOLLOW_23);
             rule__RAttribute__Group__5__Impl();
 
             state._fsp--;
@@ -11234,7 +11233,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt35=2;
             int LA35_0 = input.LA(1);
 
-            if ( (LA35_0==54) ) {
+            if ( (LA35_0==53) ) {
                 alt35=1;
             }
             switch (alt35) {
@@ -11360,7 +11359,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3197:1: ( rule__RAttribute__Group_5__0__Impl rule__RAttribute__Group_5__1 )
             // InternalAle.g:3198:2: rule__RAttribute__Group_5__0__Impl rule__RAttribute__Group_5__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RAttribute__Group_5__0__Impl();
 
             state._fsp--;
@@ -11404,7 +11403,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRAttributeAccess().getColonEqualsSignKeyword_5_0()); 
             }
-            match(input,54,FOLLOW_2); if (state.failed) return ;
+            match(input,53,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRAttributeAccess().getColonEqualsSignKeyword_5_0()); 
             }
@@ -11523,7 +11522,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3251:1: ( rule__RCardinality__Group__0__Impl rule__RCardinality__Group__1 )
             // InternalAle.g:3252:2: rule__RCardinality__Group__0__Impl rule__RCardinality__Group__1
             {
-            pushFollow(FOLLOW_26);
+            pushFollow(FOLLOW_25);
             rule__RCardinality__Group__0__Impl();
 
             state._fsp--;
@@ -11602,7 +11601,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3278:1: ( rule__RCardinality__Group__1__Impl rule__RCardinality__Group__2 )
             // InternalAle.g:3279:2: rule__RCardinality__Group__1__Impl rule__RCardinality__Group__2
             {
-            pushFollow(FOLLOW_27);
+            pushFollow(FOLLOW_26);
             rule__RCardinality__Group__1__Impl();
 
             state._fsp--;
@@ -11646,7 +11645,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRCardinalityAccess().getFullStopFullStopKeyword_1()); 
             }
-            match(input,55,FOLLOW_2); if (state.failed) return ;
+            match(input,54,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRCardinalityAccess().getFullStopFullStopKeyword_1()); 
             }
@@ -11809,7 +11808,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getROppositeAccess().getOppositeKeyword_0()); 
             }
-            match(input,56,FOLLOW_2); if (state.failed) return ;
+            match(input,55,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getROppositeAccess().getOppositeKeyword_0()); 
             }
@@ -12017,7 +12016,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3413:1: ( rule__RVarDecl__Group__1__Impl rule__RVarDecl__Group__2 )
             // InternalAle.g:3414:2: rule__RVarDecl__Group__1__Impl rule__RVarDecl__Group__2
             {
-            pushFollow(FOLLOW_28);
+            pushFollow(FOLLOW_27);
             rule__RVarDecl__Group__1__Impl();
 
             state._fsp--;
@@ -12149,7 +12148,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt36=2;
             int LA36_0 = input.LA(1);
 
-            if ( (LA36_0==54) ) {
+            if ( (LA36_0==53) ) {
                 alt36=1;
             }
             switch (alt36) {
@@ -12201,7 +12200,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3467:1: ( rule__RVarDecl__Group_2__0__Impl rule__RVarDecl__Group_2__1 )
             // InternalAle.g:3468:2: rule__RVarDecl__Group_2__0__Impl rule__RVarDecl__Group_2__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RVarDecl__Group_2__0__Impl();
 
             state._fsp--;
@@ -12245,7 +12244,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRVarDeclAccess().getColonEqualsSignKeyword_2_0()); 
             }
-            match(input,54,FOLLOW_2); if (state.failed) return ;
+            match(input,53,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRVarDeclAccess().getColonEqualsSignKeyword_2_0()); 
             }
@@ -12364,7 +12363,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3521:1: ( rule__RAssign__Group__0__Impl rule__RAssign__Group__1 )
             // InternalAle.g:3522:2: rule__RAssign__Group__0__Impl rule__RAssign__Group__1
             {
-            pushFollow(FOLLOW_28);
+            pushFollow(FOLLOW_27);
             rule__RAssign__Group__0__Impl();
 
             state._fsp--;
@@ -12453,7 +12452,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3548:1: ( rule__RAssign__Group__1__Impl rule__RAssign__Group__2 )
             // InternalAle.g:3549:2: rule__RAssign__Group__1__Impl rule__RAssign__Group__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RAssign__Group__1__Impl();
 
             state._fsp--;
@@ -12497,7 +12496,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRAssignAccess().getColonEqualsSignKeyword_1()); 
             }
-            match(input,54,FOLLOW_2); if (state.failed) return ;
+            match(input,53,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRAssignAccess().getColonEqualsSignKeyword_1()); 
             }
@@ -12616,7 +12615,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3602:1: ( rule__RInsert__Group__0__Impl rule__RInsert__Group__1 )
             // InternalAle.g:3603:2: rule__RInsert__Group__0__Impl rule__RInsert__Group__1
             {
-            pushFollow(FOLLOW_29);
+            pushFollow(FOLLOW_28);
             rule__RInsert__Group__0__Impl();
 
             state._fsp--;
@@ -12705,7 +12704,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3629:1: ( rule__RInsert__Group__1__Impl rule__RInsert__Group__2 )
             // InternalAle.g:3630:2: rule__RInsert__Group__1__Impl rule__RInsert__Group__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RInsert__Group__1__Impl();
 
             state._fsp--;
@@ -12749,7 +12748,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRInsertAccess().getPlusSignEqualsSignKeyword_1()); 
             }
-            match(input,57,FOLLOW_2); if (state.failed) return ;
+            match(input,56,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRInsertAccess().getPlusSignEqualsSignKeyword_1()); 
             }
@@ -12868,7 +12867,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3683:1: ( rule__RRemove__Group__0__Impl rule__RRemove__Group__1 )
             // InternalAle.g:3684:2: rule__RRemove__Group__0__Impl rule__RRemove__Group__1
             {
-            pushFollow(FOLLOW_30);
+            pushFollow(FOLLOW_29);
             rule__RRemove__Group__0__Impl();
 
             state._fsp--;
@@ -12957,7 +12956,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3710:1: ( rule__RRemove__Group__1__Impl rule__RRemove__Group__2 )
             // InternalAle.g:3711:2: rule__RRemove__Group__1__Impl rule__RRemove__Group__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RRemove__Group__1__Impl();
 
             state._fsp--;
@@ -13001,7 +13000,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRRemoveAccess().getHyphenMinusEqualsSignKeyword_1()); 
             }
-            match(input,58,FOLLOW_2); if (state.failed) return ;
+            match(input,57,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRRemoveAccess().getHyphenMinusEqualsSignKeyword_1()); 
             }
@@ -13120,7 +13119,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3764:1: ( rule__RForEach__Group__0__Impl rule__RForEach__Group__1 )
             // InternalAle.g:3765:2: rule__RForEach__Group__0__Impl rule__RForEach__Group__1
             {
-            pushFollow(FOLLOW_22);
+            pushFollow(FOLLOW_21);
             rule__RForEach__Group__0__Impl();
 
             state._fsp--;
@@ -13164,7 +13163,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRForEachAccess().getForKeyword_0()); 
             }
-            match(input,59,FOLLOW_2); if (state.failed) return ;
+            match(input,58,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRForEachAccess().getForKeyword_0()); 
             }
@@ -13243,7 +13242,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRForEachAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRForEachAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -13278,7 +13277,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3818:1: ( rule__RForEach__Group__2__Impl rule__RForEach__Group__3 )
             // InternalAle.g:3819:2: rule__RForEach__Group__2__Impl rule__RForEach__Group__3
             {
-            pushFollow(FOLLOW_31);
+            pushFollow(FOLLOW_30);
             rule__RForEach__Group__2__Impl();
 
             state._fsp--;
@@ -13367,7 +13366,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3845:1: ( rule__RForEach__Group__3__Impl rule__RForEach__Group__4 )
             // InternalAle.g:3846:2: rule__RForEach__Group__3__Impl rule__RForEach__Group__4
             {
-            pushFollow(FOLLOW_32);
+            pushFollow(FOLLOW_31);
             rule__RForEach__Group__3__Impl();
 
             state._fsp--;
@@ -13411,7 +13410,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRForEachAccess().getInKeyword_3()); 
             }
-            match(input,60,FOLLOW_2); if (state.failed) return ;
+            match(input,59,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRForEachAccess().getInKeyword_3()); 
             }
@@ -13446,7 +13445,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3872:1: ( rule__RForEach__Group__4__Impl rule__RForEach__Group__5 )
             // InternalAle.g:3873:2: rule__RForEach__Group__4__Impl rule__RForEach__Group__5
             {
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_32);
             rule__RForEach__Group__4__Impl();
 
             state._fsp--;
@@ -13535,7 +13534,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3899:1: ( rule__RForEach__Group__5__Impl rule__RForEach__Group__6 )
             // InternalAle.g:3900:2: rule__RForEach__Group__5__Impl rule__RForEach__Group__6
             {
-            pushFollow(FOLLOW_18);
+            pushFollow(FOLLOW_17);
             rule__RForEach__Group__5__Impl();
 
             state._fsp--;
@@ -13579,7 +13578,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRForEachAccess().getRightParenthesisKeyword_5()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRForEachAccess().getRightParenthesisKeyword_5()); 
             }
@@ -13698,7 +13697,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3953:1: ( rule__RCollection__Group_0__0__Impl rule__RCollection__Group_0__1 )
             // InternalAle.g:3954:2: rule__RCollection__Group_0__0__Impl rule__RCollection__Group_0__1
             {
-            pushFollow(FOLLOW_34);
+            pushFollow(FOLLOW_33);
             rule__RCollection__Group_0__0__Impl();
 
             state._fsp--;
@@ -13742,7 +13741,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRCollectionAccess().getLeftSquareBracketKeyword_0_0()); 
             }
-            match(input,61,FOLLOW_2); if (state.failed) return ;
+            match(input,60,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRCollectionAccess().getLeftSquareBracketKeyword_0_0()); 
             }
@@ -13777,7 +13776,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:3980:1: ( rule__RCollection__Group_0__1__Impl rule__RCollection__Group_0__2 )
             // InternalAle.g:3981:2: rule__RCollection__Group_0__1__Impl rule__RCollection__Group_0__2
             {
-            pushFollow(FOLLOW_26);
+            pushFollow(FOLLOW_25);
             rule__RCollection__Group_0__1__Impl();
 
             state._fsp--;
@@ -13866,7 +13865,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4007:1: ( rule__RCollection__Group_0__2__Impl rule__RCollection__Group_0__3 )
             // InternalAle.g:4008:2: rule__RCollection__Group_0__2__Impl rule__RCollection__Group_0__3
             {
-            pushFollow(FOLLOW_34);
+            pushFollow(FOLLOW_33);
             rule__RCollection__Group_0__2__Impl();
 
             state._fsp--;
@@ -13910,7 +13909,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRCollectionAccess().getFullStopFullStopKeyword_0_2()); 
             }
-            match(input,55,FOLLOW_2); if (state.failed) return ;
+            match(input,54,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRCollectionAccess().getFullStopFullStopKeyword_0_2()); 
             }
@@ -13945,7 +13944,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4034:1: ( rule__RCollection__Group_0__3__Impl rule__RCollection__Group_0__4 )
             // InternalAle.g:4035:2: rule__RCollection__Group_0__3__Impl rule__RCollection__Group_0__4
             {
-            pushFollow(FOLLOW_35);
+            pushFollow(FOLLOW_34);
             rule__RCollection__Group_0__3__Impl();
 
             state._fsp--;
@@ -14073,7 +14072,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRCollectionAccess().getRightSquareBracketKeyword_0_4()); 
             }
-            match(input,62,FOLLOW_2); if (state.failed) return ;
+            match(input,61,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRCollectionAccess().getRightSquareBracketKeyword_0_4()); 
             }
@@ -14108,7 +14107,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4088:1: ( rule__RBlock__Group__0__Impl rule__RBlock__Group__1 )
             // InternalAle.g:4089:2: rule__RBlock__Group__0__Impl rule__RBlock__Group__1
             {
-            pushFollow(FOLLOW_18);
+            pushFollow(FOLLOW_17);
             rule__RBlock__Group__0__Impl();
 
             state._fsp--;
@@ -14187,7 +14186,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4115:1: ( rule__RBlock__Group__1__Impl rule__RBlock__Group__2 )
             // InternalAle.g:4116:2: rule__RBlock__Group__1__Impl rule__RBlock__Group__2
             {
-            pushFollow(FOLLOW_36);
+            pushFollow(FOLLOW_35);
             rule__RBlock__Group__1__Impl();
 
             state._fsp--;
@@ -14231,7 +14230,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRBlockAccess().getLeftCurlyBracketKeyword_1()); 
             }
-            match(input,47,FOLLOW_2); if (state.failed) return ;
+            match(input,46,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRBlockAccess().getLeftCurlyBracketKeyword_1()); 
             }
@@ -14266,7 +14265,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4142:1: ( rule__RBlock__Group__2__Impl rule__RBlock__Group__3 )
             // InternalAle.g:4143:2: rule__RBlock__Group__2__Impl rule__RBlock__Group__3
             {
-            pushFollow(FOLLOW_36);
+            pushFollow(FOLLOW_35);
             rule__RBlock__Group__2__Impl();
 
             state._fsp--;
@@ -14314,7 +14313,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt37=2;
             int LA37_0 = input.LA(1);
 
-            if ( (LA37_0==RULE_INT||(LA37_0>=RULE_IDENT && LA37_0<=RULE_REAL)||LA37_0==20||LA37_0==47||LA37_0==51||LA37_0==59||LA37_0==63||(LA37_0>=65 && LA37_0<=66)||LA37_0==77||(LA37_0>=80 && LA37_0<=85)||(LA37_0>=87 && LA37_0<=92)) ) {
+            if ( (LA37_0==RULE_INT||(LA37_0>=RULE_IDENT && LA37_0<=RULE_REAL)||LA37_0==20||LA37_0==46||LA37_0==50||LA37_0==58||LA37_0==62||(LA37_0>=64 && LA37_0<=65)||LA37_0==76||(LA37_0>=79 && LA37_0<=84)||(LA37_0>=86 && LA37_0<=91)) ) {
                 alt37=1;
             }
             switch (alt37) {
@@ -14405,7 +14404,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRBlockAccess().getRightCurlyBracketKeyword_3()); 
             }
-            match(input,48,FOLLOW_2); if (state.failed) return ;
+            match(input,47,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRBlockAccess().getRightCurlyBracketKeyword_3()); 
             }
@@ -14440,7 +14439,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4196:1: ( rule__RBlock__Group_2__0__Impl rule__RBlock__Group_2__1 )
             // InternalAle.g:4197:2: rule__RBlock__Group_2__0__Impl rule__RBlock__Group_2__1
             {
-            pushFollow(FOLLOW_37);
+            pushFollow(FOLLOW_36);
             rule__RBlock__Group_2__0__Impl();
 
             state._fsp--;
@@ -14574,7 +14573,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt38=2;
                 int LA38_0 = input.LA(1);
 
-                if ( (LA38_0==RULE_INT||(LA38_0>=RULE_IDENT && LA38_0<=RULE_REAL)||LA38_0==20||LA38_0==47||LA38_0==51||LA38_0==59||LA38_0==63||(LA38_0>=65 && LA38_0<=66)||LA38_0==77||(LA38_0>=80 && LA38_0<=85)||(LA38_0>=87 && LA38_0<=92)) ) {
+                if ( (LA38_0==RULE_INT||(LA38_0>=RULE_IDENT && LA38_0<=RULE_REAL)||LA38_0==20||LA38_0==46||LA38_0==50||LA38_0==58||LA38_0==62||(LA38_0>=64 && LA38_0<=65)||LA38_0==76||(LA38_0>=79 && LA38_0<=84)||(LA38_0>=86 && LA38_0<=91)) ) {
                     alt38=1;
                 }
 
@@ -14583,7 +14582,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:4237:3: rule__RBlock__Alternatives_2_1
             	    {
-            	    pushFollow(FOLLOW_38);
+            	    pushFollow(FOLLOW_37);
             	    rule__RBlock__Alternatives_2_1();
 
             	    state._fsp--;
@@ -14957,7 +14956,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4358:1: ( rule__RIf__Group__0__Impl rule__RIf__Group__1 )
             // InternalAle.g:4359:2: rule__RIf__Group__0__Impl rule__RIf__Group__1
             {
-            pushFollow(FOLLOW_22);
+            pushFollow(FOLLOW_21);
             rule__RIf__Group__0__Impl();
 
             state._fsp--;
@@ -15001,7 +15000,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRIfAccess().getIfKeyword_0()); 
             }
-            match(input,63,FOLLOW_2); if (state.failed) return ;
+            match(input,62,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRIfAccess().getIfKeyword_0()); 
             }
@@ -15036,7 +15035,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4385:1: ( rule__RIf__Group__1__Impl rule__RIf__Group__2 )
             // InternalAle.g:4386:2: rule__RIf__Group__1__Impl rule__RIf__Group__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RIf__Group__1__Impl();
 
             state._fsp--;
@@ -15080,7 +15079,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRIfAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRIfAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -15115,7 +15114,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4412:1: ( rule__RIf__Group__2__Impl rule__RIf__Group__3 )
             // InternalAle.g:4413:2: rule__RIf__Group__2__Impl rule__RIf__Group__3
             {
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_32);
             rule__RIf__Group__2__Impl();
 
             state._fsp--;
@@ -15204,7 +15203,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4439:1: ( rule__RIf__Group__3__Impl rule__RIf__Group__4 )
             // InternalAle.g:4440:2: rule__RIf__Group__3__Impl rule__RIf__Group__4
             {
-            pushFollow(FOLLOW_18);
+            pushFollow(FOLLOW_17);
             rule__RIf__Group__3__Impl();
 
             state._fsp--;
@@ -15248,7 +15247,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRIfAccess().getRightParenthesisKeyword_3()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRIfAccess().getRightParenthesisKeyword_3()); 
             }
@@ -15283,7 +15282,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4466:1: ( rule__RIf__Group__4__Impl rule__RIf__Group__5 )
             // InternalAle.g:4467:2: rule__RIf__Group__4__Impl rule__RIf__Group__5
             {
-            pushFollow(FOLLOW_39);
+            pushFollow(FOLLOW_38);
             rule__RIf__Group__4__Impl();
 
             state._fsp--;
@@ -15415,7 +15414,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt39=2;
             int LA39_0 = input.LA(1);
 
-            if ( (LA39_0==64) ) {
+            if ( (LA39_0==63) ) {
                 alt39=1;
             }
             switch (alt39) {
@@ -15467,7 +15466,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4520:1: ( rule__RIf__Group_5__0__Impl rule__RIf__Group_5__1 )
             // InternalAle.g:4521:2: rule__RIf__Group_5__0__Impl rule__RIf__Group_5__1
             {
-            pushFollow(FOLLOW_18);
+            pushFollow(FOLLOW_17);
             rule__RIf__Group_5__0__Impl();
 
             state._fsp--;
@@ -15511,7 +15510,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRIfAccess().getElseKeyword_5_0()); 
             }
-            match(input,64,FOLLOW_2); if (state.failed) return ;
+            match(input,63,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRIfAccess().getElseKeyword_5_0()); 
             }
@@ -15630,7 +15629,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4574:1: ( rule__RWhile__Group__0__Impl rule__RWhile__Group__1 )
             // InternalAle.g:4575:2: rule__RWhile__Group__0__Impl rule__RWhile__Group__1
             {
-            pushFollow(FOLLOW_22);
+            pushFollow(FOLLOW_21);
             rule__RWhile__Group__0__Impl();
 
             state._fsp--;
@@ -15674,7 +15673,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRWhileAccess().getWhileKeyword_0()); 
             }
-            match(input,65,FOLLOW_2); if (state.failed) return ;
+            match(input,64,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRWhileAccess().getWhileKeyword_0()); 
             }
@@ -15709,7 +15708,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4601:1: ( rule__RWhile__Group__1__Impl rule__RWhile__Group__2 )
             // InternalAle.g:4602:2: rule__RWhile__Group__1__Impl rule__RWhile__Group__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RWhile__Group__1__Impl();
 
             state._fsp--;
@@ -15753,7 +15752,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRWhileAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRWhileAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -15788,7 +15787,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4628:1: ( rule__RWhile__Group__2__Impl rule__RWhile__Group__3 )
             // InternalAle.g:4629:2: rule__RWhile__Group__2__Impl rule__RWhile__Group__3
             {
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_32);
             rule__RWhile__Group__2__Impl();
 
             state._fsp--;
@@ -15877,7 +15876,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4655:1: ( rule__RWhile__Group__3__Impl rule__RWhile__Group__4 )
             // InternalAle.g:4656:2: rule__RWhile__Group__3__Impl rule__RWhile__Group__4
             {
-            pushFollow(FOLLOW_18);
+            pushFollow(FOLLOW_17);
             rule__RWhile__Group__3__Impl();
 
             state._fsp--;
@@ -15921,7 +15920,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRWhileAccess().getRightParenthesisKeyword_3()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRWhileAccess().getRightParenthesisKeyword_3()); 
             }
@@ -16040,7 +16039,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4709:1: ( rule__RSwitch__Group__0__Impl rule__RSwitch__Group__1 )
             // InternalAle.g:4710:2: rule__RSwitch__Group__0__Impl rule__RSwitch__Group__1
             {
-            pushFollow(FOLLOW_22);
+            pushFollow(FOLLOW_21);
             rule__RSwitch__Group__0__Impl();
 
             state._fsp--;
@@ -16084,7 +16083,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRSwitchAccess().getSwitchKeyword_0()); 
             }
-            match(input,66,FOLLOW_2); if (state.failed) return ;
+            match(input,65,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRSwitchAccess().getSwitchKeyword_0()); 
             }
@@ -16119,7 +16118,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4736:1: ( rule__RSwitch__Group__1__Impl rule__RSwitch__Group__2 )
             // InternalAle.g:4737:2: rule__RSwitch__Group__1__Impl rule__RSwitch__Group__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RSwitch__Group__1__Impl();
 
             state._fsp--;
@@ -16163,7 +16162,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRSwitchAccess().getLeftParenthesisKeyword_1()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRSwitchAccess().getLeftParenthesisKeyword_1()); 
             }
@@ -16198,7 +16197,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4763:1: ( rule__RSwitch__Group__2__Impl rule__RSwitch__Group__3 )
             // InternalAle.g:4764:2: rule__RSwitch__Group__2__Impl rule__RSwitch__Group__3
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RSwitch__Group__2__Impl();
 
             state._fsp--;
@@ -16249,7 +16248,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( (LA40_0==RULE_IDENT) ) {
                 int LA40_1 = input.LA(2);
 
-                if ( (LA40_1==68) ) {
+                if ( (LA40_1==67) ) {
                     alt40=1;
                 }
             }
@@ -16302,7 +16301,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4790:1: ( rule__RSwitch__Group__3__Impl rule__RSwitch__Group__4 )
             // InternalAle.g:4791:2: rule__RSwitch__Group__3__Impl rule__RSwitch__Group__4
             {
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_32);
             rule__RSwitch__Group__3__Impl();
 
             state._fsp--;
@@ -16391,7 +16390,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4817:1: ( rule__RSwitch__Group__4__Impl rule__RSwitch__Group__5 )
             // InternalAle.g:4818:2: rule__RSwitch__Group__4__Impl rule__RSwitch__Group__5
             {
-            pushFollow(FOLLOW_18);
+            pushFollow(FOLLOW_17);
             rule__RSwitch__Group__4__Impl();
 
             state._fsp--;
@@ -16435,7 +16434,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRSwitchAccess().getRightParenthesisKeyword_4()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRSwitchAccess().getRightParenthesisKeyword_4()); 
             }
@@ -16470,7 +16469,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4844:1: ( rule__RSwitch__Group__5__Impl rule__RSwitch__Group__6 )
             // InternalAle.g:4845:2: rule__RSwitch__Group__5__Impl rule__RSwitch__Group__6
             {
-            pushFollow(FOLLOW_40);
+            pushFollow(FOLLOW_39);
             rule__RSwitch__Group__5__Impl();
 
             state._fsp--;
@@ -16514,7 +16513,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRSwitchAccess().getLeftCurlyBracketKeyword_5()); 
             }
-            match(input,47,FOLLOW_2); if (state.failed) return ;
+            match(input,46,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRSwitchAccess().getLeftCurlyBracketKeyword_5()); 
             }
@@ -16549,7 +16548,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4871:1: ( rule__RSwitch__Group__6__Impl rule__RSwitch__Group__7 )
             // InternalAle.g:4872:2: rule__RSwitch__Group__6__Impl rule__RSwitch__Group__7
             {
-            pushFollow(FOLLOW_41);
+            pushFollow(FOLLOW_40);
             rule__RSwitch__Group__6__Impl();
 
             state._fsp--;
@@ -16599,7 +16598,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4887:3: ( rule__RSwitch__CasesAssignment_6 )
             // InternalAle.g:4887:4: rule__RSwitch__CasesAssignment_6
             {
-            pushFollow(FOLLOW_42);
+            pushFollow(FOLLOW_41);
             rule__RSwitch__CasesAssignment_6();
 
             state._fsp--;
@@ -16625,7 +16624,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt41=2;
                 int LA41_0 = input.LA(1);
 
-                if ( (LA41_0==RULE_IDENT||LA41_0==47||(LA41_0>=68 && LA41_0<=69)||(LA41_0>=87 && LA41_0<=92)) ) {
+                if ( (LA41_0==RULE_IDENT||LA41_0==46||(LA41_0>=67 && LA41_0<=68)||(LA41_0>=86 && LA41_0<=91)) ) {
                     alt41=1;
                 }
 
@@ -16634,7 +16633,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:4892:4: rule__RSwitch__CasesAssignment_6
             	    {
-            	    pushFollow(FOLLOW_42);
+            	    pushFollow(FOLLOW_41);
             	    rule__RSwitch__CasesAssignment_6();
 
             	    state._fsp--;
@@ -16685,7 +16684,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4905:1: ( rule__RSwitch__Group__7__Impl rule__RSwitch__Group__8 )
             // InternalAle.g:4906:2: rule__RSwitch__Group__7__Impl rule__RSwitch__Group__8
             {
-            pushFollow(FOLLOW_43);
+            pushFollow(FOLLOW_42);
             rule__RSwitch__Group__7__Impl();
 
             state._fsp--;
@@ -16729,7 +16728,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRSwitchAccess().getDefaultKeyword_7()); 
             }
-            match(input,67,FOLLOW_2); if (state.failed) return ;
+            match(input,66,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRSwitchAccess().getDefaultKeyword_7()); 
             }
@@ -16764,7 +16763,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4932:1: ( rule__RSwitch__Group__8__Impl rule__RSwitch__Group__9 )
             // InternalAle.g:4933:2: rule__RSwitch__Group__8__Impl rule__RSwitch__Group__9
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RSwitch__Group__8__Impl();
 
             state._fsp--;
@@ -16808,7 +16807,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRSwitchAccess().getColonKeyword_8()); 
             }
-            match(input,68,FOLLOW_2); if (state.failed) return ;
+            match(input,67,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRSwitchAccess().getColonKeyword_8()); 
             }
@@ -16843,7 +16842,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:4959:1: ( rule__RSwitch__Group__9__Impl rule__RSwitch__Group__10 )
             // InternalAle.g:4960:2: rule__RSwitch__Group__9__Impl rule__RSwitch__Group__10
             {
-            pushFollow(FOLLOW_44);
+            pushFollow(FOLLOW_43);
             rule__RSwitch__Group__9__Impl();
 
             state._fsp--;
@@ -16971,7 +16970,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRSwitchAccess().getRightCurlyBracketKeyword_10()); 
             }
-            match(input,48,FOLLOW_2); if (state.failed) return ;
+            match(input,47,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRSwitchAccess().getRightCurlyBracketKeyword_10()); 
             }
@@ -17006,7 +17005,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5013:1: ( rule__RSwitch__Group_2__0__Impl rule__RSwitch__Group_2__1 )
             // InternalAle.g:5014:2: rule__RSwitch__Group_2__0__Impl rule__RSwitch__Group_2__1
             {
-            pushFollow(FOLLOW_43);
+            pushFollow(FOLLOW_42);
             rule__RSwitch__Group_2__0__Impl();
 
             state._fsp--;
@@ -17134,7 +17133,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRSwitchAccess().getColonKeyword_2_1()); 
             }
-            match(input,68,FOLLOW_2); if (state.failed) return ;
+            match(input,67,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRSwitchAccess().getColonKeyword_2_1()); 
             }
@@ -17169,7 +17168,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5067:1: ( rule__RCase__Group__0__Impl rule__RCase__Group__1 )
             // InternalAle.g:5068:2: rule__RCase__Group__0__Impl rule__RCase__Group__1
             {
-            pushFollow(FOLLOW_40);
+            pushFollow(FOLLOW_39);
             rule__RCase__Group__0__Impl();
 
             state._fsp--;
@@ -17217,7 +17216,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt42=2;
             int LA42_0 = input.LA(1);
 
-            if ( (LA42_0==RULE_IDENT||LA42_0==47||(LA42_0>=87 && LA42_0<=92)) ) {
+            if ( (LA42_0==RULE_IDENT||LA42_0==46||(LA42_0>=86 && LA42_0<=91)) ) {
                 alt42=1;
             }
             switch (alt42) {
@@ -17269,7 +17268,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5094:1: ( rule__RCase__Group__1__Impl rule__RCase__Group__2 )
             // InternalAle.g:5095:2: rule__RCase__Group__1__Impl rule__RCase__Group__2
             {
-            pushFollow(FOLLOW_40);
+            pushFollow(FOLLOW_39);
             rule__RCase__Group__1__Impl();
 
             state._fsp--;
@@ -17317,7 +17316,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt43=2;
             int LA43_0 = input.LA(1);
 
-            if ( (LA43_0==69) ) {
+            if ( (LA43_0==68) ) {
                 alt43=1;
             }
             switch (alt43) {
@@ -17369,7 +17368,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5121:1: ( rule__RCase__Group__2__Impl rule__RCase__Group__3 )
             // InternalAle.g:5122:2: rule__RCase__Group__2__Impl rule__RCase__Group__3
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RCase__Group__2__Impl();
 
             state._fsp--;
@@ -17413,7 +17412,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRCaseAccess().getColonKeyword_2()); 
             }
-            match(input,68,FOLLOW_2); if (state.failed) return ;
+            match(input,67,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRCaseAccess().getColonKeyword_2()); 
             }
@@ -17532,7 +17531,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5175:1: ( rule__RCase__Group_1__0__Impl rule__RCase__Group_1__1 )
             // InternalAle.g:5176:2: rule__RCase__Group_1__0__Impl rule__RCase__Group_1__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__RCase__Group_1__0__Impl();
 
             state._fsp--;
@@ -17576,7 +17575,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRCaseAccess().getCaseKeyword_1_0()); 
             }
-            match(input,69,FOLLOW_2); if (state.failed) return ;
+            match(input,68,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRCaseAccess().getCaseKeyword_1_0()); 
             }
@@ -17695,7 +17694,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5229:1: ( rule__Expression__Group__0__Impl rule__Expression__Group__1 )
             // InternalAle.g:5230:2: rule__Expression__Group__0__Impl rule__Expression__Group__1
             {
-            pushFollow(FOLLOW_45);
+            pushFollow(FOLLOW_44);
             rule__Expression__Group__0__Impl();
 
             state._fsp--;
@@ -17826,7 +17825,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:5270:3: rule__Expression__Alternatives_1
             	    {
-            	    pushFollow(FOLLOW_46);
+            	    pushFollow(FOLLOW_45);
             	    rule__Expression__Alternatives_1();
 
             	    state._fsp--;
@@ -17874,7 +17873,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5283:1: ( rule__Expression__Group_1_0__0__Impl rule__Expression__Group_1_0__1 )
             // InternalAle.g:5284:2: rule__Expression__Group_1_0__0__Impl rule__Expression__Group_1_0__1
             {
-            pushFollow(FOLLOW_47);
+            pushFollow(FOLLOW_46);
             rule__Expression__Group_1_0__0__Impl();
 
             state._fsp--;
@@ -17997,7 +17996,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getFullStopKeyword_1_0_1()); 
             }
-            match(input,70,FOLLOW_2); if (state.failed) return ;
+            match(input,69,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getFullStopKeyword_1_0_1()); 
             }
@@ -18032,7 +18031,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5337:1: ( rule__Expression__Group_1_0__2__Impl rule__Expression__Group_1_0__3 )
             // InternalAle.g:5338:2: rule__Expression__Group_1_0__2__Impl rule__Expression__Group_1_0__3
             {
-            pushFollow(FOLLOW_22);
+            pushFollow(FOLLOW_21);
             rule__Expression__Group_1_0__2__Impl();
 
             state._fsp--;
@@ -18121,7 +18120,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5364:1: ( rule__Expression__Group_1_0__3__Impl rule__Expression__Group_1_0__4 )
             // InternalAle.g:5365:2: rule__Expression__Group_1_0__3__Impl rule__Expression__Group_1_0__4
             {
-            pushFollow(FOLLOW_48);
+            pushFollow(FOLLOW_47);
             rule__Expression__Group_1_0__3__Impl();
 
             state._fsp--;
@@ -18165,7 +18164,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getLeftParenthesisKeyword_1_0_3()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getLeftParenthesisKeyword_1_0_3()); 
             }
@@ -18200,7 +18199,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5391:1: ( rule__Expression__Group_1_0__4__Impl rule__Expression__Group_1_0__5 )
             // InternalAle.g:5392:2: rule__Expression__Group_1_0__4__Impl rule__Expression__Group_1_0__5
             {
-            pushFollow(FOLLOW_48);
+            pushFollow(FOLLOW_47);
             rule__Expression__Group_1_0__4__Impl();
 
             state._fsp--;
@@ -18248,7 +18247,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt45=2;
             int LA45_0 = input.LA(1);
 
-            if ( (LA45_0==RULE_INT||(LA45_0>=RULE_IDENT && LA45_0<=RULE_REAL)||LA45_0==20||LA45_0==47||LA45_0==51||LA45_0==63||LA45_0==77||(LA45_0>=80 && LA45_0<=85)||(LA45_0>=87 && LA45_0<=92)) ) {
+            if ( (LA45_0==RULE_INT||(LA45_0>=RULE_IDENT && LA45_0<=RULE_REAL)||LA45_0==20||LA45_0==46||LA45_0==50||LA45_0==62||LA45_0==76||(LA45_0>=79 && LA45_0<=84)||(LA45_0>=86 && LA45_0<=91)) ) {
                 alt45=1;
             }
             switch (alt45) {
@@ -18339,7 +18338,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getRightParenthesisKeyword_1_0_5()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getRightParenthesisKeyword_1_0_5()); 
             }
@@ -18374,7 +18373,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5445:1: ( rule__Expression__Group_1_0_4__0__Impl rule__Expression__Group_1_0_4__1 )
             // InternalAle.g:5446:2: rule__Expression__Group_1_0_4__0__Impl rule__Expression__Group_1_0_4__1
             {
-            pushFollow(FOLLOW_16);
+            pushFollow(FOLLOW_15);
             rule__Expression__Group_1_0_4__0__Impl();
 
             state._fsp--;
@@ -18508,7 +18507,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt46=2;
                 int LA46_0 = input.LA(1);
 
-                if ( (LA46_0==50) ) {
+                if ( (LA46_0==49) ) {
                     alt46=1;
                 }
 
@@ -18517,7 +18516,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:5486:3: rule__Expression__Group_1_0_4_1__0
             	    {
-            	    pushFollow(FOLLOW_17);
+            	    pushFollow(FOLLOW_16);
             	    rule__Expression__Group_1_0_4_1__0();
 
             	    state._fsp--;
@@ -18565,7 +18564,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5499:1: ( rule__Expression__Group_1_0_4_1__0__Impl rule__Expression__Group_1_0_4_1__1 )
             // InternalAle.g:5500:2: rule__Expression__Group_1_0_4_1__0__Impl rule__Expression__Group_1_0_4_1__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_0_4_1__0__Impl();
 
             state._fsp--;
@@ -18609,7 +18608,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getCommaKeyword_1_0_4_1_0()); 
             }
-            match(input,50,FOLLOW_2); if (state.failed) return ;
+            match(input,49,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getCommaKeyword_1_0_4_1_0()); 
             }
@@ -18728,7 +18727,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5553:1: ( rule__Expression__Group_1_1__0__Impl rule__Expression__Group_1_1__1 )
             // InternalAle.g:5554:2: rule__Expression__Group_1_1__0__Impl rule__Expression__Group_1_1__1
             {
-            pushFollow(FOLLOW_47);
+            pushFollow(FOLLOW_46);
             rule__Expression__Group_1_1__0__Impl();
 
             state._fsp--;
@@ -18851,7 +18850,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getFullStopKeyword_1_1_1()); 
             }
-            match(input,70,FOLLOW_2); if (state.failed) return ;
+            match(input,69,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getFullStopKeyword_1_1_1()); 
             }
@@ -18970,7 +18969,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5634:1: ( rule__Expression__Group_1_2__0__Impl rule__Expression__Group_1_2__1 )
             // InternalAle.g:5635:2: rule__Expression__Group_1_2__0__Impl rule__Expression__Group_1_2__1
             {
-            pushFollow(FOLLOW_49);
+            pushFollow(FOLLOW_48);
             rule__Expression__Group_1_2__0__Impl();
 
             state._fsp--;
@@ -19049,7 +19048,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5661:1: ( rule__Expression__Group_1_2__1__Impl rule__Expression__Group_1_2__2 )
             // InternalAle.g:5662:2: rule__Expression__Group_1_2__1__Impl rule__Expression__Group_1_2__2
             {
-            pushFollow(FOLLOW_50);
+            pushFollow(FOLLOW_49);
             rule__Expression__Group_1_2__1__Impl();
 
             state._fsp--;
@@ -19093,7 +19092,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getHyphenMinusGreaterThanSignKeyword_1_2_1()); 
             }
-            match(input,71,FOLLOW_2); if (state.failed) return ;
+            match(input,70,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getHyphenMinusGreaterThanSignKeyword_1_2_1()); 
             }
@@ -19212,7 +19211,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5715:1: ( rule__Expression__Group_1_2_2_0__0__Impl rule__Expression__Group_1_2_2_0__1 )
             // InternalAle.g:5716:2: rule__Expression__Group_1_2_2_0__0__Impl rule__Expression__Group_1_2_2_0__1
             {
-            pushFollow(FOLLOW_22);
+            pushFollow(FOLLOW_21);
             rule__Expression__Group_1_2_2_0__0__Impl();
 
             state._fsp--;
@@ -19345,7 +19344,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getLeftParenthesisKeyword_1_2_2_0_1()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getLeftParenthesisKeyword_1_2_2_0_1()); 
             }
@@ -19380,7 +19379,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5769:1: ( rule__Expression__Group_1_2_2_0__2__Impl rule__Expression__Group_1_2_2_0__3 )
             // InternalAle.g:5770:2: rule__Expression__Group_1_2_2_0__2__Impl rule__Expression__Group_1_2_2_0__3
             {
-            pushFollow(FOLLOW_51);
+            pushFollow(FOLLOW_50);
             rule__Expression__Group_1_2_2_0__2__Impl();
 
             state._fsp--;
@@ -19469,7 +19468,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5796:1: ( rule__Expression__Group_1_2_2_0__3__Impl rule__Expression__Group_1_2_2_0__4 )
             // InternalAle.g:5797:2: rule__Expression__Group_1_2_2_0__3__Impl rule__Expression__Group_1_2_2_0__4
             {
-            pushFollow(FOLLOW_51);
+            pushFollow(FOLLOW_50);
             rule__Expression__Group_1_2_2_0__3__Impl();
 
             state._fsp--;
@@ -19517,7 +19516,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt47=2;
             int LA47_0 = input.LA(1);
 
-            if ( (LA47_0==68) ) {
+            if ( (LA47_0==67) ) {
                 alt47=1;
             }
             switch (alt47) {
@@ -19569,7 +19568,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5823:1: ( rule__Expression__Group_1_2_2_0__4__Impl rule__Expression__Group_1_2_2_0__5 )
             // InternalAle.g:5824:2: rule__Expression__Group_1_2_2_0__4__Impl rule__Expression__Group_1_2_2_0__5
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_2_2_0__4__Impl();
 
             state._fsp--;
@@ -19613,7 +19612,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getVerticalLineKeyword_1_2_2_0_4()); 
             }
-            match(input,72,FOLLOW_2); if (state.failed) return ;
+            match(input,71,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getVerticalLineKeyword_1_2_2_0_4()); 
             }
@@ -19648,7 +19647,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5850:1: ( rule__Expression__Group_1_2_2_0__5__Impl rule__Expression__Group_1_2_2_0__6 )
             // InternalAle.g:5851:2: rule__Expression__Group_1_2_2_0__5__Impl rule__Expression__Group_1_2_2_0__6
             {
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_32);
             rule__Expression__Group_1_2_2_0__5__Impl();
 
             state._fsp--;
@@ -19776,7 +19775,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getRightParenthesisKeyword_1_2_2_0_6()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getRightParenthesisKeyword_1_2_2_0_6()); 
             }
@@ -19811,7 +19810,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5904:1: ( rule__Expression__Group_1_2_2_0_3__0__Impl rule__Expression__Group_1_2_2_0_3__1 )
             // InternalAle.g:5905:2: rule__Expression__Group_1_2_2_0_3__0__Impl rule__Expression__Group_1_2_2_0_3__1
             {
-            pushFollow(FOLLOW_52);
+            pushFollow(FOLLOW_51);
             rule__Expression__Group_1_2_2_0_3__0__Impl();
 
             state._fsp--;
@@ -19855,7 +19854,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getColonKeyword_1_2_2_0_3_0()); 
             }
-            match(input,68,FOLLOW_2); if (state.failed) return ;
+            match(input,67,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getColonKeyword_1_2_2_0_3_0()); 
             }
@@ -19974,7 +19973,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5958:1: ( rule__Expression__Group_1_2_2_1__0__Impl rule__Expression__Group_1_2_2_1__1 )
             // InternalAle.g:5959:2: rule__Expression__Group_1_2_2_1__0__Impl rule__Expression__Group_1_2_2_1__1
             {
-            pushFollow(FOLLOW_22);
+            pushFollow(FOLLOW_21);
             rule__Expression__Group_1_2_2_1__0__Impl();
 
             state._fsp--;
@@ -20063,7 +20062,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:5985:1: ( rule__Expression__Group_1_2_2_1__1__Impl rule__Expression__Group_1_2_2_1__2 )
             // InternalAle.g:5986:2: rule__Expression__Group_1_2_2_1__1__Impl rule__Expression__Group_1_2_2_1__2
             {
-            pushFollow(FOLLOW_48);
+            pushFollow(FOLLOW_47);
             rule__Expression__Group_1_2_2_1__1__Impl();
 
             state._fsp--;
@@ -20107,7 +20106,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getLeftParenthesisKeyword_1_2_2_1_1()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getLeftParenthesisKeyword_1_2_2_1_1()); 
             }
@@ -20142,7 +20141,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6012:1: ( rule__Expression__Group_1_2_2_1__2__Impl rule__Expression__Group_1_2_2_1__3 )
             // InternalAle.g:6013:2: rule__Expression__Group_1_2_2_1__2__Impl rule__Expression__Group_1_2_2_1__3
             {
-            pushFollow(FOLLOW_48);
+            pushFollow(FOLLOW_47);
             rule__Expression__Group_1_2_2_1__2__Impl();
 
             state._fsp--;
@@ -20190,7 +20189,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt48=2;
             int LA48_0 = input.LA(1);
 
-            if ( (LA48_0==RULE_INT||(LA48_0>=RULE_IDENT && LA48_0<=RULE_REAL)||LA48_0==20||LA48_0==47||LA48_0==51||LA48_0==63||LA48_0==77||(LA48_0>=80 && LA48_0<=85)||(LA48_0>=87 && LA48_0<=92)) ) {
+            if ( (LA48_0==RULE_INT||(LA48_0>=RULE_IDENT && LA48_0<=RULE_REAL)||LA48_0==20||LA48_0==46||LA48_0==50||LA48_0==62||LA48_0==76||(LA48_0>=79 && LA48_0<=84)||(LA48_0>=86 && LA48_0<=91)) ) {
                 alt48=1;
             }
             switch (alt48) {
@@ -20281,7 +20280,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getRightParenthesisKeyword_1_2_2_1_3()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getRightParenthesisKeyword_1_2_2_1_3()); 
             }
@@ -20316,7 +20315,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6066:1: ( rule__Expression__Group_1_2_2_1_2__0__Impl rule__Expression__Group_1_2_2_1_2__1 )
             // InternalAle.g:6067:2: rule__Expression__Group_1_2_2_1_2__0__Impl rule__Expression__Group_1_2_2_1_2__1
             {
-            pushFollow(FOLLOW_16);
+            pushFollow(FOLLOW_15);
             rule__Expression__Group_1_2_2_1_2__0__Impl();
 
             state._fsp--;
@@ -20450,7 +20449,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt49=2;
                 int LA49_0 = input.LA(1);
 
-                if ( (LA49_0==50) ) {
+                if ( (LA49_0==49) ) {
                     alt49=1;
                 }
 
@@ -20459,7 +20458,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:6107:3: rule__Expression__Group_1_2_2_1_2_1__0
             	    {
-            	    pushFollow(FOLLOW_17);
+            	    pushFollow(FOLLOW_16);
             	    rule__Expression__Group_1_2_2_1_2_1__0();
 
             	    state._fsp--;
@@ -20507,7 +20506,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6120:1: ( rule__Expression__Group_1_2_2_1_2_1__0__Impl rule__Expression__Group_1_2_2_1_2_1__1 )
             // InternalAle.g:6121:2: rule__Expression__Group_1_2_2_1_2_1__0__Impl rule__Expression__Group_1_2_2_1_2_1__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_2_2_1_2_1__0__Impl();
 
             state._fsp--;
@@ -20551,7 +20550,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getCommaKeyword_1_2_2_1_2_1_0()); 
             }
-            match(input,50,FOLLOW_2); if (state.failed) return ;
+            match(input,49,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getCommaKeyword_1_2_2_1_2_1_0()); 
             }
@@ -20670,7 +20669,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6174:1: ( rule__Expression__Group_1_3__0__Impl rule__Expression__Group_1_3__1 )
             // InternalAle.g:6175:2: rule__Expression__Group_1_3__0__Impl rule__Expression__Group_1_3__1
             {
-            pushFollow(FOLLOW_53);
+            pushFollow(FOLLOW_52);
             rule__Expression__Group_1_3__0__Impl();
 
             state._fsp--;
@@ -20749,7 +20748,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6201:1: ( rule__Expression__Group_1_3__1__Impl rule__Expression__Group_1_3__2 )
             // InternalAle.g:6202:2: rule__Expression__Group_1_3__1__Impl rule__Expression__Group_1_3__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_3__1__Impl();
 
             state._fsp--;
@@ -20912,7 +20911,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6255:1: ( rule__Expression__Group_1_4__0__Impl rule__Expression__Group_1_4__1 )
             // InternalAle.g:6256:2: rule__Expression__Group_1_4__0__Impl rule__Expression__Group_1_4__1
             {
-            pushFollow(FOLLOW_54);
+            pushFollow(FOLLOW_53);
             rule__Expression__Group_1_4__0__Impl();
 
             state._fsp--;
@@ -20991,7 +20990,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6282:1: ( rule__Expression__Group_1_4__1__Impl rule__Expression__Group_1_4__2 )
             // InternalAle.g:6283:2: rule__Expression__Group_1_4__1__Impl rule__Expression__Group_1_4__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_4__1__Impl();
 
             state._fsp--;
@@ -21158,7 +21157,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6336:1: ( rule__Expression__Group_1_5__0__Impl rule__Expression__Group_1_5__1 )
             // InternalAle.g:6337:2: rule__Expression__Group_1_5__0__Impl rule__Expression__Group_1_5__1
             {
-            pushFollow(FOLLOW_55);
+            pushFollow(FOLLOW_54);
             rule__Expression__Group_1_5__0__Impl();
 
             state._fsp--;
@@ -21237,7 +21236,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6363:1: ( rule__Expression__Group_1_5__1__Impl rule__Expression__Group_1_5__2 )
             // InternalAle.g:6364:2: rule__Expression__Group_1_5__1__Impl rule__Expression__Group_1_5__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_5__1__Impl();
 
             state._fsp--;
@@ -21404,7 +21403,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6417:1: ( rule__Expression__Group_1_6__0__Impl rule__Expression__Group_1_6__1 )
             // InternalAle.g:6418:2: rule__Expression__Group_1_6__0__Impl rule__Expression__Group_1_6__1
             {
-            pushFollow(FOLLOW_56);
+            pushFollow(FOLLOW_55);
             rule__Expression__Group_1_6__0__Impl();
 
             state._fsp--;
@@ -21483,7 +21482,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6444:1: ( rule__Expression__Group_1_6__1__Impl rule__Expression__Group_1_6__2 )
             // InternalAle.g:6445:2: rule__Expression__Group_1_6__1__Impl rule__Expression__Group_1_6__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_6__1__Impl();
 
             state._fsp--;
@@ -21527,7 +21526,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getAndKeyword_1_6_1()); 
             }
-            match(input,73,FOLLOW_2); if (state.failed) return ;
+            match(input,72,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getAndKeyword_1_6_1()); 
             }
@@ -21646,7 +21645,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6498:1: ( rule__Expression__Group_1_7__0__Impl rule__Expression__Group_1_7__1 )
             // InternalAle.g:6499:2: rule__Expression__Group_1_7__0__Impl rule__Expression__Group_1_7__1
             {
-            pushFollow(FOLLOW_57);
+            pushFollow(FOLLOW_56);
             rule__Expression__Group_1_7__0__Impl();
 
             state._fsp--;
@@ -21725,7 +21724,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6525:1: ( rule__Expression__Group_1_7__1__Impl rule__Expression__Group_1_7__2 )
             // InternalAle.g:6526:2: rule__Expression__Group_1_7__1__Impl rule__Expression__Group_1_7__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_7__1__Impl();
 
             state._fsp--;
@@ -21769,7 +21768,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getOrKeyword_1_7_1()); 
             }
-            match(input,74,FOLLOW_2); if (state.failed) return ;
+            match(input,73,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getOrKeyword_1_7_1()); 
             }
@@ -21888,7 +21887,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6579:1: ( rule__Expression__Group_1_8__0__Impl rule__Expression__Group_1_8__1 )
             // InternalAle.g:6580:2: rule__Expression__Group_1_8__0__Impl rule__Expression__Group_1_8__1
             {
-            pushFollow(FOLLOW_58);
+            pushFollow(FOLLOW_57);
             rule__Expression__Group_1_8__0__Impl();
 
             state._fsp--;
@@ -21967,7 +21966,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6606:1: ( rule__Expression__Group_1_8__1__Impl rule__Expression__Group_1_8__2 )
             // InternalAle.g:6607:2: rule__Expression__Group_1_8__1__Impl rule__Expression__Group_1_8__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_8__1__Impl();
 
             state._fsp--;
@@ -22011,7 +22010,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getXorKeyword_1_8_1()); 
             }
-            match(input,75,FOLLOW_2); if (state.failed) return ;
+            match(input,74,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getXorKeyword_1_8_1()); 
             }
@@ -22130,7 +22129,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6660:1: ( rule__Expression__Group_1_9__0__Impl rule__Expression__Group_1_9__1 )
             // InternalAle.g:6661:2: rule__Expression__Group_1_9__0__Impl rule__Expression__Group_1_9__1
             {
-            pushFollow(FOLLOW_45);
+            pushFollow(FOLLOW_44);
             rule__Expression__Group_1_9__0__Impl();
 
             state._fsp--;
@@ -22209,7 +22208,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6687:1: ( rule__Expression__Group_1_9__1__Impl rule__Expression__Group_1_9__2 )
             // InternalAle.g:6688:2: rule__Expression__Group_1_9__1__Impl rule__Expression__Group_1_9__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Expression__Group_1_9__1__Impl();
 
             state._fsp--;
@@ -22253,7 +22252,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExpressionAccess().getImplieKeyword_1_9_1()); 
             }
-            match(input,76,FOLLOW_2); if (state.failed) return ;
+            match(input,75,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getExpressionAccess().getImplieKeyword_1_9_1()); 
             }
@@ -22372,7 +22371,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6741:1: ( rule__NonLeftRecExpression__Group_0__0__Impl rule__NonLeftRecExpression__Group_0__1 )
             // InternalAle.g:6742:2: rule__NonLeftRecExpression__Group_0__0__Impl rule__NonLeftRecExpression__Group_0__1
             {
-            pushFollow(FOLLOW_59);
+            pushFollow(FOLLOW_58);
             rule__NonLeftRecExpression__Group_0__0__Impl();
 
             state._fsp--;
@@ -22451,7 +22450,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6768:1: ( rule__NonLeftRecExpression__Group_0__1__Impl rule__NonLeftRecExpression__Group_0__2 )
             // InternalAle.g:6769:2: rule__NonLeftRecExpression__Group_0__1__Impl rule__NonLeftRecExpression__Group_0__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__NonLeftRecExpression__Group_0__1__Impl();
 
             state._fsp--;
@@ -22495,7 +22494,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getNotKeyword_0_1()); 
             }
-            match(input,77,FOLLOW_2); if (state.failed) return ;
+            match(input,76,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getNotKeyword_0_1()); 
             }
@@ -22614,7 +22613,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6822:1: ( rule__NonLeftRecExpression__Group_1__0__Impl rule__NonLeftRecExpression__Group_1__1 )
             // InternalAle.g:6823:2: rule__NonLeftRecExpression__Group_1__0__Impl rule__NonLeftRecExpression__Group_1__1
             {
-            pushFollow(FOLLOW_60);
+            pushFollow(FOLLOW_59);
             rule__NonLeftRecExpression__Group_1__0__Impl();
 
             state._fsp--;
@@ -22693,7 +22692,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6849:1: ( rule__NonLeftRecExpression__Group_1__1__Impl rule__NonLeftRecExpression__Group_1__2 )
             // InternalAle.g:6850:2: rule__NonLeftRecExpression__Group_1__1__Impl rule__NonLeftRecExpression__Group_1__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__NonLeftRecExpression__Group_1__1__Impl();
 
             state._fsp--;
@@ -23019,7 +23018,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:6957:1: ( rule__NonLeftRecExpression__Group_3__0__Impl rule__NonLeftRecExpression__Group_3__1 )
             // InternalAle.g:6958:2: rule__NonLeftRecExpression__Group_3__0__Impl rule__NonLeftRecExpression__Group_3__1
             {
-            pushFollow(FOLLOW_61);
+            pushFollow(FOLLOW_60);
             rule__NonLeftRecExpression__Group_3__0__Impl();
 
             state._fsp--;
@@ -23182,7 +23181,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7011:1: ( rule__NonLeftRecExpression__Group_4__0__Impl rule__NonLeftRecExpression__Group_4__1 )
             // InternalAle.g:7012:2: rule__NonLeftRecExpression__Group_4__0__Impl rule__NonLeftRecExpression__Group_4__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__NonLeftRecExpression__Group_4__0__Impl();
 
             state._fsp--;
@@ -23226,7 +23225,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getLeftParenthesisKeyword_4_0()); 
             }
-            match(input,51,FOLLOW_2); if (state.failed) return ;
+            match(input,50,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getLeftParenthesisKeyword_4_0()); 
             }
@@ -23261,7 +23260,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7038:1: ( rule__NonLeftRecExpression__Group_4__1__Impl rule__NonLeftRecExpression__Group_4__2 )
             // InternalAle.g:7039:2: rule__NonLeftRecExpression__Group_4__1__Impl rule__NonLeftRecExpression__Group_4__2
             {
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_32);
             rule__NonLeftRecExpression__Group_4__1__Impl();
 
             state._fsp--;
@@ -23383,7 +23382,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getRightParenthesisKeyword_4_2()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getRightParenthesisKeyword_4_2()); 
             }
@@ -23418,7 +23417,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7092:1: ( rule__NonLeftRecExpression__Group_5__0__Impl rule__NonLeftRecExpression__Group_5__1 )
             // InternalAle.g:7093:2: rule__NonLeftRecExpression__Group_5__0__Impl rule__NonLeftRecExpression__Group_5__1
             {
-            pushFollow(FOLLOW_62);
+            pushFollow(FOLLOW_61);
             rule__NonLeftRecExpression__Group_5__0__Impl();
 
             state._fsp--;
@@ -23497,7 +23496,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7119:1: ( rule__NonLeftRecExpression__Group_5__1__Impl rule__NonLeftRecExpression__Group_5__2 )
             // InternalAle.g:7120:2: rule__NonLeftRecExpression__Group_5__1__Impl rule__NonLeftRecExpression__Group_5__2
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__NonLeftRecExpression__Group_5__1__Impl();
 
             state._fsp--;
@@ -23541,7 +23540,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getIfKeyword_5_1()); 
             }
-            match(input,63,FOLLOW_2); if (state.failed) return ;
+            match(input,62,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getIfKeyword_5_1()); 
             }
@@ -23576,7 +23575,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7146:1: ( rule__NonLeftRecExpression__Group_5__2__Impl rule__NonLeftRecExpression__Group_5__3 )
             // InternalAle.g:7147:2: rule__NonLeftRecExpression__Group_5__2__Impl rule__NonLeftRecExpression__Group_5__3
             {
-            pushFollow(FOLLOW_63);
+            pushFollow(FOLLOW_62);
             rule__NonLeftRecExpression__Group_5__2__Impl();
 
             state._fsp--;
@@ -23665,7 +23664,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7173:1: ( rule__NonLeftRecExpression__Group_5__3__Impl rule__NonLeftRecExpression__Group_5__4 )
             // InternalAle.g:7174:2: rule__NonLeftRecExpression__Group_5__3__Impl rule__NonLeftRecExpression__Group_5__4
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__NonLeftRecExpression__Group_5__3__Impl();
 
             state._fsp--;
@@ -23709,7 +23708,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getThenKeyword_5_3()); 
             }
-            match(input,78,FOLLOW_2); if (state.failed) return ;
+            match(input,77,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getThenKeyword_5_3()); 
             }
@@ -23744,7 +23743,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7200:1: ( rule__NonLeftRecExpression__Group_5__4__Impl rule__NonLeftRecExpression__Group_5__5 )
             // InternalAle.g:7201:2: rule__NonLeftRecExpression__Group_5__4__Impl rule__NonLeftRecExpression__Group_5__5
             {
-            pushFollow(FOLLOW_39);
+            pushFollow(FOLLOW_38);
             rule__NonLeftRecExpression__Group_5__4__Impl();
 
             state._fsp--;
@@ -23833,7 +23832,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7227:1: ( rule__NonLeftRecExpression__Group_5__5__Impl rule__NonLeftRecExpression__Group_5__6 )
             // InternalAle.g:7228:2: rule__NonLeftRecExpression__Group_5__5__Impl rule__NonLeftRecExpression__Group_5__6
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__NonLeftRecExpression__Group_5__5__Impl();
 
             state._fsp--;
@@ -23877,7 +23876,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getElseKeyword_5_5()); 
             }
-            match(input,64,FOLLOW_2); if (state.failed) return ;
+            match(input,63,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getElseKeyword_5_5()); 
             }
@@ -23912,7 +23911,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7254:1: ( rule__NonLeftRecExpression__Group_5__6__Impl rule__NonLeftRecExpression__Group_5__7 )
             // InternalAle.g:7255:2: rule__NonLeftRecExpression__Group_5__6__Impl rule__NonLeftRecExpression__Group_5__7
             {
-            pushFollow(FOLLOW_64);
+            pushFollow(FOLLOW_63);
             rule__NonLeftRecExpression__Group_5__6__Impl();
 
             state._fsp--;
@@ -24040,7 +24039,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getEndifKeyword_5_7()); 
             }
-            match(input,79,FOLLOW_2); if (state.failed) return ;
+            match(input,78,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getEndifKeyword_5_7()); 
             }
@@ -24075,7 +24074,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7308:1: ( rule__NonLeftRecExpression__Group_6__0__Impl rule__NonLeftRecExpression__Group_6__1 )
             // InternalAle.g:7309:2: rule__NonLeftRecExpression__Group_6__0__Impl rule__NonLeftRecExpression__Group_6__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__NonLeftRecExpression__Group_6__0__Impl();
 
             state._fsp--;
@@ -24198,7 +24197,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getLetKeyword_6_1()); 
             }
-            match(input,80,FOLLOW_2); if (state.failed) return ;
+            match(input,79,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getLetKeyword_6_1()); 
             }
@@ -24233,7 +24232,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7362:1: ( rule__NonLeftRecExpression__Group_6__2__Impl rule__NonLeftRecExpression__Group_6__3 )
             // InternalAle.g:7363:2: rule__NonLeftRecExpression__Group_6__2__Impl rule__NonLeftRecExpression__Group_6__3
             {
-            pushFollow(FOLLOW_65);
+            pushFollow(FOLLOW_64);
             rule__NonLeftRecExpression__Group_6__2__Impl();
 
             state._fsp--;
@@ -24322,7 +24321,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7389:1: ( rule__NonLeftRecExpression__Group_6__3__Impl rule__NonLeftRecExpression__Group_6__4 )
             // InternalAle.g:7390:2: rule__NonLeftRecExpression__Group_6__3__Impl rule__NonLeftRecExpression__Group_6__4
             {
-            pushFollow(FOLLOW_65);
+            pushFollow(FOLLOW_64);
             rule__NonLeftRecExpression__Group_6__3__Impl();
 
             state._fsp--;
@@ -24372,7 +24371,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt50=2;
                 int LA50_0 = input.LA(1);
 
-                if ( (LA50_0==50) ) {
+                if ( (LA50_0==49) ) {
                     alt50=1;
                 }
 
@@ -24381,7 +24380,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:7404:3: rule__NonLeftRecExpression__Group_6_3__0
             	    {
-            	    pushFollow(FOLLOW_17);
+            	    pushFollow(FOLLOW_16);
             	    rule__NonLeftRecExpression__Group_6_3__0();
 
             	    state._fsp--;
@@ -24429,7 +24428,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7416:1: ( rule__NonLeftRecExpression__Group_6__4__Impl rule__NonLeftRecExpression__Group_6__5 )
             // InternalAle.g:7417:2: rule__NonLeftRecExpression__Group_6__4__Impl rule__NonLeftRecExpression__Group_6__5
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__NonLeftRecExpression__Group_6__4__Impl();
 
             state._fsp--;
@@ -24473,7 +24472,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getInKeyword_6_4()); 
             }
-            match(input,60,FOLLOW_2); if (state.failed) return ;
+            match(input,59,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getInKeyword_6_4()); 
             }
@@ -24636,7 +24635,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNonLeftRecExpressionAccess().getCommaKeyword_6_3_0()); 
             }
-            match(input,50,FOLLOW_2); if (state.failed) return ;
+            match(input,49,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getNonLeftRecExpressionAccess().getCommaKeyword_6_3_0()); 
             }
@@ -24755,7 +24754,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7524:1: ( rule__Binding__Group__0__Impl rule__Binding__Group__1 )
             // InternalAle.g:7525:2: rule__Binding__Group__0__Impl rule__Binding__Group__1
             {
-            pushFollow(FOLLOW_66);
+            pushFollow(FOLLOW_65);
             rule__Binding__Group__0__Impl();
 
             state._fsp--;
@@ -24844,7 +24843,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7551:1: ( rule__Binding__Group__1__Impl rule__Binding__Group__2 )
             // InternalAle.g:7552:2: rule__Binding__Group__1__Impl rule__Binding__Group__2
             {
-            pushFollow(FOLLOW_66);
+            pushFollow(FOLLOW_65);
             rule__Binding__Group__1__Impl();
 
             state._fsp--;
@@ -24892,7 +24891,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt51=2;
             int LA51_0 = input.LA(1);
 
-            if ( (LA51_0==68) ) {
+            if ( (LA51_0==67) ) {
                 alt51=1;
             }
             switch (alt51) {
@@ -24944,7 +24943,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7578:1: ( rule__Binding__Group__2__Impl rule__Binding__Group__3 )
             // InternalAle.g:7579:2: rule__Binding__Group__2__Impl rule__Binding__Group__3
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Binding__Group__2__Impl();
 
             state._fsp--;
@@ -25107,7 +25106,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7632:1: ( rule__Binding__Group_1__0__Impl rule__Binding__Group_1__1 )
             // InternalAle.g:7633:2: rule__Binding__Group_1__0__Impl rule__Binding__Group_1__1
             {
-            pushFollow(FOLLOW_52);
+            pushFollow(FOLLOW_51);
             rule__Binding__Group_1__0__Impl();
 
             state._fsp--;
@@ -25151,7 +25150,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBindingAccess().getColonKeyword_1_0()); 
             }
-            match(input,68,FOLLOW_2); if (state.failed) return ;
+            match(input,67,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getBindingAccess().getColonKeyword_1_0()); 
             }
@@ -25270,7 +25269,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7686:1: ( rule__Literal__Group_0__0__Impl rule__Literal__Group_0__1 )
             // InternalAle.g:7687:2: rule__Literal__Group_0__0__Impl rule__Literal__Group_0__1
             {
-            pushFollow(FOLLOW_67);
+            pushFollow(FOLLOW_66);
             rule__Literal__Group_0__0__Impl();
 
             state._fsp--;
@@ -25433,7 +25432,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7740:1: ( rule__Literal__Group_1__0__Impl rule__Literal__Group_1__1 )
             // InternalAle.g:7741:2: rule__Literal__Group_1__0__Impl rule__Literal__Group_1__1
             {
-            pushFollow(FOLLOW_34);
+            pushFollow(FOLLOW_33);
             rule__Literal__Group_1__0__Impl();
 
             state._fsp--;
@@ -25596,7 +25595,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7794:1: ( rule__Literal__Group_2__0__Impl rule__Literal__Group_2__1 )
             // InternalAle.g:7795:2: rule__Literal__Group_2__0__Impl rule__Literal__Group_2__1
             {
-            pushFollow(FOLLOW_68);
+            pushFollow(FOLLOW_67);
             rule__Literal__Group_2__0__Impl();
 
             state._fsp--;
@@ -25759,7 +25758,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7848:1: ( rule__Literal__Group_3__0__Impl rule__Literal__Group_3__1 )
             // InternalAle.g:7849:2: rule__Literal__Group_3__0__Impl rule__Literal__Group_3__1
             {
-            pushFollow(FOLLOW_69);
+            pushFollow(FOLLOW_68);
             rule__Literal__Group_3__0__Impl();
 
             state._fsp--;
@@ -25877,7 +25876,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getTrueKeyword_3_1()); 
             }
-            match(input,81,FOLLOW_2); if (state.failed) return ;
+            match(input,80,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getTrueKeyword_3_1()); 
             }
@@ -25912,7 +25911,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7902:1: ( rule__Literal__Group_4__0__Impl rule__Literal__Group_4__1 )
             // InternalAle.g:7903:2: rule__Literal__Group_4__0__Impl rule__Literal__Group_4__1
             {
-            pushFollow(FOLLOW_70);
+            pushFollow(FOLLOW_69);
             rule__Literal__Group_4__0__Impl();
 
             state._fsp--;
@@ -26030,7 +26029,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getFalseKeyword_4_1()); 
             }
-            match(input,82,FOLLOW_2); if (state.failed) return ;
+            match(input,81,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getFalseKeyword_4_1()); 
             }
@@ -26065,7 +26064,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:7956:1: ( rule__Literal__Group_5__0__Impl rule__Literal__Group_5__1 )
             // InternalAle.g:7957:2: rule__Literal__Group_5__0__Impl rule__Literal__Group_5__1
             {
-            pushFollow(FOLLOW_71);
+            pushFollow(FOLLOW_70);
             rule__Literal__Group_5__0__Impl();
 
             state._fsp--;
@@ -26183,7 +26182,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getNullKeyword_5_1()); 
             }
-            match(input,83,FOLLOW_2); if (state.failed) return ;
+            match(input,82,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getNullKeyword_5_1()); 
             }
@@ -26218,7 +26217,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8010:1: ( rule__Literal__Group_6__0__Impl rule__Literal__Group_6__1 )
             // InternalAle.g:8011:2: rule__Literal__Group_6__0__Impl rule__Literal__Group_6__1
             {
-            pushFollow(FOLLOW_72);
+            pushFollow(FOLLOW_71);
             rule__Literal__Group_6__0__Impl();
 
             state._fsp--;
@@ -26297,7 +26296,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8037:1: ( rule__Literal__Group_6__1__Impl rule__Literal__Group_6__2 )
             // InternalAle.g:8038:2: rule__Literal__Group_6__1__Impl rule__Literal__Group_6__2
             {
-            pushFollow(FOLLOW_73);
+            pushFollow(FOLLOW_72);
             rule__Literal__Group_6__1__Impl();
 
             state._fsp--;
@@ -26341,7 +26340,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getSequenceKeyword_6_1()); 
             }
-            match(input,84,FOLLOW_2); if (state.failed) return ;
+            match(input,83,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getSequenceKeyword_6_1()); 
             }
@@ -26376,7 +26375,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8064:1: ( rule__Literal__Group_6__2__Impl rule__Literal__Group_6__3 )
             // InternalAle.g:8065:2: rule__Literal__Group_6__2__Impl rule__Literal__Group_6__3
             {
-            pushFollow(FOLLOW_73);
+            pushFollow(FOLLOW_72);
             rule__Literal__Group_6__2__Impl();
 
             state._fsp--;
@@ -26424,7 +26423,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt52=2;
             int LA52_0 = input.LA(1);
 
-            if ( (LA52_0==RULE_INT||(LA52_0>=RULE_IDENT && LA52_0<=RULE_REAL)||LA52_0==20||LA52_0==47||LA52_0==51||LA52_0==63||LA52_0==77||(LA52_0>=80 && LA52_0<=85)||(LA52_0>=87 && LA52_0<=92)) ) {
+            if ( (LA52_0==RULE_INT||(LA52_0>=RULE_IDENT && LA52_0<=RULE_REAL)||LA52_0==20||LA52_0==46||LA52_0==50||LA52_0==62||LA52_0==76||(LA52_0>=79 && LA52_0<=84)||(LA52_0>=86 && LA52_0<=91)) ) {
                 alt52=1;
             }
             switch (alt52) {
@@ -26515,7 +26514,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getRightCurlyBracketKeyword_6_3()); 
             }
-            match(input,48,FOLLOW_2); if (state.failed) return ;
+            match(input,47,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getRightCurlyBracketKeyword_6_3()); 
             }
@@ -26550,7 +26549,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8118:1: ( rule__Literal__Group_6_2__0__Impl rule__Literal__Group_6_2__1 )
             // InternalAle.g:8119:2: rule__Literal__Group_6_2__0__Impl rule__Literal__Group_6_2__1
             {
-            pushFollow(FOLLOW_16);
+            pushFollow(FOLLOW_15);
             rule__Literal__Group_6_2__0__Impl();
 
             state._fsp--;
@@ -26684,7 +26683,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt53=2;
                 int LA53_0 = input.LA(1);
 
-                if ( (LA53_0==50) ) {
+                if ( (LA53_0==49) ) {
                     alt53=1;
                 }
 
@@ -26693,7 +26692,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:8159:3: rule__Literal__Group_6_2_1__0
             	    {
-            	    pushFollow(FOLLOW_17);
+            	    pushFollow(FOLLOW_16);
             	    rule__Literal__Group_6_2_1__0();
 
             	    state._fsp--;
@@ -26741,7 +26740,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8172:1: ( rule__Literal__Group_6_2_1__0__Impl rule__Literal__Group_6_2_1__1 )
             // InternalAle.g:8173:2: rule__Literal__Group_6_2_1__0__Impl rule__Literal__Group_6_2_1__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Literal__Group_6_2_1__0__Impl();
 
             state._fsp--;
@@ -26785,7 +26784,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getCommaKeyword_6_2_1_0()); 
             }
-            match(input,50,FOLLOW_2); if (state.failed) return ;
+            match(input,49,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getCommaKeyword_6_2_1_0()); 
             }
@@ -26904,7 +26903,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8226:1: ( rule__Literal__Group_7__0__Impl rule__Literal__Group_7__1 )
             // InternalAle.g:8227:2: rule__Literal__Group_7__0__Impl rule__Literal__Group_7__1
             {
-            pushFollow(FOLLOW_74);
+            pushFollow(FOLLOW_73);
             rule__Literal__Group_7__0__Impl();
 
             state._fsp--;
@@ -26983,7 +26982,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8253:1: ( rule__Literal__Group_7__1__Impl rule__Literal__Group_7__2 )
             // InternalAle.g:8254:2: rule__Literal__Group_7__1__Impl rule__Literal__Group_7__2
             {
-            pushFollow(FOLLOW_73);
+            pushFollow(FOLLOW_72);
             rule__Literal__Group_7__1__Impl();
 
             state._fsp--;
@@ -27027,7 +27026,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getOrderedSetKeyword_7_1()); 
             }
-            match(input,85,FOLLOW_2); if (state.failed) return ;
+            match(input,84,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getOrderedSetKeyword_7_1()); 
             }
@@ -27062,7 +27061,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8280:1: ( rule__Literal__Group_7__2__Impl rule__Literal__Group_7__3 )
             // InternalAle.g:8281:2: rule__Literal__Group_7__2__Impl rule__Literal__Group_7__3
             {
-            pushFollow(FOLLOW_73);
+            pushFollow(FOLLOW_72);
             rule__Literal__Group_7__2__Impl();
 
             state._fsp--;
@@ -27110,7 +27109,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             int alt54=2;
             int LA54_0 = input.LA(1);
 
-            if ( (LA54_0==RULE_INT||(LA54_0>=RULE_IDENT && LA54_0<=RULE_REAL)||LA54_0==20||LA54_0==47||LA54_0==51||LA54_0==63||LA54_0==77||(LA54_0>=80 && LA54_0<=85)||(LA54_0>=87 && LA54_0<=92)) ) {
+            if ( (LA54_0==RULE_INT||(LA54_0>=RULE_IDENT && LA54_0<=RULE_REAL)||LA54_0==20||LA54_0==46||LA54_0==50||LA54_0==62||LA54_0==76||(LA54_0>=79 && LA54_0<=84)||(LA54_0>=86 && LA54_0<=91)) ) {
                 alt54=1;
             }
             switch (alt54) {
@@ -27201,7 +27200,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getRightCurlyBracketKeyword_7_3()); 
             }
-            match(input,48,FOLLOW_2); if (state.failed) return ;
+            match(input,47,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getRightCurlyBracketKeyword_7_3()); 
             }
@@ -27236,7 +27235,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8334:1: ( rule__Literal__Group_7_2__0__Impl rule__Literal__Group_7_2__1 )
             // InternalAle.g:8335:2: rule__Literal__Group_7_2__0__Impl rule__Literal__Group_7_2__1
             {
-            pushFollow(FOLLOW_16);
+            pushFollow(FOLLOW_15);
             rule__Literal__Group_7_2__0__Impl();
 
             state._fsp--;
@@ -27370,7 +27369,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt55=2;
                 int LA55_0 = input.LA(1);
 
-                if ( (LA55_0==50) ) {
+                if ( (LA55_0==49) ) {
                     alt55=1;
                 }
 
@@ -27379,7 +27378,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:8375:3: rule__Literal__Group_7_2_1__0
             	    {
-            	    pushFollow(FOLLOW_17);
+            	    pushFollow(FOLLOW_16);
             	    rule__Literal__Group_7_2_1__0();
 
             	    state._fsp--;
@@ -27427,7 +27426,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8388:1: ( rule__Literal__Group_7_2_1__0__Impl rule__Literal__Group_7_2_1__1 )
             // InternalAle.g:8389:2: rule__Literal__Group_7_2_1__0__Impl rule__Literal__Group_7_2_1__1
             {
-            pushFollow(FOLLOW_25);
+            pushFollow(FOLLOW_24);
             rule__Literal__Group_7_2_1__0__Impl();
 
             state._fsp--;
@@ -27471,7 +27470,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getCommaKeyword_7_2_1_0()); 
             }
-            match(input,50,FOLLOW_2); if (state.failed) return ;
+            match(input,49,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getCommaKeyword_7_2_1_0()); 
             }
@@ -27669,7 +27668,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8469:1: ( rule__Literal__Group_8__1__Impl rule__Literal__Group_8__2 )
             // InternalAle.g:8470:2: rule__Literal__Group_8__1__Impl rule__Literal__Group_8__2
             {
-            pushFollow(FOLLOW_75);
+            pushFollow(FOLLOW_74);
             rule__Literal__Group_8__1__Impl();
 
             state._fsp--;
@@ -27792,7 +27791,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getColonColonKeyword_8_2()); 
             }
-            match(input,86,FOLLOW_2); if (state.failed) return ;
+            match(input,85,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getColonColonKeyword_8_2()); 
             }
@@ -27827,7 +27826,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8523:1: ( rule__Literal__Group_8__3__Impl rule__Literal__Group_8__4 )
             // InternalAle.g:8524:2: rule__Literal__Group_8__3__Impl rule__Literal__Group_8__4
             {
-            pushFollow(FOLLOW_75);
+            pushFollow(FOLLOW_74);
             rule__Literal__Group_8__3__Impl();
 
             state._fsp--;
@@ -27950,7 +27949,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLiteralAccess().getColonColonKeyword_8_4()); 
             }
-            match(input,86,FOLLOW_2); if (state.failed) return ;
+            match(input,85,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getLiteralAccess().getColonColonKeyword_8_4()); 
             }
@@ -28059,7 +28058,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8604:1: ( rule__TypeLiteral__Group_0__0__Impl rule__TypeLiteral__Group_0__1 )
             // InternalAle.g:8605:2: rule__TypeLiteral__Group_0__0__Impl rule__TypeLiteral__Group_0__1
             {
-            pushFollow(FOLLOW_76);
+            pushFollow(FOLLOW_75);
             rule__TypeLiteral__Group_0__0__Impl();
 
             state._fsp--;
@@ -28177,7 +28176,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getStringKeyword_0_1()); 
             }
-            match(input,87,FOLLOW_2); if (state.failed) return ;
+            match(input,86,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getStringKeyword_0_1()); 
             }
@@ -28212,7 +28211,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8658:1: ( rule__TypeLiteral__Group_1__0__Impl rule__TypeLiteral__Group_1__1 )
             // InternalAle.g:8659:2: rule__TypeLiteral__Group_1__0__Impl rule__TypeLiteral__Group_1__1
             {
-            pushFollow(FOLLOW_77);
+            pushFollow(FOLLOW_76);
             rule__TypeLiteral__Group_1__0__Impl();
 
             state._fsp--;
@@ -28330,7 +28329,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getIntegerKeyword_1_1()); 
             }
-            match(input,88,FOLLOW_2); if (state.failed) return ;
+            match(input,87,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getIntegerKeyword_1_1()); 
             }
@@ -28365,7 +28364,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8712:1: ( rule__TypeLiteral__Group_2__0__Impl rule__TypeLiteral__Group_2__1 )
             // InternalAle.g:8713:2: rule__TypeLiteral__Group_2__0__Impl rule__TypeLiteral__Group_2__1
             {
-            pushFollow(FOLLOW_78);
+            pushFollow(FOLLOW_77);
             rule__TypeLiteral__Group_2__0__Impl();
 
             state._fsp--;
@@ -28483,7 +28482,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getRealKeyword_2_1()); 
             }
-            match(input,89,FOLLOW_2); if (state.failed) return ;
+            match(input,88,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getRealKeyword_2_1()); 
             }
@@ -28518,7 +28517,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8766:1: ( rule__TypeLiteral__Group_3__0__Impl rule__TypeLiteral__Group_3__1 )
             // InternalAle.g:8767:2: rule__TypeLiteral__Group_3__0__Impl rule__TypeLiteral__Group_3__1
             {
-            pushFollow(FOLLOW_79);
+            pushFollow(FOLLOW_78);
             rule__TypeLiteral__Group_3__0__Impl();
 
             state._fsp--;
@@ -28636,7 +28635,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getBooleanKeyword_3_1()); 
             }
-            match(input,90,FOLLOW_2); if (state.failed) return ;
+            match(input,89,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getBooleanKeyword_3_1()); 
             }
@@ -28671,7 +28670,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8820:1: ( rule__TypeLiteral__Group_4__0__Impl rule__TypeLiteral__Group_4__1 )
             // InternalAle.g:8821:2: rule__TypeLiteral__Group_4__0__Impl rule__TypeLiteral__Group_4__1
             {
-            pushFollow(FOLLOW_80);
+            pushFollow(FOLLOW_79);
             rule__TypeLiteral__Group_4__0__Impl();
 
             state._fsp--;
@@ -28750,7 +28749,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8847:1: ( rule__TypeLiteral__Group_4__1__Impl rule__TypeLiteral__Group_4__2 )
             // InternalAle.g:8848:2: rule__TypeLiteral__Group_4__1__Impl rule__TypeLiteral__Group_4__2
             {
-            pushFollow(FOLLOW_52);
+            pushFollow(FOLLOW_51);
             rule__TypeLiteral__Group_4__1__Impl();
 
             state._fsp--;
@@ -28794,7 +28793,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getSequenceKeyword_4_1()); 
             }
-            match(input,91,FOLLOW_2); if (state.failed) return ;
+            match(input,90,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getSequenceKeyword_4_1()); 
             }
@@ -28829,7 +28828,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8874:1: ( rule__TypeLiteral__Group_4__2__Impl rule__TypeLiteral__Group_4__3 )
             // InternalAle.g:8875:2: rule__TypeLiteral__Group_4__2__Impl rule__TypeLiteral__Group_4__3
             {
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_32);
             rule__TypeLiteral__Group_4__2__Impl();
 
             state._fsp--;
@@ -28957,7 +28956,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getRightParenthesisKeyword_4_3()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getRightParenthesisKeyword_4_3()); 
             }
@@ -28992,7 +28991,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8928:1: ( rule__TypeLiteral__Group_5__0__Impl rule__TypeLiteral__Group_5__1 )
             // InternalAle.g:8929:2: rule__TypeLiteral__Group_5__0__Impl rule__TypeLiteral__Group_5__1
             {
-            pushFollow(FOLLOW_81);
+            pushFollow(FOLLOW_80);
             rule__TypeLiteral__Group_5__0__Impl();
 
             state._fsp--;
@@ -29071,7 +29070,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8955:1: ( rule__TypeLiteral__Group_5__1__Impl rule__TypeLiteral__Group_5__2 )
             // InternalAle.g:8956:2: rule__TypeLiteral__Group_5__1__Impl rule__TypeLiteral__Group_5__2
             {
-            pushFollow(FOLLOW_52);
+            pushFollow(FOLLOW_51);
             rule__TypeLiteral__Group_5__1__Impl();
 
             state._fsp--;
@@ -29115,7 +29114,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getOrderedSetKeyword_5_1()); 
             }
-            match(input,92,FOLLOW_2); if (state.failed) return ;
+            match(input,91,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getOrderedSetKeyword_5_1()); 
             }
@@ -29150,7 +29149,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:8982:1: ( rule__TypeLiteral__Group_5__2__Impl rule__TypeLiteral__Group_5__3 )
             // InternalAle.g:8983:2: rule__TypeLiteral__Group_5__2__Impl rule__TypeLiteral__Group_5__3
             {
-            pushFollow(FOLLOW_33);
+            pushFollow(FOLLOW_32);
             rule__TypeLiteral__Group_5__2__Impl();
 
             state._fsp--;
@@ -29278,7 +29277,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getRightParenthesisKeyword_5_3()); 
             }
-            match(input,52,FOLLOW_2); if (state.failed) return ;
+            match(input,51,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getRightParenthesisKeyword_5_3()); 
             }
@@ -29313,7 +29312,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:9036:1: ( rule__TypeLiteral__Group_7__0__Impl rule__TypeLiteral__Group_7__1 )
             // InternalAle.g:9037:2: rule__TypeLiteral__Group_7__0__Impl rule__TypeLiteral__Group_7__1
             {
-            pushFollow(FOLLOW_52);
+            pushFollow(FOLLOW_51);
             rule__TypeLiteral__Group_7__0__Impl();
 
             state._fsp--;
@@ -29436,7 +29435,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getLeftCurlyBracketKeyword_7_1()); 
             }
-            match(input,47,FOLLOW_2); if (state.failed) return ;
+            match(input,46,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getLeftCurlyBracketKeyword_7_1()); 
             }
@@ -29471,7 +29470,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:9090:1: ( rule__TypeLiteral__Group_7__2__Impl rule__TypeLiteral__Group_7__3 )
             // InternalAle.g:9091:2: rule__TypeLiteral__Group_7__2__Impl rule__TypeLiteral__Group_7__3
             {
-            pushFollow(FOLLOW_82);
+            pushFollow(FOLLOW_81);
             rule__TypeLiteral__Group_7__2__Impl();
 
             state._fsp--;
@@ -29560,7 +29559,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:9117:1: ( rule__TypeLiteral__Group_7__3__Impl rule__TypeLiteral__Group_7__4 )
             // InternalAle.g:9118:2: rule__TypeLiteral__Group_7__3__Impl rule__TypeLiteral__Group_7__4
             {
-            pushFollow(FOLLOW_82);
+            pushFollow(FOLLOW_81);
             rule__TypeLiteral__Group_7__3__Impl();
 
             state._fsp--;
@@ -29610,7 +29609,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt56=2;
                 int LA56_0 = input.LA(1);
 
-                if ( (LA56_0==72) ) {
+                if ( (LA56_0==71) ) {
                     alt56=1;
                 }
 
@@ -29619,7 +29618,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:9132:3: rule__TypeLiteral__Group_7_3__0
             	    {
-            	    pushFollow(FOLLOW_83);
+            	    pushFollow(FOLLOW_82);
             	    rule__TypeLiteral__Group_7_3__0();
 
             	    state._fsp--;
@@ -29706,7 +29705,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getRightCurlyBracketKeyword_7_4()); 
             }
-            match(input,48,FOLLOW_2); if (state.failed) return ;
+            match(input,47,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getRightCurlyBracketKeyword_7_4()); 
             }
@@ -29785,7 +29784,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypeLiteralAccess().getVerticalLineKeyword_7_3_0()); 
             }
-            match(input,72,FOLLOW_2); if (state.failed) return ;
+            match(input,71,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getTypeLiteralAccess().getVerticalLineKeyword_7_3_0()); 
             }
@@ -29983,7 +29982,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:9252:1: ( rule__ClassifierTypeRule__Group__1__Impl rule__ClassifierTypeRule__Group__2 )
             // InternalAle.g:9253:2: rule__ClassifierTypeRule__Group__1__Impl rule__ClassifierTypeRule__Group__2
             {
-            pushFollow(FOLLOW_75);
+            pushFollow(FOLLOW_74);
             rule__ClassifierTypeRule__Group__1__Impl();
 
             state._fsp--;
@@ -30106,7 +30105,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getClassifierTypeRuleAccess().getColonColonKeyword_2()); 
             }
-            match(input,86,FOLLOW_2); if (state.failed) return ;
+            match(input,85,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getClassifierTypeRuleAccess().getColonColonKeyword_2()); 
             }
@@ -30215,7 +30214,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:9333:1: ( rule__RQIdent__Group__0__Impl rule__RQIdent__Group__1 )
             // InternalAle.g:9334:2: rule__RQIdent__Group__0__Impl rule__RQIdent__Group__1
             {
-            pushFollow(FOLLOW_75);
+            pushFollow(FOLLOW_74);
             rule__RQIdent__Group__0__Impl();
 
             state._fsp--;
@@ -30339,7 +30338,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt57=2;
                 int LA57_0 = input.LA(1);
 
-                if ( (LA57_0==86) ) {
+                if ( (LA57_0==85) ) {
                     alt57=1;
                 }
 
@@ -30348,7 +30347,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:9374:3: rule__RQIdent__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_84);
+            	    pushFollow(FOLLOW_83);
             	    rule__RQIdent__Group_1__0();
 
             	    state._fsp--;
@@ -30440,7 +30439,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRQIdentAccess().getColonColonKeyword_1_0()); 
             }
-            match(input,86,FOLLOW_2); if (state.failed) return ;
+            match(input,85,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRQIdentAccess().getColonColonKeyword_1_0()); 
             }
@@ -30549,7 +30548,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             // InternalAle.g:9441:1: ( rule__RQualified__Group__0__Impl rule__RQualified__Group__1 )
             // InternalAle.g:9442:2: rule__RQualified__Group__0__Impl rule__RQualified__Group__1
             {
-            pushFollow(FOLLOW_47);
+            pushFollow(FOLLOW_46);
             rule__RQualified__Group__0__Impl();
 
             state._fsp--;
@@ -30673,7 +30672,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
                 int alt58=2;
                 int LA58_0 = input.LA(1);
 
-                if ( (LA58_0==70) ) {
+                if ( (LA58_0==69) ) {
                     alt58=1;
                 }
 
@@ -30682,7 +30681,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalAle.g:9482:3: rule__RQualified__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_85);
+            	    pushFollow(FOLLOW_84);
             	    rule__RQualified__Group_1__0();
 
             	    state._fsp--;
@@ -30774,7 +30773,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRQualifiedAccess().getFullStopKeyword_1_0()); 
             }
-            match(input,70,FOLLOW_2); if (state.failed) return ;
+            match(input,69,FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
                after(grammarAccess.getRQualifiedAccess().getFullStopKeyword_1_0()); 
             }
@@ -35889,11 +35888,11 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
     protected DFA44 dfa44 = new DFA44(this);
     static final String dfa_1s = "\33\uffff";
     static final String dfa_2s = "\1\4\25\0\5\uffff";
-    static final String dfa_3s = "\1\134\25\0\5\uffff";
+    static final String dfa_3s = "\1\133\25\0\5\uffff";
     static final String dfa_4s = "\26\uffff\1\5\1\1\1\2\1\3\1\4";
     static final String dfa_5s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24\5\uffff}>";
     static final String[] dfa_6s = {
-            "\1\14\1\uffff\1\7\1\13\1\15\13\uffff\1\12\32\uffff\1\10\3\uffff\1\23\13\uffff\1\24\2\uffff\1\26\12\uffff\1\11\2\uffff\1\25\1\16\1\17\1\20\1\21\1\22\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6",
+            "\1\14\1\uffff\1\7\1\13\1\15\13\uffff\1\12\31\uffff\1\10\3\uffff\1\23\13\uffff\1\24\2\uffff\1\26\12\uffff\1\11\2\uffff\1\25\1\16\1\17\1\20\1\21\1\22\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -36374,11 +36373,11 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
     }
     static final String dfa_7s = "\31\uffff";
     static final String dfa_8s = "\1\4\23\uffff\1\0\4\uffff";
-    static final String dfa_9s = "\1\134\23\uffff\1\0\4\uffff";
+    static final String dfa_9s = "\1\133\23\uffff\1\0\4\uffff";
     static final String dfa_10s = "\1\uffff\1\1\25\uffff\1\2\1\uffff";
     static final String dfa_11s = "\24\uffff\1\0\4\uffff}>";
     static final String[] dfa_12s = {
-            "\1\1\1\uffff\3\1\13\uffff\1\1\32\uffff\1\1\3\uffff\1\1\7\uffff\1\27\3\uffff\1\24\1\uffff\1\27\1\1\12\uffff\1\1\2\uffff\6\1\1\uffff\6\1",
+            "\1\1\1\uffff\3\1\13\uffff\1\1\31\uffff\1\1\3\uffff\1\1\7\uffff\1\27\3\uffff\1\24\1\uffff\1\27\1\1\12\uffff\1\1\2\uffff\6\1\1\uffff\6\1",
             "",
             "",
             "",
@@ -36502,11 +36501,11 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
     static final String dfa_13s = "\15\uffff";
     static final String dfa_14s = "\12\uffff\1\13\2\uffff";
     static final String dfa_15s = "\1\5\1\6\10\uffff\1\5\2\uffff";
-    static final String dfa_16s = "\1\114\1\6\10\uffff\1\134\2\uffff";
+    static final String dfa_16s = "\1\113\1\6\10\uffff\1\133\2\uffff";
     static final String dfa_17s = "\2\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\uffff\1\2\1\1";
     static final String dfa_18s = "\15\uffff}>";
     static final String[] dfa_19s = {
-            "\1\3\15\uffff\2\4\10\5\51\uffff\1\1\1\2\1\uffff\1\6\1\7\1\10\1\11",
+            "\1\3\15\uffff\2\4\10\5\50\uffff\1\1\1\2\1\uffff\1\6\1\7\1\10\1\11",
             "\1\12",
             "",
             "",
@@ -36516,7 +36515,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             "",
             "",
             "",
-            "\2\13\14\uffff\12\13\13\uffff\1\13\6\uffff\2\13\1\uffff\1\13\1\14\1\13\1\uffff\1\13\2\uffff\2\13\1\uffff\1\13\3\uffff\1\13\2\uffff\5\13\1\uffff\4\13\1\uffff\2\13\7\uffff\6\13",
+            "\2\13\14\uffff\12\13\13\uffff\1\13\5\uffff\2\13\1\uffff\1\13\1\14\1\13\1\uffff\1\13\2\uffff\2\13\1\uffff\1\13\3\uffff\1\13\2\uffff\5\13\1\uffff\4\13\1\uffff\2\13\7\uffff\6\13",
             "",
             ""
     };
@@ -36548,12 +36547,12 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
     }
     static final String dfa_20s = "\16\uffff";
     static final String dfa_21s = "\14\uffff\1\12\1\uffff";
-    static final String dfa_22s = "\1\4\10\uffff\1\126\1\uffff\1\6\1\5\1\uffff";
-    static final String dfa_23s = "\1\134\10\uffff\1\126\1\uffff\1\6\1\134\1\uffff";
+    static final String dfa_22s = "\1\4\10\uffff\1\125\1\uffff\1\6\1\5\1\uffff";
+    static final String dfa_23s = "\1\133\10\uffff\1\125\1\uffff\1\6\1\133\1\uffff";
     static final String dfa_24s = "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\uffff\1\12\2\uffff\1\11";
     static final String dfa_25s = "\16\uffff}>";
     static final String[] dfa_26s = {
-            "\1\2\1\uffff\1\11\1\1\1\3\46\uffff\1\12\41\uffff\1\4\1\5\1\6\1\7\1\10\1\uffff\6\12",
+            "\1\2\1\uffff\1\11\1\1\1\3\45\uffff\1\12\41\uffff\1\4\1\5\1\6\1\7\1\10\1\uffff\6\12",
             "",
             "",
             "",
@@ -36565,7 +36564,7 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
             "\1\13",
             "",
             "\1\14",
-            "\2\12\14\uffff\12\12\13\uffff\1\12\6\uffff\2\12\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\2\uffff\2\12\1\uffff\1\12\3\uffff\1\12\2\uffff\5\12\1\uffff\4\12\1\uffff\2\12\6\uffff\1\15\6\12",
+            "\2\12\14\uffff\12\12\13\uffff\1\12\5\uffff\2\12\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\2\uffff\2\12\1\uffff\1\12\3\uffff\1\12\2\uffff\5\12\1\uffff\4\12\1\uffff\2\12\6\uffff\1\15\6\12",
             ""
     };
 
@@ -36597,11 +36596,11 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
     static final String dfa_27s = "\24\uffff";
     static final String dfa_28s = "\1\1\23\uffff";
     static final String dfa_29s = "\1\5\1\uffff\21\0\1\uffff";
-    static final String dfa_30s = "\1\134\1\uffff\21\0\1\uffff";
+    static final String dfa_30s = "\1\133\1\uffff\21\0\1\uffff";
     static final String dfa_31s = "\1\uffff\1\2\21\uffff\1\1";
     static final String dfa_32s = "\2\uffff\1\10\1\14\1\11\1\17\1\12\1\7\1\16\1\3\1\6\1\15\1\0\1\4\1\1\1\2\1\13\1\5\1\20\1\uffff}>";
     static final String[] dfa_33s = {
-            "\1\4\1\1\14\uffff\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\13\uffff\1\1\6\uffff\2\1\1\uffff\1\1\1\uffff\1\1\1\uffff\1\1\2\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\1\2\1\3\1\uffff\1\17\1\20\1\21\1\22\1\uffff\2\1\7\uffff\6\1",
+            "\1\4\1\1\14\uffff\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\13\uffff\1\1\5\uffff\2\1\1\uffff\1\1\1\uffff\1\1\1\uffff\1\1\2\uffff\2\1\1\uffff\1\1\3\uffff\1\1\2\uffff\3\1\1\2\1\3\1\uffff\1\17\1\20\1\21\1\22\1\uffff\2\1\7\uffff\6\1",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -36920,75 +36919,75 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_2 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_3 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_4 = new BitSet(new long[]{0x0000010000000000L});
-    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x0000720000000000L});
+    public static final BitSet FOLLOW_5 = new BitSet(new long[]{0x00003A0000000000L});
     public static final BitSet FOLLOW_6 = new BitSet(new long[]{0x0000020000000002L});
-    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000100000000002L});
-    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000600000000002L});
+    public static final BitSet FOLLOW_7 = new BitSet(new long[]{0x0000080000000002L});
+    public static final BitSet FOLLOW_8 = new BitSet(new long[]{0x0000300000000002L});
     public static final BitSet FOLLOW_9 = new BitSet(new long[]{0x0000040000000000L});
-    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0002800000000000L});
-    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0121800000078050L,0x000000001F800000L});
-    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0100800000060052L,0x000000001F800000L});
-    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0020000000018002L});
-    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0004000000000002L});
-    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0020000000018000L});
-    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0020000000000002L});
-    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0100800000060050L,0x000000001F800000L});
-    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0110800000060050L,0x000000001F800000L});
-    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0040010000000000L});
-    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x80088000001001D0L,0x000000001FBF2004L});
-    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0080000000000000L});
-    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000000000000030L});
-    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0040000000000000L});
+    public static final BitSet FOLLOW_10 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_11 = new BitSet(new long[]{0x0001400000000000L});
+    public static final BitSet FOLLOW_12 = new BitSet(new long[]{0x0090C00000078050L,0x000000000FC00000L});
+    public static final BitSet FOLLOW_13 = new BitSet(new long[]{0x0080400000060052L,0x000000000FC00000L});
+    public static final BitSet FOLLOW_14 = new BitSet(new long[]{0x0010000000018002L});
+    public static final BitSet FOLLOW_15 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_16 = new BitSet(new long[]{0x0002000000000002L});
+    public static final BitSet FOLLOW_17 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_18 = new BitSet(new long[]{0x0010000000018000L});
+    public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0010000000000002L});
+    public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0080400000060050L,0x000000000FC00000L});
+    public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0088400000060050L,0x000000000FC00000L});
+    public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0020010000000000L});
+    public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x40044000001001D0L,0x000000000FDF9002L});
+    public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0040000000000000L});
+    public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0020000000000000L});
+    public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0100000000000000L});
     public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0200000000000000L});
-    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0400000000000000L});
-    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x1000000000000000L});
-    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0xA0088000001001D0L,0x000000001FBF2004L});
-    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0010000000000000L});
-    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x4000000000000000L});
-    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x89098000001601D0L,0x000000001FBF2006L});
-    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x89088000001601D0L,0x000000001FBF2006L});
-    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x89088000001601D2L,0x000000001FBF2006L});
-    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0100800000060050L,0x000000001F800030L});
-    public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0100800000060052L,0x000000001F800030L});
-    public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
-    public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x000000001FF80020L,0x0000000000001EC0L});
-    public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x000000001FF80022L,0x0000000000001EC0L});
-    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x80188000001001D0L,0x000000001FBF2004L});
-    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000007FE0000040L});
-    public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000110L});
-    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000800000000040L,0x000000001F800000L});
-    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000000000180000L});
-    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x000000001FE00000L});
+    public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x50044000001001D0L,0x000000000FDF9002L});
+    public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x4484C000001601D0L,0x000000000FDF9003L});
+    public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x44844000001601D0L,0x000000000FDF9003L});
+    public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x44844000001601D2L,0x000000000FDF9003L});
+    public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x8000000000000000L});
+    public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0080400000060050L,0x000000000FC00018L});
+    public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});
+    public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0080400000060052L,0x000000000FC00018L});
+    public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x000000001FF80020L,0x0000000000000F60L});
+    public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x000000001FF80022L,0x0000000000000F60L});
+    public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x400C4000001001D0L,0x000000000FDF9002L});
+    public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+    public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000007FE0000040L});
+    public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000088L});
+    public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000400000000040L,0x000000000FC00000L});
+    public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000180000L});
+    public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x000000001FE00000L});
+    public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
     public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000200L});
     public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
-    public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x00008000000001D0L,0x000000001FBE0000L});
-    public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x8000000000000000L});
+    public static final BitSet FOLLOW_58 = new BitSet(new long[]{0x0000000000000000L,0x0000000000001000L});
+    public static final BitSet FOLLOW_59 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_60 = new BitSet(new long[]{0x00004000000001D0L,0x000000000FDF0000L});
+    public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x4000000000000000L});
+    public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
     public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
-    public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
-    public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x1004000000000000L});
-    public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000000002000000L,0x0000000000000010L});
-    public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x0802000000000000L});
+    public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0000000002000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000000000100L});
+    public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x0000000000000000L,0x0000000000010000L});
     public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x0000000000000000L,0x0000000000020000L});
     public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
     public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000000000L,0x0000000000080000L});
-    public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
-    public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x80098000001001D0L,0x000000001FBF2004L});
+    public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x4004C000001001D0L,0x000000000FDF9002L});
+    public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000000000000L,0x0000000000100000L});
     public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000000000000L,0x0000000000200000L});
     public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000000000000000L,0x0000000000400000L});
     public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0000000000000000L,0x0000000000800000L});
@@ -36996,10 +36995,9 @@ public class InternalAleParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_78 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
     public static final BitSet FOLLOW_79 = new BitSet(new long[]{0x0000000000000000L,0x0000000004000000L});
     public static final BitSet FOLLOW_80 = new BitSet(new long[]{0x0000000000000000L,0x0000000008000000L});
-    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000000000000000L,0x0000000010000000L});
-    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0001000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000100L});
-    public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000000002L,0x0000000000400000L});
-    public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000040L});
+    public static final BitSet FOLLOW_81 = new BitSet(new long[]{0x0000800000000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000080L});
+    public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000002L,0x0000000000200000L});
+    public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000020L});
 
 }

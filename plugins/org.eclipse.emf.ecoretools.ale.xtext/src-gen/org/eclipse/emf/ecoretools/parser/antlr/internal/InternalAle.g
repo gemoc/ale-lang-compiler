@@ -239,9 +239,9 @@ rulerImport returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_4='\n;'
+		otherlv_4=';'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getRImportAccess().getControl000aSemicolonKeyword_4());
+			newLeafNode(otherlv_4, grammarAccess.getRImportAccess().getSemicolonKeyword_4());
 		}
 	)
 ;

@@ -1965,9 +1965,9 @@ rule__RImport__Group__4__Impl
 	}
 :
 (
-	{ before(grammarAccess.getRImportAccess().getControl000aSemicolonKeyword_4()); }
-	'\n;'
-	{ after(grammarAccess.getRImportAccess().getControl000aSemicolonKeyword_4()); }
+	{ before(grammarAccess.getRImportAccess().getSemicolonKeyword_4()); }
+	';'
+	{ after(grammarAccess.getRImportAccess().getSemicolonKeyword_4()); }
 )
 ;
 finally {

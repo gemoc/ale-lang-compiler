@@ -94,15 +94,13 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAsKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cAliasAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cAliasIdentTerminalRuleCall_3_0 = (RuleCall)cAliasAssignment_3.eContents().get(0);
-		private final Keyword cControl000aSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//rImport Import:
-		//	'import' name=rQualified 'as' alias=Ident '
-		//;';
+		//	'import' name=rQualified 'as' alias=Ident ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'import' name=rQualified 'as' alias=Ident '
-		//;'
+		//'import' name=rQualified 'as' alias=Ident ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'import'
@@ -123,9 +121,8 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		//Ident
 		public RuleCall getAliasIdentTerminalRuleCall_3_0() { return cAliasIdentTerminalRuleCall_3_0; }
 		
-		//'
-		//;'
-		public Keyword getControl000aSemicolonKeyword_4() { return cControl000aSemicolonKeyword_4; }
+		//';'
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 	public class RServiceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.emf.ecoretools.Ale.rService");
@@ -2597,8 +2594,7 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//rImport Import:
-	//	'import' name=rQualified 'as' alias=Ident '
-	//;';
+	//	'import' name=rQualified 'as' alias=Ident ';';
 	public RImportElements getRImportAccess() {
 		return pRImport;
 	}

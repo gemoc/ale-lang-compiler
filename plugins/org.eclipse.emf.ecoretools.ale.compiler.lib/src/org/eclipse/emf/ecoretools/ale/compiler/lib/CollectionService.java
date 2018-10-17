@@ -7,7 +7,7 @@ import java.util.function.Function;
 public class CollectionService {
 	public static <T> Iterable<T> select(final Iterable<T> collection, final Function<? super T, Boolean> filter) {
 		final ArrayList<T> ret = new ArrayList<>();
-		for (final T e : ret) {
+		for (final T e : collection) {
 			if (filter.apply(e))
 				ret.add(e);
 		}
