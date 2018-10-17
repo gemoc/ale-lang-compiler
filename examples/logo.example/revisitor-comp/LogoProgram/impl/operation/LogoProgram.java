@@ -1,9 +1,9 @@
 package LogoProgram.impl.operation;
 
-import org.eclipse.emf.ecore.EClassifier;
+import kmLogo.Turtle;
 
 public interface LogoProgram {
-  EClassifier eval();
+  Turtle eval();
 
-  EClassifier createTurtle();
+  Turtle createTurtle();
 }

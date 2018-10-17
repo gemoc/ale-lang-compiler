@@ -40,7 +40,6 @@ import LogoProgram.impl.operation.UnaryExpression;
 import LogoProgram.impl.operation.Variable;
 import LogoProgram.impl.operation.While;
 import kmLogo.revisitor.KmLogoRevisitor;
-import org.eclipse.emf.ecore.EClassifier;
 
 public class IfImpl extends ControlStructureImpl implements If {
   private KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev;
@@ -54,9 +53,9 @@ public class IfImpl extends ControlStructureImpl implements If {
     this.rev = rev;
   }
 
-  public double eval(EClassifier turtle) {
+  public double eval(kmLogo.Turtle turtle) {
     double result;
-    if((rev.$(this.obj.getCondition()).eval(turtle)) != (0)) {
+    if((rev.$(this.obj.getCondition()).eval(turtle)) != (0.0)) {
       result = rev.$(this.obj.getThenPart()).eval(turtle);
     }
     else {

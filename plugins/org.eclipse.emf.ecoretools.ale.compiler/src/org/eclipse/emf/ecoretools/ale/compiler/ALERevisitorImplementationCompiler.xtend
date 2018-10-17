@@ -74,7 +74,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtend.lib.annotations.Data
 import com.squareup.javapoet.TypeName
-import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xbase.lib.Functions.Function0
 import org.eclipse.acceleo.query.validation.type.EClassifierType
 
@@ -249,7 +248,9 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureInsert body) {
-		builderSeed.addStatement('''throw new $T("FeatureInsert not implemented")''', RuntimeException)
+		builderSeed.
+			addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''',
+				RuntimeException)
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureRemove body) {
@@ -316,6 +317,11 @@ class ALERevisitorImplementationCompiler {
 			case "differs": '''(«call.arguments.get(0).compileExpression») != («call.arguments.get(1).compileExpression»)'''
 			case "sub": '''(«call.arguments.get(0).compileExpression») - («call.arguments.get(1).compileExpression»)'''
 			case "add": '''(«call.arguments.get(0).compileExpression») + («call.arguments.get(1).compileExpression»)'''
+			case "divOp": '''(«call.arguments.get(0).compileExpression») / («call.arguments.get(1).compileExpression»)'''
+			case "equals": '''java.util.Objects.equals((«call.arguments.get(0).compileExpression»), («call.arguments.get(1).compileExpression»))'''
+			case "lessThan": '''(«call.arguments.get(0).compileExpression») < («call.arguments.get(1).compileExpression»)'''
+			case "mult": '''(«call.arguments.get(0).compileExpression») * («call.arguments.get(1).compileExpression»)'''
+			case "unaryMin": '''-(«call.arguments.get(0).compileExpression»)'''
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(«call.arguments.get(0).compileExpression»)'''
@@ -364,6 +370,7 @@ class ALERevisitorImplementationCompiler {
 						'''«gm.genPackages.head.qualifiedPackageName».«gm.EPackage.name.toFirstUpper»Factory.eINSTANCE.create«(t.type as EClass).name»()'''
 					} else {
 
+						// TODO: better identification of the caller in order to route to a $ operation or a service.
 						val t = call.arguments.head.infereType.head
 						if (t instanceof EClassifierType)
 							'''rev.$(«call.arguments.head.compileExpression»).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
@@ -445,7 +452,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch String compileExpression(RealLiteral call) {
-		'''/*REALLITERAL*/'''
+		call.value.toString
 	}
 
 	def dispatch String compileExpression(SequenceInExtensionLiteral call) {

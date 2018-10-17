@@ -18,12 +18,12 @@ open class LogoProgram {
 	}
 	
 	def Turtle createTurtle() {
-		Turtle turtle := vmlogo::Turtle.create();
-		turtle.position := vmlogo::Point.create();
+		Turtle turtle := kmLogo::Turtle.create();
+		turtle.position := kmLogo::Point.create();
 		turtle.position.x := 0.0;
 		turtle.position.y := 0.0;
-		turtle.callStack := vmlogo::CallStack.create();
-		turtle.callStack.frames += vmlogo::StackFrame.create();
+		turtle.callStack := kmLogo::CallStack.create();
+		turtle.callStack.frames += kmLogo::StackFrame.create();
 		result := turtle;
 	}
 }
@@ -37,12 +37,14 @@ open class Instruction {
 open class PenDown {
 	def double eval(Turtle turtle) {
 		turtle.penUp := false;
+		result := 0.0;
 	}
 }
 
 open class PenUp {
 	def double eval(Turtle turtle) {
 		turtle.penUp := true;
+		result := 0.0;
 	}
 }
 
@@ -54,6 +56,7 @@ open class Repeat {
 			self.block.eval(turtle);
 			time := time - 1.0;
 		}
+		result := 0.0;
 	}
 }
 
@@ -88,11 +91,13 @@ open class Block {
 		for(inst in self.instructions){
 			inst.eval(turtle);
 		}
+		result := 0.0;
 	}
 }
 
 open class Clear {
 	def double eval(CTurtle turtle) {
+		result := 0.0;
 	}
 }
 
@@ -100,6 +105,7 @@ open class Forward {
 	def double eval(Turtle turtle) {
 		double move := self.steps.eval(turtle);
 		turtle.forward(move);
+		result := 0.0;
 	}
 }
 
@@ -107,6 +113,7 @@ open class Back {
 	def double eval(Turtle turtle) {
 		double move := self.steps.eval(turtle);
 		turtle.forward(-move);
+		result := 0.0;
 	}
 }
 
@@ -114,6 +121,7 @@ open class Left {
 	def double eval(Turtle turtle) {
 		double angle := self.angle.eval(turtle);
 		turtle.rotate(angle);
+		result := 0.0;
 	}
 }
 
@@ -121,6 +129,7 @@ open class Right {
 	def double eval(Turtle turtle) {
 		double angle := self.angle.eval(turtle);
 		turtle.rotate(-angle);
+		result := 0.0;
 	}
 }
 
@@ -215,10 +224,10 @@ open class ProcCall {
 	def double eval(Turtle turtle) {
 		('Calling '+self.declaration.name).log();
 	
-		StackFrame newFrame := vmlogo::StackFrame.create();
+		StackFrame newFrame := kmLogo::StackFrame.create();
 		int i := 1;
 		for (exp in self.actualArgs){
-			Variable newVar := vmlogo::Variable.create();
+			Variable newVar := kmLogo::Variable.create();
 			newVar.name := self.declaration.args->at(i).name;
 			newVar.value := exp.eval(turtle);
 			newFrame.variables += newVar;
@@ -250,6 +259,7 @@ open class ParameterCall {
 				}
 			}
 		}
+		result := 0.0;
 	}
 }
 //--------------Context----------------------
@@ -260,18 +270,18 @@ open class Turtle {
 	double anotherAttrib := 0.0;
 	
 	def void move(double dx, double dy) {
-		Point newPos := vmlogo::Point.create();
+		Point newPos := kmLogo::Point.create();
 		newPos.x := self.position.x + dx;
 		newPos.y := self.position.y  + dy;
 		if(self.penUp) {
 		}
 		else {
-			Segment newSegment := vmlogo::Segment.create();
+			Segment newSegment := kmLogo::Segment.create();
 			newSegment.begin := self.position;
 			newSegment.end := newPos;
 			self.drawings += newSegment;
 		}
-		Point newPosCopy := vmlogo::Point.create();
+		Point newPosCopy := kmLogo::Point.create();
 		newPosCopy.x := newPos.x;
 		newPosCopy.y := newPos.y;
 		self.position := newPosCopy;

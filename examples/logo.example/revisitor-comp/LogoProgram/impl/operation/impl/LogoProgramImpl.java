@@ -41,25 +41,38 @@ import LogoProgram.impl.operation.Variable;
 import LogoProgram.impl.operation.While;
 import kmLogo.revisitor.KmLogoRevisitor;
 
-public class RepeatImpl extends ControlStructureImpl implements Repeat {
+public class LogoProgramImpl implements LogoProgram {
   private KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev;
 
-  private kmLogo.Repeat obj;
+  private kmLogo.LogoProgram obj;
 
-  public RepeatImpl(kmLogo.Repeat obj,
+  public LogoProgramImpl(kmLogo.LogoProgram obj,
       KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev) {
-    super(obj, rev);
     this.obj = obj;
     this.rev = rev;
   }
 
-  public double eval(kmLogo.Turtle turtle) {
-    double result;
-    double time = ((double)rev.$(this.obj.getCondition()).eval(turtle));
-    while ((time) > (0.0)) {
-      rev.$(this.obj.getBlock()).eval(turtle);
-      time = (time) - (1.0);
+  public kmLogo.Turtle eval() {
+    kmLogo.Turtle result;
+    kmLogo.Turtle turtle = ((kmLogo.Turtle)rev.$(this.obj).createTurtle());
+    result = turtle;
+    for(kmLogo.Instruction it: this.obj.getInstructions()) {
+      rev.$(it).eval(turtle);
     }
+    result = turtle;
+    rev.$(turtle).show();
+    return result;
+  }
+
+  public kmLogo.Turtle createTurtle() {
+    kmLogo.Turtle result;
+    kmLogo.Turtle turtle = ((kmLogo.Turtle)kmLogo.KmLogoFactory.eINSTANCE.createTurtle());
+    turtle.setPosition(kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+    turtle.getPosition().setX(0.0);
+    turtle.getPosition().setY(0.0);
+    turtle.setCallStack(kmLogo.KmLogoFactory.eINSTANCE.createCallStack());
+    turtle.getCallStack().getFrames().add(kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
+    result = turtle;
     return result;
   }
 }

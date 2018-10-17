@@ -41,12 +41,12 @@ import LogoProgram.impl.operation.Variable;
 import LogoProgram.impl.operation.While;
 import kmLogo.revisitor.KmLogoRevisitor;
 
-public class RepeatImpl extends ControlStructureImpl implements Repeat {
+public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
   private KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev;
 
-  private kmLogo.Repeat obj;
+  private kmLogo.ParameterCall obj;
 
-  public RepeatImpl(kmLogo.Repeat obj,
+  public ParameterCallImpl(kmLogo.ParameterCall obj,
       KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev) {
     super(obj, rev);
     this.obj = obj;
@@ -55,10 +55,12 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
 
   public double eval(kmLogo.Turtle turtle) {
     double result;
-    double time = ((double)rev.$(this.obj.getCondition()).eval(turtle));
-    while ((time) > (0.0)) {
-      rev.$(this.obj.getBlock()).eval(turtle);
-      time = (time) - (1.0);
+    for(kmLogo.StackFrame frame: turtle.getCallStack().getFrames()) {
+      for(kmLogo.Variable var: frame.getVariables()) {
+        if(java.util.Objects.equals((var.getName()), (this.obj.getParameter().getName()))) {
+          result = var.getValue();
+        }
+      }
     }
     return result;
   }

@@ -56,6 +56,7 @@ public class ClearImpl extends PrimitiveImpl implements Clear {
 
   public double eval(EClassifier turtle) {
     double result;
+    result = 0.0;
     return result;
   }
 }

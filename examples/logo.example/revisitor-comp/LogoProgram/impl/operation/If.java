@@ -1,7 +1,7 @@
 package LogoProgram.impl.operation;
 
-import org.eclipse.emf.ecore.EClassifier;
+import kmLogo.Turtle;
 
 public interface If extends ControlStructure {
-  double eval(EClassifier turtle);
+  double eval(Turtle turtle);
 }

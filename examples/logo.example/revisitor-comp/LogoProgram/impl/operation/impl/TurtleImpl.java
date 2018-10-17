@@ -41,25 +41,53 @@ import LogoProgram.impl.operation.Variable;
 import LogoProgram.impl.operation.While;
 import kmLogo.revisitor.KmLogoRevisitor;
 
-public class RepeatImpl extends ControlStructureImpl implements Repeat {
+public class TurtleImpl implements Turtle {
   private KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev;
 
-  private kmLogo.Repeat obj;
+  private kmLogo.Turtle obj;
 
-  public RepeatImpl(kmLogo.Repeat obj,
+  public TurtleImpl(kmLogo.Turtle obj,
       KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev) {
-    super(obj, rev);
     this.obj = obj;
     this.rev = rev;
   }
 
-  public double eval(kmLogo.Turtle turtle) {
-    double result;
-    double time = ((double)rev.$(this.obj.getCondition()).eval(turtle));
-    while ((time) > (0.0)) {
-      rev.$(this.obj.getBlock()).eval(turtle);
-      time = (time) - (1.0);
+  public void move(double dx, double dy) {
+    kmLogo.Point newPos = ((kmLogo.Point)kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+    newPos.setX((this.obj.getPosition().getX()) + (dx));
+    newPos.setY((this.obj.getPosition().getY()) + (dy));
+    if(this.obj.getPenUp()) {
     }
-    return result;
+    else {
+      kmLogo.Segment newSegment = ((kmLogo.Segment)kmLogo.KmLogoFactory.eINSTANCE.createSegment());
+      newSegment.setBegin(this.obj.getPosition());
+      newSegment.setEnd(newPos);
+      this.obj.getDrawings().add(newSegment);
+    }
+    kmLogo.Point newPosCopy = ((kmLogo.Point)kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+    newPosCopy.setX(newPos.getX());
+    newPosCopy.setY(newPos.getY());
+    this.obj.setPosition(newPosCopy);
+  }
+
+  public void forward(double steps) {
+    rev.$(this.obj).move(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@6a17383d (serviceName: mult, type: CALLSERVICE)*/,/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@3c594a58 (serviceName: mult, type: CALLSERVICE)*/);
+  }
+
+  public void rotate(double angle) {
+    double newAngle = ((double)(this.obj.getHeading()) + (angle));
+    if((newAngle) > (360.0)) {
+      newAngle = (newAngle) - (360.0);
+      this.obj.setHeading(newAngle);
+    }
+    else {
+      if(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@17aa498e (serviceName: lessThan, type: CALLSERVICE)*/) {
+        newAngle = (360.0) + (newAngle);
+        this.obj.setHeading(newAngle);
+      }
+      else {
+        this.obj.setHeading(newAngle);
+      }
+    }
   }
 }

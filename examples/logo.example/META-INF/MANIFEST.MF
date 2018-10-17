@@ -6,4 +6,5 @@ Bundle-Version: 0.0.1.qualifier
 Export-Package: logo.example.service
 Require-Bundle: org.eclipse.emf.common,
  org.eclipse.emf.ecoretools.ale.core,
- logo.model
+ logo.model,
+ org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0"

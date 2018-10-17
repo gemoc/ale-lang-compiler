@@ -39,14 +39,15 @@ import LogoProgram.impl.operation.Turtle;
 import LogoProgram.impl.operation.UnaryExpression;
 import LogoProgram.impl.operation.Variable;
 import LogoProgram.impl.operation.While;
+import java.lang.RuntimeException;
 import kmLogo.revisitor.KmLogoRevisitor;
 
-public class RepeatImpl extends ControlStructureImpl implements Repeat {
+public class ProcCallImpl extends ExpressionImpl implements ProcCall {
   private KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev;
 
-  private kmLogo.Repeat obj;
+  private kmLogo.ProcCall obj;
 
-  public RepeatImpl(kmLogo.Repeat obj,
+  public ProcCallImpl(kmLogo.ProcCall obj,
       KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev) {
     super(obj, rev);
     this.obj = obj;
@@ -55,11 +56,22 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
 
   public double eval(kmLogo.Turtle turtle) {
     double result;
-    double time = ((double)rev.$(this.obj.getCondition()).eval(turtle));
-    while ((time) > (0.0)) {
-      rev.$(this.obj.getBlock()).eval(turtle);
-      time = (time) - (1.0);
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(("Calling ") + (this.obj.getDeclaration().getName()));
+    kmLogo.StackFrame newFrame = ((kmLogo.StackFrame)kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
+    int i = ((int)1);
+    for(kmLogo.Expression exp: this.obj.getActualArgs()) {
+      kmLogo.Variable newVar = ((kmLogo.Variable)kmLogo.KmLogoFactory.eINSTANCE.createVariable());
+      newVar.setName(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@1127a793 (serviceName: at, type: COLLECTIONCALL)*/.getName());
+      newVar.setValue(rev.$(exp).eval(turtle));
+      newFrame.add(newVar);
+      i = (i) + (1);
     }
+    turtle.getCallStack().getFrames().add(newFrame);
+    result = 0.0;
+    for(kmLogo.Instruction instr: this.obj.getDeclaration().getInstructions()) {
+      result = rev.$(instr).eval(turtle);
+    }
+    throw new RuntimeException("FeatureRemove not implemented");
     return result;
   }
 }

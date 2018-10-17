@@ -40,7 +40,6 @@ import LogoProgram.impl.operation.UnaryExpression;
 import LogoProgram.impl.operation.Variable;
 import LogoProgram.impl.operation.While;
 import kmLogo.revisitor.KmLogoRevisitor;
-import org.eclipse.emf.ecore.EClassifier;
 
 public class BackImpl extends PrimitiveImpl implements Back {
   private KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev;
@@ -54,10 +53,11 @@ public class BackImpl extends PrimitiveImpl implements Back {
     this.rev = rev;
   }
 
-  public double eval(EClassifier turtle) {
+  public double eval(kmLogo.Turtle turtle) {
     double result;
     double move = ((double)rev.$(this.obj.getSteps()).eval(turtle));
-    rev.$(turtle).forward(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@7c0f5c63 (serviceName: unaryMin, type: CALLSERVICE)*/);
+    rev.$(turtle).forward(-(move));
+    result = 0.0;
     return result;
   }
 }

@@ -40,7 +40,6 @@ import LogoProgram.impl.operation.UnaryExpression;
 import LogoProgram.impl.operation.Variable;
 import LogoProgram.impl.operation.While;
 import kmLogo.revisitor.KmLogoRevisitor;
-import org.eclipse.emf.ecore.EClassifier;
 
 public class LowerImpl extends BinaryExpImpl implements Lower {
   private KmLogoRevisitor<Back, BinaryExp, Block, CallStack, Clear, Constant, ControlStructure, Cos, Div, Equals, Expression, Forward, Greater, If, Instruction, Left, LogoProgram, Lower, Minus, Mult, Parameter, ParameterCall, PenDown, PenUp, Plus, Point, Primitive, ProcCall, ProcDeclaration, Repeat, Right, Segment, Sin, StackFrame, Tan, Turtle, UnaryExpression, Variable, While> rev;
@@ -54,13 +53,13 @@ public class LowerImpl extends BinaryExpImpl implements Lower {
     this.rev = rev;
   }
 
-  public double eval(EClassifier turtle) {
+  public double eval(kmLogo.Turtle turtle) {
     double result;
-    if(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@60eeb140 (serviceName: lessThan, type: CALLSERVICE)*/) {
-      result = /*REALLITERAL*/;
+    if(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@17d4a31e (serviceName: lessThan, type: CALLSERVICE)*/) {
+      result = 1.0;
     }
     else {
-      result = /*REALLITERAL*/;
+      result = 0.0;
     }
     return result;
   }
