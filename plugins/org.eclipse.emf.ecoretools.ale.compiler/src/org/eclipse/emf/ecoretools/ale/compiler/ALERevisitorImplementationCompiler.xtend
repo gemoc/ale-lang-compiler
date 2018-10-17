@@ -74,6 +74,9 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtend.lib.annotations.Data
 import com.squareup.javapoet.TypeName
+import org.eclipse.xtext.xbase.lib.Functions.Function1
+import org.eclipse.xtext.xbase.lib.Functions.Function0
+import org.eclipse.acceleo.query.validation.type.EClassifierType
 
 class ALERevisitorImplementationCompiler {
 	val IQueryEnvironment queryEnvironment
@@ -108,9 +111,6 @@ class ALERevisitorImplementationCompiler {
 
 	def void compile(String dslStr, File projectRoot) throws FileNotFoundException {
 		dsl = new WorkbenchDsl(dslStr)
-//		if (dsl.allSyntaxes.length > 1) {
-//			throw new AlexException('''Cannot compile with more than 1 syntax definition. Please create a main meta-model that references the others.''')
-//		}
 		this.parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 		this.compile(projectRoot)
 	}
@@ -173,7 +173,7 @@ class ALERevisitorImplementationCompiler {
 							if (it.EType.instanceClass !== null) {
 								ParameterSpec.builder(it.EType.instanceClass, it.name).build
 							} else {
-								ParameterSpec.builder(it.EType.revolveType, it.name).build
+								ParameterSpec.builder(it.EType.resolveType, it.name).build
 							}
 						]).build
 				] ?: newArrayList).build
@@ -187,26 +187,29 @@ class ALERevisitorImplementationCompiler {
 					Modifier.PRIVATE).build
 
 				val operationImplementation = TypeSpec.classBuilder('''«it.eCls.name»Impl''').addSuperinterfaces(
-					#[ClassName.get(operationInterfaceFile.packageName, operationInterface.name)]).addField(revField).
-					addField(objField).addModifiers(Modifier.PUBLIC).addMethod(
+					#[ClassName.get(operationInterfaceFile.packageName, operationInterface.name)]).superOperationImpl(
+					it.eCls.ESuperTypes.head).addField(revField).addField(objField).addModifiers(Modifier.PUBLIC).
+					addMethod(
 						MethodSpec.constructorBuilder.addParameter(objField.type, "obj").addParameter(revField.type,
-							"rev").addStatement('''this.obj = obj''').addStatement('''this.rev = rev''').addModifiers(
-							Modifier.PUBLIC).build).addModifiers(Modifier.PUBLIC).addMethods(it.alexCls?.methods?.map [
-						MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(
-							it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
-							if (it.EType.instanceClass !== null) {
-								ParameterSpec.builder(it.EType.instanceClass, it.name).build
-							} else {
-								ParameterSpec.builder(it.EType.revolveType, it.name).build
-							}
-						]).openMethod(it.operationRef.EType).compileBody(it.body).closeMethod(it.operationRef.EType).
-							build
-					] ?: newArrayList).build
+							"rev").addConditionalStatement([!it.ECls.ESuperTypes.empty], 'super(obj, rev)').
+							addStatement('''this.obj = obj''').addStatement('''this.rev = rev''').addModifiers(
+								Modifier.PUBLIC).build).addModifiers(Modifier.PUBLIC).addMethods(
+						it.alexCls?.methods?.map [
+							MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(
+								it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
+								if (it.EType.instanceClass !== null) {
+									ParameterSpec.builder(it.EType.instanceClass, it.name).build
+								} else {
+									ParameterSpec.builder(it.EType.resolveType, it.name).build
+								}
+							]).openMethod(it.operationRef.EType).compileBody(it.body).closeMethod(
+								it.operationRef.EType).build
+						] ?: newArrayList).build
 				val operationImplementationFile = JavaFile.
 					builder('''«dsl.revisitorImplementationPackage».operation.impl''', operationImplementation).build
 				operationImplementationFile.writeTo(compileDirectory)
 
-			} catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException | NullPointerException e) {
 				println(it)
 				e.printStackTrace
 			}
@@ -254,11 +257,14 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body) {
-		builderSeed.addStatement('''«body.name» = «body.value.compileExpression»''')
+		builderSeed.addStatement('''«body.name» = «body.value.compileExpression.escapeDollar»''')
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body) {
-		builderSeed.addStatement('''$T $L = «body.initialValue.compileExpression»''', body.type.solveType, body.name)
+		val t = body.type.solveType
+		// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
+		builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression.escapeDollar»)''', t, body.name,
+			t)
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, Block body) {
@@ -268,7 +274,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ExpressionStatement body) {
-		builderSeed.addStatement(body.expression.compileExpression, RuntimeException)
+		builderSeed.addStatement(body.expression.compileExpression.escapeDollar)
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeaturePut body) {
@@ -327,6 +333,18 @@ class ALERevisitorImplementationCompiler {
 				} else {
 					'''/*FIRST «call»*/'''
 				}
+			case "oclIsKindOf":
+				if (call.type == CallType.CALLORAPPLY) {
+					'''«call.arguments.get(0).compileExpression» instanceof «call.arguments.get(1).compileExpression»'''
+				} else {
+					'''/*OCLISKINDOF*/'''
+				}
+			case "log":
+				if (call.type == CallType.CALLORAPPLY) {
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(«call.arguments.get(0).compileExpression»)'''
+				} else {
+					'''/*OCLISKINDOF*/'''
+				}
 			default:
 				if (call.type == CallType.CALLORAPPLY)
 					if (call.serviceName == 'aqlFeatureAccess') {
@@ -343,9 +361,15 @@ class ALERevisitorImplementationCompiler {
 						val e = call.arguments.get(0)
 						val t = infereType(e).head
 						val gm = findGenModelFromExpression(e)
-						'''«gm.genPackages.head.qualifiedPackageName».«gm.EPackage.name»Factory.create«(t.type as EClass).name»()'''
-					} else
-						'''rev.$$(«call.arguments.head.compileExpression»).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+						'''«gm.genPackages.head.qualifiedPackageName».«gm.EPackage.name.toFirstUpper»Factory.eINSTANCE.create«(t.type as EClass).name»()'''
+					} else {
+						
+						val t = call.arguments.head.infereType.head
+						if(t instanceof EClassifierType)
+							'''rev.$(«call.arguments.head.compileExpression»).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+						else 
+						'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+					}
 				else
 					'''/*Call «call»*/'''
 		}
@@ -433,11 +457,11 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch String compileExpression(StringLiteral call) {
-		call.value
+		'''"call.value"'''
 	}
 
 	def dispatch String compileExpression(TypeLiteral call) {
-		'''/*TYPELITERAL*/'''
+		'''«(call.value as EClass).solveType»'''
 	}
 
 	def dispatch String compileExpression(Switch call) {
@@ -454,8 +478,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch solveType(EClass type) {
-
-		ClassName.get(ecoreInterfacesPackage, type.name)
+		resolveType(type)
 	}
 
 	def dispatch solveType(EDataType edt) {
@@ -483,23 +506,29 @@ class ALERevisitorImplementationCompiler {
 		base.getPossibleTypes(exp)
 	}
 
-	def revolveType(EClassifier e) {
-		val stx = dsl.allSyntaxes.filter [
-			it.loadEPackage.allClasses.exists [
+	def resolveType(EClassifier e) {
+		val stxs = (dsl.allSyntaxes.map[loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel] +
+			#[(EcorePackage.eINSTANCE -> null)])
+		val stx = stxs.filter [
+			it.key.allClasses.exists [
 				it.name == e.name && it.EPackage.name == (e.eContainer as EPackage).name
 			]
 		].head
 
-		val gm = stx.replaceAll(".ecore$", ".genmodel").loadGenmodel
+		val gm = stx.value
 
-		val gclass = gm.allGenPkgs.head.genClasses.filter [
-			it.name == e.name && it.genPackage.NSName == (e.eContainer as EPackage).name
-		].head
+		if (gm !== null) {
+			val gclass = gm.allGenPkgs.head.genClasses.filter [
+				it.name == e.name && it.genPackage.NSName == (e.eContainer as EPackage).name
+			].head
+			val split = gclass.qualifiedInterfaceName.split("\\.")
+			val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
+			val cn = split.last
+			ClassName.get(pkg, cn)
+		} else {
+			ClassName.get("org.eclipse.emf.ecore", e.name)
+		}
 
-		val split = gclass.qualifiedClassName.split("\\.")
-		val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
-		val cn = split.last
-		ClassName.get(pkg, cn)
 	}
 
 	def findGenModelFromExpression(Expression e) {
@@ -510,5 +539,26 @@ class ALERevisitorImplementationCompiler {
 			]
 		].head
 		stx.replaceAll(".ecore$", ".genmodel").loadGenmodel
+	}
+
+	def escapeDollar(String s) {
+		s.replaceAll("\\$\\(", "\\$\\$(")
+	}
+
+	def TypeSpec.Builder superOperationImpl(TypeSpec.Builder builder, EClass clazz) {
+		if (clazz !== null) {
+			builder.superclass(
+				ClassName.get('''«dsl.revisitorImplementationPackage».operation.impl''', '''«clazz.name»Impl'''))
+		} else {
+			builder
+		}
+	}
+
+	def <F> MethodSpec.Builder addConditionalStatement(MethodSpec.Builder builder, Function0<Boolean> f, String s) {
+		if (f.apply()) {
+			builder.addStatement(s)
+		} else {
+			builder
+		}
 	}
 }
