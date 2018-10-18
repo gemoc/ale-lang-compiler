@@ -295,12 +295,12 @@ class ALERevisitorImplementationCompiler {
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureInsert body) {
 		builderSeed.
-			addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''',
-				RuntimeException)
+			addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''')
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureRemove body) {
-		builderSeed.addStatement('''throw new $T("FeatureRemove not implemented")''', RuntimeException)
+		builderSeed.
+			addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().remove(«body.value.compileExpression»)''')
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body) {
@@ -373,6 +373,11 @@ class ALERevisitorImplementationCompiler {
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(«call.arguments.get(0).compileExpression»)'''
 				else
 					'''/*FIRST «call»*/'''
+			case "at":
+				if (call.type == CallType.COLLECTIONCALL)
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)'''
+				else
+					'''/*FIRST «call»*/'''
 			case "select":
 				if (call.type == CallType.COLLECTIONCALL) {
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)'''
@@ -404,7 +409,9 @@ class ALERevisitorImplementationCompiler {
 						if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
 							'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
 						} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-							if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean || (t.type as EDataType).instanceClass == boolean))
+							if (t.type instanceof EDataType &&
+								((t.type as EDataType).instanceClass == Boolean ||
+									(t.type as EDataType).instanceClass == boolean))
 								'''«call.arguments.head.compileExpression».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
 							else
 								'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''

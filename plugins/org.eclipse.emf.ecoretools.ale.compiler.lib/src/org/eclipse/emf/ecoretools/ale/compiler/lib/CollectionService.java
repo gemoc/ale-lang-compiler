@@ -22,6 +22,19 @@ public class CollectionService {
 			return null;
 	}
 
+	public static <T> T get(final Iterable<T> collection, int idx) {
+		final Iterator<T> iterator = collection.iterator();
+		T ret = null;
+		for (int i = 0; i < idx; i++) {
+			if (iterator.hasNext())
+				ret = iterator.next();
+			else
+				return null;
+		}
+
+		return ret;
+	}
+
 	public static <T> boolean isEmpty(final Iterable<T> collection) {
 		final Iterator<T> iterator = collection.iterator();
 		if (iterator.hasNext())
