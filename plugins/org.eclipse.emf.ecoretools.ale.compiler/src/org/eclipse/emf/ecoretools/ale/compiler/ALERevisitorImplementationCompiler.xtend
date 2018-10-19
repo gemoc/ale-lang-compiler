@@ -311,7 +311,8 @@ class ALERevisitorImplementationCompiler {
 
 		val inft = body.initialValue.infereType.head
 		if (inft instanceof SequenceType) {
-			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"), ClassName.get(inft.collectionType.type as Class<?>))
+			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
+				ClassName.get(inft.collectionType.type as Class<?>))
 			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression.escapeDollar»)''', t,
 				body.name, t)
 		} else {
@@ -471,7 +472,7 @@ class ALERevisitorImplementationCompiler {
 
 								// duplicate to following else block !!!
 								val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].
-									flatten
+									flatten.toList
 
 								val candidate = methods.filter[java.lang.reflect.Modifier.isStatic(it.value.modifiers)].
 									filter[it.value.name == call.serviceName].head
@@ -613,7 +614,11 @@ class ALERevisitorImplementationCompiler {
 
 	def returnType(MethodSpec.Builder builder, EClassifier type) {
 		if (type !== null) {
-			builder.returns(type.instanceClass)
+			if (type.instanceClass !== null) {
+				builder.returns(type.instanceClass)
+			} else {
+				builder.returns(type.resolveType)
+			}
 		} else {
 			builder
 		}
@@ -684,13 +689,17 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def allMethods(ExtendedClass aleClass) {
-		aleClass.allParents.map[it.methods].flatten
+		aleClass.allParents.map[
+			it.methods
+		].flatten
 	}
 
 	def allParents(ExtendedClass aleClass) {
 		val ecls = resolved.filter[it.alexCls == aleClass].head.eCls
 
-		resolved.filter[it.eCls == ecls || it.eCls.isSuperTypeOf(ecls)].map[it.alexCls]
+		resolved.filter[it.eCls == ecls || it.eCls.isSuperTypeOf(ecls)].map[
+			it.alexCls
+		].filter[it !== null]
 	}
 
 	def <F> MethodSpec.Builder addConditionalStatement(MethodSpec.Builder builder, Function0<Boolean> f, String s) {
