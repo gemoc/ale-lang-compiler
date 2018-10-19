@@ -1,0 +1,493 @@
+behavior boa_exec;
+
+use execboa.MapService;
+use execboa.MathService;
+
+open class boa.File {
+	@main
+	def void eval() {
+		Ctx ctx := boa_dynamic::Ctx.create(); 
+		for(it in self.commands) {
+			it.nextLine(ctx);
+		}
+	}
+}
+
+open class boa.TopLevelCmd {
+	def void nextLine(Ctx ctx) {}
+}
+
+open class boa.Def {
+	def void nextLine(Ctx ctx) {
+		boa_dynamic::EvalRes e := self.expr.eval(ctx);
+		(self.name +  ' = ' + e).log();
+		ctx.env.put(self.name, e);
+	}
+}
+
+open class boa.Expr {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		result := null;
+	}
+	
+	def void nextLine(Ctx ctx) {
+		self.eval(ctx).log();
+	}
+	
+	// TODO: asInt / asBool
+}
+
+open class boa.Var {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		if(ctx.env.containsKey(self.name)) {
+			result := ctx.env.getFromMap(self.name);
+		} else {
+			result := null;
+		}
+	}
+}
+
+
+open class boa.BObject {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		EvalMapRes ret := boa_dynamic::EvalMapRes.create();
+		for(x in self.fields) {
+			EvalRes v := x.value.eval(ctx);
+			ret.values.put(x.name, v);
+		}
+		result := ret;
+	}
+}
+
+open class boa.App {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		 
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalFunRes)) {
+			if(vlhs.oclIsKindOf(boa_dynamic::EvalBoundFunRes)) {
+				boa_dynamic::EvalBoundFunRes fct := vlhs;
+				boa_dynamic::Ctx callCtx := boa_dynamic::Ctx.create();
+				callCtx.env.putAll(fct.ctx.env);
+				callCtx.env.put(fct.name, vrhs);
+				callCtx.th.replaceWith(fct.th);
+				EvalRes fe := fct.exp.eval(callCtx);
+				if(fe.oclIsKindOf(boa_dynamic::EvalFunRes)) {
+					boa_dynamic::EvalFunRes fun := fe;
+					boa_dynamic::EvalBoundFunRes tmp := boa_dynamic::EvalBoundFunRes.create();
+					tmp.exp := fun.exp;
+					tmp.ctx := fun.ctx;
+					tmp.name := fun.name;
+					tmp.th.replaceWith(fct.th);
+					result := tmp;
+				} else {
+					result := fe;
+				}
+			} else {
+				boa_dynamic::EvalFunRes fct := vlhs;
+				boa_dynamic::Ctx callCtx := boa_dynamic::Ctx.create();
+				callCtx.env.putAll(fct.ctx.env);
+				callCtx.env.put(fct.name, vrhs);
+				callCtx.th.replaceWith(ctx.th);
+				EvalRes fe := fct.exp.eval(callCtx);
+				if(fe.oclIsKindOf(boa_dynamic::EvalFunRes)) {
+					boa_dynamic::EvalFunRes fun := fe;
+					boa_dynamic::EvalBoundFunRes tmp := boa_dynamic::EvalBoundFunRes.create();
+					tmp.exp := fun.exp;
+					tmp.ctx := fun.ctx;
+					tmp.name := fun.name;
+					tmp.th.replaceWith(ctx.th);
+					result := tmp;
+				} else {
+					result := fe;
+				}
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+
+open class boa.ArithOpDivide {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+				boa_dynamic::EvalIntRes ivlhs := vlhs;
+				boa_dynamic::EvalIntRes ivrhs := vrhs;
+				boa_dynamic::EvalIntRes ret := boa_dynamic::EvalIntRes.create();
+				ret.value := ivlhs.value / ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.ArithOpMinus {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+				boa_dynamic::EvalIntRes ivlhs := vlhs;
+				boa_dynamic::EvalIntRes ivrhs := vrhs;
+				boa_dynamic::EvalIntRes ret := boa_dynamic::EvalIntRes.create();
+				ret.value := ivlhs.value - ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.ArithOpPlus {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+				boa_dynamic::EvalIntRes ivlhs := vlhs;
+				boa_dynamic::EvalIntRes ivrhs := vrhs;
+				boa_dynamic::EvalIntRes ret := boa_dynamic::EvalIntRes.create();
+				ret.value := ivlhs.value + ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.ArithOpRemainder {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+				boa_dynamic::EvalIntRes ivlhs := vlhs;
+				boa_dynamic::EvalIntRes ivrhs := vrhs;
+				boa_dynamic::EvalIntRes ret := boa_dynamic::EvalIntRes.create();
+				ret.value := self.mod(ivlhs.value, ivrhs.value);   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.ArithOpTimes {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+				boa_dynamic::EvalIntRes ivlhs := vlhs;
+				boa_dynamic::EvalIntRes ivrhs := vrhs;
+				boa_dynamic::EvalIntRes ret := boa_dynamic::EvalIntRes.create();
+				ret.value := ivlhs.value * ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.Assign {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalMapRes)) {
+			EvalMapRes mvlhs := vlhs;
+			if(mvlhs.values.containsKey(self.name)) {
+				mvlhs.values.put(self.name, vrhs);
+				result := vrhs;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.Bool {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalBoolRes ret := boa_dynamic::EvalBoolRes.create();
+		ret.value := self.value;
+		result := ret;
+	}
+}
+
+open class boa.BoolOpAnd {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalBoolRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalBoolRes)) {
+				boa_dynamic::EvalBoolRes ivlhs := vlhs;
+				boa_dynamic::EvalBoolRes ivrhs := vrhs;
+				boa_dynamic::EvalBoolRes ret := boa_dynamic::EvalBoolRes.create();
+				ret.value := ivlhs.value and ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.BoolOpOr {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalBoolRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalBoolRes)) {
+				boa_dynamic::EvalBoolRes ivlhs := vlhs;
+				boa_dynamic::EvalBoolRes ivrhs := vrhs;
+				boa_dynamic::EvalBoolRes ret := boa_dynamic::EvalBoolRes.create();
+				ret.value := ivlhs.value or ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.CmpOpEqual {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+				boa_dynamic::EvalIntRes ivlhs := vlhs;
+				boa_dynamic::EvalIntRes ivrhs := vrhs;
+				boa_dynamic::EvalBoolRes ret := boa_dynamic::EvalBoolRes.create();
+				ret.value := ivlhs.value == ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.CmpOpUnequal {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+				boa_dynamic::EvalIntRes ivlhs := vlhs;
+				boa_dynamic::EvalIntRes ivrhs := vrhs;
+				boa_dynamic::EvalBoolRes ret := boa_dynamic::EvalBoolRes.create();
+				ret.value := ivlhs.value != ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.CmpOpLess {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalIntRes)) {
+				boa_dynamic::EvalIntRes ivlhs := vlhs;
+				boa_dynamic::EvalIntRes ivrhs := vrhs;
+				boa_dynamic::EvalBoolRes ret := boa_dynamic::EvalBoolRes.create();
+				ret.value := ivlhs.value < ivrhs.value;   
+				result := ret;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.Copy {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vcopy := self.copy.eval(ctx);
+		if(vcopy.oclIsKindOf(boa_dynamic::EvalMapRes)) {
+			boa_dynamic::EvalMapRes mvcopy := vcopy;
+			boa_dynamic::EvalMapRes ret := boa_dynamic::EvalMapRes.create();
+			ret.values.putAll(mvcopy.values);	
+			result := ret;
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.Fun {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalFunRes ret := boa_dynamic::EvalFunRes.create();
+		ret.exp := self.body;
+		ret.ctx := ctx;
+		ret.name := self.name;
+		result := ret;
+	} 
+}
+
+open class boa.If {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		EvalRes vcond := self.cond.eval(ctx);
+		
+		if(vcond.oclIsKindOf(boa_dynamic::EvalBoolRes)) {
+			EvalBoolRes bvcond := vcond;
+			if(bvcond.value) {
+				result := self.thn.eval(ctx);
+			} else {
+				result := self.els.eval(ctx);
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+
+open class boa.Int {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalIntRes ret := boa_dynamic::EvalIntRes.create();
+		ret.value := self.value;   
+		result := ret;
+	}
+}
+
+open class boa.Let {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa::Expr lhs := self.lhs;
+		boa_dynamic::EvalRes vlhs := lhs.eval(ctx);
+		boa_dynamic::Ctx nctx := boa_dynamic::Ctx.create();
+		nctx.env.putAll(ctx.env);
+		nctx.env.put(self.name, vlhs);
+		result := self.rhs.eval(nctx);
+	}
+}
+
+open class boa.Not {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vvalue := self.value.eval(ctx);
+		if(vvalue.oclIsKindOf(boa_dynamic::EvalBoolRes)) {
+			boa_dynamic::EvalBoolRes bvvalue := vvalue;
+			boa_dynamic::EvalBoolRes ret := boa_dynamic::EvalBoolRes.create();
+			ret.value := not bvvalue.value;
+			result := ret;
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class boa.Project {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vexp := self.exp.eval(ctx);
+		if(vexp.oclIsKindOf(boa_dynamic::EvalMapRes)) {
+			boa_dynamic::EvalMapRes mvexp := vexp;
+			if(mvexp.values.containsKey(self.name)) {
+				boa_dynamic::EvalRes x := mvexp.values.get(self.name);
+				
+				if(x.oclIsKindOf(boa_dynamic::EvalFunRes)) {
+					boa_dynamic::EvalFunRes func := x;			
+					result := self.project(func, mvexp); 
+				} else {
+					result := x;
+				}
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+	
+	def boa_dynamic::EvalRes project(boa_dynamic::EvalFunRes func, boa_dynamic::EvalMapRes mvexp) {			
+		boa_dynamic::EvalBoundFunRes ret := boa_dynamic::EvalBoundFunRes.create();
+		ret.exp := func.exp;
+		ret.ctx := func.ctx;
+		ret.name := func.name;
+		ret.th.replaceWith(mvexp.values);
+		result := ret;
+	}
+}
+
+open class boa.Seq {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		result := vrhs;
+	}
+}
+
+open class boa.Skip {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		result := boa_dynamic::EvalMapRes.create();
+	}
+}
+
+
+open class boa.This {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalMapRes ret := boa_dynamic::EvalMapRes.create();
+		ret.values.putAll(ctx.th);
+		result := ret;
+	}
+}
+
+open class boa.With {
+	def boa_dynamic::EvalRes eval(Ctx ctx) {
+		boa_dynamic::EvalRes vlhs := self.lhs.eval(ctx);
+		boa_dynamic::EvalRes vrhs := self.rhs.eval(ctx);
+		
+		if(vlhs.oclIsKindOf(boa_dynamic::EvalMapRes)) {
+			boa_dynamic::EvalMapRes mvlhs := vlhs;
+			if(vrhs.oclIsKindOf(boa_dynamic::EvalMapRes)) {
+				boa_dynamic::EvalMapRes mvrhs := vrhs;
+				boa_dynamic::EvalMapRes ret := boa_dynamic::EvalMapRes.create();
+				ret.values.putAll(mvlhs.values);
+				ret.values.putAll(mvrhs.values);
+				result := ret;
+				
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+		
+		
+	}
+}
+ 

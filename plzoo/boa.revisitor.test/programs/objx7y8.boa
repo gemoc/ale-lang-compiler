@@ -1,0 +1,14 @@
+File {
+	commands {
+		BObject {
+			fields {
+				Field x {
+					value Int { value 7 }
+				},
+				Field y {
+					value Int { value 8 }
+				}
+			}
+		}
+	}
+}

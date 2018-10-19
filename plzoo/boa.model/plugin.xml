@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated boa_dynamic -->
+      <package
+            uri="http://www.example.org/boa_dynamic"
+            class="boa_dynamic.Boa_dynamicPackage"
+            genModel="model/boa_dynamic.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated boa -->
+      <package
+            uri="http://www.example.org/boa"
+            class="boa.BoaPackage"
+            genModel="model/boa.genmodel"/>
+   </extension>
+
+</plugin>

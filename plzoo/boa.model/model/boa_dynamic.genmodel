@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/boa.model/src" modelPluginID="boa.model" modelName="Boa_dynamic"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>boa_dynamic.ecore</foreignModel>
+  <genPackages prefix="Boa_dynamic" disposableProviderFactory="true" ecorePackage="boa_dynamic.ecore#/">
+    <genClasses ecoreClass="boa_dynamic.ecore#//Ctx">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa_dynamic.ecore#//Ctx/env"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa_dynamic.ecore#//Ctx/th"/>
+    </genClasses>
+    <genClasses ecoreClass="boa_dynamic.ecore#//StringToEvalResMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa_dynamic.ecore#//StringToEvalResMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa_dynamic.ecore#//StringToEvalResMap/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="boa_dynamic.ecore#//EvalRes"/>
+    <genClasses ecoreClass="boa_dynamic.ecore#//EvalMapRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa_dynamic.ecore#//EvalMapRes/values"/>
+    </genClasses>
+    <genClasses ecoreClass="boa_dynamic.ecore#//EvalFunRes">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference boa_dynamic.ecore#//EvalFunRes/exp"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference boa_dynamic.ecore#//EvalFunRes/ctx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa_dynamic.ecore#//EvalFunRes/name"/>
+    </genClasses>
+    <genClasses ecoreClass="boa_dynamic.ecore#//EvalBoundFunRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa_dynamic.ecore#//EvalBoundFunRes/th"/>
+    </genClasses>
+    <genClasses ecoreClass="boa_dynamic.ecore#//EvalIntRes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa_dynamic.ecore#//EvalIntRes/value"/>
+    </genClasses>
+    <genClasses ecoreClass="boa_dynamic.ecore#//EvalBoolRes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa_dynamic.ecore#//EvalBoolRes/value"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Boa" ecorePackage="boa.ecore#/">
+    <genClasses ecoreClass="boa.ecore#//File">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//File/commands"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="boa.ecore#//TopLevelCmd"/>
+    <genClasses image="false" ecoreClass="boa.ecore#//Expr"/>
+    <genClasses ecoreClass="boa.ecore#//Def">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Def/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Def/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//App">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//App/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//App/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Var">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Var/name"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//This"/>
+    <genClasses ecoreClass="boa.ecore#//Bool">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Bool/value"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Int">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Int/value"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Skip"/>
+    <genClasses ecoreClass="boa.ecore#//Project">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Project/exp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Project/name"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//BObject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//BObject/fields"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Field/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Field/value"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Copy">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Copy/copy"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//With">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//With/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//With/rhs"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="boa.ecore#//ArithOp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//ArithOp/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//ArithOp/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Not">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Not/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="boa.ecore#//CmpOp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//CmpOp/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//CmpOp/rhs"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="boa.ecore#//BoolOp"/>
+    <genClasses ecoreClass="boa.ecore#//If">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//If/cond"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//If/thn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//If/els"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Let">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Let/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Let/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Let/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Fun">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Fun/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Fun/body"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Assign">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Assign/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Assign/rhs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//Assign/name"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//ArithOpPlus"/>
+    <genClasses ecoreClass="boa.ecore#//ArithOpMinus"/>
+    <genClasses ecoreClass="boa.ecore#//ArithOpTimes"/>
+    <genClasses ecoreClass="boa.ecore#//ArithOpDivide"/>
+    <genClasses ecoreClass="boa.ecore#//ArithOpRemainder"/>
+    <genClasses ecoreClass="boa.ecore#//BoolOpAnd">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//BoolOpAnd/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//BoolOpAnd/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//BoolOpOr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//BoolOpOr/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//BoolOpOr/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//Seq">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Seq/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Seq/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//CmpOpEqual"/>
+    <genClasses ecoreClass="boa.ecore#//CmpOpUnequal"/>
+    <genClasses ecoreClass="boa.ecore#//CmpOpLess"/>
+  </genPackages>
+</genmodel:GenModel>

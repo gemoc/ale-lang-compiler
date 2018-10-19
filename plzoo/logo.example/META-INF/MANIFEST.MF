@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: test
+Bundle-SymbolicName: logo.example
+Bundle-Version: 0.0.1.qualifier
+Export-Package: LogoProgram.impl,
+ LogoProgram.impl.operation,
+ LogoProgram.impl.operation.impl,
+ logo.example.service
+Require-Bundle: org.eclipse.emf.common,
+ org.eclipse.emf.ecoretools.ale.core,
+ logo.model,
+ org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0"

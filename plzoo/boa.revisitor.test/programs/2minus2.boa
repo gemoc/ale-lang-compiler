@@ -1,0 +1,8 @@
+File {
+	commands {
+		ArithOpMinus {
+			lhs Int { value 2}
+			rhs Int { value 2}
+		}
+	}
+}

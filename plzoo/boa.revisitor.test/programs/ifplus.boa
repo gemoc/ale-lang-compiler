@@ -1,0 +1,15 @@
+File {
+	commands {
+		ArithOpPlus {
+			lhs If {
+				cond CmpOpLess {
+					lhs Int { value 2 }
+					rhs Int { value 4 }
+				}
+				then Int { value 10 }
+				els Int { value 100 }
+			}
+			rhs Int { value 2 }
+		}
+	}
+}

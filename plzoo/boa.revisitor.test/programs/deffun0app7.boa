@@ -1,0 +1,13 @@
+File {
+	commands {
+		Def f {
+			expr Fun x {
+				body ArithOpPlus { lhs ArithOpPlus { lhs ArithOpTimes { lhs Var "x" rhs Var "x" } rhs Var "x" } rhs Int { value 1 }} 
+			}
+		},
+		App {
+			lhs Var "f"
+			rhs Int { value 7 }
+		}
+	}
+}

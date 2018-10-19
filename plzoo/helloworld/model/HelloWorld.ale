@@ -1,0 +1,15 @@
+behavior HelloWorld;
+
+open class HelloWorld {
+	
+	
+	override EString greeting () {
+		String msg := 'Hello world!';
+		result := msg;
+	}
+	
+	@main
+	def void entryPoint() {
+		self.greeting().log();
+	}
+}
