@@ -308,10 +308,19 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body) {
-		val t = body.type.solveType
-		// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
-		builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression.escapeDollar»)''', t, body.name,
-			t)
+
+		val inft = body.initialValue.infereType.head
+		if (inft instanceof SequenceType) {
+			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"), ClassName.get(inft.collectionType.type as Class<?>))
+			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression.escapeDollar»)''', t,
+				body.name, t)
+		} else {
+			val t = body.type.solveType
+			// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
+			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression.escapeDollar»)''', t,
+				body.name, t)
+
+		}
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, Block body) {
@@ -331,8 +340,13 @@ class ALERevisitorImplementationCompiler {
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ForEach body) {
 		val lt = infereType(body.collectionExpression).head as SequenceType
 
-		builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
-			(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
+		if (lt.collectionType.type instanceof EClass) {
+			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
+				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
+		} else {
+			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
+				lt.collectionType.type as Class<?>, body.variable).compileBody(body.body).endControlFlow
+		}
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, If body) {
@@ -384,6 +398,17 @@ class ALERevisitorImplementationCompiler {
 				} else {
 					'''/*FIRST «call»*/'''
 				}
+			case "filter":
+				if (call.type == CallType.COLLECTIONCALL) {
+					val t = infereType(call.arguments.get(1)).head
+					if (t instanceof EClassifierType) {
+						'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression», it -> it instanceof «call.arguments.get(1).compileExpression»)'''
+					} else {
+						'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)'''
+					}
+				} else {
+					'''/*FIRST «call»*/'''
+				}
 			case "isEmpty":
 				if (call.type == CallType.COLLECTIONCALL) {
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.isEmpty(«call.arguments.get(0).compileExpression»)'''
@@ -409,9 +434,8 @@ class ALERevisitorImplementationCompiler {
 						if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
 							'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
 						} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-							if (t.type instanceof EDataType &&
-								((t.type as EDataType).instanceClass == Boolean ||
-									(t.type as EDataType).instanceClass == boolean))
+							if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
+								(t.type as EDataType).instanceClass == boolean))
 								'''«call.arguments.head.compileExpression».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
 							else
 								'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
@@ -479,7 +503,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch String compileExpression(And call) {
-		'''/*AND*/'''
+		'''((«call.arguments.get(0).compileExpression») && («call.arguments.get(1).compileExpression»))'''
 	}
 
 	def dispatch String compileExpression(ErrorCall call) {
@@ -491,7 +515,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch String compileExpression(Or call) {
-		'''/*OR*/'''
+		'''((«call.arguments.get(0).compileExpression») || («call.arguments.get(1).compileExpression»))'''
 	}
 
 	def dispatch String compileExpression(ErrorConditional call) {
@@ -551,7 +575,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch String compileExpression(SequenceInExtensionLiteral call) {
-		'''/*SEQUENNCEINEXTNESIONLITERAL*/'''
+		'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.createEList(«FOR a : call.values SEPARATOR ', '»«a.compileExpression»«ENDFOR»)'''
 	}
 
 	def dispatch String compileExpression(SetInExtensionLiteral call) {

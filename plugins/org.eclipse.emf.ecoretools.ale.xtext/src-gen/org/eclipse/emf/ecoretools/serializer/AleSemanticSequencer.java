@@ -1361,7 +1361,7 @@ public class AleSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AlePackage.Literals.SEQ_TYPE__TYPE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeLiteralAccess().getTypeTypeLiteralParserRuleCall_4_2_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getTypeLiteralAccess().getTypeTypeLiteralParserRuleCall_4_3_0(), semanticObject.getType());
 		feeder.finish();
 	}
 	
@@ -1381,7 +1381,7 @@ public class AleSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AlePackage.Literals.SET_TYPE__TYPE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeLiteralAccess().getTypeTypeLiteralParserRuleCall_5_2_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getTypeLiteralAccess().getTypeTypeLiteralParserRuleCall_5_3_0(), semanticObject.getType());
 		feeder.finish();
 	}
 	

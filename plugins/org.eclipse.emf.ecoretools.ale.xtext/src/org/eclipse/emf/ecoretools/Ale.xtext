@@ -197,8 +197,8 @@ literal :    {String} value=STRING
 		   | {True}'true'
 		   | {False}'false'
 		   | {Null} 'null'
-		   | {Sequence} 'Sequence{' (params+=expression (',' params+=expression)*)? '}'
-		   | {OrderedSet} 'OrderedSet{' (params+=expression (',' params+=expression)*)? '}'
+		   | {Sequence} 'Sequence' '{' (params+=expression (',' params+=expression)*)? '}'
+		   | {OrderedSet} 'OrderedSet' '{' (params+=expression (',' params+=expression)*)? '}'
 		   | {Enum} Ident '::' Ident '::' Ident
 //		   | Ident '::' Ident ':'
 		   | typeLiteral
@@ -208,8 +208,8 @@ typeLiteral :   {StringType}'String'
 		      | {IntType}'Integer'
 		      | {RealType}'Real'
 		      | {BoolType}'Boolean'
-		      | {SeqType} 'Sequence(' type=typeLiteral')'
-		      | {SetType} 'OrderedSet(' type=typeLiteral')'
+		      | {SeqType} 'Sequence' '(' type=typeLiteral')'
+		      | {SetType} 'OrderedSet' '(' type=typeLiteral')'
 		      | classifierTypeRule
 		      | {ClassifierSetType}'{' types+=classifierTypeRule ('|' types+=classifierTypeRule)* '}'
 ;

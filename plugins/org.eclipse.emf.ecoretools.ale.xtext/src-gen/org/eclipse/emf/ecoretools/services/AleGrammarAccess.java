@@ -1987,25 +1987,27 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
 		private final Action cSequenceAction_6_0 = (Action)cGroup_6.eContents().get(0);
 		private final Keyword cSequenceKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
-		private final Group cGroup_6_2 = (Group)cGroup_6.eContents().get(2);
-		private final Assignment cParamsAssignment_6_2_0 = (Assignment)cGroup_6_2.eContents().get(0);
-		private final RuleCall cParamsExpressionParserRuleCall_6_2_0_0 = (RuleCall)cParamsAssignment_6_2_0.eContents().get(0);
-		private final Group cGroup_6_2_1 = (Group)cGroup_6_2.eContents().get(1);
-		private final Keyword cCommaKeyword_6_2_1_0 = (Keyword)cGroup_6_2_1.eContents().get(0);
-		private final Assignment cParamsAssignment_6_2_1_1 = (Assignment)cGroup_6_2_1.eContents().get(1);
-		private final RuleCall cParamsExpressionParserRuleCall_6_2_1_1_0 = (RuleCall)cParamsAssignment_6_2_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_6_3 = (Keyword)cGroup_6.eContents().get(3);
+		private final Keyword cLeftCurlyBracketKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
+		private final Group cGroup_6_3 = (Group)cGroup_6.eContents().get(3);
+		private final Assignment cParamsAssignment_6_3_0 = (Assignment)cGroup_6_3.eContents().get(0);
+		private final RuleCall cParamsExpressionParserRuleCall_6_3_0_0 = (RuleCall)cParamsAssignment_6_3_0.eContents().get(0);
+		private final Group cGroup_6_3_1 = (Group)cGroup_6_3.eContents().get(1);
+		private final Keyword cCommaKeyword_6_3_1_0 = (Keyword)cGroup_6_3_1.eContents().get(0);
+		private final Assignment cParamsAssignment_6_3_1_1 = (Assignment)cGroup_6_3_1.eContents().get(1);
+		private final RuleCall cParamsExpressionParserRuleCall_6_3_1_1_0 = (RuleCall)cParamsAssignment_6_3_1_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6_4 = (Keyword)cGroup_6.eContents().get(4);
 		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
 		private final Action cOrderedSetAction_7_0 = (Action)cGroup_7.eContents().get(0);
 		private final Keyword cOrderedSetKeyword_7_1 = (Keyword)cGroup_7.eContents().get(1);
-		private final Group cGroup_7_2 = (Group)cGroup_7.eContents().get(2);
-		private final Assignment cParamsAssignment_7_2_0 = (Assignment)cGroup_7_2.eContents().get(0);
-		private final RuleCall cParamsExpressionParserRuleCall_7_2_0_0 = (RuleCall)cParamsAssignment_7_2_0.eContents().get(0);
-		private final Group cGroup_7_2_1 = (Group)cGroup_7_2.eContents().get(1);
-		private final Keyword cCommaKeyword_7_2_1_0 = (Keyword)cGroup_7_2_1.eContents().get(0);
-		private final Assignment cParamsAssignment_7_2_1_1 = (Assignment)cGroup_7_2_1.eContents().get(1);
-		private final RuleCall cParamsExpressionParserRuleCall_7_2_1_1_0 = (RuleCall)cParamsAssignment_7_2_1_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_7_3 = (Keyword)cGroup_7.eContents().get(3);
+		private final Keyword cLeftCurlyBracketKeyword_7_2 = (Keyword)cGroup_7.eContents().get(2);
+		private final Group cGroup_7_3 = (Group)cGroup_7.eContents().get(3);
+		private final Assignment cParamsAssignment_7_3_0 = (Assignment)cGroup_7_3.eContents().get(0);
+		private final RuleCall cParamsExpressionParserRuleCall_7_3_0_0 = (RuleCall)cParamsAssignment_7_3_0.eContents().get(0);
+		private final Group cGroup_7_3_1 = (Group)cGroup_7_3.eContents().get(1);
+		private final Keyword cCommaKeyword_7_3_1_0 = (Keyword)cGroup_7_3_1.eContents().get(0);
+		private final Assignment cParamsAssignment_7_3_1_1 = (Assignment)cGroup_7_3_1.eContents().get(1);
+		private final RuleCall cParamsExpressionParserRuleCall_7_3_1_1_0 = (RuleCall)cParamsAssignment_7_3_1_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_7_4 = (Keyword)cGroup_7.eContents().get(4);
 		private final Group cGroup_8 = (Group)cAlternatives.eContents().get(8);
 		private final Action cEnumAction_8_0 = (Action)cGroup_8.eContents().get(0);
 		private final RuleCall cIdentTerminalRuleCall_8_1 = (RuleCall)cGroup_8.eContents().get(1);
@@ -2022,15 +2024,15 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		//	| {True} 'true'
 		//	| {False} 'false'
 		//	| {Null} 'null'
-		//	| {Sequence} 'Sequence{' (params+=expression (',' params+=expression)*)? '}'
-		//	| {OrderedSet} 'OrderedSet{' (params+=expression (',' params+=expression)*)? '}'
+		//	| {Sequence} 'Sequence' '{' (params+=expression (',' params+=expression)*)? '}'
+		//	| {OrderedSet} 'OrderedSet' '{' (params+=expression (',' params+=expression)*)? '}'
 		//	| {Enum} Ident '::' Ident '::' Ident
 		//	//		   | Ident '::' Ident ':'
 		//	| typeLiteral;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{String} value=STRING | {Int} value=INT | {Real} value=Real | {True} 'true' | {False} 'false' | {Null} 'null' |
-		//{Sequence} 'Sequence{' (params+=expression (',' params+=expression)*)? '}' | {OrderedSet} 'OrderedSet{'
+		//{Sequence} 'Sequence' '{' (params+=expression (',' params+=expression)*)? '}' | {OrderedSet} 'OrderedSet' '{'
 		//(params+=expression (',' params+=expression)*)? '}' | {Enum} Ident '::' Ident '::' Ident //		   | Ident '::' Ident ':'
 		//| typeLiteral
 		public Alternatives getAlternatives() { return cAlternatives; }
@@ -2098,71 +2100,77 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		//'null'
 		public Keyword getNullKeyword_5_1() { return cNullKeyword_5_1; }
 		
-		//{Sequence} 'Sequence{' (params+=expression (',' params+=expression)*)? '}'
+		//{Sequence} 'Sequence' '{' (params+=expression (',' params+=expression)*)? '}'
 		public Group getGroup_6() { return cGroup_6; }
 		
 		//{Sequence}
 		public Action getSequenceAction_6_0() { return cSequenceAction_6_0; }
 		
-		//'Sequence{'
+		//'Sequence'
 		public Keyword getSequenceKeyword_6_1() { return cSequenceKeyword_6_1; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_6_2() { return cLeftCurlyBracketKeyword_6_2; }
+		
 		//(params+=expression (',' params+=expression)*)?
-		public Group getGroup_6_2() { return cGroup_6_2; }
+		public Group getGroup_6_3() { return cGroup_6_3; }
 		
 		//params+=expression
-		public Assignment getParamsAssignment_6_2_0() { return cParamsAssignment_6_2_0; }
+		public Assignment getParamsAssignment_6_3_0() { return cParamsAssignment_6_3_0; }
 		
 		//expression
-		public RuleCall getParamsExpressionParserRuleCall_6_2_0_0() { return cParamsExpressionParserRuleCall_6_2_0_0; }
+		public RuleCall getParamsExpressionParserRuleCall_6_3_0_0() { return cParamsExpressionParserRuleCall_6_3_0_0; }
 		
 		//(',' params+=expression)*
-		public Group getGroup_6_2_1() { return cGroup_6_2_1; }
+		public Group getGroup_6_3_1() { return cGroup_6_3_1; }
 		
 		//','
-		public Keyword getCommaKeyword_6_2_1_0() { return cCommaKeyword_6_2_1_0; }
+		public Keyword getCommaKeyword_6_3_1_0() { return cCommaKeyword_6_3_1_0; }
 		
 		//params+=expression
-		public Assignment getParamsAssignment_6_2_1_1() { return cParamsAssignment_6_2_1_1; }
+		public Assignment getParamsAssignment_6_3_1_1() { return cParamsAssignment_6_3_1_1; }
 		
 		//expression
-		public RuleCall getParamsExpressionParserRuleCall_6_2_1_1_0() { return cParamsExpressionParserRuleCall_6_2_1_1_0; }
+		public RuleCall getParamsExpressionParserRuleCall_6_3_1_1_0() { return cParamsExpressionParserRuleCall_6_3_1_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_6_3() { return cRightCurlyBracketKeyword_6_3; }
+		public Keyword getRightCurlyBracketKeyword_6_4() { return cRightCurlyBracketKeyword_6_4; }
 		
-		//{OrderedSet} 'OrderedSet{' (params+=expression (',' params+=expression)*)? '}'
+		//{OrderedSet} 'OrderedSet' '{' (params+=expression (',' params+=expression)*)? '}'
 		public Group getGroup_7() { return cGroup_7; }
 		
 		//{OrderedSet}
 		public Action getOrderedSetAction_7_0() { return cOrderedSetAction_7_0; }
 		
-		//'OrderedSet{'
+		//'OrderedSet'
 		public Keyword getOrderedSetKeyword_7_1() { return cOrderedSetKeyword_7_1; }
 		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_7_2() { return cLeftCurlyBracketKeyword_7_2; }
+		
 		//(params+=expression (',' params+=expression)*)?
-		public Group getGroup_7_2() { return cGroup_7_2; }
+		public Group getGroup_7_3() { return cGroup_7_3; }
 		
 		//params+=expression
-		public Assignment getParamsAssignment_7_2_0() { return cParamsAssignment_7_2_0; }
+		public Assignment getParamsAssignment_7_3_0() { return cParamsAssignment_7_3_0; }
 		
 		//expression
-		public RuleCall getParamsExpressionParserRuleCall_7_2_0_0() { return cParamsExpressionParserRuleCall_7_2_0_0; }
+		public RuleCall getParamsExpressionParserRuleCall_7_3_0_0() { return cParamsExpressionParserRuleCall_7_3_0_0; }
 		
 		//(',' params+=expression)*
-		public Group getGroup_7_2_1() { return cGroup_7_2_1; }
+		public Group getGroup_7_3_1() { return cGroup_7_3_1; }
 		
 		//','
-		public Keyword getCommaKeyword_7_2_1_0() { return cCommaKeyword_7_2_1_0; }
+		public Keyword getCommaKeyword_7_3_1_0() { return cCommaKeyword_7_3_1_0; }
 		
 		//params+=expression
-		public Assignment getParamsAssignment_7_2_1_1() { return cParamsAssignment_7_2_1_1; }
+		public Assignment getParamsAssignment_7_3_1_1() { return cParamsAssignment_7_3_1_1; }
 		
 		//expression
-		public RuleCall getParamsExpressionParserRuleCall_7_2_1_1_0() { return cParamsExpressionParserRuleCall_7_2_1_1_0; }
+		public RuleCall getParamsExpressionParserRuleCall_7_3_1_1_0() { return cParamsExpressionParserRuleCall_7_3_1_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_7_3() { return cRightCurlyBracketKeyword_7_3; }
+		public Keyword getRightCurlyBracketKeyword_7_4() { return cRightCurlyBracketKeyword_7_4; }
 		
 		//{Enum} Ident '::' Ident '::' Ident
 		public Group getGroup_8() { return cGroup_8; }
@@ -2206,15 +2214,17 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
 		private final Action cSeqTypeAction_4_0 = (Action)cGroup_4.eContents().get(0);
 		private final Keyword cSequenceKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cTypeAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cTypeTypeLiteralParserRuleCall_4_2_0 = (RuleCall)cTypeAssignment_4_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final Assignment cTypeAssignment_4_3 = (Assignment)cGroup_4.eContents().get(3);
+		private final RuleCall cTypeTypeLiteralParserRuleCall_4_3_0 = (RuleCall)cTypeAssignment_4_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4_4 = (Keyword)cGroup_4.eContents().get(4);
 		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
 		private final Action cSetTypeAction_5_0 = (Action)cGroup_5.eContents().get(0);
 		private final Keyword cOrderedSetKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cTypeAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cTypeTypeLiteralParserRuleCall_5_2_0 = (RuleCall)cTypeAssignment_5_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
+		private final Assignment cTypeAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
+		private final RuleCall cTypeTypeLiteralParserRuleCall_5_3_0 = (RuleCall)cTypeAssignment_5_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5_4 = (Keyword)cGroup_5.eContents().get(4);
 		private final RuleCall cClassifierTypeRuleParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final Group cGroup_7 = (Group)cAlternatives.eContents().get(7);
 		private final Action cClassifierSetTypeAction_7_0 = (Action)cGroup_7.eContents().get(0);
@@ -2232,14 +2242,14 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		//	| {IntType} 'Integer'
 		//	| {RealType} 'Real'
 		//	| {BoolType} 'Boolean'
-		//	| {SeqType} 'Sequence(' type=typeLiteral ')'
-		//	| {SetType} 'OrderedSet(' type=typeLiteral ')'
+		//	| {SeqType} 'Sequence' '(' type=typeLiteral ')'
+		//	| {SetType} 'OrderedSet' '(' type=typeLiteral ')'
 		//	| classifierTypeRule
 		//	| {ClassifierSetType} '{' types+=classifierTypeRule ('|' types+=classifierTypeRule)* '}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{StringType} 'String' | {IntType} 'Integer' | {RealType} 'Real' | {BoolType} 'Boolean' | {SeqType} 'Sequence('
-		//type=typeLiteral ')' | {SetType} 'OrderedSet(' type=typeLiteral ')' | classifierTypeRule | {ClassifierSetType} '{'
+		//{StringType} 'String' | {IntType} 'Integer' | {RealType} 'Real' | {BoolType} 'Boolean' | {SeqType} 'Sequence' '('
+		//type=typeLiteral ')' | {SetType} 'OrderedSet' '(' type=typeLiteral ')' | classifierTypeRule | {ClassifierSetType} '{'
 		//types+=classifierTypeRule ('|' types+=classifierTypeRule)* '}'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
@@ -2279,41 +2289,47 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		//'Boolean'
 		public Keyword getBooleanKeyword_3_1() { return cBooleanKeyword_3_1; }
 		
-		//{SeqType} 'Sequence(' type=typeLiteral ')'
+		//{SeqType} 'Sequence' '(' type=typeLiteral ')'
 		public Group getGroup_4() { return cGroup_4; }
 		
 		//{SeqType}
 		public Action getSeqTypeAction_4_0() { return cSeqTypeAction_4_0; }
 		
-		//'Sequence('
+		//'Sequence'
 		public Keyword getSequenceKeyword_4_1() { return cSequenceKeyword_4_1; }
 		
+		//'('
+		public Keyword getLeftParenthesisKeyword_4_2() { return cLeftParenthesisKeyword_4_2; }
+		
 		//type=typeLiteral
-		public Assignment getTypeAssignment_4_2() { return cTypeAssignment_4_2; }
+		public Assignment getTypeAssignment_4_3() { return cTypeAssignment_4_3; }
 		
 		//typeLiteral
-		public RuleCall getTypeTypeLiteralParserRuleCall_4_2_0() { return cTypeTypeLiteralParserRuleCall_4_2_0; }
+		public RuleCall getTypeTypeLiteralParserRuleCall_4_3_0() { return cTypeTypeLiteralParserRuleCall_4_3_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_4_3() { return cRightParenthesisKeyword_4_3; }
+		public Keyword getRightParenthesisKeyword_4_4() { return cRightParenthesisKeyword_4_4; }
 		
-		//{SetType} 'OrderedSet(' type=typeLiteral ')'
+		//{SetType} 'OrderedSet' '(' type=typeLiteral ')'
 		public Group getGroup_5() { return cGroup_5; }
 		
 		//{SetType}
 		public Action getSetTypeAction_5_0() { return cSetTypeAction_5_0; }
 		
-		//'OrderedSet('
+		//'OrderedSet'
 		public Keyword getOrderedSetKeyword_5_1() { return cOrderedSetKeyword_5_1; }
 		
+		//'('
+		public Keyword getLeftParenthesisKeyword_5_2() { return cLeftParenthesisKeyword_5_2; }
+		
 		//type=typeLiteral
-		public Assignment getTypeAssignment_5_2() { return cTypeAssignment_5_2; }
+		public Assignment getTypeAssignment_5_3() { return cTypeAssignment_5_3; }
 		
 		//typeLiteral
-		public RuleCall getTypeTypeLiteralParserRuleCall_5_2_0() { return cTypeTypeLiteralParserRuleCall_5_2_0; }
+		public RuleCall getTypeTypeLiteralParserRuleCall_5_3_0() { return cTypeTypeLiteralParserRuleCall_5_3_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_5_3() { return cRightParenthesisKeyword_5_3; }
+		public Keyword getRightParenthesisKeyword_5_4() { return cRightParenthesisKeyword_5_4; }
 		
 		//classifierTypeRule
 		public RuleCall getClassifierTypeRuleParserRuleCall_6() { return cClassifierTypeRuleParserRuleCall_6; }
@@ -2950,8 +2966,8 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 	//	| {True} 'true'
 	//	| {False} 'false'
 	//	| {Null} 'null'
-	//	| {Sequence} 'Sequence{' (params+=expression (',' params+=expression)*)? '}'
-	//	| {OrderedSet} 'OrderedSet{' (params+=expression (',' params+=expression)*)? '}'
+	//	| {Sequence} 'Sequence' '{' (params+=expression (',' params+=expression)*)? '}'
+	//	| {OrderedSet} 'OrderedSet' '{' (params+=expression (',' params+=expression)*)? '}'
 	//	| {Enum} Ident '::' Ident '::' Ident
 	//	//		   | Ident '::' Ident ':'
 	//	| typeLiteral;
@@ -2968,8 +2984,8 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 	//	| {IntType} 'Integer'
 	//	| {RealType} 'Real'
 	//	| {BoolType} 'Boolean'
-	//	| {SeqType} 'Sequence(' type=typeLiteral ')'
-	//	| {SetType} 'OrderedSet(' type=typeLiteral ')'
+	//	| {SeqType} 'Sequence' '(' type=typeLiteral ')'
+	//	| {SetType} 'OrderedSet' '(' type=typeLiteral ')'
 	//	| classifierTypeRule
 	//	| {ClassifierSetType} '{' types+=classifierTypeRule ('|' types+=classifierTypeRule)* '}';
 	public TypeLiteralElements getTypeLiteralAccess() {

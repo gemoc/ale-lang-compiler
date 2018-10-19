@@ -1,10 +1,19 @@
 package org.eclipse.emf.ecoretools.ale.compiler.lib;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.Function;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+
 public class CollectionService {
+
+	public static <T> EList<T> createEList(T... ts) {
+		return new BasicEList<>(Arrays.asList(ts));
+	}
+
 	public static <T> Iterable<T> select(final Iterable<T> collection, final Function<? super T, Boolean> filter) {
 		final ArrayList<T> ret = new ArrayList<>();
 		for (final T e : collection) {
