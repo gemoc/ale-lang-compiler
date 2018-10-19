@@ -81,6 +81,7 @@ import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.xbase.lib.Functions.Function0
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
+import org.eclipse.xtext.EcoreUtil2
 
 class ALERevisitorImplementationCompiler {
 	val IQueryEnvironment queryEnvironment
@@ -452,7 +453,10 @@ class ALERevisitorImplementationCompiler {
 					} else {
 
 						// TODO: better identification of the caller in order to route to a $ operation or a service.
-						val t = call.arguments.head.infereType.head
+						val openClazz = EcoreUtil2.getContainerOfType(call, ExtendedClass)
+						val argumentsh = call.arguments.head
+						val ts = argumentsh.infereType
+						val t = ts.head
 						val re = resolved.filter [
 							if (t.type instanceof EClass) {
 								val tecls = t.type as EClass
@@ -626,7 +630,9 @@ class ALERevisitorImplementationCompiler {
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
 		syntax.allClasses.map [ eClass |
-			val aleClass = aleClasses.filter[it.name == eClass.name].head
+			val aleClass = aleClasses.filter [
+				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
+			].head
 			val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.contains(eClass)].values.map[value].map [
 				it.genPackages.map[it.genClasses].flatten
 			].flatten.filter[it.ecoreClass == eClass].head
@@ -689,7 +695,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def allMethods(ExtendedClass aleClass) {
-		aleClass.allParents.map[
+		aleClass.allParents.map [
 			it.methods
 		].flatten
 	}
@@ -697,7 +703,7 @@ class ALERevisitorImplementationCompiler {
 	def allParents(ExtendedClass aleClass) {
 		val ecls = resolved.filter[it.alexCls == aleClass].head.eCls
 
-		resolved.filter[it.eCls == ecls || it.eCls.isSuperTypeOf(ecls)].map[
+		resolved.filter[it.eCls == ecls || it.eCls.isSuperTypeOf(ecls)].map [
 			it.alexCls
 		].filter[it !== null]
 	}
