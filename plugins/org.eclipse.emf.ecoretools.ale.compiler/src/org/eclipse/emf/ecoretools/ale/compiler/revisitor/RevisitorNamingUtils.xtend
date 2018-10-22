@@ -1,10 +1,10 @@
-package org.eclipse.emf.ecoretools.ale.compiler
+package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
-class NamingUtils {
+class RevisitorNamingUtils {
 
 	def String getRevisitorPackageFqn(EPackage pkg) '''«pkg?.name».revisitor'''
 

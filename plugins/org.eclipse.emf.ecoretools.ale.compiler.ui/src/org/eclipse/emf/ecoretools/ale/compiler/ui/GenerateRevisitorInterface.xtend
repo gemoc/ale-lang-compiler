@@ -6,6 +6,10 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.IAdaptable
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.core.runtime.Path
+import org.eclipse.e4.core.services.log.Logger
+import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.RevisitorInterfaceGenerator
+import org.eclipse.emf.ecoretools.ale.compiler.revisitor.RevisitorNamingUtils
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.ISelection
@@ -14,17 +18,13 @@ import org.eclipse.swt.widgets.Shell
 import org.eclipse.ui.IObjectActionDelegate
 import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.PlatformUI
+import org.eclipse.emf.ecoretools.ale.compiler.AlexException
 import java.io.IOException
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.compiler.NamingUtils
-import org.eclipse.emf.ecoretools.ale.compiler.RevisitorInterfaceGenerator
-import org.eclipse.e4.core.services.log.Logger
-import org.eclipse.emf.ecoretools.ale.compiler.AlexException
 
 class GenerateRevisitorInterface implements IObjectActionDelegate {
 	extension EcoreUtils = new EcoreUtils()
-	extension NamingUtils = new NamingUtils()
+	extension RevisitorNamingUtils = new RevisitorNamingUtils()
 	RevisitorInterfaceGenerator generator = new RevisitorInterfaceGenerator()
 	Shell shell
 	IFile selectedIFile

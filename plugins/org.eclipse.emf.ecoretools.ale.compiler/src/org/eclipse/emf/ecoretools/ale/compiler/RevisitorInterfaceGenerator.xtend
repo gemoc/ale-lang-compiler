@@ -6,9 +6,10 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.compiler.revisitor.RevisitorNamingUtils
 
 class RevisitorInterfaceGenerator {
-	extension NamingUtils = new NamingUtils()
+	extension RevisitorNamingUtils = new RevisitorNamingUtils()
 	extension EcoreUtils = new EcoreUtils()
 
 	def allClassesCompl(EPackage pkg) {

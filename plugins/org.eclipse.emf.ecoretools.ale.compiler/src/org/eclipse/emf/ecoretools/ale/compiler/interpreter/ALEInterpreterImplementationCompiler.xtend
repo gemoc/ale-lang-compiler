@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.compiler.NamingUtils
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
@@ -36,7 +35,6 @@ class ALEInterpreterImplementationCompiler {
 		GenClass genCls
 	}
 
-	extension NamingUtils = new NamingUtils
 	extension EcoreUtils = new EcoreUtils
 
 	var List<ParseResult<ModelUnit>> parsedSemantics
@@ -119,9 +117,9 @@ class ALEInterpreterImplementationCompiler {
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
 
 		resolved = resolve(aleClasses, syntax)
-		
-		syntaxes.forEach[key, ePackage|
-			
+
+		syntaxes.forEach [ key, ePackage |
+			new FactoryInterfaceCompiler().compileFactoryInterface(ePackage.key, compileDirectory)
 		]
 	}
 

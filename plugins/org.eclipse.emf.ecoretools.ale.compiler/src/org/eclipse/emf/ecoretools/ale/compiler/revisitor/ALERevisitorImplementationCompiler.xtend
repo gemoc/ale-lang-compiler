@@ -54,7 +54,6 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.compiler.NamingUtils
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
@@ -93,7 +92,7 @@ class ALERevisitorImplementationCompiler {
 		GenClass genCls
 	}
 
-	extension NamingUtils = new NamingUtils
+	extension RevisitorNamingUtils = new RevisitorNamingUtils
 	extension EcoreUtils = new EcoreUtils
 
 	var List<ParseResult<ModelUnit>> parsedSemantics
