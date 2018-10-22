@@ -42,7 +42,7 @@ class EClassInterfaceCompiler {
 			val rt = field.EGenericType.ERawType.scopedInterfaceTypeRef
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val fieldType = if(isMultiple) ParameterizedTypeName.get(ClassName.get(EList), rt) else rt
-			val setter = if (isMultiple) {
+			val setter = if (!isMultiple) {
 					#[
 						MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType,
 							field.name).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build]

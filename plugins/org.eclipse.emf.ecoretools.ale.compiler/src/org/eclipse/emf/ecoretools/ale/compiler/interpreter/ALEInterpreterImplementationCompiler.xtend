@@ -123,6 +123,7 @@ class ALEInterpreterImplementationCompiler {
 		val pimplc = new PackageImplementationCompiler
 		
 		val eic = new EClassInterfaceCompiler
+		val eimplc = new EClassImplementationCompiler
 
 		// TODO: generate ecore + genmodel !
 		syntaxes.forEach [ key, pairEPackageGenModel |
@@ -136,6 +137,7 @@ class ALEInterpreterImplementationCompiler {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
 				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory)
+				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory)
 			}
 
 		]
