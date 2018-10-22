@@ -26,7 +26,7 @@ class FactoryInterfaceCompiler {
 				MethodSpec.methodBuilder('''create«it.name.toFirstUpper»''').returns(
 					ClassName.get(it.classInterfacePackageName, it.classInterfaceClassName)).addModifiers(
 					Modifier.ABSTRACT, Modifier.PUBLIC).build
-			]).build
+			]).addModifiers(Modifier.PUBLIC).build
 
 		val javaFile = JavaFile.builder(abstractSyntax.factoryInterfacePackageName, factory).build
 

@@ -30,7 +30,7 @@ class ALEInterpreterImplementationCompiler {
 
 	@Data
 	static class ResolvedClass {
-		ExtendedClass alexCls
+		ExtendedClass aleCls
 		public EClass eCls
 		GenClass genCls
 	}
@@ -113,21 +113,26 @@ class ALEInterpreterImplementationCompiler {
 
 		// load all syntaxes in a cache
 		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
-
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-
 		resolved = resolve(aleClasses, syntax)
 
 		val fic = new FactoryInterfaceCompiler
 		val fimplc = new FactoryImplementationCompiler
 		val pic = new PackageInterfaceCompiler
-		
+		val eic = new EClassInterfaceCompiler
+
 		// TODO: generate ecore + genmodel !
-		
-		syntaxes.forEach [ key, ePackage |
-			fic.compileFactoryInterface(ePackage.key, compileDirectory)
-			pic.compilePackageInterface(ePackage.key, compileDirectory)
-			fimplc.compileFactoryImplementation(ePackage.key, compileDirectory)
+		syntaxes.forEach [ key, pairEPackageGenModel |
+			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory)
+			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory)
+
+			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
+				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
+					head
+				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory)
+			}
+
+			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory)
 		]
 	}
 
