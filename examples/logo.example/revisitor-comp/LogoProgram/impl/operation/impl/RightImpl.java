@@ -57,6 +57,7 @@ public class RightImpl extends PrimitiveImpl implements Right {
     double result;
     double angle = ((double)rev.$(this.obj.getAngle()).eval(turtle));
     rev.$(turtle).rotate(-(angle));
+    result = 0.0;
     return result;
   }
 }

@@ -39,7 +39,6 @@ import LogoProgram.impl.operation.Turtle;
 import LogoProgram.impl.operation.UnaryExpression;
 import LogoProgram.impl.operation.Variable;
 import LogoProgram.impl.operation.While;
-import java.lang.RuntimeException;
 import kmLogo.revisitor.KmLogoRevisitor;
 
 public class ProcCallImpl extends ExpressionImpl implements ProcCall {
@@ -61,9 +60,9 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     int i = ((int)1);
     for(kmLogo.Expression exp: this.obj.getActualArgs()) {
       kmLogo.Variable newVar = ((kmLogo.Variable)kmLogo.KmLogoFactory.eINSTANCE.createVariable());
-      newVar.setName(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@1127a793 (serviceName: at, type: COLLECTIONCALL)*/.getName());
+      newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.obj.getDeclaration().getArgs(), i).getName());
       newVar.setValue(rev.$(exp).eval(turtle));
-      newFrame.add(newVar);
+      newFrame.getVariables().add(newVar);
       i = (i) + (1);
     }
     turtle.getCallStack().getFrames().add(newFrame);
@@ -71,7 +70,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     for(kmLogo.Instruction instr: this.obj.getDeclaration().getInstructions()) {
       result = rev.$(instr).eval(turtle);
     }
-    throw new RuntimeException("FeatureRemove not implemented");
+    turtle.getCallStack().getFrames().remove(newFrame);
     return result;
   }
 }

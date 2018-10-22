@@ -3,17 +3,21 @@ package org.eclipse.emf.ecoretools.ale.compiler.ui;
 import java.io.FileNotFoundException;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.emf.ecoretools.ale.compiler.ALERevisitorImplementationCompiler;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.ecoretools.ale.compiler.ALEImplementationCompiler;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-public class GenerateTruffleImplementation implements IObjectActionDelegate {
-
-	private final ALERevisitorImplementationCompiler compiler = new ALERevisitorImplementationCompiler();
+public class GenerateAleImplementation implements IObjectActionDelegate {
 
 	private IFile selectedIFile;
 
@@ -23,11 +27,16 @@ public class GenerateTruffleImplementation implements IObjectActionDelegate {
 
 	@Override
 	public void run(final IAction action) {
-//		try {
-//			//compiler.compile(this.selectedIFile.getLocation().toOSString());
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			IPath location = this.selectedIFile.getLocation();
+			new ALEImplementationCompiler().compile(location.toOSString(),
+					selectedIFile.getProject().getLocation().toFile(), selectedIFile.getProject().getName());
+			selectedIFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
 
 	}
 

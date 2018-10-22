@@ -54,13 +54,17 @@ public class LogoProgramImpl implements LogoProgram {
 
   public kmLogo.Turtle eval() {
     kmLogo.Turtle result;
+    long start = ((long)logo.example.service.TimeService.time(this.obj));
     kmLogo.Turtle turtle = ((kmLogo.Turtle)rev.$(this.obj).createTurtle());
     result = turtle;
     for(kmLogo.Instruction it: this.obj.getInstructions()) {
       rev.$(it).eval(turtle);
     }
     result = turtle;
-    rev.$(turtle).show();
+    long stop = ((long)logo.example.service.TimeService.time(this.obj));
+    long time = ((long)(stop) - (start));
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(time);
+    logo.example.service.Display.show(turtle);
     return result;
   }
 

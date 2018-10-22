@@ -27,10 +27,12 @@ public class Dsl {
 	String sourceFile;
 	List<String> allSyntaxes = new ArrayList<String>();
 	List<String> allSemantics = new ArrayList<String>();
+	private final Properties dslProp;
 
 	public Dsl(List<String> syntaxes, List<String> semantics) {
 		this.allSyntaxes.addAll(syntaxes);
 		this.allSemantics.addAll(semantics);
+		this.dslProp = new Properties();
 	}
 
 	public Dsl(String dslFile) throws FileNotFoundException {
@@ -40,16 +42,16 @@ public class Dsl {
 
 	public Dsl(InputStream input) {
 
-		Properties dslProp = new Properties();
+		this.dslProp = new Properties();
 		try {
-			dslProp.load(input);
+			getDslProp().load(input);
 			input.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		String allSyntaxes = (String) dslProp.get("syntax");
-		String allBehaviors = (String) dslProp.get("behavior");
+		String allSyntaxes = (String) getDslProp().get("syntax");
+		String allBehaviors = (String) getDslProp().get("behavior");
 
 		if (allSyntaxes != null && allBehaviors != null) {
 			String[] syntaxes = allSyntaxes.split(",");
@@ -98,5 +100,9 @@ public class Dsl {
 		}
 		return s.stream().collect(Collectors.joining("."));
 
+	}
+
+	public Properties getDslProp() {
+		return dslProp;
 	}
 }

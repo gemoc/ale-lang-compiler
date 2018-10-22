@@ -55,7 +55,7 @@ public class MultImpl extends BinaryExpImpl implements Mult {
 
   public double eval(kmLogo.Turtle turtle) {
     double result;
-    result = /*Call org.eclipse.acceleo.query.ast.impl.CallImpl@25cf712 (serviceName: mult, type: CALLSERVICE)*/;
+    result = (rev.$(this.obj.getLhs()).eval(turtle)) * (rev.$(this.obj.getRhs()).eval(turtle));
     return result;
   }
 }

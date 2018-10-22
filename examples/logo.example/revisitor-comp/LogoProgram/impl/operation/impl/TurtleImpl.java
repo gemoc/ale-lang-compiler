@@ -56,7 +56,7 @@ public class TurtleImpl implements Turtle {
     kmLogo.Point newPos = ((kmLogo.Point)kmLogo.KmLogoFactory.eINSTANCE.createPoint());
     newPos.setX((this.obj.getPosition().getX()) + (dx));
     newPos.setY((this.obj.getPosition().getY()) + (dy));
-    if(this.obj.getPenUp()) {
+    if(this.obj.isPenUp()) {
     }
     else {
       kmLogo.Segment newSegment = ((kmLogo.Segment)kmLogo.KmLogoFactory.eINSTANCE.createSegment());
@@ -71,7 +71,7 @@ public class TurtleImpl implements Turtle {
   }
 
   public void forward(double steps) {
-    rev.$(this.obj).move(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@6a17383d (serviceName: mult, type: CALLSERVICE)*/,/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@3c594a58 (serviceName: mult, type: CALLSERVICE)*/);
+    rev.$(this.obj).move((steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(this.obj.getHeading())),(steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.obj.getHeading())));
   }
 
   public void rotate(double angle) {
@@ -81,7 +81,7 @@ public class TurtleImpl implements Turtle {
       this.obj.setHeading(newAngle);
     }
     else {
-      if(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@17aa498e (serviceName: lessThan, type: CALLSERVICE)*/) {
+      if((newAngle) < (0.0)) {
         newAngle = (360.0) + (newAngle);
         this.obj.setHeading(newAngle);
       }

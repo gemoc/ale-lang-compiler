@@ -55,7 +55,7 @@ public class CosImpl extends UnaryExpressionImpl implements Cos {
 
   public double eval(kmLogo.Turtle turtle) {
     double result;
-    result = rev.$(rev.$(this.obj.getExpression()).eval(turtle)).cosinus();
+    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(rev.$(this.obj.getExpression()).eval(turtle));
     return result;
   }
 }

@@ -1,11 +1,13 @@
 behavior logo;
 
 use logo.example.service.Display;
+use logo.example.service.TimeService;
 
 open class LogoProgram {
 
 	@main
 	def Turtle eval() {
+		ELong start := self.time();
 		Turtle turtle :=  self.createTurtle();
 		result := turtle;
 		
@@ -13,6 +15,9 @@ open class LogoProgram {
 			it.eval(turtle);
 		}
 		result := turtle;
+		ELong stop := self.time();
+		ELong time := stop - start;
+		time.log();
 		turtle.show();
 		
 	}
@@ -62,7 +67,7 @@ open class Repeat {
 
 open class While {
 	def double eval(Turtle turtle) {
-		while(self.condition.eval(turtle) > 0){
+		while(self.condition.eval(turtle) > 0.0){
 			self.block.eval(turtle);
 		}
 		result := 0.0;
@@ -74,8 +79,12 @@ open class If {
 		if (self.condition.eval(turtle) != 0.0) {
 			result := self.thenPart.eval(turtle);
 		}
-		else{
-			result := self.elsePart.eval(turtle);
+		else {
+			if(self.elsePart != null) {
+				result := self.elsePart.eval(turtle);
+			} else {
+				result := 0.0;
+			}
 		}
 	}
 }
@@ -252,6 +261,7 @@ open class ProcDeclaration {
 
 open class ParameterCall {
 	def double eval(Turtle turtle){
+		result := 0.0;
 		for(frame in turtle.callStack.frames){
 			for(var in frame.variables){
 				if(var.name = self.parameter.name){
@@ -259,7 +269,6 @@ open class ParameterCall {
 				}
 			}
 		}
-		result := 0.0;
 	}
 }
 //--------------Context----------------------

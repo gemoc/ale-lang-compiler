@@ -55,7 +55,7 @@ public class LowerImpl extends BinaryExpImpl implements Lower {
 
   public double eval(kmLogo.Turtle turtle) {
     double result;
-    if(/*Call org.eclipse.acceleo.query.ast.impl.CallImpl@17d4a31e (serviceName: lessThan, type: CALLSERVICE)*/) {
+    if((rev.$(this.obj.getLhs()).eval(turtle)) < (rev.$(this.obj.getRhs()).eval(turtle))) {
       result = 1.0;
     }
     else {

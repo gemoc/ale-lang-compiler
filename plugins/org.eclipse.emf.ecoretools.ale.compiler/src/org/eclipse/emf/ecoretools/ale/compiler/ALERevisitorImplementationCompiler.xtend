@@ -9,13 +9,11 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
-import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.util.Comparator
 import java.util.List
 import java.util.Map
 import java.util.function.Function
-import javax.lang.model.element.Modifier
 import org.eclipse.acceleo.query.ast.And
 import org.eclipse.acceleo.query.ast.AstPackage
 import org.eclipse.acceleo.query.ast.BooleanLiteral
@@ -46,6 +44,7 @@ import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.acceleo.query.validation.type.EClassifierType
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
@@ -55,11 +54,11 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
-import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ConditionalBlock
 import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
@@ -79,23 +78,11 @@ import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
-import org.eclipse.xtext.xbase.lib.Functions.Function0
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.xbase.lib.Functions.Function0
+import javax.lang.model.element.Modifier
 
 class ALERevisitorImplementationCompiler {
-	val IQueryEnvironment queryEnvironment
-
-	extension NamingUtils = new NamingUtils
-	extension EcoreUtils = new EcoreUtils
-
-	var List<ParseResult<ModelUnit>> parsedSemantics
-	var JavaExtensionsManager javaExtensions
-	var Map<String, Class<?>> registeredServices
-	var Map<String, Pair<EPackage, GenModel>> syntaxes
-	var List<ResolvedClass> resolved
-
-	var WorkbenchDsl dsl
 
 	@Data
 	static class ResolvedClass {
@@ -104,34 +91,46 @@ class ALERevisitorImplementationCompiler {
 		GenClass genCls
 	}
 
-	new() {
-		this.queryEnvironment = createQueryEnvironment(false, null)
-		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
-		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-	}
+	extension NamingUtils = new NamingUtils
+	extension EcoreUtils = new EcoreUtils
 
-	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
-		val IQueryEnvironment newEnv = new ExtensionEnvironment()
-		newEnv.registerEPackage(EcorePackage.eINSTANCE)
-		newEnv.registerCustomClassMapping(EcorePackage.eINSTANCE.getEStringToStringMapEntry(),
-			EStringToStringMapEntryImpl)
-		newEnv
-	}
+	var List<ParseResult<ModelUnit>> parsedSemantics
+	val IQueryEnvironment queryEnvironment
+	val Map<String, Class<?>> registeredServices = newHashMap
+	val JavaExtensionsManager javaExtensions
+	var Map<String, Pair<EPackage, GenModel>> syntaxes
+	var Dsl dsl
+	var List<ResolvedClass> resolved
 
-	def void compile(String dslStr, File projectRoot, String projectName) throws FileNotFoundException {
-		dsl = new WorkbenchDsl(dslStr)
-		this.parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
+	def compile(String projectName, File projectRoot, Dsl dsl) {
+		this.dsl = dsl
+		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
 		registerServices(projectName)
 
 		// must be last !
-		this.compile(projectRoot)
+		compile(projectRoot)
 	}
 
 	def registerServices(String projectName) {
-		registeredServices = newHashMap
+
+		javaExtensions.updateScope(newHashSet(), #{projectName});
+
+		val services = parsedSemantics.map[root].filter[it !== null].map[services].flatten + #[TrigoServices.name]
+		registerServices(services.toList);
+	}
+
+	def registerServices(List<String> services) {
+		services.forEach[javaExtensions.addImport(it)]
+		javaExtensions.reloadIfNeeded();
+	}
+
+	new() {
+		this.queryEnvironment = createQueryEnvironment(false, null)
+		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
+		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
 		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
-		this.javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
+		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
 
 			override loaded(String arg0, Class<?> arg1) {
 				registeredServices.put(arg0, arg1)
@@ -146,16 +145,14 @@ class ALERevisitorImplementationCompiler {
 			}
 
 		});
-
-		javaExtensions.updateScope(newHashSet(), #{projectName});
-
-		val services = parsedSemantics.map[root].filter[it !== null].map[services].flatten + #[TrigoServices.name]
-		registerServices(services.toList);
 	}
 
-	def registerServices(List<String> services) {
-		services.forEach[javaExtensions.addImport(it)]
-		javaExtensions.reloadIfNeeded();
+	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
+		val IQueryEnvironment newEnv = new ExtensionEnvironment()
+		newEnv.registerEPackage(EcorePackage.eINSTANCE)
+		newEnv.registerCustomClassMapping(EcorePackage.eINSTANCE.getEStringToStringMapEntry(),
+			EStringToStringMapEntryImpl)
+		newEnv
 	}
 
 	def private void compile(File projectRoot) {
@@ -479,7 +476,9 @@ class ALERevisitorImplementationCompiler {
 									flatten.toList
 
 								val candidate = methods.filter[java.lang.reflect.Modifier.isStatic(it.value.modifiers)].
-									filter[it.value.name == call.serviceName].head
+									filter [
+										it.value.name == call.serviceName
+									].head
 
 								if (candidate !== null) {
 									'''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
@@ -492,7 +491,9 @@ class ALERevisitorImplementationCompiler {
 							val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten
 
 							val candidate = methods.filter[java.lang.reflect.Modifier.isStatic(it.value.modifiers)].
-								filter[it.value.name == call.serviceName].head
+								filter [
+									it.value.name == call.serviceName
+								].head
 
 							if (candidate !== null) {
 								'''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
@@ -715,4 +716,5 @@ class ALERevisitorImplementationCompiler {
 			builder
 		}
 	}
+
 }

@@ -55,6 +55,7 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
 
   public double eval(kmLogo.Turtle turtle) {
     double result;
+    result = 0.0;
     for(kmLogo.StackFrame frame: turtle.getCallStack().getFrames()) {
       for(kmLogo.Variable var: frame.getVariables()) {
         if(java.util.Objects.equals((var.getName()), (this.obj.getParameter().getName()))) {

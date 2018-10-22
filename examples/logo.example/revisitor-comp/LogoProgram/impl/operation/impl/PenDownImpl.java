@@ -56,6 +56,7 @@ public class PenDownImpl extends PrimitiveImpl implements PenDown {
   public double eval(kmLogo.Turtle turtle) {
     double result;
     turtle.setPenUp(false);
+    result = 0.0;
     return result;
   }
 }

@@ -59,7 +59,12 @@ public class IfImpl extends ControlStructureImpl implements If {
       result = rev.$(this.obj.getThenPart()).eval(turtle);
     }
     else {
-      result = rev.$(this.obj.getElsePart()).eval(turtle);
+      if((this.obj.getElsePart()) != (null)) {
+        result = rev.$(this.obj.getElsePart()).eval(turtle);
+      }
+      else {
+        result = 0.0;
+      }
     }
     return result;
   }

@@ -60,6 +60,7 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
       rev.$(this.obj.getBlock()).eval(turtle);
       time = (time) - (1.0);
     }
+    result = 0.0;
     return result;
   }
 }

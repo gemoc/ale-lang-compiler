@@ -55,7 +55,7 @@ public class WhileImpl extends ControlStructureImpl implements While {
 
   public double eval(kmLogo.Turtle turtle) {
     double result;
-    while ((rev.$(this.obj.getCondition()).eval(turtle)) > (0)) {
+    while ((rev.$(this.obj.getCondition()).eval(turtle)) > (0.0)) {
       rev.$(this.obj.getBlock()).eval(turtle);
     }
     result = 0.0;
