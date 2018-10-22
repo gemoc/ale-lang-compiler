@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler
+package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.FieldSpec
@@ -14,6 +14,7 @@ import java.util.Comparator
 import java.util.List
 import java.util.Map
 import java.util.function.Function
+import javax.lang.model.element.Modifier
 import org.eclipse.acceleo.query.ast.And
 import org.eclipse.acceleo.query.ast.AstPackage
 import org.eclipse.acceleo.query.ast.BooleanLiteral
@@ -52,6 +53,8 @@ import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
+import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.NamingUtils
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
@@ -80,7 +83,6 @@ import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.xbase.lib.Functions.Function0
-import javax.lang.model.element.Modifier
 
 class ALERevisitorImplementationCompiler {
 
@@ -101,6 +103,28 @@ class ALERevisitorImplementationCompiler {
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	var Dsl dsl
 	var List<ResolvedClass> resolved
+
+	new() {
+		this.queryEnvironment = createQueryEnvironment(false, null)
+		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
+		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
+		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
+		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
+
+			override loaded(String arg0, Class<?> arg1) {
+				registeredServices.put(arg0, arg1)
+			}
+
+			override notFound(String arg0) {
+				throw new RuntimeException('''«arg0» not found during services registration''')
+			}
+
+			override unloaded(String arg0, Class<?> arg1) {
+				registeredServices.remove(arg0);
+			}
+
+		});
+	}
 
 	def compile(String projectName, File projectRoot, Dsl dsl) {
 		this.dsl = dsl
@@ -123,28 +147,6 @@ class ALERevisitorImplementationCompiler {
 	def registerServices(List<String> services) {
 		services.forEach[javaExtensions.addImport(it)]
 		javaExtensions.reloadIfNeeded();
-	}
-
-	new() {
-		this.queryEnvironment = createQueryEnvironment(false, null)
-		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
-		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
-		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
-
-			override loaded(String arg0, Class<?> arg1) {
-				registeredServices.put(arg0, arg1)
-			}
-
-			override notFound(String arg0) {
-				throw new RuntimeException('''«arg0» not found during services registration''')
-			}
-
-			override unloaded(String arg0, Class<?> arg1) {
-				registeredServices.remove(arg0);
-			}
-
-		});
 	}
 
 	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
