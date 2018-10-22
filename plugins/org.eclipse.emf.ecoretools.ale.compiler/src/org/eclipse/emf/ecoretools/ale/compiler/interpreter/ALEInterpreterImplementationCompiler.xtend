@@ -137,7 +137,7 @@ class ALEInterpreterImplementationCompiler {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
 				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory)
-				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory)
+				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved, registeredServices, dsl, parsedSemantics, queryEnvironment)
 			}
 
 		]

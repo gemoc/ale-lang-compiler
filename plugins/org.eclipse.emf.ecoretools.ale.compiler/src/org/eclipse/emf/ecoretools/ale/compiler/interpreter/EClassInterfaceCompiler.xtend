@@ -59,7 +59,6 @@ class EClassInterfaceCompiler {
 
 		val operations = if (aleClass !== null) {
 				aleClass.methods.map [ method |
-
 					val params = method.operationRef.EParameters.map [ param |
 						ParameterSpec.builder(param.EType.scopedInterfaceTypeRef, param.name).build
 					]
@@ -74,7 +73,7 @@ class EClassInterfaceCompiler {
 		val factory = TypeSpec.interfaceBuilder(eClass.classInterfaceClassName).addSuperinterface(EObject).
 			addSuperinterfaces(eClass.ESuperTypes.map [
 				ClassName.get(it.classInterfacePackageName, it.classInterfaceClassName)
-			]) // .addFields(attributesFields)
+			])
 			.addMethods(attributesMethods + referencesMethods + operations).addModifiers(Modifier.PUBLIC).build
 
 		val javaFile = JavaFile.builder(eClass.classInterfacePackageName, factory).build
