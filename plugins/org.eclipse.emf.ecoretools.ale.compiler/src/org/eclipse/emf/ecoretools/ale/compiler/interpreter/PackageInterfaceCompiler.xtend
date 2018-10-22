@@ -9,10 +9,10 @@ import java.io.File
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
-import java.util.List
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EStructuralFeature
+import com.squareup.javapoet.MethodSpec
 
 class PackageInterfaceCompiler {
 
@@ -67,15 +67,15 @@ class PackageInterfaceCompiler {
 			eReferenceFieldsLiterals + eAttributeFieldsLiterals).addModifiers(Modifier.PUBLIC, Modifier.STATIC).build
 			
 		val getterFields = allClasses.map[clazz|
-			FieldSpec.builder(EClass, '''get«clazz.name.toFirstUpper»''').addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).build
+			MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
 		]
 		
-		val Iterable<FieldSpec> getterReferencesFields = allClasses.map[clazz|clazz.EReferences.map[field|
-			FieldSpec.builder(EReference, '''get«field.name.normalizeUpperField(clazz.name).toFirstUpper»''').addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).build
+		val Iterable<MethodSpec> getterReferencesFields = allClasses.map[clazz|clazz.EReferences.map[field|
+			MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').returns(EReference).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
 		]].flatten
 
-		val Iterable<FieldSpec> getterAttributesFields = allClasses.map[clazz|clazz.EAttributes.map[field|
-			FieldSpec.builder(EAttribute, '''get«field.name.normalizeUpperField(clazz.name).toFirstUpper»''').addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).build
+		val Iterable<MethodSpec> getterAttributesFields = allClasses.map[clazz|clazz.EAttributes.map[field|
+			MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').returns(EAttribute).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
 		]].flatten
 		
 		val featureCountField = 
@@ -97,9 +97,8 @@ class PackageInterfaceCompiler {
 		}
 		
 		val package = TypeSpec.interfaceBuilder(abstractSyntax.packageInterfaceClassName).addSuperinterface(EPackage).
-			addFields(#[eInstanceField, eNSURIField, eNameField, eNSPrefixField, featureCountField] + classFields + getterFields + getterReferencesFields 
-				+ getterAttributesFields + fieldsAttributesFields
-			).addType(literalType).addModifiers(Modifier.PUBLIC).
+			addFields(#[eInstanceField, eNSURIField, eNameField, eNSPrefixField, featureCountField] + classFields +  fieldsAttributesFields
+			).addMethods(getterFields + getterReferencesFields + getterAttributesFields).addType(literalType).addModifiers(Modifier.PUBLIC).
 			build
 
 		val javaFile = JavaFile.builder(abstractSyntax.packageInterfacePackageName, package).build

@@ -22,7 +22,7 @@ class FactoryInterfaceCompiler {
 		val einstance = FieldSpec.builder(factoryInterfaceType, "eINSTANCE", Modifier.PUBLIC, Modifier.FINAL,
 			Modifier.STATIC).initializer('''$T.init()''', factoryImplType).build
 		val factory = TypeSpec.interfaceBuilder(abstractSyntax.factoryInterfaceClassName).addSuperinterface(EFactory).
-			addField(einstance).addMethods(abstractSyntax.allClasses.map [
+			addField(einstance).addMethods(abstractSyntax.allClasses.filter[!abstract].map [
 				MethodSpec.methodBuilder('''create«it.name.toFirstUpper»''').returns(
 					ClassName.get(it.classInterfacePackageName, it.classInterfaceClassName)).addModifiers(
 					Modifier.ABSTRACT, Modifier.PUBLIC).build

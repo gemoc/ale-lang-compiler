@@ -45,7 +45,7 @@ class FactoryImplementationCompiler {
 			return new «ctnf»Impl();
 		''', EPackage.Registry, packageInterfaceType, EcorePlugin).build
 
-		val createMethod = MethodSpec.methodBuilder("create").returns(EObject).addParameter(
+		val createMethod = MethodSpec.methodBuilder('create').returns(EObject).addParameter(
 			ParameterSpec.builder(EClass, 'eClass').build).addCode('''
 			switch (eClass.getClassifierID()) {
 			«FOR eClass : abstractSyntax.allClasses.filter[!it.abstract]»
@@ -55,7 +55,7 @@ class FactoryImplementationCompiler {
 			default:
 				throw new $2T("The class '" + eClass.getName() + "' is not a valid classifier");
 			}
-		''', packageInterfaceType, IllegalArgumentException).build
+		''', packageInterfaceType, IllegalArgumentException).addModifiers(Modifier.PUBLIC).build
 
 		val createMethods = abstractSyntax.allClasses.filter[!abstract].map [ eClass |
 			val classImplType = ClassName.get(eClass.classImplementationPackageName,
@@ -64,7 +64,7 @@ class FactoryImplementationCompiler {
 				ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName)).addCode('''
 				$1T ret = new $1T();
 				return ret;
-			''', classImplType).build
+			''', classImplType).addModifiers(Modifier.PUBLIC).build
 		]
 
 		val factory = TypeSpec.classBuilder(abstractSyntax.factoryImplementationClassName).superclass(EFactoryImpl).

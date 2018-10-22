@@ -118,13 +118,19 @@ class ALEInterpreterImplementationCompiler {
 
 		val fic = new FactoryInterfaceCompiler
 		val fimplc = new FactoryImplementationCompiler
+		
 		val pic = new PackageInterfaceCompiler
+		val pimplc = new PackageImplementationCompiler
+		
 		val eic = new EClassInterfaceCompiler
 
 		// TODO: generate ecore + genmodel !
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory)
+			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory)
+			
 			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory)
+			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory)
 
 			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
@@ -132,7 +138,6 @@ class ALEInterpreterImplementationCompiler {
 				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory)
 			}
 
-			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory)
 		]
 	}
 
