@@ -118,8 +118,16 @@ class ALEInterpreterImplementationCompiler {
 
 		resolved = resolve(aleClasses, syntax)
 
+		val fic = new FactoryInterfaceCompiler
+		val fimplc = new FactoryImplementationCompiler
+		val pic = new PackageInterfaceCompiler
+		
+		// TODO: generate ecore + genmodel !
+		
 		syntaxes.forEach [ key, ePackage |
-			new FactoryInterfaceCompiler().compileFactoryInterface(ePackage.key, compileDirectory)
+			fic.compileFactoryInterface(ePackage.key, compileDirectory)
+			pic.compilePackageInterface(ePackage.key, compileDirectory)
+			fimplc.compileFactoryImplementation(ePackage.key, compileDirectory)
 		]
 	}
 
