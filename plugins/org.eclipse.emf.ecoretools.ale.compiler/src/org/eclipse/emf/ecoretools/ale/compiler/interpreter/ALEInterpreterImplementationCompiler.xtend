@@ -116,6 +116,8 @@ class ALEInterpreterImplementationCompiler {
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
 		resolved = resolve(aleClasses, syntax)
 
+		val egc = new EcoreGenmodelCompiler
+
 		val fic = new FactoryInterfaceCompiler
 		val fimplc = new FactoryImplementationCompiler
 		
@@ -124,6 +126,8 @@ class ALEInterpreterImplementationCompiler {
 		
 		val eic = new EClassInterfaceCompiler
 		val eimplc = new EClassImplementationCompiler
+		
+		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath)
 
 		// TODO: generate ecore + genmodel !
 		syntaxes.forEach [ key, pairEPackageGenModel |

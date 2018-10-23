@@ -81,6 +81,7 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static javax.lang.model.element.Modifier.*
+import com.squareup.javapoet.TypeName
 
 class EClassImplementationCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
@@ -343,7 +344,10 @@ class EClassImplementationCompiler {
 		this.parsedSemantics = parsedSemantics
 		this.queryEnvironment = queryEnvironment
 		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass).
-			addMethods(aleClass.methods.map[compile(aleClass, eClass)]).addModifiers(PUBLIC).build
+			applyIfTrue(aleClass !== null, [
+				addMethods(
+				aleClass.methods.map[compile(aleClass, eClass)])
+			]).addModifiers(PUBLIC).build
 
 		val javaFile = JavaFile.builder(eClass.classImplementationPackageName, factory).build
 
@@ -352,10 +356,22 @@ class EClassImplementationCompiler {
 	}
 
 	def MethodSpec compile(Method method, ExtendedClass aleClass, EClass aClass) {
-		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).returnType(method.operationRef.EType).
+		val retType = if(method.operationRef.EType !== null) {if(method.operationRef.EType instanceof EClass && !(method.operationRef.EType.EPackage == EcorePackage.eINSTANCE)) {
+				ClassName.get((method.operationRef.EType as EClass).classInterfacePackageName, (method.operationRef.EType as EClass).name)
+			} else {
+				TypeName.get(method.operationRef.EType.instanceClass)
+			
+			}} else null
+		
+		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [returns(retType)]).
 			addParameters(method.operationRef.EParameters.map [
 				if (it.EType.instanceClass !== null) {
-					ParameterSpec.builder(it.EType.instanceClass, it.name).build
+					if(it.EType instanceof EClass && !(it.EType.EPackage == EcorePackage.eINSTANCE)) {
+						ParameterSpec.builder(ClassName.get((it.EType as EClass).classInterfacePackageName, (it.EType as EClass).name), it.name).build
+					} else {
+						ParameterSpec.builder(it.EType.instanceClass, it.name).build
+					
+					}
 				} else {
 					ParameterSpec.builder(it.EType.resolveType, it.name).build
 				}
@@ -580,8 +596,9 @@ class EClassImplementationCompiler {
 					} else if (call.serviceName == 'create') {
 						val e = call.arguments.get(0)
 						val t = infereType(e).head
-						val GenModel gm = null
-						'''«gm.genPackages.head.qualifiedPackageName».«gm.EPackage.name.toFirstUpper»Factory.eINSTANCE.create«(t.type as EClass).name»()'''
+						val ecls = t.type as EClass
+						val epks = ecls.EPackage
+						'''«epks.factoryInterfacePackageName».«epks.factoryInterfaceClassName».eINSTANCE.create«ecls.name»()'''
 					} else {
 
 						// TODO: better identification of the caller in order to route to a $ operation or a service.
@@ -766,15 +783,6 @@ class EClassImplementationCompiler {
 		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
 		base.getPossibleTypes(exp)
-
-//		if(ret instanceof EClass && !resolved.filter[
-//			val c = ret as EClass
-//			it.eCls.name == c.name && it.eCls.EPackage.name == c.EC
-//		].empty) {
-//			
-//		} else {
-//			ret
-//		}
 	}
 
 	def escapeDollar(String s) {

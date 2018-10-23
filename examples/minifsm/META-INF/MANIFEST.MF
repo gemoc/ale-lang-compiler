@@ -13,6 +13,8 @@ Export-Package: MiniFsm.impl,
  MiniFsm.impl.operation.impl,
  minifsm,
  minifsm.impl,
+ minifsm.interpreter,
+ minifsm.interpreter.impl,
  minifsm.revisitor,
  minifsm.util
 Require-Bundle: org.eclipse.core.runtime,

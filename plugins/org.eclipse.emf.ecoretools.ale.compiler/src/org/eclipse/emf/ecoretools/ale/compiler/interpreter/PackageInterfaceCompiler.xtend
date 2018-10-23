@@ -86,12 +86,12 @@ class PackageInterfaceCompiler {
 		for(EClass clazz: allClasses) {
 		var cptrI = 0
 			for(EStructuralFeature esf: clazz.EReferences) {
-				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«abstractSyntax.name.toUpperCase»_FEATURE_COUNT + «cptrI»''').addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).build
+				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI»''').addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).build
 				cptrI = cptrI + 1
 			}
 		
 			for(EStructuralFeature esf: clazz.EAttributes) {
-				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«abstractSyntax.name.toUpperCase»_FEATURE_COUNT + «cptrI»''').addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).build
+				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI»''').addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).build
 				cptrI = cptrI + 1
 			}
 		}
