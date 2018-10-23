@@ -14,9 +14,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 
 public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
-  private String CURRENTEVENT_EDEFAULT = null;
+  private static final String CURRENTEVENT_EDEFAULT = null;
 
   private String currentEvent = CURRENTEVENT_EDEFAULT;
 
@@ -40,39 +41,17 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
   }
 
   public EList<Transition> getTransitions() {
-    if(transitions == null) {
-    	transitions = new EObjectContainmentEList<Transition>(minifsm.interpreter.Transition.class, this, MinifsmPackage.FSM__TRANSITIONS);
+    if (transitions == null) {
+    	transitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, MinifsmPackage.FSM__TRANSITIONS, MinifsmPackage.TRANSITION__FSM);
     }
     return transitions;
   }
 
   public void setCurrentState(State newCurrentState) {
-    if (newCurrentState != currentState) {
-    	NotificationChain msgs = null;
-    	if (currentState != null)
-    		msgs = ((InternalEObject) currentState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MinifsmPackage.FSM__CURRENT_STATE, null, msgs);
-    	if (newCurrentState != null)
-    		msgs = ((InternalEObject) newCurrentState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MinifsmPackage.FSM__CURRENT_STATE, null, msgs);
-    	msgs = basicSetCurrentState(newCurrentState, msgs);
-    	if (msgs != null)
-    		msgs.dispatch();
-    } else if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, MinifsmPackage.FSM__CURRENT_STATE, newCurrentState, newCurrentState));
-  }
-
-  private NotificationChain basicSetCurrentState(State newCurrentState, NotificationChain msgsp) {
-    NotificationChain msgs = msgsp;
     State oldCurrentState = currentState;
     currentState = newCurrentState;
-    if (eNotificationRequired()) {
-    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MinifsmPackage.FSM__CURRENT_STATE,
-    			oldCurrentState, newCurrentState);
-    	if (msgs == null)
-    		msgs = notification;
-    	else
-    		msgs.add(notification);
-    }
-    return msgs;
+    if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, MinifsmPackage.FSM__CURRENT_STATE, oldCurrentState, currentState));
   }
 
   public State getCurrentState() {

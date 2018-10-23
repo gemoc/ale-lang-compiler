@@ -30,6 +30,7 @@ class EClassInterfaceCompiler {
 //				build
 //		]
 		val attributesMethods = eClass.EAttributes.map [ field |
+			println('''Attribute «field»''')
 			val fieldType = field.EType.scopedInterfaceTypeRef
 			val getter = MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).addModifiers(
 				Modifier.ABSTRACT, Modifier.PUBLIC).build
@@ -39,6 +40,7 @@ class EClassInterfaceCompiler {
 		].flatten
 
 		val referencesMethods = eClass.EReferences.map [ field |
+			println('''Reference «field»''')
 			val rt = field.EGenericType.ERawType.scopedInterfaceTypeRef
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val fieldType = if(isMultiple) ParameterizedTypeName.get(ClassName.get(EList), rt) else rt

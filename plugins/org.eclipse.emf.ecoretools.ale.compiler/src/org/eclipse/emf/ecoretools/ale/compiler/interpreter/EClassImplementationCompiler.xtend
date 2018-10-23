@@ -82,6 +82,9 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.TypeName
+import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
 
 class EClassImplementationCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
@@ -107,7 +110,7 @@ class EClassImplementationCompiler {
 			val type = field.EType.scopedTypeRef
 			val edefault = FieldSpec.builder(type, '''«field.name.toUpperCase»_EDEFAULT''').
 				initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''').
-				addModifiers(PRIVATE).build
+				addModifiers(PRIVATE, STATIC, FINAL).build
 
 			val fieldField = FieldSpec.builder(type, field.name).initializer('''«field.name.toUpperCase»_EDEFAULT''').
 				addModifiers(PRIVATE).build
@@ -126,7 +129,10 @@ class EClassImplementationCompiler {
 			#[getter, setter]
 		].flatten
 
-		val fieldsEReferences = eClass.EReferences.map [ field |
+		/*
+		 * Do not generate physical fields for opposite relations to  containment fields
+		 */
+		val fieldsEReferences = eClass.EReferences.filter[field | if(field.EOpposite !== null) !field.EOpposite.containment else true].map [ field |
 			val rt = field.EGenericType.ERawType.scopedInterfaceTypeRef
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val fieldType = if(isMultiple) ParameterizedTypeName.get(ClassName.get(EList), rt) else rt
@@ -146,72 +152,128 @@ class EClassImplementationCompiler {
 
 			val setter = if (!isMultiple) {
 					val newName = '''new«field.name.toFirstUpper»'''
+					val oldName = '''old«field.name.toFirstUpper»'''
 					val name = field.name
 
-					val setterMethod = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
-						ParameterSpec.builder(fieldType, newName).build).addCode('''
-						if («newName» != «name») {
-							$1T msgs = null;
-							«IF field.EOpposite !== null»
-								if («name» != null)
-									msgs = (($2T) «name»).eInverseRemove(this, $5T.«field.EOpposite.name.normalizeUpperField((field.EOpposite.eContainer as EClass).name)», «rt».class, msgs);
-								if («newName» != null)
-									msgs = (($2T) «newName»).eInverseAdd(this, $5T.«field.EOpposite.name.normalizeUpperField((field.EOpposite.eContainer as EClass).name)», «rt».class,
-											msgs);
-							«ELSE»
-								if («name» != null)
-									msgs = (($2T) «name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - $5T.«field.name.normalizeUpperField(eClass.name)», null, msgs);
-								if («newName» != null)
-									msgs = (($2T) «newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - $5T.«field.name.normalizeUpperField(eClass.name)», null, msgs);
-							«ENDIF»
-							msgs = basicSet«name.toFirstUpper»(«newName», msgs);
-							if (msgs != null)
-								msgs.dispatch();
-						} else if (eNotificationRequired())
-							eNotify(new $3T(this, $4T.SET, $5T.«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
-					''', NotificationChain, InternalEObject, ENotificationImpl, Notification,
-						ClassName.get(eClass.EPackage.packageInterfacePackageName,
-							eClass.EPackage.packageInterfaceClassName)).addModifiers(PUBLIC).build
+					if (field.EOpposite !== null) {
+						if(!field.EOpposite.containment) {
+							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
+								if («newName» != «name») {
+									$1T msgs = null;
+									«IF field.EOpposite !== null»
+										if («name» != null)
+											msgs = (($2T) «name»).eInverseRemove(this, $5T.«field.EOpposite.name.normalizeUpperField((field.EOpposite.eContainer as EClass).name)», «rt».class, msgs);
+										if («newName» != null)
+											msgs = (($2T) «newName»).eInverseAdd(this, $5T.«field.EOpposite.name.normalizeUpperField((field.EOpposite.eContainer as EClass).name)», «rt».class,
+													msgs);
+									«ELSE»
+										if («name» != null)
+											msgs = (($2T) «name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - $5T.«field.name.normalizeUpperField(eClass.name)», null, msgs);
+										if («newName» != null)
+											msgs = (($2T) «newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - $5T.«field.name.normalizeUpperField(eClass.name)», null, msgs);
+									«ENDIF»
+									msgs = basicSet«name.toFirstUpper»(«newName», msgs);
+									if (msgs != null)
+										msgs.dispatch();
+								} else if (eNotificationRequired())
+									eNotify(new $3T(this, $4T.SET, $5T.«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
+							''', NotificationChain, InternalEObject, ENotificationImpl, Notification,
+								ePackageInterfaceType).addModifiers(PUBLIC).build
+							val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''').returns(
+								NotificationChain).addParameter(
+								ParameterSpec.builder(fieldType, '''new«field.name.toFirstUpper»''').build).addParameter(
+								ParameterSpec.builder(NotificationChain, 'msgsp').build).addCode('''
+								$1T msgs = msgsp;
+								$2T «oldName» = «name»;
+								«name» = «newName»;
+								if (eNotificationRequired()) {
+									$3T notification = new $3T(this, $4T.SET, $5T.«field.name.normalizeUpperField(eClass.name)»,
+											«oldName», «newName»);
+									if (msgs == null)
+										msgs = notification;
+									else
+										msgs.add(notification);
+								}
+								return msgs;
+							''', NotificationChain, fieldType, ENotificationImpl, Notification,
+								ePackageInterfaceType).addModifiers(PRIVATE).build
+							
+								#[setter, basicSetMethod]
+							} else {
+								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
+								if («newName» != eInternalContainer() || (eContainerFeatureID() != $1T.«field.name.normalizeUpperField(eClass.name)» && «newName» != null)) {
+									if ($2T.isAncestor(this, «newName»))
+										throw new $3T("Recursive containment not allowed for " + toString());
+									$4T msgs = null;
+									if (eInternalContainer() != null)
+										msgs = eBasicRemoveFromContainer(msgs);
+									if («newName» != null)
+										msgs = (($5T)«newName»).eInverseAdd(this, $1T.«field.name.normalizeUpperField(eClass.name)» , $6T.class, msgs);
+									msgs = basicSetFsm(«newName», msgs);
+									if (msgs != null) msgs.dispatch();
+								}
+								else if (eNotificationRequired())
+									eNotify(new $7T(this, $8T.SET, $1T.«field.name.normalizeUpperField(eClass.name)» , «newName», «newName»));
+							''', ePackageInterfaceType, EcoreUtil, IllegalArgumentException, NotificationChain, InternalEObject, fieldType, ENotificationImpl, Notification).addModifiers(PUBLIC).build
+							
+							val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''').returns(
+								NotificationChain).addParameter(
+								ParameterSpec.builder(fieldType, '''new«field.name.toFirstUpper»''').build).addParameter(
+								ParameterSpec.builder(NotificationChain, 'msgs').build).addCode('''
+								msgs = eBasicSetContainer(($1T)newFsm, $2T.«field.name.normalizeUpperField(eClass.name)», msgs);
+								return msgs;
+							''', InternalEObject, ePackageInterfaceType).addModifiers(PRIVATE).build
+							#[setter, basicSetMethod]
+							}
 
-					val oldName = '''old«field.name.toFirstUpper»'''
+						
+						
+					} else {
+						val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
+							ParameterSpec.builder(fieldType, newName).build).addCode('''
+							$1T «oldName» = «field.name»;
+							«field.name» = «newName»;
+							if (eNotificationRequired())
+								eNotify(new $2T(this, $3T.SET, $4T.«field.name.normalizeUpperField(eClass.name)», «oldName», «field.name»));
+						''', fieldType, ENotificationImpl, Notification,
+							ePackageInterfaceType).addModifiers(PUBLIC).build
 
-					val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''').returns(
-						NotificationChain).addParameter(
-						ParameterSpec.builder(fieldType, '''new«field.name.toFirstUpper»''').build).addParameter(
-						ParameterSpec.builder(NotificationChain, 'msgsp').build).addCode('''
-						$1T msgs = msgsp;
-						$2T «oldName» = «name»;
-						«name» = «newName»;
-						if (eNotificationRequired()) {
-							$3T notification = new $3T(this, $4T.SET, $5T.«field.name.normalizeUpperField(eClass.name)»,
-									«oldName», «newName»);
-							if (msgs == null)
-								msgs = notification;
-							else
-								msgs.add(notification);
-						}
-						return msgs;
-					''', NotificationChain, fieldType, ENotificationImpl, Notification,
-						ClassName.get(eClass.EPackage.packageInterfacePackageName,
-							eClass.EPackage.packageInterfaceClassName)).addModifiers(PRIVATE).build
-					#[setterMethod, basicSetMethod]
+						#[setter]
+					}
+
 				} else
 					#[]
 
 			val getter = if (isMultiple) {
-
-					MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
-						addModifiers(PUBLIC).addCode('''
-							if(«field.name» == null) {
-								«field.name» = new $1T(«rt».class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
-							}
-							return «field.name»;
-						''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentEList), rt),
-							ePackageInterfaceType).build
-
+					if(field.EOpposite !== null) {
+						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+							addModifiers(PUBLIC).addCode('''
+								if («field.name» == null) {
+									«field.name» = new $1T($2T.class, this, $3T.«field.name.normalizeUpperField(eClass.name)», $3T.«field.EOpposite.name.normalizeUpperField((field.EOpposite.eContainer as EClass).name)»);
+								}
+								return «field.name»;
+							''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentWithInverseEList), rt), rt, ePackageInterfaceType).build
+					} else {
+						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+							addModifiers(PUBLIC).addCode('''
+								if(«field.name» == null) {
+									«field.name» = new $1T(«rt».class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
+								}
+								return «field.name»;
+							''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentEList), rt),
+								ePackageInterfaceType).build
+					}
 				} else {
-					MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
-						addModifiers(PUBLIC).addCode('''return «field.name»;''').build
+					if(field.EOpposite !== null && field.EOpposite.containment) {
+						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+						addModifiers(PUBLIC).addCode('''
+						if (eContainerFeatureID() != $1T.«field.name.normalizeUpperField(eClass.name)») return null;
+						return ($2T)eInternalContainer();
+						''', ePackageInterfaceType, fieldType).build
+					}  else {
+						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+							addModifiers(PUBLIC).addCode('''return «field.name»;''').build
+					}
 				}
 
 			setter + #[getter]
@@ -281,7 +343,11 @@ class EClassImplementationCompiler {
 							return «esf.name» != «esf.name.toUpperCase»_EDEFAULT;
 						«ELSE»
 							«IF esf.upperBound <= 1»
+								«IF (esf as EReference).EOpposite !== null && (esf as EReference).EOpposite.containment»
+								return get«esf.name.toFirstUpper»() != null;
+								«ELSE»
 								return «esf.name» != null;
+								«ENDIF»
 							«ELSE»
 								throw new RuntimeException("Not Implemented");
 							«ENDIF»
@@ -301,10 +367,16 @@ class EClassImplementationCompiler {
 							
 							case $2T.«ref.name.normalizeUpperField(eClass.name)»:
 								«IF ref.upperBound == 0 || ref.upperBound == 1»
+									«IF ref.EOpposite !== null && ref.EOpposite.containment»
+									if (eInternalContainer() != null)
+											msgs = eBasicRemoveFromContainer(msgs);
+										return basicSetFsm((«(ref.EType as EClass).classInterfacePackageName».«(ref.EType as EClass).classInterfaceClassName»)otherEnd, msgs);
+									«ELSE»
 									if («ref.name» != null)
 										msgs = ((org.eclipse.emf.ecore.InternalEObject) «ref.name»).eInverseRemove(this, $2T.«ref.EOpposite.name.normalizeUpperField((ref.EOpposite.eContainer as EClass).name)», «(ref.EOpposite.eContainer as EClass).name».class,
 												msgs);
 									return basicSet«ref.name.toFirstUpper»((«(ref.EOpposite.eContainer as EClass).classInterfacePackageName».«(ref.EOpposite.eContainer as EClass).classInterfaceClassName») otherEnd, msgs);
+									«ENDIF»
 								«ELSE»
 									return ((org.eclipse.emf.ecore.util.InternalEList<org.eclipse.emf.ecore.InternalEObject>) (org.eclipse.emf.ecore.util.InternalEList<?>) get«ref.name.toFirstUpper»()).basicAdd(otherEnd, msgs);
 								«ENDIF»
@@ -356,27 +428,34 @@ class EClassImplementationCompiler {
 	}
 
 	def MethodSpec compile(Method method, ExtendedClass aleClass, EClass aClass) {
-		val retType = if(method.operationRef.EType !== null) {if(method.operationRef.EType instanceof EClass && !(method.operationRef.EType.EPackage == EcorePackage.eINSTANCE)) {
-				ClassName.get((method.operationRef.EType as EClass).classInterfacePackageName, (method.operationRef.EType as EClass).name)
-			} else {
-				TypeName.get(method.operationRef.EType.instanceClass)
-			
-			}} else null
-		
-		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [returns(retType)]).
-			addParameters(method.operationRef.EParameters.map [
-				if (it.EType.instanceClass !== null) {
-					if(it.EType instanceof EClass && !(it.EType.EPackage == EcorePackage.eINSTANCE)) {
-						ParameterSpec.builder(ClassName.get((it.EType as EClass).classInterfacePackageName, (it.EType as EClass).name), it.name).build
-					} else {
-						ParameterSpec.builder(it.EType.instanceClass, it.name).build
-					
-					}
+		val retType = if (method.operationRef.EType !== null) {
+				if (method.operationRef.EType instanceof EClass &&
+					!(method.operationRef.EType.EPackage == EcorePackage.eINSTANCE)) {
+					ClassName.get((method.operationRef.EType as EClass).classInterfacePackageName,
+						(method.operationRef.EType as EClass).name)
 				} else {
-					ParameterSpec.builder(it.EType.resolveType, it.name).build
+					TypeName.get(method.operationRef.EType.instanceClass)
+
 				}
-			]).openMethod(method.operationRef.EType).compileBody(method.body).closeMethod(method.operationRef.EType).
-			build
+			} else
+				null
+
+		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [
+			returns(retType)
+		]).addParameters(method.operationRef.EParameters.map [
+			if (it.EType.instanceClass !== null) {
+				if (it.EType instanceof EClass && !(it.EType.EPackage == EcorePackage.eINSTANCE)) {
+					ParameterSpec.builder(
+						ClassName.get((it.EType as EClass).classInterfacePackageName, (it.EType as EClass).name),
+						it.name).build
+				} else {
+					ParameterSpec.builder(it.EType.instanceClass, it.name).build
+
+				}
+			} else {
+				ParameterSpec.builder(it.EType.resolveType, it.name).build
+			}
+		]).openMethod(method.operationRef.EType).compileBody(method.body).closeMethod(method.operationRef.EType).build
 	}
 
 	def MethodSpec.Builder closeMethod(MethodSpec.Builder builder, EClassifier type) {

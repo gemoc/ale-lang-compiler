@@ -1,5 +1,6 @@
 package minifsm.interpreter.impl;
 
+import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import java.lang.String;
 import minifsm.interpreter.FSM;
@@ -12,17 +13,16 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class TransitionImpl extends MinimalEObjectImpl.Container implements Transition {
-  private String EVENT_EDEFAULT = null;
+  private static final String EVENT_EDEFAULT = null;
 
   private String event = EVENT_EDEFAULT;
 
   private State incoming;
 
   private State outgoing;
-
-  private FSM fsm;
 
   public String getEvent() {
     return event;}
@@ -31,101 +31,50 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
     this.event = event;}
 
   public void setIncoming(State newIncoming) {
-    if (newIncoming != incoming) {
-    	NotificationChain msgs = null;
-    	if (incoming != null)
-    		msgs = ((InternalEObject) incoming).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MinifsmPackage.TRANSITION__INCOMING, null, msgs);
-    	if (newIncoming != null)
-    		msgs = ((InternalEObject) newIncoming).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MinifsmPackage.TRANSITION__INCOMING, null, msgs);
-    	msgs = basicSetIncoming(newIncoming, msgs);
-    	if (msgs != null)
-    		msgs.dispatch();
-    } else if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__INCOMING, newIncoming, newIncoming));
-  }
-
-  private NotificationChain basicSetIncoming(State newIncoming, NotificationChain msgsp) {
-    NotificationChain msgs = msgsp;
     State oldIncoming = incoming;
     incoming = newIncoming;
-    if (eNotificationRequired()) {
-    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__INCOMING,
-    			oldIncoming, newIncoming);
-    	if (msgs == null)
-    		msgs = notification;
-    	else
-    		msgs.add(notification);
-    }
-    return msgs;
+    if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__INCOMING, oldIncoming, incoming));
   }
 
   public State getIncoming() {
     return incoming;}
 
   public void setOutgoing(State newOutgoing) {
-    if (newOutgoing != outgoing) {
-    	NotificationChain msgs = null;
-    	if (outgoing != null)
-    		msgs = ((InternalEObject) outgoing).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MinifsmPackage.TRANSITION__OUTGOING, null, msgs);
-    	if (newOutgoing != null)
-    		msgs = ((InternalEObject) newOutgoing).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MinifsmPackage.TRANSITION__OUTGOING, null, msgs);
-    	msgs = basicSetOutgoing(newOutgoing, msgs);
-    	if (msgs != null)
-    		msgs.dispatch();
-    } else if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__OUTGOING, newOutgoing, newOutgoing));
-  }
-
-  private NotificationChain basicSetOutgoing(State newOutgoing, NotificationChain msgsp) {
-    NotificationChain msgs = msgsp;
     State oldOutgoing = outgoing;
     outgoing = newOutgoing;
-    if (eNotificationRequired()) {
-    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__OUTGOING,
-    			oldOutgoing, newOutgoing);
-    	if (msgs == null)
-    		msgs = notification;
-    	else
-    		msgs.add(notification);
-    }
-    return msgs;
+    if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__OUTGOING, oldOutgoing, outgoing));
   }
 
   public State getOutgoing() {
     return outgoing;}
 
   public void setFsm(FSM newFsm) {
-    if (newFsm != fsm) {
+    if (newFsm != eInternalContainer() || (eContainerFeatureID() != MinifsmPackage.TRANSITION__FSM && newFsm != null)) {
+    	if (EcoreUtil.isAncestor(this, newFsm))
+    		throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
     	NotificationChain msgs = null;
-    	if (fsm != null)
-    		msgs = ((InternalEObject) fsm).eInverseRemove(this, MinifsmPackage.FSM__TRANSITIONS, minifsm.interpreter.FSM.class, msgs);
+    	if (eInternalContainer() != null)
+    		msgs = eBasicRemoveFromContainer(msgs);
     	if (newFsm != null)
-    		msgs = ((InternalEObject) newFsm).eInverseAdd(this, MinifsmPackage.FSM__TRANSITIONS, minifsm.interpreter.FSM.class,
-    				msgs);
+    		msgs = ((InternalEObject)newFsm).eInverseAdd(this, MinifsmPackage.TRANSITION__FSM , FSM.class, msgs);
     	msgs = basicSetFsm(newFsm, msgs);
-    	if (msgs != null)
-    		msgs.dispatch();
-    } else if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__FSM, newFsm, newFsm));
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__FSM , newFsm, newFsm));
   }
 
-  private NotificationChain basicSetFsm(FSM newFsm, NotificationChain msgsp) {
-    NotificationChain msgs = msgsp;
-    FSM oldFsm = fsm;
-    fsm = newFsm;
-    if (eNotificationRequired()) {
-    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MinifsmPackage.TRANSITION__FSM,
-    			oldFsm, newFsm);
-    	if (msgs == null)
-    		msgs = notification;
-    	else
-    		msgs.add(notification);
-    }
+  private NotificationChain basicSetFsm(FSM newFsm, NotificationChain msgs) {
+    msgs = eBasicSetContainer((InternalEObject)newFsm, MinifsmPackage.TRANSITION__FSM, msgs);
     return msgs;
   }
 
   public FSM getFsm() {
-    return fsm;}
+    if (eContainerFeatureID() != MinifsmPackage.TRANSITION__FSM) return null;
+    return (FSM)eInternalContainer();
+  }
 
   protected EClass eStaticClass() {
     return MinifsmPackage.Literals.TRANSITION;}
@@ -187,7 +136,7 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
     case MinifsmPackage.TRANSITION__OUTGOING:
     	return outgoing != null;
     case MinifsmPackage.TRANSITION__FSM:
-    	return fsm != null;
+    	return getFsm() != null;
     case MinifsmPackage.TRANSITION__EVENT:
     	return event != EVENT_EDEFAULT;
     }
@@ -200,10 +149,9 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
     switch (featureID) {
 
     case MinifsmPackage.TRANSITION__FSM:
-    	if (fsm != null)
-    		msgs = ((org.eclipse.emf.ecore.InternalEObject) fsm).eInverseRemove(this, MinifsmPackage.FSM__TRANSITIONS, FSM.class,
-    				msgs);
-    	return basicSetFsm((minifsm.interpreter.FSM) otherEnd, msgs);
+    	if (eInternalContainer() != null)
+    			msgs = eBasicRemoveFromContainer(msgs);
+    		return basicSetFsm((minifsm.interpreter.FSM)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }

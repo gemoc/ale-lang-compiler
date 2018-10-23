@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 public class StateImpl extends MinimalEObjectImpl.Container implements State {
-  private String NAME_EDEFAULT = null;
+  private static final String NAME_EDEFAULT = null;
 
   private String name = NAME_EDEFAULT;
 
