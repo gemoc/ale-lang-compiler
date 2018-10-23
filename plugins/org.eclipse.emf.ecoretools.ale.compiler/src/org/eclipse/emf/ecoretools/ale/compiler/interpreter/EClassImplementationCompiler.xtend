@@ -85,6 +85,9 @@ import com.squareup.javapoet.TypeName
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
+import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.common.util.EMap
+import org.eclipse.emf.ecore.util.EcoreEMap
 
 class EClassImplementationCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
@@ -120,7 +123,7 @@ class EClassImplementationCompiler {
 		val methodsEAttributes = eClass.EAttributes.map [ field |
 			val type = field.EType.scopedTypeRef
 
-			val getter = MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').addModifiers(PUBLIC).
+			val getter = MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').addModifiers(PUBLIC).
 				addCode('''return «field.name»;''').returns(type).build
 			val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
 				ParameterSpec.builder(type, field.name).build).addCode('''this.«field.name» = «field.name»;''').
@@ -133,10 +136,23 @@ class EClassImplementationCompiler {
 		 * Do not generate physical fields for opposite relations to  containment fields
 		 */
 		val fieldsEReferences = eClass.EReferences.filter[field | if(field.EOpposite !== null) !field.EOpposite.containment else true].map [ field |
-			val rt = field.EGenericType.ERawType.scopedInterfaceTypeRef
+			val ert = field.EGenericType.ERawType
+			val rt = ert.scopedInterfaceTypeRef
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val fieldType = if(isMultiple) ParameterizedTypeName.get(ClassName.get(EList), rt) else rt
-
+			val fieldType = if (isMultiple) {
+					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
+						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+						if(key !== null && value !== null) {
+							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
+						} else {
+							ParameterizedTypeName.get(ClassName.get(EList), rt)
+						}
+					} else {
+						ParameterizedTypeName.get(ClassName.get(EList), rt)
+					}
+				} else
+					rt
 			// TODO: modify grammar to have explicit mutability
 //				val isMutable = alexClass !== null && alexClass.mutables.exists[
 //					it.name == field.name
@@ -146,9 +162,23 @@ class EClassImplementationCompiler {
 		].flatten
 
 		val methodsEReferences = eClass.EReferences.map [ field |
-			val rt = field.EGenericType.ERawType.scopedInterfaceTypeRef
+		val ert = field.EGenericType.ERawType
+			val rt = ert.scopedInterfaceTypeRef
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val fieldType = if(isMultiple) ParameterizedTypeName.get(ClassName.get(EList), rt) else rt
+			val fieldType = if (isMultiple) {
+					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
+						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+						if(key !== null && value !== null) {
+							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
+						} else {
+							ParameterizedTypeName.get(ClassName.get(EList), rt)
+						}
+					} else {
+						ParameterizedTypeName.get(ClassName.get(EList), rt)
+					}
+				} else
+					rt
 
 			val setter = if (!isMultiple) {
 					val newName = '''new«field.name.toFirstUpper»'''
@@ -245,7 +275,20 @@ class EClassImplementationCompiler {
 					#[]
 
 			val getter = if (isMultiple) {
-					if(field.EOpposite !== null) {
+				if(ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
+					val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+					MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+							addModifiers(PUBLIC).addCode('''
+								if («field.name» == null) {
+									«field.name» = new $1T($2T.Literals.«(field.EType as EClass).name.normalizeUpperField», $3T.class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
+								}
+								return «field.name»;
+							''', ParameterizedTypeName.get(ClassName.get(EcoreEMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef), ePackageInterfaceType,
+							ClassName.get((field.EType as EClass).classImplementationPackageName, (field.EType as EClass).classImplementationClassName)).build
+							// EcoreEMap<String,EvalRes>
+				}
+					else if(field.EOpposite !== null) {
 						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
 							addModifiers(PUBLIC).addCode('''
 								if («field.name» == null) {
@@ -265,13 +308,13 @@ class EClassImplementationCompiler {
 					}
 				} else {
 					if(field.EOpposite !== null && field.EOpposite.containment) {
-						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+						MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).
 						addModifiers(PUBLIC).addCode('''
 						if (eContainerFeatureID() != $1T.«field.name.normalizeUpperField(eClass.name)») return null;
 						return ($2T)eInternalContainer();
 						''', ePackageInterfaceType, fieldType).build
 					}  else {
-						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+						MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).
 							addModifiers(PUBLIC).addCode('''return «field.name»;''').build
 					}
 				}
@@ -280,7 +323,7 @@ class EClassImplementationCompiler {
 		].flatten
 
 		val eStaticClassMethod = MethodSpec.methodBuilder('eStaticClass').returns(EClass).addModifiers(PROTECTED).
-			addCode('''return $1T.Literals.«eClass.name.toUpperCase»;''', ePackageInterfaceType).build
+			addCode('''return $1T.Literals.«eClass.name.normalizeUpperField»;''', ePackageInterfaceType).build
 
 		val eSetMethod = MethodSpec.methodBuilder('eSet').addParameter(int, 'featureID').addParameter(Object,
 			'newValue').addModifiers(PUBLIC).addCode( '''
@@ -293,8 +336,12 @@ class EClassImplementationCompiler {
 						«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 							set«esf.name.toFirstUpper»((«esf.EGenericType.ERawType.scopedTypeRef») newValue);
 						«ELSE»
+							«IF (esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry)»
+								((org.eclipse.emf.ecore.EStructuralFeature.Setting)get«esf.name.toFirstUpper»()).set(newValue);
+							«ELSE»
 							get«esf.name.toFirstUpper»().clear();
 							get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends «esf.EType.scopedTypeRef»>) newValue);
+							«ENDIF»
 						«ENDIF»
 					«ENDIF»
 				return;

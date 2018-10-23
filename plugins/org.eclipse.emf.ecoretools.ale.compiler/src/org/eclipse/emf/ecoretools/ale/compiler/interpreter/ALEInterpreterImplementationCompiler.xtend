@@ -82,7 +82,7 @@ class ALEInterpreterImplementationCompiler {
 		registerServices(projectName)
 
 		// must be last !
-		compile(projectRoot)
+		compile(projectRoot, projectName)
 	}
 
 	def registerServices(String projectName) {
@@ -98,7 +98,7 @@ class ALEInterpreterImplementationCompiler {
 		javaExtensions.reloadIfNeeded();
 	}
 
-	def private void compile(File projectRoot) {
+	def private void compile(File projectRoot, String projectName) {
 		val compileDirectory = new File(projectRoot, "interpreter-comp")
 
 		// clean previous compilation
@@ -120,20 +120,20 @@ class ALEInterpreterImplementationCompiler {
 
 		val fic = new FactoryInterfaceCompiler
 		val fimplc = new FactoryImplementationCompiler
-		
+
 		val pic = new PackageInterfaceCompiler
 		val pimplc = new PackageImplementationCompiler
-		
+
 		val eic = new EClassInterfaceCompiler
 		val eimplc = new EClassImplementationCompiler
-		
-		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath)
+
+		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
 		// TODO: generate ecore + genmodel !
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory)
 			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory)
-			
+
 			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory)
 			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory)
 
@@ -141,7 +141,8 @@ class ALEInterpreterImplementationCompiler {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
 				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory)
-				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved, registeredServices, dsl, parsedSemantics, queryEnvironment)
+				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
+					registeredServices, dsl, parsedSemantics, queryEnvironment)
 			}
 
 		]

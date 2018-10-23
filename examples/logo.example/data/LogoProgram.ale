@@ -105,7 +105,7 @@ open class Block {
 }
 
 open class Clear {
-	def double eval(CTurtle turtle) {
+	def double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }

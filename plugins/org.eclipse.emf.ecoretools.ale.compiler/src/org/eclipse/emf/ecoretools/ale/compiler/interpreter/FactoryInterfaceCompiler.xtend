@@ -9,6 +9,7 @@ import javax.lang.model.element.Modifier
 import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.JavaFile
+import org.eclipse.emf.ecore.EClass
 
 class FactoryInterfaceCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
@@ -22,7 +23,7 @@ class FactoryInterfaceCompiler {
 		val einstance = FieldSpec.builder(factoryInterfaceType, "eINSTANCE", Modifier.PUBLIC, Modifier.FINAL,
 			Modifier.STATIC).initializer('''$T.init()''', factoryImplType).build
 		val factory = TypeSpec.interfaceBuilder(abstractSyntax.factoryInterfaceClassName).addSuperinterface(EFactory).
-			addField(einstance).addMethods(abstractSyntax.allClasses.filter[!abstract].map [
+			addField(einstance).addMethods(abstractSyntax.EClassifiers.filter(EClass).filter[!abstract].map [
 				MethodSpec.methodBuilder('''create«it.name.toFirstUpper»''').returns(
 					ClassName.get(it.classInterfacePackageName, it.classInterfaceClassName)).addModifiers(
 					Modifier.ABSTRACT, Modifier.PUBLIC).build

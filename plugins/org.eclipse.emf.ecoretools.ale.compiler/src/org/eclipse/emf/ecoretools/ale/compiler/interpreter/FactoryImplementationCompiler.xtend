@@ -21,6 +21,8 @@ class FactoryImplementationCompiler {
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory) {
 
+		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
+
 		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName,
 			abstractSyntax.factoryInterfaceClassName)
 
@@ -48,7 +50,7 @@ class FactoryImplementationCompiler {
 		val createMethod = MethodSpec.methodBuilder('create').returns(EObject).addParameter(
 			ParameterSpec.builder(EClass, 'eClass').build).addCode('''
 			switch (eClass.getClassifierID()) {
-			«FOR eClass : abstractSyntax.allClasses.filter[!it.abstract]»
+			«FOR eClass : allClasses.filter[!it.abstract]»
 				case $1T.«eClass.name.normalizeUpperField»:
 					return create«eClass.name»();
 			«ENDFOR»
@@ -57,7 +59,7 @@ class FactoryImplementationCompiler {
 			}
 		''', packageInterfaceType, IllegalArgumentException).addModifiers(Modifier.PUBLIC).build
 
-		val createMethods = abstractSyntax.allClasses.filter[!abstract].map [ eClass |
+		val createMethods = allClasses.filter[!abstract].map [ eClass |
 			val classImplType = ClassName.get(eClass.classImplementationPackageName,
 				eClass.classImplementationClassName)
 			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''').returns(

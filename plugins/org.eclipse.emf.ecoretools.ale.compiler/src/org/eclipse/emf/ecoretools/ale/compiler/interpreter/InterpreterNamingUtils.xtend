@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EPackage
 
 class InterpreterNamingUtils {
 	def String factoryInterfacePackageName(EPackage ePackage) {
-		'''«ePackage.name.toLowerCase».interpreter'''
+		'''«ePackage.name».interpreter.«ePackage.name»'''
 	}
 
 	def String factoryInterfaceClassName(EPackage ePackage) {
@@ -14,7 +14,7 @@ class InterpreterNamingUtils {
 	}
 
 	def String packageInterfacePackageName(EPackage ePackage) {
-		'''«ePackage.name.toLowerCase».interpreter'''
+		'''«ePackage.name».interpreter.«ePackage.name»'''
 	}
 
 	def String packageInterfaceClassName(EPackage ePackage) {
@@ -22,7 +22,7 @@ class InterpreterNamingUtils {
 	}
 
 	def String packageImplementationPackageName(EPackage ePackage) {
-		'''«ePackage.name.toLowerCase».interpreter.impl'''
+		'''«ePackage.name».interpreter.«ePackage.name».impl'''
 	}
 
 	def String packageImplementationClassName(EPackage ePackage) {
@@ -30,7 +30,7 @@ class InterpreterNamingUtils {
 	}
 
 	def String factoryImplementationPackageName(EPackage ePackage) {
-		'''«ePackage.name.toLowerCase».interpreter.impl'''
+		'''«ePackage.name».interpreter.«ePackage.name».impl'''
 	}
 
 	def String factoryImplementationClassName(EPackage ePackage) {

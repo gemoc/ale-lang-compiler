@@ -13,6 +13,9 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import java.util.Map
+import org.eclipse.emf.common.util.EMap
+import org.eclipse.emf.ecore.EStructuralFeature
 
 class EClassInterfaceCompiler {
 
@@ -30,20 +33,33 @@ class EClassInterfaceCompiler {
 //				build
 //		]
 		val attributesMethods = eClass.EAttributes.map [ field |
-			println('''Attribute «field»''')
 			val fieldType = field.EType.scopedInterfaceTypeRef
-			val getter = MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).addModifiers(
-				Modifier.ABSTRACT, Modifier.PUBLIC).build
+			val getter = MethodSpec.
+				methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').
+				returns(fieldType).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
 			val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType,
 				field.name).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
 			#[getter, setter]
 		].flatten
 
 		val referencesMethods = eClass.EReferences.map [ field |
-			println('''Reference «field»''')
-			val rt = field.EGenericType.ERawType.scopedInterfaceTypeRef
+			val ert = field.EGenericType.ERawType
+			val rt = ert.scopedInterfaceTypeRef
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val fieldType = if(isMultiple) ParameterizedTypeName.get(ClassName.get(EList), rt) else rt
+			val fieldType = if (isMultiple) {
+					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
+						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+						if(key !== null && value !== null) {
+							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
+						} else {
+							ParameterizedTypeName.get(ClassName.get(EList), rt)
+						}
+					} else {
+						ParameterizedTypeName.get(ClassName.get(EList), rt)
+					}
+				} else
+					rt
 			val setter = if (!isMultiple) {
 					#[
 						MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType,
@@ -75,8 +91,7 @@ class EClassInterfaceCompiler {
 		val factory = TypeSpec.interfaceBuilder(eClass.classInterfaceClassName).addSuperinterface(EObject).
 			addSuperinterfaces(eClass.ESuperTypes.map [
 				ClassName.get(it.classInterfacePackageName, it.classInterfaceClassName)
-			])
-			.addMethods(attributesMethods + referencesMethods + operations).addModifiers(Modifier.PUBLIC).build
+			]).addMethods(attributesMethods + referencesMethods + operations).addModifiers(Modifier.PUBLIC).build
 
 		val javaFile = JavaFile.builder(eClass.classInterfacePackageName, factory).build
 

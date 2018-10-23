@@ -24,7 +24,7 @@ class PackageInterfaceCompiler {
 
 	def compilePackageInterface(EPackage abstractSyntax, File directory) {
 
-		val allClasses = abstractSyntax.allClasses
+		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
 
 		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName,
 			abstractSyntax.packageInterfaceClassName)
@@ -53,7 +53,7 @@ class PackageInterfaceCompiler {
 		}
 
 		val classFieldsLiterals = allClasses.map [ clazz |
-			FieldSpec.builder(EClass, clazz.name.toUpperCase).
+			FieldSpec.builder(EClass, clazz.name.normalizeUpperField).
 				initializer('''eINSTANCE.get«clazz.name.toFirstUpper»()''').addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).build
 		]
 
