@@ -1,4 +1,4 @@
-package minifsm.interpreter;
+package minifsm.interpreter.minifsm;
 
 import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface State extends EObject {
   String getName();
 
-  void setName(String name);
+  void setName(String value);
 
   void execute();
 }

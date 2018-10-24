@@ -113,10 +113,10 @@ class EClassImplementationCompiler {
 			val type = field.EType.scopedTypeRef
 			val edefault = FieldSpec.builder(type, '''«field.name.toUpperCase»_EDEFAULT''').
 				initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''').
-				addModifiers(PRIVATE, STATIC, FINAL).build
+				addModifiers(PROTECTED, STATIC, FINAL).build
 
 			val fieldField = FieldSpec.builder(type, field.name).initializer('''«field.name.toUpperCase»_EDEFAULT''').
-				addModifiers(PRIVATE).build
+				addModifiers(PROTECTED).build
 			#[edefault, fieldField]
 		].flatten
 
@@ -157,7 +157,7 @@ class EClassImplementationCompiler {
 //				val isMutable = alexClass !== null && alexClass.mutables.exists[
 //					it.name == field.name
 //				]
-			val fieldField = FieldSpec.builder(fieldType, field.name).addModifiers(PRIVATE).build
+			val fieldField = FieldSpec.builder(fieldType, field.name).addModifiers(PROTECTED).build
 			#[fieldField]
 		].flatten
 
@@ -334,13 +334,13 @@ class EClassImplementationCompiler {
 						set«esf.name.toFirstUpper»((«esf.EType.scopedTypeRef») newValue);
 					«ELSE»
 						«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-							set«esf.name.toFirstUpper»((«esf.EGenericType.ERawType.scopedTypeRef») newValue);
+							set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») newValue);
 						«ELSE»
 							«IF (esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry)»
 								((org.eclipse.emf.ecore.EStructuralFeature.Setting)get«esf.name.toFirstUpper»()).set(newValue);
 							«ELSE»
 							get«esf.name.toFirstUpper»().clear();
-							get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends «esf.EType.scopedTypeRef»>) newValue);
+							get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends «(esf.EType as EClass).classInterfacePackageName».«(esf.EType as EClass).classInterfaceClassName»>) newValue);
 							«ENDIF»
 						«ENDIF»
 					«ENDIF»
@@ -359,7 +359,7 @@ class EClassImplementationCompiler {
 							set«esf.name.toFirstUpper»(«esf.name.toUpperCase»_EDEFAULT);
 						«ELSE»
 							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-								set«esf.name.toFirstUpper»((«esf.EGenericType.ERawType.scopedTypeRef») null);
+								set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») null);
 							«ELSE»
 								get«esf.name.toFirstUpper»().clear();
 							«ENDIF»
@@ -434,6 +434,10 @@ class EClassImplementationCompiler {
 				]
 			} else
 				#[]
+				
+		val constructor = MethodSpec.constructorBuilder.addCode('''
+			super();
+		''').addModifiers(PROTECTED).build
 
 		builder.applyIfTrue(eClass.isAbstract, [addModifiers(ABSTRACT)]).applyIfTrue(hasSuperType, [
 			superclass(ClassName.get(superType.classImplementationPackageName, superType.classImplementationClassName))
@@ -441,7 +445,7 @@ class EClassImplementationCompiler {
 			ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName)).addFields(
 			fieldsEAttributes + fieldsEReferences).addMethods(
 			methodsEAttributes + methodsEReferences +
-				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod] + eInverseAdd)
+				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod, constructor] + eInverseAdd)
 	}
 
 	def <T> T applyIfTrue(T t, Boolean cond, Function1<T, T> app) {

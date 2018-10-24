@@ -1,11 +1,15 @@
-package minifsm.interpreter.impl;
+package minifsm.interpreter.minifsm.impl;
 
 import java.lang.Object;
-import minifsm.interpreter.Initial;
-import minifsm.interpreter.MinifsmPackage;
+import minifsm.interpreter.minifsm.Initial;
+import minifsm.interpreter.minifsm.MinifsmPackage;
 import org.eclipse.emf.ecore.EClass;
 
 public class InitialImpl extends StateImpl implements Initial {
+  protected InitialImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return MinifsmPackage.Literals.INITIAL;}
 

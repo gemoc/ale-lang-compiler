@@ -6,8 +6,8 @@ Bundle-Version: 0.0.1.qualifier
 Export-Package: LogoProgram.impl,
  LogoProgram.impl.operation,
  LogoProgram.impl.operation.impl,
- kmlogo.interpreter,
- kmlogo.interpreter.impl,
+ kmLogo.interpreter.kmLogo,
+ kmLogo.interpreter.kmLogo.impl,
  logo.example.service
 Require-Bundle: org.eclipse.emf.common,
  org.eclipse.emf.ecoretools.ale.core,

@@ -1,7 +1,7 @@
-package minifsm.interpreter;
+package minifsm.interpreter.minifsm;
 
 import java.lang.String;
-import minifsm.interpreter.impl.MinifsmPackageImpl;
+import minifsm.interpreter.minifsm.impl.MinifsmPackageImpl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -73,6 +73,8 @@ public interface MinifsmPackage extends EPackage {
   EAttribute getState_Name();
 
   EAttribute getTransition_Event();
+
+  MinifsmFactory getMinifsmFactory();
 
   interface Literals {
     EClass FSM = eINSTANCE.getFSM();

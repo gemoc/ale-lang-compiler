@@ -1,12 +1,12 @@
-package minifsm.interpreter.impl;
+package minifsm.interpreter.minifsm.impl;
 
 import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import java.lang.String;
-import minifsm.interpreter.FSM;
-import minifsm.interpreter.MinifsmPackage;
-import minifsm.interpreter.State;
-import minifsm.interpreter.Transition;
+import minifsm.interpreter.minifsm.FSM;
+import minifsm.interpreter.minifsm.MinifsmPackage;
+import minifsm.interpreter.minifsm.State;
+import minifsm.interpreter.minifsm.Transition;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,13 +16,17 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class TransitionImpl extends MinimalEObjectImpl.Container implements Transition {
-  private static final String EVENT_EDEFAULT = null;
+  protected static final String EVENT_EDEFAULT = null;
 
-  private String event = EVENT_EDEFAULT;
+  protected String event = EVENT_EDEFAULT;
 
-  private State incoming;
+  protected State incoming;
 
-  private State outgoing;
+  protected State outgoing;
+
+  protected TransitionImpl() {
+    super();
+  }
 
   public String getEvent() {
     return event;}
@@ -82,13 +86,13 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MinifsmPackage.TRANSITION__INCOMING:
-    	setIncoming((minifsm.interpreter.impl.StateImpl) newValue);
+    	setIncoming((minifsm.interpreter.minifsm.State) newValue);
     return;
     case MinifsmPackage.TRANSITION__OUTGOING:
-    	setOutgoing((minifsm.interpreter.impl.StateImpl) newValue);
+    	setOutgoing((minifsm.interpreter.minifsm.State) newValue);
     return;
     case MinifsmPackage.TRANSITION__FSM:
-    	setFsm((minifsm.interpreter.impl.FSMImpl) newValue);
+    	setFsm((minifsm.interpreter.minifsm.FSM) newValue);
     return;
     case MinifsmPackage.TRANSITION__EVENT:
     	setEvent((java.lang.String) newValue);
@@ -100,13 +104,13 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
   public void eUnset(int featureID) {
     switch (featureID) {
     case MinifsmPackage.TRANSITION__INCOMING:
-    	setIncoming((minifsm.interpreter.impl.StateImpl) null);
+    	setIncoming((minifsm.interpreter.minifsm.State) null);
     return;
     case MinifsmPackage.TRANSITION__OUTGOING:
-    	setOutgoing((minifsm.interpreter.impl.StateImpl) null);
+    	setOutgoing((minifsm.interpreter.minifsm.State) null);
     return;
     case MinifsmPackage.TRANSITION__FSM:
-    	setFsm((minifsm.interpreter.impl.FSMImpl) null);
+    	setFsm((minifsm.interpreter.minifsm.FSM) null);
     return;
     case MinifsmPackage.TRANSITION__EVENT:
     	setEvent(EVENT_EDEFAULT);
@@ -151,7 +155,7 @@ public class TransitionImpl extends MinimalEObjectImpl.Container implements Tran
     case MinifsmPackage.TRANSITION__FSM:
     	if (eInternalContainer() != null)
     			msgs = eBasicRemoveFromContainer(msgs);
-    		return basicSetFsm((minifsm.interpreter.FSM)otherEnd, msgs);
+    		return basicSetFsm((minifsm.interpreter.minifsm.FSM)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }

@@ -1,4 +1,4 @@
-package minifsm.interpreter;
+package minifsm.interpreter.minifsm;
 
 import org.eclipse.emf.ecore.EObject;
 

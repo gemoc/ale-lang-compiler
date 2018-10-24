@@ -38,7 +38,7 @@ class EClassInterfaceCompiler {
 				methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').
 				returns(fieldType).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
 			val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType,
-				field.name).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
+				'value').addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
 			#[getter, setter]
 		].flatten
 
@@ -63,7 +63,7 @@ class EClassInterfaceCompiler {
 			val setter = if (!isMultiple) {
 					#[
 						MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType,
-							field.name).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build]
+							'value').addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build]
 				} else {
 					#[]
 				}

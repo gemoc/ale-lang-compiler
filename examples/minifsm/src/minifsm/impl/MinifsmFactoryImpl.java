@@ -13,35 +13,16 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
+ * end-user-doc -->
+ * 
  * @generated
  */
 public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public static MinifsmFactory init() {
-		try {
-			MinifsmFactory theMinifsmFactory = (MinifsmFactory)EPackage.Registry.INSTANCE.getEFactory(MinifsmPackage.eNS_URI);
-			if (theMinifsmFactory != null) {
-				return theMinifsmFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new MinifsmFactoryImpl();
-	}
-
-	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc
+	 * -->
+	 * 
 	 * @generated
 	 */
 	public MinifsmFactoryImpl() {
@@ -49,26 +30,59 @@ public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public static MinifsmFactory init() {
+		try {
+			MinifsmFactory theMinifsmFactory = (MinifsmFactory) EPackage.Registry.INSTANCE
+					.getEFactory(MinifsmPackage.eNS_URI);
+			if (theMinifsmFactory != null) {
+				return theMinifsmFactory;
+			}
+		} catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new MinifsmFactoryImpl();
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case MinifsmPackage.FSM: return createFSM();
-			case MinifsmPackage.STATE: return createState();
-			case MinifsmPackage.TRANSITION: return createTransition();
-			case MinifsmPackage.INITIAL: return createInitial();
-			case MinifsmPackage.TERMINAL: return createTerminal();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case MinifsmPackage.FSM:
+			return createFSM();
+		case MinifsmPackage.STATE:
+			return createState();
+		case MinifsmPackage.TRANSITION:
+			return createTransition();
+		case MinifsmPackage.INITIAL:
+			return createInitial();
+		case MinifsmPackage.TERMINAL:
+			return createTerminal();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public MinifsmPackage getMinifsmPackage() {
+		return (MinifsmPackage) getEPackage();
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public FSM createFSM() {
@@ -77,8 +91,8 @@ public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public State createState() {
@@ -87,8 +101,8 @@ public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Transition createTransition() {
@@ -97,8 +111,8 @@ public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Initial createInitial() {
@@ -107,8 +121,8 @@ public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Terminal createTerminal() {
@@ -117,17 +131,8 @@ public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public MinifsmPackage getMinifsmPackage() {
-		return (MinifsmPackage)getEPackage();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
@@ -136,4 +141,4 @@ public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
 		return MinifsmPackage.eINSTANCE;
 	}
 
-} //MinifsmFactoryImpl
+} // MinifsmFactoryImpl

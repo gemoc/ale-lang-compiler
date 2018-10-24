@@ -1,13 +1,13 @@
-package minifsm.interpreter.impl;
+package minifsm.interpreter.minifsm.impl;
 
 import java.lang.IllegalArgumentException;
-import minifsm.interpreter.FSM;
-import minifsm.interpreter.Initial;
-import minifsm.interpreter.MinifsmFactory;
-import minifsm.interpreter.MinifsmPackage;
-import minifsm.interpreter.State;
-import minifsm.interpreter.Terminal;
-import minifsm.interpreter.Transition;
+import minifsm.interpreter.minifsm.FSM;
+import minifsm.interpreter.minifsm.Initial;
+import minifsm.interpreter.minifsm.MinifsmFactory;
+import minifsm.interpreter.minifsm.MinifsmPackage;
+import minifsm.interpreter.minifsm.State;
+import minifsm.interpreter.minifsm.Terminal;
+import minifsm.interpreter.minifsm.Transition;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
-  private MinifsmFactoryImpl() {
+  public MinifsmFactoryImpl() {
   }
 
   public static MinifsmFactory init() {
@@ -46,6 +46,9 @@ public class MinifsmFactoryImpl extends EFactoryImpl implements MinifsmFactory {
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
+
+  public MinifsmPackage getMinifsmPackage() {
+    return (MinifsmPackage)getEPackage();}
 
   public FSM createFSM() {
     FSMImpl ret = new FSMImpl();

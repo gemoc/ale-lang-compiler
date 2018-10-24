@@ -1,11 +1,15 @@
-package minifsm.interpreter.impl;
+package minifsm.interpreter.minifsm.impl;
 
 import java.lang.Object;
-import minifsm.interpreter.MinifsmPackage;
-import minifsm.interpreter.Terminal;
+import minifsm.interpreter.minifsm.MinifsmPackage;
+import minifsm.interpreter.minifsm.Terminal;
 import org.eclipse.emf.ecore.EClass;
 
 public class TerminalImpl extends StateImpl implements Terminal {
+  protected TerminalImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return MinifsmPackage.Literals.TERMINAL;}
 

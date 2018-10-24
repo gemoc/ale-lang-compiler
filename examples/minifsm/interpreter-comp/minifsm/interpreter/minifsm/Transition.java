@@ -1,4 +1,4 @@
-package minifsm.interpreter;
+package minifsm.interpreter.minifsm;
 
 import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
@@ -6,19 +6,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Transition extends EObject {
   String getEvent();
 
-  void setEvent(String event);
+  void setEvent(String value);
 
   State getIncoming();
 
-  void setIncoming(State incoming);
+  void setIncoming(State value);
 
   State getOutgoing();
 
-  void setOutgoing(State outgoing);
+  void setOutgoing(State value);
 
   FSM getFsm();
 
-  void setFsm(FSM fsm);
+  void setFsm(FSM value);
 
   boolean isActivated();
 }

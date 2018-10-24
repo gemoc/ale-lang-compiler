@@ -6,17 +6,15 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
-import javax.lang.model.element.Modifier
+import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.impl.EFactoryImpl
 import org.eclipse.emf.ecore.plugin.EcorePlugin
-import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 
 class FactoryImplementationCompiler {
 
-	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory) {
@@ -29,23 +27,23 @@ class FactoryImplementationCompiler {
 		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName,
 			abstractSyntax.packageInterfaceClassName)
 
-		val constructor = MethodSpec.constructorBuilder.addModifiers(Modifier.PRIVATE).build
+		val constructor = MethodSpec.constructorBuilder.addModifiers(PUBLIC).build
 
 		val ctn = abstractSyntax.name
 		val ctnf = '''«ctn.toFirstUpper»Factory'''
 
-		val initMethod = MethodSpec.methodBuilder("init").addModifiers(Modifier.STATIC, Modifier.PUBLIC).returns(
-			factoryInterfaceType).addCode('''
-			try {
-				«ctnf» the«ctnf» = («ctnf») $T.INSTANCE.getEFactory($T.eNS_URI);
-				if (the«ctnf» != null) {
-					return the«ctnf»;
+		val initMethod = MethodSpec.methodBuilder("init").addModifiers(STATIC, PUBLIC).returns(factoryInterfaceType).
+			addCode('''
+				try {
+					«ctnf» the«ctnf» = («ctnf») $T.INSTANCE.getEFactory($T.eNS_URI);
+					if (the«ctnf» != null) {
+						return the«ctnf»;
+					}
+				} catch (Exception exception) {
+					$T.INSTANCE.log(exception);
 				}
-			} catch (Exception exception) {
-				$T.INSTANCE.log(exception);
-			}
-			return new «ctnf»Impl();
-		''', EPackage.Registry, packageInterfaceType, EcorePlugin).build
+				return new «ctnf»Impl();
+			''', EPackage.Registry, packageInterfaceType, EcorePlugin).build
 
 		val createMethod = MethodSpec.methodBuilder('create').returns(EObject).addParameter(
 			ParameterSpec.builder(EClass, 'eClass').build).addCode('''
@@ -57,7 +55,7 @@ class FactoryImplementationCompiler {
 			default:
 				throw new $2T("The class '" + eClass.getName() + "' is not a valid classifier");
 			}
-		''', packageInterfaceType, IllegalArgumentException).addModifiers(Modifier.PUBLIC).build
+		''', packageInterfaceType, IllegalArgumentException).addModifiers(PUBLIC).build
 
 		val createMethods = allClasses.filter[!abstract].map [ eClass |
 			val classImplType = ClassName.get(eClass.classImplementationPackageName,
@@ -66,12 +64,15 @@ class FactoryImplementationCompiler {
 				ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName)).addCode('''
 				$1T ret = new $1T();
 				return ret;
-			''', classImplType).addModifiers(Modifier.PUBLIC).build
+			''', classImplType).addModifiers(PUBLIC).build
 		]
 
+		val getPackageMethod = MethodSpec.methodBuilder('''get«abstractSyntax.name.toFirstUpper»Package''').returns(
+			packageInterfaceType).addCode('''return ($1T)getEPackage();''', packageInterfaceType).addModifiers(PUBLIC).build
+
 		val factory = TypeSpec.classBuilder(abstractSyntax.factoryImplementationClassName).superclass(EFactoryImpl).
-			addSuperinterface(factoryInterfaceType).addMethods(#[constructor, initMethod, createMethod] +
-				createMethods).addModifiers(Modifier.PUBLIC).build
+			addSuperinterface(factoryInterfaceType).addMethods(
+				#[constructor, initMethod, createMethod, getPackageMethod] + createMethods).addModifiers(PUBLIC).build
 
 		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName, factory).build
 

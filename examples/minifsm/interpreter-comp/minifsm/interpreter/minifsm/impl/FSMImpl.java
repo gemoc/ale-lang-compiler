@@ -1,11 +1,11 @@
-package minifsm.interpreter.impl;
+package minifsm.interpreter.minifsm.impl;
 
 import java.lang.Object;
 import java.lang.String;
-import minifsm.interpreter.FSM;
-import minifsm.interpreter.MinifsmPackage;
-import minifsm.interpreter.State;
-import minifsm.interpreter.Transition;
+import minifsm.interpreter.minifsm.FSM;
+import minifsm.interpreter.minifsm.MinifsmPackage;
+import minifsm.interpreter.minifsm.State;
+import minifsm.interpreter.minifsm.Transition;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -17,15 +17,19 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 
 public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
-  private static final String CURRENTEVENT_EDEFAULT = null;
+  protected static final String CURRENTEVENT_EDEFAULT = null;
 
-  private String currentEvent = CURRENTEVENT_EDEFAULT;
+  protected String currentEvent = CURRENTEVENT_EDEFAULT;
 
-  private EList<State> states;
+  protected EList<State> states;
 
-  private EList<Transition> transitions;
+  protected EList<Transition> transitions;
 
-  private State currentState;
+  protected State currentState;
+
+  protected FSMImpl() {
+    super();
+  }
 
   public String getCurrentEvent() {
     return currentEvent;}
@@ -35,7 +39,7 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 
   public EList<State> getStates() {
     if(states == null) {
-    	states = new EObjectContainmentEList<State>(minifsm.interpreter.State.class, this, MinifsmPackage.FSM__STATES);
+    	states = new EObjectContainmentEList<State>(minifsm.interpreter.minifsm.State.class, this, MinifsmPackage.FSM__STATES);
     }
     return states;
   }
@@ -64,14 +68,14 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
     switch (featureID) {
     case MinifsmPackage.FSM__STATES:
     	getStates().clear();
-    	getStates().addAll((java.util.Collection<? extends minifsm.interpreter.impl.StateImpl>) newValue);
+    	getStates().addAll((java.util.Collection<? extends minifsm.interpreter.minifsm.State>) newValue);
     return;
     case MinifsmPackage.FSM__TRANSITIONS:
     	getTransitions().clear();
-    	getTransitions().addAll((java.util.Collection<? extends minifsm.interpreter.impl.TransitionImpl>) newValue);
+    	getTransitions().addAll((java.util.Collection<? extends minifsm.interpreter.minifsm.Transition>) newValue);
     return;
     case MinifsmPackage.FSM__CURRENT_STATE:
-    	setCurrentState((minifsm.interpreter.impl.StateImpl) newValue);
+    	setCurrentState((minifsm.interpreter.minifsm.State) newValue);
     return;
     case MinifsmPackage.FSM__CURRENT_EVENT:
     	setCurrentEvent((java.lang.String) newValue);
@@ -89,7 +93,7 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
     	getTransitions().clear();
     return;
     case MinifsmPackage.FSM__CURRENT_STATE:
-    	setCurrentState((minifsm.interpreter.impl.StateImpl) null);
+    	setCurrentState((minifsm.interpreter.minifsm.State) null);
     return;
     case MinifsmPackage.FSM__CURRENT_EVENT:
     	setCurrentEvent(CURRENTEVENT_EDEFAULT);
@@ -146,7 +150,7 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
   public void entryPoint() {
     EList<String> events = ((EList<String>)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.createEList("event1", "event2"));
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("Start");
-    this.setCurrentState(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.getStates(), it -> it instanceof minifsm.interpreter.Initial)));
+    this.setCurrentState(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.getStates(), it -> it instanceof minifsm.interpreter.minifsm.Initial)));
     this.getCurrentState().execute();
     for(String event: events) {
       this.handle(event);

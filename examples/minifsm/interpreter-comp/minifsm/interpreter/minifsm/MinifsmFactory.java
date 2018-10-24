@@ -1,6 +1,6 @@
-package minifsm.interpreter;
+package minifsm.interpreter.minifsm;
 
-import minifsm.interpreter.impl.MinifsmFactoryImpl;
+import minifsm.interpreter.minifsm.impl.MinifsmFactoryImpl;
 import org.eclipse.emf.ecore.EFactory;
 
 public interface MinifsmFactory extends EFactory {
@@ -15,4 +15,6 @@ public interface MinifsmFactory extends EFactory {
   Initial createInitial();
 
   Terminal createTerminal();
+
+  MinifsmPackage getMinifsmPackage();
 }
