@@ -8,13 +8,17 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 public class VariableImpl extends MinimalEObjectImpl.Container implements Variable {
-  private static final String NAME_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
-  private static final double VALUE_EDEFAULT = 0.0;
+  protected static final double VALUE_EDEFAULT = 0.0;
 
-  private String name = NAME_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
-  private double value = VALUE_EDEFAULT;
+  protected double value = VALUE_EDEFAULT;
+
+  protected VariableImpl() {
+    super();
+  }
 
   public String getName() {
     return name;}

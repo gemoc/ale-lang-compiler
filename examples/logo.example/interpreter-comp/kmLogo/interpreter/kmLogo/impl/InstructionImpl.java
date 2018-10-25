@@ -8,6 +8,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 public abstract class InstructionImpl extends MinimalEObjectImpl.Container implements Instruction {
+  protected InstructionImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.INSTRUCTION;}
 

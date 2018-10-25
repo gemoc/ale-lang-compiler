@@ -18,9 +18,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
 public class ProcCallImpl extends ExpressionImpl implements ProcCall {
-  private EList<Expression> actualArgs;
+  protected EList<Expression> actualArgs;
 
-  private ProcDeclaration declaration;
+  protected ProcDeclaration declaration;
+
+  protected ProcCallImpl() {
+    super();
+  }
 
   public EList<Expression> getActualArgs() {
     if(actualArgs == null) {
@@ -70,10 +74,10 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     switch (featureID) {
     case KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
     	getActualArgs().clear();
-    	getActualArgs().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.impl.ExpressionImpl>) newValue);
+    	getActualArgs().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.Expression>) newValue);
     return;
     case KmLogoPackage.PROC_CALL__DECLARATION:
-    	setDeclaration((kmLogo.interpreter.kmLogo.impl.ProcDeclarationImpl) newValue);
+    	setDeclaration((kmLogo.interpreter.kmLogo.ProcDeclaration) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -85,7 +89,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     	getActualArgs().clear();
     return;
     case KmLogoPackage.PROC_CALL__DECLARATION:
-    	setDeclaration((kmLogo.interpreter.kmLogo.impl.ProcDeclarationImpl) null);
+    	setDeclaration((kmLogo.interpreter.kmLogo.ProcDeclaration) null);
     return;
     }
     super.eUnset(featureID);
@@ -104,7 +108,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
-    	return actualArgs != null;
+    	return actualArgs != null && !actualArgs.isEmpty();
     case KmLogoPackage.PROC_CALL__DECLARATION:
     	return declaration != null;
     }

@@ -73,4 +73,6 @@ public interface KmLogoFactory extends EFactory {
   StackFrame createStackFrame();
 
   Variable createVariable();
+
+  KmLogoPackage getKmLogoPackage();
 }

@@ -7,6 +7,10 @@ import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.ecore.EClass;
 
 public class PlusImpl extends BinaryExpImpl implements Plus {
+  protected PlusImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.PLUS;}
 

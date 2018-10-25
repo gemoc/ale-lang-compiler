@@ -6,17 +6,40 @@ import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.Left;
 import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class LeftImpl extends PrimitiveImpl implements Left {
-  private Expression angle;
+  protected Expression angle;
+
+  protected LeftImpl() {
+    super();
+  }
 
   public void setAngle(Expression newAngle) {
+    if (newAngle != angle) {
+    	NotificationChain msgs = null;
+    	if (angle != null)
+    		msgs = ((InternalEObject)angle).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, null, msgs);
+    	if (newAngle != null)
+    		msgs = ((InternalEObject)newAngle).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, null, msgs);
+    	msgs = basicSetAngle(newAngle, msgs);
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, newAngle, newAngle));
+  }
+
+  public NotificationChain basicSetAngle(Expression newAngle, NotificationChain msgs) {
     Expression oldAngle = angle;
     angle = newAngle;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.LEFT__ANGLE, oldAngle, angle));
+    if (eNotificationRequired()) {
+    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, oldAngle, newAngle);
+    	if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   public Expression getAngle() {
@@ -28,7 +51,7 @@ public class LeftImpl extends PrimitiveImpl implements Left {
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case KmLogoPackage.LEFT__ANGLE:
-    	setAngle((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) newValue);
+    	setAngle((kmLogo.interpreter.kmLogo.Expression) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -37,7 +60,7 @@ public class LeftImpl extends PrimitiveImpl implements Left {
   public void eUnset(int featureID) {
     switch (featureID) {
     case KmLogoPackage.LEFT__ANGLE:
-    	setAngle((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) null);
+    	setAngle((kmLogo.interpreter.kmLogo.Expression) null);
     return;
     }
     super.eUnset(featureID);

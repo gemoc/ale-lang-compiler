@@ -7,6 +7,10 @@ import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.ecore.EClass;
 
 public class DivImpl extends BinaryExpImpl implements Div {
+  protected DivImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.DIV;}
 

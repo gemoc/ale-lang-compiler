@@ -10,7 +10,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
 public class CallStackImpl extends MinimalEObjectImpl.Container implements CallStack {
-  private EList<StackFrame> frames;
+  protected EList<StackFrame> frames;
+
+  protected CallStackImpl() {
+    super();
+  }
 
   public EList<StackFrame> getFrames() {
     if(frames == null) {
@@ -26,7 +30,7 @@ public class CallStackImpl extends MinimalEObjectImpl.Container implements CallS
     switch (featureID) {
     case KmLogoPackage.CALL_STACK__FRAMES:
     	getFrames().clear();
-    	getFrames().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.impl.StackFrameImpl>) newValue);
+    	getFrames().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.StackFrame>) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -52,7 +56,7 @@ public class CallStackImpl extends MinimalEObjectImpl.Container implements CallS
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case KmLogoPackage.CALL_STACK__FRAMES:
-    	return frames != null;
+    	return frames != null && !frames.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -6,29 +6,69 @@ import kmLogo.interpreter.kmLogo.If;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class IfImpl extends ControlStructureImpl implements If {
-  private Block thenPart;
+  protected Block thenPart;
 
-  private Block elsePart;
+  protected Block elsePart;
+
+  protected IfImpl() {
+    super();
+  }
 
   public void setThenPart(Block newThenPart) {
+    if (newThenPart != thenPart) {
+    	NotificationChain msgs = null;
+    	if (thenPart != null)
+    		msgs = ((InternalEObject)thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART, null, msgs);
+    	if (newThenPart != null)
+    		msgs = ((InternalEObject)newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART, null, msgs);
+    	msgs = basicSetThenPart(newThenPart, msgs);
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART, newThenPart, newThenPart));
+  }
+
+  public NotificationChain basicSetThenPart(Block newThenPart, NotificationChain msgs) {
     Block oldThenPart = thenPart;
     thenPart = newThenPart;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.IF__THEN_PART, oldThenPart, thenPart));
+    if (eNotificationRequired()) {
+    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART, oldThenPart, newThenPart);
+    	if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   public Block getThenPart() {
     return thenPart;}
 
   public void setElsePart(Block newElsePart) {
+    if (newElsePart != elsePart) {
+    	NotificationChain msgs = null;
+    	if (elsePart != null)
+    		msgs = ((InternalEObject)elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART, null, msgs);
+    	if (newElsePart != null)
+    		msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART, null, msgs);
+    	msgs = basicSetElsePart(newElsePart, msgs);
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART, newElsePart, newElsePart));
+  }
+
+  public NotificationChain basicSetElsePart(Block newElsePart, NotificationChain msgs) {
     Block oldElsePart = elsePart;
     elsePart = newElsePart;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.IF__ELSE_PART, oldElsePart, elsePart));
+    if (eNotificationRequired()) {
+    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART, oldElsePart, newElsePart);
+    	if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   public Block getElsePart() {
@@ -40,10 +80,10 @@ public class IfImpl extends ControlStructureImpl implements If {
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case KmLogoPackage.IF__THEN_PART:
-    	setThenPart((kmLogo.interpreter.kmLogo.impl.BlockImpl) newValue);
+    	setThenPart((kmLogo.interpreter.kmLogo.Block) newValue);
     return;
     case KmLogoPackage.IF__ELSE_PART:
-    	setElsePart((kmLogo.interpreter.kmLogo.impl.BlockImpl) newValue);
+    	setElsePart((kmLogo.interpreter.kmLogo.Block) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -52,10 +92,10 @@ public class IfImpl extends ControlStructureImpl implements If {
   public void eUnset(int featureID) {
     switch (featureID) {
     case KmLogoPackage.IF__THEN_PART:
-    	setThenPart((kmLogo.interpreter.kmLogo.impl.BlockImpl) null);
+    	setThenPart((kmLogo.interpreter.kmLogo.Block) null);
     return;
     case KmLogoPackage.IF__ELSE_PART:
-    	setElsePart((kmLogo.interpreter.kmLogo.impl.BlockImpl) null);
+    	setElsePart((kmLogo.interpreter.kmLogo.Block) null);
     return;
     }
     super.eUnset(featureID);

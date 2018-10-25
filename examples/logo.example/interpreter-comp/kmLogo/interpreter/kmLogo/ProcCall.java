@@ -8,7 +8,7 @@ public interface ProcCall extends EObject, Expression {
 
   ProcDeclaration getDeclaration();
 
-  void setDeclaration(ProcDeclaration declaration);
+  void setDeclaration(ProcDeclaration value);
 
   double eval(Turtle turtle);
 }

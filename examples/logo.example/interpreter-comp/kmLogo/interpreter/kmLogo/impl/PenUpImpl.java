@@ -7,6 +7,10 @@ import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.ecore.EClass;
 
 public class PenUpImpl extends PrimitiveImpl implements PenUp {
+  protected PenUpImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.PEN_UP;}
 

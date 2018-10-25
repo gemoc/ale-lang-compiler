@@ -7,6 +7,10 @@ import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.ecore.EClass;
 
 public class TanImpl extends UnaryExpressionImpl implements Tan {
+  protected TanImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.TAN;}
 

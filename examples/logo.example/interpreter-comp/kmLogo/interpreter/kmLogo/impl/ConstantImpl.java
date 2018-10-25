@@ -7,9 +7,13 @@ import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.ecore.EClass;
 
 public class ConstantImpl extends ExpressionImpl implements Constant {
-  private static final double VALUE_EDEFAULT = 0.0;
+  protected static final double VALUE_EDEFAULT = 0.0;
 
-  private double value = VALUE_EDEFAULT;
+  protected double value = VALUE_EDEFAULT;
+
+  protected ConstantImpl() {
+    super();
+  }
 
   public double getValue() {
     return value;}

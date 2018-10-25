@@ -79,28 +79,22 @@ class PackageInterfaceCompiler {
 			MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').returns(EAttribute).addModifiers(ABSTRACT, PUBLIC).build
 		]].flatten
 		
-		val featureCountField = 
-			FieldSpec.builder(int, '''«abstractSyntax.name.toUpperCase»_FEATURE_COUNT''').initializer('''0''').addModifiers(PUBLIC, STATIC, FINAL).build
-		
 		val fieldsAttributesFields = newArrayList
 		
 		for(EClass clazz: allClasses) {
-		var cptrI = 0
-			for(EStructuralFeature esf: clazz.EReferences) {
-				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI»''').addModifiers(PUBLIC, STATIC, FINAL).build
+			var cptrI = 0
+			val offset = countOffset(clazz)
+			
+			for(EStructuralFeature esf: clazz.EStructuralFeatures) {
+				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build
 				cptrI = cptrI + 1
-			}
-		
-			for(EStructuralFeature esf: clazz.EAttributes) {
-				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI»''').addModifiers(PUBLIC, STATIC, FINAL).build
-				cptrI = cptrI + 1
-			}
+			}		
 		}
 		
 		val getFactoryMethod = MethodSpec.methodBuilder('''get«abstractSyntax.name.toFirstUpper»Factory''').returns(factoryInterfaceType).addModifiers(PUBLIC,ABSTRACT).build
 		
 		val package = TypeSpec.interfaceBuilder(abstractSyntax.packageInterfaceClassName).addSuperinterface(EPackage).
-			addFields(#[eInstanceField, eNSURIField, eNameField, eNSPrefixField, featureCountField] + classFields +  fieldsAttributesFields
+			addFields(#[eInstanceField, eNSURIField, eNameField, eNSPrefixField] + classFields +  fieldsAttributesFields
 			).addMethods(getterFields + getterReferencesFields + getterAttributesFields + #[getFactoryMethod]).addType(literalType).addModifiers(PUBLIC).
 			build
 
@@ -108,4 +102,8 @@ class PackageInterfaceCompiler {
 
 		javaFile.writeTo(directory)
 	}
+	
+	def int countOffset(EClass clazz) {
+		clazz.EAllSuperTypes.map[it.EStructuralFeatures.size].fold(0, [l,r|l+r]) 
+	} 
 }

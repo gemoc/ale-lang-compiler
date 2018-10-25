@@ -5,17 +5,40 @@ import kmLogo.interpreter.kmLogo.ControlStructure;
 import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class ControlStructureImpl extends InstructionImpl implements ControlStructure {
-  private Expression condition;
+  protected Expression condition;
+
+  protected ControlStructureImpl() {
+    super();
+  }
 
   public void setCondition(Expression newCondition) {
+    if (newCondition != condition) {
+    	NotificationChain msgs = null;
+    	if (condition != null)
+    		msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION, null, msgs);
+    	if (newCondition != null)
+    		msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION, null, msgs);
+    	msgs = basicSetCondition(newCondition, msgs);
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION, newCondition, newCondition));
+  }
+
+  public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
     Expression oldCondition = condition;
     condition = newCondition;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.CONTROL_STRUCTURE__CONDITION, oldCondition, condition));
+    if (eNotificationRequired()) {
+    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION, oldCondition, newCondition);
+    	if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   public Expression getCondition() {
@@ -27,7 +50,7 @@ public class ControlStructureImpl extends InstructionImpl implements ControlStru
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case KmLogoPackage.CONTROL_STRUCTURE__CONDITION:
-    	setCondition((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) newValue);
+    	setCondition((kmLogo.interpreter.kmLogo.Expression) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -36,7 +59,7 @@ public class ControlStructureImpl extends InstructionImpl implements ControlStru
   public void eUnset(int featureID) {
     switch (featureID) {
     case KmLogoPackage.CONTROL_STRUCTURE__CONDITION:
-    	setCondition((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) null);
+    	setCondition((kmLogo.interpreter.kmLogo.Expression) null);
     return;
     }
     super.eUnset(featureID);

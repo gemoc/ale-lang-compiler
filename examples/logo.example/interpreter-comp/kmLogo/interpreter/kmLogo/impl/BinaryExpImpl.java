@@ -5,29 +5,69 @@ import kmLogo.interpreter.kmLogo.BinaryExp;
 import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp {
-  private Expression lhs;
+  protected Expression lhs;
 
-  private Expression rhs;
+  protected Expression rhs;
+
+  protected BinaryExpImpl() {
+    super();
+  }
 
   public void setLhs(Expression newLhs) {
+    if (newLhs != lhs) {
+    	NotificationChain msgs = null;
+    	if (lhs != null)
+    		msgs = ((InternalEObject)lhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, null, msgs);
+    	if (newLhs != null)
+    		msgs = ((InternalEObject)newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, null, msgs);
+    	msgs = basicSetLhs(newLhs, msgs);
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, newLhs, newLhs));
+  }
+
+  public NotificationChain basicSetLhs(Expression newLhs, NotificationChain msgs) {
     Expression oldLhs = lhs;
     lhs = newLhs;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.BINARY_EXP__LHS, oldLhs, lhs));
+    if (eNotificationRequired()) {
+    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, oldLhs, newLhs);
+    	if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   public Expression getLhs() {
     return lhs;}
 
   public void setRhs(Expression newRhs) {
+    if (newRhs != rhs) {
+    	NotificationChain msgs = null;
+    	if (rhs != null)
+    		msgs = ((InternalEObject)rhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, null, msgs);
+    	if (newRhs != null)
+    		msgs = ((InternalEObject)newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, null, msgs);
+    	msgs = basicSetRhs(newRhs, msgs);
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, newRhs, newRhs));
+  }
+
+  public NotificationChain basicSetRhs(Expression newRhs, NotificationChain msgs) {
     Expression oldRhs = rhs;
     rhs = newRhs;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.BINARY_EXP__RHS, oldRhs, rhs));
+    if (eNotificationRequired()) {
+    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, oldRhs, newRhs);
+    	if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   public Expression getRhs() {
@@ -39,10 +79,10 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case KmLogoPackage.BINARY_EXP__LHS:
-    	setLhs((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) newValue);
+    	setLhs((kmLogo.interpreter.kmLogo.Expression) newValue);
     return;
     case KmLogoPackage.BINARY_EXP__RHS:
-    	setRhs((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) newValue);
+    	setRhs((kmLogo.interpreter.kmLogo.Expression) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -51,10 +91,10 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
   public void eUnset(int featureID) {
     switch (featureID) {
     case KmLogoPackage.BINARY_EXP__LHS:
-    	setLhs((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) null);
+    	setLhs((kmLogo.interpreter.kmLogo.Expression) null);
     return;
     case KmLogoPackage.BINARY_EXP__RHS:
-    	setRhs((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) null);
+    	setRhs((kmLogo.interpreter.kmLogo.Expression) null);
     return;
     }
     super.eUnset(featureID);

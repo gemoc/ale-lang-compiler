@@ -6,21 +6,21 @@ import org.eclipse.emf.ecore.EObject;
 public interface Turtle extends EObject {
   double getHeading();
 
-  void setHeading(double heading);
+  void setHeading(double value);
 
   boolean isPenUp();
 
-  void setPenUp(boolean penUp);
+  void setPenUp(boolean value);
 
   Point getPosition();
 
-  void setPosition(Point position);
+  void setPosition(Point value);
 
   EList<Segment> getDrawings();
 
   CallStack getCallStack();
 
-  void setCallStack(CallStack callStack);
+  void setCallStack(CallStack value);
 
   void move(double dx, double dy);
 

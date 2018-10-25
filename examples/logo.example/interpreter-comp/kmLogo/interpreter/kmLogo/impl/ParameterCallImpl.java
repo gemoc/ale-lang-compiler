@@ -12,7 +12,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
-  private Parameter parameter;
+  protected Parameter parameter;
+
+  protected ParameterCallImpl() {
+    super();
+  }
 
   public void setParameter(Parameter newParameter) {
     Parameter oldParameter = parameter;
@@ -30,7 +34,7 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case KmLogoPackage.PARAMETER_CALL__PARAMETER:
-    	setParameter((kmLogo.interpreter.kmLogo.impl.ParameterImpl) newValue);
+    	setParameter((kmLogo.interpreter.kmLogo.Parameter) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -39,7 +43,7 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
   public void eUnset(int featureID) {
     switch (featureID) {
     case KmLogoPackage.PARAMETER_CALL__PARAMETER:
-    	setParameter((kmLogo.interpreter.kmLogo.impl.ParameterImpl) null);
+    	setParameter((kmLogo.interpreter.kmLogo.Parameter) null);
     return;
     }
     super.eUnset(featureID);

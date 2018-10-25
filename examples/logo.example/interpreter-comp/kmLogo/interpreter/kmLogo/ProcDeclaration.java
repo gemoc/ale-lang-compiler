@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface ProcDeclaration extends EObject, Instruction {
   String getName();
 
-  void setName(String name);
+  void setName(String value);
 
   EList<Parameter> getArgs();
 

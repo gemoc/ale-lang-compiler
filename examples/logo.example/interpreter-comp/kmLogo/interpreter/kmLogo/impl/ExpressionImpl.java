@@ -7,6 +7,10 @@ import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.ecore.EClass;
 
 public abstract class ExpressionImpl extends InstructionImpl implements Expression {
+  protected ExpressionImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.EXPRESSION;}
 

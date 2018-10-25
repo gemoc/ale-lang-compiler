@@ -6,17 +6,40 @@ import kmLogo.interpreter.kmLogo.Forward;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class ForwardImpl extends PrimitiveImpl implements Forward {
-  private Expression steps;
+  protected Expression steps;
+
+  protected ForwardImpl() {
+    super();
+  }
 
   public void setSteps(Expression newSteps) {
+    if (newSteps != steps) {
+    	NotificationChain msgs = null;
+    	if (steps != null)
+    		msgs = ((InternalEObject)steps).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, null, msgs);
+    	if (newSteps != null)
+    		msgs = ((InternalEObject)newSteps).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, null, msgs);
+    	msgs = basicSetSteps(newSteps, msgs);
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, newSteps, newSteps));
+  }
+
+  public NotificationChain basicSetSteps(Expression newSteps, NotificationChain msgs) {
     Expression oldSteps = steps;
     steps = newSteps;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.FORWARD__STEPS, oldSteps, steps));
+    if (eNotificationRequired()) {
+    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, oldSteps, newSteps);
+    	if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   public Expression getSteps() {
@@ -28,7 +51,7 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case KmLogoPackage.FORWARD__STEPS:
-    	setSteps((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) newValue);
+    	setSteps((kmLogo.interpreter.kmLogo.Expression) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -37,7 +60,7 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
   public void eUnset(int featureID) {
     switch (featureID) {
     case KmLogoPackage.FORWARD__STEPS:
-    	setSteps((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) null);
+    	setSteps((kmLogo.interpreter.kmLogo.Expression) null);
     return;
     }
     super.eUnset(featureID);

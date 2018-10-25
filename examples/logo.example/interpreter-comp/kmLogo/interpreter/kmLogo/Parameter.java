@@ -6,5 +6,5 @@ import org.eclipse.emf.ecore.EObject;
 public interface Parameter extends EObject {
   String getName();
 
-  void setName(String name);
+  void setName(String value);
 }

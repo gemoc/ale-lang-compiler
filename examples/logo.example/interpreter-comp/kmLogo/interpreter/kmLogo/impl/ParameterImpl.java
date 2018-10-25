@@ -8,9 +8,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 public class ParameterImpl extends MinimalEObjectImpl.Container implements Parameter {
-  private static final String NAME_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
-  private String name = NAME_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
+
+  protected ParameterImpl() {
+    super();
+  }
 
   public String getName() {
     return name;}

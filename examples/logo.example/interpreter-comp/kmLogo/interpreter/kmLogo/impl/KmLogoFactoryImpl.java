@@ -44,7 +44,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 public class KmLogoFactoryImpl extends EFactoryImpl implements KmLogoFactory {
-  private KmLogoFactoryImpl() {
+  public KmLogoFactoryImpl() {
   }
 
   public static KmLogoFactory init() {
@@ -133,6 +133,9 @@ public class KmLogoFactoryImpl extends EFactoryImpl implements KmLogoFactory {
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
   }
+
+  public KmLogoPackage getKmLogoPackage() {
+    return (KmLogoPackage)getEPackage();}
 
   public Back createBack() {
     BackImpl ret = new BackImpl();

@@ -5,9 +5,9 @@ import org.eclipse.emf.ecore.EObject;
 public interface Segment extends EObject {
   Point getBegin();
 
-  void setBegin(Point begin);
+  void setBegin(Point value);
 
   Point getEnd();
 
-  void setEnd(Point end);
+  void setEnd(Point value);
 }

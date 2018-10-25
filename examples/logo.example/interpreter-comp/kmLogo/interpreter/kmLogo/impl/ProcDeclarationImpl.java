@@ -16,15 +16,19 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 
 public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclaration {
-  private static final String NAME_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
-  private String name = NAME_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
-  private EList<Parameter> args;
+  protected EList<Parameter> args;
 
-  private EList<ProcCall> procCall;
+  protected EList<ProcCall> procCall;
 
-  private EList<Instruction> instructions;
+  protected EList<Instruction> instructions;
+
+  protected ProcDeclarationImpl() {
+    super();
+  }
 
   public String getName() {
     return name;}
@@ -63,15 +67,15 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
     return;
     case KmLogoPackage.PROC_DECLARATION__ARGS:
     	getArgs().clear();
-    	getArgs().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.impl.ParameterImpl>) newValue);
+    	getArgs().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.Parameter>) newValue);
     return;
     case KmLogoPackage.PROC_DECLARATION__PROC_CALL:
     	getProcCall().clear();
-    	getProcCall().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.impl.ProcCallImpl>) newValue);
+    	getProcCall().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.ProcCall>) newValue);
     return;
     case KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS:
     	getInstructions().clear();
-    	getInstructions().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.impl.InstructionImpl>) newValue);
+    	getInstructions().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.Instruction>) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -114,11 +118,11 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
     case KmLogoPackage.PROC_DECLARATION__NAME:
     	return name != NAME_EDEFAULT;
     case KmLogoPackage.PROC_DECLARATION__ARGS:
-    	return args != null;
+    	return args != null && !args.isEmpty();
     case KmLogoPackage.PROC_DECLARATION__PROC_CALL:
-    	return procCall != null;
+    	return procCall != null && !procCall.isEmpty();
     case KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS:
-    	return instructions != null;
+    	return instructions != null && !instructions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

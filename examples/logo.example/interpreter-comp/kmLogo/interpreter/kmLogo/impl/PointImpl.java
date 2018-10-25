@@ -7,13 +7,17 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 public class PointImpl extends MinimalEObjectImpl.Container implements Point {
-  private static final double X_EDEFAULT = 0.0;
+  protected static final double X_EDEFAULT = 0.0;
 
-  private static final double Y_EDEFAULT = 0.0;
+  protected static final double Y_EDEFAULT = 0.0;
 
-  private double x = X_EDEFAULT;
+  protected double x = X_EDEFAULT;
 
-  private double y = Y_EDEFAULT;
+  protected double y = Y_EDEFAULT;
+
+  protected PointImpl() {
+    super();
+  }
 
   public double getX() {
     return x;}

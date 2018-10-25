@@ -5,9 +5,9 @@ import org.eclipse.emf.ecore.EObject;
 public interface Point extends EObject {
   double getX();
 
-  void setX(double x);
+  void setX(double value);
 
   double getY();
 
-  void setY(double y);
+  void setY(double value);
 }

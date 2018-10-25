@@ -5,17 +5,40 @@ import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.UnaryExpression;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public abstract class UnaryExpressionImpl extends ExpressionImpl implements UnaryExpression {
-  private Expression expression;
+  protected Expression expression;
+
+  protected UnaryExpressionImpl() {
+    super();
+  }
 
   public void setExpression(Expression newExpression) {
+    if (newExpression != expression) {
+    	NotificationChain msgs = null;
+    	if (expression != null)
+    		msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, null, msgs);
+    	if (newExpression != null)
+    		msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, null, msgs);
+    	msgs = basicSetExpression(newExpression, msgs);
+    	if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+    	eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, newExpression, newExpression));
+  }
+
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
     Expression oldExpression = expression;
     expression = newExpression;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, oldExpression, expression));
+    if (eNotificationRequired()) {
+    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, oldExpression, newExpression);
+    	if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   public Expression getExpression() {
@@ -27,7 +50,7 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl implements Unar
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case KmLogoPackage.UNARY_EXPRESSION__EXPRESSION:
-    	setExpression((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) newValue);
+    	setExpression((kmLogo.interpreter.kmLogo.Expression) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -36,7 +59,7 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl implements Unar
   public void eUnset(int featureID) {
     switch (featureID) {
     case KmLogoPackage.UNARY_EXPRESSION__EXPRESSION:
-    	setExpression((kmLogo.interpreter.kmLogo.impl.ExpressionImpl) null);
+    	setExpression((kmLogo.interpreter.kmLogo.Expression) null);
     return;
     }
     super.eUnset(featureID);

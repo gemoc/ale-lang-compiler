@@ -10,7 +10,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
 public class BlockImpl extends InstructionImpl implements Block {
-  private EList<Instruction> instructions;
+  protected EList<Instruction> instructions;
+
+  protected BlockImpl() {
+    super();
+  }
 
   public EList<Instruction> getInstructions() {
     if(instructions == null) {
@@ -26,7 +30,7 @@ public class BlockImpl extends InstructionImpl implements Block {
     switch (featureID) {
     case KmLogoPackage.BLOCK__INSTRUCTIONS:
     	getInstructions().clear();
-    	getInstructions().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.impl.InstructionImpl>) newValue);
+    	getInstructions().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.Instruction>) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -52,7 +56,7 @@ public class BlockImpl extends InstructionImpl implements Block {
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case KmLogoPackage.BLOCK__INSTRUCTIONS:
-    	return instructions != null;
+    	return instructions != null && !instructions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

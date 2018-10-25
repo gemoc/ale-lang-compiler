@@ -259,16 +259,50 @@ class EClassImplementationCompiler {
 						
 						
 					} else {
-						val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
-							ParameterSpec.builder(fieldType, newName).build).addCode('''
+						if(field.containment) {
+							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
+							if («newName» != «field.name») {
+								$4T msgs = null;
+								if («field.name» != null)
+									msgs = (($1T)«field.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+								if («newName» != null)
+									msgs = (($1T)«newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+								msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
+								if (msgs != null) msgs.dispatch();
+							}
+							else if (eNotificationRequired())
+								eNotify(new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
+						''', InternalEObject, ENotificationImpl, Notification, NotificationChain).addModifiers(PUBLIC).build
+						val basicSetter = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
+						.returns(NotificationChain)
+							.addParameter(ParameterSpec.builder(fieldType, newName).build)
+							.addParameter(ParameterSpec.builder(NotificationChain, 'msgs').build)
+							.addCode('''
 							$1T «oldName» = «field.name»;
 							«field.name» = «newName»;
-							if (eNotificationRequired())
-								eNotify(new $2T(this, $3T.SET, $4T.«field.name.normalizeUpperField(eClass.name)», «oldName», «field.name»));
-						''', fieldType, ENotificationImpl, Notification,
-							ePackageInterfaceType).addModifiers(PUBLIC).build
-
-						#[setter]
+							if (eNotificationRequired()) {
+								$2T notification = new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «oldName», «newName»);
+								if (msgs == null) msgs = notification; else msgs.add(notification);
+							}
+							return msgs;
+							''', fieldType, ENotificationImpl, Notification)
+							.addModifiers(PUBLIC)
+						.build // TODO + taking into account into eSet/eGet implementation
+						
+							#[setter, basicSetter]
+						} else { 
+							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
+								ParameterSpec.builder(fieldType, newName).build).addCode('''
+								$1T «oldName» = «field.name»;
+								«field.name» = «newName»;
+								if (eNotificationRequired())
+									eNotify(new $2T(this, $3T.SET, $4T.«field.name.normalizeUpperField(eClass.name)», «oldName», «field.name»));
+							''', fieldType, ENotificationImpl, Notification,
+								ePackageInterfaceType).addModifiers(PUBLIC).build
+	
+							#[setter]
+						
+						}
 					}
 
 				} else
@@ -393,7 +427,11 @@ class EClassImplementationCompiler {
 								«IF (esf as EReference).EOpposite !== null && (esf as EReference).EOpposite.containment»
 								return get«esf.name.toFirstUpper»() != null;
 								«ELSE»
+								«IF esf.upperBound == 0 || esf.upperBound == 1»
 								return «esf.name» != null;
+								«ELSE»
+								return «esf.name» != null && !«esf.name».isEmpty();
+								«ENDIF»
 								«ENDIF»
 							«ELSE»
 								throw new RuntimeException("Not Implemented");

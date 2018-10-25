@@ -24,10 +24,5 @@
 			<attribute name="plugin_id" value="org.eclipse.emf.common"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="var" path="EMF_ECORE">
-		<attributes>
-			<attribute name="plugin_id" value="org.eclipse.emf.ecore"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

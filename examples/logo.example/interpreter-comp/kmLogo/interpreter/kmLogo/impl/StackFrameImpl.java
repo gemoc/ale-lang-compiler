@@ -10,7 +10,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
 public class StackFrameImpl extends MinimalEObjectImpl.Container implements StackFrame {
-  private EList<Variable> variables;
+  protected EList<Variable> variables;
+
+  protected StackFrameImpl() {
+    super();
+  }
 
   public EList<Variable> getVariables() {
     if(variables == null) {
@@ -26,7 +30,7 @@ public class StackFrameImpl extends MinimalEObjectImpl.Container implements Stac
     switch (featureID) {
     case KmLogoPackage.STACK_FRAME__VARIABLES:
     	getVariables().clear();
-    	getVariables().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.impl.VariableImpl>) newValue);
+    	getVariables().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.Variable>) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -52,7 +56,7 @@ public class StackFrameImpl extends MinimalEObjectImpl.Container implements Stac
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case KmLogoPackage.STACK_FRAME__VARIABLES:
-    	return variables != null;
+    	return variables != null && !variables.isEmpty();
     }
     return super.eIsSet(featureID);
   }

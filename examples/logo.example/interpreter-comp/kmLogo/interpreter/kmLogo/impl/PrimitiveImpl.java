@@ -6,6 +6,10 @@ import kmLogo.interpreter.kmLogo.Primitive;
 import org.eclipse.emf.ecore.EClass;
 
 public abstract class PrimitiveImpl extends InstructionImpl implements Primitive {
+  protected PrimitiveImpl() {
+    super();
+  }
+
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.PRIMITIVE;}
 

@@ -11,7 +11,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
 public class LogoProgramImpl extends MinimalEObjectImpl.Container implements LogoProgram {
-  private EList<Instruction> instructions;
+  protected EList<Instruction> instructions;
+
+  protected LogoProgramImpl() {
+    super();
+  }
 
   public EList<Instruction> getInstructions() {
     if(instructions == null) {
@@ -27,7 +31,7 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
     switch (featureID) {
     case KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS:
     	getInstructions().clear();
-    	getInstructions().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.impl.InstructionImpl>) newValue);
+    	getInstructions().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.Instruction>) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -53,7 +57,7 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS:
-    	return instructions != null;
+    	return instructions != null && !instructions.isEmpty();
     }
     return super.eIsSet(featureID);
   }
