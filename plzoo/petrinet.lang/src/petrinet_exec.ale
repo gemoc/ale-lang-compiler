@@ -6,6 +6,7 @@ open class Petrinet {
 		boolean stop := false;
 		while(not stop) {
 			Node enabledNode := self.nodes->select(n |n.canFire())->first();
+			//enabledNode.log();
 			if(enabledNode != null) {
 				enabledNode.fire();
 			} else {

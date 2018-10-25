@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<boa:File xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:boa="http://boa.boa.boa/"
+    xsi:schemaLocation="http://boa.boa.boa/ ../../boa.lang/interpreter-comp/boa.ecore">
+  <commands xsi:type="boa:Skip"/>
+</boa:File>

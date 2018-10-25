@@ -38,7 +38,7 @@ public class NotTruffleTest extends AbstractBoaTest {
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 		final Resource resource = resourceSet.createResource(URI.createURI("dummy:/example.boa"));
 
-		java.io.File file = new java.io.File(pathname);
+		java.io.File file = new java.io.File("programs/" + pathname + ".boa");
 		final InputStream stream = new FileInputStream(file);
 		resource.load(stream, resourceSet.getLoadOptions());
 		final File result = (File) resource.getContents().get(0);

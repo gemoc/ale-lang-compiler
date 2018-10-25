@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/boa.lang/interpreter-comp" complianceLevel="8.0"
+    copyrightFields="false">
+  <foreignModel>boa_dynamic.ecore</foreignModel>
+  <genPackages prefix="Boa_dynamic" basePackage="boa_dynamic.interpreter" disposableProviderFactory="true"
+      ecorePackage="platform:/resource/boa.model/model/boa_dynamic.ecore#/">
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa_dynamic.ecore#//Ctx">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa_dynamic.ecore#//Ctx/env"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa_dynamic.ecore#//Ctx/th"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa_dynamic.ecore#//StringToEvalResMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa_dynamic.ecore#//StringToEvalResMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa_dynamic.ecore#//StringToEvalResMap/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalRes"/>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalMapRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalMapRes/values"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalFunRes">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalFunRes/exp"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalFunRes/ctx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalFunRes/name"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalBoundFunRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalBoundFunRes/th"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalIntRes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalIntRes/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalBoolRes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa_dynamic.ecore#//EvalBoolRes/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

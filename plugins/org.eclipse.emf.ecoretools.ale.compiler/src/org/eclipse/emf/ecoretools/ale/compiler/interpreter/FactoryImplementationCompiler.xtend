@@ -4,17 +4,23 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
+import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
-import static javax.lang.model.element.Modifier.*
+import java.util.Map
+import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.impl.EFactoryImpl
 import org.eclipse.emf.ecore.plugin.EcorePlugin
 
+import static javax.lang.model.element.Modifier.*
+
 class FactoryImplementationCompiler {
 
+	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory) {
@@ -50,7 +56,11 @@ class FactoryImplementationCompiler {
 			switch (eClass.getClassifierID()) {
 			«FOR eClass : allClasses.filter[!it.abstract]»
 				case $1T.«eClass.name.normalizeUpperField»:
+					«IF eClass.instanceClass !== null && eClass.instanceClass == Map.Entry»
+					return (org.eclipse.emf.ecore.EObject) create«eClass.name»();
+					«ELSE»
 					return create«eClass.name»();
+					«ENDIF»
 			«ENDFOR»
 			default:
 				throw new $2T("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -58,10 +68,19 @@ class FactoryImplementationCompiler {
 		''', packageInterfaceType, IllegalArgumentException).addModifiers(PUBLIC).build
 
 		val createMethods = allClasses.filter[!abstract].map [ eClass |
+			val returnType = if(eClass.instanceClass !== null && eClass.instanceClass == Map.Entry) {
+				// is map
+				val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+				val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+				ParameterizedTypeName.get(ClassName.get(Map.Entry), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
+			} else {
+				ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName)
+			}
 			val classImplType = ClassName.get(eClass.classImplementationPackageName,
 				eClass.classImplementationClassName)
+			
 			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''').returns(
-				ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName)).addCode('''
+				returnType).addCode('''
 				$1T ret = new $1T();
 				return ret;
 			''', classImplType).addModifiers(PUBLIC).build

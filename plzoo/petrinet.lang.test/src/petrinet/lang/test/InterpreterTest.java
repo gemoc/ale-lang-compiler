@@ -29,27 +29,32 @@ public class InterpreterTest {
 
 	@Test
 	public void test1() {
-		Petrinet model = ModelFactory.chainOfOne(5);
+		Petrinet model = ModelFactory.chainOfOne(Param.SIZE);
 
-		Dsl environment = new Dsl(Arrays.asList("model/petrinet.ecore"), Arrays.asList("model/petrinet_exec.ale"));
+		Dsl environment = new Dsl(Arrays.asList("/home/manuel/runtime-ale-lang/petrinet.lang/model/petrinet.ecore"),
+				Arrays.asList("/home/manuel/runtime-ale-lang/petrinet.lang/src/petrinet_exec.ale"));
 		List<ParseResult<ModelUnit>> parsedSemantics = (new DslBuilder(interpreter.getQueryEnvironment()))
 				.parse(environment);
-//		EObject caller = interpreter.loadModel("model/ClassA.xmi").getContents().get(0);
-		IEvaluationResult res = interpreter.eval(model, Arrays.asList(), parsedSemantics);
 
+		long start = System.currentTimeMillis();
+		IEvaluationResult res = interpreter.eval(model, Arrays.asList(), parsedSemantics);
+		System.out.println("interpreter 1 : " + (System.currentTimeMillis() - start));
 		assertEquals(1,
 				model.getNodes().stream().filter(x -> x instanceof Place && ((Place) x).getTokenNb() == 1).count());
 	}
-	
+
 	@Test
 	public void test2() {
-		Petrinet model = ModelFactory.manyToOne(5);
+		Petrinet model = ModelFactory.manyToOne(Param.SIZE);
 
-		Dsl environment = new Dsl(Arrays.asList("model/petrinet.ecore"), Arrays.asList("model/petrinet_exec.ale"));
+		Dsl environment = new Dsl(Arrays.asList("/home/manuel/runtime-ale-lang/petrinet.lang/model/petrinet.ecore"),
+				Arrays.asList("/home/manuel/runtime-ale-lang/petrinet.lang/src/petrinet_exec.ale"));
 		List<ParseResult<ModelUnit>> parsedSemantics = (new DslBuilder(interpreter.getQueryEnvironment()))
 				.parse(environment);
 //		EObject caller = interpreter.loadModel("model/ClassA.xmi").getContents().get(0);
+		long start = System.currentTimeMillis();
 		IEvaluationResult res = interpreter.eval(model, Arrays.asList(), parsedSemantics);
+		System.out.println("interpreter 2 : " + (System.currentTimeMillis() - start));
 
 		assertEquals(1,
 				model.getNodes().stream().filter(x -> x instanceof Place && ((Place) x).getTokenNb() == 1).count());

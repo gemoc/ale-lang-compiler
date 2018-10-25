@@ -8,11 +8,15 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Automatic-Module-Name: boa.lang
 Bundle-RequiredExecutionEnvironment: JavaSE-10
-Export-Package: boa_exec.impl,
+Export-Package: boa.interpreter.boa,
+ boa.interpreter.boa.impl,
+ boa_dynamic.interpreter.boa_dynamic,
+ boa_dynamic.interpreter.boa_dynamic.impl,
+ boa_exec.impl,
  boa_exec.impl.operation,
  boa_exec.impl.operation.impl,
  execboa
-Require-Bundle: boa.model;bundle-version="1.0.0",
+Require-Bundle: boa.model;bundle-version="1.0.0";visibility:=reexport,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,

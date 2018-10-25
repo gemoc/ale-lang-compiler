@@ -2,6 +2,7 @@ behavior boa_exec;
 
 use execboa.MapService;
 use execboa.MathService;
+use execboa.SerializeService;
 
 open class boa.File {
 	@main
@@ -20,7 +21,7 @@ open class boa.TopLevelCmd {
 open class boa.Def {
 	def void nextLine(Ctx ctx) {
 		boa_dynamic::EvalRes e := self.expr.eval(ctx);
-		(self.name +  ' = ' + e).log();
+		(self.name +  ' = ' + e.serialize()).log();
 		ctx.env.put(self.name, e);
 	}
 }
@@ -31,7 +32,7 @@ open class boa.Expr {
 	}
 	
 	def void nextLine(Ctx ctx) {
-		self.eval(ctx).log();
+		self.eval(ctx).serialize().log();
 	}
 	
 	// TODO: asInt / asBool

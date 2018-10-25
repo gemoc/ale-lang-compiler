@@ -8,16 +8,15 @@ import minifsm.Terminal;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Terminal</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object
+ * '<em><b>Terminal</b></em>'. <!-- end-user-doc -->
  *
  * @generated
  */
 public class TerminalImpl extends StateImpl implements Terminal {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected TerminalImpl() {
@@ -25,8 +24,8 @@ public class TerminalImpl extends StateImpl implements Terminal {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -34,4 +33,4 @@ public class TerminalImpl extends StateImpl implements Terminal {
 		return MinifsmPackage.Literals.TERMINAL;
 	}
 
-} //TerminalImpl
+} // TerminalImpl

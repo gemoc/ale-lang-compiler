@@ -7,13 +7,14 @@ import petrinet_exec.impl.operation.Petrinet;
 import petrinet_exec.impl.operation.Place;
 import petrinet_exec.impl.operation.Transition;
 
-public class PlaceImpl implements Place {
+public class PlaceImpl extends NodeImpl implements Place {
   private PetrinetRevisitor<Arc, Node, Petrinet, Place, Transition> rev;
 
   private petrinet.lang.petrinet.Place obj;
 
   public PlaceImpl(petrinet.lang.petrinet.Place obj,
       PetrinetRevisitor<Arc, Node, Petrinet, Place, Transition> rev) {
+    super(obj, rev);
     this.obj = obj;
     this.rev = rev;
   }

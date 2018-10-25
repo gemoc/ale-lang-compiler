@@ -16,19 +16,19 @@ public class TestRevisitorLogo {
 	@Test
 	public void testLogoProgram() throws Exception {
 		KmLogoPackage.eINSTANCE.eClass();
-//		KmLogoFactory.eINSTANCE.eClass();
 
 		final ResourceSet resSet = new ResourceSetImpl();
-//		resSet.getPackageRegistry().put(KmLogoPackage.eNS_URI, KmLogoPackage.eINSTANCE);
 		resSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
 
 		URI createPlatformResourceURI = URI.createPlatformPluginURI("/logo.example/data/LogoProgram.xmi", true);
 		final Resource resource = resSet.getResource(createPlatformResourceURI, true);
 
-//		resource.load(null);
 		final LogoProgram model = (LogoProgram) resource.getContents().get(0);
 
-		new LogoProgramImplementation() {
-		}.$(model).eval();
+		LogoProgramImplementation logoProgramImplementation = new LogoProgramImplementation() {
+		};
+		logoProgramImplementation.$(model).eval();
+
+		System.out.println("yolo");
 	}
 }

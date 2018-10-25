@@ -16,73 +16,87 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-/**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>String To Eval Res Map</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- *   <li>{@link boa_dynamic.impl.StringToEvalResMapImpl#getTypedKey <em>Key</em>}</li>
- *   <li>{@link boa_dynamic.impl.StringToEvalResMapImpl#getTypedValue <em>Value</em>}</li>
- * </ul>
- *
- * @generated
- */
-public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<String,EvalRes> {
-	/**
-	 * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTypedKey()
-	 * @generated
-	 * @ordered
-	 */
+public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<String, EvalRes> {
 	protected static final String KEY_EDEFAULT = null;
 
-	/**
-	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTypedKey()
-	 * @generated
-	 * @ordered
-	 */
 	protected String key = KEY_EDEFAULT;
 
-	/**
-	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTypedValue()
-	 * @generated
-	 * @ordered
-	 */
 	protected EvalRes value;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	protected StringToEvalResMapImpl() {
 		super();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
+	public String getKey() {
+		return getTypedKey();
+	}
+
+	public void setKey(String key) {
+		setTypedKey(key);
+	}
+
+	public EvalRes setValue(EvalRes value) {
+		EvalRes oldValue = getValue();
+		setTypedValue(value);
+		return oldValue;
+	}
+	
+	public EvalRes getValue() {
+		return getTypedValue();
+	}
+
 	protected EClass eStaticClass() {
 		return Boa_dynamicPackage.Literals.STRING_TO_EVAL_RES_MAP;
 	}
+	
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+		case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__KEY:
+			setTypedKey((String) newValue);
+			return;
+		case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE:
+			setTypedValue((EvalRes) newValue);
+			return;
+		}
+		super.eSet(featureID, newValue);
+	}
+	
+	public void eUnset(int featureID) {
+		switch (featureID) {
+		case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__KEY:
+			setTypedKey(KEY_EDEFAULT);
+			return;
+		case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE:
+			setTypedValue((EvalRes) null);
+			return;
+		}
+		super.eUnset(featureID);
+	}
+	
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+		case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__KEY:
+			return getTypedKey();
+		case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE:
+			if (resolve)
+				return getTypedValue();
+			return basicGetTypedValue();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+	
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+		case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__KEY:
+			return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
+		case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE:
+			return value != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public String getTypedKey() {
@@ -90,8 +104,7 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedKey(String newKey) {
@@ -102,8 +115,7 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EvalRes getTypedValue() {
@@ -119,8 +131,7 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public EvalRes basicGetTypedValue() {
@@ -128,8 +139,7 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setTypedValue(EvalRes newValue) {
@@ -139,83 +149,9 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 			eNotify(new ENotificationImpl(this, Notification.SET, Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE, oldValue, value));
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__KEY:
-				return getTypedKey();
-			case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE:
-				if (resolve) return getTypedValue();
-				return basicGetTypedValue();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__KEY:
-				setTypedKey((String)newValue);
-				return;
-			case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE:
-				setTypedValue((EvalRes)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__KEY:
-				setTypedKey(KEY_EDEFAULT);
-				return;
-			case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE:
-				setTypedValue((EvalRes)null);
-				return;
-		}
-		super.eUnset(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__KEY:
-				return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
-			case Boa_dynamicPackage.STRING_TO_EVAL_RES_MAP__VALUE:
-				return value != null;
-		}
-		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (key: ");
@@ -225,15 +161,13 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected int hash = -1;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public int getHash() {
@@ -245,8 +179,7 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	public void setHash(int hash) {
@@ -254,46 +187,32 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public String getKey() {
-		return getTypedKey();
-	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public void setKey(String key) {
-		setTypedKey(key);
-	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public EvalRes getValue() {
-		return getTypedValue();
-	}
+	
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public EvalRes setValue(EvalRes value) {
-		EvalRes oldValue = getValue();
-		setTypedValue(value);
-		return oldValue;
-	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -302,4 +221,4 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 		return container == null ? null : (EMap<String, EvalRes>)container.eGet(eContainmentFeature());
 	}
 
-} //StringToEvalResMapImpl
+} // StringToEvalResMapImpl

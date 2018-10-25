@@ -8,7 +8,9 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: petrinet.lang.petrinet,
+Export-Package: petrinet.interpreter.petrinet,
+ petrinet.interpreter.petrinet.impl,
+ petrinet.lang.petrinet,
  petrinet.lang.petrinet.impl,
  petrinet.lang.petrinet.util,
  petrinet.revisitor,

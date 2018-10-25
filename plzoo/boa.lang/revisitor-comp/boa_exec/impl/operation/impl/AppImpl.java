@@ -1,9 +1,5 @@
 package boa_exec.impl.operation.impl;
 
-import java.util.Map.Entry;
-
-import org.eclipse.emf.common.util.EList;
-
 import boa.revisitor.BoaRevisitor;
 import boa_dynamic.Ctx;
 import boa_dynamic.EvalBoundFunRes;

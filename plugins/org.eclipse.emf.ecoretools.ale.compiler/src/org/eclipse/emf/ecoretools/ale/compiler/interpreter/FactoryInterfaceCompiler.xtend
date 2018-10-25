@@ -9,6 +9,7 @@ import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.JavaFile
 import org.eclipse.emf.ecore.EClass
+import java.util.Map
 
 class FactoryInterfaceCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -23,7 +24,9 @@ class FactoryInterfaceCompiler {
 		val einstance = FieldSpec.builder(factoryInterfaceType, "eINSTANCE", PUBLIC, FINAL, STATIC).
 			initializer('''$T.init()''', factoryImplType).build
 		val factory = TypeSpec.interfaceBuilder(abstractSyntax.factoryInterfaceClassName).addSuperinterface(EFactory).
-			addField(einstance).addMethods(abstractSyntax.EClassifiers.filter(EClass).filter[!abstract].map [
+			addField(einstance).addMethods(abstractSyntax.EClassifiers.filter(EClass).filter [
+				!abstract && !(it.instanceClass !== null && it.instanceClass == Map.Entry)
+			].map [
 				MethodSpec.methodBuilder('''create«it.name.toFirstUpper»''').returns(
 					ClassName.get(it.classInterfacePackageName, it.classInterfaceClassName)).addModifiers(ABSTRACT,
 					PUBLIC).build

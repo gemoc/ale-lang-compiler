@@ -88,6 +88,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.util.EcoreEMap
+import org.eclipse.emf.common.util.BasicEMap
 
 class EClassImplementationCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
@@ -291,16 +292,30 @@ class EClassImplementationCompiler {
 						
 							#[setter, basicSetter]
 						} else { 
-							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
-								ParameterSpec.builder(fieldType, newName).build).addCode('''
-								$1T «oldName» = «field.name»;
-								«field.name» = «newName»;
-								if (eNotificationRequired())
-									eNotify(new $2T(this, $3T.SET, $4T.«field.name.normalizeUpperField(eClass.name)», «oldName», «field.name»));
-							''', fieldType, ENotificationImpl, Notification,
-								ePackageInterfaceType).addModifiers(PUBLIC).build
-	
-							#[setter]
+							val isMapValueField = (field.eContainer as EClass).instanceClass !== null && (field.eContainer as EClass).instanceClass == Map.Entry && field.name == "value"
+							if(isMapValueField) {
+								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').returns(
+									fieldType).addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
+									$1T «oldName» = this.«field.name»;
+									this.«field.name» = «newName»;
+									return «oldName»;
+								''', fieldType).
+									addModifiers(PUBLIC).build
+		
+								#[setter]						
+							} else {
+								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
+									ParameterSpec.builder(fieldType, newName).build).addCode('''
+									$1T «oldName» = «field.name»;
+									«field.name» = «newName»;
+									if (eNotificationRequired())
+										eNotify(new $2T(this, $3T.SET, $4T.«field.name.normalizeUpperField(eClass.name)», «oldName», «field.name»));
+								''', fieldType, ENotificationImpl, Notification,
+									ePackageInterfaceType).addModifiers(PUBLIC).build
+		
+								#[setter]
+							
+							}
 						
 						}
 					}
@@ -311,7 +326,7 @@ class EClassImplementationCompiler {
 			val getter = if (isMultiple) {
 				if(ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
 					val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+					val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 					MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
 							addModifiers(PUBLIC).addCode('''
 								if («field.name» == null) {
@@ -409,7 +424,14 @@ class EClassImplementationCompiler {
 				switch (featureID) {
 				«FOR esf : eClass.EStructuralFeatures»
 					case $1T.«esf.name.normalizeUpperField(eClass.name)»:
+					«IF esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry»
+					if (coreType)
+						return get«esf.name.toFirstUpper»();
+					else
+						return get«esf.name.toFirstUpper»().map();
+					«ELSE»
 						return «IF esf.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«esf.name.toFirstUpper»();
+					«ENDIF»
 				«ENDFOR»
 				}
 				return super.eGet(featureID, resolve, coreType);
@@ -495,13 +517,34 @@ class EClassImplementationCompiler {
 			super();
 		''').addModifiers(PROTECTED).build
 
+		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
+		val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+		val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+
 		builder.applyIfTrue(eClass.isAbstract, [addModifiers(ABSTRACT)]).applyIfTrue(hasSuperType, [
 			superclass(ClassName.get(superType.classImplementationPackageName, superType.classImplementationClassName))
-		]).applyIfTrue(!hasSuperType, [superclass(ClassName.get(MinimalEObjectImpl.Container))]).addSuperinterface(
-			ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName)).addFields(
-			fieldsEAttributes + fieldsEReferences).addMethods(
+		]).applyIfTrue(isMapElement, [
+			it.addSuperinterface(
+				ParameterizedTypeName.get(ClassName.get(BasicEMap.Entry), key.EType.scopedInterfaceTypeRef,
+					value.EType.scopedInterfaceTypeRef))
+		]).applyIfTrue(!hasSuperType, [superclass(ClassName.get(MinimalEObjectImpl.Container))]).applyIfTrue(
+			!isMapElement, [
+				addSuperinterface(ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName))
+			]).addFields(fieldsEAttributes + fieldsEReferences).addMethods(
 			methodsEAttributes + methodsEReferences +
-				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod, constructor, eInverseRemove] + eInverseAdd)
+				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod, constructor, eInverseRemove] +
+				eInverseAdd).applyIfTrue(isMapElement, [
+			it.addField(FieldSpec.builder(int, 'hash', PROTECTED).initializer('-1').build).addMethod(
+				MethodSpec.methodBuilder('setHash').addParameter(int, 'hash').addCode('''
+					this.hash = hash;
+				''').addModifiers(PUBLIC).build).addMethod(MethodSpec.methodBuilder('getHash').returns(int).addCode('''
+				if (hash == -1) {
+					Object theKey = getKey();
+					hash = (theKey == null ? 0 : theKey.hashCode());
+				}
+				return hash;
+			''').addModifiers(PUBLIC).build)
+		])
 	}
 
 	def <T> T applyIfTrue(T t, Boolean cond, Function1<T, T> app) {

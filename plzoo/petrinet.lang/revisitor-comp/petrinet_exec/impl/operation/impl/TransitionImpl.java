@@ -7,13 +7,14 @@ import petrinet_exec.impl.operation.Petrinet;
 import petrinet_exec.impl.operation.Place;
 import petrinet_exec.impl.operation.Transition;
 
-public class TransitionImpl implements Transition {
+public class TransitionImpl extends NodeImpl implements Transition {
   private PetrinetRevisitor<Arc, Node, Petrinet, Place, Transition> rev;
 
   private petrinet.lang.petrinet.Transition obj;
 
   public TransitionImpl(petrinet.lang.petrinet.Transition obj,
       PetrinetRevisitor<Arc, Node, Petrinet, Place, Transition> rev) {
+    super(obj, rev);
     this.obj = obj;
     this.rev = rev;
   }

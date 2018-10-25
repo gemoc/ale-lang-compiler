@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:implementation="http://implementation/" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style">
   <viewpoint:DAnalysis xmi:id="_rZdvgE9qEeeXAN0Yp2lY_A" selectedViews="_rogREE9qEeeXAN0Yp2lY_A _rotscE9qEeeXAN0Yp2lY_A _YTd5kE9rEeeXAN0Yp2lY_A" version="13.0.0.201804031646">
     <semanticResources>MiniFsm.ecore</semanticResources>
     <semanticResources>MiniFsm.dsl</semanticResources>
@@ -44,6 +44,12 @@
             <labelColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
           </endLabelStyleDescription>
         </computedStyleDescriptions>
+        <computedStyleDescriptions xmi:type="style:BundledImageDescription" xmi:id="_Xd3igNa0EeiNDqUxUH8hMg" labelExpression="service:render" labelAlignment="LEFT" tooltipExpression="service:renderEOperationTooltip" sizeComputationExpression="2">
+          <borderColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          <labelFormat>bold</labelFormat>
+          <labelColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          <color xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+        </computedStyleDescriptions>
       </data>
     </ownedAnnotationEntries>
     <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_sYVLgE9qEeeXAN0Yp2lY_A" source="GMF_DIAGRAMS">
@@ -58,6 +64,10 @@
             <children xmi:type="notation:Node" xmi:id="_PwG4kNNyEeigDZXy5tUT4A" type="3010" element="_PvFk4NNyEeigDZXy5tUT4A">
               <styles xmi:type="notation:FontStyle" xmi:id="_PwG4kdNyEeigDZXy5tUT4A" fontColor="2697711" fontName="Cantarell" fontHeight="8"/>
               <layoutConstraint xmi:type="notation:Location" xmi:id="_PwG4ktNyEeigDZXy5tUT4A"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_Xe4PINa0EeiNDqUxUH8hMg" type="3010" element="_XeEW0Na0EeiNDqUxUH8hMg">
+              <styles xmi:type="notation:FontStyle" xmi:id="_Xe4PIda0EeiNDqUxUH8hMg" fontName="Cantarell" fontHeight="8" bold="true"/>
+              <layoutConstraint xmi:type="notation:Location" xmi:id="_Xe4PIta0EeiNDqUxUH8hMg"/>
             </children>
             <styles xmi:type="notation:SortingStyle" xmi:id="_x0tUoU9qEeeXAN0Yp2lY_A"/>
             <styles xmi:type="notation:FilteringStyle" xmi:id="_x0tUok9qEeeXAN0Yp2lY_A"/>
@@ -246,8 +256,8 @@
         <target xmi:type="ecore:EOperation" href="MiniFsm.ecore#//FSM/handle"/>
         <semanticElements xmi:type="ecore:EOperation" href="MiniFsm.ecore#//FSM/handle"/>
         <semanticElements xmi:type="ecore:EParameter" href="MiniFsm.ecore#//FSM/handle/event"/>
-        <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_EDJswNNzEeirCJ5xMl-rPQ" labelAlignment="LEFT">
-          <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
+        <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_Xd-3QNa0EeiNDqUxUH8hMg" labelAlignment="LEFT" description="_Xd3igNa0EeiNDqUxUH8hMg">
+          <labelFormat>bold</labelFormat>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']"/>
       </ownedElements>
@@ -258,6 +268,15 @@
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
+      </ownedElements>
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_XeEW0Na0EeiNDqUxUH8hMg" name="entryPoint()">
+        <target xmi:type="implementation:Method" href="MiniFsm.dsl#//FSM/@methods.1"/>
+        <semanticElements xmi:type="implementation:Method" href="MiniFsm.dsl#//FSM/@methods.1"/>
+        <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_XeFk8Na0EeiNDqUxUH8hMg" iconPath="/org.eclipse.emf.ecore.edit/icons/full/obj16/EOperation.gif" labelAlignment="LEFT" labelPosition="node">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.ale.ide/description/ale.odesign#//@ownedViewpoints[name='Behavior']/@ownedRepresentationExtensions[name='BehaviorEntities']/@layers[name='Behavior']/@containerMappings[name='ExtendedClass']/@subNodeMappings[name='Method']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.ale.ide/description/ale.odesign#//@ownedViewpoints[name='Behavior']/@ownedRepresentationExtensions[name='BehaviorEntities']/@layers[name='Behavior']/@containerMappings[name='ExtendedClass']/@subNodeMappings[name='Method']"/>
       </ownedElements>
     </ownedDiagramElements>
     <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_zFGlgE9qEeeXAN0Yp2lY_A" name="State" tooltipText="" incomingEdges="_1wUOkE9qEeeXAN0Yp2lY_A _3TQoAE9qEeeXAN0Yp2lY_A _4nugkE9qEeeXAN0Yp2lY_A _9PMa8E9qEeeXAN0Yp2lY_A _9qrdEE9qEeeXAN0Yp2lY_A _NdxpkNNyEeigDZXy5tUT4A" width="12" height="10">
@@ -273,8 +292,8 @@
       <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_GbQh4E9rEeeXAN0Yp2lY_A" name="execute()" tooltipText="execute()">
         <target xmi:type="ecore:EOperation" href="MiniFsm.ecore#//State/execute"/>
         <semanticElements xmi:type="ecore:EOperation" href="MiniFsm.ecore#//State/execute"/>
-        <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_ED9lENNzEeirCJ5xMl-rPQ" labelAlignment="LEFT">
-          <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
+        <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_XeJPUNa0EeiNDqUxUH8hMg" labelAlignment="LEFT" description="_Xd3igNa0EeiNDqUxUH8hMg">
+          <labelFormat>bold</labelFormat>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']"/>
       </ownedElements>
@@ -308,8 +327,8 @@
       <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_E3x88E9rEeeXAN0Yp2lY_A" name="isActivated() : EBoolean" tooltipText="isActivated() : EBoolean">
         <target xmi:type="ecore:EOperation" href="MiniFsm.ecore#//Transition/isActivated"/>
         <semanticElements xmi:type="ecore:EOperation" href="MiniFsm.ecore#//Transition/isActivated"/>
-        <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_EECdkNNzEeirCJ5xMl-rPQ" labelAlignment="LEFT">
-          <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']/@style"/>
+        <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_XeNgwNa0EeiNDqUxUH8hMg" labelAlignment="LEFT" description="_Xd3igNa0EeiNDqUxUH8hMg">
+          <labelFormat>bold</labelFormat>
         </ownedStyle>
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='Operation']"/>
       </ownedElements>

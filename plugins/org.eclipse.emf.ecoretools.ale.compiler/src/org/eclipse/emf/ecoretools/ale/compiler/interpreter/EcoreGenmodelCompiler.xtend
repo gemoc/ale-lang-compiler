@@ -26,6 +26,7 @@ class EcoreGenmodelCompiler {
 			gm.modelDirectory = '''/«projectName»/interpreter-comp'''
 			gm.genPackages.head.basePackage = '''«ePackage.name».interpreter'''
 			gm.complianceLevel = GenJDKLevel.JDK80_LITERAL
+			gm.foreignModel += '''«ePackage.name».ecore'''
 			
 			val gmRes = resSet.createResource(URI.createFileURI('''«path»/«ePackage.name».genmodel'''))
 			gmRes.contents += gm
