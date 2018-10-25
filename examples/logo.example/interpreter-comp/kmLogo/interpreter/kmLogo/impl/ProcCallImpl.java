@@ -115,6 +115,15 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     return super.eIsSet(featureID);
   }
 
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
+    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getActualArgs()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
       NotificationChain msgs2) {
     NotificationChain msgs = msgs2;

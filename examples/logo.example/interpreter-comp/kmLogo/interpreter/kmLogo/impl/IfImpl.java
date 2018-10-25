@@ -121,6 +121,17 @@ public class IfImpl extends ControlStructureImpl implements If {
     return super.eIsSet(featureID);
   }
 
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART:
+    	return basicSetThenPart(null, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART:
+    	return basicSetElsePart(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
   public double eval(Turtle turtle) {
     double result;
     if((this.getCondition().eval(turtle)) != (0.0)) {

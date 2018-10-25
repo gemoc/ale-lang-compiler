@@ -5,8 +5,10 @@ import kmLogo.interpreter.kmLogo.Instruction;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.LogoProgram;
 import kmLogo.interpreter.kmLogo.Turtle;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
@@ -62,6 +64,15 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
     return super.eIsSet(featureID);
   }
 
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS:
+    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getInstructions()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
   public Turtle eval() {
     Turtle result;
     long start = ((long)logo.example.service.TimeService.time(this));
@@ -74,6 +85,7 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
     long stop = ((long)logo.example.service.TimeService.time(this));
     long time = ((long)(stop) - (start));
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(time);
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(turtle.getDrawings()));
     logo.example.service.Display.show(turtle);
     return result;
   }

@@ -80,4 +80,13 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl implements Unar
     }
     return super.eIsSet(featureID);
   }
+
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION:
+    	return basicSetExpression(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 }

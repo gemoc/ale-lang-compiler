@@ -80,4 +80,13 @@ public class ControlStructureImpl extends InstructionImpl implements ControlStru
     }
     return super.eIsSet(featureID);
   }
+
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION:
+    	return basicSetCondition(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 }

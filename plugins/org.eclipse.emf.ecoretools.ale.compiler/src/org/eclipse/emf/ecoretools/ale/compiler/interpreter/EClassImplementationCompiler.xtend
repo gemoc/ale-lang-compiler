@@ -473,6 +473,24 @@ class EClassImplementationCompiler {
 			} else
 				#[]
 				
+				
+		val eInverseRemove = MethodSpec.methodBuilder('eInverseRemove').returns(NotificationChain).addModifiers(PUBLIC).
+			addParameter(ParameterSpec.builder(InternalEObject, 'otherEnd').build).addParameter(
+				ParameterSpec.builder(int, 'featureID').build).addParameter(
+				ParameterSpec.builder(NotificationChain, 'msgs').build).addCode('''
+				switch(featureID) {
+				«FOR ref: eClass.EReferences.filter[it.containment]»
+				case «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«ref.name.normalizeUpperField(eClass.name)»:
+					«IF ref.upperBound == 0 || ref.upperBound == 1»
+					return basicSet«ref.name.toFirstUpper»(null, msgs);
+					«ELSE»
+					return ((org.eclipse.emf.ecore.util.InternalEList<?>) get«ref.name.toFirstUpper»()).basicRemove(otherEnd, msgs);
+					«ENDIF»
+				«ENDFOR»
+				}
+				return super.eInverseRemove(otherEnd, featureID, msgs);
+			''').build
+				
 		val constructor = MethodSpec.constructorBuilder.addCode('''
 			super();
 		''').addModifiers(PROTECTED).build
@@ -483,7 +501,7 @@ class EClassImplementationCompiler {
 			ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName)).addFields(
 			fieldsEAttributes + fieldsEReferences).addMethods(
 			methodsEAttributes + methodsEReferences +
-				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod, constructor] + eInverseAdd)
+				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod, constructor, eInverseRemove] + eInverseAdd)
 	}
 
 	def <T> T applyIfTrue(T t, Boolean cond, Function1<T, T> app) {
@@ -703,6 +721,11 @@ class EClassImplementationCompiler {
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(«call.arguments.get(0).compileExpression»)'''
+				else
+					'''/*FIRST «call»*/'''
+			case "size":
+				if (call.type == CallType.COLLECTIONCALL)
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression»)'''
 				else
 					'''/*FIRST «call»*/'''
 			case "at":

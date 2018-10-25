@@ -119,4 +119,15 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
     }
     return super.eIsSet(featureID);
   }
+
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS:
+    	return basicSetLhs(null, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS:
+    	return basicSetRhs(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 }

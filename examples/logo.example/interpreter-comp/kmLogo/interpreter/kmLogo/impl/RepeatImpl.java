@@ -82,6 +82,15 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
     return super.eIsSet(featureID);
   }
 
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.REPEAT__BLOCK:
+    	return basicSetBlock(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
   public double eval(Turtle turtle) {
     double result;
     double time = ((double)this.getCondition().eval(turtle));

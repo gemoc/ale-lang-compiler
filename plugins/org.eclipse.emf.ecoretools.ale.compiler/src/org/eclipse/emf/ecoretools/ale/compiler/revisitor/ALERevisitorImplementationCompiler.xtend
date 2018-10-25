@@ -387,6 +387,11 @@ class ALERevisitorImplementationCompiler {
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(«call.arguments.get(0).compileExpression»)'''
 				else
 					'''/*FIRST «call»*/'''
+			case "size":
+				if (call.type == CallType.COLLECTIONCALL)
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression»)'''
+				else
+					'''/*FIRST «call»*/'''
 			case "at":
 				if (call.type == CallType.COLLECTIONCALL)
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)'''

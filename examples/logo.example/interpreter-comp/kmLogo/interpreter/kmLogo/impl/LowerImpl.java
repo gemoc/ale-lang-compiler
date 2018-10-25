@@ -4,7 +4,9 @@ import java.lang.Object;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.Lower;
 import kmLogo.interpreter.kmLogo.Turtle;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 public class LowerImpl extends BinaryExpImpl implements Lower {
   protected LowerImpl() {
@@ -36,6 +38,13 @@ public class LowerImpl extends BinaryExpImpl implements Lower {
     switch (featureID) {
     }
     return super.eIsSet(featureID);
+  }
+
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   public double eval(Turtle turtle) {

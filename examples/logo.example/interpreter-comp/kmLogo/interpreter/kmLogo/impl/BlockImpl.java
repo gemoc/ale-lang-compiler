@@ -5,8 +5,10 @@ import kmLogo.interpreter.kmLogo.Block;
 import kmLogo.interpreter.kmLogo.Instruction;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.Turtle;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
 public class BlockImpl extends InstructionImpl implements Block {
@@ -59,6 +61,15 @@ public class BlockImpl extends InstructionImpl implements Block {
     	return instructions != null && !instructions.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.BLOCK__INSTRUCTIONS:
+    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getInstructions()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   public double eval(Turtle turtle) {

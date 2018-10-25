@@ -82,6 +82,15 @@ public class RightImpl extends PrimitiveImpl implements Right {
     return super.eIsSet(featureID);
   }
 
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.RIGHT__ANGLE:
+    	return basicSetAngle(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
   public double eval(Turtle turtle) {
     double result;
     double angle = ((double)this.getAngle().eval(turtle));

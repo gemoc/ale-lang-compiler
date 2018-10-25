@@ -14,6 +14,15 @@ public class CollectionService {
 		return new BasicEList<>(Arrays.asList(ts));
 	}
 
+	public static <T> int size(final Iterable<T> collection) {
+		int ret = 0;
+		for (Object x : collection) {
+			ret++;
+		}
+
+		return ret;
+	}
+
 	public static <T> Iterable<T> select(final Iterable<T> collection, final Function<? super T, Boolean> filter) {
 		final ArrayList<T> ret = new ArrayList<>();
 		for (final T e : collection) {

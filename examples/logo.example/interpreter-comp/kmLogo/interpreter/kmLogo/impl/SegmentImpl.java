@@ -120,4 +120,15 @@ public class SegmentImpl extends MinimalEObjectImpl.Container implements Segment
     }
     return super.eIsSet(featureID);
   }
+
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__BEGIN:
+    	return basicSetBegin(null, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__END:
+    	return basicSetEnd(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
 }

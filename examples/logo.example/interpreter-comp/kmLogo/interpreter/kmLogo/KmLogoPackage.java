@@ -252,61 +252,61 @@ public interface KmLogoPackage extends EPackage {
 
   EReference getRight_Angle();
 
-  EReference getBinaryExp_Lhs();
+  EReference getBinary_exp_Lhs();
 
-  EReference getBinaryExp_Rhs();
+  EReference getBinary_exp_Rhs();
 
-  EReference getUnaryExpression_Expression();
+  EReference getUnary_expression_Expression();
 
-  EReference getProcCall_ActualArgs();
+  EReference getProc_call_Actual_args();
 
-  EReference getProcCall_Declaration();
+  EReference getProc_call_Declaration();
 
-  EReference getProcDeclaration_Args();
+  EReference getProc_declaration_Args();
 
-  EReference getProcDeclaration_ProcCall();
+  EReference getProc_declaration_Proc_call();
 
-  EReference getProcDeclaration_Instructions();
+  EReference getProc_declaration_Instructions();
 
   EReference getBlock_Instructions();
 
-  EReference getIf_ThenPart();
+  EReference getIf_Then_part();
 
-  EReference getIf_ElsePart();
+  EReference getIf_Else_part();
 
-  EReference getControlStructure_Condition();
+  EReference getControl_structure_Condition();
 
   EReference getRepeat_Block();
 
   EReference getWhile_Block();
 
-  EReference getParameterCall_Parameter();
+  EReference getParameter_call_Parameter();
 
-  EReference getLogoProgram_Instructions();
+  EReference getLogo_program_Instructions();
 
   EReference getTurtle_Position();
 
   EReference getTurtle_Drawings();
 
-  EReference getTurtle_CallStack();
+  EReference getTurtle_Call_stack();
 
   EReference getSegment_Begin();
 
   EReference getSegment_End();
 
-  EReference getCallStack_Frames();
+  EReference getCall_stack_Frames();
 
-  EReference getStackFrame_Variables();
+  EReference getStack_frame_Variables();
 
   EAttribute getConstant_Value();
 
-  EAttribute getProcDeclaration_Name();
+  EAttribute getProc_declaration_Name();
 
   EAttribute getParameter_Name();
 
   EAttribute getTurtle_Heading();
 
-  EAttribute getTurtle_PenUp();
+  EAttribute getTurtle_Pen_up();
 
   EAttribute getPoint_X();
 
@@ -405,61 +405,61 @@ public interface KmLogoPackage extends EPackage {
 
     EReference RIGHT__ANGLE = eINSTANCE.getRight_Angle();
 
-    EReference BINARY_EXP__LHS = eINSTANCE.getBinaryExp_Lhs();
+    EReference BINARY_EXP__LHS = eINSTANCE.getBinary_exp_Lhs();
 
-    EReference BINARY_EXP__RHS = eINSTANCE.getBinaryExp_Rhs();
+    EReference BINARY_EXP__RHS = eINSTANCE.getBinary_exp_Rhs();
 
-    EReference UNARY_EXPRESSION__EXPRESSION = eINSTANCE.getUnaryExpression_Expression();
+    EReference UNARY_EXPRESSION__EXPRESSION = eINSTANCE.getUnary_expression_Expression();
 
-    EReference PROC_CALL__ACTUAL_ARGS = eINSTANCE.getProcCall_ActualArgs();
+    EReference PROC_CALL__ACTUAL_ARGS = eINSTANCE.getProc_call_Actual_args();
 
-    EReference PROC_CALL__DECLARATION = eINSTANCE.getProcCall_Declaration();
+    EReference PROC_CALL__DECLARATION = eINSTANCE.getProc_call_Declaration();
 
-    EReference PROC_DECLARATION__ARGS = eINSTANCE.getProcDeclaration_Args();
+    EReference PROC_DECLARATION__ARGS = eINSTANCE.getProc_declaration_Args();
 
-    EReference PROC_DECLARATION__PROC_CALL = eINSTANCE.getProcDeclaration_ProcCall();
+    EReference PROC_DECLARATION__PROC_CALL = eINSTANCE.getProc_declaration_Proc_call();
 
-    EReference PROC_DECLARATION__INSTRUCTIONS = eINSTANCE.getProcDeclaration_Instructions();
+    EReference PROC_DECLARATION__INSTRUCTIONS = eINSTANCE.getProc_declaration_Instructions();
 
     EReference BLOCK__INSTRUCTIONS = eINSTANCE.getBlock_Instructions();
 
-    EReference IF__THEN_PART = eINSTANCE.getIf_ThenPart();
+    EReference IF__THEN_PART = eINSTANCE.getIf_Then_part();
 
-    EReference IF__ELSE_PART = eINSTANCE.getIf_ElsePart();
+    EReference IF__ELSE_PART = eINSTANCE.getIf_Else_part();
 
-    EReference CONTROL_STRUCTURE__CONDITION = eINSTANCE.getControlStructure_Condition();
+    EReference CONTROL_STRUCTURE__CONDITION = eINSTANCE.getControl_structure_Condition();
 
     EReference REPEAT__BLOCK = eINSTANCE.getRepeat_Block();
 
     EReference WHILE__BLOCK = eINSTANCE.getWhile_Block();
 
-    EReference PARAMETER_CALL__PARAMETER = eINSTANCE.getParameterCall_Parameter();
+    EReference PARAMETER_CALL__PARAMETER = eINSTANCE.getParameter_call_Parameter();
 
-    EReference LOGO_PROGRAM__INSTRUCTIONS = eINSTANCE.getLogoProgram_Instructions();
+    EReference LOGO_PROGRAM__INSTRUCTIONS = eINSTANCE.getLogo_program_Instructions();
 
     EReference TURTLE__POSITION = eINSTANCE.getTurtle_Position();
 
     EReference TURTLE__DRAWINGS = eINSTANCE.getTurtle_Drawings();
 
-    EReference TURTLE__CALL_STACK = eINSTANCE.getTurtle_CallStack();
+    EReference TURTLE__CALL_STACK = eINSTANCE.getTurtle_Call_stack();
 
     EReference SEGMENT__BEGIN = eINSTANCE.getSegment_Begin();
 
     EReference SEGMENT__END = eINSTANCE.getSegment_End();
 
-    EReference CALL_STACK__FRAMES = eINSTANCE.getCallStack_Frames();
+    EReference CALL_STACK__FRAMES = eINSTANCE.getCall_stack_Frames();
 
-    EReference STACK_FRAME__VARIABLES = eINSTANCE.getStackFrame_Variables();
+    EReference STACK_FRAME__VARIABLES = eINSTANCE.getStack_frame_Variables();
 
     EAttribute CONSTANT__VALUE = eINSTANCE.getConstant_Value();
 
-    EAttribute PROC_DECLARATION__NAME = eINSTANCE.getProcDeclaration_Name();
+    EAttribute PROC_DECLARATION__NAME = eINSTANCE.getProc_declaration_Name();
 
     EAttribute PARAMETER__NAME = eINSTANCE.getParameter_Name();
 
     EAttribute TURTLE__HEADING = eINSTANCE.getTurtle_Heading();
 
-    EAttribute TURTLE__PEN_UP = eINSTANCE.getTurtle_PenUp();
+    EAttribute TURTLE__PEN_UP = eINSTANCE.getTurtle_Pen_up();
 
     EAttribute POINT__X = eINSTANCE.getPoint_X();
 

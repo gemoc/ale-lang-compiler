@@ -4,7 +4,9 @@ import java.lang.Object;
 import kmLogo.interpreter.kmLogo.Cos;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.Turtle;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 public class CosImpl extends UnaryExpressionImpl implements Cos {
   protected CosImpl() {
@@ -36,6 +38,13 @@ public class CosImpl extends UnaryExpressionImpl implements Cos {
     switch (featureID) {
     }
     return super.eIsSet(featureID);
+  }
+
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   public double eval(Turtle turtle) {

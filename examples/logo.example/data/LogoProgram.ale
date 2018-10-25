@@ -18,6 +18,7 @@ open class LogoProgram {
 		ELong stop := self.time();
 		ELong time := stop - start;
 		time.log();
+		turtle.drawings->size().log();
 		turtle.show();
 		
 	}

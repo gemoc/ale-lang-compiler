@@ -64,6 +64,7 @@ public class LogoProgramImpl implements LogoProgram {
     long stop = ((long)logo.example.service.TimeService.time(this.obj));
     long time = ((long)(stop) - (start));
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(time);
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(turtle.getDrawings()));
     logo.example.service.Display.show(turtle);
     return result;
   }

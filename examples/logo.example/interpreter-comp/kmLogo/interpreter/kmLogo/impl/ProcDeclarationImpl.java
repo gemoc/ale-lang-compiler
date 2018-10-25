@@ -127,6 +127,17 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
     return super.eIsSet(featureID);
   }
 
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_DECLARATION__ARGS:
+    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getArgs()).basicRemove(otherEnd, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS:
+    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getInstructions()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
       NotificationChain msgs2) {
     NotificationChain msgs = msgs2;

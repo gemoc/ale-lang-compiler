@@ -8,7 +8,9 @@ import kmLogo.interpreter.kmLogo.StackFrame;
 import kmLogo.interpreter.kmLogo.Turtle;
 import kmLogo.interpreter.kmLogo.Variable;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
@@ -63,6 +65,13 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
     	return parameter != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   public double eval(Turtle turtle) {

@@ -82,6 +82,15 @@ public class WhileImpl extends ControlStructureImpl implements While {
     return super.eIsSet(featureID);
   }
 
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.WHILE__BLOCK:
+    	return basicSetBlock(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
   public double eval(Turtle turtle) {
     double result;
     while ((this.getCondition().eval(turtle)) > (0.0)) {

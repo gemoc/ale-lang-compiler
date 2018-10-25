@@ -185,6 +185,19 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
     return super.eIsSet(featureID);
   }
 
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+      NotificationChain msgs) {
+    switch(featureID) {
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__POSITION:
+    	return basicSetPosition(null, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__DRAWINGS:
+    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getDrawings()).basicRemove(otherEnd, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__CALL_STACK:
+    	return basicSetCallStack(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
   public void move(double dx, double dy) {
     Point newPos = ((Point)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
     newPos.setX((this.getPosition().getX()) + (dx));
