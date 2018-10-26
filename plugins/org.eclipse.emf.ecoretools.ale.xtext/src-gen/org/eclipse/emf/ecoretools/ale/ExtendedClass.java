@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.ExtendedClass#getExtends <em>Extends</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecoretools.ale.ExtendedClass#getMutables <em>Mutables</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecoretools.ale.AlePackage#getExtendedClass()
@@ -51,5 +52,21 @@ public interface ExtendedClass extends BehavioredClass
    * @generated
    */
   EList<String> getExtends();
+
+  /**
+   * Returns the value of the '<em><b>Mutables</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.ecoretools.ale.MutableRef}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Mutables</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Mutables</em>' containment reference list.
+   * @see org.eclipse.emf.ecoretools.ale.AlePackage#getExtendedClass_Mutables()
+   * @model containment="true"
+   * @generated
+   */
+  EList<MutableRef> getMutables();
 
 } // ExtendedClass

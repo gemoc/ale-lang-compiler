@@ -33,7 +33,14 @@ rClass returns BehavioredClass :
 ;
 
 rOpenClass returns ExtendedClass :
-	'open' 'class' name=rQualified ('extends' extends+=rQualified (',' extends+=rQualified)* )? '{' attributes+=rAttribute* operations+=rOperation* '}'
+	'open' 'class' name=rQualified ('extends' extends+=rQualified (',' extends+=rQualified)* )? '{'
+	    ('mutable' mutables+=MutableRef*)? 
+		attributes+=rAttribute* operations+=rOperation* 
+	'}'
+;
+
+MutableRef:
+	name=ID
 ;
 
 rNewClass returns RuntimeClass :
@@ -41,7 +48,7 @@ rNewClass returns RuntimeClass :
 ;
 
 rOperation returns Operation :
-	tag+=rTag* ('def' | 'override') type=rType name=Ident '(' (params+=rVariable (',' params+=rVariable)*)? ')' body=rBlock
+	tag+=rTag* ('def' | 'override') (dispatch?='dispatch')? type=rType name=Ident '(' (params+=rVariable (',' params+=rVariable)*)? ')' body=rBlock
 ;
 
 rTag returns Tag :

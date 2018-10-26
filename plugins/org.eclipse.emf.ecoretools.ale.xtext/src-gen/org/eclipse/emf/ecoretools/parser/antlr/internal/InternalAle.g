@@ -432,11 +432,36 @@ rulerOpenClass returns [EObject current=null]
 			newLeafNode(otherlv_7, grammarAccess.getROpenClassAccess().getLeftCurlyBracketKeyword_4());
 		}
 		(
+			otherlv_8='mutable'
+			{
+				newLeafNode(otherlv_8, grammarAccess.getROpenClassAccess().getMutableKeyword_5_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getROpenClassAccess().getMutablesMutableRefParserRuleCall_5_1_0());
+					}
+					lv_mutables_9_0=ruleMutableRef
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getROpenClassRule());
+						}
+						add(
+							$current,
+							"mutables",
+							lv_mutables_9_0,
+							"org.eclipse.emf.ecoretools.Ale.MutableRef");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)*
+		)?
+		(
 			(
 				{
-					newCompositeNode(grammarAccess.getROpenClassAccess().getAttributesRAttributeParserRuleCall_5_0());
+					newCompositeNode(grammarAccess.getROpenClassAccess().getAttributesRAttributeParserRuleCall_6_0());
 				}
-				lv_attributes_8_0=rulerAttribute
+				lv_attributes_10_0=rulerAttribute
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getROpenClassRule());
@@ -444,7 +469,7 @@ rulerOpenClass returns [EObject current=null]
 					add(
 						$current,
 						"attributes",
-						lv_attributes_8_0,
+						lv_attributes_10_0,
 						"org.eclipse.emf.ecoretools.Ale.rAttribute");
 					afterParserOrEnumRuleCall();
 				}
@@ -453,9 +478,9 @@ rulerOpenClass returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getROpenClassAccess().getOperationsROperationParserRuleCall_6_0());
+					newCompositeNode(grammarAccess.getROpenClassAccess().getOperationsROperationParserRuleCall_7_0());
 				}
-				lv_operations_9_0=rulerOperation
+				lv_operations_11_0=rulerOperation
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getROpenClassRule());
@@ -463,16 +488,51 @@ rulerOpenClass returns [EObject current=null]
 					add(
 						$current,
 						"operations",
-						lv_operations_9_0,
+						lv_operations_11_0,
 						"org.eclipse.emf.ecoretools.Ale.rOperation");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_10='}'
+		otherlv_12='}'
 		{
-			newLeafNode(otherlv_10, grammarAccess.getROpenClassAccess().getRightCurlyBracketKeyword_7());
+			newLeafNode(otherlv_12, grammarAccess.getROpenClassAccess().getRightCurlyBracketKeyword_8());
 		}
+	)
+;
+
+// Entry rule entryRuleMutableRef
+entryRuleMutableRef returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getMutableRefRule()); }
+	iv_ruleMutableRef=ruleMutableRef
+	{ $current=$iv_ruleMutableRef.current; }
+	EOF;
+
+// Rule MutableRef
+ruleMutableRef returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			lv_name_0_0=RULE_ID
+			{
+				newLeafNode(lv_name_0_0, grammarAccess.getMutableRefAccess().getNameIDTerminalRuleCall_0());
+			}
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getMutableRefRule());
+				}
+				setWithLastConsumed(
+					$current,
+					"name",
+					lv_name_0_0,
+					"org.eclipse.xtext.common.Terminals.ID");
+			}
+		)
 	)
 ;
 
@@ -611,10 +671,24 @@ rulerOperation returns [EObject current=null]
 		)
 		(
 			(
+				lv_dispatch_3_0='dispatch'
 				{
-					newCompositeNode(grammarAccess.getROperationAccess().getTypeRTypeParserRuleCall_2_0());
+					newLeafNode(lv_dispatch_3_0, grammarAccess.getROperationAccess().getDispatchDispatchKeyword_2_0());
 				}
-				lv_type_3_0=rulerType
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getROperationRule());
+					}
+					setWithLastConsumed($current, "dispatch", true, "dispatch");
+				}
+			)
+		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getROperationAccess().getTypeRTypeParserRuleCall_3_0());
+				}
+				lv_type_4_0=rulerType
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getROperationRule());
@@ -622,7 +696,7 @@ rulerOperation returns [EObject current=null]
 					set(
 						$current,
 						"type",
-						lv_type_3_0,
+						lv_type_4_0,
 						"org.eclipse.emf.ecoretools.Ale.rType");
 					afterParserOrEnumRuleCall();
 				}
@@ -630,9 +704,9 @@ rulerOperation returns [EObject current=null]
 		)
 		(
 			(
-				lv_name_4_0=RULE_IDENT
+				lv_name_5_0=RULE_IDENT
 				{
-					newLeafNode(lv_name_4_0, grammarAccess.getROperationAccess().getNameIdentTerminalRuleCall_3_0());
+					newLeafNode(lv_name_5_0, grammarAccess.getROperationAccess().getNameIdentTerminalRuleCall_4_0());
 				}
 				{
 					if ($current==null) {
@@ -641,22 +715,22 @@ rulerOperation returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_4_0,
+						lv_name_5_0,
 						"org.eclipse.emf.ecoretools.Ale.Ident");
 				}
 			)
 		)
-		otherlv_5='('
+		otherlv_6='('
 		{
-			newLeafNode(otherlv_5, grammarAccess.getROperationAccess().getLeftParenthesisKeyword_4());
+			newLeafNode(otherlv_6, grammarAccess.getROperationAccess().getLeftParenthesisKeyword_5());
 		}
 		(
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getROperationAccess().getParamsRVariableParserRuleCall_5_0_0());
+						newCompositeNode(grammarAccess.getROperationAccess().getParamsRVariableParserRuleCall_6_0_0());
 					}
-					lv_params_6_0=rulerVariable
+					lv_params_7_0=rulerVariable
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getROperationRule());
@@ -664,23 +738,23 @@ rulerOperation returns [EObject current=null]
 						add(
 							$current,
 							"params",
-							lv_params_6_0,
+							lv_params_7_0,
 							"org.eclipse.emf.ecoretools.Ale.rVariable");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_7=','
+				otherlv_8=','
 				{
-					newLeafNode(otherlv_7, grammarAccess.getROperationAccess().getCommaKeyword_5_1_0());
+					newLeafNode(otherlv_8, grammarAccess.getROperationAccess().getCommaKeyword_6_1_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getROperationAccess().getParamsRVariableParserRuleCall_5_1_1_0());
+							newCompositeNode(grammarAccess.getROperationAccess().getParamsRVariableParserRuleCall_6_1_1_0());
 						}
-						lv_params_8_0=rulerVariable
+						lv_params_9_0=rulerVariable
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getROperationRule());
@@ -688,7 +762,7 @@ rulerOperation returns [EObject current=null]
 							add(
 								$current,
 								"params",
-								lv_params_8_0,
+								lv_params_9_0,
 								"org.eclipse.emf.ecoretools.Ale.rVariable");
 							afterParserOrEnumRuleCall();
 						}
@@ -696,16 +770,16 @@ rulerOperation returns [EObject current=null]
 				)
 			)*
 		)?
-		otherlv_9=')'
+		otherlv_10=')'
 		{
-			newLeafNode(otherlv_9, grammarAccess.getROperationAccess().getRightParenthesisKeyword_6());
+			newLeafNode(otherlv_10, grammarAccess.getROperationAccess().getRightParenthesisKeyword_7());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getROperationAccess().getBodyRBlockParserRuleCall_7_0());
+					newCompositeNode(grammarAccess.getROperationAccess().getBodyRBlockParserRuleCall_8_0());
 				}
-				lv_body_10_0=rulerBlock
+				lv_body_11_0=rulerBlock
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getROperationRule());
@@ -713,7 +787,7 @@ rulerOperation returns [EObject current=null]
 					set(
 						$current,
 						"body",
-						lv_body_10_0,
+						lv_body_11_0,
 						"org.eclipse.emf.ecoretools.Ale.rBlock");
 					afterParserOrEnumRuleCall();
 				}

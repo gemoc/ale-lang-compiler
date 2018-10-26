@@ -26,10 +26,15 @@
     </genClasses>
     <genClasses ecoreClass="Ale.ecore#//ExtendedClass">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ale.ecore#//ExtendedClass/extends"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ale.ecore#//ExtendedClass/mutables"/>
+    </genClasses>
+    <genClasses ecoreClass="Ale.ecore#//MutableRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ale.ecore#//MutableRef/name"/>
     </genClasses>
     <genClasses ecoreClass="Ale.ecore#//RuntimeClass"/>
     <genClasses ecoreClass="Ale.ecore#//Operation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ale.ecore#//Operation/tag"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ale.ecore#//Operation/dispatch"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ale.ecore#//Operation/type"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ale.ecore#//Operation/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ale.ecore#//Operation/params"/>

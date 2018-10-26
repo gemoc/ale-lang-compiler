@@ -32,6 +32,7 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AleGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_a;
 	protected AbstractElementAlias match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_p;
+	protected AbstractElementAlias match_rOpenClass_MutableKeyword_5_0_q;
 	protected AbstractElementAlias match_rOperation_DefKeyword_1_0_or_OverrideKeyword_1_1;
 	
 	@Inject
@@ -39,6 +40,7 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 		grammarAccess = (AleGrammarAccess) access;
 		match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_a = new TokenAlias(true, true, grammarAccess.getNonLeftRecExpressionAccess().getLeftParenthesisKeyword_4_0());
 		match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_p = new TokenAlias(true, false, grammarAccess.getNonLeftRecExpressionAccess().getLeftParenthesisKeyword_4_0());
+		match_rOpenClass_MutableKeyword_5_0_q = new TokenAlias(false, true, grammarAccess.getROpenClassAccess().getMutableKeyword_5_0());
 		match_rOperation_DefKeyword_1_0_or_OverrideKeyword_1_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getROperationAccess().getDefKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getROperationAccess().getOverrideKeyword_1_1()));
 	}
 	
@@ -112,6 +114,8 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_nonLeftRecExpression_LeftParenthesisKeyword_4_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_p.equals(syntax))
 				emit_nonLeftRecExpression_LeftParenthesisKeyword_4_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_rOpenClass_MutableKeyword_5_0_q.equals(syntax))
+				emit_rOpenClass_MutableKeyword_5_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_rOperation_DefKeyword_1_0_or_OverrideKeyword_1_1.equals(syntax))
 				emit_rOperation_DefKeyword_1_0_or_OverrideKeyword_1_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -166,10 +170,28 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
+	 *     'mutable'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     extends+=rQualified '{' (ambiguity) '}' (rule end)
+	 *     extends+=rQualified '{' (ambiguity) attributes+=rAttribute
+	 *     extends+=rQualified '{' (ambiguity) operations+=rOperation
+	 *     name=rQualified '{' (ambiguity) '}' (rule end)
+	 *     name=rQualified '{' (ambiguity) attributes+=rAttribute
+	 *     name=rQualified '{' (ambiguity) operations+=rOperation
+	 */
+	protected void emit_rOpenClass_MutableKeyword_5_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
 	 *     'def' | 'override'
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) dispatch?='dispatch'
 	 *     (rule start) (ambiguity) type=rType
+	 *     tag+=rTag (ambiguity) dispatch?='dispatch'
 	 *     tag+=rTag (ambiguity) type=rType
 	 */
 	protected void emit_rOperation_DefKeyword_1_0_or_OverrideKeyword_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

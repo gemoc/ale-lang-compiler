@@ -80,6 +80,15 @@ public interface AleFactory extends EFactory
   ExtendedClass createExtendedClass();
 
   /**
+   * Returns a new object of class '<em>Mutable Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Mutable Ref</em>'.
+   * @generated
+   */
+  MutableRef createMutableRef();
+
+  /**
    * Returns a new object of class '<em>Runtime Class</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

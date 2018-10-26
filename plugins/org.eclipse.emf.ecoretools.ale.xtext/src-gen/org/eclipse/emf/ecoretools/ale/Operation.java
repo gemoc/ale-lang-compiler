@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.Operation#getTag <em>Tag</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecoretools.ale.Operation#isDispatch <em>Dispatch</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.Operation#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.Operation#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.Operation#getParams <em>Params</em>}</li>
@@ -57,6 +58,32 @@ public interface Operation extends EObject
    * @generated
    */
   EList<Tag> getTag();
+
+  /**
+   * Returns the value of the '<em><b>Dispatch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Dispatch</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Dispatch</em>' attribute.
+   * @see #setDispatch(boolean)
+   * @see org.eclipse.emf.ecoretools.ale.AlePackage#getOperation_Dispatch()
+   * @model
+   * @generated
+   */
+  boolean isDispatch();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.ecoretools.ale.Operation#isDispatch <em>Dispatch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Dispatch</em>' attribute.
+   * @see #isDispatch()
+   * @generated
+   */
+  void setDispatch(boolean value);
 
   /**
    * Returns the value of the '<em><b>Type</b></em>' containment reference.

@@ -54,6 +54,7 @@ import org.eclipse.emf.ecoretools.ale.Let;
 import org.eclipse.emf.ecoretools.ale.Lit;
 import org.eclipse.emf.ecoretools.ale.Min;
 import org.eclipse.emf.ecoretools.ale.Mult;
+import org.eclipse.emf.ecoretools.ale.MutableRef;
 import org.eclipse.emf.ecoretools.ale.Not;
 import org.eclipse.emf.ecoretools.ale.Null;
 import org.eclipse.emf.ecoretools.ale.Operation;
@@ -143,6 +144,7 @@ public class AleFactoryImpl extends EFactoryImpl implements AleFactory
       case AlePackage.SERVICE: return createService();
       case AlePackage.BEHAVIORED_CLASS: return createBehavioredClass();
       case AlePackage.EXTENDED_CLASS: return createExtendedClass();
+      case AlePackage.MUTABLE_REF: return createMutableRef();
       case AlePackage.RUNTIME_CLASS: return createRuntimeClass();
       case AlePackage.OPERATION: return createOperation();
       case AlePackage.TAG: return createTag();
@@ -259,6 +261,17 @@ public class AleFactoryImpl extends EFactoryImpl implements AleFactory
   {
     ExtendedClassImpl extendedClass = new ExtendedClassImpl();
     return extendedClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MutableRef createMutableRef()
+  {
+    MutableRefImpl mutableRef = new MutableRefImpl();
+    return mutableRef;
   }
 
   /**

@@ -50,6 +50,7 @@ import org.eclipse.emf.ecoretools.ale.Let;
 import org.eclipse.emf.ecoretools.ale.Lit;
 import org.eclipse.emf.ecoretools.ale.Min;
 import org.eclipse.emf.ecoretools.ale.Mult;
+import org.eclipse.emf.ecoretools.ale.MutableRef;
 import org.eclipse.emf.ecoretools.ale.Not;
 import org.eclipse.emf.ecoretools.ale.Null;
 import org.eclipse.emf.ecoretools.ale.Operation;
@@ -178,6 +179,13 @@ public class AleSwitch<T> extends Switch<T>
         ExtendedClass extendedClass = (ExtendedClass)theEObject;
         T result = caseExtendedClass(extendedClass);
         if (result == null) result = caseBehavioredClass(extendedClass);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AlePackage.MUTABLE_REF:
+      {
+        MutableRef mutableRef = (MutableRef)theEObject;
+        T result = caseMutableRef(mutableRef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -731,6 +739,22 @@ public class AleSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseExtendedClass(ExtendedClass object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Mutable Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Mutable Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMutableRef(MutableRef object)
   {
     return null;
   }

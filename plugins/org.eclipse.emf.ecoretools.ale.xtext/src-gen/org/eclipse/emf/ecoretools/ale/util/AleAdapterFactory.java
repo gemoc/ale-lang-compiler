@@ -52,6 +52,7 @@ import org.eclipse.emf.ecoretools.ale.Let;
 import org.eclipse.emf.ecoretools.ale.Lit;
 import org.eclipse.emf.ecoretools.ale.Min;
 import org.eclipse.emf.ecoretools.ale.Mult;
+import org.eclipse.emf.ecoretools.ale.MutableRef;
 import org.eclipse.emf.ecoretools.ale.Not;
 import org.eclipse.emf.ecoretools.ale.Null;
 import org.eclipse.emf.ecoretools.ale.Operation;
@@ -171,6 +172,11 @@ public class AleAdapterFactory extends AdapterFactoryImpl
       public Adapter caseExtendedClass(ExtendedClass object)
       {
         return createExtendedClassAdapter();
+      }
+      @Override
+      public Adapter caseMutableRef(MutableRef object)
+      {
+        return createMutableRefAdapter();
       }
       @Override
       public Adapter caseRuntimeClass(RuntimeClass object)
@@ -555,6 +561,21 @@ public class AleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExtendedClassAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecoretools.ale.MutableRef <em>Mutable Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.ecoretools.ale.MutableRef
+   * @generated
+   */
+  public Adapter createMutableRefAdapter()
   {
     return null;
   }

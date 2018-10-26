@@ -45,6 +45,7 @@ import org.eclipse.emf.ecoretools.ale.Let;
 import org.eclipse.emf.ecoretools.ale.Lit;
 import org.eclipse.emf.ecoretools.ale.Min;
 import org.eclipse.emf.ecoretools.ale.Mult;
+import org.eclipse.emf.ecoretools.ale.MutableRef;
 import org.eclipse.emf.ecoretools.ale.Not;
 import org.eclipse.emf.ecoretools.ale.Null;
 import org.eclipse.emf.ecoretools.ale.Operation;
@@ -182,6 +183,9 @@ public class AleSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case AlePackage.MULT:
 				sequence_expression(context, (Mult) semanticObject); 
 				return; 
+			case AlePackage.MUTABLE_REF:
+				sequence_MutableRef(context, (MutableRef) semanticObject); 
+				return; 
 			case AlePackage.NOT:
 				sequence_nonLeftRecExpression(context, (Not) semanticObject); 
 				return; 
@@ -270,6 +274,24 @@ public class AleSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     MutableRef returns MutableRef
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_MutableRef(ISerializationContext context, MutableRef semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AlePackage.Literals.MUTABLE_REF__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AlePackage.Literals.MUTABLE_REF__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMutableRefAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -1097,7 +1119,7 @@ public class AleSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     rOpenClass returns ExtendedClass
 	 *
 	 * Constraint:
-	 *     (name=rQualified (extends+=rQualified extends+=rQualified*)? attributes+=rAttribute* operations+=rOperation*)
+	 *     (name=rQualified (extends+=rQualified extends+=rQualified*)? mutables+=MutableRef* attributes+=rAttribute* operations+=rOperation*)
 	 */
 	protected void sequence_rOpenClass(ISerializationContext context, ExtendedClass semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1109,7 +1131,14 @@ public class AleSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     rOperation returns Operation
 	 *
 	 * Constraint:
-	 *     (tag+=rTag* type=rType name=Ident (params+=rVariable params+=rVariable*)? body=rBlock)
+	 *     (
+	 *         tag+=rTag* 
+	 *         dispatch?='dispatch'? 
+	 *         type=rType 
+	 *         name=Ident 
+	 *         (params+=rVariable params+=rVariable*)? 
+	 *         body=rBlock
+	 *     )
 	 */
 	protected void sequence_rOperation(ISerializationContext context, Operation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

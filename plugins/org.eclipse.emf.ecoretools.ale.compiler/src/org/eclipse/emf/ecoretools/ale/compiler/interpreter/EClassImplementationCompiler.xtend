@@ -6,6 +6,7 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
+import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.lang.reflect.Modifier
@@ -43,18 +44,25 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.common.notify.Notification
 import org.eclipse.emf.common.notify.NotificationChain
+import org.eclipse.emf.common.util.BasicEMap
 import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.ENotificationImpl
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecore.util.EObjectContainmentEList
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
+import org.eclipse.emf.ecore.util.EcoreEMap
+import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
@@ -78,22 +86,15 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static javax.lang.model.element.Modifier.*
-import com.squareup.javapoet.TypeName
-import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.emf.ecore.EReference
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.common.util.EMap
-import org.eclipse.emf.ecore.util.EcoreEMap
-import org.eclipse.emf.common.util.BasicEMap
+import com.squareup.javapoet.AnnotationSpec
 
 class EClassImplementationCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
 	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
+	extension JavaPoetUtils = new JavaPoetUtils
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	var List<ResolvedClass> resolved
 	var Map<String, Class<?>> registeredServices
@@ -527,7 +528,13 @@ class EClassImplementationCompiler {
 			it.addSuperinterface(
 				ParameterizedTypeName.get(ClassName.get(BasicEMap.Entry), key.EType.scopedInterfaceTypeRef,
 					value.EType.scopedInterfaceTypeRef))
-		]).applyIfTrue(!hasSuperType, [superclass(ClassName.get(MinimalEObjectImpl.Container))]).applyIfTrue(
+		]).applyIfTrue(!hasSuperType, [
+			if(dsl.dslProp.getOrDefault("truffle", "false") == true) {
+				superclass(ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl.TruffleContainer"))
+			} else {
+				superclass(ClassName.get(MinimalEObjectImpl.Container))
+			}
+		]).applyIfTrue(
 			!isMapElement, [
 				addSuperinterface(ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName))
 			]).addFields(fieldsEAttributes + fieldsEReferences).addMethods(
@@ -547,14 +554,6 @@ class EClassImplementationCompiler {
 		])
 	}
 
-	def <T> T applyIfTrue(T t, Boolean cond, Function1<T, T> app) {
-		if (cond) {
-			app.apply(t)
-		} else {
-			t
-		}
-	}
-
 	def compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
 		Map<String, Class<?>> registeredServices, Dsl dsl, List<ParseResult<ModelUnit>> parsedSemantics,
@@ -569,7 +568,14 @@ class EClassImplementationCompiler {
 			applyIfTrue(aleClass !== null, [
 				addMethods(
 				aleClass.methods.map[compile(aleClass, eClass)])
-			]).addModifiers(PUBLIC).build
+			])
+			.applyIfTrue(dsl.dslProp.getOrDefault("truffle", "false") == "true", [
+				addAnnotation(AnnotationSpec.builder(ClassName.get("com.oracle.truffle.api.nodes","NodeInfo"))
+					.addMember("description", '$S', eClass.name)
+					.build
+				)
+			])
+			.addModifiers(PUBLIC).build
 
 		val javaFile = JavaFile.builder(eClass.classImplementationPackageName, factory).build
 

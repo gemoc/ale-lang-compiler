@@ -53,6 +53,7 @@ import org.eclipse.emf.ecoretools.ale.Let;
 import org.eclipse.emf.ecoretools.ale.Lit;
 import org.eclipse.emf.ecoretools.ale.Min;
 import org.eclipse.emf.ecoretools.ale.Mult;
+import org.eclipse.emf.ecoretools.ale.MutableRef;
 import org.eclipse.emf.ecoretools.ale.Not;
 import org.eclipse.emf.ecoretools.ale.Null;
 import org.eclipse.emf.ecoretools.ale.Operation;
@@ -127,6 +128,13 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    * @generated
    */
   private EClass extendedClassEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mutableRefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -762,6 +770,36 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getExtendedClass_Mutables()
+  {
+    return (EReference)extendedClassEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMutableRef()
+  {
+    return mutableRefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMutableRef_Name()
+  {
+    return (EAttribute)mutableRefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getRuntimeClass()
   {
     return runtimeClassEClass;
@@ -792,9 +830,19 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getOperation_Dispatch()
+  {
+    return (EAttribute)operationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getOperation_Type()
   {
-    return (EReference)operationEClass.getEStructuralFeatures().get(1);
+    return (EReference)operationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -804,7 +852,7 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    */
   public EAttribute getOperation_Name()
   {
-    return (EAttribute)operationEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)operationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -814,7 +862,7 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    */
   public EReference getOperation_Params()
   {
-    return (EReference)operationEClass.getEStructuralFeatures().get(3);
+    return (EReference)operationEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -824,7 +872,7 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    */
   public EReference getOperation_Body()
   {
-    return (EReference)operationEClass.getEStructuralFeatures().get(4);
+    return (EReference)operationEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -2287,11 +2335,16 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
 
     extendedClassEClass = createEClass(EXTENDED_CLASS);
     createEAttribute(extendedClassEClass, EXTENDED_CLASS__EXTENDS);
+    createEReference(extendedClassEClass, EXTENDED_CLASS__MUTABLES);
+
+    mutableRefEClass = createEClass(MUTABLE_REF);
+    createEAttribute(mutableRefEClass, MUTABLE_REF__NAME);
 
     runtimeClassEClass = createEClass(RUNTIME_CLASS);
 
     operationEClass = createEClass(OPERATION);
     createEReference(operationEClass, OPERATION__TAG);
+    createEAttribute(operationEClass, OPERATION__DISPATCH);
     createEReference(operationEClass, OPERATION__TYPE);
     createEAttribute(operationEClass, OPERATION__NAME);
     createEReference(operationEClass, OPERATION__PARAMS);
@@ -2592,11 +2645,16 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
 
     initEClass(extendedClassEClass, ExtendedClass.class, "ExtendedClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getExtendedClass_Extends(), ecorePackage.getEString(), "extends", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExtendedClass_Mutables(), this.getMutableRef(), null, "mutables", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(mutableRefEClass, MutableRef.class, "MutableRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMutableRef_Name(), ecorePackage.getEString(), "name", null, 0, 1, MutableRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(runtimeClassEClass, RuntimeClass.class, "RuntimeClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(operationEClass, Operation.class, "Operation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getOperation_Tag(), this.getTag(), null, "tag", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getOperation_Dispatch(), ecorePackage.getEBoolean(), "dispatch", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getOperation_Type(), this.getrType(), null, "type", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getOperation_Name(), ecorePackage.getEString(), "name", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getOperation_Params(), this.getVariable(), null, "params", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

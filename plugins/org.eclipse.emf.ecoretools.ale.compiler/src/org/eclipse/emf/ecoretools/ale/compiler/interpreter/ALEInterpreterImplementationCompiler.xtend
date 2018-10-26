@@ -140,7 +140,7 @@ class ALEInterpreterImplementationCompiler {
 			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
-				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory)
+				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl)
 				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
 					registeredServices, dsl, parsedSemantics, queryEnvironment)
 			}

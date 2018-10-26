@@ -18,14 +18,20 @@ import java.lang.String;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.emf.ecoretools.ale.AlePackage;
 import org.eclipse.emf.ecoretools.ale.ExtendedClass;
+import org.eclipse.emf.ecoretools.ale.MutableRef;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,6 +42,7 @@ import org.eclipse.emf.ecoretools.ale.ExtendedClass;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.impl.ExtendedClassImpl#getExtends <em>Extends</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecoretools.ale.impl.ExtendedClassImpl#getMutables <em>Mutables</em>}</li>
  * </ul>
  *
  * @generated
@@ -51,6 +58,16 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
    * @ordered
    */
   protected EList<String> extends_;
+
+  /**
+   * The cached value of the '{@link #getMutables() <em>Mutables</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getMutables()
+   * @generated
+   * @ordered
+   */
+  protected EList<MutableRef> mutables;
 
   /**
    * <!-- begin-user-doc -->
@@ -92,6 +109,36 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<MutableRef> getMutables()
+  {
+    if (mutables == null)
+    {
+      mutables = new EObjectContainmentEList<MutableRef>(MutableRef.class, this, AlePackage.EXTENDED_CLASS__MUTABLES);
+    }
+    return mutables;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case AlePackage.EXTENDED_CLASS__MUTABLES:
+        return ((InternalEList<?>)getMutables()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -99,6 +146,8 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
     {
       case AlePackage.EXTENDED_CLASS__EXTENDS:
         return getExtends();
+      case AlePackage.EXTENDED_CLASS__MUTABLES:
+        return getMutables();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -118,6 +167,10 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
         getExtends().clear();
         getExtends().addAll((Collection<? extends String>)newValue);
         return;
+      case AlePackage.EXTENDED_CLASS__MUTABLES:
+        getMutables().clear();
+        getMutables().addAll((Collection<? extends MutableRef>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -135,6 +188,9 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
       case AlePackage.EXTENDED_CLASS__EXTENDS:
         getExtends().clear();
         return;
+      case AlePackage.EXTENDED_CLASS__MUTABLES:
+        getMutables().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -151,6 +207,8 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
     {
       case AlePackage.EXTENDED_CLASS__EXTENDS:
         return extends_ != null && !extends_.isEmpty();
+      case AlePackage.EXTENDED_CLASS__MUTABLES:
+        return mutables != null && !mutables.isEmpty();
     }
     return super.eIsSet(featureID);
   }
