@@ -14,8 +14,7 @@ Export-Package: boa.interpreter.boa,
  boa_dynamic.interpreter.boa_dynamic.impl,
  boa_exec.impl,
  boa_exec.impl.operation,
- boa_exec.impl.operation.impl,
- execboa
+ boa_exec.impl.operation.impl
 Require-Bundle: boa.model;bundle-version="1.0.0";visibility:=reexport,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
