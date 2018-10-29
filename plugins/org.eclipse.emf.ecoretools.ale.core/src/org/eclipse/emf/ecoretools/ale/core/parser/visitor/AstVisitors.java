@@ -40,6 +40,7 @@ import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RExpressionStmtConte
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RForEachContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RIfContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RInsertContext;
+import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RMutableRefContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RNewClassContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ROpenClassContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ROperationContext;
@@ -337,14 +338,15 @@ public class AstVisitors {
 			
 			Method res = null;
 			if(keyword.equals("def")) {
-				res = ModelBuilder.singleton.buildMethod(fragment, operationName, parameters, returnType, body, tags);
+				boolean dispatch = ctx.dispatch != null;
+				res = ModelBuilder.singleton.buildMethod(fragment, operationName, parameters, returnType, body, tags, dispatch);
 			}
 			else if(keyword.equals("override")) {
-				res = ModelBuilder.singleton.buildImplementation(className, operationName, parameters, returnType, body, tags);
+				res = ModelBuilder.singleton.buildImplementation(className, operationName, parameters, returnType, body, tags, false);
 			}
 			else {
 				//TODO: error: should not happen
-				res = ModelBuilder.singleton.buildMethod(fragment, operationName, parameters, returnType, body, tags);
+				res = ModelBuilder.singleton.buildMethod(fragment, operationName, parameters, returnType, body, tags, false);
 			}
 			
 			parseRes.getStartPositions().put(res,ctx.start.getStartIndex());
@@ -440,7 +442,9 @@ public class AstVisitors {
 				.map(q -> aliasToRealName(q.getText(),importedBehaviors))
 				.collect(Collectors.toList());
 			
-			ExtendedClass res = ModelBuilder.singleton.buildExtendedClass(name,attributes,operations,extended);
+			final List<String> mutable = ctx.rMutableRef().stream().map(RMutableRefContext::getText)
+					.collect(Collectors.toList());
+			ExtendedClass res = ModelBuilder.singleton.buildExtendedClass(name,attributes,operations,extended, mutable);
 			res.setFragment(fragment);
 			parseRes.getStartPositions().put(res,ctx.start.getStartIndex());
 			parseRes.getEndPositions().put(res,ctx.stop.getStopIndex());

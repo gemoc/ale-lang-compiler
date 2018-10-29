@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass;
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage;
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.impl.ExtendedClassImpl#getBaseClass <em>Base Class</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.impl.ExtendedClassImpl#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.impl.ExtendedClassImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.impl.ExtendedClassImpl#getMutable <em>Mutable</em>}</li>
  * </ul>
  *
  * @generated
@@ -78,6 +80,16 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
 	 * @ordered
 	 */
 	protected EList<ExtendedClass> children;
+
+	/**
+	 * The cached value of the '{@link #getMutable() <em>Mutable</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMutable()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> mutable;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -165,6 +177,18 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getMutable() {
+		if (mutable == null) {
+			mutable = new EDataTypeUniqueEList<String>(String.class, this, ImplementationPackage.EXTENDED_CLASS__MUTABLE);
+		}
+		return mutable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -208,6 +232,8 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
 				return getExtends();
 			case ImplementationPackage.EXTENDED_CLASS__CHILDREN:
 				return getChildren();
+			case ImplementationPackage.EXTENDED_CLASS__MUTABLE:
+				return getMutable();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -232,6 +258,10 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
 				getChildren().clear();
 				getChildren().addAll((Collection<? extends ExtendedClass>)newValue);
 				return;
+			case ImplementationPackage.EXTENDED_CLASS__MUTABLE:
+				getMutable().clear();
+				getMutable().addAll((Collection<? extends String>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -253,6 +283,9 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
 			case ImplementationPackage.EXTENDED_CLASS__CHILDREN:
 				getChildren().clear();
 				return;
+			case ImplementationPackage.EXTENDED_CLASS__MUTABLE:
+				getMutable().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -271,8 +304,26 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
 				return extends_ != null && !extends_.isEmpty();
 			case ImplementationPackage.EXTENDED_CLASS__CHILDREN:
 				return children != null && !children.isEmpty();
+			case ImplementationPackage.EXTENDED_CLASS__MUTABLE:
+				return mutable != null && !mutable.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (mutable: ");
+		result.append(mutable);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ExtendedClassImpl

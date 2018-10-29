@@ -1,4 +1,4 @@
-// Generated from ALE.g4 by ANTLR 4.3
+// Generated from src/org/eclipse/emf/ecoretools/ale/core/parser/ALE.g4 by ANTLR 4.3
 
 /*******************************************************************************
  * Copyright (c) 2017 Inria and Obeo.
@@ -634,6 +634,19 @@ public class ALEBaseListener implements ALEListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSeqType(@NotNull ALEParser.SeqTypeContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRMutableRef(@NotNull ALEParser.RMutableRefContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRMutableRef(@NotNull ALEParser.RMutableRefContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

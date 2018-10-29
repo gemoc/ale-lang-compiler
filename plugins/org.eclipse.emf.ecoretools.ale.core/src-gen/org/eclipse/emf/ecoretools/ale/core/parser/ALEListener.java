@@ -1,4 +1,4 @@
-// Generated from ALE.g4 by ANTLR 4.3
+// Generated from src/org/eclipse/emf/ecoretools/ale/core/parser/ALE.g4 by ANTLR 4.3
 
 /*******************************************************************************
  * Copyright (c) 2017 Inria and Obeo.
@@ -590,6 +590,17 @@ public interface ALEListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSeqType(@NotNull ALEParser.SeqTypeContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link ALEParser#rMutableRef}.
+	 * @param ctx the parse tree
+	 */
+	void enterRMutableRef(@NotNull ALEParser.RMutableRefContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ALEParser#rMutableRef}.
+	 * @param ctx the parse tree
+	 */
+	void exitRMutableRef(@NotNull ALEParser.RMutableRefContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link ALEParser#rClass}.

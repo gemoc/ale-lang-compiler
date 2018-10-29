@@ -18,12 +18,14 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Implementation.ecore#//ExtendedClass/baseClass"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Implementation.ecore#//ExtendedClass/extends"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Implementation.ecore#//ExtendedClass/children"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//ExtendedClass/mutable"/>
     </genClasses>
     <genClasses ecoreClass="Implementation.ecore#//RuntimeClass"/>
     <genClasses ecoreClass="Implementation.ecore#//Method">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Implementation.ecore#//Method/operationRef"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Implementation.ecore#//Method/body"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//Method/tags"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//Method/dispatch"/>
     </genClasses>
     <genClasses ecoreClass="Implementation.ecore#//ModelUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//ModelUnit/services"/>

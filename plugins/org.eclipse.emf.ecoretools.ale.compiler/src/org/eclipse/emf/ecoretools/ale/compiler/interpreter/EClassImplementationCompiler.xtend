@@ -85,7 +85,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.Switch
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
-import org.eclipse.xtext.EcoreUtil2
 
 import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.AnnotationSpec
@@ -102,7 +101,7 @@ class EClassImplementationCompiler {
 	var List<ParseResult<ModelUnit>> parsedSemantics
 	var IQueryEnvironment queryEnvironment
 
-	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass) {
+	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
 //		this.syntaxes = syntaxes
 		// TODO add annotation if compiler to truffle target
 		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName,
@@ -142,26 +141,25 @@ class EClassImplementationCompiler {
 			val rt = ert.scopedInterfaceTypeRef
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val fieldType = if (isMultiple) {
-					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
-						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-						if(key !== null && value !== null) {
-							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
-						} else {
-							ParameterizedTypeName.get(ClassName.get(EList), rt)
-						}
+				if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
+					val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+					val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+					if(key !== null && value !== null) {
+						ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
 					} else {
 						ParameterizedTypeName.get(ClassName.get(EList), rt)
 					}
-				} else
-					rt
-			// TODO: modify grammar to have explicit mutability
-//				val isMutable = alexClass !== null && alexClass.mutables.exists[
-//					it.name == field.name
-//				]
-			val fieldField = FieldSpec.builder(fieldType, field.name).addModifiers(PROTECTED).build
-			#[fieldField]
-		].flatten
+				} else {
+					ParameterizedTypeName.get(ClassName.get(EList), rt)
+				}
+			} else
+				rt
+				
+			val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
+			FieldSpec.builder(fieldType, field.name).applyIfTrue(dsl.dslProp.getOrDefault("child", "false").equals("true") && !isMultiple && !isMutable && field.containment, [
+				addAnnotation(ClassName.get("com.oracle.truffle.api.nodes.Node", "Child"))
+			]).addModifiers(PROTECTED).build
+		]
 
 		val methodsEReferences = eClass.EReferences.map [ field |
 		val ert = field.EGenericType.ERawType
@@ -564,7 +562,7 @@ class EClassImplementationCompiler {
 		this.dsl = dsl
 		this.parsedSemantics = parsedSemantics
 		this.queryEnvironment = queryEnvironment
-		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass).
+		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass, aleClass).
 			applyIfTrue(aleClass !== null, [
 				addMethods(
 				aleClass.methods.map[compile(aleClass, eClass)])
@@ -840,9 +838,7 @@ class EClassImplementationCompiler {
 						val epks = ecls.EPackage
 						'''«epks.factoryInterfacePackageName».«epks.factoryInterfaceClassName».eINSTANCE.create«ecls.name»()'''
 					} else {
-
 						// TODO: better identification of the caller in order to route to a $ operation or a service.
-						val openClazz = EcoreUtil2.getContainerOfType(call, ExtendedClass)
 						val argumentsh = call.arguments.head
 						val ts = argumentsh.infereType
 						val t = ts.head

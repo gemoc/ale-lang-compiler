@@ -250,7 +250,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>This method is used to initialize {@link ImplementationPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
@@ -264,7 +264,8 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		if (isInited) return (ImplementationPackage)EPackage.Registry.INSTANCE.getEPackage(ImplementationPackage.eNS_URI);
 
 		// Obtain or create and register package
-		ImplementationPackageImpl theImplementationPackage = (ImplementationPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ImplementationPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ImplementationPackageImpl());
+		Object registeredImplementationPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		ImplementationPackageImpl theImplementationPackage = registeredImplementationPackage instanceof ImplementationPackageImpl ? (ImplementationPackageImpl)registeredImplementationPackage : new ImplementationPackageImpl();
 
 		isInited = true;
 
@@ -281,7 +282,6 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		// Mark meta-data to indicate it can't be changed
 		theImplementationPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(ImplementationPackage.eNS_URI, theImplementationPackage);
 		return theImplementationPackage;
@@ -355,6 +355,15 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getExtendedClass_Mutable() {
+		return (EAttribute)extendedClassEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getRuntimeClass() {
 		return runtimeClassEClass;
 	}
@@ -393,6 +402,15 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 	 */
 	public EAttribute getMethod_Tags() {
 		return (EAttribute)methodEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMethod_Dispatch() {
+		return (EAttribute)methodEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -962,6 +980,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		createEReference(extendedClassEClass, EXTENDED_CLASS__BASE_CLASS);
 		createEReference(extendedClassEClass, EXTENDED_CLASS__EXTENDS);
 		createEReference(extendedClassEClass, EXTENDED_CLASS__CHILDREN);
+		createEAttribute(extendedClassEClass, EXTENDED_CLASS__MUTABLE);
 
 		runtimeClassEClass = createEClass(RUNTIME_CLASS);
 
@@ -969,6 +988,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		createEReference(methodEClass, METHOD__OPERATION_REF);
 		createEReference(methodEClass, METHOD__BODY);
 		createEAttribute(methodEClass, METHOD__TAGS);
+		createEAttribute(methodEClass, METHOD__DISPATCH);
 
 		modelUnitEClass = createEClass(MODEL_UNIT);
 		createEAttribute(modelUnitEClass, MODEL_UNIT__SERVICES);
@@ -1110,6 +1130,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		initEReference(getExtendedClass_BaseClass(), ecorePackage.getEClass(), null, "baseClass", null, 1, 1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExtendedClass_Extends(), this.getExtendedClass(), this.getExtendedClass_Children(), "extends", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExtendedClass_Children(), this.getExtendedClass(), this.getExtendedClass_Extends(), "children", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getExtendedClass_Mutable(), ecorePackage.getEString(), "mutable", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(runtimeClassEClass, RuntimeClass.class, "RuntimeClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1117,6 +1138,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		initEReference(getMethod_OperationRef(), ecorePackage.getEOperation(), null, "operationRef", null, 1, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMethod_Body(), this.getBlock(), null, "body", null, 1, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMethod_Tags(), ecorePackage.getEString(), "tags", null, 0, -1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMethod_Dispatch(), ecorePackage.getEBoolean(), "dispatch", null, 0, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelUnitEClass, ModelUnit.class, "ModelUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModelUnit_Services(), ecorePackage.getEString(), "services", null, 0, -1, ModelUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

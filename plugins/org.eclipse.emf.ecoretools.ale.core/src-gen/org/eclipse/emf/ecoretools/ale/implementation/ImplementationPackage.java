@@ -285,13 +285,22 @@ public interface ImplementationPackage extends EPackage {
 	int EXTENDED_CLASS__CHILDREN = BEHAVIORED_CLASS_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Mutable</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENDED_CLASS__MUTABLE = BEHAVIORED_CLASS_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Extended Class</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENDED_CLASS_FEATURE_COUNT = BEHAVIORED_CLASS_FEATURE_COUNT + 3;
+	int EXTENDED_CLASS_FEATURE_COUNT = BEHAVIORED_CLASS_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get EAnnotation</em>' operation.
@@ -431,13 +440,22 @@ public interface ImplementationPackage extends EPackage {
 	int METHOD__TAGS = 2;
 
 	/**
+	 * The feature id for the '<em><b>Dispatch</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD__DISPATCH = 3;
+
+	/**
 	 * The number of structural features of the '<em>Method</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_FEATURE_COUNT = 3;
+	int METHOD_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>Method</em>' class.
@@ -1444,6 +1462,17 @@ public interface ImplementationPackage extends EPackage {
 	EReference getExtendedClass_Children();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass#getMutable <em>Mutable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Mutable</em>'.
+	 * @see org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass#getMutable()
+	 * @see #getExtendedClass()
+	 * @generated
+	 */
+	EAttribute getExtendedClass_Mutable();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.implementation.RuntimeClass <em>Runtime Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1495,6 +1524,17 @@ public interface ImplementationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getMethod_Tags();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecoretools.ale.implementation.Method#isDispatch <em>Dispatch</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Dispatch</em>'.
+	 * @see org.eclipse.emf.ecoretools.ale.implementation.Method#isDispatch()
+	 * @see #getMethod()
+	 * @generated
+	 */
+	EAttribute getMethod_Dispatch();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.implementation.ModelUnit <em>Model Unit</em>}'.
@@ -2210,6 +2250,14 @@ public interface ImplementationPackage extends EPackage {
 		EReference EXTENDED_CLASS__CHILDREN = eINSTANCE.getExtendedClass_Children();
 
 		/**
+		 * The meta object literal for the '<em><b>Mutable</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXTENDED_CLASS__MUTABLE = eINSTANCE.getExtendedClass_Mutable();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.RuntimeClassImpl <em>Runtime Class</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2252,6 +2300,14 @@ public interface ImplementationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute METHOD__TAGS = eINSTANCE.getMethod_Tags();
+
+		/**
+		 * The meta object literal for the '<em><b>Dispatch</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute METHOD__DISPATCH = eINSTANCE.getMethod_Dispatch();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.ModelUnitImpl <em>Model Unit</em>}' class.

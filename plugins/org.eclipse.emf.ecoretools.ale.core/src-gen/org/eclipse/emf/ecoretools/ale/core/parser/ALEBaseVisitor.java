@@ -1,4 +1,4 @@
-// Generated from ALE.g4 by ANTLR 4.3
+// Generated from src/org/eclipse/emf/ecoretools/ale/core/parser/ALE.g4 by ANTLR 4.3
 
 /*******************************************************************************
  * Copyright (c) 2017 Inria and Obeo.
@@ -399,6 +399,14 @@ public class ALEBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements AL
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitSeqType(@NotNull ALEParser.SeqTypeContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitRMutableRef(@NotNull ALEParser.RMutableRefContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
