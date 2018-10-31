@@ -15,7 +15,7 @@ import com.squareup.javapoet.MethodSpec
 
 class PackageInterfaceCompiler {
 
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
+	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
 
 	def compilePackageInterface(EPackage abstractSyntax, File directory, String packageRoot) {
 

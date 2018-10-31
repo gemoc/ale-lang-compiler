@@ -16,7 +16,7 @@ import static javax.lang.model.element.Modifier.*
 
 class PackageImplementationCompiler {
 
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
+	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
 
 	def boolean isResolveProxiesFlag(EReference ref) {
 		val eStructuralFeature = ref
@@ -150,7 +150,9 @@ class PackageImplementationCompiler {
 
 		val constructor = MethodSpec.constructorBuilder.addModifiers(PRIVATE).addCode('''
 			super(eNS_URI, $T.eINSTANCE);
-		''', ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot), abstractSyntax.factoryInterfaceClassName)).build
+		''',
+			ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
+				abstractSyntax.factoryInterfaceClassName)).build
 
 		val accessorsMethods = newArrayList
 		for (EClass clazz : allClasses) {
@@ -182,8 +184,9 @@ class PackageImplementationCompiler {
 
 		val packageImpl = TypeSpec.classBuilder(abstractSyntax.packageImplementationClassName).superclass(EPackageImpl).
 			addSuperinterface(
-				ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName)).
-			addFields(#[isInitedField, isCreatedField, isInitializedField] + classFields).addMethods(
+				ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
+					abstractSyntax.packageInterfaceClassName)).addFields(
+				#[isInitedField, isCreatedField, isInitializedField] + classFields).addMethods(
 				#[initMethod, createPackageContentsMethod, initializePackageContentsMethod, constructor,
 					getFactoryMethod] + methodGetterFields + accessorsMethods).addModifiers(PUBLIC).build
 

@@ -4,9 +4,51 @@ import org.eclipse.emf.codegen.util.CodeGenUtil
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 
-class InterpreterNamingUtils {
+class VisitorNamingUtils {
+	
+	def String operationInterfacePackageName(String packageRoot, EClass eClass) {
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»visitor.operation.«eClass.EPackage.name»'''
+	}
+	
+	def String operationInterfaceClassName(EClass eClass) {
+		'''«eClass.name»Operation'''
+	}
+	
+	def String operationImplementationPackageName(String packageRoot, EClass eClass) {
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»visitor.operation.«eClass.EPackage.name».impl'''
+	}
+	
+	def String operationImplementationClassName(EClass eClass) {
+		'''«eClass.name»OperationImpl'''
+	}
+	
+	def String visitorInterfacePackageName(String packageRoot) {
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»visitor'''
+	}
+	
+	def String visitorInterfaceClassName() {
+		'''VisitorInterface'''
+	}
+	
+		
+	def String visitorImplementationPackageName(String packageRoot) {
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»visitor'''
+	}
+	
+	def String visitorImplementationClassName() {
+		'''VisitorImplementation'''
+	}
+	
+	def String acceptInterfacePackageName(String packageRoot) {
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»visitor'''
+	}
+	
+	def String acceptInterfaceClassName() {
+		'''AcceptInterface'''
+	}
+	
 	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».interpreter.«ePackage.name»'''
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».visitor.«ePackage.name»'''
 	}
 
 	def String factoryInterfaceClassName(EPackage ePackage) {
@@ -14,7 +56,7 @@ class InterpreterNamingUtils {
 	}
 
 	def String packageInterfacePackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».interpreter.«ePackage.name»'''
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».visitor.«ePackage.name»'''
 	}
 
 	def String packageInterfaceClassName(EPackage ePackage) {
@@ -22,7 +64,7 @@ class InterpreterNamingUtils {
 	}
 
 	def String packageImplementationPackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».interpreter.«ePackage.name».impl'''
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».visitor.«ePackage.name».impl'''
 	}
 
 	def String packageImplementationClassName(EPackage ePackage) {
@@ -30,7 +72,7 @@ class InterpreterNamingUtils {
 	}
 
 	def String factoryImplementationPackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».interpreter.«ePackage.name».impl'''
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».visitor.«ePackage.name».impl'''
 	}
 
 	def String factoryImplementationClassName(EPackage ePackage) {

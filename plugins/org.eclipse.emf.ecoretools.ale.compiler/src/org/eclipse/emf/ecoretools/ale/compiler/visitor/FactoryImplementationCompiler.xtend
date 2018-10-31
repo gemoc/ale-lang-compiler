@@ -8,7 +8,6 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.Map
-import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
@@ -20,8 +19,8 @@ import static javax.lang.model.element.Modifier.*
 
 class FactoryImplementationCompiler {
 
-	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
+	extension VisitorCompilerUtils = new VisitorCompilerUtils
+	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
 

@@ -5,9 +5,9 @@ import org.eclipse.emf.ecore.EClass
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.TypeName
 
-class InterpreterCompilerUtils {
+class VisitorCompilerUtils {
 
-	extension InterpreterNamingUtils = new InterpreterNamingUtils
+	extension VisitorNamingUtils = new VisitorNamingUtils
 
 	def dispatch scopedTypeRef(EDataType edt, String packageRoot) {
 		TypeName.get(edt.instanceClass)

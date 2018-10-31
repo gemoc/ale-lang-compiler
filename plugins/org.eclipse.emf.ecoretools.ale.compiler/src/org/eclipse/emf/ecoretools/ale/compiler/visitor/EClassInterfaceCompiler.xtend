@@ -3,9 +3,7 @@ package org.eclipse.emf.ecoretools.ale.compiler.visitor
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
-import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
-import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.Map
@@ -20,9 +18,8 @@ import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 class EClassInterfaceCompiler {
 
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
-	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
-	extension JavaPoetUtils = new JavaPoetUtils
+	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
+	extension VisitorCompilerUtils = new VisitorCompilerUtils
 
 	def compileEClassInterface(EClass eClass, ExtendedClass aleClass, File directory, Dsl dsl, String packageRoot) {
 
@@ -47,7 +44,8 @@ class EClassInterfaceCompiler {
 						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 						if (key !== null && value !== null) {
-							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot),
+							ParameterizedTypeName.get(ClassName.get(EMap),
+								key.EType.scopedInterfaceTypeRef(packageRoot),
 								value.EType.scopedInterfaceTypeRef(packageRoot))
 						} else {
 							ParameterizedTypeName.get(ClassName.get(EList), rt)
@@ -72,34 +70,16 @@ class EClassInterfaceCompiler {
 			getter + setter
 		].flatten
 
-		val operations = if (aleClass !== null) {
-				// methods signature are only generated when truffle and the dispatch option are not activated, or if activated, only when the dispatch option is not activated on the method
-				aleClass.methods.map [ method |
-					val params = method.operationRef.EParameters.map [ param |
-						ParameterSpec.builder(param.EType.scopedInterfaceTypeRef(packageRoot), param.name).build
-					]
-
-					MethodSpec.methodBuilder(method.operationRef.name).returnsIfNotNull(
-						method.operationRef.EType?.scopedInterfaceTypeRef(packageRoot)).addParameters(params).addModifiers(
-						Modifier.ABSTRACT, Modifier.PUBLIC).build
-				]
-			} else
-				#[]
-
-		val factory = TypeSpec.interfaceBuilder(eClass.classInterfaceClassName).addSuperinterface(EObject).addSuperinterfaces(eClass.ESuperTypes.map [
-			ClassName.get(it.classInterfacePackageName(packageRoot), it.classInterfaceClassName)
-		]).addMethods(attributesMethods + referencesMethods + operations).addModifiers(Modifier.PUBLIC).build
+		val factory = TypeSpec.interfaceBuilder(eClass.classInterfaceClassName).addSuperinterface(EObject).
+			addSuperinterface(
+				ClassName.get(namingUtils.acceptInterfacePackageName(packageRoot),
+					namingUtils.acceptInterfaceClassName)).addSuperinterfaces(eClass.ESuperTypes.map [
+				ClassName.get(it.classInterfacePackageName(packageRoot), it.classInterfaceClassName)
+			]).addMethods(attributesMethods + referencesMethods).addModifiers(Modifier.PUBLIC).build
 
 		val javaFile = JavaFile.builder(eClass.classInterfacePackageName(packageRoot), factory).build
 
 		javaFile.writeTo(directory)
 
-	}
-
-	def MethodSpec.Builder returnsIfNotNull(MethodSpec.Builder builder, TypeName typeName) {
-		if (typeName !== null)
-			builder.returns(typeName)
-		else
-			builder
 	}
 }

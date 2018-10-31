@@ -99,7 +99,7 @@ class ALEVisitorImplementationCompiler {
 	}
 
 	def private void compile(File projectRoot, String projectName) {
-		val compileDirectory = new File(projectRoot, "interpreter-comp")
+		val compileDirectory = new File(projectRoot, "visitor-comp")
 
 		// clean previous compilation
 		if (compileDirectory.exists)
@@ -115,7 +115,7 @@ class ALEVisitorImplementationCompiler {
 		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
 		resolved = resolve(aleClasses, syntax)
-		
+
 		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 
 		val egc = new EcoreGenmodelCompiler
@@ -126,8 +126,20 @@ class ALEVisitorImplementationCompiler {
 		val pic = new PackageInterfaceCompiler
 		val pimplc = new PackageImplementationCompiler
 
+		val acceptInterfaceCompiler = new AcceptInterfaceCompiler(compileDirectory, syntaxes, packageRoot)
+		acceptInterfaceCompiler.compile
+		
+		val visitorInterfaceCompiler = new VisitorInterfaceCompiler(compileDirectory, syntaxes, packageRoot)
+		visitorInterfaceCompiler.compile
+		
+		val visitorImplementationCompiler = new VisitorImplementationCompiler(compileDirectory, syntaxes, packageRoot)
+		visitorImplementationCompiler.compile
+				
 		val eic = new EClassInterfaceCompiler
 		val eimplc = new EClassImplementationCompiler(packageRoot)
+		
+		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot)
+		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
@@ -143,8 +155,9 @@ class ALEVisitorImplementationCompiler {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
 				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
-				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
-					registeredServices, dsl, parsedSemantics, queryEnvironment)
+				eimplc.compileEClassImplementation(eclazz, compileDirectory)
+				operationInterfaceCompiler.compile(eclazz, rc?.aleCls)
+				operationImplementationCompiler.compile(eclazz, rc?.aleCls)
 			}
 
 		]

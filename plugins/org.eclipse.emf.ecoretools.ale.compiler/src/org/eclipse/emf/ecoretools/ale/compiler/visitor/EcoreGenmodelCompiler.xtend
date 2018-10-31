@@ -19,7 +19,7 @@ class EcoreGenmodelCompiler {
 				it.nsURI = '''http://«ePackage.name».«ePackage.name».«ePackage.name»/'''
 			]
 			ecoreRes.save(null)
-			
+
 			// TODO: define genmodel
 			val gm = GenModelFactory.eINSTANCE.createGenModel
 			gm.initialize(#[ePackage])
@@ -27,11 +27,11 @@ class EcoreGenmodelCompiler {
 			gm.genPackages.head.basePackage = '''«ePackage.name».interpreter'''
 			gm.complianceLevel = GenJDKLevel.JDK80_LITERAL
 			gm.foreignModel += '''«ePackage.name».ecore'''
-			
+
 			val gmRes = resSet.createResource(URI.createFileURI('''«path»/«ePackage.name».genmodel'''))
 			gmRes.contents += gm
 			gmRes.save(null)
-			
+
 		]
 	}
 }

@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EClass
 import java.util.Map
 
 class FactoryInterfaceCompiler {
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
+	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
 
 	def compileFactoryInterface(EPackage abstractSyntax, java.io.File directory, String packageRoot) {
 		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
