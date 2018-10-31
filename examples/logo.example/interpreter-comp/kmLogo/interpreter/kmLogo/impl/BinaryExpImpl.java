@@ -103,9 +103,9 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.BINARY_EXP__LHS:
-    	return getLhs();
+    return getLhs();
     case KmLogoPackage.BINARY_EXP__RHS:
-    	return getRhs();
+    return getRhs();
     }
     return super.eGet(featureID, resolve, coreType);
   }

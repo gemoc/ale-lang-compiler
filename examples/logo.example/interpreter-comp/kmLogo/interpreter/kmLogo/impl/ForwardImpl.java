@@ -69,7 +69,7 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.FORWARD__STEPS:
-    	return getSteps();
+    return getSteps();
     }
     return super.eGet(featureID, resolve, coreType);
   }

@@ -54,7 +54,7 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.PARAMETER_CALL__PARAMETER:
-    	return getParameter();
+    return getParameter();
     }
     return super.eGet(featureID, resolve, coreType);
   }

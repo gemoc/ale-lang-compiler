@@ -50,7 +50,7 @@ public class CallStackImpl extends MinimalEObjectImpl.Container implements CallS
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.CALL_STACK__FRAMES:
-    	return getFrames();
+    return getFrames();
     }
     return super.eGet(featureID, resolve, coreType);
   }

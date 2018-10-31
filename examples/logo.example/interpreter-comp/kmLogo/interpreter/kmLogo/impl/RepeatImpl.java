@@ -69,7 +69,7 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.REPEAT__BLOCK:
-    	return getBlock();
+    return getBlock();
     }
     return super.eGet(featureID, resolve, coreType);
   }

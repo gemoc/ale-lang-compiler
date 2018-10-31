@@ -23,14 +23,14 @@ class FactoryImplementationCompiler {
 	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
 
-	def compileFactoryImplementation(EPackage abstractSyntax, File directory) {
+	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
 
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
 
-		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName,
+		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
 			abstractSyntax.factoryInterfaceClassName)
 
-		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName,
+		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
 			abstractSyntax.packageInterfaceClassName)
 
 		val constructor = MethodSpec.constructorBuilder.addModifiers(PUBLIC).build
@@ -57,9 +57,9 @@ class FactoryImplementationCompiler {
 			«FOR eClass : allClasses.filter[!it.abstract]»
 				case $1T.«eClass.name.normalizeUpperField»:
 					«IF eClass.instanceClass !== null && eClass.instanceClass == Map.Entry»
-					return (org.eclipse.emf.ecore.EObject) create«eClass.name»();
+						return (org.eclipse.emf.ecore.EObject) create«eClass.name»();
 					«ELSE»
-					return create«eClass.name»();
+						return create«eClass.name»();
 					«ENDIF»
 			«ENDFOR»
 			default:
@@ -68,32 +68,33 @@ class FactoryImplementationCompiler {
 		''', packageInterfaceType, IllegalArgumentException).addModifiers(PUBLIC).build
 
 		val createMethods = allClasses.filter[!abstract].map [ eClass |
-			val returnType = if(eClass.instanceClass !== null && eClass.instanceClass == Map.Entry) {
-				// is map
-				val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-				val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-				ParameterizedTypeName.get(ClassName.get(Map.Entry), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
-			} else {
-				ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName)
-			}
-			val classImplType = ClassName.get(eClass.classImplementationPackageName,
+			val returnType = if (eClass.instanceClass !== null && eClass.instanceClass == Map.Entry) {
+					// is map
+					val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+					val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+					ParameterizedTypeName.get(ClassName.get(Map.Entry), key.EType.scopedInterfaceTypeRef(packageRoot),
+						value.EType.scopedInterfaceTypeRef(packageRoot))
+				} else {
+					ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
+				}
+			val classImplType = ClassName.get(eClass.classImplementationPackageName(packageRoot),
 				eClass.classImplementationClassName)
-			
-			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''').returns(
-				returnType).addCode('''
+
+			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''').returns(returnType).addCode('''
 				$1T ret = new $1T();
 				return ret;
 			''', classImplType).addModifiers(PUBLIC).build
 		]
 
 		val getPackageMethod = MethodSpec.methodBuilder('''get«abstractSyntax.name.toFirstUpper»Package''').returns(
-			packageInterfaceType).addCode('''return ($1T)getEPackage();''', packageInterfaceType).addModifiers(PUBLIC).build
+			packageInterfaceType).addCode('''return ($1T)getEPackage();''', packageInterfaceType).addModifiers(PUBLIC).
+			build
 
 		val factory = TypeSpec.classBuilder(abstractSyntax.factoryImplementationClassName).superclass(EFactoryImpl).
 			addSuperinterface(factoryInterfaceType).addMethods(
 				#[constructor, initMethod, createMethod, getPackageMethod] + createMethods).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName, factory).build
+		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName(packageRoot), factory).build
 
 		javaFile.writeTo(directory)
 	}

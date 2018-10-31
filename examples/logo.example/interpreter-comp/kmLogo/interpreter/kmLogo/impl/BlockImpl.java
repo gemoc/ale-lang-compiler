@@ -50,7 +50,7 @@ public class BlockImpl extends InstructionImpl implements Block {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.BLOCK__INSTRUCTIONS:
-    	return getInstructions();
+    return getInstructions();
     }
     return super.eGet(featureID, resolve, coreType);
   }

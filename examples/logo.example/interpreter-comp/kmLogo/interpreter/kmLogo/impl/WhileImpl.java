@@ -69,7 +69,7 @@ public class WhileImpl extends ControlStructureImpl implements While {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.WHILE__BLOCK:
-    	return getBlock();
+    return getBlock();
     }
     return super.eGet(featureID, resolve, coreType);
   }

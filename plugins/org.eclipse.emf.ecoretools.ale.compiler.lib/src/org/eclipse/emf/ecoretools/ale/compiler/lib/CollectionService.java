@@ -8,12 +8,16 @@ import java.util.function.Function;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+
 public class CollectionService {
 
+	@TruffleBoundary
 	public static <T> EList<T> createEList(T... ts) {
 		return new BasicEList<>(Arrays.asList(ts));
 	}
 
+	@TruffleBoundary
 	public static <T> int size(final Iterable<T> collection) {
 		int ret = 0;
 		for (Object x : collection) {
@@ -23,6 +27,7 @@ public class CollectionService {
 		return ret;
 	}
 
+	@TruffleBoundary
 	public static <T> Iterable<T> select(final Iterable<T> collection, final Function<? super T, Boolean> filter) {
 		final ArrayList<T> ret = new ArrayList<>();
 		for (final T e : collection) {
@@ -32,6 +37,7 @@ public class CollectionService {
 		return ret;
 	}
 
+	@TruffleBoundary
 	public static <T> T head(final Iterable<T> collection) {
 		final Iterator<T> iterator = collection.iterator();
 		if (iterator.hasNext())
@@ -40,6 +46,7 @@ public class CollectionService {
 			return null;
 	}
 
+	@TruffleBoundary
 	public static <T> T get(final Iterable<T> collection, int idx) {
 		final Iterator<T> iterator = collection.iterator();
 		T ret = null;
@@ -53,6 +60,7 @@ public class CollectionService {
 		return ret;
 	}
 
+	@TruffleBoundary
 	public static <T> boolean isEmpty(final Iterable<T> collection) {
 		final Iterator<T> iterator = collection.iterator();
 		if (iterator.hasNext())

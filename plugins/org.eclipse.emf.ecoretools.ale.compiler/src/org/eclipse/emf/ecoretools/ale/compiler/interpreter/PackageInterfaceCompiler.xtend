@@ -17,19 +17,16 @@ class PackageInterfaceCompiler {
 
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
 
-	def TypeSpec.Builder addFieldWithIndex(TypeSpec.Builder builder) {
-	}
-
-	def compilePackageInterface(EPackage abstractSyntax, File directory) {
+	def compilePackageInterface(EPackage abstractSyntax, File directory, String packageRoot) {
 
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
 
-		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName,
+		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
 			abstractSyntax.packageInterfaceClassName)
-		val packageImplementationType = ClassName.get(abstractSyntax.packageImplementationPackageName,
+		val packageImplementationType = ClassName.get(abstractSyntax.packageImplementationPackageName(packageRoot),
 			abstractSyntax.packageImplementationClassName)
 			
-		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName,
+		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
 			abstractSyntax.factoryInterfaceClassName)
 
 		val eInstanceField = FieldSpec.builder(packageInterfaceType, 'eINSTANCE').initializer('''$T.init()''',
@@ -98,7 +95,7 @@ class PackageInterfaceCompiler {
 			).addMethods(getterFields + getterReferencesFields + getterAttributesFields + #[getFactoryMethod]).addType(literalType).addModifiers(PUBLIC).
 			build
 
-		val javaFile = JavaFile.builder(abstractSyntax.packageInterfacePackageName, package).build
+		val javaFile = JavaFile.builder(abstractSyntax.packageInterfacePackageName(packageRoot), package).build
 
 		javaFile.writeTo(directory)
 	}

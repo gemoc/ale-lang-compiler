@@ -100,18 +100,21 @@ class EClassImplementationCompiler {
 	var Dsl dsl
 	var List<ParseResult<ModelUnit>> parsedSemantics
 	var IQueryEnvironment queryEnvironment
+	val String packageRoot
+	
+	new(String packageRoot) {
+		this.packageRoot = packageRoot
+	}
 
 	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
-//		this.syntaxes = syntaxes
-		// TODO add annotation if compiler to truffle target
-		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName,
+		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
 			eClass.EPackage.packageInterfaceClassName)
 
 		val hasSuperType = !eClass.ESuperTypes.empty
 		val superType = eClass.ESuperTypes.head
 
 		val fieldsEAttributes = eClass.EAttributes.map [ field |
-			val type = field.EType.scopedTypeRef
+			val type = field.EType.scopedTypeRef(packageRoot)
 			val edefault = FieldSpec.builder(type, '''«field.name.toUpperCase»_EDEFAULT''').
 				initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''').
 				addModifiers(PROTECTED, STATIC, FINAL).build
@@ -122,7 +125,7 @@ class EClassImplementationCompiler {
 		].flatten
 
 		val methodsEAttributes = eClass.EAttributes.map [ field |
-			val type = field.EType.scopedTypeRef
+			val type = field.EType.scopedTypeRef(packageRoot)
 
 			val getter = MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').addModifiers(PUBLIC).
 				addCode('''return «field.name»;''').returns(type).build
@@ -138,14 +141,14 @@ class EClassImplementationCompiler {
 		 */
 		val fieldsEReferences = eClass.EReferences.filter[field | if(field.EOpposite !== null) !field.EOpposite.containment else true].map [ field |
 			val ert = field.EGenericType.ERawType
-			val rt = ert.scopedInterfaceTypeRef
+			val rt = ert.scopedInterfaceTypeRef(packageRoot)
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val fieldType = if (isMultiple) {
 				if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
 					val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 					val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 					if(key !== null && value !== null) {
-						ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
+						ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot))
 					} else {
 						ParameterizedTypeName.get(ClassName.get(EList), rt)
 					}
@@ -163,14 +166,14 @@ class EClassImplementationCompiler {
 
 		val methodsEReferences = eClass.EReferences.map [ field |
 		val ert = field.EGenericType.ERawType
-			val rt = ert.scopedInterfaceTypeRef
+			val rt = ert.scopedInterfaceTypeRef(packageRoot)
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val fieldType = if (isMultiple) {
 					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
 						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 						if(key !== null && value !== null) {
-							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef)
+							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot))
 						} else {
 							ParameterizedTypeName.get(ClassName.get(EList), rt)
 						}
@@ -187,7 +190,9 @@ class EClassImplementationCompiler {
 
 					if (field.EOpposite !== null) {
 						if(!field.EOpposite.containment) {
-							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
+							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
+							.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+							.addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
 								if («newName» != «name») {
 									$1T msgs = null;
 									«IF field.EOpposite !== null»
@@ -209,7 +214,9 @@ class EClassImplementationCompiler {
 									eNotify(new $3T(this, $4T.SET, $5T.«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
 							''', NotificationChain, InternalEObject, ENotificationImpl, Notification,
 								ePackageInterfaceType).addModifiers(PUBLIC).build
-							val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''').returns(
+							val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
+							.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+							.returns(
 								NotificationChain).addParameter(
 								ParameterSpec.builder(fieldType, '''new«field.name.toFirstUpper»''').build).addParameter(
 								ParameterSpec.builder(NotificationChain, 'msgsp').build).addCode('''
@@ -230,7 +237,9 @@ class EClassImplementationCompiler {
 							
 								#[setter, basicSetMethod]
 							} else {
-								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
+								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
+								.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+								.addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
 								if («newName» != eInternalContainer() || (eContainerFeatureID() != $1T.«field.name.normalizeUpperField(eClass.name)» && «newName» != null)) {
 									if ($2T.isAncestor(this, «newName»))
 										throw new $3T("Recursive containment not allowed for " + toString());
@@ -246,7 +255,9 @@ class EClassImplementationCompiler {
 									eNotify(new $7T(this, $8T.SET, $1T.«field.name.normalizeUpperField(eClass.name)» , «newName», «newName»));
 							''', ePackageInterfaceType, EcoreUtil, IllegalArgumentException, NotificationChain, InternalEObject, fieldType, ENotificationImpl, Notification).addModifiers(PUBLIC).build
 							
-							val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''').returns(
+							val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
+							.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+							.returns(
 								NotificationChain).addParameter(
 								ParameterSpec.builder(fieldType, '''new«field.name.toFirstUpper»''').build).addParameter(
 								ParameterSpec.builder(NotificationChain, 'msgs').build).addCode('''
@@ -260,20 +271,23 @@ class EClassImplementationCompiler {
 						
 					} else {
 						if(field.containment) {
-							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
+							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
+							.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+							.addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
 							if («newName» != «field.name») {
 								$4T msgs = null;
 								if («field.name» != null)
-									msgs = (($1T)«field.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+									msgs = (($1T)«field.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
 								if («newName» != null)
-									msgs = (($1T)«newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+									msgs = (($1T)«newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
 								msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
 								if (msgs != null) msgs.dispatch();
 							}
 							else if (eNotificationRequired())
-								eNotify(new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
+								eNotify(new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
 						''', InternalEObject, ENotificationImpl, Notification, NotificationChain).addModifiers(PUBLIC).build
 						val basicSetter = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
+						.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 						.returns(NotificationChain)
 							.addParameter(ParameterSpec.builder(fieldType, newName).build)
 							.addParameter(ParameterSpec.builder(NotificationChain, 'msgs').build)
@@ -281,7 +295,7 @@ class EClassImplementationCompiler {
 							$1T «oldName» = «field.name»;
 							«field.name» = «newName»;
 							if (eNotificationRequired()) {
-								$2T notification = new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «oldName», «newName»);
+								$2T notification = new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «oldName», «newName»);
 								if (msgs == null) msgs = notification; else msgs.add(notification);
 							}
 							return msgs;
@@ -293,7 +307,9 @@ class EClassImplementationCompiler {
 						} else { 
 							val isMapValueField = (field.eContainer as EClass).instanceClass !== null && (field.eContainer as EClass).instanceClass == Map.Entry && field.name == "value"
 							if(isMapValueField) {
-								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').returns(
+								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
+								.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+								.returns(
 									fieldType).addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
 									$1T «oldName» = this.«field.name»;
 									this.«field.name» = «newName»;
@@ -303,7 +319,9 @@ class EClassImplementationCompiler {
 		
 								#[setter]						
 							} else {
-								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
+								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
+								
+								.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).addParameter(
 									ParameterSpec.builder(fieldType, newName).build).addCode('''
 									$1T «oldName» = «field.name»;
 									«field.name» = «newName»;
@@ -326,18 +344,20 @@ class EClassImplementationCompiler {
 				if(ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
 					val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 					val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-					MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+					MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType)
+					.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 							addModifiers(PUBLIC).addCode('''
 								if («field.name» == null) {
 									«field.name» = new $1T($2T.Literals.«(field.EType as EClass).name.normalizeUpperField», $3T.class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
 								}
 								return «field.name»;
-							''', ParameterizedTypeName.get(ClassName.get(EcoreEMap), key.EType.scopedInterfaceTypeRef, value.EType.scopedInterfaceTypeRef), ePackageInterfaceType,
-							ClassName.get((field.EType as EClass).classImplementationPackageName, (field.EType as EClass).classImplementationClassName)).build
+							''', ParameterizedTypeName.get(ClassName.get(EcoreEMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot)), ePackageInterfaceType,
+							ClassName.get((field.EType as EClass).classImplementationPackageName(packageRoot), (field.EType as EClass).classImplementationClassName)).build
 							// EcoreEMap<String,EvalRes>
 				}
 					else if(field.EOpposite !== null) {
-						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType)
+						.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 							addModifiers(PUBLIC).addCode('''
 								if («field.name» == null) {
 									«field.name» = new $1T($2T.class, this, $3T.«field.name.normalizeUpperField(eClass.name)», $3T.«field.EOpposite.name.normalizeUpperField((field.EOpposite.eContainer as EClass).name)»);
@@ -345,7 +365,8 @@ class EClassImplementationCompiler {
 								return «field.name»;
 							''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentWithInverseEList), rt), rt, ePackageInterfaceType).build
 					} else {
-						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
+						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType)
+						.addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 							addModifiers(PUBLIC).addCode('''
 								if(«field.name» == null) {
 									«field.name» = new $1T(«rt».class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
@@ -356,13 +377,13 @@ class EClassImplementationCompiler {
 					}
 				} else {
 					if(field.EOpposite !== null && field.EOpposite.containment) {
-						MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).
+						MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 						addModifiers(PUBLIC).addCode('''
 						if (eContainerFeatureID() != $1T.«field.name.normalizeUpperField(eClass.name)») return null;
 						return ($2T)eInternalContainer();
 						''', ePackageInterfaceType, fieldType).build
 					}  else {
-						MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).
+						MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 							addModifiers(PUBLIC).addCode('''return «field.name»;''').build
 					}
 				}
@@ -370,25 +391,25 @@ class EClassImplementationCompiler {
 			setter + #[getter]
 		].flatten
 
-		val eStaticClassMethod = MethodSpec.methodBuilder('eStaticClass').returns(EClass).addModifiers(PROTECTED).
+		val eStaticClassMethod = MethodSpec.methodBuilder('eStaticClass').returns(EClass).addModifiers(PROTECTED).addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 			addCode('''return $1T.Literals.«eClass.name.normalizeUpperField»;''', ePackageInterfaceType).build
 
-		val eSetMethod = MethodSpec.methodBuilder('eSet').addParameter(int, 'featureID').addParameter(Object,
+		val eSetMethod = MethodSpec.methodBuilder('eSet').addParameter(int, 'featureID').addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).addParameter(Object,
 			'newValue').addModifiers(PUBLIC).addCode( '''
 			switch (featureID) {
 			«FOR esf : eClass.EStructuralFeatures»
 				case $1T.«esf.name.normalizeUpperField(eClass.name)»:
 					«IF esf instanceof EAttribute»
-						set«esf.name.toFirstUpper»((«esf.EType.scopedTypeRef») newValue);
+						set«esf.name.toFirstUpper»((«esf.EType.scopedTypeRef(packageRoot)») newValue);
 					«ELSE»
 						«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-							set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») newValue);
+							set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName(packageRoot)».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») newValue);
 						«ELSE»
 							«IF (esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry)»
 								((org.eclipse.emf.ecore.EStructuralFeature.Setting)get«esf.name.toFirstUpper»()).set(newValue);
 							«ELSE»
 							get«esf.name.toFirstUpper»().clear();
-							get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends «(esf.EType as EClass).classInterfacePackageName».«(esf.EType as EClass).classInterfaceClassName»>) newValue);
+							get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends «(esf.EType as EClass).classInterfacePackageName(packageRoot)».«(esf.EType as EClass).classInterfaceClassName»>) newValue);
 							«ENDIF»
 						«ENDIF»
 					«ENDIF»
@@ -398,7 +419,7 @@ class EClassImplementationCompiler {
 			super.eSet(featureID, newValue);
 		''', ePackageInterfaceType).build
 
-		val eUnsetMethod = MethodSpec.methodBuilder('eUnset').addParameter(int, 'featureID').addModifiers(PUBLIC).
+		val eUnsetMethod = MethodSpec.methodBuilder('eUnset').addParameter(int, 'featureID').addModifiers(PUBLIC).addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 			addCode('''
 				switch (featureID) {
 				«FOR esf : eClass.EStructuralFeatures»
@@ -407,7 +428,7 @@ class EClassImplementationCompiler {
 							set«esf.name.toFirstUpper»(«esf.name.toUpperCase»_EDEFAULT);
 						«ELSE»
 							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-								set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») null);
+								set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName(packageRoot)».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») null);
 							«ELSE»
 								get«esf.name.toFirstUpper»().clear();
 							«ENDIF»
@@ -418,7 +439,7 @@ class EClassImplementationCompiler {
 				super.eUnset(featureID);
 			''', ePackageInterfaceType).build
 
-		val eGetMethod = MethodSpec.methodBuilder('eGet').returns(Object).addParameter(int, 'featureID').
+		val eGetMethod = MethodSpec.methodBuilder('eGet').returns(Object).addParameter(int, 'featureID').addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 			addParameter(boolean, 'resolve').addParameter(boolean, 'coreType').addModifiers(PUBLIC).addCode('''
 				switch (featureID) {
 				«FOR esf : eClass.EStructuralFeatures»
@@ -436,7 +457,7 @@ class EClassImplementationCompiler {
 				return super.eGet(featureID, resolve, coreType);
 			''', ePackageInterfaceType).build
 
-		val eIsSetMethod = MethodSpec.methodBuilder('eIsSet').returns(boolean).addParameter(int, 'featureID').
+		val eIsSetMethod = MethodSpec.methodBuilder('eIsSet').returns(boolean).addParameter(int, 'featureID').addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 			addModifiers(PUBLIC).addCode( '''
 				switch (featureID) {
 				«FOR esf : eClass.EStructuralFeatures»
@@ -465,7 +486,7 @@ class EClassImplementationCompiler {
 
 		val eInverseAdd = if (!eClass.EReferences.filter[it.EOpposite !== null].empty) {
 				#[
-					MethodSpec.methodBuilder('eInverseAdd').returns(NotificationChain).addParameter(InternalEObject,
+					MethodSpec.methodBuilder('eInverseAdd').returns(NotificationChain).addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).addParameter(InternalEObject,
 						'otherEnd').addParameter(int, 'featureID').addParameter(NotificationChain, 'msgs2').addCode('''
 						$1T msgs = msgs2;
 						switch (featureID) {
@@ -476,12 +497,12 @@ class EClassImplementationCompiler {
 									«IF ref.EOpposite !== null && ref.EOpposite.containment»
 									if (eInternalContainer() != null)
 											msgs = eBasicRemoveFromContainer(msgs);
-										return basicSetFsm((«(ref.EType as EClass).classInterfacePackageName».«(ref.EType as EClass).classInterfaceClassName»)otherEnd, msgs);
+										return basicSetFsm((«(ref.EType as EClass).classInterfacePackageName(packageRoot)».«(ref.EType as EClass).classInterfaceClassName»)otherEnd, msgs);
 									«ELSE»
 									if («ref.name» != null)
 										msgs = ((org.eclipse.emf.ecore.InternalEObject) «ref.name»).eInverseRemove(this, $2T.«ref.EOpposite.name.normalizeUpperField((ref.EOpposite.eContainer as EClass).name)», «(ref.EOpposite.eContainer as EClass).name».class,
 												msgs);
-									return basicSet«ref.name.toFirstUpper»((«(ref.EOpposite.eContainer as EClass).classInterfacePackageName».«(ref.EOpposite.eContainer as EClass).classInterfaceClassName») otherEnd, msgs);
+									return basicSet«ref.name.toFirstUpper»((«(ref.EOpposite.eContainer as EClass).classInterfacePackageName(packageRoot)».«(ref.EOpposite.eContainer as EClass).classInterfaceClassName») otherEnd, msgs);
 									«ENDIF»
 								«ELSE»
 									return ((org.eclipse.emf.ecore.util.InternalEList<org.eclipse.emf.ecore.InternalEObject>) (org.eclipse.emf.ecore.util.InternalEList<?>) get«ref.name.toFirstUpper»()).basicAdd(otherEnd, msgs);
@@ -495,13 +516,13 @@ class EClassImplementationCompiler {
 				#[]
 				
 				
-		val eInverseRemove = MethodSpec.methodBuilder('eInverseRemove').returns(NotificationChain).addModifiers(PUBLIC).
+		val eInverseRemove = MethodSpec.methodBuilder('eInverseRemove').returns(NotificationChain).addModifiers(PUBLIC).addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).
 			addParameter(ParameterSpec.builder(InternalEObject, 'otherEnd').build).addParameter(
 				ParameterSpec.builder(int, 'featureID').build).addParameter(
 				ParameterSpec.builder(NotificationChain, 'msgs').build).addCode('''
 				switch(featureID) {
 				«FOR ref: eClass.EReferences.filter[it.containment]»
-				case «eClass.EPackage.packageInterfacePackageName».«eClass.EPackage.packageInterfaceClassName».«ref.name.normalizeUpperField(eClass.name)»:
+				case «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«ref.name.normalizeUpperField(eClass.name)»:
 					«IF ref.upperBound == 0 || ref.upperBound == 1»
 					return basicSet«ref.name.toFirstUpper»(null, msgs);
 					«ELSE»
@@ -514,6 +535,11 @@ class EClassImplementationCompiler {
 				
 		val constructor = MethodSpec.constructorBuilder.addCode('''
 			super();
+			«IF aleClass !== null»
+			«FOR method: aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true']»
+			this.dispatch«method.operationRef.name.toFirstUpper» = com.oracle.truffle.api.Truffle.getRuntime().createIndirectCallNode();
+			«ENDFOR»
+			«ENDIF»
 		''').addModifiers(PROTECTED).build
 
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
@@ -521,28 +547,28 @@ class EClassImplementationCompiler {
 		val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 
 		builder.applyIfTrue(eClass.isAbstract, [addModifiers(ABSTRACT)]).applyIfTrue(hasSuperType, [
-			superclass(ClassName.get(superType.classImplementationPackageName, superType.classImplementationClassName))
+			superclass(ClassName.get(superType.classImplementationPackageName(packageRoot), superType.classImplementationClassName))
 		]).applyIfTrue(isMapElement, [
 			it.addSuperinterface(
-				ParameterizedTypeName.get(ClassName.get(BasicEMap.Entry), key.EType.scopedInterfaceTypeRef,
-					value.EType.scopedInterfaceTypeRef))
+				ParameterizedTypeName.get(ClassName.get(BasicEMap.Entry), key.EType.scopedInterfaceTypeRef(packageRoot),
+					value.EType.scopedInterfaceTypeRef(packageRoot)))
 		]).applyIfTrue(!hasSuperType, [
-			if(dsl.dslProp.getOrDefault("truffle", "false") == true) {
-				superclass(ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl.TruffleContainer"))
+			if(dsl.dslProp.getOrDefault("truffle", "false") == 'true') {
+				superclass(ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl", "TruffleContainer"))
 			} else {
 				superclass(ClassName.get(MinimalEObjectImpl.Container))
 			}
 		]).applyIfTrue(
 			!isMapElement, [
-				addSuperinterface(ClassName.get(eClass.classInterfacePackageName, eClass.classInterfaceClassName))
+				addSuperinterface(ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName))
 			]).addFields(fieldsEAttributes + fieldsEReferences).addMethods(
 			methodsEAttributes + methodsEReferences +
 				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod, constructor, eInverseRemove] +
 				eInverseAdd).applyIfTrue(isMapElement, [
 			it.addField(FieldSpec.builder(int, 'hash', PROTECTED).initializer('-1').build).addMethod(
-				MethodSpec.methodBuilder('setHash').addParameter(int, 'hash').addCode('''
+				MethodSpec.methodBuilder('setHash').addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).addParameter(int, 'hash').addCode('''
 					this.hash = hash;
-				''').addModifiers(PUBLIC).build).addMethod(MethodSpec.methodBuilder('getHash').returns(int).addCode('''
+				''').addModifiers(PUBLIC).build).addMethod(MethodSpec.methodBuilder('getHash').addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary")).returns(int).addCode('''
 				if (hash == -1) {
 					Object theKey = getKey();
 					hash = (theKey == null ? 0 : theKey.hashCode());
@@ -565,27 +591,91 @@ class EClassImplementationCompiler {
 		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass, aleClass).
 			applyIfTrue(aleClass !== null, [
 				addMethods(
-				aleClass.methods.map[compile(aleClass, eClass)])
-			])
-			.applyIfTrue(dsl.dslProp.getOrDefault("truffle", "false") == "true", [
-				addAnnotation(AnnotationSpec.builder(ClassName.get("com.oracle.truffle.api.nodes","NodeInfo"))
-					.addMember("description", '$S', eClass.name)
-					.build
+				aleClass.methods.filter[!(it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true')].map [
+					compile(aleClass, eClass)
+				])
+			]).applyIfTrue(dsl.dslProp.getOrDefault("truffle", "false") == "true", [
+				addAnnotation(
+					AnnotationSpec.builder(ClassName.get("com.oracle.truffle.api.nodes", "NodeInfo")).addMember(
+						"description", '$S', eClass.name).build
 				)
-			])
-			.addModifiers(PUBLIC).build
+			]).applyIfTrue(aleClass !== null, [
+				addFields(aleClass.methods.filter [
+					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
+				].map [
+					FieldSpec.builder(
+						ClassName.get('com.oracle.truffle.api.nodes', 'IndirectCallNode'), '''dispatch«it.operationRef.name.toFirstUpper»''').
+						addModifiers(PRIVATE).addAnnotation(
+							ClassName.get("com.oracle.truffle.api.nodes.Node", "Child")).build
+				])
+			]).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(eClass.classImplementationPackageName, factory).build
-
+		val javaFile = JavaFile.builder(eClass.classImplementationPackageName(packageRoot), factory).build
 		javaFile.writeTo(directory)
+		
+	//	generateDispatchClasses(aleClass, directory, eClass)
 
+	}
+	
+	def generateDispatchClasses(ExtendedClass aleClass, File directory, EClass eClass) {
+		if (aleClass !== null) {
+			// Generation of the dispatch classes
+			aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'].forEach [ method |
+
+				val factoryDispatch = TypeSpec.
+					classBuilder('''«eClass.name»Dispatch«method.operationRef.name.toFirstUpper»''').superclass(
+						ClassName.get("com.oracle.truffle.api.nodes", "Node")).addField(
+						FieldSpec.builder(int, 'INLINE_CACHE_SIZE', PUBLIC, STATIC, FINAL).initializer('3').build).
+					addMethod(
+						MethodSpec.methodBuilder('''executeDispatch''').addModifiers(PUBLIC, ABSTRACT).
+							addParameter(Object, 'function').addParameter(typeof(Object[]), 'arguments').
+							returns(Object).build).addMethod(
+						MethodSpec.methodBuilder('doDirect').addAnnotation(
+							AnnotationSpec.builder(ClassName.get('com.oracle.truffle.api.dsl', 'Specialization')).
+								addMember('limit', '"INLINE_CACHE_SIZE"').addMember('guards',
+									'"function.getCallTarget() == cached"') // TODO: find out how to identify the name of the operation to call on the function
+								.addMember('assumptions', '"callTargetStable"').build
+						).addModifiers(PROTECTED, STATIC).returns(Object).addParameter(
+							ParameterSpec.builder(method.operationRef.EParameters.head.EType.resolveType, 'function').
+								build
+						).addParameter(typeof(Object[]), 'arguments').addParameter(
+							ParameterSpec.builder(ClassName.get('com.oracle.truffle.api', 'Assumption'),
+								'callTargetStable').addAnnotation(
+								AnnotationSpec.builder(ClassName.get('com.oracle.truffle.api.dsl', 'Cached')).
+									addMember('value', '"function.getCallTargetStable()"') // TODO: how to add such operations on the SLFunction ? // do wo infere that we have to add them since it is used as a first parameter of a dispatch somewhere ?
+									.build
+							).build
+						).addParameter(
+							ParameterSpec.builder(ClassName.get('com.oracle.truffle.api', 'RootCallTarget'),
+								'cachedTarget').addAnnotation(
+								AnnotationSpec.builder(ClassName.get('com.oracle.truffle.api.dsl', 'Cached')).
+									addMember('value', '"function.getCallTarget()"') // TODO: how to add such operations on the SLFunction ? // do wo infere that we have to add them since it is used as a first parameter of a dispatch somewhere ?
+									.build
+							).build
+						).addParameter(
+							ParameterSpec.builder(ClassName.get('com.oracle.truffle.api.nodes', 'DirectCallNode'),
+								'callNode').addAnnotation(
+								AnnotationSpec.builder(ClassName.get('com.oracle.truffle.api.dsl', 'Cached')).
+									addMember('value', '"create(cachedTarget)"') // TODO: how to add such operations on the SLFunction ? // do wo infere that we have to add them since it is used as a first parameter of a dispatch somewhere ?
+									.build
+							).build
+						)
+						.addCode("return callNode.call(arguments);")
+						.build
+					).addModifiers(PUBLIC, ABSTRACT).build
+
+				val javaFileDispatch = JavaFile.builder(eClass.classImplementationPackageName(packageRoot), factoryDispatch).build
+				javaFileDispatch.writeTo(directory)
+
+			]
+		}
 	}
 
 	def MethodSpec compile(Method method, ExtendedClass aleClass, EClass aClass) {
 		val retType = if (method.operationRef.EType !== null) {
 				if (method.operationRef.EType instanceof EClass &&
 					!(method.operationRef.EType.EPackage == EcorePackage.eINSTANCE)) {
-					ClassName.get((method.operationRef.EType as EClass).classInterfacePackageName,
+					ClassName.get((method.operationRef.EType as EClass).classInterfacePackageName(packageRoot),
 						(method.operationRef.EType as EClass).name)
 				} else {
 					TypeName.get(method.operationRef.EType.instanceClass)
@@ -600,7 +690,7 @@ class EClassImplementationCompiler {
 			if (it.EType.instanceClass !== null) {
 				if (it.EType instanceof EClass && !(it.EType.EPackage == EcorePackage.eINSTANCE)) {
 					ParameterSpec.builder(
-						ClassName.get((it.EType as EClass).classInterfacePackageName, (it.EType as EClass).name),
+						ClassName.get((it.EType as EClass).classInterfacePackageName(packageRoot), (it.EType as EClass).name),
 						it.name).build
 				} else {
 					ParameterSpec.builder(it.EType.instanceClass, it.name).build
@@ -632,7 +722,7 @@ class EClassImplementationCompiler {
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
-				ClassName.get(e.classInterfacePackageName, e.name)
+				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
 			} else {
 				val GenClass gclass = gm.allGenPkgs.map [
 					it.genClasses.filter [
@@ -836,9 +926,8 @@ class EClassImplementationCompiler {
 						val t = infereType(e).head
 						val ecls = t.type as EClass
 						val epks = ecls.EPackage
-						'''«epks.factoryInterfacePackageName».«epks.factoryInterfaceClassName».eINSTANCE.create«ecls.name»()'''
+						'''«epks.factoryInterfacePackageName(packageRoot)».«epks.factoryInterfaceClassName».eINSTANCE.create«ecls.name»()'''
 					} else {
-						// TODO: better identification of the caller in order to route to a $ operation or a service.
 						val argumentsh = call.arguments.head
 						val ts = argumentsh.infereType
 						val t = ts.head
@@ -856,10 +945,14 @@ class EClassImplementationCompiler {
 								it.operationRef.name == call.serviceName
 							]
 							if (methodExist) {
-								'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+								val method = allMethods.filter[it.operationRef.name == call.serviceName].head
+								if(method.isDispatch) {
+									'''this.dispatch«method.operationRef.name.toFirstUpper».call(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+								} else {
+									'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+								}
 							} else {
 
-								// duplicate to following else block !!!
 								val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].
 									flatten.toList
 

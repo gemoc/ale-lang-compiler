@@ -48,7 +48,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.PARAMETER__NAME:
-    	return getName();
+    return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }

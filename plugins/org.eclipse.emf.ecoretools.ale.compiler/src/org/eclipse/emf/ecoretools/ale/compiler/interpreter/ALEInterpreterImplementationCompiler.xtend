@@ -115,6 +115,8 @@ class ALEInterpreterImplementationCompiler {
 		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
 		resolved = resolve(aleClasses, syntax)
+		
+		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 
 		val egc = new EcoreGenmodelCompiler
 
@@ -125,22 +127,22 @@ class ALEInterpreterImplementationCompiler {
 		val pimplc = new PackageImplementationCompiler
 
 		val eic = new EClassInterfaceCompiler
-		val eimplc = new EClassImplementationCompiler
+		val eimplc = new EClassImplementationCompiler(packageRoot)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
 		// TODO: generate ecore + genmodel !
 		syntaxes.forEach [ key, pairEPackageGenModel |
-			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory)
-			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory)
+			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
+			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
-			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory)
-			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory)
+			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
+			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
 			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
-				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl)
+				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
 				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
 					registeredServices, dsl, parsedSemantics, queryEnvironment)
 			}

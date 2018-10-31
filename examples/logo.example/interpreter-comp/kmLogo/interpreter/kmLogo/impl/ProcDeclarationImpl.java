@@ -102,13 +102,13 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.PROC_DECLARATION__NAME:
-    	return getName();
+    return getName();
     case KmLogoPackage.PROC_DECLARATION__ARGS:
-    	return getArgs();
+    return getArgs();
     case KmLogoPackage.PROC_DECLARATION__PROC_CALL:
-    	return getProcCall();
+    return getProcCall();
     case KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS:
-    	return getInstructions();
+    return getInstructions();
     }
     return super.eGet(featureID, resolve, coreType);
   }

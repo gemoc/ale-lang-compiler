@@ -156,15 +156,15 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.TURTLE__POSITION:
-    	return getPosition();
+    return getPosition();
     case KmLogoPackage.TURTLE__HEADING:
-    	return getHeading();
+    return getHeading();
     case KmLogoPackage.TURTLE__PEN_UP:
-    	return isPenUp();
+    return isPenUp();
     case KmLogoPackage.TURTLE__DRAWINGS:
-    	return getDrawings();
+    return getDrawings();
     case KmLogoPackage.TURTLE__CALL_STACK:
-    	return getCallStack();
+    return getCallStack();
     }
     return super.eGet(featureID, resolve, coreType);
   }

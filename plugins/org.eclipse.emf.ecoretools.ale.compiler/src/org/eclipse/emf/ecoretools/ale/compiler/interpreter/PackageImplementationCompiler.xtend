@@ -25,7 +25,7 @@ class PackageImplementationCompiler {
 		return (!isContainer && !isContains) && eStructuralFeature instanceof EReference && ref.isResolveProxies;
 	}
 
-	def compilePackageImplementation(EPackage abstractSyntax, File directory) {
+	def compilePackageImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
 
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
 
@@ -37,13 +37,13 @@ class PackageImplementationCompiler {
 		val isInitializedField = FieldSpec.builder(boolean, 'isInitialized').addModifiers(PRIVATE).
 			initializer('''false''').build
 
-		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName,
+		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
 			abstractSyntax.packageInterfaceClassName)
 		val packageInterfaceName = abstractSyntax.packageInterfaceClassName
-		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName,
+		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
 			abstractSyntax.factoryInterfaceClassName)
 
-		val test = '''«abstractSyntax.packageImplementationPackageName».«abstractSyntax.packageImplementationClassName»'''
+		val test = '''«abstractSyntax.packageImplementationPackageName(packageRoot)».«abstractSyntax.packageImplementationClassName»'''
 
 		val initMethod = MethodSpec.methodBuilder('init').addModifiers(PUBLIC, STATIC).returns(packageInterfaceType).
 			addCode('''
@@ -116,19 +116,19 @@ class PackageImplementationCompiler {
 				
 				// Initialize classes, features, and operations; add parameters
 				«FOR eClass : allClasses»
-					initEClass(«eClass.name.toFirstLower»EClass, «eClass.classInterfacePackageName».«eClass.name».class, "«eClass.name»", «IF eClass.isAbstract»«ELSE»!«ENDIF»IS_ABSTRACT, «IF eClass.isInterface»«ELSE»!«ENDIF»IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+					initEClass(«eClass.name.toFirstLower»EClass, «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, "«eClass.name»", «IF eClass.isAbstract»«ELSE»!«ENDIF»IS_ABSTRACT, «IF eClass.isInterface»«ELSE»!«ENDIF»IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 					«FOR eAttr: eClass.EStructuralFeatures»
 						«IF eAttr instanceof EReference»
 							«IF eAttr.EType.EPackage != abstractSyntax»
 								initEReference(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), 
-								((«eAttr.EType.EPackage.packageInterfacePackageName».«eAttr.EType.EPackage.packageInterfaceClassName»)org.eclipse.emf.ecore.EPackage.Registry.INSTANCE.getEPackage(«eAttr.EType.EPackage.packageInterfacePackageName».«eAttr.EType.EPackage.packageInterfaceClassName».eNS_URI)).get«eAttr.EType.name»(), 
-									«IF eAttr.EOpposite !== null»this.get«eAttr.EOpposite.name.normalizeUpperMethod((eAttr.EOpposite.eContainer as EClass).name)»()«ELSE»null«ENDIF», "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.isVolatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.isChangeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.isContainment»«ELSE»!«ENDIF»IS_COMPOSITE, «IF eAttr.isResolveProxiesFlag»«ELSE»!«ENDIF»IS_RESOLVE_PROXIES, «IF eAttr.isUnsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
+								((«eAttr.EType.EPackage.packageInterfacePackageName(packageRoot)».«eAttr.EType.EPackage.packageInterfaceClassName»)org.eclipse.emf.ecore.EPackage.Registry.INSTANCE.getEPackage(«eAttr.EType.EPackage.packageInterfacePackageName(packageRoot)».«eAttr.EType.EPackage.packageInterfaceClassName».eNS_URI)).get«eAttr.EType.name»(), 
+									«IF eAttr.EOpposite !== null»this.get«eAttr.EOpposite.name.normalizeUpperMethod((eAttr.EOpposite.eContainer as EClass).name)»()«ELSE»null«ENDIF», "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.isVolatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.isChangeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.isContainment»«ELSE»!«ENDIF»IS_COMPOSITE, «IF eAttr.isResolveProxiesFlag»«ELSE»!«ENDIF»IS_RESOLVE_PROXIES, «IF eAttr.isUnsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 							«ELSE»
 								initEReference(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), this.get«eAttr.EType.name»(),  
-									«IF eAttr.EOpposite !== null»this.get«eAttr.EOpposite.name.normalizeUpperMethod((eAttr.EOpposite.eContainer as EClass).name)»()«ELSE»null«ENDIF», "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.isVolatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.isChangeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.isContainment»«ELSE»!«ENDIF»IS_COMPOSITE, «IF eAttr.isResolveProxiesFlag»«ELSE»!«ENDIF»IS_RESOLVE_PROXIES, «IF eAttr.isUnsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
+									«IF eAttr.EOpposite !== null»this.get«eAttr.EOpposite.name.normalizeUpperMethod((eAttr.EOpposite.eContainer as EClass).name)»()«ELSE»null«ENDIF», "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.isVolatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.isChangeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.isContainment»«ELSE»!«ENDIF»IS_COMPOSITE, «IF eAttr.isResolveProxiesFlag»«ELSE»!«ENDIF»IS_RESOLVE_PROXIES, «IF eAttr.isUnsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 							«ENDIF»				
 						«ELSE»
-							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), ecorePackage.get«IF !eAttr.EType.name.startsWith('E')»E«ENDIF»«eAttr.EType.name»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT,«IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);				
+							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), ecorePackage.get«IF !eAttr.EType.name.startsWith('E')»E«ENDIF»«eAttr.EType.name»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT,«IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);				
 						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
@@ -150,7 +150,7 @@ class PackageImplementationCompiler {
 
 		val constructor = MethodSpec.constructorBuilder.addModifiers(PRIVATE).addCode('''
 			super(eNS_URI, $T.eINSTANCE);
-		''', ClassName.get(abstractSyntax.factoryInterfacePackageName, abstractSyntax.factoryInterfaceClassName)).build
+		''', ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot), abstractSyntax.factoryInterfaceClassName)).build
 
 		val accessorsMethods = newArrayList
 		for (EClass clazz : allClasses) {
@@ -182,12 +182,12 @@ class PackageImplementationCompiler {
 
 		val packageImpl = TypeSpec.classBuilder(abstractSyntax.packageImplementationClassName).superclass(EPackageImpl).
 			addSuperinterface(
-				ClassName.get(abstractSyntax.packageInterfacePackageName, abstractSyntax.packageInterfaceClassName)).
+				ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName)).
 			addFields(#[isInitedField, isCreatedField, isInitializedField] + classFields).addMethods(
 				#[initMethod, createPackageContentsMethod, initializePackageContentsMethod, constructor,
 					getFactoryMethod] + methodGetterFields + accessorsMethods).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(abstractSyntax.packageImplementationPackageName, packageImpl).build
+		val javaFile = JavaFile.builder(abstractSyntax.packageImplementationPackageName(packageRoot), packageImpl).build
 
 		javaFile.writeTo(directory)
 	}

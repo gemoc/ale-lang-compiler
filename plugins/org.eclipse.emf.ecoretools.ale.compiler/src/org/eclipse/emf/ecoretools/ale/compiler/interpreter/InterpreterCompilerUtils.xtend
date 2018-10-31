@@ -9,22 +9,19 @@ class InterpreterCompilerUtils {
 
 	extension InterpreterNamingUtils = new InterpreterNamingUtils
 
-//	def isDispatch(AleMethod method) {
-//		method instanceof DefMethod && (method as DefMethod).dispatch
-//	}
-	def dispatch scopedTypeRef(EDataType edt) {
+	def dispatch scopedTypeRef(EDataType edt, String packageRoot) {
 		TypeName.get(edt.instanceClass)
 	}
 
-	def dispatch scopedTypeRef(EClass clazz) {
-		ClassName.get(clazz.classImplementationPackageName, clazz.classImplementationClassName)
+	def dispatch scopedTypeRef(EClass clazz, String packageRoot) {
+		ClassName.get(clazz.classImplementationPackageName(packageRoot), clazz.classImplementationClassName)
 	}
 
-	def dispatch scopedInterfaceTypeRef(EDataType edt) {
+	def dispatch scopedInterfaceTypeRef(EDataType edt, String packageRoot) {
 		TypeName.get(edt.instanceClass)
 	}
 
-	def dispatch scopedInterfaceTypeRef(EClass clazz) {
-		ClassName.get(clazz.classInterfacePackageName, clazz.classInterfaceClassName)
+	def dispatch scopedInterfaceTypeRef(EClass clazz, String packageRoot) {
+		ClassName.get(clazz.classInterfacePackageName(packageRoot), clazz.classInterfaceClassName)
 	}
 }
