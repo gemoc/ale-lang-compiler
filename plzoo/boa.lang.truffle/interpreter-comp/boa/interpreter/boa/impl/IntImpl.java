@@ -1,10 +1,12 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalIntRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Int;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalIntRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -75,7 +77,8 @@ public class IntImpl extends ExprImpl implements Int {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalIntRes ret = ((EvalIntRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalIntRes());
+    CompilerDirectives.transferToInterpreter();
+    EvalIntRes ret = ((EvalIntRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalIntRes());
     ret.setValue(this.getValue());
     result = ret;
     return result;

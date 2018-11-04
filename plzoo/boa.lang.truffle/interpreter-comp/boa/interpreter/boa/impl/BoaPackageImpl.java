@@ -83,6 +83,22 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
 
   private EClass cmpOpLessEClass = null;
 
+  private EClass ctxEClass = null;
+
+  private EClass stringToEvalResMapEClass = null;
+
+  private EClass evalResEClass = null;
+
+  private EClass evalMapResEClass = null;
+
+  private EClass evalFunResEClass = null;
+
+  private EClass evalBoundFunResEClass = null;
+
+  private EClass evalIntResEClass = null;
+
+  private EClass evalBoolResEClass = null;
+
   private BoaPackageImpl() {
     super(eNS_URI, BoaFactory.eINSTANCE);
   }
@@ -192,6 +208,25 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
     cmpOpEqualEClass = createEClass(CMP_OP_EQUAL);
     cmpOpUnequalEClass = createEClass(CMP_OP_UNEQUAL);
     cmpOpLessEClass = createEClass(CMP_OP_LESS);
+    ctxEClass = createEClass(CTX);
+    createEReference(ctxEClass, CTX__ENV);
+    createEReference(ctxEClass, CTX__TH);
+    stringToEvalResMapEClass = createEClass(STRING_TO_EVAL_RES_MAP);
+    createEAttribute(stringToEvalResMapEClass, STRING_TO_EVAL_RES_MAP__KEY);						
+    createEReference(stringToEvalResMapEClass, STRING_TO_EVAL_RES_MAP__VALUE);
+    evalResEClass = createEClass(EVAL_RES);
+    evalMapResEClass = createEClass(EVAL_MAP_RES);
+    createEReference(evalMapResEClass, EVAL_MAP_RES__VALUES);
+    evalFunResEClass = createEClass(EVAL_FUN_RES);
+    createEReference(evalFunResEClass, EVAL_FUN_RES__EXP);
+    createEReference(evalFunResEClass, EVAL_FUN_RES__CTX);
+    createEAttribute(evalFunResEClass, EVAL_FUN_RES__NAME);						
+    evalBoundFunResEClass = createEClass(EVAL_BOUND_FUN_RES);
+    createEReference(evalBoundFunResEClass, EVAL_BOUND_FUN_RES__TH);
+    evalIntResEClass = createEClass(EVAL_INT_RES);
+    createEAttribute(evalIntResEClass, EVAL_INT_RES__VALUE);						
+    evalBoolResEClass = createEClass(EVAL_BOOL_RES);
+    createEAttribute(evalBoolResEClass, EVAL_BOOL_RES__VALUE);						
   }
 
   public void initializePackageContents() {
@@ -240,6 +275,11 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
     cmpOpEqualEClass.getESuperTypes().add(this.getCmpOp());
     cmpOpUnequalEClass.getESuperTypes().add(this.getCmpOp());
     cmpOpLessEClass.getESuperTypes().add(this.getCmpOp());
+    evalMapResEClass.getESuperTypes().add(this.getEvalRes());
+    evalFunResEClass.getESuperTypes().add(this.getEvalRes());
+    evalBoundFunResEClass.getESuperTypes().add(this.getEvalFunRes());
+    evalIntResEClass.getESuperTypes().add(this.getEvalRes());
+    evalBoolResEClass.getESuperTypes().add(this.getEvalRes());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(fileEClass, boa.interpreter.boa.File.class, "File", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -343,6 +383,32 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
     initEClass(cmpOpEqualEClass, boa.interpreter.boa.CmpOpEqual.class, "CmpOpEqual", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(cmpOpUnequalEClass, boa.interpreter.boa.CmpOpUnequal.class, "CmpOpUnequal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(cmpOpLessEClass, boa.interpreter.boa.CmpOpLess.class, "CmpOpLess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(ctxEClass, boa.interpreter.boa.Ctx.class, "Ctx", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCtx_Env(), this.getStringToEvalResMap(),  
+    	null, "env", null, 0, -1,  boa.interpreter.boa.Ctx.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCtx_Th(), this.getStringToEvalResMap(),  
+    	null, "th", null, 0, -1,  boa.interpreter.boa.Ctx.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(stringToEvalResMapEClass, boa.interpreter.boa.StringToEvalResMap.class, "StringToEvalResMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getString_to_eval_res_map_Key(), ecorePackage.getEString(), "key", null, 0, 1,  boa.interpreter.boa.StringToEvalResMap.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
+    initEReference(getString_to_eval_res_map_Value(), this.getEvalRes(),  
+    	null, "value", null, 1, 1,  boa.interpreter.boa.StringToEvalResMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(evalResEClass, boa.interpreter.boa.EvalRes.class, "EvalRes", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(evalMapResEClass, boa.interpreter.boa.EvalMapRes.class, "EvalMapRes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEval_map_res_Values(), this.getStringToEvalResMap(),  
+    	null, "values", null, 0, -1,  boa.interpreter.boa.EvalMapRes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(evalFunResEClass, boa.interpreter.boa.EvalFunRes.class, "EvalFunRes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEval_fun_res_Exp(), this.getExpr(),  
+    	null, "exp", null, 1, 1,  boa.interpreter.boa.EvalFunRes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEval_fun_res_Ctx(), this.getCtx(),  
+    	null, "ctx", null, 1, 1,  boa.interpreter.boa.EvalFunRes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEval_fun_res_Name(), ecorePackage.getEString(), "name", null, 0, 1,  boa.interpreter.boa.EvalFunRes.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
+    initEClass(evalBoundFunResEClass, boa.interpreter.boa.EvalBoundFunRes.class, "EvalBoundFunRes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEval_bound_fun_res_Th(), this.getStringToEvalResMap(),  
+    	null, "th", null, 0, -1,  boa.interpreter.boa.EvalBoundFunRes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(evalIntResEClass, boa.interpreter.boa.EvalIntRes.class, "EvalIntRes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEval_int_res_Value(), ecorePackage.getEInt(), "value", null, 0, 1,  boa.interpreter.boa.EvalIntRes.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
+    initEClass(evalBoolResEClass, boa.interpreter.boa.EvalBoolRes.class, "EvalBoolRes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEval_bool_res_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1,  boa.interpreter.boa.EvalBoolRes.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
     // Create resource
     createResource(eNS_URI);
   }
@@ -485,6 +551,38 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
 
   public EClass getCmpOpLess() {
     return cmpOpLessEClass;
+  }
+
+  public EClass getCtx() {
+    return ctxEClass;
+  }
+
+  public EClass getStringToEvalResMap() {
+    return stringToEvalResMapEClass;
+  }
+
+  public EClass getEvalRes() {
+    return evalResEClass;
+  }
+
+  public EClass getEvalMapRes() {
+    return evalMapResEClass;
+  }
+
+  public EClass getEvalFunRes() {
+    return evalFunResEClass;
+  }
+
+  public EClass getEvalBoundFunRes() {
+    return evalBoundFunResEClass;
+  }
+
+  public EClass getEvalIntRes() {
+    return evalIntResEClass;
+  }
+
+  public EClass getEvalBoolRes() {
+    return evalBoolResEClass;
   }
 
   public EReference getFile_Commands() {
@@ -637,5 +735,49 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
 
   public EReference getSeq_Rhs() {
     return (EReference) seqEClass.getEStructuralFeatures().get(1);
+  }
+
+  public EReference getCtx_Env() {
+    return (EReference) ctxEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getCtx_Th() {
+    return (EReference) ctxEClass.getEStructuralFeatures().get(1);
+  }
+
+  public EAttribute getString_to_eval_res_map_Key() {
+    return (EAttribute) stringToEvalResMapEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getString_to_eval_res_map_Value() {
+    return (EReference) stringToEvalResMapEClass.getEStructuralFeatures().get(1);
+  }
+
+  public EReference getEval_map_res_Values() {
+    return (EReference) evalMapResEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getEval_fun_res_Exp() {
+    return (EReference) evalFunResEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getEval_fun_res_Ctx() {
+    return (EReference) evalFunResEClass.getEStructuralFeatures().get(1);
+  }
+
+  public EAttribute getEval_fun_res_Name() {
+    return (EAttribute) evalFunResEClass.getEStructuralFeatures().get(2);
+  }
+
+  public EReference getEval_bound_fun_res_Th() {
+    return (EReference) evalBoundFunResEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EAttribute getEval_int_res_Value() {
+    return (EAttribute) evalIntResEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EAttribute getEval_bool_res_Value() {
+    return (EAttribute) evalBoolResEClass.getEStructuralFeatures().get(0);
   }
 }

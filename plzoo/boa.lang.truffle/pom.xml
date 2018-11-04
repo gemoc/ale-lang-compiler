@@ -56,5 +56,15 @@
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.lib</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf.ecoretools.ale.core</groupId>
+			<artifactId>org.eclipse.emf.ecoretools.ale.core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</groupId>
+			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

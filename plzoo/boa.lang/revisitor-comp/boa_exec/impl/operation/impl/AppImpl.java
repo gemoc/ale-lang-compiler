@@ -1,10 +1,6 @@
 package boa_exec.impl.operation.impl;
 
 import boa.revisitor.BoaRevisitor;
-import boa_dynamic.Ctx;
-import boa_dynamic.EvalBoundFunRes;
-import boa_dynamic.EvalFunRes;
-import boa_dynamic.EvalRes;
 import boa_exec.impl.operation.App;
 import boa_exec.impl.operation.ArithOp;
 import boa_exec.impl.operation.ArithOpDivide;
@@ -23,7 +19,14 @@ import boa_exec.impl.operation.CmpOpEqual;
 import boa_exec.impl.operation.CmpOpLess;
 import boa_exec.impl.operation.CmpOpUnequal;
 import boa_exec.impl.operation.Copy;
+import boa_exec.impl.operation.Ctx;
 import boa_exec.impl.operation.Def;
+import boa_exec.impl.operation.EvalBoolRes;
+import boa_exec.impl.operation.EvalBoundFunRes;
+import boa_exec.impl.operation.EvalFunRes;
+import boa_exec.impl.operation.EvalIntRes;
+import boa_exec.impl.operation.EvalMapRes;
+import boa_exec.impl.operation.EvalRes;
 import boa_exec.impl.operation.Expr;
 import boa_exec.impl.operation.Field;
 import boa_exec.impl.operation.File;
@@ -35,38 +38,39 @@ import boa_exec.impl.operation.Not;
 import boa_exec.impl.operation.Project;
 import boa_exec.impl.operation.Seq;
 import boa_exec.impl.operation.Skip;
+import boa_exec.impl.operation.StringToEvalResMap;
 import boa_exec.impl.operation.This;
 import boa_exec.impl.operation.TopLevelCmd;
 import boa_exec.impl.operation.Var;
 import boa_exec.impl.operation.With;
 
 public class AppImpl extends ExprImpl implements App {
-  private BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> rev;
+  private BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> rev;
 
   private boa.App obj;
 
   public AppImpl(boa.App obj,
-      BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> rev) {
+      BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> rev) {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
   }
 
-  public EvalRes eval(Ctx ctx) {
-    EvalRes result;
-    EvalRes vlhs = ((EvalRes)rev.$(this.obj.getLhs()).eval(ctx));
-    EvalRes vrhs = ((EvalRes)rev.$(this.obj.getRhs()).eval(ctx));
-    if(vlhs instanceof boa_dynamic.EvalFunRes) {
-      if(vlhs instanceof boa_dynamic.EvalBoundFunRes) {
-        EvalBoundFunRes fct = ((EvalBoundFunRes)vlhs);
-        Ctx callCtx = ((Ctx)boa_dynamic.Boa_dynamicFactory.eINSTANCE.createCtx());
+  public boa.EvalRes eval(boa.Ctx ctx) {
+    boa.EvalRes result;
+    boa.EvalRes vlhs = ((boa.EvalRes)rev.$(this.obj.getLhs()).eval(ctx));
+    boa.EvalRes vrhs = ((boa.EvalRes)rev.$(this.obj.getRhs()).eval(ctx));
+    if(vlhs instanceof boa.EvalFunRes) {
+      if(vlhs instanceof boa.EvalBoundFunRes) {
+        boa.EvalBoundFunRes fct = ((boa.EvalBoundFunRes)vlhs);
+        boa.Ctx callCtx = ((boa.Ctx)boa.BoaFactory.eINSTANCE.createCtx());
         execboa.MapService.putAll(callCtx.getEnv(), fct.getCtx().getEnv());
         execboa.MapService.put(callCtx.getEnv(), fct.getName(), vrhs);
         execboa.MapService.replaceWith(callCtx.getTh(), fct.getTh());
-        EvalRes fe = ((EvalRes)rev.$(fct.getExp()).eval(callCtx));
-        if(fe instanceof boa_dynamic.EvalFunRes) {
-          EvalFunRes fun = ((EvalFunRes)fe);
-          EvalBoundFunRes tmp = ((EvalBoundFunRes)boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalBoundFunRes());
+        boa.EvalRes fe = ((boa.EvalRes)rev.$(this.obj).callFunc(fct,callCtx));
+        if(fe instanceof boa.EvalFunRes) {
+          boa.EvalFunRes fun = ((boa.EvalFunRes)fe);
+          boa.EvalBoundFunRes tmp = ((boa.EvalBoundFunRes)boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
           tmp.setExp(fun.getExp());
           tmp.setCtx(fun.getCtx());
           tmp.setName(fun.getName());
@@ -78,15 +82,15 @@ public class AppImpl extends ExprImpl implements App {
         }
       }
       else {
-        EvalFunRes fct = ((EvalFunRes)vlhs);
-        Ctx callCtx = ((Ctx)boa_dynamic.Boa_dynamicFactory.eINSTANCE.createCtx());
+        boa.EvalFunRes fct = ((boa.EvalFunRes)vlhs);
+        boa.Ctx callCtx = ((boa.Ctx)boa.BoaFactory.eINSTANCE.createCtx());
         execboa.MapService.putAll(callCtx.getEnv(), fct.getCtx().getEnv());
         execboa.MapService.put(callCtx.getEnv(), fct.getName(), vrhs);
         execboa.MapService.replaceWith(callCtx.getTh(), ctx.getTh());
-        EvalRes fe = ((EvalRes)rev.$(fct.getExp()).eval(callCtx));
-        if(fe instanceof boa_dynamic.EvalFunRes) {
-          EvalFunRes fun = ((EvalFunRes)fe);
-          EvalBoundFunRes tmp = ((EvalBoundFunRes)boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalBoundFunRes());
+        boa.EvalRes fe = ((boa.EvalRes)rev.$(this.obj).callFunc(fct,callCtx));
+        if(fe instanceof boa.EvalFunRes) {
+          boa.EvalFunRes fun = ((boa.EvalFunRes)fe);
+          boa.EvalBoundFunRes tmp = ((boa.EvalBoundFunRes)boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
           tmp.setExp(fun.getExp());
           tmp.setCtx(fun.getCtx());
           tmp.setName(fun.getName());
@@ -101,6 +105,12 @@ public class AppImpl extends ExprImpl implements App {
     else {
       result = null;
     }
+    return result;
+  }
+
+  public boa.EvalRes callFunc(boa.EvalFunRes fct, boa.Ctx callCtx) {
+    boa.EvalRes result;
+    result = rev.$(fct.getExp()).eval(callCtx);
     return result;
   }
 }

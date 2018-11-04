@@ -1,6 +1,5 @@
 package boa.interpreter.boa;
 
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
 import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 

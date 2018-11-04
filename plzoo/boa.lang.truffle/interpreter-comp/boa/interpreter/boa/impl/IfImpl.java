@@ -1,11 +1,11 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalBoolRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.If;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalBoolRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -186,7 +186,7 @@ public class IfImpl extends ExprImpl implements If {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     EvalRes vcond = ((EvalRes)this.getCond().eval(ctx));
-    if(vcond instanceof boa_dynamic.interpreter.boa_dynamic.EvalBoolRes) {
+    if(vcond instanceof boa.interpreter.boa.EvalBoolRes) {
       EvalBoolRes bvcond = ((EvalBoolRes)vcond);
       if(bvcond.isValue()) {
         result = this.getThn().eval(ctx);

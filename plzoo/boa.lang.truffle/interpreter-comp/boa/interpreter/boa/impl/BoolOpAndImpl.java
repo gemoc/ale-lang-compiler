@@ -2,10 +2,10 @@ package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.BoolOpAnd;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalBoolRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalBoolRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -145,11 +145,11 @@ public class BoolOpAndImpl extends BoolOpImpl implements BoolOpAnd {
     EvalRes result;
     EvalRes vlhs = ((EvalRes)this.getLhs().eval(ctx));
     EvalRes vrhs = ((EvalRes)this.getRhs().eval(ctx));
-    if(vlhs instanceof boa_dynamic.interpreter.boa_dynamic.EvalBoolRes) {
-      if(vrhs instanceof boa_dynamic.interpreter.boa_dynamic.EvalBoolRes) {
+    if(vlhs instanceof boa.interpreter.boa.EvalBoolRes) {
+      if(vrhs instanceof boa.interpreter.boa.EvalBoolRes) {
         EvalBoolRes ivlhs = ((EvalBoolRes)vlhs);
         EvalBoolRes ivrhs = ((EvalBoolRes)vrhs);
-        EvalBoolRes ret = ((EvalBoolRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalBoolRes());
+        EvalBoolRes ret = ((EvalBoolRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoolRes());
         ret.setValue(((ivlhs.isValue()) && (ivrhs.isValue())));
         result = ret;
       }

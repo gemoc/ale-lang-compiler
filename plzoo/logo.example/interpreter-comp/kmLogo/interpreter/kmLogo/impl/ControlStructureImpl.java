@@ -68,7 +68,7 @@ public class ControlStructureImpl extends InstructionImpl implements ControlStru
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.CONTROL_STRUCTURE__CONDITION:
-    	return getCondition();
+    return getCondition();
     }
     return super.eGet(featureID, resolve, coreType);
   }

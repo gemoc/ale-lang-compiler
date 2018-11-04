@@ -4,6 +4,7 @@ package boa.impl;
 
 import boa.*;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -85,6 +86,13 @@ public class BoaFactoryImpl extends EFactoryImpl implements BoaFactory {
 			case BoaPackage.CMP_OP_EQUAL: return createCmpOpEqual();
 			case BoaPackage.CMP_OP_UNEQUAL: return createCmpOpUnequal();
 			case BoaPackage.CMP_OP_LESS: return createCmpOpLess();
+			case BoaPackage.CTX: return createCtx();
+			case BoaPackage.STRING_TO_EVAL_RES_MAP: return (EObject)createStringToEvalResMap();
+			case BoaPackage.EVAL_MAP_RES: return createEvalMapRes();
+			case BoaPackage.EVAL_FUN_RES: return createEvalFunRes();
+			case BoaPackage.EVAL_BOUND_FUN_RES: return createEvalBoundFunRes();
+			case BoaPackage.EVAL_INT_RES: return createEvalIntRes();
+			case BoaPackage.EVAL_BOOL_RES: return createEvalBoolRes();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -378,6 +386,76 @@ public class BoaFactoryImpl extends EFactoryImpl implements BoaFactory {
 	public CmpOpLess createCmpOpLess() {
 		CmpOpLessImpl cmpOpLess = new CmpOpLessImpl();
 		return cmpOpLess;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Ctx createCtx() {
+		CtxImpl ctx = new CtxImpl();
+		return ctx;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Map.Entry<String, EvalRes> createStringToEvalResMap() {
+		StringToEvalResMapImpl stringToEvalResMap = new StringToEvalResMapImpl();
+		return stringToEvalResMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EvalMapRes createEvalMapRes() {
+		EvalMapResImpl evalMapRes = new EvalMapResImpl();
+		return evalMapRes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EvalFunRes createEvalFunRes() {
+		EvalFunResImpl evalFunRes = new EvalFunResImpl();
+		return evalFunRes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EvalBoundFunRes createEvalBoundFunRes() {
+		EvalBoundFunResImpl evalBoundFunRes = new EvalBoundFunResImpl();
+		return evalBoundFunRes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EvalIntRes createEvalIntRes() {
+		EvalIntResImpl evalIntRes = new EvalIntResImpl();
+		return evalIntRes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EvalBoolRes createEvalBoolRes() {
+		EvalBoolResImpl evalBoolRes = new EvalBoolResImpl();
+		return evalBoolRes;
 	}
 
 	/**

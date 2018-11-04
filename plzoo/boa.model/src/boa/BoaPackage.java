@@ -1496,6 +1496,357 @@ public interface BoaPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link boa.impl.CtxImpl <em>Ctx</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see boa.impl.CtxImpl
+	 * @see boa.impl.BoaPackageImpl#getCtx()
+	 * @generated
+	 */
+	int CTX = 34;
+
+	/**
+	 * The feature id for the '<em><b>Env</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CTX__ENV = 0;
+
+	/**
+	 * The feature id for the '<em><b>Th</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CTX__TH = 1;
+
+	/**
+	 * The number of structural features of the '<em>Ctx</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CTX_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Ctx</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CTX_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link boa.impl.StringToEvalResMapImpl <em>String To Eval Res Map</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see boa.impl.StringToEvalResMapImpl
+	 * @see boa.impl.BoaPackageImpl#getStringToEvalResMap()
+	 * @generated
+	 */
+	int STRING_TO_EVAL_RES_MAP = 35;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_EVAL_RES_MAP__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_EVAL_RES_MAP__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Eval Res Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_EVAL_RES_MAP_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>String To Eval Res Map</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_EVAL_RES_MAP_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link boa.impl.EvalResImpl <em>Eval Res</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see boa.impl.EvalResImpl
+	 * @see boa.impl.BoaPackageImpl#getEvalRes()
+	 * @generated
+	 */
+	int EVAL_RES = 36;
+
+	/**
+	 * The number of structural features of the '<em>Eval Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_RES_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Eval Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_RES_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link boa.impl.EvalMapResImpl <em>Eval Map Res</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see boa.impl.EvalMapResImpl
+	 * @see boa.impl.BoaPackageImpl#getEvalMapRes()
+	 * @generated
+	 */
+	int EVAL_MAP_RES = 37;
+
+	/**
+	 * The feature id for the '<em><b>Values</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_MAP_RES__VALUES = EVAL_RES_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Eval Map Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_MAP_RES_FEATURE_COUNT = EVAL_RES_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Eval Map Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_MAP_RES_OPERATION_COUNT = EVAL_RES_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link boa.impl.EvalFunResImpl <em>Eval Fun Res</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see boa.impl.EvalFunResImpl
+	 * @see boa.impl.BoaPackageImpl#getEvalFunRes()
+	 * @generated
+	 */
+	int EVAL_FUN_RES = 38;
+
+	/**
+	 * The feature id for the '<em><b>Exp</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_FUN_RES__EXP = EVAL_RES_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Ctx</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_FUN_RES__CTX = EVAL_RES_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_FUN_RES__NAME = EVAL_RES_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Eval Fun Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_FUN_RES_FEATURE_COUNT = EVAL_RES_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Eval Fun Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_FUN_RES_OPERATION_COUNT = EVAL_RES_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link boa.impl.EvalBoundFunResImpl <em>Eval Bound Fun Res</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see boa.impl.EvalBoundFunResImpl
+	 * @see boa.impl.BoaPackageImpl#getEvalBoundFunRes()
+	 * @generated
+	 */
+	int EVAL_BOUND_FUN_RES = 39;
+
+	/**
+	 * The feature id for the '<em><b>Exp</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOUND_FUN_RES__EXP = EVAL_FUN_RES__EXP;
+
+	/**
+	 * The feature id for the '<em><b>Ctx</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOUND_FUN_RES__CTX = EVAL_FUN_RES__CTX;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOUND_FUN_RES__NAME = EVAL_FUN_RES__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Th</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOUND_FUN_RES__TH = EVAL_FUN_RES_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Eval Bound Fun Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOUND_FUN_RES_FEATURE_COUNT = EVAL_FUN_RES_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Eval Bound Fun Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOUND_FUN_RES_OPERATION_COUNT = EVAL_FUN_RES_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link boa.impl.EvalIntResImpl <em>Eval Int Res</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see boa.impl.EvalIntResImpl
+	 * @see boa.impl.BoaPackageImpl#getEvalIntRes()
+	 * @generated
+	 */
+	int EVAL_INT_RES = 40;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_INT_RES__VALUE = EVAL_RES_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Eval Int Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_INT_RES_FEATURE_COUNT = EVAL_RES_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Eval Int Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_INT_RES_OPERATION_COUNT = EVAL_RES_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link boa.impl.EvalBoolResImpl <em>Eval Bool Res</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see boa.impl.EvalBoolResImpl
+	 * @see boa.impl.BoaPackageImpl#getEvalBoolRes()
+	 * @generated
+	 */
+	int EVAL_BOOL_RES = 41;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOOL_RES__VALUE = EVAL_RES_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Eval Bool Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOOL_RES_FEATURE_COUNT = EVAL_RES_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Eval Bool Res</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EVAL_BOOL_RES_OPERATION_COUNT = EVAL_RES_OPERATION_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link boa.File <em>File</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2254,6 +2605,209 @@ public interface BoaPackage extends EPackage {
 	EClass getCmpOpLess();
 
 	/**
+	 * Returns the meta object for class '{@link boa.Ctx <em>Ctx</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ctx</em>'.
+	 * @see boa.Ctx
+	 * @generated
+	 */
+	EClass getCtx();
+
+	/**
+	 * Returns the meta object for the map '{@link boa.Ctx#getEnv <em>Env</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Env</em>'.
+	 * @see boa.Ctx#getEnv()
+	 * @see #getCtx()
+	 * @generated
+	 */
+	EReference getCtx_Env();
+
+	/**
+	 * Returns the meta object for the map '{@link boa.Ctx#getTh <em>Th</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Th</em>'.
+	 * @see boa.Ctx#getTh()
+	 * @see #getCtx()
+	 * @generated
+	 */
+	EReference getCtx_Th();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Eval Res Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Eval Res Map</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueType="boa.EvalRes" valueRequired="true"
+	 * @generated
+	 */
+	EClass getStringToEvalResMap();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToEvalResMap()
+	 * @generated
+	 */
+	EAttribute getStringToEvalResMap_Key();
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToEvalResMap()
+	 * @generated
+	 */
+	EReference getStringToEvalResMap_Value();
+
+	/**
+	 * Returns the meta object for class '{@link boa.EvalRes <em>Eval Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Eval Res</em>'.
+	 * @see boa.EvalRes
+	 * @generated
+	 */
+	EClass getEvalRes();
+
+	/**
+	 * Returns the meta object for class '{@link boa.EvalMapRes <em>Eval Map Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Eval Map Res</em>'.
+	 * @see boa.EvalMapRes
+	 * @generated
+	 */
+	EClass getEvalMapRes();
+
+	/**
+	 * Returns the meta object for the map '{@link boa.EvalMapRes#getValues <em>Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Values</em>'.
+	 * @see boa.EvalMapRes#getValues()
+	 * @see #getEvalMapRes()
+	 * @generated
+	 */
+	EReference getEvalMapRes_Values();
+
+	/**
+	 * Returns the meta object for class '{@link boa.EvalFunRes <em>Eval Fun Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Eval Fun Res</em>'.
+	 * @see boa.EvalFunRes
+	 * @generated
+	 */
+	EClass getEvalFunRes();
+
+	/**
+	 * Returns the meta object for the reference '{@link boa.EvalFunRes#getExp <em>Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Exp</em>'.
+	 * @see boa.EvalFunRes#getExp()
+	 * @see #getEvalFunRes()
+	 * @generated
+	 */
+	EReference getEvalFunRes_Exp();
+
+	/**
+	 * Returns the meta object for the reference '{@link boa.EvalFunRes#getCtx <em>Ctx</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Ctx</em>'.
+	 * @see boa.EvalFunRes#getCtx()
+	 * @see #getEvalFunRes()
+	 * @generated
+	 */
+	EReference getEvalFunRes_Ctx();
+
+	/**
+	 * Returns the meta object for the attribute '{@link boa.EvalFunRes#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see boa.EvalFunRes#getName()
+	 * @see #getEvalFunRes()
+	 * @generated
+	 */
+	EAttribute getEvalFunRes_Name();
+
+	/**
+	 * Returns the meta object for class '{@link boa.EvalBoundFunRes <em>Eval Bound Fun Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Eval Bound Fun Res</em>'.
+	 * @see boa.EvalBoundFunRes
+	 * @generated
+	 */
+	EClass getEvalBoundFunRes();
+
+	/**
+	 * Returns the meta object for the map '{@link boa.EvalBoundFunRes#getTh <em>Th</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Th</em>'.
+	 * @see boa.EvalBoundFunRes#getTh()
+	 * @see #getEvalBoundFunRes()
+	 * @generated
+	 */
+	EReference getEvalBoundFunRes_Th();
+
+	/**
+	 * Returns the meta object for class '{@link boa.EvalIntRes <em>Eval Int Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Eval Int Res</em>'.
+	 * @see boa.EvalIntRes
+	 * @generated
+	 */
+	EClass getEvalIntRes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link boa.EvalIntRes#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see boa.EvalIntRes#getValue()
+	 * @see #getEvalIntRes()
+	 * @generated
+	 */
+	EAttribute getEvalIntRes_Value();
+
+	/**
+	 * Returns the meta object for class '{@link boa.EvalBoolRes <em>Eval Bool Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Eval Bool Res</em>'.
+	 * @see boa.EvalBoolRes
+	 * @generated
+	 */
+	EClass getEvalBoolRes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link boa.EvalBoolRes#isValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see boa.EvalBoolRes#isValue()
+	 * @see #getEvalBoolRes()
+	 * @generated
+	 */
+	EAttribute getEvalBoolRes_Value();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2919,6 +3473,174 @@ public interface BoaPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CMP_OP_LESS = eINSTANCE.getCmpOpLess();
+
+		/**
+		 * The meta object literal for the '{@link boa.impl.CtxImpl <em>Ctx</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see boa.impl.CtxImpl
+		 * @see boa.impl.BoaPackageImpl#getCtx()
+		 * @generated
+		 */
+		EClass CTX = eINSTANCE.getCtx();
+
+		/**
+		 * The meta object literal for the '<em><b>Env</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CTX__ENV = eINSTANCE.getCtx_Env();
+
+		/**
+		 * The meta object literal for the '<em><b>Th</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CTX__TH = eINSTANCE.getCtx_Th();
+
+		/**
+		 * The meta object literal for the '{@link boa.impl.StringToEvalResMapImpl <em>String To Eval Res Map</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see boa.impl.StringToEvalResMapImpl
+		 * @see boa.impl.BoaPackageImpl#getStringToEvalResMap()
+		 * @generated
+		 */
+		EClass STRING_TO_EVAL_RES_MAP = eINSTANCE.getStringToEvalResMap();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_EVAL_RES_MAP__KEY = eINSTANCE.getStringToEvalResMap_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STRING_TO_EVAL_RES_MAP__VALUE = eINSTANCE.getStringToEvalResMap_Value();
+
+		/**
+		 * The meta object literal for the '{@link boa.impl.EvalResImpl <em>Eval Res</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see boa.impl.EvalResImpl
+		 * @see boa.impl.BoaPackageImpl#getEvalRes()
+		 * @generated
+		 */
+		EClass EVAL_RES = eINSTANCE.getEvalRes();
+
+		/**
+		 * The meta object literal for the '{@link boa.impl.EvalMapResImpl <em>Eval Map Res</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see boa.impl.EvalMapResImpl
+		 * @see boa.impl.BoaPackageImpl#getEvalMapRes()
+		 * @generated
+		 */
+		EClass EVAL_MAP_RES = eINSTANCE.getEvalMapRes();
+
+		/**
+		 * The meta object literal for the '<em><b>Values</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EVAL_MAP_RES__VALUES = eINSTANCE.getEvalMapRes_Values();
+
+		/**
+		 * The meta object literal for the '{@link boa.impl.EvalFunResImpl <em>Eval Fun Res</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see boa.impl.EvalFunResImpl
+		 * @see boa.impl.BoaPackageImpl#getEvalFunRes()
+		 * @generated
+		 */
+		EClass EVAL_FUN_RES = eINSTANCE.getEvalFunRes();
+
+		/**
+		 * The meta object literal for the '<em><b>Exp</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EVAL_FUN_RES__EXP = eINSTANCE.getEvalFunRes_Exp();
+
+		/**
+		 * The meta object literal for the '<em><b>Ctx</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EVAL_FUN_RES__CTX = eINSTANCE.getEvalFunRes_Ctx();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVAL_FUN_RES__NAME = eINSTANCE.getEvalFunRes_Name();
+
+		/**
+		 * The meta object literal for the '{@link boa.impl.EvalBoundFunResImpl <em>Eval Bound Fun Res</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see boa.impl.EvalBoundFunResImpl
+		 * @see boa.impl.BoaPackageImpl#getEvalBoundFunRes()
+		 * @generated
+		 */
+		EClass EVAL_BOUND_FUN_RES = eINSTANCE.getEvalBoundFunRes();
+
+		/**
+		 * The meta object literal for the '<em><b>Th</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference EVAL_BOUND_FUN_RES__TH = eINSTANCE.getEvalBoundFunRes_Th();
+
+		/**
+		 * The meta object literal for the '{@link boa.impl.EvalIntResImpl <em>Eval Int Res</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see boa.impl.EvalIntResImpl
+		 * @see boa.impl.BoaPackageImpl#getEvalIntRes()
+		 * @generated
+		 */
+		EClass EVAL_INT_RES = eINSTANCE.getEvalIntRes();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVAL_INT_RES__VALUE = eINSTANCE.getEvalIntRes_Value();
+
+		/**
+		 * The meta object literal for the '{@link boa.impl.EvalBoolResImpl <em>Eval Bool Res</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see boa.impl.EvalBoolResImpl
+		 * @see boa.impl.BoaPackageImpl#getEvalBoolRes()
+		 * @generated
+		 */
+		EClass EVAL_BOOL_RES = eINSTANCE.getEvalBoolRes();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EVAL_BOOL_RES__VALUE = eINSTANCE.getEvalBoolRes_Value();
 
 	}
 

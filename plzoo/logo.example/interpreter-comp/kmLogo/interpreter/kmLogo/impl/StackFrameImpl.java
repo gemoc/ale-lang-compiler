@@ -50,7 +50,7 @@ public class StackFrameImpl extends MinimalEObjectImpl.Container implements Stac
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.STACK_FRAME__VARIABLES:
-    	return getVariables();
+    return getVariables();
     }
     return super.eGet(featureID, resolve, coreType);
   }

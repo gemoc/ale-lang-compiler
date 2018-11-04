@@ -10,8 +10,6 @@ Automatic-Module-Name: boa.lang
 Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: boa.interpreter.boa,
  boa.interpreter.boa.impl,
- boa_dynamic.interpreter.boa_dynamic,
- boa_dynamic.interpreter.boa_dynamic.impl,
  boa_exec.impl,
  boa_exec.impl.operation,
  boa_exec.impl.operation.impl
@@ -20,5 +18,6 @@ Require-Bundle: boa.model;bundle-version="1.0.0";visibility:=reexport,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,
- org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0"
+ org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0",
+ boa.lang.services;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy

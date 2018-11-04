@@ -1,0 +1,26 @@
+behavior print; 
+
+open class Yolo {
+	
+	
+	
+	/* 
+	def String pouet() {
+		Sequence(String) events := Sequence{'e1', 'e2'};
+		result := 'pouet';
+	}
+	*/
+	def Yolo pouet() {
+		result := self;
+	}
+	
+	
+	def void log() {
+		
+	}
+	
+	@main
+	def void entryPoint() {
+		self.pouet().log();
+	}
+}

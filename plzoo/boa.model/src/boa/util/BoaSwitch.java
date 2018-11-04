@@ -4,6 +4,7 @@ package boa.util;
 
 import boa.*;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -337,6 +338,60 @@ public class BoaSwitch<T> extends Switch<T> {
 				if (result == null) result = caseCmpOp(cmpOpLess);
 				if (result == null) result = caseExpr(cmpOpLess);
 				if (result == null) result = caseTopLevelCmd(cmpOpLess);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BoaPackage.CTX: {
+				Ctx ctx = (Ctx)theEObject;
+				T result = caseCtx(ctx);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BoaPackage.STRING_TO_EVAL_RES_MAP: {
+				@SuppressWarnings("unchecked") Map.Entry<String, EvalRes> stringToEvalResMap = (Map.Entry<String, EvalRes>)theEObject;
+				T result = caseStringToEvalResMap(stringToEvalResMap);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BoaPackage.EVAL_RES: {
+				EvalRes evalRes = (EvalRes)theEObject;
+				T result = caseEvalRes(evalRes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BoaPackage.EVAL_MAP_RES: {
+				EvalMapRes evalMapRes = (EvalMapRes)theEObject;
+				T result = caseEvalMapRes(evalMapRes);
+				if (result == null) result = caseEvalRes(evalMapRes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BoaPackage.EVAL_FUN_RES: {
+				EvalFunRes evalFunRes = (EvalFunRes)theEObject;
+				T result = caseEvalFunRes(evalFunRes);
+				if (result == null) result = caseEvalRes(evalFunRes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BoaPackage.EVAL_BOUND_FUN_RES: {
+				EvalBoundFunRes evalBoundFunRes = (EvalBoundFunRes)theEObject;
+				T result = caseEvalBoundFunRes(evalBoundFunRes);
+				if (result == null) result = caseEvalFunRes(evalBoundFunRes);
+				if (result == null) result = caseEvalRes(evalBoundFunRes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BoaPackage.EVAL_INT_RES: {
+				EvalIntRes evalIntRes = (EvalIntRes)theEObject;
+				T result = caseEvalIntRes(evalIntRes);
+				if (result == null) result = caseEvalRes(evalIntRes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case BoaPackage.EVAL_BOOL_RES: {
+				EvalBoolRes evalBoolRes = (EvalBoolRes)theEObject;
+				T result = caseEvalBoolRes(evalBoolRes);
+				if (result == null) result = caseEvalRes(evalBoolRes);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -851,6 +906,126 @@ public class BoaSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCmpOpLess(CmpOpLess object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Ctx</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Ctx</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCtx(Ctx object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Eval Res Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Eval Res Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToEvalResMap(Map.Entry<String, EvalRes> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Eval Res</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Eval Res</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEvalRes(EvalRes object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Eval Map Res</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Eval Map Res</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEvalMapRes(EvalMapRes object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Eval Fun Res</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Eval Fun Res</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEvalFunRes(EvalFunRes object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Eval Bound Fun Res</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Eval Bound Fun Res</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEvalBoundFunRes(EvalBoundFunRes object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Eval Int Res</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Eval Int Res</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEvalIntRes(EvalIntRes object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Eval Bool Res</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Eval Bool Res</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEvalBoolRes(EvalBoolRes object) {
 		return null;
 	}
 

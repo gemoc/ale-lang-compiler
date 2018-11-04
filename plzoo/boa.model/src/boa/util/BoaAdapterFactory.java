@@ -4,6 +4,7 @@ package boa.util;
 
 import boa.*;
 
+import java.util.Map;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -202,6 +203,38 @@ public class BoaAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCmpOpLess(CmpOpLess object) {
 				return createCmpOpLessAdapter();
+			}
+			@Override
+			public Adapter caseCtx(Ctx object) {
+				return createCtxAdapter();
+			}
+			@Override
+			public Adapter caseStringToEvalResMap(Map.Entry<String, EvalRes> object) {
+				return createStringToEvalResMapAdapter();
+			}
+			@Override
+			public Adapter caseEvalRes(EvalRes object) {
+				return createEvalResAdapter();
+			}
+			@Override
+			public Adapter caseEvalMapRes(EvalMapRes object) {
+				return createEvalMapResAdapter();
+			}
+			@Override
+			public Adapter caseEvalFunRes(EvalFunRes object) {
+				return createEvalFunResAdapter();
+			}
+			@Override
+			public Adapter caseEvalBoundFunRes(EvalBoundFunRes object) {
+				return createEvalBoundFunResAdapter();
+			}
+			@Override
+			public Adapter caseEvalIntRes(EvalIntRes object) {
+				return createEvalIntResAdapter();
+			}
+			@Override
+			public Adapter caseEvalBoolRes(EvalBoolRes object) {
+				return createEvalBoolResAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -696,6 +729,118 @@ public class BoaAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCmpOpLessAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link boa.Ctx <em>Ctx</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see boa.Ctx
+	 * @generated
+	 */
+	public Adapter createCtxAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Eval Res Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToEvalResMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link boa.EvalRes <em>Eval Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see boa.EvalRes
+	 * @generated
+	 */
+	public Adapter createEvalResAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link boa.EvalMapRes <em>Eval Map Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see boa.EvalMapRes
+	 * @generated
+	 */
+	public Adapter createEvalMapResAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link boa.EvalFunRes <em>Eval Fun Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see boa.EvalFunRes
+	 * @generated
+	 */
+	public Adapter createEvalFunResAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link boa.EvalBoundFunRes <em>Eval Bound Fun Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see boa.EvalBoundFunRes
+	 * @generated
+	 */
+	public Adapter createEvalBoundFunResAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link boa.EvalIntRes <em>Eval Int Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see boa.EvalIntRes
+	 * @generated
+	 */
+	public Adapter createEvalIntResAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link boa.EvalBoolRes <em>Eval Bool Res</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see boa.EvalBoolRes
+	 * @generated
+	 */
+	public Adapter createEvalBoolResAdapter() {
 		return null;
 	}
 

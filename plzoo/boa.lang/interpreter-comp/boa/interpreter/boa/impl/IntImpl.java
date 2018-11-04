@@ -1,10 +1,11 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalIntRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Int;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalIntRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -25,9 +26,11 @@ public class IntImpl extends ExprImpl implements Int {
   public void setValue(int value) {
     this.value = value;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.INT;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.INT__VALUE:
@@ -37,6 +40,7 @@ public class IntImpl extends ExprImpl implements Int {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.INT__VALUE:
@@ -46,6 +50,7 @@ public class IntImpl extends ExprImpl implements Int {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.INT__VALUE:
@@ -54,6 +59,7 @@ public class IntImpl extends ExprImpl implements Int {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.INT__VALUE:
@@ -62,6 +68,7 @@ public class IntImpl extends ExprImpl implements Int {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -71,7 +78,7 @@ public class IntImpl extends ExprImpl implements Int {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalIntRes ret = ((EvalIntRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalIntRes());
+    EvalIntRes ret = ((EvalIntRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalIntRes());
     ret.setValue(this.getValue());
     result = ret;
     return result;

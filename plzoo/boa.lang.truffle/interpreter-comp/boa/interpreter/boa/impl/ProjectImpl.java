@@ -1,13 +1,13 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalBoundFunRes;
+import boa.interpreter.boa.EvalFunRes;
+import boa.interpreter.boa.EvalMapRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Project;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalBoundFunRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalFunRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalMapRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -125,11 +125,11 @@ public class ProjectImpl extends ExprImpl implements Project {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     EvalRes vexp = ((EvalRes)this.getExp().eval(ctx));
-    if(vexp instanceof boa_dynamic.interpreter.boa_dynamic.EvalMapRes) {
+    if(vexp instanceof boa.interpreter.boa.EvalMapRes) {
       EvalMapRes mvexp = ((EvalMapRes)vexp);
       if(execboa.MapService.containsKey(mvexp.getValues(), this.getName())) {
         EvalRes x = ((EvalRes)mvexp.getValues().get(this.getName()));
-        if(x instanceof boa_dynamic.interpreter.boa_dynamic.EvalFunRes) {
+        if(x instanceof boa.interpreter.boa.EvalFunRes) {
           EvalFunRes func = ((EvalFunRes)x);
           result = this.project(func,mvexp);
         }
@@ -149,7 +149,7 @@ public class ProjectImpl extends ExprImpl implements Project {
 
   public EvalRes project(EvalFunRes func, EvalMapRes mvexp) {
     EvalRes result;
-    EvalBoundFunRes ret = ((EvalBoundFunRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalBoundFunRes());
+    EvalBoundFunRes ret = ((EvalBoundFunRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
     ret.setExp(func.getExp());
     ret.setCtx(func.getCtx());
     ret.setName(func.getName());

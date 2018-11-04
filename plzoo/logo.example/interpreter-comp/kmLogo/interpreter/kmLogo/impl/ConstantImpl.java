@@ -47,7 +47,7 @@ public class ConstantImpl extends ExpressionImpl implements Constant {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.CONSTANT__VALUE:
-    	return getValue();
+    return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }

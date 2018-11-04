@@ -1,11 +1,12 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalFunRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Fun;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalFunRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
@@ -31,6 +32,7 @@ public class FunImpl extends ExprImpl implements Fun {
   public void setName(String name) {
     this.name = name;}
 
+  @TruffleBoundary
   public void setBody(Expr newBody) {
     if (newBody != body) {
     	NotificationChain msgs = null;
@@ -45,6 +47,7 @@ public class FunImpl extends ExprImpl implements Fun {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.FUN__BODY, newBody, newBody));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetBody(Expr newBody, NotificationChain msgs) {
     Expr oldBody = body;
     body = newBody;
@@ -55,12 +58,15 @@ public class FunImpl extends ExprImpl implements Fun {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getBody() {
     return body;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.FUN;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.FUN__NAME:
@@ -73,6 +79,7 @@ public class FunImpl extends ExprImpl implements Fun {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.FUN__NAME:
@@ -85,6 +92,7 @@ public class FunImpl extends ExprImpl implements Fun {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.FUN__NAME:
@@ -95,6 +103,7 @@ public class FunImpl extends ExprImpl implements Fun {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.FUN__NAME:
@@ -105,6 +114,7 @@ public class FunImpl extends ExprImpl implements Fun {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -116,7 +126,7 @@ public class FunImpl extends ExprImpl implements Fun {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalFunRes ret = ((EvalFunRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalFunRes());
+    EvalFunRes ret = ((EvalFunRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalFunRes());
     ret.setExp(this.getBody());
     ret.setCtx(ctx);
     ret.setName(this.getName());

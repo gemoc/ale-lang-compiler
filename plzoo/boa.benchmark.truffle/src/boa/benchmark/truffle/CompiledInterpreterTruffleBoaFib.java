@@ -10,12 +10,12 @@ public class CompiledInterpreterTruffleBoaFib {
 
 		final int SIZE = 2000;
 		final long[] times = new long[SIZE];
+		Context context = Context.create();
 		for (int i = 0; i < SIZE; i++) {
-			Context context = Context.create();
-			Value eval = context.eval("boa", String.valueOf(i));
+			Value eval = context.eval("boa", String.valueOf(0));
 			times[i] = eval.asLong();
-			context.close();
 		}
+		context.close();
 
 		System.out.println(Arrays.toString(times));
 	}

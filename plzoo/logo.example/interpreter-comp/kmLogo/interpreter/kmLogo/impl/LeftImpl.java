@@ -69,7 +69,7 @@ public class LeftImpl extends PrimitiveImpl implements Left {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.LEFT__ANGLE:
-    	return getAngle();
+    return getAngle();
     }
     return super.eGet(featureID, resolve, coreType);
   }

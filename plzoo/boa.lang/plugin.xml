@@ -6,14 +6,6 @@
 
 <plugin>
 
-  <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated boa_dynamic -->
-      <package
-            uri="http://boa_dynamic.boa_dynamic.boa_dynamic/"
-            class="boa_dynamic.interpreter.boa_dynamic.Boa_dynamicPackage"
-            genModel="interpreter-comp/boa_dynamic.genmodel"/>
-   </extension>
-
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated boa -->
       <package

@@ -1,10 +1,10 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalMapRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.This;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalMapRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -55,7 +55,7 @@ public class ThisImpl extends ExprImpl implements This {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalMapRes ret = ((EvalMapRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalMapRes());
+    EvalMapRes ret = ((EvalMapRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalMapRes());
     execboa.MapService.putAll(ret.getValues(), ctx.getTh());
     result = ret;
     return result;

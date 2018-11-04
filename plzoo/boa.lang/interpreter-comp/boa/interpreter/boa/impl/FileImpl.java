@@ -1,9 +1,10 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.File;
 import boa.interpreter.boa.TopLevelCmd;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -19,6 +20,7 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
     super();
   }
 
+  @TruffleBoundary
   public EList<TopLevelCmd> getCommands() {
     if(commands == null) {
     	commands = new EObjectContainmentEList<TopLevelCmd>(boa.interpreter.boa.TopLevelCmd.class, this, BoaPackage.FILE__COMMANDS);
@@ -26,9 +28,11 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
     return commands;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.FILE;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.FILE__COMMANDS:
@@ -39,6 +43,7 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.FILE__COMMANDS:
@@ -48,6 +53,7 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.FILE__COMMANDS:
@@ -56,6 +62,7 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.FILE__COMMANDS:
@@ -64,6 +71,7 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -74,7 +82,7 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
   }
 
   public void eval() {
-    Ctx ctx = ((Ctx)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createCtx());
+    Ctx ctx = ((Ctx)boa.interpreter.boa.BoaFactory.eINSTANCE.createCtx());
     for(TopLevelCmd it: this.getCommands()) {
       it.nextLine(ctx);
     }

@@ -1,9 +1,6 @@
 package boa_exec.impl.operation.impl;
 
 import boa.revisitor.BoaRevisitor;
-import boa_dynamic.Ctx;
-import boa_dynamic.EvalIntRes;
-import boa_dynamic.EvalRes;
 import boa_exec.impl.operation.App;
 import boa_exec.impl.operation.ArithOp;
 import boa_exec.impl.operation.ArithOpDivide;
@@ -22,7 +19,14 @@ import boa_exec.impl.operation.CmpOpEqual;
 import boa_exec.impl.operation.CmpOpLess;
 import boa_exec.impl.operation.CmpOpUnequal;
 import boa_exec.impl.operation.Copy;
+import boa_exec.impl.operation.Ctx;
 import boa_exec.impl.operation.Def;
+import boa_exec.impl.operation.EvalBoolRes;
+import boa_exec.impl.operation.EvalBoundFunRes;
+import boa_exec.impl.operation.EvalFunRes;
+import boa_exec.impl.operation.EvalIntRes;
+import boa_exec.impl.operation.EvalMapRes;
+import boa_exec.impl.operation.EvalRes;
 import boa_exec.impl.operation.Expr;
 import boa_exec.impl.operation.Field;
 import boa_exec.impl.operation.File;
@@ -34,32 +38,33 @@ import boa_exec.impl.operation.Not;
 import boa_exec.impl.operation.Project;
 import boa_exec.impl.operation.Seq;
 import boa_exec.impl.operation.Skip;
+import boa_exec.impl.operation.StringToEvalResMap;
 import boa_exec.impl.operation.This;
 import boa_exec.impl.operation.TopLevelCmd;
 import boa_exec.impl.operation.Var;
 import boa_exec.impl.operation.With;
 
 public class ArithOpRemainderImpl extends ArithOpImpl implements ArithOpRemainder {
-  private BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> rev;
+  private BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> rev;
 
   private boa.ArithOpRemainder obj;
 
   public ArithOpRemainderImpl(boa.ArithOpRemainder obj,
-      BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> rev) {
+      BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> rev) {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
   }
 
-  public EvalRes eval(Ctx ctx) {
-    EvalRes result;
-    EvalRes vlhs = ((EvalRes)rev.$(this.obj.getLhs()).eval(ctx));
-    EvalRes vrhs = ((EvalRes)rev.$(this.obj.getRhs()).eval(ctx));
-    if(vlhs instanceof boa_dynamic.EvalIntRes) {
-      if(vrhs instanceof boa_dynamic.EvalIntRes) {
-        EvalIntRes ivlhs = ((EvalIntRes)vlhs);
-        EvalIntRes ivrhs = ((EvalIntRes)vrhs);
-        EvalIntRes ret = ((EvalIntRes)boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalIntRes());
+  public boa.EvalRes eval(boa.Ctx ctx) {
+    boa.EvalRes result;
+    boa.EvalRes vlhs = ((boa.EvalRes)rev.$(this.obj.getLhs()).eval(ctx));
+    boa.EvalRes vrhs = ((boa.EvalRes)rev.$(this.obj.getRhs()).eval(ctx));
+    if(vlhs instanceof boa.EvalIntRes) {
+      if(vrhs instanceof boa.EvalIntRes) {
+        boa.EvalIntRes ivlhs = ((boa.EvalIntRes)vlhs);
+        boa.EvalIntRes ivrhs = ((boa.EvalIntRes)vrhs);
+        boa.EvalIntRes ret = ((boa.EvalIntRes)boa.BoaFactory.eINSTANCE.createEvalIntRes());
         ret.setValue(execboa.MathService.mod(this.obj, ivlhs.getValue(), ivrhs.getValue()));
         result = ret;
       }

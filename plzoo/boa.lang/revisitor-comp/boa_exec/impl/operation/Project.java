@@ -1,9 +1,9 @@
 package boa_exec.impl.operation;
 
-import boa_dynamic.Ctx;
-import boa_dynamic.EvalFunRes;
-import boa_dynamic.EvalMapRes;
-import boa_dynamic.EvalRes;
+import boa.Ctx;
+import boa.EvalFunRes;
+import boa.EvalMapRes;
+import boa.EvalRes;
 
 public interface Project extends Expr {
   EvalRes eval(Ctx ctx);

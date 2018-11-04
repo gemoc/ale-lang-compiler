@@ -1,9 +1,6 @@
 package boa_exec.impl.operation.impl;
 
 import boa.revisitor.BoaRevisitor;
-import boa_dynamic.Ctx;
-import boa_dynamic.EvalMapRes;
-import boa_dynamic.EvalRes;
 import boa_exec.impl.operation.App;
 import boa_exec.impl.operation.ArithOp;
 import boa_exec.impl.operation.ArithOpDivide;
@@ -22,7 +19,14 @@ import boa_exec.impl.operation.CmpOpEqual;
 import boa_exec.impl.operation.CmpOpLess;
 import boa_exec.impl.operation.CmpOpUnequal;
 import boa_exec.impl.operation.Copy;
+import boa_exec.impl.operation.Ctx;
 import boa_exec.impl.operation.Def;
+import boa_exec.impl.operation.EvalBoolRes;
+import boa_exec.impl.operation.EvalBoundFunRes;
+import boa_exec.impl.operation.EvalFunRes;
+import boa_exec.impl.operation.EvalIntRes;
+import boa_exec.impl.operation.EvalMapRes;
+import boa_exec.impl.operation.EvalRes;
 import boa_exec.impl.operation.Expr;
 import boa_exec.impl.operation.Field;
 import boa_exec.impl.operation.File;
@@ -34,29 +38,30 @@ import boa_exec.impl.operation.Not;
 import boa_exec.impl.operation.Project;
 import boa_exec.impl.operation.Seq;
 import boa_exec.impl.operation.Skip;
+import boa_exec.impl.operation.StringToEvalResMap;
 import boa_exec.impl.operation.This;
 import boa_exec.impl.operation.TopLevelCmd;
 import boa_exec.impl.operation.Var;
 import boa_exec.impl.operation.With;
 
 public class CopyImpl extends ExprImpl implements Copy {
-  private BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> rev;
+  private BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> rev;
 
   private boa.Copy obj;
 
   public CopyImpl(boa.Copy obj,
-      BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> rev) {
+      BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> rev) {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
   }
 
-  public EvalRes eval(Ctx ctx) {
-    EvalRes result;
-    EvalRes vcopy = ((EvalRes)rev.$(this.obj.getCopy()).eval(ctx));
-    if(vcopy instanceof boa_dynamic.EvalMapRes) {
-      EvalMapRes mvcopy = ((EvalMapRes)vcopy);
-      EvalMapRes ret = ((EvalMapRes)boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalMapRes());
+  public boa.EvalRes eval(boa.Ctx ctx) {
+    boa.EvalRes result;
+    boa.EvalRes vcopy = ((boa.EvalRes)rev.$(this.obj.getCopy()).eval(ctx));
+    if(vcopy instanceof boa.EvalMapRes) {
+      boa.EvalMapRes mvcopy = ((boa.EvalMapRes)vcopy);
+      boa.EvalMapRes ret = ((boa.EvalMapRes)boa.BoaFactory.eINSTANCE.createEvalMapRes());
       execboa.MapService.putAll(ret.getValues(), mvcopy.getValues());
       result = ret;
     }

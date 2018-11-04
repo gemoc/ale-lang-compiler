@@ -1,15 +1,15 @@
 package fr.mleduc.lang.boa.test;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import org.junit.Assert;
 
@@ -30,12 +30,17 @@ public class CompilerInterpreterXmiTest extends AbstractBoaTest {
 
 		// TODO: replace with loading of XMI from program_xmi. Or from program if their
 		// is a way to change the factory used at runtime.
+		
+		Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+	    Map<String, Object> m = reg.getExtensionToFactoryMap();
+	    m.put("xmi", new XMIResourceFactoryImpl());
 
 		final ResourceSetImpl resSet = new ResourceSetImpl();
-		final java.io.File file = new java.io.File("xmi_interpreter/" + pathname + ".boa.xmi");
-		final InputStream stream = new FileInputStream(file);
-		final Resource resource = resSet.createResource(URI.createURI("dummy:/example.xmi"));
-		resource.load(stream, resSet.getLoadOptions());
+//		final java.io.File file = new java.io.File();
+//		final InputStream stream = new FileInputStream(file);
+		URI createFileURI = URI.createFileURI("/home/manuel/runtime-ale-lang/boa.revisitor.test/xmi_interpreter/" + pathname + ".boa.xmi");
+		final Resource resource = resSet.getResource(createFileURI, true);
+//		resource.load(stream, resSet.getLoadOptions());
 		final File result = (File) resource.getContents().get(0);
 
 		Assert.assertNotNull(result);

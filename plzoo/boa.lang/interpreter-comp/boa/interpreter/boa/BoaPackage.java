@@ -84,6 +84,22 @@ public interface BoaPackage extends EPackage {
 
   int CMP_OP_LESS = 33;
 
+  int CTX = 34;
+
+  int STRING_TO_EVAL_RES_MAP = 35;
+
+  int EVAL_RES = 36;
+
+  int EVAL_MAP_RES = 37;
+
+  int EVAL_FUN_RES = 38;
+
+  int EVAL_BOUND_FUN_RES = 39;
+
+  int EVAL_INT_RES = 40;
+
+  int EVAL_BOOL_RES = 41;
+
   int FILE__COMMANDS = 0;
 
   int DEF__NAME = 0;
@@ -160,6 +176,28 @@ public interface BoaPackage extends EPackage {
 
   int SEQ__RHS = 1;
 
+  int CTX__ENV = 0;
+
+  int CTX__TH = 1;
+
+  int STRING_TO_EVAL_RES_MAP__KEY = 0;
+
+  int STRING_TO_EVAL_RES_MAP__VALUE = 1;
+
+  int EVAL_MAP_RES__VALUES = 0;
+
+  int EVAL_FUN_RES__EXP = 0;
+
+  int EVAL_FUN_RES__CTX = 1;
+
+  int EVAL_FUN_RES__NAME = 2;
+
+  int EVAL_BOUND_FUN_RES__TH = 3;
+
+  int EVAL_INT_RES__VALUE = 0;
+
+  int EVAL_BOOL_RES__VALUE = 0;
+
   EClass getFile();
 
   EClass getTopLevelCmd();
@@ -228,6 +266,22 @@ public interface BoaPackage extends EPackage {
 
   EClass getCmpOpLess();
 
+  EClass getCtx();
+
+  EClass getStringToEvalResMap();
+
+  EClass getEvalRes();
+
+  EClass getEvalMapRes();
+
+  EClass getEvalFunRes();
+
+  EClass getEvalBoundFunRes();
+
+  EClass getEvalIntRes();
+
+  EClass getEvalBoolRes();
+
   EReference getFile_Commands();
 
   EReference getDef_Expr();
@@ -286,6 +340,20 @@ public interface BoaPackage extends EPackage {
 
   EReference getSeq_Rhs();
 
+  EReference getCtx_Env();
+
+  EReference getCtx_Th();
+
+  EReference getString_to_eval_res_map_Value();
+
+  EReference getEval_map_res_Values();
+
+  EReference getEval_fun_res_Exp();
+
+  EReference getEval_fun_res_Ctx();
+
+  EReference getEval_bound_fun_res_Th();
+
   EAttribute getDef_Name();
 
   EAttribute getVar_Name();
@@ -303,6 +371,14 @@ public interface BoaPackage extends EPackage {
   EAttribute getFun_Name();
 
   EAttribute getAssign_Name();
+
+  EAttribute getString_to_eval_res_map_Key();
+
+  EAttribute getEval_fun_res_Name();
+
+  EAttribute getEval_int_res_Value();
+
+  EAttribute getEval_bool_res_Value();
 
   BoaFactory getBoaFactory();
 
@@ -375,6 +451,22 @@ public interface BoaPackage extends EPackage {
 
     EClass CMP_OP_LESS = eINSTANCE.getCmpOpLess();
 
+    EClass CTX = eINSTANCE.getCtx();
+
+    EClass STRING_TO_EVAL_RES_MAP = eINSTANCE.getStringToEvalResMap();
+
+    EClass EVAL_RES = eINSTANCE.getEvalRes();
+
+    EClass EVAL_MAP_RES = eINSTANCE.getEvalMapRes();
+
+    EClass EVAL_FUN_RES = eINSTANCE.getEvalFunRes();
+
+    EClass EVAL_BOUND_FUN_RES = eINSTANCE.getEvalBoundFunRes();
+
+    EClass EVAL_INT_RES = eINSTANCE.getEvalIntRes();
+
+    EClass EVAL_BOOL_RES = eINSTANCE.getEvalBoolRes();
+
     EReference FILE__COMMANDS = eINSTANCE.getFile_Commands();
 
     EReference DEF__EXPR = eINSTANCE.getDef_Expr();
@@ -433,6 +525,20 @@ public interface BoaPackage extends EPackage {
 
     EReference SEQ__RHS = eINSTANCE.getSeq_Rhs();
 
+    EReference CTX__ENV = eINSTANCE.getCtx_Env();
+
+    EReference CTX__TH = eINSTANCE.getCtx_Th();
+
+    EReference STRING_TO_EVAL_RES_MAP__VALUE = eINSTANCE.getString_to_eval_res_map_Value();
+
+    EReference EVAL_MAP_RES__VALUES = eINSTANCE.getEval_map_res_Values();
+
+    EReference EVAL_FUN_RES__EXP = eINSTANCE.getEval_fun_res_Exp();
+
+    EReference EVAL_FUN_RES__CTX = eINSTANCE.getEval_fun_res_Ctx();
+
+    EReference EVAL_BOUND_FUN_RES__TH = eINSTANCE.getEval_bound_fun_res_Th();
+
     EAttribute DEF__NAME = eINSTANCE.getDef_Name();
 
     EAttribute VAR__NAME = eINSTANCE.getVar_Name();
@@ -450,5 +556,13 @@ public interface BoaPackage extends EPackage {
     EAttribute FUN__NAME = eINSTANCE.getFun_Name();
 
     EAttribute ASSIGN__NAME = eINSTANCE.getAssign_Name();
+
+    EAttribute STRING_TO_EVAL_RES_MAP__KEY = eINSTANCE.getString_to_eval_res_map_Key();
+
+    EAttribute EVAL_FUN_RES__NAME = eINSTANCE.getEval_fun_res_Name();
+
+    EAttribute EVAL_INT_RES__VALUE = eINSTANCE.getEval_int_res_Value();
+
+    EAttribute EVAL_BOOL_RES__VALUE = eINSTANCE.getEval_bool_res_Value();
   }
 }

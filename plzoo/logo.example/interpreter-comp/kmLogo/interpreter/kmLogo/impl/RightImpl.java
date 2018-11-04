@@ -69,7 +69,7 @@ public class RightImpl extends PrimitiveImpl implements Right {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.RIGHT__ANGLE:
-    	return getAngle();
+    return getAngle();
     }
     return super.eGet(featureID, resolve, coreType);
   }

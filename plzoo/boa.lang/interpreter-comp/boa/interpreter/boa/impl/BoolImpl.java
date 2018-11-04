@@ -2,9 +2,10 @@ package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Bool;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalBoolRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalBoolRes;
+import boa.interpreter.boa.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -25,9 +26,11 @@ public class BoolImpl extends ExprImpl implements Bool {
   public void setValue(boolean value) {
     this.value = value;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.BOOL;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.BOOL__VALUE:
@@ -37,6 +40,7 @@ public class BoolImpl extends ExprImpl implements Bool {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.BOOL__VALUE:
@@ -46,6 +50,7 @@ public class BoolImpl extends ExprImpl implements Bool {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.BOOL__VALUE:
@@ -54,6 +59,7 @@ public class BoolImpl extends ExprImpl implements Bool {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.BOOL__VALUE:
@@ -62,6 +68,7 @@ public class BoolImpl extends ExprImpl implements Bool {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -71,7 +78,7 @@ public class BoolImpl extends ExprImpl implements Bool {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalBoolRes ret = ((EvalBoolRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalBoolRes());
+    EvalBoolRes ret = ((EvalBoolRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoolRes());
     ret.setValue(this.isValue());
     result = ret;
     return result;

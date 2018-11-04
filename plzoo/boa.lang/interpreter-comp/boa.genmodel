@@ -98,5 +98,31 @@
     <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//CmpOpEqual"/>
     <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//CmpOpUnequal"/>
     <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//CmpOpLess"/>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Ctx">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Ctx/env"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Ctx/th"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//StringToEvalResMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//StringToEvalResMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//StringToEvalResMap/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalRes"/>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalMapRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//EvalMapRes/values"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalFunRes">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//EvalFunRes/exp"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//EvalFunRes/ctx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//EvalFunRes/name"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalBoundFunRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//EvalBoundFunRes/th"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalIntRes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//EvalIntRes/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalBoolRes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//EvalBoolRes/value"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

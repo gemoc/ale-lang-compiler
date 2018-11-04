@@ -1,22 +1,23 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.File;
 import boa.interpreter.boa.TopLevelCmd;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl.TruffleContainer;
 
 @NodeInfo(
     description = "File"
 )
-public class FileImpl extends MinimalEObjectImpl.Container implements File {
+public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements File {
   protected EList<TopLevelCmd> commands;
 
   protected FileImpl() {
@@ -78,7 +79,7 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
   }
 
   public void eval() {
-    Ctx ctx = ((Ctx)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createCtx());
+    Ctx ctx = ((Ctx)boa.interpreter.boa.BoaFactory.eINSTANCE.createCtx());
     for(TopLevelCmd it: this.getCommands()) {
       it.nextLine(ctx);
     }

@@ -1,6 +1,6 @@
 package boa.revisitor;
 
-public interface BoaRevisitor<Boa__AppT extends Boa__ExprT, Boa__ArithOpT extends Boa__ExprT, Boa__ArithOpDivideT extends Boa__ArithOpT, Boa__ArithOpMinusT extends Boa__ArithOpT, Boa__ArithOpPlusT extends Boa__ArithOpT, Boa__ArithOpRemainderT extends Boa__ArithOpT, Boa__ArithOpTimesT extends Boa__ArithOpT, Boa__AssignT extends Boa__ExprT, Boa__BObjectT extends Boa__ExprT, Boa__BoolT extends Boa__ExprT, Boa__BoolOpT extends Boa__ExprT, Boa__BoolOpAndT extends Boa__BoolOpT, Boa__BoolOpOrT extends Boa__BoolOpT, Boa__CmpOpT extends Boa__ExprT, Boa__CmpOpEqualT extends Boa__CmpOpT, Boa__CmpOpLessT extends Boa__CmpOpT, Boa__CmpOpUnequalT extends Boa__CmpOpT, Boa__CopyT extends Boa__ExprT, Boa__DefT extends Boa__TopLevelCmdT, Boa__ExprT extends Boa__TopLevelCmdT, Boa__FieldT, Boa__FileT, Boa__FunT extends Boa__ExprT, Boa__IfT extends Boa__ExprT, Boa__IntT extends Boa__ExprT, Boa__LetT extends Boa__ExprT, Boa__NotT extends Boa__ExprT, Boa__ProjectT extends Boa__ExprT, Boa__SeqT extends Boa__ExprT, Boa__SkipT extends Boa__ExprT, Boa__ThisT extends Boa__ExprT, Boa__TopLevelCmdT, Boa__VarT extends Boa__ExprT, Boa__WithT extends Boa__ExprT> {
+public interface BoaRevisitor<Boa__AppT extends Boa__ExprT, Boa__ArithOpT extends Boa__ExprT, Boa__ArithOpDivideT extends Boa__ArithOpT, Boa__ArithOpMinusT extends Boa__ArithOpT, Boa__ArithOpPlusT extends Boa__ArithOpT, Boa__ArithOpRemainderT extends Boa__ArithOpT, Boa__ArithOpTimesT extends Boa__ArithOpT, Boa__AssignT extends Boa__ExprT, Boa__BObjectT extends Boa__ExprT, Boa__BoolT extends Boa__ExprT, Boa__BoolOpT extends Boa__ExprT, Boa__BoolOpAndT extends Boa__BoolOpT, Boa__BoolOpOrT extends Boa__BoolOpT, Boa__CmpOpT extends Boa__ExprT, Boa__CmpOpEqualT extends Boa__CmpOpT, Boa__CmpOpLessT extends Boa__CmpOpT, Boa__CmpOpUnequalT extends Boa__CmpOpT, Boa__CopyT extends Boa__ExprT, Boa__CtxT, Boa__DefT extends Boa__TopLevelCmdT, Boa__EvalBoolResT extends Boa__EvalResT, Boa__EvalBoundFunResT extends Boa__EvalFunResT, Boa__EvalFunResT extends Boa__EvalResT, Boa__EvalIntResT extends Boa__EvalResT, Boa__EvalMapResT extends Boa__EvalResT, Boa__EvalResT, Boa__ExprT extends Boa__TopLevelCmdT, Boa__FieldT, Boa__FileT, Boa__FunT extends Boa__ExprT, Boa__IfT extends Boa__ExprT, Boa__IntT extends Boa__ExprT, Boa__LetT extends Boa__ExprT, Boa__NotT extends Boa__ExprT, Boa__ProjectT extends Boa__ExprT, Boa__SeqT extends Boa__ExprT, Boa__SkipT extends Boa__ExprT, Boa__StringToEvalResMapT, Boa__ThisT extends Boa__ExprT, Boa__TopLevelCmdT, Boa__VarT extends Boa__ExprT, Boa__WithT extends Boa__ExprT> {
 	Boa__AppT boa__App(final boa.App it);
 	Boa__ArithOpDivideT boa__ArithOpDivide(final boa.ArithOpDivide it);
 	Boa__ArithOpMinusT boa__ArithOpMinus(final boa.ArithOpMinus it);
@@ -16,7 +16,13 @@ public interface BoaRevisitor<Boa__AppT extends Boa__ExprT, Boa__ArithOpT extend
 	Boa__CmpOpLessT boa__CmpOpLess(final boa.CmpOpLess it);
 	Boa__CmpOpUnequalT boa__CmpOpUnequal(final boa.CmpOpUnequal it);
 	Boa__CopyT boa__Copy(final boa.Copy it);
+	Boa__CtxT boa__Ctx(final boa.Ctx it);
 	Boa__DefT boa__Def(final boa.Def it);
+	Boa__EvalBoolResT boa__EvalBoolRes(final boa.EvalBoolRes it);
+	Boa__EvalBoundFunResT boa__EvalBoundFunRes(final boa.EvalBoundFunRes it);
+	Boa__EvalFunResT boa__EvalFunRes(final boa.EvalFunRes it);
+	Boa__EvalIntResT boa__EvalIntRes(final boa.EvalIntRes it);
+	Boa__EvalMapResT boa__EvalMapRes(final boa.EvalMapRes it);
 	Boa__FieldT boa__Field(final boa.Field it);
 	Boa__FileT boa__File(final boa.File it);
 	Boa__FunT boa__Fun(final boa.Fun it);
@@ -105,8 +111,41 @@ public interface BoaRevisitor<Boa__AppT extends Boa__ExprT, Boa__ArithOpT extend
 	default Boa__CopyT $(final boa.Copy it) {
 		return boa__Copy(it);
 	}
+	default Boa__CtxT $(final boa.Ctx it) {
+		return boa__Ctx(it);
+	}
 	default Boa__DefT $(final boa.Def it) {
 		return boa__Def(it);
+	}
+	default Boa__EvalBoolResT $(final boa.EvalBoolRes it) {
+		return boa__EvalBoolRes(it);
+	}
+	default Boa__EvalBoundFunResT $(final boa.EvalBoundFunRes it) {
+		return boa__EvalBoundFunRes(it);
+	}
+	default Boa__EvalFunResT $(final boa.EvalFunRes it) {
+		if (it.getClass() == boa.impl.EvalBoundFunResImpl.class)
+			return boa__EvalBoundFunRes((boa.EvalBoundFunRes) it);
+		return boa__EvalFunRes(it);
+	}
+	default Boa__EvalIntResT $(final boa.EvalIntRes it) {
+		return boa__EvalIntRes(it);
+	}
+	default Boa__EvalMapResT $(final boa.EvalMapRes it) {
+		return boa__EvalMapRes(it);
+	}
+	default Boa__EvalResT $(final boa.EvalRes it) {
+		if (it.getClass() == boa.impl.EvalBoolResImpl.class)
+			return boa__EvalBoolRes((boa.EvalBoolRes) it);
+		if (it.getClass() == boa.impl.EvalBoundFunResImpl.class)
+			return boa__EvalBoundFunRes((boa.EvalBoundFunRes) it);
+		if (it.getClass() == boa.impl.EvalFunResImpl.class)
+			return boa__EvalFunRes((boa.EvalFunRes) it);
+		if (it.getClass() == boa.impl.EvalIntResImpl.class)
+			return boa__EvalIntRes((boa.EvalIntRes) it);
+		if (it.getClass() == boa.impl.EvalMapResImpl.class)
+			return boa__EvalMapRes((boa.EvalMapRes) it);
+		return null;
 	}
 	default Boa__ExprT $(final boa.Expr it) {
 		if (it.getClass() == boa.impl.AppImpl.class)

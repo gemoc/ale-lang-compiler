@@ -51,7 +51,7 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS:
-    	return getInstructions();
+    return getInstructions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -86,7 +86,7 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
     long time = ((long)(stop) - (start));
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(time);
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(turtle.getDrawings()));
-    logo.example.service.Display.show(turtle);
+    //logo.example.service.Display.show(turtle);
     return result;
   }
 

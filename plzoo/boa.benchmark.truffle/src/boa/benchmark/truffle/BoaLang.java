@@ -12,8 +12,6 @@ import com.oracle.truffle.api.CallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.TruffleLanguage.ContextPolicy;
-import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.RootNode;
 
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.File;
@@ -53,15 +51,7 @@ public class BoaLang extends TruffleLanguage<Void> {
 		final Resource resource = resSet.getResource(createFileURI, true);
 		final File result = (File) resource.getContents().get(0);
 
-		return Truffle.getRuntime().createCallTarget(new RootNode(BoaLang.this) {
-
-			@Override
-			public Object execute(final VirtualFrame frame) {
-				final long start = System.currentTimeMillis();
-				result.eval();
-				return System.currentTimeMillis() - start;
-			}
-		});
+		return Truffle.getRuntime().createCallTarget(new MainRootNodeExtension(BoaLang.this, result));
 	}
 
 }

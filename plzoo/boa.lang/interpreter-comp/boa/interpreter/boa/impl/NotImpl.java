@@ -1,11 +1,12 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalBoolRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Not;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalBoolRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -20,6 +21,7 @@ public class NotImpl extends ExprImpl implements Not {
     super();
   }
 
+  @TruffleBoundary
   public void setValue(Expr newValue) {
     if (newValue != value) {
     	NotificationChain msgs = null;
@@ -34,6 +36,7 @@ public class NotImpl extends ExprImpl implements Not {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.NOT__VALUE, newValue, newValue));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetValue(Expr newValue, NotificationChain msgs) {
     Expr oldValue = value;
     value = newValue;
@@ -44,12 +47,15 @@ public class NotImpl extends ExprImpl implements Not {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getValue() {
     return value;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.NOT;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.NOT__VALUE:
@@ -59,6 +65,7 @@ public class NotImpl extends ExprImpl implements Not {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.NOT__VALUE:
@@ -68,6 +75,7 @@ public class NotImpl extends ExprImpl implements Not {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.NOT__VALUE:
@@ -76,6 +84,7 @@ public class NotImpl extends ExprImpl implements Not {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.NOT__VALUE:
@@ -84,6 +93,7 @@ public class NotImpl extends ExprImpl implements Not {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -96,9 +106,9 @@ public class NotImpl extends ExprImpl implements Not {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     EvalRes vvalue = ((EvalRes)this.getValue().eval(ctx));
-    if(vvalue instanceof boa_dynamic.interpreter.boa_dynamic.EvalBoolRes) {
+    if(vvalue instanceof boa.interpreter.boa.EvalBoolRes) {
       EvalBoolRes bvvalue = ((EvalBoolRes)vvalue);
-      EvalBoolRes ret = ((EvalBoolRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalBoolRes());
+      EvalBoolRes ret = ((EvalBoolRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoolRes());
       ret.setValue(!(bvvalue.isValue()));
       result = ret;
     }

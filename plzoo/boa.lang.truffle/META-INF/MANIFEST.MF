@@ -11,5 +11,4 @@ Require-Bundle: org.eclipse.emf.ecore,
  boa.lang.services;bundle-version="1.0.0"
 Export-Package: boa.interpreter.boa,
  boa.interpreter.boa.impl,
- boa_dynamic.interpreter.boa_dynamic,
- boa_dynamic.interpreter.boa_dynamic.impl
+ boa.interpreter.boa.util

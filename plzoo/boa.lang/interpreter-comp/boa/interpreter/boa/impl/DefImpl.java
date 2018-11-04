@@ -1,10 +1,11 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.Def;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
@@ -30,6 +31,7 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
   public void setName(String name) {
     this.name = name;}
 
+  @TruffleBoundary
   public void setExpr(Expr newExpr) {
     if (newExpr != expr) {
     	NotificationChain msgs = null;
@@ -44,6 +46,7 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.DEF__EXPR, newExpr, newExpr));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetExpr(Expr newExpr, NotificationChain msgs) {
     Expr oldExpr = expr;
     expr = newExpr;
@@ -54,12 +57,15 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getExpr() {
     return expr;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.DEF;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.DEF__NAME:
@@ -72,6 +78,7 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.DEF__NAME:
@@ -84,6 +91,7 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.DEF__NAME:
@@ -94,6 +102,7 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.DEF__NAME:
@@ -104,6 +113,7 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

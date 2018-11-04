@@ -2,10 +2,10 @@ package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.Assign;
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalMapRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalMapRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -166,7 +166,7 @@ public class AssignImpl extends ExprImpl implements Assign {
     EvalRes result;
     EvalRes vlhs = ((EvalRes)this.getLhs().eval(ctx));
     EvalRes vrhs = ((EvalRes)this.getRhs().eval(ctx));
-    if(vlhs instanceof boa_dynamic.interpreter.boa_dynamic.EvalMapRes) {
+    if(vlhs instanceof boa.interpreter.boa.EvalMapRes) {
       EvalMapRes mvlhs = ((EvalMapRes)vlhs);
       if(execboa.MapService.containsKey(mvlhs.getValues(), this.getName())) {
         execboa.MapService.put(mvlhs.getValues(), this.getName(), vrhs);

@@ -63,9 +63,9 @@ public class PointImpl extends MinimalEObjectImpl.Container implements Point {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.POINT__X:
-    	return getX();
+    return getX();
     case KmLogoPackage.POINT__Y:
-    	return getY();
+    return getY();
     }
     return super.eGet(featureID, resolve, coreType);
   }

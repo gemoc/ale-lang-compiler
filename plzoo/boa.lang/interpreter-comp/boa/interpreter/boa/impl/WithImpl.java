@@ -1,11 +1,12 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalMapRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.With;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalMapRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -22,6 +23,7 @@ public class WithImpl extends ExprImpl implements With {
     super();
   }
 
+  @TruffleBoundary
   public void setLhs(Expr newLhs) {
     if (newLhs != lhs) {
     	NotificationChain msgs = null;
@@ -36,6 +38,7 @@ public class WithImpl extends ExprImpl implements With {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.WITH__LHS, newLhs, newLhs));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
     Expr oldLhs = lhs;
     lhs = newLhs;
@@ -46,9 +49,11 @@ public class WithImpl extends ExprImpl implements With {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getLhs() {
     return lhs;}
 
+  @TruffleBoundary
   public void setRhs(Expr newRhs) {
     if (newRhs != rhs) {
     	NotificationChain msgs = null;
@@ -63,6 +68,7 @@ public class WithImpl extends ExprImpl implements With {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.WITH__RHS, newRhs, newRhs));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
     Expr oldRhs = rhs;
     rhs = newRhs;
@@ -73,12 +79,15 @@ public class WithImpl extends ExprImpl implements With {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getRhs() {
     return rhs;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.WITH;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.WITH__LHS:
@@ -91,6 +100,7 @@ public class WithImpl extends ExprImpl implements With {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.WITH__LHS:
@@ -103,6 +113,7 @@ public class WithImpl extends ExprImpl implements With {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.WITH__LHS:
@@ -113,6 +124,7 @@ public class WithImpl extends ExprImpl implements With {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.WITH__LHS:
@@ -123,6 +135,7 @@ public class WithImpl extends ExprImpl implements With {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -138,11 +151,11 @@ public class WithImpl extends ExprImpl implements With {
     EvalRes result;
     EvalRes vlhs = ((EvalRes)this.getLhs().eval(ctx));
     EvalRes vrhs = ((EvalRes)this.getRhs().eval(ctx));
-    if(vlhs instanceof boa_dynamic.interpreter.boa_dynamic.EvalMapRes) {
+    if(vlhs instanceof boa.interpreter.boa.EvalMapRes) {
       EvalMapRes mvlhs = ((EvalMapRes)vlhs);
-      if(vrhs instanceof boa_dynamic.interpreter.boa_dynamic.EvalMapRes) {
+      if(vrhs instanceof boa.interpreter.boa.EvalMapRes) {
         EvalMapRes mvrhs = ((EvalMapRes)vrhs);
-        EvalMapRes ret = ((EvalMapRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalMapRes());
+        EvalMapRes ret = ((EvalMapRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalMapRes());
         execboa.MapService.putAll(ret.getValues(), mvlhs.getValues());
         execboa.MapService.putAll(ret.getValues(), mvrhs.getValues());
         result = ret;

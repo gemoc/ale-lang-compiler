@@ -104,9 +104,9 @@ public class IfImpl extends ControlStructureImpl implements If {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.IF__THEN_PART:
-    	return getThenPart();
+    return getThenPart();
     case KmLogoPackage.IF__ELSE_PART:
-    	return getElsePart();
+    return getElsePart();
     }
     return super.eGet(featureID, resolve, coreType);
   }

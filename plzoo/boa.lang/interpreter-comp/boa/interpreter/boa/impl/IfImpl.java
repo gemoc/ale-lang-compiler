@@ -1,11 +1,12 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalBoolRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.If;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalBoolRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -24,6 +25,7 @@ public class IfImpl extends ExprImpl implements If {
     super();
   }
 
+  @TruffleBoundary
   public void setCond(Expr newCond) {
     if (newCond != cond) {
     	NotificationChain msgs = null;
@@ -38,6 +40,7 @@ public class IfImpl extends ExprImpl implements If {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.IF__COND, newCond, newCond));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetCond(Expr newCond, NotificationChain msgs) {
     Expr oldCond = cond;
     cond = newCond;
@@ -48,9 +51,11 @@ public class IfImpl extends ExprImpl implements If {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getCond() {
     return cond;}
 
+  @TruffleBoundary
   public void setThn(Expr newThn) {
     if (newThn != thn) {
     	NotificationChain msgs = null;
@@ -65,6 +70,7 @@ public class IfImpl extends ExprImpl implements If {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.IF__THN, newThn, newThn));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetThn(Expr newThn, NotificationChain msgs) {
     Expr oldThn = thn;
     thn = newThn;
@@ -75,9 +81,11 @@ public class IfImpl extends ExprImpl implements If {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getThn() {
     return thn;}
 
+  @TruffleBoundary
   public void setEls(Expr newEls) {
     if (newEls != els) {
     	NotificationChain msgs = null;
@@ -92,6 +100,7 @@ public class IfImpl extends ExprImpl implements If {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.IF__ELS, newEls, newEls));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetEls(Expr newEls, NotificationChain msgs) {
     Expr oldEls = els;
     els = newEls;
@@ -102,12 +111,15 @@ public class IfImpl extends ExprImpl implements If {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getEls() {
     return els;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.IF;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.IF__COND:
@@ -123,6 +135,7 @@ public class IfImpl extends ExprImpl implements If {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.IF__COND:
@@ -138,6 +151,7 @@ public class IfImpl extends ExprImpl implements If {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.IF__COND:
@@ -150,6 +164,7 @@ public class IfImpl extends ExprImpl implements If {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.IF__COND:
@@ -162,6 +177,7 @@ public class IfImpl extends ExprImpl implements If {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -178,7 +194,7 @@ public class IfImpl extends ExprImpl implements If {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     EvalRes vcond = ((EvalRes)this.getCond().eval(ctx));
-    if(vcond instanceof boa_dynamic.interpreter.boa_dynamic.EvalBoolRes) {
+    if(vcond instanceof boa.interpreter.boa.EvalBoolRes) {
       EvalBoolRes bvcond = ((EvalBoolRes)vcond);
       if(bvcond.isValue()) {
         result = this.getThn().eval(ctx);

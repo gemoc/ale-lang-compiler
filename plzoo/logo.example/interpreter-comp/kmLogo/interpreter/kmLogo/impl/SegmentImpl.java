@@ -104,9 +104,9 @@ public class SegmentImpl extends MinimalEObjectImpl.Container implements Segment
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.SEGMENT__BEGIN:
-    	return getBegin();
+    return getBegin();
     case KmLogoPackage.SEGMENT__END:
-    	return getEnd();
+    return getEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }

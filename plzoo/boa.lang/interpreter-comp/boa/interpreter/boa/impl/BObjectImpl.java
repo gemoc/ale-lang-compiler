@@ -2,10 +2,11 @@ package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BObject;
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalMapRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Field;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalMapRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -20,6 +21,7 @@ public class BObjectImpl extends ExprImpl implements BObject {
     super();
   }
 
+  @TruffleBoundary
   public EList<Field> getFields() {
     if(fields == null) {
     	fields = new EObjectContainmentEList<Field>(boa.interpreter.boa.Field.class, this, BoaPackage.BOBJECT__FIELDS);
@@ -27,9 +29,11 @@ public class BObjectImpl extends ExprImpl implements BObject {
     return fields;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.BOBJECT;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.BOBJECT__FIELDS:
@@ -40,6 +44,7 @@ public class BObjectImpl extends ExprImpl implements BObject {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.BOBJECT__FIELDS:
@@ -49,6 +54,7 @@ public class BObjectImpl extends ExprImpl implements BObject {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.BOBJECT__FIELDS:
@@ -57,6 +63,7 @@ public class BObjectImpl extends ExprImpl implements BObject {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.BOBJECT__FIELDS:
@@ -65,6 +72,7 @@ public class BObjectImpl extends ExprImpl implements BObject {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -76,7 +84,7 @@ public class BObjectImpl extends ExprImpl implements BObject {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalMapRes ret = ((EvalMapRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalMapRes());
+    EvalMapRes ret = ((EvalMapRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalMapRes());
     for(Field x: this.getFields()) {
       EvalRes v = ((EvalRes)x.getValue().eval(ctx));
       execboa.MapService.put(ret.getValues(), x.getName(), v);

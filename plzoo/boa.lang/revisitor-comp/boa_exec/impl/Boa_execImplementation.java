@@ -19,7 +19,14 @@ import boa_exec.impl.operation.CmpOpEqual;
 import boa_exec.impl.operation.CmpOpLess;
 import boa_exec.impl.operation.CmpOpUnequal;
 import boa_exec.impl.operation.Copy;
+import boa_exec.impl.operation.Ctx;
 import boa_exec.impl.operation.Def;
+import boa_exec.impl.operation.EvalBoolRes;
+import boa_exec.impl.operation.EvalBoundFunRes;
+import boa_exec.impl.operation.EvalFunRes;
+import boa_exec.impl.operation.EvalIntRes;
+import boa_exec.impl.operation.EvalMapRes;
+import boa_exec.impl.operation.EvalRes;
 import boa_exec.impl.operation.Expr;
 import boa_exec.impl.operation.Field;
 import boa_exec.impl.operation.File;
@@ -31,6 +38,7 @@ import boa_exec.impl.operation.Not;
 import boa_exec.impl.operation.Project;
 import boa_exec.impl.operation.Seq;
 import boa_exec.impl.operation.Skip;
+import boa_exec.impl.operation.StringToEvalResMap;
 import boa_exec.impl.operation.This;
 import boa_exec.impl.operation.TopLevelCmd;
 import boa_exec.impl.operation.Var;
@@ -53,7 +61,14 @@ import boa_exec.impl.operation.impl.CmpOpImpl;
 import boa_exec.impl.operation.impl.CmpOpLessImpl;
 import boa_exec.impl.operation.impl.CmpOpUnequalImpl;
 import boa_exec.impl.operation.impl.CopyImpl;
+import boa_exec.impl.operation.impl.CtxImpl;
 import boa_exec.impl.operation.impl.DefImpl;
+import boa_exec.impl.operation.impl.EvalBoolResImpl;
+import boa_exec.impl.operation.impl.EvalBoundFunResImpl;
+import boa_exec.impl.operation.impl.EvalFunResImpl;
+import boa_exec.impl.operation.impl.EvalIntResImpl;
+import boa_exec.impl.operation.impl.EvalMapResImpl;
+import boa_exec.impl.operation.impl.EvalResImpl;
 import boa_exec.impl.operation.impl.ExprImpl;
 import boa_exec.impl.operation.impl.FieldImpl;
 import boa_exec.impl.operation.impl.FileImpl;
@@ -70,7 +85,7 @@ import boa_exec.impl.operation.impl.TopLevelCmdImpl;
 import boa_exec.impl.operation.impl.VarImpl;
 import boa_exec.impl.operation.impl.WithImpl;
 
-public interface Boa_execImplementation extends BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> {
+public interface Boa_execImplementation extends BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> {
   default File boa__File(boa.File it) {
     return new FileImpl(it, this);
   }
@@ -205,5 +220,34 @@ public interface Boa_execImplementation extends BoaRevisitor<App, ArithOp, Arith
 
   default CmpOpLess boa__CmpOpLess(boa.CmpOpLess it) {
     return new CmpOpLessImpl(it, this);
+  }
+
+  default Ctx boa__Ctx(boa.Ctx it) {
+    return new CtxImpl(it, this);
+  }
+
+
+  default EvalRes boa__EvalRes(boa.EvalRes it) {
+    return new EvalResImpl(it, this);
+  }
+
+  default EvalMapRes boa__EvalMapRes(boa.EvalMapRes it) {
+    return new EvalMapResImpl(it, this);
+  }
+
+  default EvalFunRes boa__EvalFunRes(boa.EvalFunRes it) {
+    return new EvalFunResImpl(it, this);
+  }
+
+  default EvalBoundFunRes boa__EvalBoundFunRes(boa.EvalBoundFunRes it) {
+    return new EvalBoundFunResImpl(it, this);
+  }
+
+  default EvalIntRes boa__EvalIntRes(boa.EvalIntRes it) {
+    return new EvalIntResImpl(it, this);
+  }
+
+  default EvalBoolRes boa__EvalBoolRes(boa.EvalBoolRes it) {
+    return new EvalBoolResImpl(it, this);
   }
 }

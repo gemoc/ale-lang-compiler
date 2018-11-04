@@ -12,12 +12,13 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl.TruffleContainer;
 
 @NodeInfo(
     description = "Field"
 )
-public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
+public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Field {
   protected static final String NAME_EDEFAULT = null;
 
   protected String name = NAME_EDEFAULT;

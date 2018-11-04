@@ -1,9 +1,10 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Var;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.String;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,9 +26,11 @@ public class VarImpl extends ExprImpl implements Var {
   public void setName(String name) {
     this.name = name;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.VAR;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.VAR__NAME:
@@ -37,6 +40,7 @@ public class VarImpl extends ExprImpl implements Var {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.VAR__NAME:
@@ -46,6 +50,7 @@ public class VarImpl extends ExprImpl implements Var {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.VAR__NAME:
@@ -54,6 +59,7 @@ public class VarImpl extends ExprImpl implements Var {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.VAR__NAME:
@@ -62,6 +68,7 @@ public class VarImpl extends ExprImpl implements Var {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

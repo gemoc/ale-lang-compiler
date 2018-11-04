@@ -1,10 +1,11 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Let;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
@@ -32,6 +33,7 @@ public class LetImpl extends ExprImpl implements Let {
   public void setName(String name) {
     this.name = name;}
 
+  @TruffleBoundary
   public void setLhs(Expr newLhs) {
     if (newLhs != lhs) {
     	NotificationChain msgs = null;
@@ -46,6 +48,7 @@ public class LetImpl extends ExprImpl implements Let {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.LET__LHS, newLhs, newLhs));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
     Expr oldLhs = lhs;
     lhs = newLhs;
@@ -56,9 +59,11 @@ public class LetImpl extends ExprImpl implements Let {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getLhs() {
     return lhs;}
 
+  @TruffleBoundary
   public void setRhs(Expr newRhs) {
     if (newRhs != rhs) {
     	NotificationChain msgs = null;
@@ -73,6 +78,7 @@ public class LetImpl extends ExprImpl implements Let {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.LET__RHS, newRhs, newRhs));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
     Expr oldRhs = rhs;
     rhs = newRhs;
@@ -83,12 +89,15 @@ public class LetImpl extends ExprImpl implements Let {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getRhs() {
     return rhs;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.LET;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.LET__NAME:
@@ -104,6 +113,7 @@ public class LetImpl extends ExprImpl implements Let {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.LET__NAME:
@@ -119,6 +129,7 @@ public class LetImpl extends ExprImpl implements Let {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.LET__NAME:
@@ -131,6 +142,7 @@ public class LetImpl extends ExprImpl implements Let {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.LET__NAME:
@@ -143,6 +155,7 @@ public class LetImpl extends ExprImpl implements Let {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -158,7 +171,7 @@ public class LetImpl extends ExprImpl implements Let {
     EvalRes result;
     Expr lhs = ((Expr)this.getLhs());
     EvalRes vlhs = ((EvalRes)lhs.eval(ctx));
-    Ctx nctx = ((Ctx)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createCtx());
+    Ctx nctx = ((Ctx)boa.interpreter.boa.BoaFactory.eINSTANCE.createCtx());
     execboa.MapService.putAll(nctx.getEnv(), ctx.getEnv());
     execboa.MapService.put(nctx.getEnv(), this.getName(), vlhs);
     result = this.getRhs().eval(nctx);

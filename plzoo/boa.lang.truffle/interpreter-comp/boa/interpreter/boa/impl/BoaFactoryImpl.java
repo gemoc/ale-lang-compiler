@@ -17,7 +17,14 @@ import boa.interpreter.boa.CmpOpEqual;
 import boa.interpreter.boa.CmpOpLess;
 import boa.interpreter.boa.CmpOpUnequal;
 import boa.interpreter.boa.Copy;
+import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.Def;
+import boa.interpreter.boa.EvalBoolRes;
+import boa.interpreter.boa.EvalBoundFunRes;
+import boa.interpreter.boa.EvalFunRes;
+import boa.interpreter.boa.EvalIntRes;
+import boa.interpreter.boa.EvalMapRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Field;
 import boa.interpreter.boa.File;
 import boa.interpreter.boa.Fun;
@@ -32,6 +39,8 @@ import boa.interpreter.boa.This;
 import boa.interpreter.boa.Var;
 import boa.interpreter.boa.With;
 import java.lang.IllegalArgumentException;
+import java.lang.String;
+import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -114,6 +123,20 @@ public class BoaFactoryImpl extends EFactoryImpl implements BoaFactory {
     	return createCmpOpUnequal();
     case BoaPackage.CMP_OP_LESS:
     	return createCmpOpLess();
+    case BoaPackage.CTX:
+    	return createCtx();
+    case BoaPackage.STRING_TO_EVAL_RES_MAP:
+    	return (org.eclipse.emf.ecore.EObject) createStringToEvalResMap();
+    case BoaPackage.EVAL_MAP_RES:
+    	return createEvalMapRes();
+    case BoaPackage.EVAL_FUN_RES:
+    	return createEvalFunRes();
+    case BoaPackage.EVAL_BOUND_FUN_RES:
+    	return createEvalBoundFunRes();
+    case BoaPackage.EVAL_INT_RES:
+    	return createEvalIntRes();
+    case BoaPackage.EVAL_BOOL_RES:
+    	return createEvalBoolRes();
     default:
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -264,6 +287,41 @@ public class BoaFactoryImpl extends EFactoryImpl implements BoaFactory {
 
   public CmpOpLess createCmpOpLess() {
     CmpOpLessImpl ret = new CmpOpLessImpl();
+    return ret;
+  }
+
+  public Ctx createCtx() {
+    CtxImpl ret = new CtxImpl();
+    return ret;
+  }
+
+  public Map.Entry<String, EvalRes> createStringToEvalResMap() {
+    StringToEvalResMapImpl ret = new StringToEvalResMapImpl();
+    return ret;
+  }
+
+  public EvalMapRes createEvalMapRes() {
+    EvalMapResImpl ret = new EvalMapResImpl();
+    return ret;
+  }
+
+  public EvalFunRes createEvalFunRes() {
+    EvalFunResImpl ret = new EvalFunResImpl();
+    return ret;
+  }
+
+  public EvalBoundFunRes createEvalBoundFunRes() {
+    EvalBoundFunResImpl ret = new EvalBoundFunResImpl();
+    return ret;
+  }
+
+  public EvalIntRes createEvalIntRes() {
+    EvalIntResImpl ret = new EvalIntResImpl();
+    return ret;
+  }
+
+  public EvalBoolRes createEvalBoolRes() {
+    EvalBoolResImpl ret = new EvalBoolResImpl();
     return ret;
   }
 }

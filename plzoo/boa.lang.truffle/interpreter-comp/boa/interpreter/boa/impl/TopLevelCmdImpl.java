@@ -1,19 +1,20 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.TopLevelCmd;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl.TruffleContainer;
 
 @NodeInfo(
     description = "TopLevelCmd"
 )
-public abstract class TopLevelCmdImpl extends MinimalEObjectImpl.Container implements TopLevelCmd {
+public abstract class TopLevelCmdImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements TopLevelCmd {
   protected TopLevelCmdImpl() {
     super();
   }

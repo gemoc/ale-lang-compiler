@@ -3,6 +3,7 @@ package boa.interpreter.boa.impl;
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Field;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
@@ -29,6 +30,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
   public void setName(String name) {
     this.name = name;}
 
+  @TruffleBoundary
   public void setValue(Expr newValue) {
     if (newValue != value) {
     	NotificationChain msgs = null;
@@ -43,6 +45,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.FIELD__VALUE, newValue, newValue));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetValue(Expr newValue, NotificationChain msgs) {
     Expr oldValue = value;
     value = newValue;
@@ -53,12 +56,15 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getValue() {
     return value;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.FIELD;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.FIELD__NAME:
@@ -71,6 +77,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.FIELD__NAME:
@@ -83,6 +90,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.FIELD__NAME:
@@ -93,6 +101,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.FIELD__NAME:
@@ -103,6 +112,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

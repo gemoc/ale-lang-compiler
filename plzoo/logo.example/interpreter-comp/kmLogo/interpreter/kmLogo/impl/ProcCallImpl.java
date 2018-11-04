@@ -98,9 +98,9 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
-    	return getActualArgs();
+    return getActualArgs();
     case KmLogoPackage.PROC_CALL__DECLARATION:
-    	return getDeclaration();
+    return getDeclaration();
     }
     return super.eGet(featureID, resolve, coreType);
   }

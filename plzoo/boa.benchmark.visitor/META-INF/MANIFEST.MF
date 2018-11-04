@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Visitor
+Bundle-SymbolicName: boa.benchmark.visitor
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: boa.benchmark.visitor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: boa.lang.visitor,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi

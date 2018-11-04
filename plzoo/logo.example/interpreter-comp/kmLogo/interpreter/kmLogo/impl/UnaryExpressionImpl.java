@@ -68,7 +68,7 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl implements Unar
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.UNARY_EXPRESSION__EXPRESSION:
-    	return getExpression();
+    return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }

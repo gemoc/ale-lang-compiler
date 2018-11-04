@@ -1,13 +1,14 @@
 package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalBoundFunRes;
+import boa.interpreter.boa.EvalFunRes;
+import boa.interpreter.boa.EvalMapRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Project;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalBoundFunRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalFunRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalMapRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
@@ -33,6 +34,7 @@ public class ProjectImpl extends ExprImpl implements Project {
   public void setName(String name) {
     this.name = name;}
 
+  @TruffleBoundary
   public void setExp(Expr newExp) {
     if (newExp != exp) {
     	NotificationChain msgs = null;
@@ -47,6 +49,7 @@ public class ProjectImpl extends ExprImpl implements Project {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.PROJECT__EXP, newExp, newExp));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetExp(Expr newExp, NotificationChain msgs) {
     Expr oldExp = exp;
     exp = newExp;
@@ -57,12 +60,15 @@ public class ProjectImpl extends ExprImpl implements Project {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getExp() {
     return exp;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.PROJECT;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.PROJECT__EXP:
@@ -75,6 +81,7 @@ public class ProjectImpl extends ExprImpl implements Project {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.PROJECT__EXP:
@@ -87,6 +94,7 @@ public class ProjectImpl extends ExprImpl implements Project {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.PROJECT__EXP:
@@ -97,6 +105,7 @@ public class ProjectImpl extends ExprImpl implements Project {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.PROJECT__EXP:
@@ -107,6 +116,7 @@ public class ProjectImpl extends ExprImpl implements Project {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -119,11 +129,11 @@ public class ProjectImpl extends ExprImpl implements Project {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     EvalRes vexp = ((EvalRes)this.getExp().eval(ctx));
-    if(vexp instanceof boa_dynamic.interpreter.boa_dynamic.EvalMapRes) {
+    if(vexp instanceof boa.interpreter.boa.EvalMapRes) {
       EvalMapRes mvexp = ((EvalMapRes)vexp);
       if(execboa.MapService.containsKey(mvexp.getValues(), this.getName())) {
         EvalRes x = ((EvalRes)mvexp.getValues().get(this.getName()));
-        if(x instanceof boa_dynamic.interpreter.boa_dynamic.EvalFunRes) {
+        if(x instanceof boa.interpreter.boa.EvalFunRes) {
           EvalFunRes func = ((EvalFunRes)x);
           result = this.project(func,mvexp);
         }
@@ -143,7 +153,7 @@ public class ProjectImpl extends ExprImpl implements Project {
 
   public EvalRes project(EvalFunRes func, EvalMapRes mvexp) {
     EvalRes result;
-    EvalBoundFunRes ret = ((EvalBoundFunRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalBoundFunRes());
+    EvalBoundFunRes ret = ((EvalBoundFunRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
     ret.setExp(func.getExp());
     ret.setCtx(func.getCtx());
     ret.setName(func.getName());

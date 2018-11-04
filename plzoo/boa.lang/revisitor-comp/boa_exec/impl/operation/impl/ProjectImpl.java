@@ -1,11 +1,6 @@
 package boa_exec.impl.operation.impl;
 
 import boa.revisitor.BoaRevisitor;
-import boa_dynamic.Ctx;
-import boa_dynamic.EvalBoundFunRes;
-import boa_dynamic.EvalFunRes;
-import boa_dynamic.EvalMapRes;
-import boa_dynamic.EvalRes;
 import boa_exec.impl.operation.App;
 import boa_exec.impl.operation.ArithOp;
 import boa_exec.impl.operation.ArithOpDivide;
@@ -24,7 +19,14 @@ import boa_exec.impl.operation.CmpOpEqual;
 import boa_exec.impl.operation.CmpOpLess;
 import boa_exec.impl.operation.CmpOpUnequal;
 import boa_exec.impl.operation.Copy;
+import boa_exec.impl.operation.Ctx;
 import boa_exec.impl.operation.Def;
+import boa_exec.impl.operation.EvalBoolRes;
+import boa_exec.impl.operation.EvalBoundFunRes;
+import boa_exec.impl.operation.EvalFunRes;
+import boa_exec.impl.operation.EvalIntRes;
+import boa_exec.impl.operation.EvalMapRes;
+import boa_exec.impl.operation.EvalRes;
 import boa_exec.impl.operation.Expr;
 import boa_exec.impl.operation.Field;
 import boa_exec.impl.operation.File;
@@ -36,32 +38,33 @@ import boa_exec.impl.operation.Not;
 import boa_exec.impl.operation.Project;
 import boa_exec.impl.operation.Seq;
 import boa_exec.impl.operation.Skip;
+import boa_exec.impl.operation.StringToEvalResMap;
 import boa_exec.impl.operation.This;
 import boa_exec.impl.operation.TopLevelCmd;
 import boa_exec.impl.operation.Var;
 import boa_exec.impl.operation.With;
 
 public class ProjectImpl extends ExprImpl implements Project {
-  private BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> rev;
+  private BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> rev;
 
   private boa.Project obj;
 
   public ProjectImpl(boa.Project obj,
-      BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Def, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, This, TopLevelCmd, Var, With> rev) {
+      BoaRevisitor<App, ArithOp, ArithOpDivide, ArithOpMinus, ArithOpPlus, ArithOpRemainder, ArithOpTimes, Assign, BObject, Bool, BoolOp, BoolOpAnd, BoolOpOr, CmpOp, CmpOpEqual, CmpOpLess, CmpOpUnequal, Copy, Ctx, Def, EvalBoolRes, EvalBoundFunRes, EvalFunRes, EvalIntRes, EvalMapRes, EvalRes, Expr, Field, File, Fun, If, Int, Let, Not, Project, Seq, Skip, StringToEvalResMap, This, TopLevelCmd, Var, With> rev) {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
   }
 
-  public EvalRes eval(Ctx ctx) {
-    EvalRes result;
-    EvalRes vexp = ((EvalRes)rev.$(this.obj.getExp()).eval(ctx));
-    if(vexp instanceof boa_dynamic.EvalMapRes) {
-      EvalMapRes mvexp = ((EvalMapRes)vexp);
+  public boa.EvalRes eval(boa.Ctx ctx) {
+    boa.EvalRes result;
+    boa.EvalRes vexp = ((boa.EvalRes)rev.$(this.obj.getExp()).eval(ctx));
+    if(vexp instanceof boa.EvalMapRes) {
+      boa.EvalMapRes mvexp = ((boa.EvalMapRes)vexp);
       if(execboa.MapService.containsKey(mvexp.getValues(), this.obj.getName())) {
-        EvalRes x = ((EvalRes)mvexp.getValues().get(this.obj.getName()));
-        if(x instanceof boa_dynamic.EvalFunRes) {
-          EvalFunRes func = ((EvalFunRes)x);
+        boa.EvalRes x = ((boa.EvalRes)mvexp.getValues().get(this.obj.getName()));
+        if(x instanceof boa.EvalFunRes) {
+          boa.EvalFunRes func = ((boa.EvalFunRes)x);
           result = rev.$(this.obj).project(func,mvexp);
         }
         else {
@@ -78,9 +81,9 @@ public class ProjectImpl extends ExprImpl implements Project {
     return result;
   }
 
-  public EvalRes project(EvalFunRes func, EvalMapRes mvexp) {
-    EvalRes result;
-    EvalBoundFunRes ret = ((EvalBoundFunRes)boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalBoundFunRes());
+  public boa.EvalRes project(boa.EvalFunRes func, boa.EvalMapRes mvexp) {
+    boa.EvalRes result;
+    boa.EvalBoundFunRes ret = ((boa.EvalBoundFunRes)boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
     ret.setExp(func.getExp());
     ret.setCtx(func.getCtx());
     ret.setName(func.getName());

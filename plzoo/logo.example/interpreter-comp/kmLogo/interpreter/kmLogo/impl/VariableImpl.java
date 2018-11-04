@@ -64,9 +64,9 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case KmLogoPackage.VARIABLE__NAME:
-    	return getName();
+    return getName();
     case KmLogoPackage.VARIABLE__VALUE:
-    	return getValue();
+    return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }

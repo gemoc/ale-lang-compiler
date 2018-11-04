@@ -64,5 +64,17 @@ public interface BoaFactory extends EFactory {
 
   CmpOpLess createCmpOpLess();
 
+  Ctx createCtx();
+
+  EvalMapRes createEvalMapRes();
+
+  EvalFunRes createEvalFunRes();
+
+  EvalBoundFunRes createEvalBoundFunRes();
+
+  EvalIntRes createEvalIntRes();
+
+  EvalBoolRes createEvalBoolRes();
+
   BoaPackage getBoaPackage();
 }

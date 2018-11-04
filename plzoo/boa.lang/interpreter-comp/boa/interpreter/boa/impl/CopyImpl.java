@@ -2,10 +2,11 @@ package boa.interpreter.boa.impl;
 
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Copy;
+import boa.interpreter.boa.Ctx;
+import boa.interpreter.boa.EvalMapRes;
+import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import boa_dynamic.interpreter.boa_dynamic.Ctx;
-import boa_dynamic.interpreter.boa_dynamic.EvalMapRes;
-import boa_dynamic.interpreter.boa_dynamic.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -20,6 +21,7 @@ public class CopyImpl extends ExprImpl implements Copy {
     super();
   }
 
+  @TruffleBoundary
   public void setCopy(Expr newCopy) {
     if (newCopy != copy) {
     	NotificationChain msgs = null;
@@ -34,6 +36,7 @@ public class CopyImpl extends ExprImpl implements Copy {
     	eNotify(new ENotificationImpl(this, Notification.SET, boa.interpreter.boa.BoaPackage.COPY__COPY, newCopy, newCopy));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetCopy(Expr newCopy, NotificationChain msgs) {
     Expr oldCopy = copy;
     copy = newCopy;
@@ -44,12 +47,15 @@ public class CopyImpl extends ExprImpl implements Copy {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expr getCopy() {
     return copy;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return BoaPackage.Literals.COPY;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case BoaPackage.COPY__COPY:
@@ -59,6 +65,7 @@ public class CopyImpl extends ExprImpl implements Copy {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case BoaPackage.COPY__COPY:
@@ -68,6 +75,7 @@ public class CopyImpl extends ExprImpl implements Copy {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case BoaPackage.COPY__COPY:
@@ -76,6 +84,7 @@ public class CopyImpl extends ExprImpl implements Copy {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case BoaPackage.COPY__COPY:
@@ -84,6 +93,7 @@ public class CopyImpl extends ExprImpl implements Copy {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -96,9 +106,9 @@ public class CopyImpl extends ExprImpl implements Copy {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     EvalRes vcopy = ((EvalRes)this.getCopy().eval(ctx));
-    if(vcopy instanceof boa_dynamic.interpreter.boa_dynamic.EvalMapRes) {
+    if(vcopy instanceof boa.interpreter.boa.EvalMapRes) {
       EvalMapRes mvcopy = ((EvalMapRes)vcopy);
-      EvalMapRes ret = ((EvalMapRes)boa_dynamic.interpreter.boa_dynamic.Boa_dynamicFactory.eINSTANCE.createEvalMapRes());
+      EvalMapRes ret = ((EvalMapRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalMapRes());
       execboa.MapService.putAll(ret.getValues(), mvcopy.getValues());
       result = ret;
     }

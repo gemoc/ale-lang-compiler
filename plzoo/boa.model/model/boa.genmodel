@@ -98,5 +98,31 @@
     <genClasses ecoreClass="boa.ecore#//CmpOpEqual"/>
     <genClasses ecoreClass="boa.ecore#//CmpOpUnequal"/>
     <genClasses ecoreClass="boa.ecore#//CmpOpLess"/>
+    <genClasses ecoreClass="boa.ecore#//Ctx">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Ctx/env"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//Ctx/th"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//StringToEvalResMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//StringToEvalResMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference boa.ecore#//StringToEvalResMap/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="boa.ecore#//EvalRes"/>
+    <genClasses ecoreClass="boa.ecore#//EvalMapRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//EvalMapRes/values"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//EvalFunRes">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference boa.ecore#//EvalFunRes/exp"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference boa.ecore#//EvalFunRes/ctx"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//EvalFunRes/name"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//EvalBoundFunRes">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference boa.ecore#//EvalBoundFunRes/th"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//EvalIntRes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//EvalIntRes/value"/>
+    </genClasses>
+    <genClasses ecoreClass="boa.ecore#//EvalBoolRes">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute boa.ecore#//EvalBoolRes/value"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
