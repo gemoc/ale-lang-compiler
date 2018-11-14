@@ -128,18 +128,19 @@ class ALEVisitorImplementationCompiler {
 
 		val acceptInterfaceCompiler = new AcceptInterfaceCompiler(compileDirectory, syntaxes, packageRoot)
 		acceptInterfaceCompiler.compile
-		
+
 		val visitorInterfaceCompiler = new VisitorInterfaceCompiler(compileDirectory, syntaxes, packageRoot)
 		visitorInterfaceCompiler.compile
-		
+
 		val visitorImplementationCompiler = new VisitorImplementationCompiler(compileDirectory, syntaxes, packageRoot)
 		visitorImplementationCompiler.compile
-				
+
 		val eic = new EClassInterfaceCompiler
 		val eimplc = new EClassImplementationCompiler(packageRoot)
-		
-		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot)
-		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot)
+
+		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
+		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,
+			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 

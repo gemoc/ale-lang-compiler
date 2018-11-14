@@ -18,12 +18,15 @@ import java.lang.String;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -41,6 +44,7 @@ import org.eclipse.emf.ecoretools.ale.MutableRef;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.emf.ecoretools.ale.impl.ExtendedClassImpl#isAbstract <em>Abstract</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.impl.ExtendedClassImpl#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.impl.ExtendedClassImpl#getMutables <em>Mutables</em>}</li>
  * </ul>
@@ -49,6 +53,26 @@ import org.eclipse.emf.ecoretools.ale.MutableRef;
  */
 public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedClass
 {
+  /**
+   * The default value of the '{@link #isAbstract() <em>Abstract</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAbstract()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean ABSTRACT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isAbstract() <em>Abstract</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isAbstract()
+   * @generated
+   * @ordered
+   */
+  protected boolean abstract_ = ABSTRACT_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getExtends() <em>Extends</em>}' attribute list.
    * <!-- begin-user-doc -->
@@ -88,6 +112,29 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
   protected EClass eStaticClass()
   {
     return AlePackage.Literals.EXTENDED_CLASS;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isAbstract()
+  {
+    return abstract_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAbstract(boolean newAbstract)
+  {
+    boolean oldAbstract = abstract_;
+    abstract_ = newAbstract;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, AlePackage.EXTENDED_CLASS__ABSTRACT, oldAbstract, abstract_));
   }
 
   /**
@@ -144,6 +191,8 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
   {
     switch (featureID)
     {
+      case AlePackage.EXTENDED_CLASS__ABSTRACT:
+        return isAbstract();
       case AlePackage.EXTENDED_CLASS__EXTENDS:
         return getExtends();
       case AlePackage.EXTENDED_CLASS__MUTABLES:
@@ -163,6 +212,9 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
   {
     switch (featureID)
     {
+      case AlePackage.EXTENDED_CLASS__ABSTRACT:
+        setAbstract((Boolean)newValue);
+        return;
       case AlePackage.EXTENDED_CLASS__EXTENDS:
         getExtends().clear();
         getExtends().addAll((Collection<? extends String>)newValue);
@@ -185,6 +237,9 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
   {
     switch (featureID)
     {
+      case AlePackage.EXTENDED_CLASS__ABSTRACT:
+        setAbstract(ABSTRACT_EDEFAULT);
+        return;
       case AlePackage.EXTENDED_CLASS__EXTENDS:
         getExtends().clear();
         return;
@@ -205,6 +260,8 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
   {
     switch (featureID)
     {
+      case AlePackage.EXTENDED_CLASS__ABSTRACT:
+        return abstract_ != ABSTRACT_EDEFAULT;
       case AlePackage.EXTENDED_CLASS__EXTENDS:
         return extends_ != null && !extends_.isEmpty();
       case AlePackage.EXTENDED_CLASS__MUTABLES:
@@ -224,7 +281,9 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (extends: ");
+    result.append(" (abstract: ");
+    result.append(abstract_);
+    result.append(", extends: ");
     result.append(extends_);
     result.append(')');
     return result.toString();

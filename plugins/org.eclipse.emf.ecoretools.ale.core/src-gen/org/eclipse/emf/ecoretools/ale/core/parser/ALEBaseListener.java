@@ -809,6 +809,19 @@ public class ALEBaseListener implements ALEListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRConcreteOperation(@NotNull ALEParser.RConcreteOperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRConcreteOperation(@NotNull ALEParser.RConcreteOperationContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterServiceCall(@NotNull ALEParser.ServiceCallContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -1037,6 +1050,19 @@ public class ALEBaseListener implements ALEListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitErrorStringLit(@NotNull ALEParser.ErrorStringLitContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRAbstractOperation(@NotNull ALEParser.RAbstractOperationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRAbstractOperation(@NotNull ALEParser.RAbstractOperationContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

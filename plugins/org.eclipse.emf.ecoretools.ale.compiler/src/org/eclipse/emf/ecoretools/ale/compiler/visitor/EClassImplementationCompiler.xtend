@@ -493,9 +493,11 @@ class EClassImplementationCompiler {
 				}
 				return hash;
 			''').addModifiers(PUBLIC).build)
-		]).applyIfTrue(!eClass.abstract, [
+		]).applyIfTrue(!eClass.abstract && !isMapElement, [
 			addMethod(
-				MethodSpec.methodBuilder('accept').addParameter(
+				MethodSpec.methodBuilder('accept').
+				addAnnotation(Override)
+				.addParameter(
 					ClassName.get(namingUtils.visitorInterfacePackageName(packageRoot),
 						namingUtils.visitorInterfaceClassName), 'visitor').addModifiers(PUBLIC).returns(Object).
 					addCode('''return visitor.visit«eClass.EPackage.name»__«eClass.name»(this);''').build

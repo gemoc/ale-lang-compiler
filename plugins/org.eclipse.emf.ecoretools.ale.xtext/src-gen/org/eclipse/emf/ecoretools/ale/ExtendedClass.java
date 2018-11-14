@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.emf.ecoretools.ale.ExtendedClass#isAbstract <em>Abstract</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.ExtendedClass#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.ExtendedClass#getMutables <em>Mutables</em>}</li>
  * </ul>
@@ -37,6 +38,32 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface ExtendedClass extends BehavioredClass
 {
+  /**
+   * Returns the value of the '<em><b>Abstract</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Abstract</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Abstract</em>' attribute.
+   * @see #setAbstract(boolean)
+   * @see org.eclipse.emf.ecoretools.ale.AlePackage#getExtendedClass_Abstract()
+   * @model
+   * @generated
+   */
+  boolean isAbstract();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.ecoretools.ale.ExtendedClass#isAbstract <em>Abstract</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Abstract</em>' attribute.
+   * @see #isAbstract()
+   * @generated
+   */
+  void setAbstract(boolean value);
+
   /**
    * Returns the value of the '<em><b>Extends</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.emf.ecoretools.ale.AbstractOperation;
 import org.eclipse.emf.ecoretools.ale.Add;
 import org.eclipse.emf.ecoretools.ale.AleFactory;
 import org.eclipse.emf.ecoretools.ale.AlePackage;
@@ -310,6 +311,13 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    * @generated
    */
   private EClass rTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass abstractOperationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -760,7 +768,7 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getExtendedClass_Extends()
+  public EAttribute getExtendedClass_Abstract()
   {
     return (EAttribute)extendedClassEClass.getEStructuralFeatures().get(0);
   }
@@ -770,9 +778,19 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getExtendedClass_Extends()
+  {
+    return (EAttribute)extendedClassEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getExtendedClass_Mutables()
   {
-    return (EReference)extendedClassEClass.getEStructuralFeatures().get(1);
+    return (EReference)extendedClassEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1533,6 +1551,16 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
   public EAttribute getrType_Name()
   {
     return (EAttribute)rTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAbstractOperation()
+  {
+    return abstractOperationEClass;
   }
 
   /**
@@ -2334,6 +2362,7 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
     createEReference(behavioredClassEClass, BEHAVIORED_CLASS__OPERATIONS);
 
     extendedClassEClass = createEClass(EXTENDED_CLASS);
+    createEAttribute(extendedClassEClass, EXTENDED_CLASS__ABSTRACT);
     createEAttribute(extendedClassEClass, EXTENDED_CLASS__EXTENDS);
     createEReference(extendedClassEClass, EXTENDED_CLASS__MUTABLES);
 
@@ -2438,6 +2467,8 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
 
     rTypeEClass = createEClass(RTYPE);
     createEAttribute(rTypeEClass, RTYPE__NAME);
+
+    abstractOperationEClass = createEClass(ABSTRACT_OPERATION);
 
     callEClass = createEClass(CALL);
     createEReference(callEClass, CALL__TARGET);
@@ -2590,6 +2621,7 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
     typeLiteralEClass.getESuperTypes().add(this.getliteral());
     typeLiteralEClass.getESuperTypes().add(this.getrType());
     classifierTypeRuleEClass.getESuperTypes().add(this.gettypeLiteral());
+    abstractOperationEClass.getESuperTypes().add(this.getOperation());
     callEClass.getESuperTypes().add(this.getExpression());
     featureEClass.getESuperTypes().add(this.getExpression());
     applyEClass.getESuperTypes().add(this.getExpression());
@@ -2644,6 +2676,7 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
     initEReference(getBehavioredClass_Operations(), this.getOperation(), null, "operations", null, 0, -1, BehavioredClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(extendedClassEClass, ExtendedClass.class, "ExtendedClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getExtendedClass_Abstract(), ecorePackage.getEBoolean(), "abstract", null, 0, 1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getExtendedClass_Extends(), ecorePackage.getEString(), "extends", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExtendedClass_Mutables(), this.getMutableRef(), null, "mutables", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2748,6 +2781,8 @@ public class AlePackageImpl extends EPackageImpl implements AlePackage
 
     initEClass(rTypeEClass, rType.class, "rType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getrType_Name(), ecorePackage.getEString(), "name", null, 0, 1, rType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(abstractOperationEClass, AbstractOperation.class, "AbstractOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(callEClass, Call.class, "Call", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCall_Target(), this.getExpression(), null, "target", null, 0, 1, Call.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

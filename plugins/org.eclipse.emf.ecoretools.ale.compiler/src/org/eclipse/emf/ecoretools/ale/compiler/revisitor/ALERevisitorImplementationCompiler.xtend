@@ -80,7 +80,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
-import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.xbase.lib.Functions.Function0
 
 class ALERevisitorImplementationCompiler {
@@ -188,14 +187,14 @@ class ALERevisitorImplementationCompiler {
 				arg0.eCls.EPackage.name
 			}
 		})
-		val typeParams = resolved.sortWith(comparator).map [
+		val typeParams = resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].sortWith(comparator).map [
 			ClassName.get('''«dsl.revisitorImplementationPackage».operation''', it.eCls.name)
 		]
 		val fullInterfaceType = ParameterizedTypeName.get(
 			ClassName.get(syntax.revisitorPackageFqn, syntax.revisitorInterfaceName), typeParams)
 
 		val revisitorInterface = TypeSpec.interfaceBuilder(interfaceName).addSuperinterface(fullInterfaceType).
-			addModifiers(Modifier.PUBLIC).addMethods(syntax.allClasses.map [
+			addModifiers(Modifier.PUBLIC).addMethods(syntax.allClasses.filter[it.instanceClassName != "java.util.Map$Entry" ].map [
 				MethodSpec.methodBuilder(it.denotationName).returns(
 					ClassName.get('''«dsl.revisitorImplementationPackage».operation''', it.name)).addParameter(
 					it.solveType as TypeName, "it").addStatement('''return new $T(it, this)''',
@@ -207,7 +206,7 @@ class ALERevisitorImplementationCompiler {
 
 		javaFile.writeTo(compileDirectory)
 
-		resolved.forEach [
+		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].forEach [
 			try {
 				val operationInterface = TypeSpec.interfaceBuilder(it.eCls.name).addSuperinterfaces(eCls.ESuperTypes.map [
 					ClassName.get('''«dsl.revisitorImplementationPackage».operation''', it.name)
@@ -456,7 +455,6 @@ class ALERevisitorImplementationCompiler {
 					} else {
 
 						// TODO: better identification of the caller in order to route to a $ operation or a service.
-						val openClazz = EcoreUtil2.getContainerOfType(call, ExtendedClass)
 						val argumentsh = call.arguments.head
 						val ts = argumentsh.infereType
 						val t = ts.head

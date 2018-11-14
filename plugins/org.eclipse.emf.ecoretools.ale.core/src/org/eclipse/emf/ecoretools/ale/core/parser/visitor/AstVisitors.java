@@ -26,8 +26,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEBaseVisitor;
-import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.CallExpContext;
-import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.CallOrApplyContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ExpressionContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.FeatureContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.NavContext;
@@ -35,6 +33,7 @@ import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.NavigationSegmentCon
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RAssignContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RAttributeContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RBlockContext;
+import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RConcreteOperationContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RExpressionContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RExpressionStmtContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RForEachContext;
@@ -43,7 +42,6 @@ import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RInsertContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RMutableRefContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RNewClassContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ROpenClassContext;
-import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ROperationContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RParametersContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RRemoveContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RRootContext;
@@ -53,7 +51,6 @@ import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RTypeContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RVarDeclContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RVariableContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RWhileContext;
-import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ServiceCallContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.VarRefContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ModelBuilder.Parameter;
 import org.eclipse.emf.ecoretools.ale.implementation.Attribute;
@@ -299,7 +296,7 @@ public class AstVisitors {
 		}
 		
 		@Override
-		public Method visitROperation(ROperationContext ctx) {
+		public Method visitRConcreteOperation(RConcreteOperationContext ctx) {
 			String keyword = 
 				ctx
 				.children
@@ -319,9 +316,9 @@ public class AstVisitors {
 				
 			Block body = (new BlockVisitor(parseRes)).visit(ctx.rBlock());
 			
-			String className = ctx.parent.getChild(1).getText();
+			String className = ctx.parent.parent.getChild(2).getText();
 			
-			RuleContext parent = ctx.parent;
+			RuleContext parent = ctx.parent.parent;
 			if(parent instanceof RNewClassContext) {
 				className = ((RNewClassContext)parent).name.getText();
 			}

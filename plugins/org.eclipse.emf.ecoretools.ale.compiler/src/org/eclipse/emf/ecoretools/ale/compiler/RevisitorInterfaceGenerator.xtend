@@ -26,8 +26,8 @@ class RevisitorInterfaceGenerator {
 		]
 		val Iterable<EClassifier> classifiers = pkg.EClassifiers + complementaryClassifiers
 		val eclasses = classifiers.filter(EClass)
-		val localClasses = eclasses.sortBy[name].buildExtendedFactoryNames
-		val allClasses = pkg.allClassesCompl.buildExtendedFactoryNames
+		val localClasses = eclasses.sortBy[name].filter[it.instanceClassName != "java.util.Map$Entry"].toList.buildExtendedFactoryNames
+		val allClasses = pkg.allClassesCompl.filter[it.instanceClassName != "java.util.Map$Entry"].toList.buildExtendedFactoryNames
 		return '''
 			package «pkg.revisitorPackageFqn»;
 			

@@ -476,6 +476,13 @@ public interface ALEVisitor<T> extends ParseTreeVisitor<T> {
 	T visitRWhile(@NotNull ALEParser.RWhileContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link ALEParser#rConcreteOperation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRConcreteOperation(@NotNull ALEParser.RConcreteOperationContext ctx);
+
+	/**
 	 * Visit a parse tree produced by the {@code ServiceCall}
 	 * labeled alternative in {@link ALEParser#callExp}.
 	 * @param ctx the parse tree
@@ -609,6 +616,13 @@ public interface ALEVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitErrorStringLit(@NotNull ALEParser.ErrorStringLitContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link ALEParser#rAbstractOperation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRAbstractOperation(@NotNull ALEParser.RAbstractOperationContext ctx);
 
 	/**
 	 * Visit a parse tree produced by the {@code Paren}

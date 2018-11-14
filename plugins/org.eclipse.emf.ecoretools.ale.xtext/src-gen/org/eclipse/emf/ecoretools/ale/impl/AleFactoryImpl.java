@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import org.eclipse.emf.ecoretools.ale.AbstractOperation;
 import org.eclipse.emf.ecoretools.ale.Add;
 import org.eclipse.emf.ecoretools.ale.AleFactory;
 import org.eclipse.emf.ecoretools.ale.AlePackage;
@@ -170,6 +171,7 @@ public class AleFactoryImpl extends EFactoryImpl implements AleFactory
       case AlePackage.TYPE_LITERAL: return createtypeLiteral();
       case AlePackage.CLASSIFIER_TYPE_RULE: return createclassifierTypeRule();
       case AlePackage.RTYPE: return createrType();
+      case AlePackage.ABSTRACT_OPERATION: return createAbstractOperation();
       case AlePackage.CALL: return createCall();
       case AlePackage.FEATURE: return createFeature();
       case AlePackage.APPLY: return createApply();
@@ -547,6 +549,17 @@ public class AleFactoryImpl extends EFactoryImpl implements AleFactory
   {
     rTypeImpl rType = new rTypeImpl();
     return rType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AbstractOperation createAbstractOperation()
+  {
+    AbstractOperationImpl abstractOperation = new AbstractOperationImpl();
+    return abstractOperation;
   }
 
   /**

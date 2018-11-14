@@ -30,7 +30,7 @@ class VisitorInterfaceCompiler {
 	def compile() {
 		val factory = TypeSpec.interfaceBuilder(namingUtils.visitorInterfaceClassName).addMethods(syntaxes.values.map [
 			key
-		].map[allClasses].flatten.map [ eClass |
+		].map[allClasses].flatten.filter[!it.abstract].map [ eClass |
 			MethodSpec.methodBuilder('''visit«eClass.EPackage.name»__«eClass.name»''').addParameter(
 				ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName), 'it').
 				addModifiers(ABSTRACT, PUBLIC).returns(Object).build

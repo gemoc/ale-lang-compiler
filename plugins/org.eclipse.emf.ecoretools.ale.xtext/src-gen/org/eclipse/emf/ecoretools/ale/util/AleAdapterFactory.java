@@ -21,6 +21,7 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecoretools.ale.AbstractOperation;
 import org.eclipse.emf.ecoretools.ale.Add;
 import org.eclipse.emf.ecoretools.ale.AlePackage;
 import org.eclipse.emf.ecoretools.ale.And;
@@ -302,6 +303,11 @@ public class AleAdapterFactory extends AdapterFactoryImpl
       public Adapter caserType(rType object)
       {
         return createrTypeAdapter();
+      }
+      @Override
+      public Adapter caseAbstractOperation(AbstractOperation object)
+      {
+        return createAbstractOperationAdapter();
       }
       @Override
       public Adapter caseCall(Call object)
@@ -951,6 +957,21 @@ public class AleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createrTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecoretools.ale.AbstractOperation <em>Abstract Operation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.ecoretools.ale.AbstractOperation
+   * @generated
+   */
+  public Adapter createAbstractOperationAdapter()
   {
     return null;
   }

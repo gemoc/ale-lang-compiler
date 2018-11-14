@@ -25,6 +25,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ale.ecore#//BehavioredClass/operations"/>
     </genClasses>
     <genClasses ecoreClass="Ale.ecore#//ExtendedClass">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ale.ecore#//ExtendedClass/abstract"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ale.ecore#//ExtendedClass/extends"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ale.ecore#//ExtendedClass/mutables"/>
     </genClasses>
@@ -124,6 +125,7 @@
     <genClasses ecoreClass="Ale.ecore#//rType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ale.ecore#//rType/name"/>
     </genClasses>
+    <genClasses ecoreClass="Ale.ecore#//AbstractOperation"/>
     <genClasses ecoreClass="Ale.ecore#//Call">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Ale.ecore#//Call/target"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Ale.ecore#//Call/name"/>

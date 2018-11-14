@@ -314,6 +314,15 @@ public interface AleFactory extends EFactory
   rType createrType();
 
   /**
+   * Returns a new object of class '<em>Abstract Operation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Abstract Operation</em>'.
+   * @generated
+   */
+  AbstractOperation createAbstractOperation();
+
+  /**
    * Returns a new object of class '<em>Call</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

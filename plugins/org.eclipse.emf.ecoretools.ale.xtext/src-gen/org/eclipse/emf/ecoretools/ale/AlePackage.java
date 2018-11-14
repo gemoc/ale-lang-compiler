@@ -274,13 +274,22 @@ public interface AlePackage extends EPackage
   int EXTENDED_CLASS__OPERATIONS = BEHAVIORED_CLASS__OPERATIONS;
 
   /**
+   * The feature id for the '<em><b>Abstract</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTENDED_CLASS__ABSTRACT = BEHAVIORED_CLASS_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Extends</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXTENDED_CLASS__EXTENDS = BEHAVIORED_CLASS_FEATURE_COUNT + 0;
+  int EXTENDED_CLASS__EXTENDS = BEHAVIORED_CLASS_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Mutables</b></em>' containment reference list.
@@ -289,7 +298,7 @@ public interface AlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXTENDED_CLASS__MUTABLES = BEHAVIORED_CLASS_FEATURE_COUNT + 1;
+  int EXTENDED_CLASS__MUTABLES = BEHAVIORED_CLASS_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Extended Class</em>' class.
@@ -298,7 +307,7 @@ public interface AlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int EXTENDED_CLASS_FEATURE_COUNT = BEHAVIORED_CLASS_FEATURE_COUNT + 2;
+  int EXTENDED_CLASS_FEATURE_COUNT = BEHAVIORED_CLASS_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.ecoretools.ale.impl.MutableRefImpl <em>Mutable Ref</em>}' class.
@@ -1290,6 +1299,79 @@ public interface AlePackage extends EPackage
   int RTYPE_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.ecoretools.ale.impl.AbstractOperationImpl <em>Abstract Operation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.ecoretools.ale.impl.AbstractOperationImpl
+   * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getAbstractOperation()
+   * @generated
+   */
+  int ABSTRACT_OPERATION = 31;
+
+  /**
+   * The feature id for the '<em><b>Tag</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_OPERATION__TAG = OPERATION__TAG;
+
+  /**
+   * The feature id for the '<em><b>Dispatch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_OPERATION__DISPATCH = OPERATION__DISPATCH;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_OPERATION__TYPE = OPERATION__TYPE;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_OPERATION__NAME = OPERATION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Params</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_OPERATION__PARAMS = OPERATION__PARAMS;
+
+  /**
+   * The feature id for the '<em><b>Body</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_OPERATION__BODY = OPERATION__BODY;
+
+  /**
+   * The number of structural features of the '<em>Abstract Operation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABSTRACT_OPERATION_FEATURE_COUNT = OPERATION_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.ecoretools.ale.impl.CallImpl <em>Call</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1297,7 +1379,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getCall()
    * @generated
    */
-  int CALL = 31;
+  int CALL = 32;
 
   /**
    * The feature id for the '<em><b>Target</b></em>' containment reference.
@@ -1343,7 +1425,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getFeature()
    * @generated
    */
-  int FEATURE = 32;
+  int FEATURE = 33;
 
   /**
    * The feature id for the '<em><b>Target</b></em>' containment reference.
@@ -1380,7 +1462,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getApply()
    * @generated
    */
-  int APPLY = 33;
+  int APPLY = 34;
 
   /**
    * The feature id for the '<em><b>Target</b></em>' containment reference.
@@ -1453,7 +1535,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getMult()
    * @generated
    */
-  int MULT = 34;
+  int MULT = 35;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1490,7 +1572,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getAdd()
    * @generated
    */
-  int ADD = 35;
+  int ADD = 36;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1527,7 +1609,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getComp()
    * @generated
    */
-  int COMP = 36;
+  int COMP = 37;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1564,7 +1646,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getAnd()
    * @generated
    */
-  int AND = 37;
+  int AND = 38;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1601,7 +1683,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getOr()
    * @generated
    */
-  int OR = 38;
+  int OR = 39;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1638,7 +1720,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getXor()
    * @generated
    */
-  int XOR = 39;
+  int XOR = 40;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1675,7 +1757,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getImplie()
    * @generated
    */
-  int IMPLIE = 40;
+  int IMPLIE = 41;
 
   /**
    * The feature id for the '<em><b>Left</b></em>' containment reference.
@@ -1712,7 +1794,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getNot()
    * @generated
    */
-  int NOT = 41;
+  int NOT = 42;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -1740,7 +1822,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getMin()
    * @generated
    */
-  int MIN = 42;
+  int MIN = 43;
 
   /**
    * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -1768,7 +1850,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getVarRef()
    * @generated
    */
-  int VAR_REF = 43;
+  int VAR_REF = 44;
 
   /**
    * The feature id for the '<em><b>ID</b></em>' attribute.
@@ -1796,7 +1878,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getLit()
    * @generated
    */
-  int LIT = 44;
+  int LIT = 45;
 
   /**
    * The feature id for the '<em><b>Literal</b></em>' containment reference.
@@ -1824,7 +1906,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getConditional()
    * @generated
    */
-  int CONDITIONAL = 45;
+  int CONDITIONAL = 46;
 
   /**
    * The feature id for the '<em><b>Cond</b></em>' containment reference.
@@ -1870,7 +1952,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getLet()
    * @generated
    */
-  int LET = 46;
+  int LET = 47;
 
   /**
    * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -1907,7 +1989,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getString()
    * @generated
    */
-  int STRING = 47;
+  int STRING = 48;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1935,7 +2017,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getInt()
    * @generated
    */
-  int INT = 48;
+  int INT = 49;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1963,7 +2045,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getReal()
    * @generated
    */
-  int REAL = 49;
+  int REAL = 50;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -1991,7 +2073,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getTrue()
    * @generated
    */
-  int TRUE = 50;
+  int TRUE = 51;
 
   /**
    * The number of structural features of the '<em>True</em>' class.
@@ -2010,7 +2092,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getFalse()
    * @generated
    */
-  int FALSE = 51;
+  int FALSE = 52;
 
   /**
    * The number of structural features of the '<em>False</em>' class.
@@ -2029,7 +2111,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getNull()
    * @generated
    */
-  int NULL = 52;
+  int NULL = 53;
 
   /**
    * The number of structural features of the '<em>Null</em>' class.
@@ -2048,7 +2130,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getSequence()
    * @generated
    */
-  int SEQUENCE = 53;
+  int SEQUENCE = 54;
 
   /**
    * The feature id for the '<em><b>Params</b></em>' containment reference list.
@@ -2076,7 +2158,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getOrderedSet()
    * @generated
    */
-  int ORDERED_SET = 54;
+  int ORDERED_SET = 55;
 
   /**
    * The feature id for the '<em><b>Params</b></em>' containment reference list.
@@ -2104,7 +2186,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getEnum()
    * @generated
    */
-  int ENUM = 55;
+  int ENUM = 56;
 
   /**
    * The number of structural features of the '<em>Enum</em>' class.
@@ -2123,7 +2205,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getStringType()
    * @generated
    */
-  int STRING_TYPE = 56;
+  int STRING_TYPE = 57;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2151,7 +2233,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getIntType()
    * @generated
    */
-  int INT_TYPE = 57;
+  int INT_TYPE = 58;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2179,7 +2261,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getRealType()
    * @generated
    */
-  int REAL_TYPE = 58;
+  int REAL_TYPE = 59;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2207,7 +2289,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getBoolType()
    * @generated
    */
-  int BOOL_TYPE = 59;
+  int BOOL_TYPE = 60;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2235,7 +2317,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getSeqType()
    * @generated
    */
-  int SEQ_TYPE = 60;
+  int SEQ_TYPE = 61;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2272,7 +2354,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getSetType()
    * @generated
    */
-  int SET_TYPE = 61;
+  int SET_TYPE = 62;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2309,7 +2391,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getClassifierSetType()
    * @generated
    */
-  int CLASSIFIER_SET_TYPE = 62;
+  int CLASSIFIER_SET_TYPE = 63;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2346,7 +2428,7 @@ public interface AlePackage extends EPackage
    * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getClassifierType()
    * @generated
    */
-  int CLASSIFIER_TYPE = 63;
+  int CLASSIFIER_TYPE = 64;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2526,6 +2608,17 @@ public interface AlePackage extends EPackage
    * @generated
    */
   EClass getExtendedClass();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.ecoretools.ale.ExtendedClass#isAbstract <em>Abstract</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Abstract</em>'.
+   * @see org.eclipse.emf.ecoretools.ale.ExtendedClass#isAbstract()
+   * @see #getExtendedClass()
+   * @generated
+   */
+  EAttribute getExtendedClass_Abstract();
 
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecoretools.ale.ExtendedClass#getExtends <em>Extends</em>}'.
@@ -3358,6 +3451,16 @@ public interface AlePackage extends EPackage
    * @generated
    */
   EAttribute getrType_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.AbstractOperation <em>Abstract Operation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Abstract Operation</em>'.
+   * @see org.eclipse.emf.ecoretools.ale.AbstractOperation
+   * @generated
+   */
+  EClass getAbstractOperation();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.Call <em>Call</em>}'.
@@ -4305,6 +4408,14 @@ public interface AlePackage extends EPackage
     EClass EXTENDED_CLASS = eINSTANCE.getExtendedClass();
 
     /**
+     * The meta object literal for the '<em><b>Abstract</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EXTENDED_CLASS__ABSTRACT = eINSTANCE.getExtendedClass_Abstract();
+
+    /**
      * The meta object literal for the '<em><b>Extends</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4979,6 +5090,16 @@ public interface AlePackage extends EPackage
      * @generated
      */
     EAttribute RTYPE__NAME = eINSTANCE.getrType_Name();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.impl.AbstractOperationImpl <em>Abstract Operation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.ecoretools.ale.impl.AbstractOperationImpl
+     * @see org.eclipse.emf.ecoretools.ale.impl.AlePackageImpl#getAbstractOperation()
+     * @generated
+     */
+    EClass ABSTRACT_OPERATION = eINSTANCE.getAbstractOperation();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.impl.CallImpl <em>Call</em>}' class.

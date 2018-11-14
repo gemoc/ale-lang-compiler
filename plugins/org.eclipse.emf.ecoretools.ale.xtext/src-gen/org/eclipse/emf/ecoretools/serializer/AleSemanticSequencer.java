@@ -16,6 +16,7 @@ import com.google.inject.Inject;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecoretools.ale.AbstractOperation;
 import org.eclipse.emf.ecoretools.ale.Add;
 import org.eclipse.emf.ecoretools.ale.AlePackage;
 import org.eclipse.emf.ecoretools.ale.And;
@@ -96,6 +97,9 @@ public class AleSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == AlePackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case AlePackage.ABSTRACT_OPERATION:
+				sequence_rOperation(context, (AbstractOperation) semanticObject); 
+				return; 
 			case AlePackage.ADD:
 				sequence_expression(context, (Add) semanticObject); 
 				return; 
@@ -1119,9 +1123,28 @@ public class AleSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     rOpenClass returns ExtendedClass
 	 *
 	 * Constraint:
-	 *     (name=rQualified (extends+=rQualified extends+=rQualified*)? mutables+=MutableRef* attributes+=rAttribute* operations+=rOperation*)
+	 *     (
+	 *         abstract?='abstract'? 
+	 *         name=rQualified 
+	 *         (extends+=rQualified extends+=rQualified*)? 
+	 *         mutables+=MutableRef* 
+	 *         attributes+=rAttribute* 
+	 *         operations+=rOperation*
+	 *     )
 	 */
 	protected void sequence_rOpenClass(ISerializationContext context, ExtendedClass semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     rOperation returns AbstractOperation
+	 *
+	 * Constraint:
+	 *     (tag+=rTag* type=rType name=Ident (params+=rVariable params+=rVariable*)?)
+	 */
+	protected void sequence_rOperation(ISerializationContext context, AbstractOperation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

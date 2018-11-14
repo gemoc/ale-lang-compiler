@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
 
+import org.eclipse.emf.ecoretools.ale.AbstractOperation;
 import org.eclipse.emf.ecoretools.ale.Add;
 import org.eclipse.emf.ecoretools.ale.AlePackage;
 import org.eclipse.emf.ecoretools.ale.And;
@@ -375,6 +376,14 @@ public class AleSwitch<T> extends Switch<T>
       {
         rType rType = (rType)theEObject;
         T result = caserType(rType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case AlePackage.ABSTRACT_OPERATION:
+      {
+        AbstractOperation abstractOperation = (AbstractOperation)theEObject;
+        T result = caseAbstractOperation(abstractOperation);
+        if (result == null) result = caseOperation(abstractOperation);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1155,6 +1164,22 @@ public class AleSwitch<T> extends Switch<T>
    * @generated
    */
   public T caserType(rType object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Abstract Operation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Abstract Operation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAbstractOperation(AbstractOperation object)
   {
     return null;
   }

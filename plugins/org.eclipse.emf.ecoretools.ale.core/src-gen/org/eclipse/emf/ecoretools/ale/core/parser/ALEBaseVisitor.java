@@ -510,6 +510,14 @@ public class ALEBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements AL
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitRConcreteOperation(@NotNull ALEParser.RConcreteOperationContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitServiceCall(@NotNull ALEParser.ServiceCallContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -647,6 +655,14 @@ public class ALEBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements AL
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitErrorStringLit(@NotNull ALEParser.ErrorStringLitContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitRAbstractOperation(@NotNull ALEParser.RAbstractOperationContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

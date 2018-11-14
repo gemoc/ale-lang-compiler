@@ -745,6 +745,17 @@ public interface ALEListener extends ParseTreeListener {
 	void exitRWhile(@NotNull ALEParser.RWhileContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link ALEParser#rConcreteOperation}.
+	 * @param ctx the parse tree
+	 */
+	void enterRConcreteOperation(@NotNull ALEParser.RConcreteOperationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ALEParser#rConcreteOperation}.
+	 * @param ctx the parse tree
+	 */
+	void exitRConcreteOperation(@NotNull ALEParser.RConcreteOperationContext ctx);
+
+	/**
 	 * Enter a parse tree produced by the {@code ServiceCall}
 	 * labeled alternative in {@link ALEParser#callExp}.
 	 * @param ctx the parse tree
@@ -959,6 +970,17 @@ public interface ALEListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitErrorStringLit(@NotNull ALEParser.ErrorStringLitContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link ALEParser#rAbstractOperation}.
+	 * @param ctx the parse tree
+	 */
+	void enterRAbstractOperation(@NotNull ALEParser.RAbstractOperationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ALEParser#rAbstractOperation}.
+	 * @param ctx the parse tree
+	 */
+	void exitRAbstractOperation(@NotNull ALEParser.RAbstractOperationContext ctx);
 
 	/**
 	 * Enter a parse tree produced by the {@code Paren}

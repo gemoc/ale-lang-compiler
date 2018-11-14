@@ -30,14 +30,16 @@ class VisitorImplementationCompiler {
 			ClassName.get(namingUtils.visitorInterfacePackageName(packageRoot), namingUtils.visitorInterfaceClassName)).
 			addMethods(syntaxes.values.map [
 				key
-			].map[allClasses].flatten.map [ eClass |
+			].map[allClasses].flatten.filter[!it.abstract].map [ eClass |
 				MethodSpec.methodBuilder('''visit«eClass.EPackage.name»__«eClass.name»''').addParameter(
 					ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName), 'it').
-					addModifiers(PUBLIC)
-					.addCode('''
-					return new $T(it, this);
-					''', ClassName.get(namingUtils.operationImplementationPackageName(packageRoot, eClass), namingUtils.operationImplementationClassName(eClass)))
-					.returns(ClassName.get(namingUtils.operationInterfacePackageName(packageRoot, eClass), namingUtils.operationInterfaceClassName(eClass))).build
+					addModifiers(PUBLIC).addCode('''
+						return new $T(it, this);
+					''',
+						ClassName.get(namingUtils.operationImplementationPackageName(packageRoot, eClass),
+							namingUtils.operationImplementationClassName(eClass))).returns(
+						ClassName.get(namingUtils.operationInterfacePackageName(packageRoot, eClass),
+							namingUtils.operationInterfaceClassName(eClass))).build
 			]).addModifiers(PUBLIC).build
 
 		val javaFile = JavaFile.builder(namingUtils.visitorImplementationPackageName(packageRoot), factory).build
