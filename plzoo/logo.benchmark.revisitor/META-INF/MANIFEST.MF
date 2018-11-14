@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Revisitor
+Bundle-SymbolicName: logo.benchmark.revisitor
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: logo.lang.revisitor;bundle-version="1.0.0",
+ logo.model,
+ org.eclipse.emf.ecore.xmi

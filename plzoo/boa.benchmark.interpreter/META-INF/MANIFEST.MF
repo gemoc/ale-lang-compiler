@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Interpreter
-Bundle-SymbolicName: boa.benchmark.interpreter
-Bundle-Version: 1.0.0.qualifier
-Export-Package: boa.benchmark.interpreter
-Require-Bundle: boa.lang,
- org.eclipse.emf.ecore,
- org.eclipse.emf.ecore.xmi

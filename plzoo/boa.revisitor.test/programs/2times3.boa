@@ -1,8 +1,0 @@
-File {
-	commands {
-		ArithOpTimes {
-			lhs Int { value 2}
-			rhs Int { value 3}
-		}
-	}
-}

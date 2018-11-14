@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Revisitor
+Bundle-SymbolicName: logo.lang.revisitor
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: logo.model,
+ logo.lang.services;bundle-version="1.0.0",
+ org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0",
+ org.eclipse.emf.ecoretools.ale.core;bundle-version="0.0.1"
+Export-Package: LogoProgram_revisitor.impl,
+ LogoProgram_revisitor.impl.operation,
+ LogoProgram_revisitor.impl.operation.impl

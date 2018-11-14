@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Visitor
+Bundle-SymbolicName: logo.benchmark.visitor
+Bundle-Version: 1.0.0.qualifier
+Export-Package: logo.benchmark.visitor
+Require-Bundle: logo.lang.visitor;bundle-version="1.0.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi

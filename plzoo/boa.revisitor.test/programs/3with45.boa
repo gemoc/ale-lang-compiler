@@ -1,8 +1,0 @@
-File {
-	commands {
-		With {
-			lhs BObject { fields { Field a { value Int { value 3 } }}}
-			rhs BObject { fields { Field a { value Int { value 4 } }, Field b { value Int { value 5 } }}}
-		}
-	}
-}
