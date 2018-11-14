@@ -1,0 +1,7 @@
+plzoo/logo.benchmark.scripts/interpreter-graalvm-logo-fractal.log filter=lfs diff=lfs merge=lfs -text
+plzoo/logo.benchmark.scripts/interpreter-java8-logo-fractal.log filter=lfs diff=lfs merge=lfs -text
+plzoo/logo.benchmark.scripts/revisitor-graalvm-logo-fractal.log filter=lfs diff=lfs merge=lfs -text
+plzoo/logo.benchmark.scripts/revisitor-java8-logo-fractal.log filter=lfs diff=lfs merge=lfs -text
+plzoo/logo.benchmark.scripts/truffle-graalvmtruffle-logo-fractal.log filter=lfs diff=lfs merge=lfs -text
+plzoo/logo.benchmark.scripts/visitor-graalvm-logo-fractal.log filter=lfs diff=lfs merge=lfs -text
+plzoo/logo.benchmark.scripts/visitor-java8-logo-fractal.log filter=lfs diff=lfs merge=lfs -text
