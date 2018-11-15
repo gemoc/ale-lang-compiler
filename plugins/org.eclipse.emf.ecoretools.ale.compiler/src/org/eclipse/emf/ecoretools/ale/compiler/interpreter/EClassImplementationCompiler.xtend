@@ -38,7 +38,6 @@ import org.eclipse.acceleo.query.ast.SetInExtensionLiteral
 import org.eclipse.acceleo.query.ast.StringLiteral
 import org.eclipse.acceleo.query.ast.TypeLiteral
 import org.eclipse.acceleo.query.ast.VarRef
-import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.acceleo.query.validation.type.EClassifierType
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
@@ -67,7 +66,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ConditionalBlock
@@ -80,7 +78,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.FeatureRemove
 import org.eclipse.emf.ecoretools.ale.implementation.ForEach
 import org.eclipse.emf.ecoretools.ale.implementation.If
 import org.eclipse.emf.ecoretools.ale.implementation.Method
-import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
@@ -97,10 +94,9 @@ class EClassImplementationCompiler {
 	var List<ResolvedClass> resolved
 	var Map<String, Class<?>> registeredServices
 	var Dsl dsl
-//	var List<ParseResult<ModelUnit>> parsedSemantics
-//	var IQueryEnvironment queryEnvironment
 	val String packageRoot
 	var BaseValidator base
+	var List<Method> registreredDispatch = newArrayList
 	
 	
 	private static class CompilerExpressionCtx {
@@ -309,7 +305,7 @@ class EClassImplementationCompiler {
 							return msgs;
 							''', fieldType, ENotificationImpl, Notification)
 							.addModifiers(PUBLIC)
-						.build // TODO + taking into account into eSet/eGet implementation
+						.build
 						
 							#[setter, basicSetter]
 						} else { 
@@ -551,14 +547,7 @@ class EClassImplementationCompiler {
 				return super.eInverseRemove(otherEnd, featureID, msgs);
 			''').build
 				
-		val constructor = MethodSpec.constructorBuilder.addCode('''
-			super();
-«««			«IF aleClass !== null»
-«««			«FOR method: aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true']»
-«««			this.dispatch«method.operationRef.name.toFirstUpper» = com.oracle.truffle.api.Truffle.getRuntime().createIndirectCallNode();
-«««			«ENDFOR»
-«««			«ENDIF»
-		''').addModifiers(PROTECTED).build
+		
 
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
 		val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
@@ -581,7 +570,7 @@ class EClassImplementationCompiler {
 				addSuperinterface(ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName))
 			]).addFields(fieldsEAttributes + fieldsEReferences).addMethods(
 			methodsEAttributes + methodsEReferences +
-				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod, constructor, eInverseRemove] +
+				#[eStaticClassMethod, eSetMethod, eUnsetMethod, eGetMethod, eIsSetMethod, eInverseRemove] +
 				eInverseAdd).applyIfTrue(isMapElement, [
 			it.addField(FieldSpec.builder(int, 'hash', PROTECTED).initializer('-1').build).addMethod(
 				MethodSpec.methodBuilder('setHash')
@@ -606,6 +595,8 @@ class EClassImplementationCompiler {
 		this.registeredServices = registeredServices
 		this.dsl = dsl
 		this.base = base
+		val implPackage = eClass.classImplementationPackageName(packageRoot)
+		
 		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass, aleClass).
 			applyIfTrue(aleClass !== null, [
 				addMethods(
@@ -618,17 +609,50 @@ class EClassImplementationCompiler {
 						"description", '$S', eClass.name).build
 				)
 			])
-//			.applyIfTrue(aleClass !== null, [
-//				addFields(aleClass.methods.filter [
-//					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
-//				].map [
-//					FieldSpec.builder(
-//						ClassName.get('com.oracle.truffle.api.nodes', 'IndirectCallNode'), '''dispatch«it.operationRef.name.toFirstUpper»''').
-//						addModifiers(PRIVATE).addAnnotation(
-//							ClassName.get("com.oracle.truffle.api.nodes.Node", "Child")).build
-//				])
-//			])
+			.applyIfTrue(aleClass !== null, [
+				addFields(aleClass.methods.filter [
+					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
+				].map [
+					FieldSpec.builder(ClassName.get(eClass.classImplementationPackageName(packageRoot), '''«eClass.name»DispatchWrapper«it.operationRef.name.toFirstUpper»'''), '''cached«it.operationRef.name.toFirstUpper»''')
+						.addModifiers(PRIVATE)
+						.addAnnotation(ClassName.get('com.oracle.truffle.api.CompilerDirectives', 'CompilationFinal'))
+						.build
+				])
+			])
+			.applyIfTrue(aleClass !== null, [
+				addMethods(aleClass.methods.filter [
+					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
+				].map [
+					MethodSpec.methodBuilder('''getCached«it.operationRef.name.toFirstUpper»''')
+						.returns(ClassName.get(eClass.classImplementationPackageName(packageRoot), '''«eClass.name»DispatchWrapper«it.operationRef.name.toFirstUpper»'''))
+						.addModifiers(PUBLIC)
+						.addCode('''
+						return this.cached«it.operationRef.name.toFirstUpper»;
+						''')
+						.build
+				])
+			])
+			.addMethod(MethodSpec.constructorBuilder.addCode('''
+				super();
+				«IF aleClass !== null»
+					«FOR method: aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true']»
+						this.cached«method.operationRef.name.toFirstUpper» = new «eClass.classImplementationPackageName(packageRoot)».«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»(this);
+					«ENDFOR»
+				«ENDIF»
+				«FOR method: registreredDispatch»
+					this.dispatch«(method.eContainer as ExtendedClass).name.toFirstUpper»«method.operationRef.name.toFirstUpper» = «implPackage».«(method.eContainer as ExtendedClass).name»Dispatch«method.operationRef.name.toFirstUpper»NodeGen.create(); 
+				«ENDFOR»
+			''')
+			
+			.addModifiers(PROTECTED).build)
+			.addFields(registreredDispatch.map[method|
+				FieldSpec
+					.builder(ClassName.get(implPackage, '''«(method.eContainer as ExtendedClass).name»Dispatch«method.operationRef.name.toFirstUpper»'''), '''dispatch«(method.eContainer as ExtendedClass).name.toFirstUpper»«method.operationRef.name.toFirstUpper»''', PRIVATE)
+					.build
+			])
 			.addModifiers(PUBLIC).build
+			
+		registreredDispatch.clear
 
 		val javaFile = JavaFile.builder(eClass.classImplementationPackageName(packageRoot), factory).build
 		javaFile.writeTo(directory)
@@ -645,12 +669,7 @@ class EClassImplementationCompiler {
 			aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'].forEach [ method |
 
 				val packageFQN = eClass.classImplementationPackageName(packageRoot)
-				val cyclicAssumptionType = ClassName.get('com.oracle.truffle.api.utilities', 'CyclicAssumption')
-				val rootCalltargetType = ClassName.get('com.oracle.truffle.api', 'RootCallTarget')
-				val assumptionType = ClassName.get('com.oracle.truffle.api', 'Assumption')
-				val truffleType = ClassName.get('com.oracle.truffle.api', 'Truffle')
 				val rootNodeName = '''«eClass.name»«method.operationRef.name.toFirstUpper»RootNode'''
-				val rootNodeType = ClassName.get(packageFQN, rootNodeName)
 				val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 				val virtualFrameType = ClassName.get('com.oracle.truffle.api.frame', 'VirtualFrame')
 				
@@ -675,7 +694,7 @@ class EClassImplementationCompiler {
 						.returns(Object)
 						.openMethod(method.operationRef.EType)
 						.mapParameters(method)
-						.compileBody(method.body).closeMethod(method.operationRef.EType)
+						.compileBody(method.body, new CompilerExpressionCtx('it')).closeMethod(method.operationRef.EType)
 						.addModifiers(PUBLIC)
 						.build
 					)
@@ -860,7 +879,7 @@ class EClassImplementationCompiler {
 			} else {
 				ParameterSpec.builder(it.EType.resolveType, it.name).build
 			}
-		]).openMethod(method.operationRef.EType).compileBody(method.body).closeMethod(method.operationRef.EType).build
+		]).openMethod(method.operationRef.EType).compileBody(method.body, new CompilerExpressionCtx('this')).closeMethod(method.operationRef.EType).build
 	}
 
 	def MethodSpec.Builder closeMethod(MethodSpec.Builder builder, EClassifier type) {
@@ -910,48 +929,48 @@ class EClassImplementationCompiler {
 		}
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body, CompilerExpressionCtx ctx) {
 		val t = infereType(body.target).head
 		if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
 			builderSeed.
-				addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''')
+				addStatement('''«body.target.compileExpression(ctx)».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression(ctx)»)''')
 		} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 			builderSeed.
-				addStatement('''«body.target.compileExpression.escapeDollar».set«body.targetFeature.toFirstUpper»(«body.value.compileExpression.escapeDollar»)''')
+				addStatement('''«body.target.compileExpression(ctx).escapeDollar».set«body.targetFeature.toFirstUpper»(«body.value.compileExpression(ctx).escapeDollar»)''')
 		} else {
 			builderSeed.
-				addStatement('''«body.target.compileExpression».«body.targetFeature» = «body.value.compileExpression»''')
+				addStatement('''«body.target.compileExpression(ctx)».«body.targetFeature» = «body.value.compileExpression(ctx)»''')
 
 		}
 
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureInsert body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureInsert body, CompilerExpressionCtx ctx) {
 		builderSeed.
-			addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''')
+			addStatement('''«body.target.compileExpression(ctx)».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression(ctx)»)''')
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureRemove body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureRemove body, CompilerExpressionCtx ctx) {
 		builderSeed.
-			addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().remove(«body.value.compileExpression»)''')
+			addStatement('''«body.target.compileExpression(ctx)».get«body.targetFeature.toFirstUpper»().remove(«body.value.compileExpression(ctx)»)''')
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body) {
-		builderSeed.addStatement('''«body.name» = «body.value.compileExpression.escapeDollar»''')
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body, CompilerExpressionCtx ctx) {
+		builderSeed.addStatement('''«body.name» = «body.value.compileExpression(ctx).escapeDollar»''')
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body, CompilerExpressionCtx ctx) {
 
 		val inft = body.initialValue.infereType.head
 		if (inft instanceof SequenceType) {
 			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
-			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression.escapeDollar»)''', t,
+			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression(ctx).escapeDollar»)''', t,
 				body.name, t)
 		} else {
 			val t = body.type.solveType
 			// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
-			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression.escapeDollar»)''', t,
+			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression(ctx).escapeDollar»)''', t,
 				body.name, t)
 
 		}
@@ -979,83 +998,85 @@ class EClassImplementationCompiler {
 		return builder
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, Block body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, Block body, CompilerExpressionCtx ctx) {
 		body.statements.fold(builderSeed, [ builder, statement |
-			builder.compileBody(statement)
+			builder.compileBody(statement, ctx)
 		])
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ExpressionStatement body) {
-		builderSeed.addStatement(body.expression.compileExpression.escapeDollar)
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ExpressionStatement body, CompilerExpressionCtx ctx) {
+		builderSeed.addStatement(body.expression.compileExpression(ctx).escapeDollar)
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeaturePut body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeaturePut body, CompilerExpressionCtx ctx) {
 		builderSeed.addStatement('''throw new $T("FeaturePut not implemented")''', RuntimeException)
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ForEach body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ForEach body, CompilerExpressionCtx ctx) {
 		val lt = infereType(body.collectionExpression).head as SequenceType
 
 		if (lt.collectionType.type instanceof EClass) {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
-				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
+			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression(ctx)»)''',
+				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body, ctx).endControlFlow
 		} else {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
-				lt.collectionType.type as Class<?>, body.variable).compileBody(body.body).endControlFlow
+			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression(ctx)»)''',
+				lt.collectionType.type as Class<?>, body.variable).compileBody(body.body, ctx).endControlFlow
 		}
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, If body) {
-		var ret = builderSeed.beginControlFlow('''if($L)''', body.blocks.head.condition.compileExpression).compileBody(
-			body.blocks.head.block).endControlFlow
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, If body, CompilerExpressionCtx ctx) {
+		var ret = builderSeed.beginControlFlow('''if($L)''', body.blocks.head.condition.compileExpression(ctx))
+			.compileBody(body.blocks.head.block, ctx).endControlFlow
 		for (ConditionalBlock x : body.blocks.tail) {
-			ret = ret.beginControlFlow('''else if ($L''', x.condition.compileExpression).compileBody(x.block).
-				endControlFlow
+			ret = ret.beginControlFlow('''else if ($L''', x.condition.compileExpression(ctx))
+				.compileBody(x.block, ctx)
+				.endControlFlow
 		}
 		if (body.^else !== null)
-			ret = ret.beginControlFlow("else").compileBody(body.^else).endControlFlow
+			ret = ret.beginControlFlow("else").compileBody(body.^else, ctx).endControlFlow
 		ret
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ConditionalBlock body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ConditionalBlock body, CompilerExpressionCtx ctx) {
 		builderSeed.addStatement('''throw new $T("ConditionalBlock not implemented")''', RuntimeException)
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, While body) {
-		val a = builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression)
-		a.compileBody(body.body).endControlFlow
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, While body, CompilerExpressionCtx ctx) {
+		builderSeed
+			.beginControlFlow("while ($L)", body.condition.compileExpression(ctx)).compileBody(body.body, ctx)
+			.endControlFlow
 	}
-
-	def dispatch String compileExpression(Call call) {
+	
+	def dispatch String compileExpression(Call call, CompilerExpressionCtx ctx) {
 		switch (call.serviceName) {
-			case "not": '''!(«call.arguments.get(0).compileExpression»)'''
-			case "greaterThan": '''(«call.arguments.get(0).compileExpression») > («call.arguments.get(1).compileExpression»)'''
-			case "differs": '''(«call.arguments.get(0).compileExpression») != («call.arguments.get(1).compileExpression»)'''
-			case "sub": '''(«call.arguments.get(0).compileExpression») - («call.arguments.get(1).compileExpression»)'''
-			case "add": '''(«call.arguments.get(0).compileExpression») + («call.arguments.get(1).compileExpression»)'''
-			case "divOp": '''(«call.arguments.get(0).compileExpression») / («call.arguments.get(1).compileExpression»)'''
-			case "equals": '''java.util.Objects.equals((«call.arguments.get(0).compileExpression»), («call.arguments.get(1).compileExpression»))'''
-			case "lessThan": '''(«call.arguments.get(0).compileExpression») < («call.arguments.get(1).compileExpression»)'''
-			case "mult": '''(«call.arguments.get(0).compileExpression») * («call.arguments.get(1).compileExpression»)'''
-			case "unaryMin": '''-(«call.arguments.get(0).compileExpression»)'''
+			case "not": '''!(«call.arguments.get(0).compileExpression(ctx)»)'''
+			case "greaterThan": '''(«call.arguments.get(0).compileExpression(ctx)») > («call.arguments.get(1).compileExpression(ctx)»)'''
+			case "differs": '''(«call.arguments.get(0).compileExpression(ctx)») != («call.arguments.get(1).compileExpression(ctx)»)'''
+			case "sub": '''(«call.arguments.get(0).compileExpression(ctx)») - («call.arguments.get(1).compileExpression(ctx)»)'''
+			case "add": '''(«call.arguments.get(0).compileExpression(ctx)») + («call.arguments.get(1).compileExpression(ctx)»)'''
+			case "divOp": '''(«call.arguments.get(0).compileExpression(ctx)») / («call.arguments.get(1).compileExpression(ctx)»)'''
+			case "equals": '''java.util.Objects.equals((«call.arguments.get(0).compileExpression(ctx)»), («call.arguments.get(1).compileExpression(ctx)»))'''
+			case "lessThan": '''(«call.arguments.get(0).compileExpression(ctx)») < («call.arguments.get(1).compileExpression(ctx)»)'''
+			case "mult": '''(«call.arguments.get(0).compileExpression(ctx)») * («call.arguments.get(1).compileExpression(ctx)»)'''
+			case "unaryMin": '''-(«call.arguments.get(0).compileExpression(ctx)»)'''
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
-					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(«call.arguments.get(0).compileExpression»)'''
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(«call.arguments.get(0).compileExpression(ctx)»)'''
 				else
 					'''/*FIRST «call»*/'''
 			case "size":
 				if (call.type == CallType.COLLECTIONCALL)
-					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression»)'''
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression(ctx)»)'''
 				else
 					'''/*FIRST «call»*/'''
 			case "at":
 				if (call.type == CallType.COLLECTIONCALL)
-					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)'''
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)'''
 				else
 					'''/*FIRST «call»*/'''
 			case "select":
 				if (call.type == CallType.COLLECTIONCALL) {
-					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)'''
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)'''
 				} else {
 					'''/*FIRST «call»*/'''
 				}
@@ -1063,28 +1084,28 @@ class EClassImplementationCompiler {
 				if (call.type == CallType.COLLECTIONCALL) {
 					val t = infereType(call.arguments.get(1)).head
 					if (t instanceof EClassifierType) {
-						'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression», it -> it instanceof «call.arguments.get(1).compileExpression»)'''
+						'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression(ctx)», it -> it instanceof «call.arguments.get(1).compileExpression(ctx)»)'''
 					} else {
-						'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)'''
+						'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)'''
 					}
 				} else {
 					'''/*FIRST «call»*/'''
 				}
 			case "isEmpty":
 				if (call.type == CallType.COLLECTIONCALL) {
-					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.isEmpty(«call.arguments.get(0).compileExpression»)'''
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.isEmpty(«call.arguments.get(0).compileExpression(ctx)»)'''
 				} else {
 					'''/*FIRST «call»*/'''
 				}
 			case "oclIsKindOf":
 				if (call.type == CallType.CALLORAPPLY) {
-					'''«call.arguments.get(0).compileExpression» instanceof «call.arguments.get(1).compileExpression»'''
+					'''«call.arguments.get(0).compileExpression(ctx)» instanceof «call.arguments.get(1).compileExpression(ctx)»'''
 				} else {
 					'''/*OCLISKINDOF*/'''
 				}
 			case "log":
 				if (call.type == CallType.CALLORAPPLY) {
-					'''org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(«call.arguments.get(0).compileExpression»)'''
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(«call.arguments.get(0).compileExpression(ctx)»)'''
 				} else {
 					'''/*OCLISKINDOF*/'''
 				}
@@ -1093,15 +1114,15 @@ class EClassImplementationCompiler {
 					if (call.serviceName == 'aqlFeatureAccess') {
 						val t = infereType(call).head
 						if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-							'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
+							'''«call.arguments.head.compileExpression(ctx)».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
 						} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 							if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 								(t.type as EDataType).instanceClass == boolean))
-								'''«call.arguments.head.compileExpression».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
+								'''«call.arguments.head.compileExpression(ctx)».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
 							else
-								'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
+								'''«call.arguments.head.compileExpression(ctx)».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
 						} else {
-							'''«call.arguments.head.compileExpression».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»'''
+							'''«call.arguments.head.compileExpression(ctx)».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»'''
 
 						}
 					} else if (call.serviceName == 'create') {
@@ -1128,11 +1149,24 @@ class EClassImplementationCompiler {
 								it.operationRef.name == call.serviceName
 							]
 							if (methodExist) {
-								val method = allMethods.filter[it.operationRef.name == call.serviceName].head
+								val methods = allMethods.filter[it.operationRef.name == call.serviceName].toList
+								
+								
+								/* Look for the most specific method that matches the resolved class by walking up the hierarchy */
+								var Method method = null
+								var ResolvedClass rev = re
+								while(method === null) {
+									val lc = rev.aleCls
+									method = methods.filter[it.eContainer === lc].head
+									
+									val revc = rev
+									rev = resolved.filter[it.eCls == revc.eCls.ESuperTypes].head
+								}
 								if(method.isDispatch) {
-									'''this.dispatch«method.operationRef.name.toFirstUpper».call(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+									this.registreredDispatch.add(method)
+									'''dispatch«(method.eContainer as ExtendedClass).name.toFirstUpper»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})'''
 								} else {
-									'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+									'''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)'''
 								}
 							} else {
 
@@ -1144,9 +1178,9 @@ class EClassImplementationCompiler {
 								].head
 
 								if (candidate !== null) {
-									'''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
+									'''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)'''
 								} else {
-									'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+									'''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)'''
 
 								}
 							}
@@ -1158,9 +1192,9 @@ class EClassImplementationCompiler {
 							].head
 
 							if (candidate !== null) {
-								'''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
+								'''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)'''
 							} else {
-								'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+								'''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)'''
 
 							}
 						}
@@ -1170,95 +1204,95 @@ class EClassImplementationCompiler {
 		}
 	}
 
-	def dispatch String compileExpression(And call) {
-		'''((«call.arguments.get(0).compileExpression») && («call.arguments.get(1).compileExpression»))'''
+	def dispatch String compileExpression(And call, CompilerExpressionCtx ctx) {
+		'''((«call.arguments.get(0).compileExpression(ctx)») && («call.arguments.get(1).compileExpression(ctx)»))'''
 	}
 
-	def dispatch String compileExpression(ErrorCall call) {
+	def dispatch String compileExpression(ErrorCall call, CompilerExpressionCtx ctx) {
 		'''/*ERRORCALL*/'''
 	}
 
-	def dispatch String compileExpression(Implies call) {
+	def dispatch String compileExpression(Implies call, CompilerExpressionCtx ctx) {
 		'''/*IMPLIES*/'''
 	}
 
-	def dispatch String compileExpression(Or call) {
-		'''((«call.arguments.get(0).compileExpression») || («call.arguments.get(1).compileExpression»))'''
+	def dispatch String compileExpression(Or call, CompilerExpressionCtx ctx) {
+		'''((«call.arguments.get(0).compileExpression(ctx)») || («call.arguments.get(1).compileExpression(ctx)»))'''
 	}
 
-	def dispatch String compileExpression(ErrorConditional call) {
+	def dispatch String compileExpression(ErrorConditional call, CompilerExpressionCtx ctx) {
 		'''/*ERRORCONDITIONAL*/'''
 	}
 
-	def dispatch String compileExpression(ErrorBinding call) {
+	def dispatch String compileExpression(ErrorBinding call, CompilerExpressionCtx ctx) {
 		'''/*ERRORBINDING*/'''
 	}
 
-	def dispatch String compileExpression(EEnumLiteral call) {
+	def dispatch String compileExpression(EEnumLiteral call, CompilerExpressionCtx ctx) {
 		'''/*EENUMLITERAL*/'''
 	}
 
-	def dispatch String compileExpression(ErrorExpression call) {
+	def dispatch String compileExpression(ErrorExpression call, CompilerExpressionCtx ctx) {
 		'''/*ERROREXPRESSION*/'''
 	}
 
-	def dispatch String compileExpression(ErrorStringLiteral call) {
+	def dispatch String compileExpression(ErrorStringLiteral call, CompilerExpressionCtx ctx) {
 		'''/*ERRORSTRINGLITERAL*/'''
 	}
 
-	def dispatch String compileExpression(ErrorTypeLiteral call) {
+	def dispatch String compileExpression(ErrorTypeLiteral call, CompilerExpressionCtx ctx) {
 		'''/*ERRORTYPELITERAL*/'''
 	}
 
-	def dispatch String compileExpression(ErrorVariableDeclaration call) {
+	def dispatch String compileExpression(ErrorVariableDeclaration call, CompilerExpressionCtx ctx) {
 		'''/*ERRORVARIABLEDECLARATION*/'''
 	}
 
-	def dispatch String compileExpression(Let call) {
+	def dispatch String compileExpression(Let call, CompilerExpressionCtx ctx) {
 		'''/*let*/'''
 	}
 
-	def dispatch String compileExpression(BooleanLiteral call) {
+	def dispatch String compileExpression(BooleanLiteral call, CompilerExpressionCtx ctx) {
 		if(call.value) 'true' else 'false'
 	}
 
-	def dispatch String compileExpression(EnumLiteral call) {
+	def dispatch String compileExpression(EnumLiteral call, CompilerExpressionCtx ctx) {
 		'''/*ENUMLITERAL*/'''
 	}
 
-	def dispatch String compileExpression(IntegerLiteral call) {
+	def dispatch String compileExpression(IntegerLiteral call, CompilerExpressionCtx ctx) {
 		call.value.toString
 	}
 
-	def dispatch String compileExpression(Lambda call) {
-		'''(«FOR p : call.parameters SEPARATOR ', '»«p.name»«ENDFOR») -> «call.expression.compileExpression»'''
+	def dispatch String compileExpression(Lambda call, CompilerExpressionCtx ctx) {
+		'''(«FOR p : call.parameters SEPARATOR ', '»«p.name»«ENDFOR») -> «call.expression.compileExpression(ctx)»'''
 	}
 
-	def dispatch String compileExpression(NullLiteral call) {
+	def dispatch String compileExpression(NullLiteral call, CompilerExpressionCtx ctx) {
 		'null'
 	}
 
-	def dispatch String compileExpression(RealLiteral call) {
+	def dispatch String compileExpression(RealLiteral call, CompilerExpressionCtx ctx) {
 		call.value.toString
 	}
 
-	def dispatch String compileExpression(SequenceInExtensionLiteral call) {
-		'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.createEList(«FOR a : call.values SEPARATOR ', '»«a.compileExpression»«ENDFOR»)'''
+	def dispatch String compileExpression(SequenceInExtensionLiteral call, CompilerExpressionCtx ctx) {
+		'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.createEList(«FOR a : call.values SEPARATOR ', '»«a.compileExpression(ctx)»«ENDFOR»)'''
 	}
 
-	def dispatch String compileExpression(SetInExtensionLiteral call) {
+	def dispatch String compileExpression(SetInExtensionLiteral call, CompilerExpressionCtx ctx) {
 		'''/*SETINEXTENSIONLITERAL*/'''
 	}
 
-	def dispatch String compileExpression(StringLiteral call) {
+	def dispatch String compileExpression(StringLiteral call, CompilerExpressionCtx ctx) {
 		'''"«call.value»"'''
 	}
 
-	def dispatch String compileExpression(TypeLiteral call) {
+	def dispatch String compileExpression(TypeLiteral call, CompilerExpressionCtx ctx) {
 		'''«(call.value as EClass).solveType»'''
 	}
 
-	def dispatch String compileExpression(Switch call) {
+	def dispatch String compileExpression(Switch call, CompilerExpressionCtx ctx) {
 		'''/*SWITCH*/'''
 	}
 
@@ -1267,8 +1301,8 @@ class EClassImplementationCompiler {
 		gm.genPackages.head.qualifiedPackageName
 	}
 
-	def dispatch String compileExpression(VarRef call) {
-		if(call.variableName == 'self') 'this' else call.variableName
+	def dispatch String compileExpression(VarRef call, CompilerExpressionCtx ctx) {
+		if(call.variableName == 'self') ctx.thisCtxName else call.variableName
 	}
 
 	def dispatch solveType(EClass type) {

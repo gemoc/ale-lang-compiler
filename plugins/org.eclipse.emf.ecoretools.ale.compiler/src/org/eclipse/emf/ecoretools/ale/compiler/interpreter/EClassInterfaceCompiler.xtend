@@ -9,7 +9,7 @@ import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.Map
-import javax.lang.model.element.Modifier
+import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
@@ -32,9 +32,9 @@ class EClassInterfaceCompiler {
 			val fieldType = field.EType.scopedInterfaceTypeRef(packageRoot)
 			val getter = MethodSpec.
 				methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').
-				returns(fieldType).addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
+				returns(fieldType).addModifiers(ABSTRACT, PUBLIC).build
 			val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType, 'value').
-				addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build
+				addModifiers(ABSTRACT, PUBLIC).build
 			#[getter, setter]
 		].flatten
 
@@ -60,14 +60,14 @@ class EClassInterfaceCompiler {
 			val setter = if (!isMultiple) {
 					#[
 						MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType, 'value').
-							addModifiers(Modifier.ABSTRACT, Modifier.PUBLIC).build]
+							addModifiers(ABSTRACT, PUBLIC).build]
 				} else {
 					#[]
 				}
 
 			val getter = #[
 				MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).addModifiers(
-					Modifier.ABSTRACT, Modifier.PUBLIC).build]
+					ABSTRACT, PUBLIC).build]
 
 			getter + setter
 		].flatten
@@ -81,17 +81,29 @@ class EClassInterfaceCompiler {
 
 					MethodSpec.methodBuilder(method.operationRef.name).returnsIfNotNull(
 						method.operationRef.EType?.scopedInterfaceTypeRef(packageRoot)).addParameters(params).addModifiers(
-						Modifier.ABSTRACT, Modifier.PUBLIC).build
+						ABSTRACT, PUBLIC).build
 				]
 			} else
 				#[]
+				
+				
+		val cached = if(aleClass !== null) {
+				aleClass.methods.filter [
+					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
+				].map [
+					MethodSpec.methodBuilder('''getCached«it.operationRef.name.toFirstUpper»''')
+						.returns(ClassName.get(eClass.classImplementationPackageName(packageRoot), '''«eClass.name»DispatchWrapper«it.operationRef.name.toFirstUpper»'''))
+						.addModifiers(PUBLIC, ABSTRACT)
+						.build
+				]
+			} else { #[]}
 
 		val factory = TypeSpec.interfaceBuilder(eClass.classInterfaceClassName).addSuperinterface(EObject).applyIfTrue(
 			dsl.dslProp.getProperty("truffle", "false") == "true", [
 				addSuperinterface(ClassName.get("com.oracle.truffle.api.nodes", "NodeInterface"))
 			]).addSuperinterfaces(eClass.ESuperTypes.map [
 			ClassName.get(it.classInterfacePackageName(packageRoot), it.classInterfaceClassName)
-		]).addMethods(attributesMethods + referencesMethods + operations).addModifiers(Modifier.PUBLIC).build
+		]).addMethods(attributesMethods + referencesMethods + operations + cached).addModifiers(PUBLIC).build
 
 		val javaFile = JavaFile.builder(eClass.classInterfacePackageName(packageRoot), factory).build
 
