@@ -19,6 +19,8 @@ import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
+import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
+import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
@@ -132,19 +134,24 @@ class ALEInterpreterImplementationCompiler {
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
 		// TODO: generate ecore + genmodel !
+		
+		val isTruffle = dsl.dslProp.getProperty('truffle', "false") == "true"
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
-			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
+			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot, isTruffle)
 
 			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
 			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
+
+			val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+			base.validate(parsedSemantics)
 			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
 				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
 				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
-					registeredServices, dsl, parsedSemantics, queryEnvironment)
+					registeredServices, dsl, base)
 			}
 
 		]

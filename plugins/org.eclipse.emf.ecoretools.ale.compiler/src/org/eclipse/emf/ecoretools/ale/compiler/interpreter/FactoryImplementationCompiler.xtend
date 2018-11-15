@@ -22,8 +22,9 @@ class FactoryImplementationCompiler {
 
 	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
+	extension JavaPoetUtils = new JavaPoetUtils
 
-	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
+	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot, boolean isTruffle) {
 
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
 
@@ -51,8 +52,11 @@ class FactoryImplementationCompiler {
 				return new «ctnf»Impl();
 			''', EPackage.Registry, packageInterfaceType, EcorePlugin).build
 
-		val createMethod = MethodSpec.methodBuilder('create').returns(EObject).addParameter(
-			ParameterSpec.builder(EClass, 'eClass').build).addCode('''
+		val createMethod = MethodSpec.methodBuilder('create')
+			.returns(EObject)
+			.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+			.addParameter(ParameterSpec.builder(EClass, 'eClass').build)
+			.addCode('''
 			switch (eClass.getClassifierID()) {
 			«FOR eClass : allClasses.filter[!it.abstract]»
 				case $1T.«eClass.name.normalizeUpperField»:
@@ -80,10 +84,15 @@ class FactoryImplementationCompiler {
 			val classImplType = ClassName.get(eClass.classImplementationPackageName(packageRoot),
 				eClass.classImplementationClassName)
 
-			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''').returns(returnType).addCode('''
-				$1T ret = new $1T();
-				return ret;
-			''', classImplType).addModifiers(PUBLIC).build
+			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''')
+				.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+				.returns(returnType)
+				.addCode('''
+					$1T ret = new $1T();
+					return ret;
+				''', classImplType)
+				.addModifiers(PUBLIC)
+				.build
 		]
 
 		val getPackageMethod = MethodSpec.methodBuilder('''get«abstractSyntax.name.toFirstUpper»Package''').returns(

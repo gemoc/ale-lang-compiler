@@ -1,5 +1,6 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 
+import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.JavaFile
@@ -68,7 +69,6 @@ import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImpleme
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
-import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ConditionalBlock
 import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
@@ -87,7 +87,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 
 import static javax.lang.model.element.Modifier.*
-import com.squareup.javapoet.AnnotationSpec
 
 class EClassImplementationCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
@@ -98,9 +97,18 @@ class EClassImplementationCompiler {
 	var List<ResolvedClass> resolved
 	var Map<String, Class<?>> registeredServices
 	var Dsl dsl
-	var List<ParseResult<ModelUnit>> parsedSemantics
-	var IQueryEnvironment queryEnvironment
+//	var List<ParseResult<ModelUnit>> parsedSemantics
+//	var IQueryEnvironment queryEnvironment
 	val String packageRoot
+	var BaseValidator base
+	
+	
+	private static class CompilerExpressionCtx {
+		val String thisCtxName
+		new(String thisCtxName) {
+			this.thisCtxName = thisCtxName
+		}
+	}
 	
 	new(String packageRoot) {
 		this.packageRoot = packageRoot
@@ -545,11 +553,11 @@ class EClassImplementationCompiler {
 				
 		val constructor = MethodSpec.constructorBuilder.addCode('''
 			super();
-			«IF aleClass !== null»
-			«FOR method: aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true']»
-			this.dispatch«method.operationRef.name.toFirstUpper» = com.oracle.truffle.api.Truffle.getRuntime().createIndirectCallNode();
-			«ENDFOR»
-			«ENDIF»
+«««			«IF aleClass !== null»
+«««			«FOR method: aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true']»
+«««			this.dispatch«method.operationRef.name.toFirstUpper» = com.oracle.truffle.api.Truffle.getRuntime().createIndirectCallNode();
+«««			«ENDFOR»
+«««			«ENDIF»
 		''').addModifiers(PROTECTED).build
 
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
@@ -592,14 +600,12 @@ class EClassImplementationCompiler {
 
 	def compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, Dsl dsl, List<ParseResult<ModelUnit>> parsedSemantics,
-		IQueryEnvironment queryEnvironment) {
+		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base) {
 		this.syntaxes = syntaxes
 		this.resolved = resolved
 		this.registeredServices = registeredServices
 		this.dsl = dsl
-		this.parsedSemantics = parsedSemantics
-		this.queryEnvironment = queryEnvironment
+		this.base = base
 		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass, aleClass).
 			applyIfTrue(aleClass !== null, [
 				addMethods(
@@ -611,28 +617,148 @@ class EClassImplementationCompiler {
 					AnnotationSpec.builder(ClassName.get("com.oracle.truffle.api.nodes", "NodeInfo")).addMember(
 						"description", '$S', eClass.name).build
 				)
-			]).applyIfTrue(aleClass !== null, [
-				addFields(aleClass.methods.filter [
-					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
-				].map [
-					FieldSpec.builder(
-						ClassName.get('com.oracle.truffle.api.nodes', 'IndirectCallNode'), '''dispatch«it.operationRef.name.toFirstUpper»''').
-						addModifiers(PRIVATE).addAnnotation(
-							ClassName.get("com.oracle.truffle.api.nodes.Node", "Child")).build
-				])
-			]).addModifiers(PUBLIC).build
+			])
+//			.applyIfTrue(aleClass !== null, [
+//				addFields(aleClass.methods.filter [
+//					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
+//				].map [
+//					FieldSpec.builder(
+//						ClassName.get('com.oracle.truffle.api.nodes', 'IndirectCallNode'), '''dispatch«it.operationRef.name.toFirstUpper»''').
+//						addModifiers(PRIVATE).addAnnotation(
+//							ClassName.get("com.oracle.truffle.api.nodes.Node", "Child")).build
+//				])
+//			])
+			.addModifiers(PUBLIC).build
 
 		val javaFile = JavaFile.builder(eClass.classImplementationPackageName(packageRoot), factory).build
 		javaFile.writeTo(directory)
 		
-	//	generateDispatchClasses(aleClass, directory, eClass)
+		generateDispatchClasses(aleClass, directory, eClass)
+		generateDispatchWrapperClasses(aleClass, directory, eClass)
+		generateRootNodes(aleClass, directory, eClass)
 
+	}
+	
+	def generateRootNodes(ExtendedClass aleClass, File directory, EClass eClass) {
+		if (aleClass !== null) {
+			// Generation of the dispatch classes
+			aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'].forEach [ method |
+
+				val packageFQN = eClass.classImplementationPackageName(packageRoot)
+				val cyclicAssumptionType = ClassName.get('com.oracle.truffle.api.utilities', 'CyclicAssumption')
+				val rootCalltargetType = ClassName.get('com.oracle.truffle.api', 'RootCallTarget')
+				val assumptionType = ClassName.get('com.oracle.truffle.api', 'Assumption')
+				val truffleType = ClassName.get('com.oracle.truffle.api', 'Truffle')
+				val rootNodeName = '''«eClass.name»«method.operationRef.name.toFirstUpper»RootNode'''
+				val rootNodeType = ClassName.get(packageFQN, rootNodeName)
+				val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
+				val virtualFrameType = ClassName.get('com.oracle.truffle.api.frame', 'VirtualFrame')
+				
+				val factoryDispatch = TypeSpec
+					.classBuilder(rootNodeName)
+					.superclass(ClassName.get('com.oracle.truffle.api.nodes', 'RootNode'))
+					.addField(eClassInterfaceType, 'it', PRIVATE, FINAL) // Child ??
+					.addMethod(MethodSpec
+						.constructorBuilder
+						.addParameter(eClassInterfaceType, 'it')
+						.addCode('''
+							super(null);
+							this.it = it;
+							''')
+						.addModifiers(PUBLIC)
+						.build
+					)
+					.addMethod(MethodSpec
+						.methodBuilder('execute')
+						.addAnnotation(Override)
+						.addParameter(virtualFrameType, 'frame')
+						.returns(Object)
+						.openMethod(method.operationRef.EType)
+						.mapParameters(method)
+						.compileBody(method.body).closeMethod(method.operationRef.EType)
+						.addModifiers(PUBLIC)
+						.build
+					)
+					.addModifiers(PUBLIC)
+					.build
+
+				val javaFileDispatch = JavaFile.builder(packageFQN,
+					factoryDispatch).build
+				javaFileDispatch.writeTo(directory)
+
+			]
+		}
+	}
+	
+	def generateDispatchWrapperClasses(ExtendedClass aleClass, File directory, EClass eClass) {
+		if (aleClass !== null) {
+			// Generation of the dispatch classes
+			aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'].forEach [ method |
+
+				val packageFQN = eClass.classImplementationPackageName(packageRoot)
+				val cyclicAssumptionType = ClassName.get('com.oracle.truffle.api.utilities', 'CyclicAssumption')
+				val rootCalltargetType = ClassName.get('com.oracle.truffle.api', 'RootCallTarget')
+				val assumptionType = ClassName.get('com.oracle.truffle.api', 'Assumption')
+				val truffleType = ClassName.get('com.oracle.truffle.api', 'Truffle')
+				val rootNodeName = '''«eClass.name»«method.operationRef.name.toFirstUpper»RootNode'''
+				val rootNodeType = ClassName.get(packageFQN, rootNodeName)
+				val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
+				
+				val name = '''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»_«Math.random * 99999999»'''
+
+				val factoryDispatch = TypeSpec.classBuilder('''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»''')
+					.addField(ClassName.get('com.oracle.truffle.api', 'RootCallTarget'), 'callTarget', PRIVATE)
+					.addField(cyclicAssumptionType, 'callTargetStable', PRIVATE, FINAL)
+					.addMethod(MethodSpec
+						.constructorBuilder
+						.addParameter(eClassInterfaceType, 'it')
+						.addCode('''
+						this.callTargetStable = new $T($S);
+						this.callTarget = $T.getRuntime().createCallTarget(new $T(it));
+						''', cyclicAssumptionType, name, truffleType, rootNodeType)
+						.addModifiers(PROTECTED)
+						.build)
+//					.addMethod(MethodSpec.methodBuilder('setCallTarget')
+//						.addParameter(rootCalltargetType, 'callTarget')
+//						.addCode('''
+//						this.callTarget = callTarget;
+//						callTargetStable.invalidate();
+//						''')
+//						.addModifiers(PROTECTED)
+//						.build
+//					)
+					.addMethod(MethodSpec
+						.methodBuilder('getCallTarget')
+						.returns(rootCalltargetType)
+						.addCode('''return callTarget;''')
+						.addModifiers(PUBLIC)
+						.build
+					)
+					.addMethod(MethodSpec
+						.methodBuilder('getCallTargetStable')
+						.returns(assumptionType)
+						.addCode('''return callTargetStable.getAssumption();''')
+						.addModifiers(PUBLIC)
+						.build
+					)
+					.addModifiers(PUBLIC)
+					.build
+
+				val javaFileDispatch = JavaFile.builder(packageFQN,
+					factoryDispatch).build
+				javaFileDispatch.writeTo(directory)
+
+			]
+		}
 	}
 	
 	def generateDispatchClasses(ExtendedClass aleClass, File directory, EClass eClass) {
 		if (aleClass !== null) {
 			// Generation of the dispatch classes
 			aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'].forEach [ method |
+
+				val specializationType = ClassName.get('com.oracle.truffle.api.dsl', 'Specialization')
+				val cachedType = ClassName.get('com.oracle.truffle.api.dsl', 'Cached')
 
 				val factoryDispatch = TypeSpec.
 					classBuilder('''«eClass.name»Dispatch«method.operationRef.name.toFirstUpper»''').superclass(
@@ -643,12 +769,12 @@ class EClassImplementationCompiler {
 							addParameter(Object, 'function').addParameter(typeof(Object[]), 'arguments').
 							returns(Object).build).addMethod(
 						MethodSpec.methodBuilder('doDirect').addAnnotation(
-							AnnotationSpec.builder(ClassName.get('com.oracle.truffle.api.dsl', 'Specialization')).
+							AnnotationSpec.builder(specializationType).
 								addMember('limit', '"INLINE_CACHE_SIZE"').addMember('guards',
-									'"function.getCallTarget() == cached"') // TODO: find out how to identify the name of the operation to call on the function
+									'"function.getCallTarget() == cachedTarget"') // TODO: find out how to identify the name of the operation to call on the function
 								.addMember('assumptions', '"callTargetStable"').build
 						).addModifiers(PROTECTED, STATIC).returns(Object).addParameter(
-							ParameterSpec.builder(method.operationRef.EParameters.head.EType.resolveType, 'function').
+							ParameterSpec.builder(ClassName.get(eClass.classImplementationPackageName(packageRoot), '''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»'''), 'function').
 								build
 						).addParameter(typeof(Object[]), 'arguments').addParameter(
 							ParameterSpec.builder(ClassName.get('com.oracle.truffle.api', 'Assumption'),
@@ -667,14 +793,37 @@ class EClassImplementationCompiler {
 						).addParameter(
 							ParameterSpec.builder(ClassName.get('com.oracle.truffle.api.nodes', 'DirectCallNode'),
 								'callNode').addAnnotation(
-								AnnotationSpec.builder(ClassName.get('com.oracle.truffle.api.dsl', 'Cached')).
+								AnnotationSpec.builder(cachedType).
 									addMember('value', '"create(cachedTarget)"') // TODO: how to add such operations on the SLFunction ? // do wo infere that we have to add them since it is used as a first parameter of a dispatch somewhere ?
 									.build
 							).build
 						)
 						.addCode("return callNode.call(arguments);")
 						.build
-					).addModifiers(PUBLIC, ABSTRACT).build
+					)
+					.addMethod(MethodSpec
+						.methodBuilder('doIndirect')
+						.addAnnotation(AnnotationSpec
+							.builder(specializationType)
+							.addMember('replaces', '"doDirect"')
+							.build
+						)
+						.addParameter(
+							ParameterSpec.builder(ClassName.get(eClass.classImplementationPackageName(packageRoot), '''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»'''), 'function').
+								build
+						)
+						.addParameter(typeof(Object[]), 'arguments')
+						.addParameter(ParameterSpec
+							.builder(ClassName.get('com.oracle.truffle.api.nodes', 'IndirectCallNode'), 'callNode')
+							.addAnnotation(AnnotationSpec.builder(cachedType).addMember('value', '"create()"').build)
+							.build
+						)
+						.addCode('''return callNode.call(function.getCallTarget(), arguments);''')
+						.returns(Object)
+						.addModifiers(PROTECTED, STATIC)
+						.build
+					)
+					.addModifiers(PUBLIC, ABSTRACT).build
 
 				val javaFileDispatch = JavaFile.builder(eClass.classImplementationPackageName(packageRoot), factoryDispatch).build
 				javaFileDispatch.writeTo(directory)
@@ -806,6 +955,28 @@ class EClassImplementationCompiler {
 				body.name, t)
 
 		}
+	}
+	
+	def MethodSpec.Builder mapParameters(MethodSpec.Builder builderSeed, Method method) {
+		var builder = builderSeed
+		for (var i = 0; i < method.operationRef.EParameters.size; i = i + 1) {
+
+			val parameter = method.operationRef.EParameters.get(i)
+
+			val type = if (parameter.EType.instanceClass !== null) {
+					if (parameter.EType instanceof EClass && !(parameter.EType.EPackage == EcorePackage.eINSTANCE)) {
+						ClassName.get((parameter.EType as EClass).classInterfacePackageName(packageRoot),
+							(parameter.EType as EClass).name)
+					} else {
+						parameter.EType.instanceClass
+					}
+				} else {
+					parameter.EType.resolveType
+				}
+			builder = builder.addStatement('''«type» «parameter.name» = («type») frame.getArguments()[«i»]''')
+		}
+
+		return builder
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, Block body) {
@@ -1121,8 +1292,6 @@ class EClassImplementationCompiler {
 	}
 
 	def infereType(Expression exp) {
-		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
-		base.validate(parsedSemantics)
 		base.getPossibleTypes(exp)
 	}
 
