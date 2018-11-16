@@ -74,7 +74,9 @@ class EClassInterfaceCompiler {
 
 		val operations = if (aleClass !== null) {
 				// methods signature are only generated when truffle and the dispatch option are not activated, or if activated, only when the dispatch option is not activated on the method
-				aleClass.methods.filter[!(it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true')].map [ method |
+				aleClass.methods
+					//.filter[!(it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true')]
+					.map [ method |
 					val params = method.operationRef.EParameters.map [ param |
 						ParameterSpec.builder(param.EType.scopedInterfaceTypeRef(packageRoot), param.name).build
 					]

@@ -600,9 +600,9 @@ class EClassImplementationCompiler {
 		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass, aleClass).
 			applyIfTrue(aleClass !== null, [
 				addMethods(
-				aleClass.methods.filter[!(it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true')].map [
-					compile(aleClass, eClass)
-				])
+				aleClass.methods
+				//.filter[!(it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true')]
+				.map [compile(aleClass, eClass)])
 			]).applyIfTrue(dsl.dslProp.getOrDefault("truffle", "false") == "true", [
 				addAnnotation(
 					AnnotationSpec.builder(ClassName.get("com.oracle.truffle.api.nodes", "NodeInfo")).addMember(
@@ -676,7 +676,7 @@ class EClassImplementationCompiler {
 				val factoryDispatch = TypeSpec
 					.classBuilder(rootNodeName)
 					.superclass(ClassName.get('com.oracle.truffle.api.nodes', 'RootNode'))
-					.addField(eClassInterfaceType, 'it', PRIVATE, FINAL) // Child ??
+					.addField(FieldSpec.builder(eClassInterfaceType, 'it', PRIVATE).addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Child')).build) // Child ??
 					.addMethod(MethodSpec
 						.constructorBuilder
 						.addParameter(eClassInterfaceType, 'it')
@@ -692,9 +692,10 @@ class EClassImplementationCompiler {
 						.addAnnotation(Override)
 						.addParameter(virtualFrameType, 'frame')
 						.returns(Object)
-						.openMethod(method.operationRef.EType)
 						.mapParameters(method)
-						.compileBody(method.body, new CompilerExpressionCtx('it')).closeMethod(method.operationRef.EType)
+						.addCode('''
+						return it.«method.operationRef.name»(«FOR p: method.operationRef.EParameters SEPARATOR ', '»«p.name»«ENDFOR»);
+						''')
 						.addModifiers(PUBLIC)
 						.build
 					)
@@ -879,7 +880,11 @@ class EClassImplementationCompiler {
 			} else {
 				ParameterSpec.builder(it.EType.resolveType, it.name).build
 			}
-		]).openMethod(method.operationRef.EType).compileBody(method.body, new CompilerExpressionCtx('this')).closeMethod(method.operationRef.EType).build
+		])
+		.openMethod(method.operationRef.EType)
+		// TODO: initChildrens() 
+		.compileBody(method.body, new CompilerExpressionCtx('this'))
+		.closeMethod(method.operationRef.EType).build
 	}
 
 	def MethodSpec.Builder closeMethod(MethodSpec.Builder builder, EClassifier type) {
