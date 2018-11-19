@@ -3,6 +3,7 @@ package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 import org.eclipse.emf.codegen.util.CodeGenUtil
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 class InterpreterNamingUtils {
 	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
@@ -64,5 +65,9 @@ class InterpreterNamingUtils {
 
 	def String normalizeUpperMethod(String input, String className) {
 		'''«CodeGenUtil.format(className, '_', '', false, false).toLowerCase.toFirstUpper»_«CodeGenUtil.format(input, '_', '', false, false).toLowerCase.toFirstUpper»'''
+	}
+	
+	def String normalizeExtendedClassName(ExtendedClass ec) {
+		ec.name.split('\\.').reverse.head.toFirstUpper
 	}
 }

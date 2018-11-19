@@ -1,8 +1,10 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 
+import com.squareup.javapoet.CodeBlock
 import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
+import java.util.Set
 import org.eclipse.acceleo.query.ast.And
 import org.eclipse.acceleo.query.ast.BooleanLiteral
 import org.eclipse.acceleo.query.ast.Call
@@ -40,7 +42,6 @@ import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
-import com.squareup.javapoet.CodeBlock
 
 class AleExpressionsCompiler {
 
@@ -48,19 +49,21 @@ class AleExpressionsCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
 	val String packageRoot
 	var List<ResolvedClass> resolved
-	val List<Method> registreredDispatch
+	val Set<Method> registreredDispatch
 	val Map<String, Class<?>> registeredServices
 	val List<String> registeredArray
+	val boolean isTruffle
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
-		List<ResolvedClass> resolved, List<Method> registreredDispatch, List<String> registeredArray,
-		Map<String, Class<?>> registeredServices) {
+		List<ResolvedClass> resolved, Set<Method> registreredDispatch, List<String> registeredArray,
+		Map<String, Class<?>> registeredServices, boolean isTruffle) {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 		tsu = new TypeSystemUtils(syntaxes, packageRoot, base, resolved)
 		this.registreredDispatch = registreredDispatch
 		this.registeredServices = registeredServices
 		this.registeredArray = registeredArray
+		this.isTruffle = isTruffle
 	}
 
 	def dispatch CodeBlock compileExpression(Call call, CompilerExpressionCtx ctx) {
@@ -163,9 +166,14 @@ class AleExpressionsCompiler {
 						if (lhs.toString == 'this') {
 							if (t instanceof SequenceType &&
 								(t as SequenceType).collectionType.type instanceof EClass) {
-								val rhs = (call.arguments.get(1) as StringLiteral).value
-								registeredArray.add(rhs)
-								CodeBlock.of('''«lhs».«rhs»Arr''')
+								if (isTruffle) {
+									val rhs = (call.arguments.get(1) as StringLiteral).value
+									registeredArray.add(rhs)
+									CodeBlock.of('''«lhs».«rhs»Arr''')
+
+								} else {
+									CodeBlock.of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+								}
 							} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 								CodeBlock.of('''«lhs».«(call.arguments.get(1) as StringLiteral).value»''')
 							} else {
@@ -228,10 +236,10 @@ class AleExpressionsCompiler {
 									val revc = rev
 									rev = resolved.filter[it.eCls == revc.eCls.ESuperTypes].head
 								}
-								if (method.isDispatch) {
+								if (isTruffle && method.isDispatch) {
 									this.registreredDispatch.add(method)
 									CodeBlock.
-										of('''dispatch«(method.eContainer as ExtendedClass).name.toFirstUpper»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})''')
+										of('''dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})''')
 								} else {
 									CodeBlock.
 										of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)''')

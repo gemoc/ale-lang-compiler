@@ -26,6 +26,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
+import java.util.Set
 
 class AleBodyCompiler {
 
@@ -33,9 +34,9 @@ class AleBodyCompiler {
 	extension AleExpressionsCompiler aec
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
-		List<ResolvedClass> resolved, List<Method> registreredDispatch, List<String> registeredArray, Map<String, Class<?>> registeredServices) {
+		List<ResolvedClass> resolved, Set<Method> registreredDispatch, List<String> registeredArray, Map<String, Class<?>> registeredServices, boolean isTruffle) {
 		tsu = new TypeSystemUtils(syntaxes, packageRoot, base, resolved)
-		aec = new AleExpressionsCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registeredArray, registeredServices)
+		aec = new AleExpressionsCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registeredArray, registeredServices, isTruffle)
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, FeatureAssignment body,
