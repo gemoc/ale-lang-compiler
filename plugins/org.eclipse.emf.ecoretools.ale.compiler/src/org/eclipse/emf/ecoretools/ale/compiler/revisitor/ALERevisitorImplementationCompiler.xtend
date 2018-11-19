@@ -101,6 +101,7 @@ class ALERevisitorImplementationCompiler {
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	var Dsl dsl
 	var List<ResolvedClass> resolved
+	var BaseValidator base
 
 	new() {
 		this.queryEnvironment = createQueryEnvironment(false, null)
@@ -162,6 +163,10 @@ class ALERevisitorImplementationCompiler {
 		// clean previous compilation
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
+
+
+		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		base.validate(parsedSemantics)
 
 		val aleClasses = newArrayList
 		for (ParseResult<ModelUnit> pr : parsedSemantics) {
@@ -646,8 +651,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def infereType(Expression exp) {
-		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
-		base.validate(parsedSemantics)
+		
 		base.getPossibleTypes(exp)
 	}
 

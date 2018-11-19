@@ -82,6 +82,7 @@ class OperationImplementationCompiler {
 	val List<ParseResult<ModelUnit>> parsedSemantics
 	val List<ResolvedClass> resolved
 	val Map<String, Class<?>> registeredServices
+	var BaseValidator base
 
 	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes,
 		IQueryEnvironment queryEnvironment, List<ParseResult<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved,
@@ -96,6 +97,10 @@ class OperationImplementationCompiler {
 	}
 
 	def compile(EClass eClass, ExtendedClass aleClass) {
+		
+		this.base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		base.validate(parsedSemantics)
+		
 		val classInterfaceType = ClassName.get(namingUtils.classInterfacePackageName(eClass, packageRoot),
 			namingUtils.classInterfaceClassName(eClass))
 
@@ -543,8 +548,7 @@ class OperationImplementationCompiler {
 	}
 
 	def infereType(Expression exp) {
-		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
-		base.validate(parsedSemantics)
+		
 		base.getPossibleTypes(exp)
 	}
 

@@ -133,6 +133,8 @@ class ALEInterpreterImplementationCompiler {
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
+		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		base.validate(parsedSemantics)
 		// TODO: generate ecore + genmodel !
 		val isTruffle = dsl.dslProp.getProperty('truffle', "false") == "true"
 		syntaxes.forEach [ key, pairEPackageGenModel |
@@ -142,8 +144,6 @@ class ALEInterpreterImplementationCompiler {
 			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
 			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
-			val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
-			base.validate(parsedSemantics)
 			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head

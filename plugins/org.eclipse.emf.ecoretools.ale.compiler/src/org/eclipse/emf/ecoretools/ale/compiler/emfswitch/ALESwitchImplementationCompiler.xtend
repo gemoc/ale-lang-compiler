@@ -113,7 +113,8 @@ class ALESwitchImplementationCompiler {
 
 		sic.compile
 		
-		val soc = new SwitchOperationCompiler(packageRoot, compileDirectory)
+		val soc = new SwitchOperationCompiler(packageRoot, compileDirectory, syntaxes, queryEnvironment,
+			parsedSemantics, resolved, registeredServices, dsl)
 		
 		resolved.forEach[resolved|
 			soc.compile(resolved)
@@ -135,7 +136,7 @@ class ALESwitchImplementationCompiler {
 
 	@Data
 	static class ResolvedClass {
-		ExtendedClass alexCls
+		ExtendedClass aleCls
 		public EClass eCls
 		GenClass genCls
 	}

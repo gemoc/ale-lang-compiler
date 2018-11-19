@@ -2,7 +2,6 @@ package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
-import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
@@ -13,6 +12,7 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler.ResolvedClass
 
 import static javax.lang.model.element.Modifier.*
+import com.squareup.javapoet.MethodSpec
 
 class SwitchImplementationCompiler {
 
@@ -31,16 +31,15 @@ class SwitchImplementationCompiler {
 	}
 
 	def compile() {
-
 		val firstPackage = syntaxes.entrySet.head.value
 		val gp = firstPackage.value.genPackages.head
 
 		val abstractSwitchType = ParameterizedTypeName.get(ClassName.get(gp.utilitiesPackageName, gp.switchClassName),
 			ClassName.get(Object))
 
-		val factory = TypeSpec.classBuilder(namingUtils.switchImplementationClassName(packageRoot)).superclass(
-			abstractSwitchType)
-			.addMethods(resolved.map[resolved|
+		val factory = TypeSpec.classBuilder(namingUtils.switchImplementationClassName(packageRoot))
+			.superclass(abstractSwitchType)
+			.addMethods(resolved.map[resolved | 
 				MethodSpec
 					.methodBuilder('''case«resolved.eCls.name.toFirstUpper»''')
 					.addParameter(ClassName.get(resolved.genCls.genPackage.interfacePackageName, resolved.genCls.interfaceName), 'it')
@@ -59,5 +58,4 @@ class SwitchImplementationCompiler {
 
 		javaFile.writeTo(directory)
 	}
-
 }

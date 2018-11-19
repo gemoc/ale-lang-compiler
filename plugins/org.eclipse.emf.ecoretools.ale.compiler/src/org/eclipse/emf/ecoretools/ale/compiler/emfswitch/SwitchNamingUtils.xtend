@@ -20,4 +20,12 @@ class SwitchNamingUtils {
 	def String operationClassName(EClass eCls) {
 		'''«eCls.name.toFirstUpper»Operation'''
 	}
+	
+	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».visitor.«ePackage.name»'''
+	}
+	
+	def String factoryInterfaceClassName(EPackage ePackage) {
+		'''«ePackage.name.toFirstUpper»Factory'''
+	}
 }
