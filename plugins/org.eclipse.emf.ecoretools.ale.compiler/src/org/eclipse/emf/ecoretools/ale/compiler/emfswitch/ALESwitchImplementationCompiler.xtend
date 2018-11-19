@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
 
 import java.io.File
 import java.nio.file.Files
@@ -19,8 +19,6 @@ import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
-import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
-import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
@@ -28,23 +26,15 @@ import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
 
-class ALEInterpreterImplementationCompiler {
-
-	@Data
-	static class ResolvedClass {
-		ExtendedClass aleCls
-		public EClass eCls
-		GenClass genCls
-	}
-
+class ALESwitchImplementationCompiler {
 	extension EcoreUtils = new EcoreUtils
 
+	var Dsl dsl
 	var List<ParseResult<ModelUnit>> parsedSemantics
 	val IQueryEnvironment queryEnvironment
 	val Map<String, Class<?>> registeredServices = newHashMap
 	val JavaExtensionsManager javaExtensions
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
-	var Dsl dsl
 	var List<ResolvedClass> resolved
 
 	new() {
@@ -77,16 +67,6 @@ class ALEInterpreterImplementationCompiler {
 		newEnv
 	}
 
-	def compile(String projectName, File projectRoot, Dsl dsl) {
-		this.dsl = dsl
-		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
-
-		registerServices(projectName)
-
-		// must be last !
-		compile(projectRoot, projectName)
-	}
-
 	def registerServices(String projectName) {
 
 		javaExtensions.updateScope(newHashSet(), #{projectName});
@@ -100,12 +80,24 @@ class ALEInterpreterImplementationCompiler {
 		javaExtensions.reloadIfNeeded();
 	}
 
-	def private void compile(File projectRoot, String projectName) {
-		val compileDirectory = new File(projectRoot, "interpreter-comp")
+	def compile(String projectName, File projectRoot, Dsl dsl) {
+		this.dsl = dsl
+		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
-		// clean previous compilation
+		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
+
+		registerServices(projectName)
+
+		// must be last !
+		compile(projectRoot, projectName)
+	}
+
+	def private void compile(File projectRoot, String projectName) {
+		val compileDirectory = new File(projectRoot, "switch-comp")
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
+
+		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 
 		val aleClasses = newArrayList
 		for (ParseResult<ModelUnit> pr : parsedSemantics) {
@@ -113,46 +105,20 @@ class ALEInterpreterImplementationCompiler {
 			aleClasses += root.classExtensions
 		}
 
-		// load all syntaxes in a cache
-		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
+
 		resolved = resolve(aleClasses, syntax)
 
-		val String packageRoot = dsl.dslProp.get("rootPackage") as String
+		val sic = new SwitchImplementationCompiler(compileDirectory, syntaxes, packageRoot, resolved)
 
-		val egc = new EcoreGenmodelCompiler
-
-		val fic = new FactoryInterfaceCompiler
-		val fimplc = new FactoryImplementationCompiler
-
-		val pic = new PackageInterfaceCompiler
-		val pimplc = new PackageImplementationCompiler
-
-		val eic = new EClassInterfaceCompiler
-		val eimplc = new EClassImplementationCompiler(packageRoot)
-
-		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
-
-		// TODO: generate ecore + genmodel !
-		val isTruffle = dsl.dslProp.getProperty('truffle', "false") == "true"
-		syntaxes.forEach [ key, pairEPackageGenModel |
-			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
-			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot, isTruffle)
-
-			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
-			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
-
-			val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
-			base.validate(parsedSemantics)
-			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
-				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
-					head
-				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
-				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
-					registeredServices, dsl, base)
-			}
-
+		sic.compile
+		
+		val soc = new SwitchOperationCompiler(packageRoot, compileDirectory)
+		
+		resolved.forEach[resolved|
+			soc.compile(resolved)
 		]
+
 	}
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
@@ -165,5 +131,12 @@ class ALEInterpreterImplementationCompiler {
 			].flatten.filter[it.ecoreClass == eClass].head
 			new ResolvedClass(aleClass, eClass, gl)
 		]
+	}
+
+	@Data
+	static class ResolvedClass {
+		ExtendedClass alexCls
+		public EClass eCls
+		GenClass genCls
 	}
 }

@@ -2,10 +2,11 @@ package org.eclipse.emf.ecoretools.ale.compiler
 
 import java.io.File
 import java.io.FileNotFoundException
+import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl
 
 class ALEImplementationCompiler {
 
@@ -20,6 +21,8 @@ class ALEImplementationCompiler {
 					new ALEInterpreterImplementationCompiler().compile(projectName, projectRoot, dsl)
 				case "visitor":
 					new ALEVisitorImplementationCompiler().compile(projectName, projectRoot, dsl)
+				case "switch":
+					new ALESwitchImplementationCompiler().compile(projectName, projectRoot, dsl)
 				default:
 					throw new RuntimeException('''value «compilationType» unknown for "compilationType" key in «dsl.sourceFileName».''')
 			}
