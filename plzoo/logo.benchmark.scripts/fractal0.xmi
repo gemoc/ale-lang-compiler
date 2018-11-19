@@ -337,7 +337,7 @@
         value="150.0"/>
     <actualArgs
         xsi:type="kmlogo:Constant"
-        value="17.0"/>
+        value="10.0"/>
     <actualArgs
         xsi:type="kmlogo:Constant"
         value="5.0"/>

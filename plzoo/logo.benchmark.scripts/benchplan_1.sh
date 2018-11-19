@@ -1,7 +1,7 @@
 JAVA8_HOME=$PWD/java-8-oracle
 GRAALVM_HOME=$PWD/graalvm-ee-1.0.0-rc7
 OPENJ9_HOME=$PWD/openj9-9-0.11.0
-ITERATIONS=100
+ITERATIONS=1
 # Jar names:
 if [ ! -f "logo_visitor.jar" ]; then
   echo "File logo_visitor.jar does not exist."
