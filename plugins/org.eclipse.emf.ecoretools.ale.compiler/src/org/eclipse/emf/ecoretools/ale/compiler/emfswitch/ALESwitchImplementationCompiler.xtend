@@ -116,7 +116,7 @@ class ALESwitchImplementationCompiler {
 		val soc = new SwitchOperationCompiler(packageRoot, compileDirectory, syntaxes, queryEnvironment,
 			parsedSemantics, resolved, registeredServices, dsl)
 		
-		resolved.forEach[resolved|
+		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].forEach[resolved|
 			soc.compile(resolved)
 		]
 

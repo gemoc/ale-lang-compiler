@@ -39,7 +39,7 @@ class SwitchImplementationCompiler {
 
 		val factory = TypeSpec.classBuilder(namingUtils.switchImplementationClassName(packageRoot))
 			.superclass(abstractSwitchType)
-			.addMethods(resolved.map[resolved | 
+			.addMethods(resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].map[resolved | 
 				MethodSpec
 					.methodBuilder('''case«resolved.eCls.name.toFirstUpper»''')
 					.addParameter(ClassName.get(resolved.genCls.genPackage.interfacePackageName, resolved.genCls.interfaceName), 'it')
