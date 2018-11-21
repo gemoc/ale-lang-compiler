@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EStructuralFeature
 import com.squareup.javapoet.MethodSpec
+import org.eclipse.emf.ecore.EEnum
 
 class PackageInterfaceCompiler {
 
@@ -20,6 +21,7 @@ class PackageInterfaceCompiler {
 	def compilePackageInterface(EPackage abstractSyntax, File directory, String packageRoot) {
 
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
+		val allEnums = abstractSyntax.EClassifiers.filter(EEnum)
 
 		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
 			abstractSyntax.packageInterfaceClassName)
@@ -68,6 +70,10 @@ class PackageInterfaceCompiler {
 			MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(ABSTRACT, PUBLIC).build
 		]
 		
+		val getterEnumFields = allEnums.map[eEnum|
+			MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EEnum).addModifiers(ABSTRACT, PUBLIC).build
+		]
+		
 		val Iterable<MethodSpec> getterReferencesFields = allClasses.map[clazz|clazz.EReferences.map[field|
 			MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').returns(EReference).addModifiers(ABSTRACT, PUBLIC).build
 		]].flatten
@@ -90,10 +96,14 @@ class PackageInterfaceCompiler {
 		
 		val getFactoryMethod = MethodSpec.methodBuilder('''get«abstractSyntax.name.toFirstUpper»Factory''').returns(factoryInterfaceType).addModifiers(PUBLIC,ABSTRACT).build
 		
-		val package = TypeSpec.interfaceBuilder(abstractSyntax.packageInterfaceClassName).addSuperinterface(EPackage).
-			addFields(#[eInstanceField, eNSURIField, eNameField, eNSPrefixField] + classFields +  fieldsAttributesFields
-			).addMethods(getterFields + getterReferencesFields + getterAttributesFields + #[getFactoryMethod]).addType(literalType).addModifiers(PUBLIC).
-			build
+		val package = TypeSpec
+			.interfaceBuilder(abstractSyntax.packageInterfaceClassName)
+			.addSuperinterface(EPackage)
+			.addFields(#[eInstanceField, eNSURIField, eNameField, eNSPrefixField] + classFields +  fieldsAttributesFields)
+			.addMethods(getterFields + getterEnumFields + getterReferencesFields + getterAttributesFields + #[getFactoryMethod])
+			.addType(literalType)
+			.addModifiers(PUBLIC)
+			.build
 
 		val javaFile = JavaFile.builder(abstractSyntax.packageInterfacePackageName(packageRoot), package).build
 

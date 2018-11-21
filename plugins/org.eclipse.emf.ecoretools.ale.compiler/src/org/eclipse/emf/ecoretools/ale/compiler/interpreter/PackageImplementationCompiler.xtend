@@ -144,6 +144,11 @@ class PackageImplementationCompiler {
 			FieldSpec.builder(EClass, '''«clazz.name.toFirstLower»EClass''').initializer('''null''').
 				addModifiers(PRIVATE).build
 		]
+		
+		val enumFields = allEnums.map [ clazz |
+			FieldSpec.builder(EEnum, '''«clazz.name.toFirstLower»EEnum''').initializer('''null''').
+				addModifiers(PRIVATE).build
+		]
 
 		val methodGetterFields = allClasses.map [ clazz |
 			MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
@@ -153,7 +158,7 @@ class PackageImplementationCompiler {
 		]
 		
 		val methodEnumGetterFields = allEnums.map[eEnum |
-			MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
+			MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EEnum).addModifiers(PUBLIC).
 				addCode('''
 					return «eEnum.name.toFirstLower»EEnum;
 				''').build
@@ -191,12 +196,14 @@ class PackageImplementationCompiler {
 			return ($T) getEFactoryInstance();
 		''', factoryInterfaceType).addModifiers(PUBLIC).build
 
-		val packageImpl = TypeSpec.classBuilder(abstractSyntax.packageImplementationClassName).superclass(EPackageImpl).
-			addSuperinterface(
-				ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName)).
-			addFields(#[isInitedField, isCreatedField, isInitializedField] + classFields).addMethods(
-				#[initMethod, createPackageContentsMethod, initializePackageContentsMethod, constructor,
-					getFactoryMethod] + methodGetterFields + methodEnumGetterFields + accessorsMethods).addModifiers(PUBLIC).build
+		val packageImpl = TypeSpec
+			.classBuilder(abstractSyntax.packageImplementationClassName)
+			.superclass(EPackageImpl)
+			.addSuperinterface(ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName))
+			.addFields(#[isInitedField, isCreatedField, isInitializedField] + classFields + enumFields)
+			.addMethods(#[initMethod, createPackageContentsMethod, initializePackageContentsMethod, constructor, getFactoryMethod] + methodGetterFields + methodEnumGetterFields + accessorsMethods)
+			.addModifiers(PUBLIC)
+			.build
 
 		val javaFile = JavaFile.builder(abstractSyntax.packageImplementationPackageName(packageRoot), packageImpl).build
 

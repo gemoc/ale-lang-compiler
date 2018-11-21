@@ -74,6 +74,10 @@ class EClassImplementationCompiler {
 	}
 
 	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
+		
+		
+		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
+		
 		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
 			eClass.EPackage.packageInterfaceClassName)
 
@@ -141,7 +145,7 @@ class EClassImplementationCompiler {
 		]
 
 		val methodsEReferences = eClass.EReferences.map [ field |
-		val ert = field.EGenericType.ERawType
+			val ert = field.EGenericType.ERawType
 			val rt = ert.scopedInterfaceTypeRef(packageRoot)
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val fieldType = if (isMultiple) {
@@ -247,21 +251,51 @@ class EClassImplementationCompiler {
 						
 					} else {
 						if(field.containment) {
-							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
-							.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
-							.addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
-							if («newName» != «field.name») {
-								$4T msgs = null;
-								if («field.name» != null)
-									msgs = (($1T)«field.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
-								if («newName» != null)
-									msgs = (($1T)«newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
-								msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
-								if (msgs != null) msgs.dispatch();
+							val isEnum = field.EType instanceof EEnum
+							val setter = if(isMapElement) {
+								MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
+									.returns(fieldType)
+									.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+									.addParameter(ParameterSpec.builder(fieldType, newName).build)
+									.addCode('''
+									«IF isEnum»«ENDIF»
+									$5T «oldName» = «field.name»;
+									if («newName» != «field.name») {
+										$4T msgs = null;
+										if («field.name» != null)
+											msgs = (($1T)«field.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+										if («newName» != null)
+											msgs = (($1T)«newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+										msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
+										if (msgs != null) msgs.dispatch();
+									}
+									else if (eNotificationRequired())
+										eNotify(new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
+									return «oldName»;
+									''', InternalEObject, ENotificationImpl, Notification, NotificationChain, fieldType)
+									.addModifiers(PUBLIC)
+									.build
+							} else {
+								MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
+									.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+									.addParameter(ParameterSpec.builder(fieldType, newName).build)
+									.addCode('''
+									«IF isEnum»«ENDIF»
+									if («newName» != «field.name») {
+										$4T msgs = null;
+										if («field.name» != null)
+											msgs = (($1T)«field.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+										if («newName» != null)
+											msgs = (($1T)«newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+										msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
+										if (msgs != null) msgs.dispatch();
+									}
+									else if (eNotificationRequired())
+										eNotify(new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
+									''', InternalEObject, ENotificationImpl, Notification, NotificationChain)
+									.addModifiers(PUBLIC)
+									.build
 							}
-							else if (eNotificationRequired())
-								eNotify(new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «newName», «newName»));
-						''', InternalEObject, ENotificationImpl, Notification, NotificationChain).addModifiers(PUBLIC).build
 						val basicSetter = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
 						.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 						.returns(NotificationChain)
@@ -519,9 +553,6 @@ class EClassImplementationCompiler {
 				return super.eInverseRemove(otherEnd, featureID, msgs);
 			''').build
 				
-		
-
-		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
 		val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 		val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 
