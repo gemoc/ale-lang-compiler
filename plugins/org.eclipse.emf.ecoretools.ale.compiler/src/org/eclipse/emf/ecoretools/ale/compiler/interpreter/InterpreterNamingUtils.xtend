@@ -5,8 +5,14 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecoretools.ale.implementation.Method
 
 class InterpreterNamingUtils {
+	
+	def String dispatchWrapperClassName(EClass eClass, Method method) {
+		'''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»'''
+	}
+	
 	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
 		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».interpreter.«ePackage.name»'''
 	}

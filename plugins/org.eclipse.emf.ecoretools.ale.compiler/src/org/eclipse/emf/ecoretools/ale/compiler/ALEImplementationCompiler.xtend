@@ -8,6 +8,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementat
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl
 import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.core.resources.ResourcesPlugin
 
 class ALEImplementationCompiler {
 
@@ -33,7 +34,8 @@ class ALEImplementationCompiler {
 				throw new RuntimeException('''"compilationType" key not defined in «dsl.sourceFileName».''')
 			}
 		])
-
+		// FIXME: currently locking the whole workspace during compilation
+		a.rule = ResourcesPlugin.workspace.root
 		a.schedule
 	}
 

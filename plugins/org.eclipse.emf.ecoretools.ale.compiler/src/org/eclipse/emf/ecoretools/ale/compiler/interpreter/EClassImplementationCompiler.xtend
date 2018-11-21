@@ -44,6 +44,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.Statement
 
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecore.EEnum
+import java.util.Comparator
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -57,6 +58,7 @@ class EClassImplementationCompiler {
 	val String packageRoot
 	var Set<Method> registreredDispatch = newHashSet
 	var Set<String> registreredArrays = newHashSet
+	val List<ResolvedClass> resolved
 	
 	static class CompilerExpressionCtx {
 		public val String thisCtxName
@@ -69,8 +71,9 @@ class EClassImplementationCompiler {
 		}
 	}
 	
-	new(String packageRoot) {
+	new(String packageRoot, List<ResolvedClass> resolved) {
 		this.packageRoot = packageRoot
+		this.resolved = resolved
 	}
 
 	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
@@ -729,7 +732,8 @@ class EClassImplementationCompiler {
 						.returns(Object)
 						.mapParameters(method)
 						.addCode('''
-						return it.«method.operationRef.name»(«FOR p: method.operationRef.EParameters SEPARATOR ', '»«p.name»«ENDFOR»);
+						«IF method.operationRef.EType !== null»return «ENDIF»it.«method.operationRef.name»(«FOR p: method.operationRef.EParameters SEPARATOR ', '»«p.name»«ENDFOR»);
+						«IF method.operationRef.EType === null»return null;«ENDIF»
 						''')
 						.addModifiers(PUBLIC)
 						.build
@@ -760,28 +764,46 @@ class EClassImplementationCompiler {
 				val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 				
 				val name = '''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»_«Math.random * 99999999»'''
+				
+				/* Look for the closest method that is overriden by the current method and that also has a dispatch annotation */
+				val s0 = resolved.filter[eClass.EAllSuperTypes.contains(it.eCls)]
+				val s1 = s0.filter[it.aleCls !== null]
+				val s2 = s1.map[resolved|
+					resolved.aleCls.allMethods.filter[
+					it.operationRef.name == method.operationRef.name && method.dispatch
+					].map[resolved -> it]
+				].flatten
 
-				val factoryDispatch = TypeSpec.classBuilder('''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»''')
+				val overridenMethods = s2.sortWith(new Comparator<Pair<ResolvedClass, Method>>() {
+					
+					override compare(Pair<ResolvedClass, Method> arg0, Pair<ResolvedClass, Method> arg1) {
+						if(arg0.key.eCls instanceof EClass) {
+							val eCls = arg0.key.eCls as EClass
+							if(eCls.EAllSuperTypes.contains(arg1.key.eCls)) {
+								-1
+							} else {
+								1
+							}
+						} else {
+							0
+						}
+					}
+				}).head
+
+				val factoryDispatch = TypeSpec.classBuilder(namingUtils.dispatchWrapperClassName(eClass, method))
+					.applyIfTrue(overridenMethods !== null, [it.superclass(ClassName.get(packageFQN, namingUtils.dispatchWrapperClassName(overridenMethods.key.eCls as EClass, overridenMethods.value)))])
 					.addField(ClassName.get('com.oracle.truffle.api', 'RootCallTarget'), 'callTarget', PRIVATE)
 					.addField(cyclicAssumptionType, 'callTargetStable', PRIVATE, FINAL)
 					.addMethod(MethodSpec
 						.constructorBuilder
 						.addParameter(eClassInterfaceType, 'it')
 						.addCode('''
+						«IF overridenMethods !== null»super(it);«ENDIF»
 						this.callTargetStable = new $T($S);
 						this.callTarget = $T.getRuntime().createCallTarget(new $T(it));
 						''', cyclicAssumptionType, name, truffleType, rootNodeType)
 						.addModifiers(PROTECTED)
 						.build)
-//					.addMethod(MethodSpec.methodBuilder('setCallTarget')
-//						.addParameter(rootCalltargetType, 'callTarget')
-//						.addCode('''
-//						this.callTarget = callTarget;
-//						callTargetStable.invalidate();
-//						''')
-//						.addModifiers(PROTECTED)
-//						.build
-//					)
 					.addMethod(MethodSpec
 						.methodBuilder('getCallTarget')
 						.returns(rootCalltargetType)

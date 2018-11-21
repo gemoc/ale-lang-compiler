@@ -29,6 +29,8 @@ import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EEnum
 
 class ALEInterpreterImplementationCompiler {
 
@@ -133,7 +135,7 @@ class ALEInterpreterImplementationCompiler {
 		val pimplc = new PackageImplementationCompiler
 
 		val eic = new EClassInterfaceCompiler
-		val eimplc = new EClassImplementationCompiler(packageRoot)
+		val eimplc = new EClassImplementationCompiler(packageRoot, resolved)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
@@ -149,7 +151,7 @@ class ALEInterpreterImplementationCompiler {
 			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
 			val eClassifiersLst = pairEPackageGenModel.key.allClassifiers
-			for (EClassifier eclazz : eClassifiersLst) {
+			for (EClassifier eclazz : eClassifiersLst.filter[!(it instanceof EDataType) || (it instanceof EEnum)]) {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
 				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)

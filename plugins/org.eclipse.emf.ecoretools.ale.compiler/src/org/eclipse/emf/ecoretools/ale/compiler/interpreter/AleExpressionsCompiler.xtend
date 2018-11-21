@@ -42,6 +42,7 @@ import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
+import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
 
 class AleExpressionsCompiler {
 
@@ -241,8 +242,9 @@ class AleExpressionsCompiler {
 								}
 								if (isTruffle && method.isDispatch) {
 									this.registreredDispatch.add(method)
+									val effectFull = !(call.eContainer instanceof ExpressionStatement)
 									CodeBlock.
-										of('''dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})''')
+										of('''«IF effectFull && method.operationRef.EType !==null»((«method.operationRef.EType.solveType»)«ENDIF»dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})«IF effectFull && method.operationRef.EType !==null»)«ENDIF»''')
 								} else {
 									CodeBlock.
 										of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)''')
