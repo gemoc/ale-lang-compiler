@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.impl.EPackageImpl
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecore.EEnum
 
 class PackageImplementationCompiler {
 
@@ -28,6 +29,7 @@ class PackageImplementationCompiler {
 	def compilePackageImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
 
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
+		val allEnums = abstractSyntax.EClassifiers.filter(EEnum)
 
 		val isInitedField = FieldSpec.builder(boolean, 'isInited').addModifiers(PRIVATE, STATIC).
 			initializer('''false''').build
@@ -127,6 +129,8 @@ class PackageImplementationCompiler {
 								initEReference(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), this.get«eAttr.EType.name»(),  
 									«IF eAttr.EOpposite !== null»this.get«eAttr.EOpposite.name.normalizeUpperMethod((eAttr.EOpposite.eContainer as EClass).name)»()«ELSE»null«ENDIF», "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.isVolatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.isChangeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.isContainment»«ELSE»!«ENDIF»IS_COMPOSITE, «IF eAttr.isResolveProxiesFlag»«ELSE»!«ENDIF»IS_RESOLVE_PROXIES, «IF eAttr.isUnsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 							«ENDIF»				
+						«ELSEIF eAttr.EType instanceof EEnum»
+							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), this.get«eAttr.EType.name.toFirstUpper»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT,«IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 						«ELSE»
 							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), ecorePackage.get«IF !eAttr.EType.name.startsWith('E')»E«ENDIF»«eAttr.EType.name»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT,«IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);				
 						«ENDIF»
@@ -145,6 +149,13 @@ class PackageImplementationCompiler {
 			MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
 				addCode('''
 					return «clazz.name.toFirstLower»EClass;
+				''').build
+		]
+		
+		val methodEnumGetterFields = allEnums.map[eEnum |
+			MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
+				addCode('''
+					return «eEnum.name.toFirstLower»EEnum;
 				''').build
 		]
 
@@ -185,7 +196,7 @@ class PackageImplementationCompiler {
 				ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName)).
 			addFields(#[isInitedField, isCreatedField, isInitializedField] + classFields).addMethods(
 				#[initMethod, createPackageContentsMethod, initializePackageContentsMethod, constructor,
-					getFactoryMethod] + methodGetterFields + accessorsMethods).addModifiers(PUBLIC).build
+					getFactoryMethod] + methodGetterFields + methodEnumGetterFields + accessorsMethods).addModifiers(PUBLIC).build
 
 		val javaFile = JavaFile.builder(abstractSyntax.packageImplementationPackageName(packageRoot), packageImpl).build
 

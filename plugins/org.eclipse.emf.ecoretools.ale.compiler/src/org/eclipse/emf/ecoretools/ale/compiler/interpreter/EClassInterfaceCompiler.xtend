@@ -1,6 +1,8 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 
+import com.squareup.javapoet.ArrayTypeName
 import com.squareup.javapoet.ClassName
+import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
@@ -8,23 +10,169 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import java.util.Arrays
+import java.util.Collections
+import java.util.List
 import java.util.Map
-import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+
+import static javax.lang.model.element.Modifier.*
 
 class EClassInterfaceCompiler {
 
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
 	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
 	extension JavaPoetUtils = new JavaPoetUtils
+	
+	def dispatch compileEClassInterface(EEnum eEnum, ExtendedClass aleClass, File directory, Dsl dsl, String packageRoot) {
+		
+		val selfClassName = eEnum.name
+		val selfPackageName = eEnum.classInterfacePackageName(packageRoot)
+		val selfClass = ClassName.get(selfPackageName, selfClassName)
+		val selfArrayClass = ArrayTypeName.of(selfClass)
+		val selfListClass = ParameterizedTypeName.get(ClassName.get(List), selfClass)
+		
+		val factory = TypeSpec
+			.enumBuilder(selfClassName)
+			.addSuperinterface(ClassName.get('org.eclipse.emf.common.util', 'Enumerator'))
+			.addEnumConstants(eEnum.ELiterals.map [
+				it.name -> TypeSpec.anonymousClassBuilder('''$L, $S, $S''', it.value, it.literal, it.literal).build
+			])
+			.addFields(eEnum.ELiterals.map[
+				FieldSpec.builder(int, '''«it.name.toUpperCase»_VALUE''', PUBLIC, STATIC, FINAL).initializer('''«it.value»''').build
+			])
+			.addField(FieldSpec
+				.builder(selfArrayClass, 'VALUES_ARRAY', PRIVATE, STATIC, FINAL)
+				.initializer('''new $T { «FOR lit:eEnum.ELiterals SEPARATOR ', '»«lit.literal»«ENDFOR» }''', selfArrayClass)
+				.build
+			)
+			.addField(FieldSpec
+				.builder(selfListClass, 'VALUES', PUBLIC, STATIC, FINAL)
+				.initializer('''$T.unmodifiableList($T.asList(VALUES_ARRAY))''', Collections, Arrays)
+				.build
+			)
+			.addMethod(MethodSpec
+				.methodBuilder('''get''')
+				.returns(selfClass)
+				.addParameter(String, 'literal')
+				.addCode('''
+				for (int i = 0; i < VALUES_ARRAY.length; ++i) {
+					$T result = VALUES_ARRAY[i];
+					if (result.toString().equals(literal)) {
+						return result;
+					}
+				}
+				return null;
+				''', selfClass)
+				.addModifiers(PUBLIC, STATIC)
+				.build
+			)
+			.addMethod(MethodSpec
+				.methodBuilder('''getByName''')
+				.returns(selfClass)
+				.addParameter(String, 'name')
+				.addCode('''
+				for (int i = 0; i < VALUES_ARRAY.length; ++i) {
+					$T result = VALUES_ARRAY[i];
+					if (result.getName().equals(name)) {
+						return result;
+					}
+				}
+				return null;
+				''', selfClass)
+				.addModifiers(PUBLIC, STATIC)
+				.build
+			)
+			.addMethod(MethodSpec
+				.methodBuilder('''get''')
+				.returns(selfClass)
+				.addParameter(int, 'value')
+				.addCode('''
+				switch (value) {
+				«FOR lit:eEnum.ELiterals»
+				case «lit.literal»_VALUE:
+					return «lit.literal»;
+				«ENDFOR»
+				}
+				return null;
+				''', selfClass)
+				.addModifiers(PUBLIC, STATIC)
+				.build
+			)
+			.addField(int, 'value', PRIVATE, FINAL)
+			.addField(String, 'name', PRIVATE, FINAL)
+			.addField(String, 'literal', PRIVATE, FINAL)
+			.addMethod(MethodSpec
+				.constructorBuilder
+				.addParameter(int, 'value')
+				.addParameter(String, 'name')
+				.addParameter(String, 'literal')
+				.addCode('''
+				this.value = value;
+				this.name = name;
+				this.literal = literal;
+				''')
+				.addModifiers(PRIVATE)
+				.build
+			)
+			.addMethod(MethodSpec
+				.methodBuilder('getValue')
+				.returns(int)
+				.addCode('''
+				return value;
+				''')
+				.addModifiers(PUBLIC)
+				.build
+			)
+			.addMethod(MethodSpec
+				.methodBuilder('getLiteral')
+				.returns(String)
+				.addCode('''
+				return literal;
+				''')
+				.addModifiers(PUBLIC)
+				.build
+			)
+			.addMethod(MethodSpec
+				.methodBuilder('getName')
+				.returns(String)
+				.addCode('''
+				return name;
+				''')
+				.addModifiers(PUBLIC)
+				.build
+			)
+			.addMethod(MethodSpec
+				.methodBuilder('toString')
+				.returns(String)
+				.addCode('''
+				return literal;
+				''')
+				.addModifiers(PUBLIC)
+				.build
+			)
+			.addModifiers(PUBLIC)
+			.build
 
-	def compileEClassInterface(EClass eClass, ExtendedClass aleClass, File directory, Dsl dsl, String packageRoot) {
+		val javaFile = JavaFile.builder(selfPackageName, factory).build
+
+		javaFile.writeTo(directory)
+	}
+	
+	def TypeSpec.Builder addEnumConstants(TypeSpec.Builder seed, List<Pair<String, TypeSpec>> constants) {
+		constants.fold(seed, [ builder, ec |
+			builder.addEnumConstant(ec.key, ec.value)
+		])
+	}
+
+	def dispatch compileEClassInterface(EClass eClass, ExtendedClass aleClass, File directory, Dsl dsl, String packageRoot) {
 
 		// TODO: in case of truffle option: add parent interface com.oracle.truffle.api.nodes.NodeInterface
 		// TODO: weave the dynamically declared fields on the class

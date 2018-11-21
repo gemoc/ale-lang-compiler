@@ -9,7 +9,7 @@ import org.eclipse.acceleo.query.ast.AstPackage
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
-import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
@@ -33,7 +33,7 @@ class ALEInterpreterImplementationCompiler {
 	@Data
 	static class ResolvedClass {
 		ExtendedClass aleCls
-		public EClass eCls
+		public EClassifier eCls
 		GenClass genCls
 	}
 
@@ -144,7 +144,8 @@ class ALEInterpreterImplementationCompiler {
 			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
 			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
-			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
+			val eClassifiersLst = pairEPackageGenModel.key.allClassifiers
+			for (EClassifier eclazz : eClassifiersLst) {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
 				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
@@ -156,11 +157,11 @@ class ALEInterpreterImplementationCompiler {
 	}
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
-		syntax.allClasses.map [ eClass |
+		syntax.allClassifiers.map [ eClass |
 			val aleClass = aleClasses.filter [
 				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
 			].head
-			val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.contains(eClass)].values.map[value].map [
+			val GenClass gl = syntaxes.filter[k, v|v.key.allClassifiers.contains(eClass)].values.map[value].map [
 				it.genPackages.map[it.genClasses].flatten
 			].flatten.filter[it.ecoreClass == eClass].head
 			new ResolvedClass(aleClass, eClass, gl)

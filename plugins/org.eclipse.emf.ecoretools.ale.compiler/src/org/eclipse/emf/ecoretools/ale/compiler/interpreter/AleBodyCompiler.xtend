@@ -34,7 +34,7 @@ class AleBodyCompiler {
 	extension AleExpressionsCompiler aec
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
-		List<ResolvedClass> resolved, Set<Method> registreredDispatch, List<String> registeredArray, Map<String, Class<?>> registeredServices, boolean isTruffle) {
+		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray, Map<String, Class<?>> registeredServices, boolean isTruffle) {
 		tsu = new TypeSystemUtils(syntaxes, packageRoot, base, resolved)
 		aec = new AleExpressionsCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registeredArray, registeredServices, isTruffle)
 	}

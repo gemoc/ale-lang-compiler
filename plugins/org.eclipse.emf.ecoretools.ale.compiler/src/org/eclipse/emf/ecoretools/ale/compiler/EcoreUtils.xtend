@@ -1,5 +1,6 @@
 package org.eclipse.emf.ecoretools.ale.compiler
 
+import com.google.inject.Inject
 import java.util.Collection
 import java.util.Comparator
 import java.util.List
@@ -13,13 +14,11 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import org.eclipse.xtext.xbase.lib.Functions.Function1
-import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import com.google.inject.Inject
-import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.xbase.lib.Functions.Function1
+import org.eclipse.emf.ecore.EClassifier
 
 class EcoreUtils {
 	@Inject XtextResourceSet rs
@@ -100,9 +99,27 @@ class EcoreUtils {
 
 		return ret.toSet.toList
 	}
+	
+	
+	def List<EClassifier> getAllClassifiers(EPackage pkg) {
+		val ret = newArrayList
+
+		if (pkg !== null) {
+			ret += pkg.EClassifiers
+			ret += pkg.allSubPkgs.allClassifiers
+			ret += pkg.referencedPkgs.allClassifiers
+
+		}
+
+		return ret.toSet.toList
+	}
 
 	def List<EClass> getAllClasses(List<EPackage> pkgs) {
 		return pkgs.map[allClasses].flatten.toSet.toList
+	}
+	
+	def List<EClassifier> getAllClassifiers(List<EPackage> pkgs) {
+		return pkgs.map[allClassifiers].flatten.toSet.toList
 	}
 
 	def List<EPackage> getAllSubPkgs(EPackage pkg) {
@@ -147,7 +164,7 @@ class EcoreUtils {
 		return ret
 	}
 
-	private val Map<EPackage, Map<EObject, Collection<EStructuralFeature.Setting>>> cache = newHashMap()
+	val Map<EPackage, Map<EObject, Collection<EStructuralFeature.Setting>>> cache = newHashMap()
 
 	private def void getReferencedPkgsRec(EPackage pkg, List<EPackage> ret) {
 

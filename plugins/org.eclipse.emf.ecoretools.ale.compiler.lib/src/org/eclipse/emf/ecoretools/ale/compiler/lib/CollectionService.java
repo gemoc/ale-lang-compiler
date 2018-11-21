@@ -27,6 +27,20 @@ public class CollectionService {
 		return ret;
 	}
 
+	public static <T> Iterable<T> select(final T[] collection, final Function<? super T, Boolean> filter) {
+		final ArrayList<T> ret = new ArrayList<>();
+		for (final T e : collection) {
+			if (apply(filter, e))
+				ret.add(e);
+		}
+		return ret;
+	}
+
+	@TruffleBoundary
+	private static <T> Boolean apply(final Function<? super T, Boolean> filter, final T e) {
+		return filter.apply(e);
+	}
+
 	@TruffleBoundary
 	public static <T> Iterable<T> select(final Iterable<T> collection, final Function<? super T, Boolean> filter) {
 		final ArrayList<T> ret = new ArrayList<>();
@@ -46,6 +60,13 @@ public class CollectionService {
 			return null;
 	}
 
+	public static <T> T head(final T[] collection) {
+		if (collection.length > 0)
+			return collection[0];
+		else
+			return null;
+	}
+
 	@TruffleBoundary
 	public static <T> T get(final Iterable<T> collection, int idx) {
 		final Iterator<T> iterator = collection.iterator();
@@ -60,6 +81,14 @@ public class CollectionService {
 		return ret;
 	}
 
+	public static <T> T get(final T[] collection, int idx) {
+		if (collection.length > idx)
+			return collection[idx];
+		else
+			return null;
+
+	}
+
 	@TruffleBoundary
 	public static <T> boolean isEmpty(final Iterable<T> collection) {
 		final Iterator<T> iterator = collection.iterator();
@@ -67,5 +96,9 @@ public class CollectionService {
 			return false;
 		else
 			return true;
+	}
+
+	public static <T> boolean isEmpty(final T[] collection) {
+		return collection.length > 0;
 	}
 }

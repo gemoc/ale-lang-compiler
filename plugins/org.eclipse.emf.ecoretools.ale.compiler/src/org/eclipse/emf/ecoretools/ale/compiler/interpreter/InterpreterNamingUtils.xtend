@@ -4,6 +4,7 @@ import org.eclipse.emf.codegen.util.CodeGenUtil
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecore.EEnum
 
 class InterpreterNamingUtils {
 	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
@@ -41,9 +42,17 @@ class InterpreterNamingUtils {
 	def String classInterfacePackageName(EClass eClass, String packageRoot) {
 		eClass.EPackage.factoryInterfacePackageName(packageRoot)
 	}
+	
+	def String classInterfacePackageName(EEnum eEnum, String packageRoot) {
+		eEnum.EPackage.factoryInterfacePackageName(packageRoot)
+	}
 
 	def String classInterfaceClassName(EClass eClass) {
 		eClass.name.toFirstUpper
+	}
+	
+	def String classInterfaceClassName(EEnum eEnum) {
+		eEnum.name.toFirstUpper
 	}
 
 	def String classImplementationPackageName(EClass eClass, String packageRoot) {
@@ -53,6 +62,8 @@ class InterpreterNamingUtils {
 	def String classImplementationClassName(EClass eClass) {
 		'''«eClass.name.toFirstUpper»Impl'''
 	}
+	
+	
 
 	def String normalizeUpperField(String input) {
 		'''«CodeGenUtil.format(input, '_', '', false, false)»'''.toString.toUpperCase

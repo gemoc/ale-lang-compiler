@@ -51,11 +51,11 @@ class AleExpressionsCompiler {
 	var List<ResolvedClass> resolved
 	val Set<Method> registreredDispatch
 	val Map<String, Class<?>> registeredServices
-	val List<String> registeredArray
+	val Set<String> registeredArray
 	val boolean isTruffle
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
-		List<ResolvedClass> resolved, Set<Method> registreredDispatch, List<String> registeredArray,
+		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
 		Map<String, Class<?>> registeredServices, boolean isTruffle) {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
@@ -234,7 +234,10 @@ class AleExpressionsCompiler {
 									method = methods.filter[it.eContainer === lc].head
 
 									val revc = rev
-									rev = resolved.filter[it.eCls == revc.eCls.ESuperTypes].head
+									rev = resolved.filter [
+										revc.eCls instanceof EClass &&
+											(revc.eCls as EClass).ESuperTypes.contains(it.eCls)
+									].head
 								}
 								if (isTruffle && method.isDispatch) {
 									this.registreredDispatch.add(method)

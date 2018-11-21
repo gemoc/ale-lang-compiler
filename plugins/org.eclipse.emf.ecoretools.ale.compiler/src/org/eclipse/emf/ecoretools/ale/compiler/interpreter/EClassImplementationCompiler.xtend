@@ -43,6 +43,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Statement
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecore.EEnum
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -55,7 +56,7 @@ class EClassImplementationCompiler {
 	var Dsl dsl
 	val String packageRoot
 	var Set<Method> registreredDispatch = newHashSet
-	var List<String> registreredArrays = newArrayList
+	var Set<String> registreredArrays = newHashSet
 	
 	static class CompilerExpressionCtx {
 		public val String thisCtxName
@@ -80,10 +81,19 @@ class EClassImplementationCompiler {
 		val superType = eClass.ESuperTypes.head
 
 		val fieldsEAttributes = eClass.EAttributes.map [ field |
-			val type = field.EType.scopedTypeRef(packageRoot)
-			val edefault = FieldSpec.builder(type, '''«field.name.toUpperCase»_EDEFAULT''').
-				initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''').
-				addModifiers(PROTECTED, STATIC, FINAL).build
+			val fet = field.EType
+			val type = fet.scopedTypeRef(packageRoot)
+			val edefault = if(fet instanceof EEnum) {
+				FieldSpec
+					.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
+					.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«namingUtils.classInterfacePackageName(fet, packageRoot)».«namingUtils.classInterfaceClassName(fet)».«field.defaultValue»«ENDIF»''')
+					.addModifiers(PROTECTED, STATIC, FINAL).build
+			} else {
+				FieldSpec
+					.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
+					.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''')
+					.addModifiers(PROTECTED, STATIC, FINAL).build
+			}
 
 			val fieldField = FieldSpec.builder(type, field.name).initializer('''«field.name.toUpperCase»_EDEFAULT''').
 				addModifiers(PROTECTED).build
@@ -552,8 +562,14 @@ class EClassImplementationCompiler {
 			''').addModifiers(PUBLIC).build)
 		])
 	}
+	
+	def dispatch compileEClassImplementation(EClassifier eClass, ExtendedClass aleClass, File directory,
+		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
+		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base) {
+			
+	}
 
-	def compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
+	def dispatch compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
 		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base) {
 		this.syntaxes = syntaxes
@@ -644,7 +660,7 @@ class EClassImplementationCompiler {
 		generateDispatchWrapperClasses(aleClass, directory, eClass)
 		generateRootNodes(aleClass, directory, eClass)
 
-		registreredArrays = newArrayList
+		registreredArrays = newHashSet
 		registreredDispatch = newHashSet
 	}
 	
