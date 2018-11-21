@@ -45,5 +45,107 @@
        </action>
     </objectContribution>
    </extension>
+   <extension
+         id="ALECompilerBuilder"
+         name="ALE Compiler Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="org.eclipse.emf.ecoretools.ale.compiler.ui.builder.ALECompilerBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="ALECompilerNature"
+         name="ALE Compiler Project"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.eclipse.emf.ecoretools.ale.compiler.ui.builder.ALECompilerNature">
+         </run>
+      </runtime>
+      <builder
+            id="org.eclipse.emf.ecoretools.ale.compiler.ui.ALECompilerBuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.eclipse.emf.ecoretools.ale.compiler.ui.ALECompilerNature.category"
+            name="ALE Compiler Project commands">
+      </category>
+      <command
+            categoryId="org.eclipse.emf.ecoretools.ale.compiler.ui.ALECompilerNature.category"
+            defaultHandler="org.eclipse.emf.ecoretools.ale.compiler.ui.builder.AddRemoveALECompilerNatureHandler"
+            id="org.eclipse.emf.ecoretools.ale.compiler.ui.addRemoveALECompilerNature"
+            name="Add/RemoveALE Compiler Project">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+         <command
+               commandId="org.eclipse.emf.ecoretools.ale.compiler.ui.addRemoveALECompilerNature"
+               label="Disable Sample builder"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <test
+                              property="org.eclipse.core.resources.projectNature"
+                              value="org.eclipse.emf.ecoretools.ale.compiler.ui.ALECompilerNature">
+                        </test>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecoretools.ale.compiler.ui.addRemoveALECompilerNature"
+               label="Enable Sample builder"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <not>
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="org.eclipse.emf.ecoretools.ale.compiler.ui.ALECompilerNature">
+                           </test>
+                        </not>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         id="xmlProblem"
+         name="XML Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
 
 </plugin>
