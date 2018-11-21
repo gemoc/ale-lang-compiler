@@ -81,6 +81,8 @@ import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.xbase.lib.Functions.Function0
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
 
 class ALERevisitorImplementationCompiler {
 
@@ -125,7 +127,7 @@ class ALERevisitorImplementationCompiler {
 		});
 	}
 
-	def compile(String projectName, File projectRoot, Dsl dsl) {
+	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
@@ -133,6 +135,8 @@ class ALERevisitorImplementationCompiler {
 
 		// must be last !
 		compile(projectRoot)
+		
+		Status.OK_STATUS
 	}
 
 	def registerServices(String projectName) {

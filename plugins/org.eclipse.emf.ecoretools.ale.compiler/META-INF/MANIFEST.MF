@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.emf.ecoretools.ale.core,
  com.squareup.javapoet.wrapper;bundle-version="1.0.0",
  org.eclipse.xtend.lib;bundle-version="2.14.0",
  org.eclipse.sirius.common;bundle-version="6.0.0",
- com.oracle.truffle.wrapper;bundle-version="1.0.0"
+ com.oracle.truffle.wrapper;bundle-version="1.0.0",
+ org.eclipse.core.runtime;bundle-version="3.14.0"
 Export-Package: org.eclipse.emf.ecoretools.ale.compiler,
  org.eclipse.emf.ecoretools.ale.compiler.interpreter,
  org.eclipse.emf.ecoretools.ale.compiler.revisitor,

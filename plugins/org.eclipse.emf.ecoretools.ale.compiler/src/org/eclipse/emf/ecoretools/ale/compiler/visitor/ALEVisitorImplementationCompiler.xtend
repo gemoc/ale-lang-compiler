@@ -25,6 +25,8 @@ import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
 
 class ALEVisitorImplementationCompiler {
 
@@ -75,7 +77,7 @@ class ALEVisitorImplementationCompiler {
 		newEnv
 	}
 
-	def compile(String projectName, File projectRoot, Dsl dsl) {
+	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
@@ -83,6 +85,8 @@ class ALEVisitorImplementationCompiler {
 
 		// must be last !
 		compile(projectRoot, projectName)
+		
+		Status.OK_STATUS
 	}
 
 	def registerServices(String projectName) {

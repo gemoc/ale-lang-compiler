@@ -7,6 +7,8 @@ import java.util.List
 import java.util.Map
 import org.eclipse.acceleo.query.ast.AstPackage
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
+import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Status
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClassifier
@@ -77,7 +79,7 @@ class ALEInterpreterImplementationCompiler {
 		newEnv
 	}
 
-	def compile(String projectName, File projectRoot, Dsl dsl) {
+	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
@@ -85,6 +87,8 @@ class ALEInterpreterImplementationCompiler {
 
 		// must be last !
 		compile(projectRoot, projectName)
+		
+		Status.OK_STATUS
 	}
 
 	def registerServices(String projectName) {
