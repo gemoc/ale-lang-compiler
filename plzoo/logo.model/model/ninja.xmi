@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmlogo:LogoProgram
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:kmlogo="http://kmLogo">
+  <instructions
+      xsi:type="kmlogo:Block">
+    <instructions
+        xsi:type="kmlogo:Equals"/>
+  </instructions>
+</kmlogo:LogoProgram>
