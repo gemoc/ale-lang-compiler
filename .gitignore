@@ -1,5 +1,7 @@
 *.class
+*.swp
 *.jar
+.idea/
 bin/
 target/
 xtend-gen/
