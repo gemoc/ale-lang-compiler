@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Switch
+Bundle-SymbolicName: logo.lang.switch
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: logo.model;bundle-version="1.0.1",
+ logo.lang.services;bundle-version="1.0.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecoretools.ale.core;bundle-version="0.0.1",
+ org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0"
+Export-Package: emfswitch.emfswitch,
+ emfswitch.emfswitch.operation

@@ -1,0 +1,24 @@
+File {
+	commands {
+		Def p {
+			expr BObject {
+				fields {
+					Field x {
+						value Int { value 7 }
+					},
+					Field y {
+						value Int { value 8 }
+					}
+				}
+			}	
+		},
+		Project x {
+			exp Var "p"
+		},
+		Assign x {
+			lhs Var "p"
+			rhs Int { value 10 }
+		},
+		Var "p"
+	}
+}

@@ -39,6 +39,6 @@
     <lhs xsi:type="boa:Project" name="app">
       <exp xsi:type="boa:Var" name="fib"/>
     </lhs>
-    <rhs xsi:type="boa:Int" value="30"/>
+    <rhs xsi:type="boa:Int" value="10"/>
   </commands>
 </boa:File>

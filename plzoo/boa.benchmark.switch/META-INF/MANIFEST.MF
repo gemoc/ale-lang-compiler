@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Switch
+Bundle-SymbolicName: boa.benchmark.switch
+Bundle-Version: 1.0.0.qualifier
+Export-Package: boa.benchmark.emfswitch
+Require-Bundle: boa.lang.switch;bundle-version="1.0.0",
+ boa.model;bundle-version="1.0.0",
+ org.eclipse.emf.ecore.xmi

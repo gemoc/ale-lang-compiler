@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Truffle
+Bundle-SymbolicName: boa.lang.truffle
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: boa.lang.truffle
+Bundle-RequiredExecutionEnvironment: JavaSE-10
+Require-Bundle: org.eclipse.emf.ecore,
+ org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0",
+ boa.lang;bundle-version="1.0.0",
+ boa.lang.services;bundle-version="1.0.0"
+Export-Package: boa.interpreter.boa,
+ boa.interpreter.boa.impl

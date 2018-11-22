@@ -1,6 +1,5 @@
 package logo.benchmark.visitor;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -9,6 +8,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
 import kmLogo.visitor.kmLogo.KmLogoPackage;
 import kmLogo.visitor.kmLogo.LogoProgram;
@@ -24,6 +24,8 @@ public class CompiledVisitorLogo {
 
 		EPackage.Registry.INSTANCE.put("http://kmLogo", KmLogoPackage.eINSTANCE);
 
+		//LogService.MUTE = true;
+		
 		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		final Map<String, Object> m = reg.getExtensionToFactoryMap();
 		m.put("xmi", new XMIResourceFactoryImpl());

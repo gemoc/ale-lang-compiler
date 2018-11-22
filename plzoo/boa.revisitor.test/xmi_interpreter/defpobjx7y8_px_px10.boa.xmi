@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<boa:File xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:boa="http://boa.boa.boa/"
+    xsi:schemaLocation="http://boa.boa.boa/ ../../boa.lang/interpreter-comp/boa.ecore">
+  <commands xsi:type="boa:Def" name="p">
+    <expr xsi:type="boa:BObject">
+      <fields name="x">
+        <value xsi:type="boa:Int" value="7"/>
+      </fields>
+      <fields name="y">
+        <value xsi:type="boa:Int" value="8"/>
+      </fields>
+    </expr>
+  </commands>
+  <commands xsi:type="boa:Project" name="x">
+    <exp xsi:type="boa:Var" name="p"/>
+  </commands>
+  <commands xsi:type="boa:Assign" name="x">
+    <lhs xsi:type="boa:Var" name="p"/>
+    <rhs xsi:type="boa:Int" value="10"/>
+  </commands>
+</boa:File>

@@ -123,6 +123,6 @@
     <lhs xsi:type="boa:Project" name="app">
       <exp xsi:type="boa:Var" name="fib"/>
     </lhs>
-    <rhs xsi:type="boa:Int" value="20"/>
+    <rhs xsi:type="boa:Int" value="15"/>
   </commands>
 </boa:File>

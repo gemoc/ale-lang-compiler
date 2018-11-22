@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Alldispatch
+Bundle-SymbolicName: logo.benchmark.truffle.alldispatch
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: logo.lang.truffle.alldispatch;bundle-version="1.0.0"

@@ -55,6 +55,7 @@ public class FileImpl implements File {
   }
 
   public void eval() {
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("v1");
     boa.Ctx ctx = ((boa.Ctx)boa.BoaFactory.eINSTANCE.createCtx());
     for(boa.TopLevelCmd it: this.obj.getCommands()) {
       rev.$(it).nextLine(ctx);
