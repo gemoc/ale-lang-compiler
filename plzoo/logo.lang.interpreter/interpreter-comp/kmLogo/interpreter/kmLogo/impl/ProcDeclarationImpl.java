@@ -152,6 +152,9 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
   public double eval(Turtle turtle) {
     double result;
     result = 0.0;
+    for(Instruction instr: this.getInstructions()) {
+      result = instr.eval(turtle);
+    }
     return result;
   }
 }

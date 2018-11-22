@@ -75,17 +75,13 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
 
   public Turtle eval() {
     Turtle result;
-    long start = ((long)logo.example.service.TimeService.time(this));
     Turtle turtle = ((Turtle)this.createTurtle());
     result = turtle;
     for(Instruction it: this.getInstructions()) {
       it.eval(turtle);
     }
     result = turtle;
-    long stop = ((long)logo.example.service.TimeService.time(this));
-    long time = ((long)(stop) - (start));
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(time);
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(turtle.getDrawings()));
+    //logo.example.service.Display.show(turtle);
     return result;
   }
 

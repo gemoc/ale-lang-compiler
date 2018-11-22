@@ -3,7 +3,7 @@ import           Data.Char     (toLower)
 import           Data.List     (intersperse)
 
 -- Datas
-data Language=Boa|Petrinet|Logo deriving (Show)
+data Language=Boa|BoaAllDispatch|Petrinet|Logo|LogoAllDispatch deriving (Show)
 
 languages :: [Language]
 
@@ -25,8 +25,9 @@ runtimeToVar GraalvmTruffle = "$GRAALVM_HOME"
 runtimeToVar Java8          = "$JAVA8_HOME"
 runtimeToVar OpenJ9         = "$OPENJ9_HOME"
 
-flattenedtargets :: [(CompileTarget, Runtime)]
-flattenedtargets = concatMap (\(ct, rts) -> map (\x -> (ct,x)) rts) targets
+
+flattenedtargets :: Foldable t2 => t2 (t, [t1]) -> [(t, t1)]
+flattenedtargets targets = concatMap (\(ct, rts) -> map (\x -> (ct,x)) rts) targets
 
 p :: Language -> String -> Program
 p = Program
@@ -68,24 +69,28 @@ toCheckFile ct r = unlines [
 
 -- configuration
 compilerTargets :: [CompileTarget]
-compilerTargets = [Visitor, Revisitor, Interpreter, Truffle]
+compilerTargets = [ Interpreter, Truffle] -- Visitor, Revisitor, , Switch
 
 targets :: [(CompileTarget, [Runtime])]
 targets = [
-    (Visitor, [Graalvm, Java8, OpenJ9])
-  , (Revisitor, [Graalvm, Java8, OpenJ9])
-  , (Interpreter, [Graalvm, Java8, OpenJ9])
-  , (Switch, [Graalvm, Java8, OpenJ9])
+    --(Visitor, [Graalvm, Java8, OpenJ9])
+  --, (Revisitor, [Graalvm, Java8, OpenJ9])
+  --,
+  (Interpreter, [Graalvm]) -- , Java8, OpenJ9
+  --, (Switch, [Graalvm, Java8, OpenJ9])
   , (Truffle, [GraalvmTruffle])
   ]
 
-languages = [Logo, Boa] -- Boa, Petrinet,
+languages = [Logo, LogoAllDispatch] --Logo,  Boa, Petrinet,
 
 programs :: Programs
 programs = [
   p Logo "fractal",
-  p Boa "fib10",
-  p Boa "fib20"
+  p LogoAllDispatch "fractal"
+  -- p Boa "fib20",
+  -- p Boa "fib30",
+  -- p BoaAllDispatch "fib20",
+  -- p BoaAllDispatch "fib30"
   --, p Petrinet "manyToOne", p Petrinet "oneToOne",
   ]
 
@@ -128,7 +133,7 @@ main = do
   let c = combine languages compilerTargets
   let strs = map (uncurry toCheckFile) c
   mapM_ putStrLn strs
-  let x = combine flattenedtargets programs
+  let x = combine (flattenedtargets targets) programs
   putStrLn "# Executions:"
   mapM_ (putStrLn .  toExecution) x
   let total = 500 * length x

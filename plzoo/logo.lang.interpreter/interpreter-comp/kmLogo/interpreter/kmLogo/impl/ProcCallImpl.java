@@ -2,7 +2,6 @@ package kmLogo.interpreter.kmLogo.impl;
 
 import java.lang.Object;
 import kmLogo.interpreter.kmLogo.Expression;
-import kmLogo.interpreter.kmLogo.Instruction;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.ProcCall;
 import kmLogo.interpreter.kmLogo.ProcDeclaration;
@@ -152,9 +151,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     }
     turtle.getCallStack().getFrames().add(newFrame);
     result = 0.0;
-    for(Instruction instr: this.getDeclaration().getInstructions()) {
-      result = instr.eval(turtle);
-    }
+    this.getDeclaration().eval(turtle);
     turtle.getCallStack().getFrames().remove(newFrame);
     return result;
   }
