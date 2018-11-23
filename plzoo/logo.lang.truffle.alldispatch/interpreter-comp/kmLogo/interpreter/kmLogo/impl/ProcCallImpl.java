@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -29,17 +28,10 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
   @Children
   private Expression[] actualArgsArr;
 
-  @CompilationFinal
-  private ProcCallDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   private ProcDeclarationDispatchEval dispatchProcDeclarationEval;
 
   protected ProcCallImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.ProcCallDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
     this.dispatchProcDeclarationEval = kmLogo.interpreter.kmLogo.impl.ProcDeclarationDispatchEvalNodeGen.create(); 
   }
 
@@ -178,7 +170,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
         for(kmLogo.interpreter.kmLogo.Expression exp: this.actualArgsArr) {
           kmLogo.interpreter.kmLogo.Variable newVar = ((kmLogo.interpreter.kmLogo.Variable)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createVariable());
           newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.declaration.getArgs(), i).getName());
-          newVar.setValue(((double)dispatchExpressionEval.executeDispatch(exp.getCachedEval(), new Object[] {turtle})));
+          newVar.setValue(exp.eval(turtle));
           newFrame.getVariables().add(newVar);
           i = (i) + (1);
         }
@@ -191,9 +183,5 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
         turtle.getCallStack().getFrames().remove(newFrame);
         ;
     return result;
-  }
-
-  public ProcCallDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

@@ -5,7 +5,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -31,14 +30,10 @@ public class AssignImpl extends ExprImpl implements Assign {
   @Child
   protected Expr rhs;
 
-  @CompilationFinal
-  private AssignDispatchWrapperEval cachedEval;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected AssignImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.AssignDispatchWrapperEval(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -184,8 +179,8 @@ public class AssignImpl extends ExprImpl implements Assign {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {ctx}));
-        boa.interpreter.boa.EvalRes vrhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {ctx}));
+    boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {ctx})));
+        boa.interpreter.boa.EvalRes vrhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {ctx})));
         if(vlhs instanceof boa.interpreter.boa.EvalMapRes) {
           boa.interpreter.boa.EvalMapRes mvlhs = ((boa.interpreter.boa.EvalMapRes)vlhs);
           if(execboa.MapService.containsKey(mvlhs.getValues(), this.name)) {
@@ -201,9 +196,5 @@ public class AssignImpl extends ExprImpl implements Assign {
         }
         ;
     return result;
-  }
-
-  public AssignDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

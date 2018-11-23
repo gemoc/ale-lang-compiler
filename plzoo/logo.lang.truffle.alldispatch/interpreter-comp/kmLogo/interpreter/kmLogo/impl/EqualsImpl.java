@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,15 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Equals"
 )
 public class EqualsImpl extends BinaryExpImpl implements Equals {
-  @CompilationFinal
-  private EqualsDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected EqualsImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.EqualsDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -68,7 +60,7 @@ public class EqualsImpl extends BinaryExpImpl implements Equals {
 
   public double eval(Turtle turtle) {
     double result;
-    if(java.util.Objects.equals((((double)dispatchExpressionEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {turtle}))), (((double)dispatchExpressionEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {turtle}))))) {
+    if(java.util.Objects.equals((this.lhs.eval(turtle)), (this.rhs.eval(turtle)))) {
           result = 1.0;
         }
         else {
@@ -76,9 +68,5 @@ public class EqualsImpl extends BinaryExpImpl implements Equals {
         }
         ;
     return result;
-  }
-
-  public EqualsDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

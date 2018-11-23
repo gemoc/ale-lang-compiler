@@ -19,15 +19,11 @@ public abstract class ExprImpl extends TopLevelCmdImpl implements Expr {
   @CompilationFinal
   private ExprDispatchWrapperEval cachedEval;
 
-  @CompilationFinal
-  private ExprDispatchWrapperNextLine cachedNextLine;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected ExprImpl() {
     super();
     this.cachedEval = new boa.interpreter.boa.impl.ExprDispatchWrapperEval(this);
-    this.cachedNextLine = new boa.interpreter.boa.impl.ExprDispatchWrapperNextLine(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -79,15 +75,11 @@ public abstract class ExprImpl extends TopLevelCmdImpl implements Expr {
   }
 
   public void nextLine(Ctx ctx) {
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(execboa.SerializeService.serialize(dispatchExprEval.executeDispatch(this.getCachedEval(), new Object[] {ctx})));
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(execboa.SerializeService.serialize(((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.getCachedEval(), new Object[] {ctx}))));
         ;
   }
 
   public ExprDispatchWrapperEval getCachedEval() {
     return this.cachedEval;
-  }
-
-  public ExprDispatchWrapperNextLine getCachedNextLine() {
-    return this.cachedNextLine;
   }
 }

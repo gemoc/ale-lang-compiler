@@ -5,7 +5,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Field;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -25,14 +24,10 @@ public class BObjectImpl extends ExprImpl implements BObject {
   @Children
   private Field[] fieldsArr;
 
-  @CompilationFinal
-  private BObjectDispatchWrapperEval cachedEval;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected BObjectImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.BObjectDispatchWrapperEval(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -105,15 +100,11 @@ public class BObjectImpl extends ExprImpl implements BObject {
         			};
     boa.interpreter.boa.EvalMapRes ret = ((boa.interpreter.boa.EvalMapRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalMapRes());
         for(boa.interpreter.boa.Field x: this.fieldsArr) {
-          boa.interpreter.boa.EvalRes v = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(x.getValue().getCachedEval(), new Object[] {ctx}));
+          boa.interpreter.boa.EvalRes v = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(x.getValue().getCachedEval(), new Object[] {ctx})));
           execboa.MapService.put(ret.getValues(), x.getName(), v);
         }
         result = ret;
         ;
     return result;
-  }
-
-  public BObjectDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

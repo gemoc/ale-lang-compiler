@@ -48,6 +48,12 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
   private EClass boolValueEClass = null;
 
+  private EClass arrayValueEClass = null;
+
+  private EClass arrayDeclEClass = null;
+
+  private EClass boolConstEClass = null;
+
   private EEnum unaryOpEEnum = null;
 
   private EEnum binaryOpEEnum = null;
@@ -94,6 +100,7 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
     assignEClass = createEClass(ASSIGN);
     createEAttribute(assignEClass, ASSIGN__NAME);
     createEReference(assignEClass, ASSIGN__EXP);
+    createEReference(assignEClass, ASSIGN__INDEX);
     exprEClass = createEClass(EXPR);
     blockEClass = createEClass(BLOCK);
     createEReference(blockEClass, BLOCK__STMTS);
@@ -108,6 +115,7 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
     createEAttribute(intConstEClass, INT_CONST__VALUE);
     varEClass = createEClass(VAR);
     createEAttribute(varEClass, VAR__NAME);
+    createEReference(varEClass, VAR__INDEX);
     unaryEClass = createEClass(UNARY);
     createEAttribute(unaryEClass, UNARY__OP);
     createEReference(unaryEClass, UNARY__EXPR);
@@ -125,6 +133,12 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
     createEAttribute(intValueEClass, INT_VALUE__VALUE);
     boolValueEClass = createEClass(BOOL_VALUE);
     createEAttribute(boolValueEClass, BOOL_VALUE__VALUE);
+    arrayValueEClass = createEClass(ARRAY_VALUE);
+    createEReference(arrayValueEClass, ARRAY_VALUE__VALUES);
+    arrayDeclEClass = createEClass(ARRAY_DECL);
+    createEReference(arrayDeclEClass, ARRAY_DECL__VALUES);
+    boolConstEClass = createEClass(BOOL_CONST);
+    createEAttribute(boolConstEClass, BOOL_CONST__VALUE);
     unaryOpEEnum = createEEnum(UNARY_OP);
     binaryOpEEnum = createEEnum(BINARY_OP);
   }
@@ -155,6 +169,9 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
     binaryEClass.getESuperTypes().add(this.getExpr());
     intValueEClass.getESuperTypes().add(this.getValue());
     boolValueEClass.getESuperTypes().add(this.getValue());
+    arrayValueEClass.getESuperTypes().add(this.getValue());
+    arrayDeclEClass.getESuperTypes().add(this.getExpr());
+    boolConstEClass.getESuperTypes().add(this.getExpr());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(stmtEClass, interpreter.imp.interpreter.imp.Stmt.class, "Stmt", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -163,6 +180,8 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
     initEAttribute(getAssign_Name(), ecorePackage.getEString(), "name", null, 0, 1,  interpreter.imp.interpreter.imp.Assign.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
     initEReference(getAssign_Exp(), this.getExpr(),  
     	null, "exp", null, 1, 1,  interpreter.imp.interpreter.imp.Assign.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAssign_Index(), this.getExpr(),  
+    	null, "index", null, 0, 1,  interpreter.imp.interpreter.imp.Assign.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(exprEClass, interpreter.imp.interpreter.imp.Expr.class, "Expr", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(blockEClass, interpreter.imp.interpreter.imp.Block.class, "Block", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getBlock_Stmts(), this.getStmt(),  
@@ -183,6 +202,8 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
     initEAttribute(getInt_const_Value(), ecorePackage.getEInt(), "value", null, 0, 1,  interpreter.imp.interpreter.imp.IntConst.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
     initEClass(varEClass, interpreter.imp.interpreter.imp.Var.class, "Var", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVar_Name(), ecorePackage.getEString(), "name", null, 0, 1,  interpreter.imp.interpreter.imp.Var.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
+    initEReference(getVar_Index(), this.getExpr(),  
+    	null, "index", null, 0, 1,  interpreter.imp.interpreter.imp.Var.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(unaryEClass, interpreter.imp.interpreter.imp.Unary.class, "Unary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getUnary_Op(), this.getUnaryOp(), "op", null, 0, 1,  interpreter.imp.interpreter.imp.Unary.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getUnary_Expr(), this.getExpr(),  
@@ -202,9 +223,17 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
     	null, "value", null, 1, 1,  interpreter.imp.interpreter.imp.StringToValueMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(valueEClass, interpreter.imp.interpreter.imp.Value.class, "Value", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(intValueEClass, interpreter.imp.interpreter.imp.IntValue.class, "IntValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getInt_value_Value(), ecorePackage.getELong(), "value", null, 0, 1,  interpreter.imp.interpreter.imp.IntValue.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
+    initEAttribute(getInt_value_Value(), ecorePackage.getEInt(), "value", null, 0, 1,  interpreter.imp.interpreter.imp.IntValue.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
     initEClass(boolValueEClass, interpreter.imp.interpreter.imp.BoolValue.class, "BoolValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBool_value_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1,  interpreter.imp.interpreter.imp.BoolValue.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
+    initEClass(arrayValueEClass, interpreter.imp.interpreter.imp.ArrayValue.class, "ArrayValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArray_value_Values(), this.getValue(),  
+    	null, "values", null, 0, -1,  interpreter.imp.interpreter.imp.ArrayValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(arrayDeclEClass, interpreter.imp.interpreter.imp.ArrayDecl.class, "ArrayDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArray_decl_Values(), this.getExpr(),  
+    	null, "values", null, 0, -1,  interpreter.imp.interpreter.imp.ArrayDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(boolConstEClass, interpreter.imp.interpreter.imp.BoolConst.class, "BoolConst", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBool_const_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1,  interpreter.imp.interpreter.imp.BoolConst.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
     initEEnum(unaryOpEEnum, interpreter.imp.interpreter.imp.UnaryOp.class, "UnaryOp");
     addEEnumLiteral(unaryOpEEnum, interpreter.imp.interpreter.imp.UnaryOp.NEGATE);
     addEEnumLiteral(unaryOpEEnum, interpreter.imp.interpreter.imp.UnaryOp.NOT);
@@ -291,6 +320,18 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
     return boolValueEClass;
   }
 
+  public EClass getArrayValue() {
+    return arrayValueEClass;
+  }
+
+  public EClass getArrayDecl() {
+    return arrayDeclEClass;
+  }
+
+  public EClass getBoolConst() {
+    return boolConstEClass;
+  }
+
   public EEnum getUnaryOp() {
     return unaryOpEEnum;
   }
@@ -305,6 +346,10 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
   public EReference getAssign_Exp() {
     return (EReference) assignEClass.getEStructuralFeatures().get(1);
+  }
+
+  public EReference getAssign_Index() {
+    return (EReference) assignEClass.getEStructuralFeatures().get(2);
   }
 
   public EReference getBlock_Stmts() {
@@ -337,6 +382,10 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
   public EAttribute getVar_Name() {
     return (EAttribute) varEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getVar_Index() {
+    return (EReference) varEClass.getEStructuralFeatures().get(1);
   }
 
   public EAttribute getUnary_Op() {
@@ -377,5 +426,17 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
   public EAttribute getBool_value_Value() {
     return (EAttribute) boolValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getArray_value_Values() {
+    return (EReference) arrayValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getArray_decl_Values() {
+    return (EReference) arrayDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EAttribute getBool_const_Value() {
+    return (EAttribute) boolConstEClass.getEStructuralFeatures().get(0);
   }
 }

@@ -31,9 +31,6 @@ public class ProjectImpl extends ExprImpl implements Project {
   protected Expr exp;
 
   @CompilationFinal
-  private ProjectDispatchWrapperEval cachedEval;
-
-  @CompilationFinal
   private ProjectDispatchWrapperProject cachedProject;
 
   private ProjectDispatchProject dispatchProjectProject;
@@ -42,7 +39,6 @@ public class ProjectImpl extends ExprImpl implements Project {
 
   protected ProjectImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.ProjectDispatchWrapperEval(this);
     this.cachedProject = new boa.interpreter.boa.impl.ProjectDispatchWrapperProject(this);
     this.dispatchProjectProject = boa.interpreter.boa.impl.ProjectDispatchProjectNodeGen.create(); 
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
@@ -148,14 +144,14 @@ public class ProjectImpl extends ExprImpl implements Project {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    boa.interpreter.boa.EvalRes vexp = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.exp.getCachedEval(), new Object[] {ctx}));
+    boa.interpreter.boa.EvalRes vexp = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.exp.getCachedEval(), new Object[] {ctx})));
         if(vexp instanceof boa.interpreter.boa.EvalMapRes) {
           boa.interpreter.boa.EvalMapRes mvexp = ((boa.interpreter.boa.EvalMapRes)vexp);
           if(execboa.MapService.containsKey(mvexp.getValues(), this.name)) {
             boa.interpreter.boa.EvalRes x = ((boa.interpreter.boa.EvalRes)mvexp.getValues().get(this.name));
             if(x instanceof boa.interpreter.boa.EvalFunRes) {
               boa.interpreter.boa.EvalFunRes func = ((boa.interpreter.boa.EvalFunRes)x);
-              result = (EvalRes) dispatchProjectProject.executeDispatch(this.getCachedProject(), new Object[] {func,mvexp});
+              result = ((boa.interpreter.boa.EvalRes)dispatchProjectProject.executeDispatch(this.getCachedProject(), new Object[] {func,mvexp}));
             }
             else {
               result = x;
@@ -182,10 +178,6 @@ public class ProjectImpl extends ExprImpl implements Project {
         result = ret;
         ;
     return result;
-  }
-
-  public ProjectDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 
   public ProjectDispatchWrapperProject getCachedProject() {

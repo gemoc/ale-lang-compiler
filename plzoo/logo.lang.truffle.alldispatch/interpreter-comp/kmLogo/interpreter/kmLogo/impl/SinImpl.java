@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,15 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Sin"
 )
 public class SinImpl extends UnaryExpressionImpl implements Sin {
-  @CompilationFinal
-  private SinDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected SinImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.SinDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -68,12 +60,8 @@ public class SinImpl extends UnaryExpressionImpl implements Sin {
 
   public double eval(Turtle turtle) {
     double result;
-    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(((double)dispatchExpressionEval.executeDispatch(this.expression.getCachedEval(), new Object[] {turtle})));
+    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.expression.eval(turtle));
         ;
     return result;
-  }
-
-  public SinDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

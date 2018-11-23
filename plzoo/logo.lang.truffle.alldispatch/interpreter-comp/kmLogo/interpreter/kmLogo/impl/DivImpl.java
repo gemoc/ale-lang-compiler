@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,15 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Div"
 )
 public class DivImpl extends BinaryExpImpl implements Div {
-  @CompilationFinal
-  private DivDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected DivImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.DivDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -68,17 +60,13 @@ public class DivImpl extends BinaryExpImpl implements Div {
 
   public double eval(Turtle turtle) {
     double result;
-    if((((double)dispatchExpressionEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {turtle}))) != (0.0)) {
-          result = (((double)dispatchExpressionEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {turtle}))) / (((double)dispatchExpressionEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {turtle})));
+    if((this.rhs.eval(turtle)) != (0.0)) {
+          result = (this.lhs.eval(turtle)) / (this.rhs.eval(turtle));
         }
         else {
           result = 0.0;
         }
         ;
     return result;
-  }
-
-  public DivDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

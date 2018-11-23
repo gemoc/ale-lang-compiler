@@ -5,7 +5,6 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Let;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -31,14 +30,10 @@ public class LetImpl extends ExprImpl implements Let {
   @Child
   protected Expr rhs;
 
-  @CompilationFinal
-  private LetDispatchWrapperEval cachedEval;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected LetImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.LetDispatchWrapperEval(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -185,16 +180,12 @@ public class LetImpl extends ExprImpl implements Let {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     boa.interpreter.boa.Expr lhs = ((boa.interpreter.boa.Expr)this.lhs);
-        boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(lhs.getCachedEval(), new Object[] {ctx}));
+        boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(lhs.getCachedEval(), new Object[] {ctx})));
         boa.interpreter.boa.Ctx nctx = ((boa.interpreter.boa.Ctx)boa.interpreter.boa.BoaFactory.eINSTANCE.createCtx());
         execboa.MapService.putAll(nctx.getEnv(), ctx.getEnv());
         execboa.MapService.put(nctx.getEnv(), this.name, vlhs);
-        result = (EvalRes) dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {nctx});
+        result = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {nctx}));
         ;
     return result;
-  }
-
-  public LetDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

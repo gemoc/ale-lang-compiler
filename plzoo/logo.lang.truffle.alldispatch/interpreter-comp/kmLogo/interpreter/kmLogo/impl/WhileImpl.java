@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -22,18 +21,8 @@ public class WhileImpl extends ControlStructureImpl implements While {
   @Child
   protected Block block;
 
-  @CompilationFinal
-  private WhileDispatchWrapperEval cachedEval;
-
-  private BlockDispatchEval dispatchBlockEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected WhileImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.WhileDispatchWrapperEval(this);
-    this.dispatchBlockEval = kmLogo.interpreter.kmLogo.impl.BlockDispatchEvalNodeGen.create(); 
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -120,15 +109,11 @@ public class WhileImpl extends ControlStructureImpl implements While {
 
   public double eval(Turtle turtle) {
     double result;
-    while ((((double)dispatchExpressionEval.executeDispatch(this.condition.getCachedEval(), new Object[] {turtle}))) > (0.0)) {
-          dispatchBlockEval.executeDispatch(this.block.getCachedEval(), new Object[] {turtle});
+    while ((this.condition.eval(turtle)) > (0.0)) {
+          this.block.eval(turtle);
         }
         result = 0.0;
         ;
     return result;
-  }
-
-  public WhileDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

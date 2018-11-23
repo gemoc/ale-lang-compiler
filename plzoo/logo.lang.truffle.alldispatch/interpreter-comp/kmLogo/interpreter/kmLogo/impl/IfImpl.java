@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -25,18 +24,8 @@ public class IfImpl extends ControlStructureImpl implements If {
   @Child
   protected Block elsePart;
 
-  @CompilationFinal
-  private IfDispatchWrapperEval cachedEval;
-
-  private BlockDispatchEval dispatchBlockEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected IfImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.IfDispatchWrapperEval(this);
-    this.dispatchBlockEval = kmLogo.interpreter.kmLogo.impl.BlockDispatchEvalNodeGen.create(); 
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -165,12 +154,12 @@ public class IfImpl extends ControlStructureImpl implements If {
 
   public double eval(Turtle turtle) {
     double result;
-    if((((double)dispatchExpressionEval.executeDispatch(this.condition.getCachedEval(), new Object[] {turtle}))) != (0.0)) {
-          result = ((double)dispatchBlockEval.executeDispatch(this.thenPart.getCachedEval(), new Object[] {turtle}));
+    if((this.condition.eval(turtle)) != (0.0)) {
+          result = this.thenPart.eval(turtle);
         }
         else {
           if((this.elsePart) != (null)) {
-            result = ((double)dispatchBlockEval.executeDispatch(this.elsePart.getCachedEval(), new Object[] {turtle}));
+            result = this.elsePart.eval(turtle);
           }
           else {
             result = 0.0;
@@ -178,9 +167,5 @@ public class IfImpl extends ControlStructureImpl implements If {
         }
         ;
     return result;
-  }
-
-  public IfDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

@@ -40,9 +40,11 @@ import boa.interpreter.boa.Var;
 import boa.interpreter.boa.With;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.IllegalArgumentException;
+import java.lang.Object;
 import java.lang.String;
 import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -141,6 +143,20 @@ public class BoaFactoryImpl extends EFactoryImpl implements BoaFactory {
     	return createEvalBoolRes();
     default:
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  public Object createFromString(EDataType eDataType, String initialValue) {
+    switch (eDataType.getClassifierID()) {
+    default:
+    	throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  public String convertToString(EDataType eDataType, Object instanceValue) {
+    switch (eDataType.getClassifierID()) {
+    default:
+    	throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 

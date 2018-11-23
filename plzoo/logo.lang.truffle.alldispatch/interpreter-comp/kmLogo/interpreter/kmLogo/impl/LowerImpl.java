@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,15 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Lower"
 )
 public class LowerImpl extends BinaryExpImpl implements Lower {
-  @CompilationFinal
-  private LowerDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected LowerImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.LowerDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -68,7 +60,7 @@ public class LowerImpl extends BinaryExpImpl implements Lower {
 
   public double eval(Turtle turtle) {
     double result;
-    if((((double)dispatchExpressionEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {turtle}))) < (((double)dispatchExpressionEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {turtle})))) {
+    if((this.lhs.eval(turtle)) < (this.rhs.eval(turtle))) {
           result = 1.0;
         }
         else {
@@ -76,9 +68,5 @@ public class LowerImpl extends BinaryExpImpl implements Lower {
         }
         ;
     return result;
-  }
-
-  public LowerDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

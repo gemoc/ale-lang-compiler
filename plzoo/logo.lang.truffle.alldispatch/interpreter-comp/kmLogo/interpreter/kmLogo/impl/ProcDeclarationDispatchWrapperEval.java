@@ -13,7 +13,7 @@ public class ProcDeclarationDispatchWrapperEval extends InstructionDispatchWrapp
 
   protected ProcDeclarationDispatchWrapperEval(ProcDeclaration it) {
     super(it);
-    this.callTargetStable = new CyclicAssumption("ProcDeclarationDispatchWrapperEval_6.78372509239071E7");
+    this.callTargetStable = new CyclicAssumption("ProcDeclarationDispatchWrapperEval_6.3595775896392666E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new ProcDeclarationEvalRootNode(it));
   }
 

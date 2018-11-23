@@ -28,15 +28,15 @@ public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer 
   @CompilationFinal
   private LogoProgramDispatchWrapperCreateTurtle cachedCreateTurtle;
 
-  private InstructionDispatchEval dispatchInstructionEval;
-
   private LogoProgramDispatchCreateTurtle dispatchLogoProgramCreateTurtle;
+
+  private InstructionDispatchEval dispatchInstructionEval;
 
   protected LogoProgramImpl() {
     super();
     this.cachedCreateTurtle = new kmLogo.interpreter.kmLogo.impl.LogoProgramDispatchWrapperCreateTurtle(this);
-    this.dispatchInstructionEval = kmLogo.interpreter.kmLogo.impl.InstructionDispatchEvalNodeGen.create(); 
     this.dispatchLogoProgramCreateTurtle = kmLogo.interpreter.kmLogo.impl.LogoProgramDispatchCreateTurtleNodeGen.create(); 
+    this.dispatchInstructionEval = kmLogo.interpreter.kmLogo.impl.InstructionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary

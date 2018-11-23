@@ -150,12 +150,12 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     unaryExpressionEClass = createEClass(UNARY_EXPRESSION);
     createEReference(unaryExpressionEClass, UNARY_EXPRESSION__EXPRESSION);
     constantEClass = createEClass(CONSTANT);
-    createEAttribute(constantEClass, CONSTANT__VALUE);						
+    createEAttribute(constantEClass, CONSTANT__VALUE);
     procCallEClass = createEClass(PROC_CALL);
     createEReference(procCallEClass, PROC_CALL__ACTUAL_ARGS);
     createEReference(procCallEClass, PROC_CALL__DECLARATION);
     procDeclarationEClass = createEClass(PROC_DECLARATION);
-    createEAttribute(procDeclarationEClass, PROC_DECLARATION__NAME);						
+    createEAttribute(procDeclarationEClass, PROC_DECLARATION__NAME);
     createEReference(procDeclarationEClass, PROC_DECLARATION__ARGS);
     createEReference(procDeclarationEClass, PROC_DECLARATION__PROC_CALL);
     createEReference(procDeclarationEClass, PROC_DECLARATION__INSTRUCTIONS);
@@ -171,7 +171,7 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     whileEClass = createEClass(WHILE);
     createEReference(whileEClass, WHILE__BLOCK);
     parameterEClass = createEClass(PARAMETER);
-    createEAttribute(parameterEClass, PARAMETER__NAME);						
+    createEAttribute(parameterEClass, PARAMETER__NAME);
     parameterCallEClass = createEClass(PARAMETER_CALL);
     createEReference(parameterCallEClass, PARAMETER_CALL__PARAMETER);
     plusEClass = createEClass(PLUS);
@@ -188,13 +188,13 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     createEReference(logoProgramEClass, LOGO_PROGRAM__INSTRUCTIONS);
     turtleEClass = createEClass(TURTLE);
     createEReference(turtleEClass, TURTLE__POSITION);
-    createEAttribute(turtleEClass, TURTLE__HEADING);						
-    createEAttribute(turtleEClass, TURTLE__PEN_UP);						
+    createEAttribute(turtleEClass, TURTLE__HEADING);
+    createEAttribute(turtleEClass, TURTLE__PEN_UP);
     createEReference(turtleEClass, TURTLE__DRAWINGS);
     createEReference(turtleEClass, TURTLE__CALL_STACK);
     pointEClass = createEClass(POINT);
-    createEAttribute(pointEClass, POINT__X);						
-    createEAttribute(pointEClass, POINT__Y);						
+    createEAttribute(pointEClass, POINT__X);
+    createEAttribute(pointEClass, POINT__Y);
     segmentEClass = createEClass(SEGMENT);
     createEReference(segmentEClass, SEGMENT__BEGIN);
     createEReference(segmentEClass, SEGMENT__END);
@@ -203,8 +203,8 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     stackFrameEClass = createEClass(STACK_FRAME);
     createEReference(stackFrameEClass, STACK_FRAME__VARIABLES);
     variableEClass = createEClass(VARIABLE);
-    createEAttribute(variableEClass, VARIABLE__NAME);						
-    createEAttribute(variableEClass, VARIABLE__VALUE);						
+    createEAttribute(variableEClass, VARIABLE__NAME);
+    createEAttribute(variableEClass, VARIABLE__VALUE);
   }
 
   public void initializePackageContents() {

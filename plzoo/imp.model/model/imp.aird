@@ -355,7 +355,7 @@
           </children>
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_4R0lIezLEei277oPj0a_yQ" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_4R0lIuzLEei277oPj0a_yQ" fontColor="7490599" fontName="Cantarell" fontHeight="8"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4R0lI-zLEei277oPj0a_yQ" points="[59, 0, -397, 0]$[397, 0, -59, 0]"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_4R0lI-zLEei277oPj0a_yQ" points="[59, -13, -397, -13]$[397, -13, -59, -13]"/>
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4R2aUuzLEei277oPj0a_yQ" id="(0.5,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_4R3BYOzLEei277oPj0a_yQ" id="(0.5,0.5)"/>
         </edges>
@@ -787,7 +787,7 @@
           </children>
           <styles xmi:type="notation:ConnectorStyle" xmi:id="_dnL08e6AEeiPm6FvI8Hsww" routing="Rectilinear"/>
           <styles xmi:type="notation:FontStyle" xmi:id="_dnL08u6AEeiPm6FvI8Hsww" fontColor="7490599" fontName="Cantarell" fontHeight="8"/>
-          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_dnL08-6AEeiPm6FvI8Hsww" points="[0, 0, -338, 0]$[338, 0, 0, 0]"/>
+          <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_dnL08-6AEeiPm6FvI8Hsww" points="[0, -37, -338, -37]$[338, -37, 0, -37]"/>
           <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dnNDEu6AEeiPm6FvI8Hsww" id="(1.0,0.5)"/>
           <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_dnNDE-6AEeiPm6FvI8Hsww" id="(0.0,0.5)"/>
         </edges>
@@ -1364,7 +1364,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_jpouQOzNEei277oPj0a_yQ" name="value : ELong" tooltipText="">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_jpouQOzNEei277oPj0a_yQ" name="value : EInt" tooltipText="">
         <target xmi:type="ecore:EAttribute" href="imp.ecore#//IntValue/value"/>
         <semanticElements xmi:type="ecore:EAttribute" href="imp.ecore#//IntValue/value"/>
         <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_kRmGIOzNEei277oPj0a_yQ" labelAlignment="LEFT">

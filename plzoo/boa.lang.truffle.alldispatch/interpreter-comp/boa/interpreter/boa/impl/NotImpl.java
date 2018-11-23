@@ -5,7 +5,6 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Not;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -23,14 +22,10 @@ public class NotImpl extends ExprImpl implements Not {
   @Child
   protected Expr value;
 
-  @CompilationFinal
-  private NotDispatchWrapperEval cachedEval;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected NotImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.NotDispatchWrapperEval(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -118,7 +113,7 @@ public class NotImpl extends ExprImpl implements Not {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    boa.interpreter.boa.EvalRes vvalue = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.value.getCachedEval(), new Object[] {ctx}));
+    boa.interpreter.boa.EvalRes vvalue = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.value.getCachedEval(), new Object[] {ctx})));
         if(vvalue instanceof boa.interpreter.boa.EvalBoolRes) {
           boa.interpreter.boa.EvalBoolRes bvvalue = ((boa.interpreter.boa.EvalBoolRes)vvalue);
           boa.interpreter.boa.EvalBoolRes ret = ((boa.interpreter.boa.EvalBoolRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoolRes());
@@ -130,9 +125,5 @@ public class NotImpl extends ExprImpl implements Not {
         }
         ;
     return result;
-  }
-
-  public NotDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

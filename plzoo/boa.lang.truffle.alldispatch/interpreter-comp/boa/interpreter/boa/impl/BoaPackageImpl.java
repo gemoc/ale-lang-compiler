@@ -141,26 +141,26 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
     topLevelCmdEClass = createEClass(TOP_LEVEL_CMD);
     exprEClass = createEClass(EXPR);
     defEClass = createEClass(DEF);
-    createEAttribute(defEClass, DEF__NAME);						
+    createEAttribute(defEClass, DEF__NAME);
     createEReference(defEClass, DEF__EXPR);
     appEClass = createEClass(APP);
     createEReference(appEClass, APP__LHS);
     createEReference(appEClass, APP__RHS);
     varEClass = createEClass(VAR);
-    createEAttribute(varEClass, VAR__NAME);						
+    createEAttribute(varEClass, VAR__NAME);
     thisEClass = createEClass(THIS);
     boolEClass = createEClass(BOOL);
-    createEAttribute(boolEClass, BOOL__VALUE);						
+    createEAttribute(boolEClass, BOOL__VALUE);
     intEClass = createEClass(INT);
-    createEAttribute(intEClass, INT__VALUE);						
+    createEAttribute(intEClass, INT__VALUE);
     skipEClass = createEClass(SKIP);
     projectEClass = createEClass(PROJECT);
     createEReference(projectEClass, PROJECT__EXP);
-    createEAttribute(projectEClass, PROJECT__NAME);						
+    createEAttribute(projectEClass, PROJECT__NAME);
     bObjectEClass = createEClass(BOBJECT);
     createEReference(bObjectEClass, BOBJECT__FIELDS);
     fieldEClass = createEClass(FIELD);
-    createEAttribute(fieldEClass, FIELD__NAME);						
+    createEAttribute(fieldEClass, FIELD__NAME);
     createEReference(fieldEClass, FIELD__VALUE);
     copyEClass = createEClass(COPY);
     createEReference(copyEClass, COPY__COPY);
@@ -181,16 +181,16 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
     createEReference(ifEClass, IF__THN);
     createEReference(ifEClass, IF__ELS);
     letEClass = createEClass(LET);
-    createEAttribute(letEClass, LET__NAME);						
+    createEAttribute(letEClass, LET__NAME);
     createEReference(letEClass, LET__LHS);
     createEReference(letEClass, LET__RHS);
     funEClass = createEClass(FUN);
-    createEAttribute(funEClass, FUN__NAME);						
+    createEAttribute(funEClass, FUN__NAME);
     createEReference(funEClass, FUN__BODY);
     assignEClass = createEClass(ASSIGN);
     createEReference(assignEClass, ASSIGN__LHS);
     createEReference(assignEClass, ASSIGN__RHS);
-    createEAttribute(assignEClass, ASSIGN__NAME);						
+    createEAttribute(assignEClass, ASSIGN__NAME);
     arithOpPlusEClass = createEClass(ARITH_OP_PLUS);
     arithOpMinusEClass = createEClass(ARITH_OP_MINUS);
     arithOpTimesEClass = createEClass(ARITH_OP_TIMES);
@@ -212,7 +212,7 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
     createEReference(ctxEClass, CTX__ENV);
     createEReference(ctxEClass, CTX__TH);
     stringToEvalResMapEClass = createEClass(STRING_TO_EVAL_RES_MAP);
-    createEAttribute(stringToEvalResMapEClass, STRING_TO_EVAL_RES_MAP__KEY);						
+    createEAttribute(stringToEvalResMapEClass, STRING_TO_EVAL_RES_MAP__KEY);
     createEReference(stringToEvalResMapEClass, STRING_TO_EVAL_RES_MAP__VALUE);
     evalResEClass = createEClass(EVAL_RES);
     evalMapResEClass = createEClass(EVAL_MAP_RES);
@@ -220,13 +220,13 @@ public class BoaPackageImpl extends EPackageImpl implements BoaPackage {
     evalFunResEClass = createEClass(EVAL_FUN_RES);
     createEReference(evalFunResEClass, EVAL_FUN_RES__EXP);
     createEReference(evalFunResEClass, EVAL_FUN_RES__CTX);
-    createEAttribute(evalFunResEClass, EVAL_FUN_RES__NAME);						
+    createEAttribute(evalFunResEClass, EVAL_FUN_RES__NAME);
     evalBoundFunResEClass = createEClass(EVAL_BOUND_FUN_RES);
     createEReference(evalBoundFunResEClass, EVAL_BOUND_FUN_RES__TH);
     evalIntResEClass = createEClass(EVAL_INT_RES);
-    createEAttribute(evalIntResEClass, EVAL_INT_RES__VALUE);						
+    createEAttribute(evalIntResEClass, EVAL_INT_RES__VALUE);
     evalBoolResEClass = createEClass(EVAL_BOOL_RES);
-    createEAttribute(evalBoolResEClass, EVAL_BOOL_RES__VALUE);						
+    createEAttribute(evalBoolResEClass, EVAL_BOOL_RES__VALUE);
   }
 
   public void initializePackageContents() {

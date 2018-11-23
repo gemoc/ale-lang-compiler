@@ -13,18 +13,18 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "IntValue"
 )
 public class IntValueImpl extends ValueImpl implements IntValue {
-  protected static final long VALUE_EDEFAULT = 0;
+  protected static final int VALUE_EDEFAULT = 0;
 
-  protected long value = VALUE_EDEFAULT;
+  protected int value = VALUE_EDEFAULT;
 
   protected IntValueImpl() {
     super();
   }
 
-  public long getValue() {
+  public int getValue() {
     return value;}
 
-  public void setValue(long value) {
+  public void setValue(int value) {
     this.value = value;}
 
   @TruffleBoundary
@@ -35,7 +35,7 @@ public class IntValueImpl extends ValueImpl implements IntValue {
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case ImpPackage.INT_VALUE__VALUE:
-    	setValue((long) newValue);
+    	setValue((int) newValue);
     return;
     }
     super.eSet(featureID, newValue);

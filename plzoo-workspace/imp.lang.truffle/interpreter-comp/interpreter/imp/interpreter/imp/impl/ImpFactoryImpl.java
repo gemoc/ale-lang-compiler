@@ -1,10 +1,13 @@
 package interpreter.imp.interpreter.imp.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import interpreter.imp.interpreter.imp.ArrayDecl;
+import interpreter.imp.interpreter.imp.ArrayValue;
 import interpreter.imp.interpreter.imp.Assign;
 import interpreter.imp.interpreter.imp.Binary;
 import interpreter.imp.interpreter.imp.BinaryOp;
 import interpreter.imp.interpreter.imp.Block;
+import interpreter.imp.interpreter.imp.BoolConst;
 import interpreter.imp.interpreter.imp.BoolValue;
 import interpreter.imp.interpreter.imp.If;
 import interpreter.imp.interpreter.imp.ImpFactory;
@@ -74,6 +77,12 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
     	return createIntValue();
     case ImpPackage.BOOL_VALUE:
     	return createBoolValue();
+    case ImpPackage.ARRAY_VALUE:
+    	return createArrayValue();
+    case ImpPackage.ARRAY_DECL:
+    	return createArrayDecl();
+    case ImpPackage.BOOL_CONST:
+    	return createBoolConst();
     default:
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -179,6 +188,24 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
   @TruffleBoundary
   public BoolValue createBoolValue() {
     BoolValueImpl ret = new BoolValueImpl();
+    return ret;
+  }
+
+  @TruffleBoundary
+  public ArrayValue createArrayValue() {
+    ArrayValueImpl ret = new ArrayValueImpl();
+    return ret;
+  }
+
+  @TruffleBoundary
+  public ArrayDecl createArrayDecl() {
+    ArrayDeclImpl ret = new ArrayDeclImpl();
+    return ret;
+  }
+
+  @TruffleBoundary
+  public BoolConst createBoolConst() {
+    BoolConstImpl ret = new BoolConstImpl();
     return ret;
   }
 

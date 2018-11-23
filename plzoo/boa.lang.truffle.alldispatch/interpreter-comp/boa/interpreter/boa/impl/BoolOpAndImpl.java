@@ -5,7 +5,6 @@ import boa.interpreter.boa.BoolOpAnd;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -26,14 +25,10 @@ public class BoolOpAndImpl extends BoolOpImpl implements BoolOpAnd {
   @Child
   protected Expr rhs;
 
-  @CompilationFinal
-  private BoolOpAndDispatchWrapperEval cachedEval;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected BoolOpAndImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.BoolOpAndDispatchWrapperEval(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -163,8 +158,8 @@ public class BoolOpAndImpl extends BoolOpImpl implements BoolOpAnd {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {ctx}));
-        boa.interpreter.boa.EvalRes vrhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {ctx}));
+    boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {ctx})));
+        boa.interpreter.boa.EvalRes vrhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {ctx})));
         if(vlhs instanceof boa.interpreter.boa.EvalBoolRes) {
           if(vrhs instanceof boa.interpreter.boa.EvalBoolRes) {
             boa.interpreter.boa.EvalBoolRes ivlhs = ((boa.interpreter.boa.EvalBoolRes)vlhs);
@@ -182,9 +177,5 @@ public class BoolOpAndImpl extends BoolOpImpl implements BoolOpAnd {
         }
         ;
     return result;
-  }
-
-  public BoolOpAndDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

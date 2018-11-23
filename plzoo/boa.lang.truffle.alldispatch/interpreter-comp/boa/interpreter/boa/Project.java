@@ -1,6 +1,5 @@
 package boa.interpreter.boa;
 
-import boa.interpreter.boa.impl.ProjectDispatchWrapperEval;
 import boa.interpreter.boa.impl.ProjectDispatchWrapperProject;
 import com.oracle.truffle.api.nodes.NodeInterface;
 import java.lang.String;
@@ -18,8 +17,6 @@ public interface Project extends EObject, NodeInterface, Expr {
   EvalRes eval(Ctx ctx);
 
   EvalRes project(EvalFunRes func, EvalMapRes mvexp);
-
-  ProjectDispatchWrapperEval getCachedEval();
 
   ProjectDispatchWrapperProject getCachedProject();
 }

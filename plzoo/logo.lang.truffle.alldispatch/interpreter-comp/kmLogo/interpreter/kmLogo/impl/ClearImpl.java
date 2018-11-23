@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,12 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Clear"
 )
 public class ClearImpl extends PrimitiveImpl implements Clear {
-  @CompilationFinal
-  private ClearDispatchWrapperEval cachedEval;
-
   protected ClearImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.ClearDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -68,9 +63,5 @@ public class ClearImpl extends PrimitiveImpl implements Clear {
     result = 0.0;
         ;
     return result;
-  }
-
-  public ClearDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -22,17 +21,10 @@ public class LeftImpl extends PrimitiveImpl implements Left {
   @Child
   protected Expression angle;
 
-  @CompilationFinal
-  private LeftDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   private TurtleDispatchRotate dispatchTurtleRotate;
 
   protected LeftImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.LeftDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
     this.dispatchTurtleRotate = kmLogo.interpreter.kmLogo.impl.TurtleDispatchRotateNodeGen.create(); 
   }
 
@@ -120,14 +112,10 @@ public class LeftImpl extends PrimitiveImpl implements Left {
 
   public double eval(Turtle turtle) {
     double result;
-    double angle = ((double)((double)dispatchExpressionEval.executeDispatch(this.angle.getCachedEval(), new Object[] {turtle})));
+    double angle = ((double)this.angle.eval(turtle));
         dispatchTurtleRotate.executeDispatch(turtle.getCachedRotate(), new Object[] {angle});
         result = 0.0;
         ;
     return result;
-  }
-
-  public LeftDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

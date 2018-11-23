@@ -8,18 +8,18 @@ import java.lang.Object;
 import java.lang.Override;
 
 public class TopLevelCmdNextLineRootNode extends RootNode {
-	@Child
-	private TopLevelCmd it;
+  @Child
+  private TopLevelCmd it;
 
-	public TopLevelCmdNextLineRootNode(TopLevelCmd it) {
-		super(null);
-		this.it = it;
-	}
+  public TopLevelCmdNextLineRootNode(TopLevelCmd it) {
+    super(null);
+    this.it = it;
+  }
 
-	@Override
-	public Object execute(VirtualFrame frame) {
-		boa.interpreter.boa.Ctx ctx = (boa.interpreter.boa.Ctx) frame.getArguments()[0];
-		it.nextLine(ctx);
-		return null;
-	}
+  @Override
+  public Object execute(VirtualFrame frame) {
+    boa.interpreter.boa.Ctx ctx = (boa.interpreter.boa.Ctx) frame.getArguments()[0];
+    it.nextLine(ctx);
+    return null;
+  }
 }

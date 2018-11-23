@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -20,12 +19,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
   protected Parameter parameter;
 
-  @CompilationFinal
-  private ParameterCallDispatchWrapperEval cachedEval;
-
   protected ParameterCallImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.ParameterCallDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -102,9 +97,5 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
         }
         ;
     return result;
-  }
-
-  public ParameterCallDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

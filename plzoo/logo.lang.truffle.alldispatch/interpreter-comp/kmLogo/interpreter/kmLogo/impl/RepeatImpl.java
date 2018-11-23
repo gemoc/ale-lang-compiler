@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -22,18 +21,8 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
   @Child
   protected Block block;
 
-  @CompilationFinal
-  private RepeatDispatchWrapperEval cachedEval;
-
-  private BlockDispatchEval dispatchBlockEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected RepeatImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.RepeatDispatchWrapperEval(this);
-    this.dispatchBlockEval = kmLogo.interpreter.kmLogo.impl.BlockDispatchEvalNodeGen.create(); 
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -120,17 +109,13 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
 
   public double eval(Turtle turtle) {
     double result;
-    double time = ((double)((double)dispatchExpressionEval.executeDispatch(this.condition.getCachedEval(), new Object[] {turtle})));
+    double time = ((double)this.condition.eval(turtle));
         while ((time) > (0.0)) {
-          dispatchBlockEval.executeDispatch(this.block.getCachedEval(), new Object[] {turtle});
+          this.block.eval(turtle);
           time = (time) - (1.0);
         }
         result = 0.0;
         ;
     return result;
-  }
-
-  public RepeatDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

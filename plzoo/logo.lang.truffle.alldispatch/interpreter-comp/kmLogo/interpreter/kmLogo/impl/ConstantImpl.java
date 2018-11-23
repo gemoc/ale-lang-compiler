@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -19,12 +18,8 @@ public class ConstantImpl extends ExpressionImpl implements Constant {
 
   protected double value = VALUE_EDEFAULT;
 
-  @CompilationFinal
-  private ConstantDispatchWrapperEval cachedEval;
-
   protected ConstantImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.ConstantDispatchWrapperEval(this);
   }
 
   public double getValue() {
@@ -88,9 +83,5 @@ public class ConstantImpl extends ExpressionImpl implements Constant {
     result = this.value;
         ;
     return result;
-  }
-
-  public ConstantDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

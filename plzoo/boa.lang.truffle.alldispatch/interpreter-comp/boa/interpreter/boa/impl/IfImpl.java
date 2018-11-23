@@ -5,7 +5,6 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.If;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -29,14 +28,10 @@ public class IfImpl extends ExprImpl implements If {
   @Child
   protected Expr els;
 
-  @CompilationFinal
-  private IfDispatchWrapperEval cachedEval;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected IfImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.IfDispatchWrapperEval(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -208,14 +203,14 @@ public class IfImpl extends ExprImpl implements If {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    boa.interpreter.boa.EvalRes vcond = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.cond.getCachedEval(), new Object[] {ctx}));
+    boa.interpreter.boa.EvalRes vcond = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.cond.getCachedEval(), new Object[] {ctx})));
         if(vcond instanceof boa.interpreter.boa.EvalBoolRes) {
           boa.interpreter.boa.EvalBoolRes bvcond = ((boa.interpreter.boa.EvalBoolRes)vcond);
           if(bvcond.isValue()) {
-            result = (EvalRes) dispatchExprEval.executeDispatch(this.thn.getCachedEval(), new Object[] {ctx});
+            result = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.thn.getCachedEval(), new Object[] {ctx}));
           }
           else {
-            result = (EvalRes) dispatchExprEval.executeDispatch(this.els.getCachedEval(), new Object[] {ctx});
+            result = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.els.getCachedEval(), new Object[] {ctx}));
           }
         }
         else {
@@ -223,9 +218,5 @@ public class IfImpl extends ExprImpl implements If {
         }
         ;
     return result;
-  }
-
-  public IfDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

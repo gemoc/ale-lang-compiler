@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -24,14 +23,10 @@ public class BlockImpl extends InstructionImpl implements Block {
   @Children
   private Instruction[] instructionsArr;
 
-  @CompilationFinal
-  private BlockDispatchWrapperEval cachedEval;
-
   private InstructionDispatchEval dispatchInstructionEval;
 
   protected BlockImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.BlockDispatchWrapperEval(this);
     this.dispatchInstructionEval = kmLogo.interpreter.kmLogo.impl.InstructionDispatchEvalNodeGen.create(); 
   }
 
@@ -108,9 +103,5 @@ public class BlockImpl extends InstructionImpl implements Block {
         result = 0.0;
         ;
     return result;
-  }
-
-  public BlockDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

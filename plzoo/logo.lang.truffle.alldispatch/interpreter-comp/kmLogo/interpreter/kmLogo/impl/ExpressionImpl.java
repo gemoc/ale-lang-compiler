@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,12 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Expression"
 )
 public abstract class ExpressionImpl extends InstructionImpl implements Expression {
-  @CompilationFinal
-  private ExpressionDispatchWrapperEval cachedEval;
-
   protected ExpressionImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.ExpressionDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -68,9 +63,5 @@ public abstract class ExpressionImpl extends InstructionImpl implements Expressi
     result = 0.0;
         ;
     return result;
-  }
-
-  public ExpressionDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

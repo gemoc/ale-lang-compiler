@@ -12,7 +12,7 @@ public class ExprDispatchWrapperEval {
   private final CyclicAssumption callTargetStable;
 
   protected ExprDispatchWrapperEval(Expr it) {
-    this.callTargetStable = new CyclicAssumption("ExprDispatchWrapperEval_8.30550030537851E7");
+    this.callTargetStable = new CyclicAssumption("ExprDispatchWrapperEval_7.009299367665268E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new ExprEvalRootNode(it));
   }
 

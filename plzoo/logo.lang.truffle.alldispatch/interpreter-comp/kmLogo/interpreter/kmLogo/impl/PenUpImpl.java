@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,12 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "PenUp"
 )
 public class PenUpImpl extends PrimitiveImpl implements PenUp {
-  @CompilationFinal
-  private PenUpDispatchWrapperEval cachedEval;
-
   protected PenUpImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.PenUpDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -69,9 +64,5 @@ public class PenUpImpl extends PrimitiveImpl implements PenUp {
         result = 0.0;
         ;
     return result;
-  }
-
-  public PenUpDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

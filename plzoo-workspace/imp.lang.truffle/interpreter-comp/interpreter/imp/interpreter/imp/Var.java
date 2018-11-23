@@ -9,5 +9,9 @@ public interface Var extends EObject, NodeInterface, Expr {
 
   void setName(String value);
 
+  Expr getIndex();
+
+  void setIndex(Expr value);
+
   Value evaluate(Store s);
 }

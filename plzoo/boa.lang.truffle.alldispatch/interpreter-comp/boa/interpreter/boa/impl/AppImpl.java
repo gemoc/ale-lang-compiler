@@ -28,21 +28,17 @@ public class AppImpl extends ExprImpl implements App {
   protected Expr rhs;
 
   @CompilationFinal
-  private AppDispatchWrapperEval cachedEval;
-
-  @CompilationFinal
   private AppDispatchWrapperCallFunc cachedCallFunc;
-
-  private AppDispatchCallFunc dispatchAppCallFunc;
 
   private ExprDispatchEval dispatchExprEval;
 
+  private AppDispatchCallFunc dispatchAppCallFunc;
+
   protected AppImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.AppDispatchWrapperEval(this);
     this.cachedCallFunc = new boa.interpreter.boa.impl.AppDispatchWrapperCallFunc(this);
-    this.dispatchAppCallFunc = boa.interpreter.boa.impl.AppDispatchCallFuncNodeGen.create(); 
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
+    this.dispatchAppCallFunc = boa.interpreter.boa.impl.AppDispatchCallFuncNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -171,8 +167,8 @@ public class AppImpl extends ExprImpl implements App {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {ctx}));
-        boa.interpreter.boa.EvalRes vrhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {ctx}));
+    boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {ctx})));
+        boa.interpreter.boa.EvalRes vrhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {ctx})));
         if(vlhs instanceof boa.interpreter.boa.EvalFunRes) {
           if(vlhs instanceof boa.interpreter.boa.EvalBoundFunRes) {
             boa.interpreter.boa.EvalBoundFunRes fct = ((boa.interpreter.boa.EvalBoundFunRes)vlhs);
@@ -180,7 +176,7 @@ public class AppImpl extends ExprImpl implements App {
             execboa.MapService.putAll(callCtx.getEnv(), fct.getCtx().getEnv());
             execboa.MapService.put(callCtx.getEnv(), fct.getName(), vrhs);
             execboa.MapService.replaceWith(callCtx.getTh(), fct.getTh());
-            boa.interpreter.boa.EvalRes fe = ((boa.interpreter.boa.EvalRes)dispatchAppCallFunc.executeDispatch(this.getCachedCallFunc(), new Object[] {fct,callCtx}));
+            boa.interpreter.boa.EvalRes fe = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchAppCallFunc.executeDispatch(this.getCachedCallFunc(), new Object[] {fct,callCtx})));
             if(fe instanceof boa.interpreter.boa.EvalFunRes) {
               boa.interpreter.boa.EvalFunRes fun = ((boa.interpreter.boa.EvalFunRes)fe);
               boa.interpreter.boa.EvalBoundFunRes tmp = ((boa.interpreter.boa.EvalBoundFunRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
@@ -200,7 +196,7 @@ public class AppImpl extends ExprImpl implements App {
             execboa.MapService.putAll(callCtx.getEnv(), fct.getCtx().getEnv());
             execboa.MapService.put(callCtx.getEnv(), fct.getName(), vrhs);
             execboa.MapService.replaceWith(callCtx.getTh(), ctx.getTh());
-            boa.interpreter.boa.EvalRes fe = ((boa.interpreter.boa.EvalRes)dispatchAppCallFunc.executeDispatch(this.getCachedCallFunc(), new Object[] {fct,callCtx}));
+            boa.interpreter.boa.EvalRes fe = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchAppCallFunc.executeDispatch(this.getCachedCallFunc(), new Object[] {fct,callCtx})));
             if(fe instanceof boa.interpreter.boa.EvalFunRes) {
               boa.interpreter.boa.EvalFunRes fun = ((boa.interpreter.boa.EvalFunRes)fe);
               boa.interpreter.boa.EvalBoundFunRes tmp = ((boa.interpreter.boa.EvalBoundFunRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
@@ -224,13 +220,9 @@ public class AppImpl extends ExprImpl implements App {
 
   public EvalRes callFunc(EvalFunRes fct, Ctx callCtx) {
     EvalRes result;
-    result = (EvalRes) dispatchExprEval.executeDispatch(fct.getExp().getCachedEval(), new Object[] {callCtx});
+    result = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(fct.getExp().getCachedEval(), new Object[] {callCtx}));
         ;
     return result;
-  }
-
-  public AppDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 
   public AppDispatchWrapperCallFunc getCachedCallFunc() {

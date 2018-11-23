@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Bool;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -20,12 +19,8 @@ public class BoolImpl extends ExprImpl implements Bool {
 
   protected boolean value = VALUE_EDEFAULT;
 
-  @CompilationFinal
-  private BoolDispatchWrapperEval cachedEval;
-
   protected BoolImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.BoolDispatchWrapperEval(this);
   }
 
   public boolean isValue() {
@@ -91,9 +86,5 @@ public class BoolImpl extends ExprImpl implements Bool {
         result = ret;
         ;
     return result;
-  }
-
-  public BoolDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

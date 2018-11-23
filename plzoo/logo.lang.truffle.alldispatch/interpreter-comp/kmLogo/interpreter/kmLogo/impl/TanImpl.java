@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,15 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Tan"
 )
 public class TanImpl extends UnaryExpressionImpl implements Tan {
-  @CompilationFinal
-  private TanDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected TanImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.TanDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -68,12 +60,8 @@ public class TanImpl extends UnaryExpressionImpl implements Tan {
 
   public double eval(Turtle turtle) {
     double result;
-    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.tan(((double)dispatchExpressionEval.executeDispatch(this.expression.getCachedEval(), new Object[] {turtle})));
+    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.tan(this.expression.eval(turtle));
         ;
     return result;
-  }
-
-  public TanDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

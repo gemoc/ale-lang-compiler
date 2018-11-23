@@ -12,7 +12,7 @@ public class ProjectDispatchWrapperProject {
   private final CyclicAssumption callTargetStable;
 
   protected ProjectDispatchWrapperProject(Project it) {
-    this.callTargetStable = new CyclicAssumption("ProjectDispatchWrapperProject_3798097.9057300747");
+    this.callTargetStable = new CyclicAssumption("ProjectDispatchWrapperProject_9.989176258189335E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new ProjectProjectRootNode(it));
   }
 

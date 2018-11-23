@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,15 +14,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Mult"
 )
 public class MultImpl extends BinaryExpImpl implements Mult {
-  @CompilationFinal
-  private MultDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   protected MultImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.MultDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -68,12 +60,8 @@ public class MultImpl extends BinaryExpImpl implements Mult {
 
   public double eval(Turtle turtle) {
     double result;
-    result = (((double)dispatchExpressionEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {turtle}))) * (((double)dispatchExpressionEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {turtle})));
+    result = (this.lhs.eval(turtle)) * (this.rhs.eval(turtle));
         ;
     return result;
-  }
-
-  public MultDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

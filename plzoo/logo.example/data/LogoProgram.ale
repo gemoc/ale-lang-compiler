@@ -34,20 +34,20 @@ open class LogoProgram {
 }
 
 open class Instruction {
-	def dispatch  double eval(Turtle turtle) {
+	def dispatch double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }
 
 open class PenDown {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		turtle.penUp := false;
 		result := 0.0;
 	}
 }
 
 open class PenUp {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		turtle.penUp := true;
 		result := 0.0;
 	}
@@ -55,7 +55,7 @@ open class PenUp {
 
 
 open class Repeat {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		double time := self.condition.eval(turtle);
 		while( time > 0.0 ){
 			self.block.eval(turtle);
@@ -66,7 +66,7 @@ open class Repeat {
 }
 
 open class While {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		while(self.condition.eval(turtle) > 0.0){
 			self.block.eval(turtle);
 		}
@@ -75,7 +75,7 @@ open class While {
 }
 
 open class If {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		if (self.condition.eval(turtle) != 0.0) {
 			result := self.thenPart.eval(turtle);
 		}
@@ -90,13 +90,13 @@ open class If {
 }
 
 open class Constant {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		result := self.value;
 	}
 }
 
 open class Block {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		for(inst in self.instructions){
 			inst.eval(turtle);
 		}
@@ -105,13 +105,13 @@ open class Block {
 }
 
 open class Clear {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }
 
 open class Forward {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		double move := self.steps.eval(turtle);
 		turtle.forward(move);
 		result := 0.0;
@@ -119,7 +119,7 @@ open class Forward {
 }
 
 open class Back {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		double move := self.steps.eval(turtle);
 		turtle.forward(-move);
 		result := 0.0;
@@ -127,7 +127,7 @@ open class Back {
 }
 
 open class Left {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		double angle := self.angle.eval(turtle);
 		turtle.rotate(angle);
 		result := 0.0;
@@ -135,7 +135,7 @@ open class Left {
 }
 
 open class Right {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		double angle := self.angle.eval(turtle);
 		turtle.rotate(-angle);
 		result := 0.0;
@@ -143,32 +143,32 @@ open class Right {
 }
 
 open class Plus {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := self.lhs.eval(turtle) + self.rhs.eval(turtle);
 	}
 }
 
 
 open class Expression {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }
 
 open class Minus {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := self.lhs.eval(turtle) - self.rhs.eval(turtle);
 	}
 }
 
 open class Mult {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := self.lhs.eval(turtle) * self.rhs.eval(turtle);
 	}
 }
 
 open class Div {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		if(self.rhs.eval(turtle) != 0.0){
 			result := self.lhs.eval(turtle) / self.rhs.eval(turtle);
 		}
@@ -179,7 +179,7 @@ open class Div {
 }
 
 open class Equals {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		if(self.lhs.eval(turtle) = self.rhs.eval(turtle)){
 			result := 1.0;
 		}
@@ -190,7 +190,7 @@ open class Equals {
 }
 
 open class Lower {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		if(self.lhs.eval(turtle) < self.rhs.eval(turtle)){
 			result := 1.0;
 		}
@@ -201,7 +201,7 @@ open class Lower {
 }
 
 open class Greater {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		if(self.lhs.eval(turtle) > self.rhs.eval(turtle)){
 			result := 1.0;
 		}
@@ -212,25 +212,25 @@ open class Greater {
 }
 
 open class Cos {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := self.expression.eval(turtle).cosinus();
 	}
 }
 
 open class Sin {
-	def dispatch  double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		result := self.expression.eval(turtle).sinus();
 	}
 }
 
 open class Tan {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := self.expression.eval(turtle).tan();
 	}
 }
 
 open class ProcCall {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		('Calling '+self.declaration.name).log();
 	
 		StackFrame newFrame := kmLogo::StackFrame.create();
@@ -265,7 +265,7 @@ open class ProcDeclaration {
 }
 
 open class ParameterCall {
-	def dispatch double eval(Turtle turtle){
+	def double eval(Turtle turtle){
 		result := 0.0;
 		for(frame in turtle.callStack.frames){
 			for(var in frame.variables){

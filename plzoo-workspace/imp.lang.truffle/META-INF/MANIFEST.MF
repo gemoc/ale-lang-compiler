@@ -7,3 +7,5 @@ Require-Bundle: org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.
  imp.services;bundle-version="1.0.0",
  org.eclipse.emf.common,
  org.eclipse.emf.ecore
+Export-Package: interpreter.imp.interpreter.imp,
+ interpreter.imp.interpreter.imp.impl

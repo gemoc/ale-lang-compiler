@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.Def;
 import boa.interpreter.boa.Expr;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -27,14 +26,10 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
   @Child
   protected Expr expr;
 
-  @CompilationFinal
-  private DefDispatchWrapperNextLine cachedNextLine;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected DefImpl() {
     super();
-    this.cachedNextLine = new boa.interpreter.boa.impl.DefDispatchWrapperNextLine(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -137,13 +132,9 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
   }
 
   public void nextLine(Ctx ctx) {
-    boa.interpreter.boa.EvalRes e = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.expr.getCachedEval(), new Object[] {ctx}));
+    boa.interpreter.boa.EvalRes e = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.expr.getCachedEval(), new Object[] {ctx})));
         org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(((this.name) + (" = ")) + (execboa.SerializeService.serialize(e)));
         execboa.MapService.put(ctx.getEnv(), this.name, e);
         ;
-  }
-
-  public DefDispatchWrapperNextLine getCachedNextLine() {
-    return this.cachedNextLine;
   }
 }

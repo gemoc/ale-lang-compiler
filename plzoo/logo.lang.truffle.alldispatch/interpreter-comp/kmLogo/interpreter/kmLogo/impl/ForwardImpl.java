@@ -1,6 +1,5 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -22,17 +21,10 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
   @Child
   protected Expression steps;
 
-  @CompilationFinal
-  private ForwardDispatchWrapperEval cachedEval;
-
-  private ExpressionDispatchEval dispatchExpressionEval;
-
   private TurtleDispatchForward dispatchTurtleForward;
 
   protected ForwardImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.ForwardDispatchWrapperEval(this);
-    this.dispatchExpressionEval = kmLogo.interpreter.kmLogo.impl.ExpressionDispatchEvalNodeGen.create(); 
     this.dispatchTurtleForward = kmLogo.interpreter.kmLogo.impl.TurtleDispatchForwardNodeGen.create(); 
   }
 
@@ -120,14 +112,10 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
 
   public double eval(Turtle turtle) {
     double result;
-    double move = ((double)((double)dispatchExpressionEval.executeDispatch(this.steps.getCachedEval(), new Object[] {turtle})));
+    double move = ((double)this.steps.eval(turtle));
         dispatchTurtleForward.executeDispatch(turtle.getCachedForward(), new Object[] {move});
         result = 0.0;
         ;
     return result;
-  }
-
-  public ForwardDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

@@ -4,7 +4,6 @@ import boa.interpreter.boa.ArithOpTimes;
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -16,14 +15,10 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "ArithOpTimes"
 )
 public class ArithOpTimesImpl extends ArithOpImpl implements ArithOpTimes {
-  @CompilationFinal
-  private ArithOpTimesDispatchWrapperEval cachedEval;
-
   private ExprDispatchEval dispatchExprEval;
 
   protected ArithOpTimesImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.ArithOpTimesDispatchWrapperEval(this);
     this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
@@ -69,8 +64,8 @@ public class ArithOpTimesImpl extends ArithOpImpl implements ArithOpTimes {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {ctx}));
-        boa.interpreter.boa.EvalRes vrhs = ((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {ctx}));
+    boa.interpreter.boa.EvalRes vlhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.lhs.getCachedEval(), new Object[] {ctx})));
+        boa.interpreter.boa.EvalRes vrhs = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchExprEval.executeDispatch(this.rhs.getCachedEval(), new Object[] {ctx})));
         if(vlhs instanceof boa.interpreter.boa.EvalIntRes) {
           if(vrhs instanceof boa.interpreter.boa.EvalIntRes) {
             boa.interpreter.boa.EvalIntRes ivlhs = ((boa.interpreter.boa.EvalIntRes)vlhs);
@@ -88,9 +83,5 @@ public class ArithOpTimesImpl extends ArithOpImpl implements ArithOpTimes {
         }
         ;
     return result;
-  }
-
-  public ArithOpTimesDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }
