@@ -81,7 +81,7 @@ class AleExpressionsCompiler {
 			case "sub":
 				CodeBlock.
 					of('''(«call.arguments.get(0).compileExpression(ctx)») - («call.arguments.get(1).compileExpression(ctx)»)''')
-			case "add":
+			case call.serviceName == "add" && call.type == CallType.CALLSERVICE:
 				CodeBlock.
 					of('''(«call.arguments.get(0).compileExpression(ctx)») + («call.arguments.get(1).compileExpression(ctx)»)''')
 			case "divOp":
@@ -93,6 +93,13 @@ class AleExpressionsCompiler {
 			case "lessThan":
 				CodeBlock.
 					of('''(«call.arguments.get(0).compileExpression(ctx)») < («call.arguments.get(1).compileExpression(ctx)»)''')
+			case "lessThanEqual":
+				CodeBlock.
+					of('''(«call.arguments.get(0).compileExpression(ctx)») <= («call.arguments.get(1).compileExpression(ctx)»)''')
+			case "greaterThanEqual":
+				CodeBlock.
+					of('''(«call.arguments.get(0).compileExpression(ctx)») >= («call.arguments.get(1).compileExpression(ctx)»)''')		
+					
 			case "mult":
 				CodeBlock.
 					of('''(«call.arguments.get(0).compileExpression(ctx)») * («call.arguments.get(1).compileExpression(ctx)»)''')
@@ -187,7 +194,7 @@ class AleExpressionsCompiler {
 								(t as SequenceType).collectionType.type instanceof EClass) {
 								CodeBlock.
 									of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
-							} else if (t.type instanceof EClass || t.type instanceof EDataType) {
+							} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
 								if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 									(t.type as EDataType).instanceClass == boolean))
 									CodeBlock.
@@ -212,7 +219,7 @@ class AleExpressionsCompiler {
 						val ts = argumentsh.infereType
 						val t = ts.head
 						val re = resolved.filter [
-							if (t.type instanceof EClass) {
+							if (t !== null && t.type instanceof EClass) {
 								val tecls = t.type as EClass
 								it.ECls.name == tecls.name && it.ECls.EPackage.name == tecls.EPackage.name
 							} else {

@@ -149,6 +149,21 @@ public class ImpAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseArrayValue(ArrayValue object) {
+			return createArrayValueAdapter();
+		}
+
+		@Override
+		public Adapter caseArrayDecl(ArrayDecl object) {
+			return createArrayDeclAdapter();
+		}
+
+		@Override
+		public Adapter caseBoolConst(BoolConst object) {
+			return createBoolConstAdapter();
+		}
+
+		@Override
 		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
@@ -388,6 +403,48 @@ public class ImpAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBoolValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.ArrayValue <em>Array Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.ArrayValue
+	 * @generated
+	 */
+	public Adapter createArrayValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.ArrayDecl <em>Array Decl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.ArrayDecl
+	 * @generated
+	 */
+	public Adapter createArrayDeclAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.BoolConst <em>Bool Const</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.BoolConst
+	 * @generated
+	 */
+	public Adapter createBoolConstAdapter() {
 		return null;
 	}
 

@@ -12,6 +12,7 @@ package imp.model.imp;
  * </p>
  * <ul>
  *   <li>{@link imp.model.imp.Var#getName <em>Name</em>}</li>
+ *   <li>{@link imp.model.imp.Var#getIndex <em>Index</em>}</li>
  * </ul>
  *
  * @see imp.model.imp.ImpPackage#getVar()
@@ -44,5 +45,31 @@ public interface Var extends Expr {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Index</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Index</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Index</em>' containment reference.
+	 * @see #setIndex(Expr)
+	 * @see imp.model.imp.ImpPackage#getVar_Index()
+	 * @model containment="true"
+	 * @generated
+	 */
+	Expr getIndex();
+
+	/**
+	 * Sets the value of the '{@link imp.model.imp.Var#getIndex <em>Index</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Index</em>' containment reference.
+	 * @see #getIndex()
+	 * @generated
+	 */
+	void setIndex(Expr value);
 
 } // Var

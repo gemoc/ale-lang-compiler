@@ -14,4 +14,6 @@ public interface Binary extends EObject, Expr {
   Expr getRhs();
 
   void setRhs(Expr value);
+
+  Value evaluate(Store s);
 }

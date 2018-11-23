@@ -51,6 +51,13 @@ class PackageInterfaceCompiler {
 					STATIC, PUBLIC, FINAL).build
 			cptr = cptr + 1
 		}
+		
+		for(EEnum eEnum : allEnums) {
+			classFields +=
+				FieldSpec.builder(int, eEnum.name.normalizeUpperField).initializer('''«cptr»''').addModifiers(
+					STATIC, PUBLIC, FINAL).build
+			cptr = cptr + 1
+		}
 
 		val classFieldsLiterals = allClasses.map [ clazz |
 			FieldSpec.builder(EClass, clazz.name.normalizeUpperField).
@@ -91,8 +98,10 @@ class PackageInterfaceCompiler {
 			for(EStructuralFeature esf: clazz.EStructuralFeatures) {
 				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build
 				cptrI = cptrI + 1
-			}		
+			}
 		}
+		
+		
 		
 		val getFactoryMethod = MethodSpec.methodBuilder('''get«abstractSyntax.name.toFirstUpper»Factory''').returns(factoryInterfaceType).addModifiers(PUBLIC,ABSTRACT).build
 		

@@ -130,6 +130,33 @@ public interface ImpFactory extends EFactory {
 	BoolValue createBoolValue();
 
 	/**
+	 * Returns a new object of class '<em>Array Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Array Value</em>'.
+	 * @generated
+	 */
+	ArrayValue createArrayValue();
+
+	/**
+	 * Returns a new object of class '<em>Array Decl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Array Decl</em>'.
+	 * @generated
+	 */
+	ArrayDecl createArrayDecl();
+
+	/**
+	 * Returns a new object of class '<em>Bool Const</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Bool Const</em>'.
+	 * @generated
+	 */
+	BoolConst createBoolConst();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

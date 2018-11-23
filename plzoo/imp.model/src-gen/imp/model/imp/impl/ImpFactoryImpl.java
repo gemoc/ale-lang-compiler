@@ -84,6 +84,12 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
 			return createIntValue();
 		case ImpPackage.BOOL_VALUE:
 			return createBoolValue();
+		case ImpPackage.ARRAY_VALUE:
+			return createArrayValue();
+		case ImpPackage.ARRAY_DECL:
+			return createArrayDecl();
+		case ImpPackage.BOOL_CONST:
+			return createBoolConst();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -251,6 +257,36 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
 	public BoolValue createBoolValue() {
 		BoolValueImpl boolValue = new BoolValueImpl();
 		return boolValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ArrayValue createArrayValue() {
+		ArrayValueImpl arrayValue = new ArrayValueImpl();
+		return arrayValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ArrayDecl createArrayDecl() {
+		ArrayDeclImpl arrayDecl = new ArrayDeclImpl();
+		return arrayDecl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BoolConst createBoolConst() {
+		BoolConstImpl boolConst = new BoolConstImpl();
+		return boolConst;
 	}
 
 	/**

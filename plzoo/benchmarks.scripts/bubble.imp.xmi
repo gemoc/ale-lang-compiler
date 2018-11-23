@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ASCII"?>
+<imp:Block xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:imp="http://www.example.org/imp">
+  <stmts xsi:type="imp:Assign" name="swapped">
+    <exp xsi:type="imp:BoolConst" value="true"/>
+  </stmts>
+  <stmts xsi:type="imp:While">
+    <cond xsi:type="imp:Var" name="swapped"/>
+    <body xsi:type="imp:Block">
+      <stmts xsi:type="imp:Assign" name="swapped">
+        <exp xsi:type="imp:BoolConst"/>
+      </stmts>
+      <stmts xsi:type="imp:Assign" name="i">
+        <exp xsi:type="imp:IntConst" value="1"/>
+      </stmts>
+      <stmts xsi:type="imp:While">
+        <cond xsi:type="imp:Binary" op="LEQ">
+          <lhs xsi:type="imp:Var" name="i"/>
+          <rhs xsi:type="imp:Binary" op="SUB">
+            <lhs xsi:type="imp:Var" name="n"/>
+            <rhs xsi:type="imp:IntConst" value="1"/>
+          </rhs>
+        </cond>
+        <body xsi:type="imp:Block">
+          <stmts xsi:type="imp:Assign" name="ib">
+            <exp xsi:type="imp:Binary" op="SUB">
+              <lhs xsi:type="imp:Var" name="i"/>
+              <rhs xsi:type="imp:IntConst" value="1"/>
+            </exp>
+          </stmts>
+          <stmts xsi:type="imp:If">
+            <cond xsi:type="imp:Binary" op="GT">
+              <lhs xsi:type="imp:Var" name="a">
+                <index xsi:type="imp:Var" name="ib"/>
+              </lhs>
+              <rhs xsi:type="imp:Var" name="a">
+                <index xsi:type="imp:Var" name="i"/>
+              </rhs>
+            </cond>
+            <lhs xsi:type="imp:Block">
+              <stmts xsi:type="imp:Assign" name="tmp">
+                <exp xsi:type="imp:Var" name="a">
+                  <index xsi:type="imp:Var" name="ib"/>
+                </exp>
+              </stmts>
+              <stmts xsi:type="imp:Assign" name="a">
+                <exp xsi:type="imp:Var" name="a">
+                  <index xsi:type="imp:Var" name="i"/>
+                </exp>
+                <index xsi:type="imp:Var" name="ib"/>
+              </stmts>
+              <stmts xsi:type="imp:Assign" name="a">
+                <exp xsi:type="imp:Var" name="tmp"/>
+                <index xsi:type="imp:Var" name="i"/>
+              </stmts>
+              <stmts xsi:type="imp:Assign" name="swapped">
+                <exp xsi:type="imp:BoolConst" value="true"/>
+              </stmts>
+            </lhs>
+            <rhs xsi:type="imp:Skip"/>
+          </stmts>
+          <stmts xsi:type="imp:Assign" name="i">
+            <exp xsi:type="imp:Binary">
+              <lhs xsi:type="imp:Var" name="i"/>
+              <rhs xsi:type="imp:IntConst" value="1"/>
+            </exp>
+          </stmts>
+        </body>
+      </stmts>
+    </body>
+  </stmts>
+</imp:Block>

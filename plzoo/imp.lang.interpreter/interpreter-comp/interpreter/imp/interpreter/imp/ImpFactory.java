@@ -30,5 +30,11 @@ public interface ImpFactory extends EFactory {
 
   BoolValue createBoolValue();
 
+  ArrayValue createArrayValue();
+
+  ArrayDecl createArrayDecl();
+
+  BoolConst createBoolConst();
+
   ImpPackage getImpPackage();
 }

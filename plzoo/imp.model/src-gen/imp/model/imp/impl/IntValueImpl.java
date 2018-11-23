@@ -33,7 +33,7 @@ public class IntValueImpl extends ValueImpl implements IntValue {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int VALUE_EDEFAULT = 0;
+	protected static final long VALUE_EDEFAULT = 0L;
 
 	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -43,7 +43,7 @@ public class IntValueImpl extends ValueImpl implements IntValue {
 	 * @generated
 	 * @ordered
 	 */
-	protected int value = VALUE_EDEFAULT;
+	protected long value = VALUE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -69,7 +69,7 @@ public class IntValueImpl extends ValueImpl implements IntValue {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getValue() {
+	public long getValue() {
 		return value;
 	}
 
@@ -78,8 +78,8 @@ public class IntValueImpl extends ValueImpl implements IntValue {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setValue(int newValue) {
-		int oldValue = value;
+	public void setValue(long newValue) {
+		long oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ImpPackage.INT_VALUE__VALUE, oldValue, value));
@@ -108,7 +108,7 @@ public class IntValueImpl extends ValueImpl implements IntValue {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case ImpPackage.INT_VALUE__VALUE:
-			setValue((Integer) newValue);
+			setValue((Long) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);

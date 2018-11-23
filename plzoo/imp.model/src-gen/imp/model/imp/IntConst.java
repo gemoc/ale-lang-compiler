@@ -29,7 +29,7 @@ public interface IntConst extends Expr {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(int)
-	 * @see imp.model.imp.ImpPackage#getInt_const_Value()
+	 * @see imp.model.imp.ImpPackage#getIntConst_Value()
 	 * @model
 	 * @generated
 	 */

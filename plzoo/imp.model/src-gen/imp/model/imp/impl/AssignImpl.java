@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link imp.model.imp.impl.AssignImpl#getName <em>Name</em>}</li>
  *   <li>{@link imp.model.imp.impl.AssignImpl#getExp <em>Exp</em>}</li>
+ *   <li>{@link imp.model.imp.impl.AssignImpl#getIndex <em>Index</em>}</li>
  * </ul>
  *
  * @generated
@@ -58,6 +59,16 @@ public class AssignImpl extends StmtImpl implements Assign {
 	 * @ordered
 	 */
 	protected Expr exp;
+
+	/**
+	 * The cached value of the '{@link #getIndex() <em>Index</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected Expr index;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -153,11 +164,62 @@ public class AssignImpl extends StmtImpl implements Assign {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Expr getIndex() {
+		return index;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetIndex(Expr newIndex, NotificationChain msgs) {
+		Expr oldIndex = index;
+		index = newIndex;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ImpPackage.ASSIGN__INDEX,
+					oldIndex, newIndex);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIndex(Expr newIndex) {
+		if (newIndex != index) {
+			NotificationChain msgs = null;
+			if (index != null)
+				msgs = ((InternalEObject) index).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ImpPackage.ASSIGN__INDEX,
+						null, msgs);
+			if (newIndex != null)
+				msgs = ((InternalEObject) newIndex).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ImpPackage.ASSIGN__INDEX,
+						null, msgs);
+			msgs = basicSetIndex(newIndex, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImpPackage.ASSIGN__INDEX, newIndex, newIndex));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case ImpPackage.ASSIGN__EXP:
 			return basicSetExp(null, msgs);
+		case ImpPackage.ASSIGN__INDEX:
+			return basicSetIndex(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -174,6 +236,8 @@ public class AssignImpl extends StmtImpl implements Assign {
 			return getName();
 		case ImpPackage.ASSIGN__EXP:
 			return getExp();
+		case ImpPackage.ASSIGN__INDEX:
+			return getIndex();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -191,6 +255,9 @@ public class AssignImpl extends StmtImpl implements Assign {
 			return;
 		case ImpPackage.ASSIGN__EXP:
 			setExp((Expr) newValue);
+			return;
+		case ImpPackage.ASSIGN__INDEX:
+			setIndex((Expr) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -210,6 +277,9 @@ public class AssignImpl extends StmtImpl implements Assign {
 		case ImpPackage.ASSIGN__EXP:
 			setExp((Expr) null);
 			return;
+		case ImpPackage.ASSIGN__INDEX:
+			setIndex((Expr) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -226,6 +296,8 @@ public class AssignImpl extends StmtImpl implements Assign {
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case ImpPackage.ASSIGN__EXP:
 			return exp != null;
+		case ImpPackage.ASSIGN__INDEX:
+			return index != null;
 		}
 		return super.eIsSet(featureID);
 	}

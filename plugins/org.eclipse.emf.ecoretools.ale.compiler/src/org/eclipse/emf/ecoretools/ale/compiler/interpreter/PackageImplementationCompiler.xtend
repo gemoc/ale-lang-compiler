@@ -88,9 +88,12 @@ class PackageImplementationCompiler {
 						«IF eAttr instanceof EReference»
 							createEReference(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);
 						«ELSE»
-							createEAttribute(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);						
+							createEAttribute(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);
 						«ENDIF»
 					«ENDFOR»
+				«ENDFOR»
+				«FOR eEnum : allEnums»
+					«eEnum.name.toFirstLower»EEnum = createEEnum(«eEnum.name.normalizeUpperField»);
 				«ENDFOR»
 			''').build
 
@@ -135,6 +138,12 @@ class PackageImplementationCompiler {
 							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), ecorePackage.get«IF !eAttr.EType.name.startsWith('E')»E«ENDIF»«eAttr.EType.name»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT,«IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);				
 						«ENDIF»
 					«ENDFOR»
+				«ENDFOR»
+				«FOR eEnum: allEnums»
+				initEEnum(«eEnum.name.toFirstLower»EEnum, «eEnum.classInterfacePackageName(packageRoot)».«eEnum.name».class, "«eEnum.name»");
+				«FOR lit: eEnum.ELiterals»
+				addEEnumLiteral(«eEnum.name.toFirstLower»EEnum, «eEnum.classInterfacePackageName(packageRoot)».«eEnum.name».«lit.name»);
+				«ENDFOR»
 				«ENDFOR»
 				// Create resource
 				createResource(eNS_URI);

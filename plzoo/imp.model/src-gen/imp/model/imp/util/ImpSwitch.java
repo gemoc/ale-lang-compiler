@@ -203,6 +203,33 @@ public class ImpSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
+		case ImpPackage.ARRAY_VALUE: {
+			ArrayValue arrayValue = (ArrayValue) theEObject;
+			T result = caseArrayValue(arrayValue);
+			if (result == null)
+				result = caseValue(arrayValue);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case ImpPackage.ARRAY_DECL: {
+			ArrayDecl arrayDecl = (ArrayDecl) theEObject;
+			T result = caseArrayDecl(arrayDecl);
+			if (result == null)
+				result = caseExpr(arrayDecl);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case ImpPackage.BOOL_CONST: {
+			BoolConst boolConst = (BoolConst) theEObject;
+			T result = caseBoolConst(boolConst);
+			if (result == null)
+				result = caseExpr(boolConst);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -445,6 +472,51 @@ public class ImpSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseBoolValue(BoolValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Array Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Array Value</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseArrayValue(ArrayValue object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Array Decl</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Array Decl</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseArrayDecl(ArrayDecl object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Bool Const</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Bool Const</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBoolConst(BoolConst object) {
 		return null;
 	}
 

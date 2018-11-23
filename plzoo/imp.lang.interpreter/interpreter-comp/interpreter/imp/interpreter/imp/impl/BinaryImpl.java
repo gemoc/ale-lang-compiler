@@ -4,6 +4,8 @@ import interpreter.imp.interpreter.imp.Binary;
 import interpreter.imp.interpreter.imp.BinaryOp;
 import interpreter.imp.interpreter.imp.Expr;
 import interpreter.imp.interpreter.imp.ImpPackage;
+import interpreter.imp.interpreter.imp.Store;
+import interpreter.imp.interpreter.imp.Value;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -150,5 +152,78 @@ public class BinaryImpl extends ExprImpl implements Binary {
     	return basicSetRhs(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluate(Store s) {
+    Value result;
+    interpreter.imp.interpreter.imp.Value lv = ((interpreter.imp.interpreter.imp.Value)this.lhs.evaluate(s));
+        interpreter.imp.interpreter.imp.Value rv = ((interpreter.imp.interpreter.imp.Value)this.rhs.evaluate(s));
+        result = interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createIntValue();
+        if(lv instanceof interpreter.imp.interpreter.imp.IntValue) {
+          interpreter.imp.interpreter.imp.IntValue clv = ((interpreter.imp.interpreter.imp.IntValue)lv);
+          if(rv instanceof interpreter.imp.interpreter.imp.IntValue) {
+            interpreter.imp.interpreter.imp.IntValue crv = ((interpreter.imp.interpreter.imp.IntValue)rv);
+            if(java.util.Objects.equals((this.op.getValue()), (0))) {
+              interpreter.imp.interpreter.imp.IntValue tmp2 = ((interpreter.imp.interpreter.imp.IntValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createIntValue());
+              tmp2.setValue((clv.getValue()) + (crv.getValue()));
+              result = tmp2;
+            }
+            if(java.util.Objects.equals((this.op.getValue()), (1))) {
+              interpreter.imp.interpreter.imp.IntValue tmp2 = ((interpreter.imp.interpreter.imp.IntValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createIntValue());
+              tmp2.setValue((clv.getValue()) - (crv.getValue()));
+              result = tmp2;
+            }
+            if(java.util.Objects.equals((this.op.getValue()), (2))) {
+              interpreter.imp.interpreter.imp.IntValue tmp2 = ((interpreter.imp.interpreter.imp.IntValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createIntValue());
+              tmp2.setValue((clv.getValue()) * (crv.getValue()));
+              result = tmp2;
+            }
+            if(java.util.Objects.equals((this.op.getValue()), (3))) {
+              interpreter.imp.interpreter.imp.BoolValue tmp2 = ((interpreter.imp.interpreter.imp.BoolValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createBoolValue());
+              tmp2.setValue((clv.getValue()) < (crv.getValue()));
+              result = tmp2;
+            }
+            if(java.util.Objects.equals((this.op.getValue()), (4))) {
+              interpreter.imp.interpreter.imp.BoolValue tmp2 = ((interpreter.imp.interpreter.imp.BoolValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createBoolValue());
+              tmp2.setValue((clv.getValue()) <= (crv.getValue()));
+              result = tmp2;
+            }
+            if(java.util.Objects.equals((this.op.getValue()), (5))) {
+              interpreter.imp.interpreter.imp.BoolValue tmp2 = ((interpreter.imp.interpreter.imp.BoolValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createBoolValue());
+              tmp2.setValue(java.util.Objects.equals((clv.getValue()), (crv.getValue())));
+              result = tmp2;
+            }
+            if(java.util.Objects.equals((this.op.getValue()), (6))) {
+              interpreter.imp.interpreter.imp.BoolValue tmp2 = ((interpreter.imp.interpreter.imp.BoolValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createBoolValue());
+              tmp2.setValue((clv.getValue()) >= (crv.getValue()));
+              result = tmp2;
+            }
+            if(java.util.Objects.equals((this.op.getValue()), (7))) {
+              interpreter.imp.interpreter.imp.BoolValue tmp2 = ((interpreter.imp.interpreter.imp.BoolValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createBoolValue());
+              tmp2.setValue((clv.getValue()) > (crv.getValue()));
+              result = tmp2;
+            }
+          }
+        }
+        else {
+          if(lv instanceof interpreter.imp.interpreter.imp.BoolValue) {
+            interpreter.imp.interpreter.imp.BoolValue clv = ((interpreter.imp.interpreter.imp.BoolValue)lv);
+            if(rv instanceof interpreter.imp.interpreter.imp.BoolValue) {
+              interpreter.imp.interpreter.imp.BoolValue crv = ((interpreter.imp.interpreter.imp.BoolValue)rv);
+              if(java.util.Objects.equals((this.op.getValue()), (8))) {
+                interpreter.imp.interpreter.imp.BoolValue tmp2 = ((interpreter.imp.interpreter.imp.BoolValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createBoolValue());
+                tmp2.setValue(((clv.isValue()) && (crv.isValue())));
+                result = tmp2;
+              }
+              if(java.util.Objects.equals((this.op.getValue()), (9))) {
+                interpreter.imp.interpreter.imp.BoolValue tmp2 = ((interpreter.imp.interpreter.imp.BoolValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createBoolValue());
+                tmp2.setValue(((clv.isValue()) || (crv.isValue())));
+                result = tmp2;
+              }
+            }
+          }
+        }
+        ;
+    return result;
   }
 }

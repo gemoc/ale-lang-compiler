@@ -1,0 +1,19 @@
+{
+	// a = [0,1,2,3]
+	// n = a.length
+	swapped = true;
+	while(swapped) {
+		swapped = false;
+		i = 1;
+		while (Binary { LEQ lhs i rhs Binary { SUB lhs n rhs 1 } } ) {
+			ib = Binary { SUB lhs i rhs 1};
+			if (Binary { GT lhs a[ib]  rhs a[i] } )  {
+				tmp = a [ib];
+				a [ib] = a [i];
+				a [i] = tmp;
+				swapped = true
+			} else Skip;
+			i = Binary { ADD lhs i rhs 1 }
+		}
+	}
+}

@@ -8,8 +8,8 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.Map
-import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -27,6 +27,7 @@ class FactoryImplementationCompiler {
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot, boolean isTruffle) {
 
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
+		val allEnum = abstractSyntax.EClassifiers.filter(EEnum)
 
 		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
 			abstractSyntax.factoryInterfaceClassName)
@@ -70,6 +71,74 @@ class FactoryImplementationCompiler {
 				throw new $2T("The class '" + eClass.getName() + "' is not a valid classifier");
 			}
 		''', packageInterfaceType, IllegalArgumentException).addModifiers(PUBLIC).build
+		
+		val createFromStringMethod = MethodSpec
+			.methodBuilder('createFromString')
+			.returns(Object)
+			.addParameter(ClassName.get('org.eclipse.emf.ecore', 'EDataType'), 'eDataType')
+			.addParameter(String, 'initialValue')
+			.addCode('''
+			switch (eDataType.getClassifierID()) {
+			«FOR eEnum:allEnum»
+			case «abstractSyntax.packageInterfacePackageName(packageRoot)».«abstractSyntax.packageInterfaceClassName».«eEnum.name.normalizeUpperField»:
+				return create«eEnum.name»FromString(eDataType, initialValue);
+			«ENDFOR»
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+			}
+			''')
+			.addModifiers(PUBLIC)
+			.build
+			
+		val convertToStringMethod = MethodSpec
+			.methodBuilder('convertToString')
+			.returns(String)
+			.addParameter(ClassName.get('org.eclipse.emf.ecore', 'EDataType'), 'eDataType')
+			.addParameter(Object, 'instanceValue')
+			.addCode('''
+			switch (eDataType.getClassifierID()) {
+			«FOR eEnum: allEnum»
+			case «abstractSyntax.packageInterfacePackageName(packageRoot)».«abstractSyntax.packageInterfaceClassName».«eEnum.name.normalizeUpperField»:
+				return convert«eEnum.name»ToString(eDataType, instanceValue);
+			«ENDFOR»
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+			}
+			''')
+			.addModifiers(PUBLIC)
+			.build
+			
+		val methodsFromString = allEnum.map[eEnum|
+			
+			val enumType = ClassName.get(eEnum.classInterfacePackageName(packageRoot), eEnum.classInterfaceClassName)
+			val methodFrom  = MethodSpec
+				.methodBuilder('''create«eEnum.name»FromString''')
+				.returns(enumType)
+				.addParameter(ClassName.get('org.eclipse.emf.ecore', 'EDataType'), 'eDataType')
+				.addParameter(String, 'initialValue')
+				.addCode('''
+				$1T result = $1T.get(initialValue);
+				if (result == null)
+					throw new IllegalArgumentException(
+							"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+				return result;
+				''', enumType)
+				.addModifiers(PUBLIC)
+				.build
+			val methodTo = MethodSpec
+				.methodBuilder('''convert«eEnum.name»ToString''')
+				.addParameter(ClassName.get('org.eclipse.emf.ecore', 'EDataType'), 'eDataType')
+				.addParameter(Object, 'instanceValue')
+				.returns(String)
+				.addCode('''
+				return instanceValue == null ? null : instanceValue.toString();
+				''')
+				.addModifiers(PUBLIC)
+				.build
+			
+			#[methodFrom, methodTo]
+		].flatten
+			
 
 		val createMethods = allClasses.filter[!abstract].map [ eClass |
 			val returnType = if (eClass.instanceClass !== null && eClass.instanceClass == Map.Entry) {
@@ -101,7 +170,7 @@ class FactoryImplementationCompiler {
 
 		val factory = TypeSpec.classBuilder(abstractSyntax.factoryImplementationClassName).superclass(EFactoryImpl).
 			addSuperinterface(factoryInterfaceType).addMethods(
-				#[constructor, initMethod, createMethod, getPackageMethod] + createMethods).addModifiers(PUBLIC).build
+				#[constructor, initMethod, createMethod, createFromStringMethod, convertToStringMethod, getPackageMethod] + createMethods + methodsFromString).addModifiers(PUBLIC).build
 
 		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName(packageRoot), factory).build
 

@@ -8,5 +8,9 @@ public interface Var extends EObject, Expr {
 
   void setName(String value);
 
+  Expr getIndex();
+
+  void setIndex(Expr value);
+
   Value evaluate(Store s);
 }

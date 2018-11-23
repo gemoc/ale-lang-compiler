@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ASCII"?>
+<imp:Block xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:imp="http://www.example.org/imp">
+  <stmts xsi:type="imp:If">
+    <cond xsi:type="imp:Binary" op="LEQ">
+      <lhs xsi:type="imp:Var" name="n"/>
+      <rhs xsi:type="imp:IntConst" value="1"/>
+    </cond>
+    <lhs xsi:type="imp:Assign" name="res">
+      <exp xsi:type="imp:IntConst" value="1"/>
+    </lhs>
+    <rhs xsi:type="imp:Block">
+      <stmts xsi:type="imp:Assign" name="fib">
+        <exp xsi:type="imp:IntConst" value="1"/>
+      </stmts>
+      <stmts xsi:type="imp:Assign" name="prevFib">
+        <exp xsi:type="imp:IntConst" value="1"/>
+      </stmts>
+      <stmts xsi:type="imp:Assign" name="i">
+        <exp xsi:type="imp:IntConst" value="2"/>
+      </stmts>
+      <stmts xsi:type="imp:While">
+        <cond xsi:type="imp:Binary" op="LT">
+          <lhs xsi:type="imp:Var" name="i"/>
+          <rhs xsi:type="imp:Var" name="n"/>
+        </cond>
+        <body xsi:type="imp:Block">
+          <stmts xsi:type="imp:Assign" name="temp">
+            <exp xsi:type="imp:Var" name="fib"/>
+          </stmts>
+          <stmts xsi:type="imp:Assign" name="fib">
+            <exp xsi:type="imp:Binary">
+              <lhs xsi:type="imp:Var" name="fib"/>
+              <rhs xsi:type="imp:Var" name="prevFib"/>
+            </exp>
+          </stmts>
+          <stmts xsi:type="imp:Assign" name="prevFib">
+            <exp xsi:type="imp:Var" name="temp"/>
+          </stmts>
+          <stmts xsi:type="imp:Assign" name="i">
+            <exp xsi:type="imp:Binary">
+              <lhs xsi:type="imp:Var" name="i"/>
+              <rhs xsi:type="imp:IntConst" value="1"/>
+            </exp>
+          </stmts>
+        </body>
+      </stmts>
+      <stmts xsi:type="imp:Assign" name="res">
+        <exp xsi:type="imp:Var" name="fib"/>
+      </stmts>
+    </rhs>
+  </stmts>
+</imp:Block>

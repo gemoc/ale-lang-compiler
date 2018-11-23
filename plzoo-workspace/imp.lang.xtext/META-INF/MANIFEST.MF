@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: imp.lang.xtext
+Bundle-ManifestVersion: 2
+Bundle-Name: imp.lang.xtext
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: imp.lang.xtext; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: imp.model,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-10
+Export-Package: imp.lang.xtext.parser.antlr.internal,
+ imp.lang.xtext.validation,
+ imp.lang.xtext.formatting2,
+ imp.lang.xtext.services,
+ imp.lang.xtext.parser.antlr,
+ imp.lang.xtext,
+ imp.lang.xtext.serializer,
+ imp.lang.xtext.generator,
+ imp.lang.xtext.scoping
+Import-Package: org.apache.log4j

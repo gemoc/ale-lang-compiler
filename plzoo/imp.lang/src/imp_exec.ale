@@ -1,6 +1,7 @@
 behavior imp_exec;
 
 use execimp.MapService;
+use execimp.CopyService;
 
 open class Stmt {
 	def Store execute(Store s) {
@@ -16,8 +17,39 @@ open class Skip {
 
 open class Assign {
 	def Store execute(Store s) {
-		s.values.put(self.name, self.exp.evaluate(s));
+		if(not (self.index == null)) {
+			imp::Value idx := self.index.evaluate(s);
+			imp::Value elem := s.values.getFromMap(self.name);
+			if(elem.oclIsKindOf(imp::ArrayValue)) {
+				imp::ArrayValue aelem := elem;
+				if(idx.oclIsKindOf(imp::IntValue)) {
+					imp::IntValue iidx := idx;
+					aelem.values.set(iidx.value, self.exp.evaluate(s).emfcopy());
+				}
+			}
+		} else {
+			s.values.put(self.name, self.exp.evaluate(s).emfcopy());
+		}
 		result := s;
+	}
+}
+
+open class Var {
+	def Value evaluate(Store s) {
+		result := imp::IntValue.create();
+		if(not (self.index == null)) {
+			imp::Value idx := self.index.evaluate(s);
+			imp::Value elem := s.values.getFromMap(self.name);
+			if(elem.oclIsKindOf(imp::ArrayValue)) {
+				imp::ArrayValue aelem := elem;
+				if(idx.oclIsKindOf(imp::IntValue)) {
+					imp::IntValue iidx := idx;
+					result := aelem.values.get(iidx.value);
+				}
+			}
+		} else {
+			result := s.values.getFromMap(self.name);
+		}
 	}
 }
 
@@ -83,21 +115,115 @@ open class IntConst {
  	}
 }
 
-open class Var {
+open class BoolConst {
+ 	def Value evaluate(Store s) {
+ 		BoolValue tmp := imp::BoolValue.create();
+		tmp.value := self.value;
+		result := tmp;
+ 	}
+}
+
+open class Unary {
 	def Value evaluate(Store s) {
-		result := s.values.get(self.name);		
+		Value ev := self.expr.evaluate(s);
+		result := imp::IntValue.create(); // useless value
+		if(self.op.value == 0) { // Negate
+			if(ev.oclIsKindOf(imp::IntValue)) {
+				imp::IntValue tmp := ev;
+				IntValue tmp2 := imp::IntValue.create();
+				tmp2.value := -tmp.value;
+				result := tmp2;
+			}		
+		} else {
+			if(self.op.value == 1) { // not
+				if(ev.oclIsKindOf(imp::BoolValue)) {
+				imp::BoolValue tmp := ev;
+				BoolValue tmp2 := imp::BoolValue.create();
+				tmp2.value := not tmp.value;
+				result := tmp2;
+			}
+			} 
+		}
 	}
 }
 
-//open class Unary {
-//	def Value evaluate(Store s) {
-//		//Value ev := self.expr.evaluate(s);
-////		if(self.op == imp::UnaryOp.Negate) {
-////			if(ev.oclIsKindof(imp::IntValue)) {
-////				imp::IntValue tmp := ev;
-////				result := boa::IntValue.create();
-////				result.value := tmp.value;
-////			}		
-////		}
-//	}
-//}
+
+open class Binary {
+	def Value evaluate(Store s) {
+		imp::Value lv := self.lhs.evaluate(s);
+		imp::Value rv := self.rhs.evaluate(s);
+		result := imp::IntValue.create();
+		
+		if(lv.oclIsKindOf(imp::IntValue)) {
+			imp::IntValue clv := lv;
+			if(rv.oclIsKindOf(imp::IntValue)) {
+				imp::IntValue crv := rv;
+				if(self.op.value == 0) { // add
+					IntValue tmp2 := imp::IntValue.create();
+					tmp2.value := clv.value + crv.value;
+					result := tmp2;
+				}
+				
+				if(self.op.value == 1) { // sub
+					IntValue tmp2 := imp::IntValue.create();
+					tmp2.value := clv.value - crv.value;
+					result := tmp2;
+				}
+				
+				if(self.op.value == 2) { // mul
+					IntValue tmp2 := imp::IntValue.create();
+					tmp2.value := clv.value * crv.value;
+					result := tmp2;
+				}
+				
+				if(self.op.value == 3) { // lt
+					BoolValue tmp2 := imp::BoolValue.create();
+					tmp2.value := clv.value < crv.value;
+					result := tmp2;
+				}
+				
+				if(self.op.value == 4) { // leq
+					BoolValue tmp2 := imp::BoolValue.create();
+					tmp2.value := clv.value <= crv.value;
+					result := tmp2;
+				}
+				
+				if(self.op.value == 5) { // eq
+					BoolValue tmp2 := imp::BoolValue.create();
+					tmp2.value := clv.value == crv.value;
+					result := tmp2;
+				}
+				
+				if(self.op.value == 6) { //geq
+					BoolValue tmp2 := imp::BoolValue.create();
+					tmp2.value := clv.value >= crv.value;
+					result := tmp2;
+				}
+				
+				if(self.op.value == 7) { // gt
+					BoolValue tmp2 := imp::BoolValue.create();
+					tmp2.value := clv.value > crv.value;
+					result := tmp2;
+				}
+			}
+		} else {
+			if(lv.oclIsKindOf(imp::BoolValue)) {
+				imp::BoolValue clv := lv;
+				if(rv.oclIsKindOf(imp::BoolValue)) {
+					imp::BoolValue crv := rv;
+					if(self.op.value == 8) { // and
+						BoolValue tmp2 := imp::BoolValue.create();
+						tmp2.value := clv.value and crv.value;
+						result := tmp2;
+					}
+					
+					if(self.op.value == 9) { // and
+						BoolValue tmp2 := imp::BoolValue.create();
+						tmp2.value := clv.value or crv.value;
+						result := tmp2;
+					}
+				}
+			}
+		}
+	}
+}

@@ -2,8 +2,10 @@ package interpreter.imp.interpreter.imp.impl;
 
 import interpreter.imp.interpreter.imp.Expr;
 import interpreter.imp.interpreter.imp.ImpPackage;
+import interpreter.imp.interpreter.imp.Store;
 import interpreter.imp.interpreter.imp.Unary;
 import interpreter.imp.interpreter.imp.UnaryOp;
+import interpreter.imp.interpreter.imp.Value;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -109,5 +111,31 @@ public class UnaryImpl extends ExprImpl implements Unary {
     	return basicSetExpr(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluate(Store s) {
+    Value result;
+    interpreter.imp.interpreter.imp.Value ev = ((interpreter.imp.interpreter.imp.Value)this.expr.evaluate(s));
+        result = interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createIntValue();
+        if(java.util.Objects.equals((this.op.getValue()), (0))) {
+          if(ev instanceof interpreter.imp.interpreter.imp.IntValue) {
+            interpreter.imp.interpreter.imp.IntValue tmp = ((interpreter.imp.interpreter.imp.IntValue)ev);
+            interpreter.imp.interpreter.imp.IntValue tmp2 = ((interpreter.imp.interpreter.imp.IntValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createIntValue());
+            tmp2.setValue(-(tmp.getValue()));
+            result = tmp2;
+          }
+        }
+        else {
+          if(java.util.Objects.equals((this.op.getValue()), (1))) {
+            if(ev instanceof interpreter.imp.interpreter.imp.BoolValue) {
+              interpreter.imp.interpreter.imp.BoolValue tmp = ((interpreter.imp.interpreter.imp.BoolValue)ev);
+              interpreter.imp.interpreter.imp.BoolValue tmp2 = ((interpreter.imp.interpreter.imp.BoolValue)interpreter.imp.interpreter.imp.ImpFactory.eINSTANCE.createBoolValue());
+              tmp2.setValue(!(tmp.isValue()));
+              result = tmp2;
+            }
+          }
+        }
+        ;
+    return result;
   }
 }

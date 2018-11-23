@@ -49,9 +49,21 @@ public interface ImpPackage extends EPackage {
 
   int BOOL_VALUE = 15;
 
+  int ARRAY_VALUE = 16;
+
+  int ARRAY_DECL = 17;
+
+  int BOOL_CONST = 18;
+
+  int UNARY_OP = 19;
+
+  int BINARY_OP = 20;
+
   int ASSIGN__NAME = 0;
 
   int ASSIGN__EXP = 1;
+
+  int ASSIGN__INDEX = 2;
 
   int BLOCK__STMTS = 0;
 
@@ -68,6 +80,8 @@ public interface ImpPackage extends EPackage {
   int INT_CONST__VALUE = 0;
 
   int VAR__NAME = 0;
+
+  int VAR__INDEX = 1;
 
   int UNARY__OP = 0;
 
@@ -88,6 +102,12 @@ public interface ImpPackage extends EPackage {
   int INT_VALUE__VALUE = 0;
 
   int BOOL_VALUE__VALUE = 0;
+
+  int ARRAY_VALUE__VALUES = 0;
+
+  int ARRAY_DECL__VALUES = 0;
+
+  int BOOL_CONST__VALUE = 0;
 
   EClass getStmt();
 
@@ -121,11 +141,19 @@ public interface ImpPackage extends EPackage {
 
   EClass getBoolValue();
 
+  EClass getArrayValue();
+
+  EClass getArrayDecl();
+
+  EClass getBoolConst();
+
   EEnum getUnaryOp();
 
   EEnum getBinaryOp();
 
   EReference getAssign_Exp();
+
+  EReference getAssign_Index();
 
   EReference getBlock_Stmts();
 
@@ -139,6 +167,8 @@ public interface ImpPackage extends EPackage {
 
   EReference getWhile_Body();
 
+  EReference getVar_Index();
+
   EReference getUnary_Expr();
 
   EReference getBinary_Lhs();
@@ -148,6 +178,10 @@ public interface ImpPackage extends EPackage {
   EReference getStore_Values();
 
   EReference getString_to_value_map_Value();
+
+  EReference getArray_value_Values();
+
+  EReference getArray_decl_Values();
 
   EAttribute getAssign_Name();
 
@@ -164,6 +198,8 @@ public interface ImpPackage extends EPackage {
   EAttribute getInt_value_Value();
 
   EAttribute getBool_value_Value();
+
+  EAttribute getBool_const_Value();
 
   ImpFactory getImpFactory();
 
@@ -200,7 +236,15 @@ public interface ImpPackage extends EPackage {
 
     EClass BOOL_VALUE = eINSTANCE.getBoolValue();
 
+    EClass ARRAY_VALUE = eINSTANCE.getArrayValue();
+
+    EClass ARRAY_DECL = eINSTANCE.getArrayDecl();
+
+    EClass BOOL_CONST = eINSTANCE.getBoolConst();
+
     EReference ASSIGN__EXP = eINSTANCE.getAssign_Exp();
+
+    EReference ASSIGN__INDEX = eINSTANCE.getAssign_Index();
 
     EReference BLOCK__STMTS = eINSTANCE.getBlock_Stmts();
 
@@ -214,6 +258,8 @@ public interface ImpPackage extends EPackage {
 
     EReference WHILE__BODY = eINSTANCE.getWhile_Body();
 
+    EReference VAR__INDEX = eINSTANCE.getVar_Index();
+
     EReference UNARY__EXPR = eINSTANCE.getUnary_Expr();
 
     EReference BINARY__LHS = eINSTANCE.getBinary_Lhs();
@@ -223,6 +269,10 @@ public interface ImpPackage extends EPackage {
     EReference STORE__VALUES = eINSTANCE.getStore_Values();
 
     EReference STRING_TO_VALUE_MAP__VALUE = eINSTANCE.getString_to_value_map_Value();
+
+    EReference ARRAY_VALUE__VALUES = eINSTANCE.getArray_value_Values();
+
+    EReference ARRAY_DECL__VALUES = eINSTANCE.getArray_decl_Values();
 
     EAttribute ASSIGN__NAME = eINSTANCE.getAssign_Name();
 
@@ -239,5 +289,7 @@ public interface ImpPackage extends EPackage {
     EAttribute INT_VALUE__VALUE = eINSTANCE.getInt_value_Value();
 
     EAttribute BOOL_VALUE__VALUE = eINSTANCE.getBool_value_Value();
+
+    EAttribute BOOL_CONST__VALUE = eINSTANCE.getBool_const_Value();
   }
 }

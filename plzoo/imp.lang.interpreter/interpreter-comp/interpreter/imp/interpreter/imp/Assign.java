@@ -12,5 +12,9 @@ public interface Assign extends EObject, Stmt {
 
   void setExp(Expr value);
 
+  Expr getIndex();
+
+  void setIndex(Expr value);
+
   Store execute(Store s);
 }

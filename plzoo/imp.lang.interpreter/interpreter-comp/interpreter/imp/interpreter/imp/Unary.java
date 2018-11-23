@@ -10,4 +10,6 @@ public interface Unary extends EObject, Expr {
   Expr getExpr();
 
   void setExpr(Expr value);
+
+  Value evaluate(Store s);
 }

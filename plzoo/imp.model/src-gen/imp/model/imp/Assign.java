@@ -13,6 +13,7 @@ package imp.model.imp;
  * <ul>
  *   <li>{@link imp.model.imp.Assign#getName <em>Name</em>}</li>
  *   <li>{@link imp.model.imp.Assign#getExp <em>Exp</em>}</li>
+ *   <li>{@link imp.model.imp.Assign#getIndex <em>Index</em>}</li>
  * </ul>
  *
  * @see imp.model.imp.ImpPackage#getAssign()
@@ -71,5 +72,31 @@ public interface Assign extends Stmt {
 	 * @generated
 	 */
 	void setExp(Expr value);
+
+	/**
+	 * Returns the value of the '<em><b>Index</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Index</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Index</em>' containment reference.
+	 * @see #setIndex(Expr)
+	 * @see imp.model.imp.ImpPackage#getAssign_Index()
+	 * @model containment="true"
+	 * @generated
+	 */
+	Expr getIndex();
+
+	/**
+	 * Sets the value of the '{@link imp.model.imp.Assign#getIndex <em>Index</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Index</em>' containment reference.
+	 * @see #getIndex()
+	 * @generated
+	 */
+	void setIndex(Expr value);
 
 } // Assign

@@ -142,13 +142,22 @@ public interface ImpPackage extends EPackage {
 	int ASSIGN__EXP = STMT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Index</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGN__INDEX = STMT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Assign</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSIGN_FEATURE_COUNT = STMT_FEATURE_COUNT + 2;
+	int ASSIGN_FEATURE_COUNT = STMT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Assign</em>' class.
@@ -382,13 +391,22 @@ public interface ImpPackage extends EPackage {
 	int VAR__NAME = EXPR_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Index</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR__INDEX = EXPR_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Var</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int VAR_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
+	int VAR_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Var</em>' class.
@@ -686,6 +704,117 @@ public interface ImpPackage extends EPackage {
 	int BOOL_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.ArrayValueImpl <em>Array Value</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.ArrayValueImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getArrayValue()
+	 * @generated
+	 */
+	int ARRAY_VALUE = 16;
+
+	/**
+	 * The feature id for the '<em><b>Values</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_VALUE__VALUES = VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Array Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Array Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.ArrayDeclImpl <em>Array Decl</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.ArrayDeclImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getArrayDecl()
+	 * @generated
+	 */
+	int ARRAY_DECL = 17;
+
+	/**
+	 * The feature id for the '<em><b>Values</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_DECL__VALUES = EXPR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Array Decl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_DECL_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Array Decl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARRAY_DECL_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.BoolConstImpl <em>Bool Const</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.BoolConstImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getBoolConst()
+	 * @generated
+	 */
+	int BOOL_CONST = 18;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOL_CONST__VALUE = EXPR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Bool Const</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOL_CONST_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Bool Const</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOL_CONST_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link imp.model.imp.UnaryOp <em>Unary Op</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -693,7 +822,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getUnaryOp()
 	 * @generated
 	 */
-	int UNARY_OP = 16;
+	int UNARY_OP = 19;
 
 	/**
 	 * The meta object id for the '{@link imp.model.imp.BinaryOp <em>Binary Op</em>}' enum.
@@ -703,7 +832,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getBinaryOp()
 	 * @generated
 	 */
-	int BINARY_OP = 17;
+	int BINARY_OP = 20;
 
 	/**
 	 * Returns the meta object for class '{@link imp.model.imp.Stmt <em>Stmt</em>}'.
@@ -756,6 +885,17 @@ public interface ImpPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAssign_Exp();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Assign#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Index</em>'.
+	 * @see imp.model.imp.Assign#getIndex()
+	 * @see #getAssign()
+	 * @generated
+	 */
+	EReference getAssign_Index();
 
 	/**
 	 * Returns the meta object for class '{@link imp.model.imp.Expr <em>Expr</em>}'.
@@ -882,7 +1022,7 @@ public interface ImpPackage extends EPackage {
 	 * @see #getIntConst()
 	 * @generated
 	 */
-	EAttribute getInt_const_Value();
+	EAttribute getIntConst_Value();
 
 	/**
 	 * Returns the meta object for class '{@link imp.model.imp.Var <em>Var</em>}'.
@@ -904,6 +1044,17 @@ public interface ImpPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getVar_Name();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Var#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Index</em>'.
+	 * @see imp.model.imp.Var#getIndex()
+	 * @see #getVar()
+	 * @generated
+	 */
+	EReference getVar_Index();
 
 	/**
 	 * Returns the meta object for class '{@link imp.model.imp.Unary <em>Unary</em>}'.
@@ -1088,6 +1239,69 @@ public interface ImpPackage extends EPackage {
 	EAttribute getBoolValue_Value();
 
 	/**
+	 * Returns the meta object for class '{@link imp.model.imp.ArrayValue <em>Array Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Array Value</em>'.
+	 * @see imp.model.imp.ArrayValue
+	 * @generated
+	 */
+	EClass getArrayValue();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link imp.model.imp.ArrayValue#getValues <em>Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Values</em>'.
+	 * @see imp.model.imp.ArrayValue#getValues()
+	 * @see #getArrayValue()
+	 * @generated
+	 */
+	EReference getArrayValue_Values();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.ArrayDecl <em>Array Decl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Array Decl</em>'.
+	 * @see imp.model.imp.ArrayDecl
+	 * @generated
+	 */
+	EClass getArrayDecl();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link imp.model.imp.ArrayDecl#getValues <em>Values</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Values</em>'.
+	 * @see imp.model.imp.ArrayDecl#getValues()
+	 * @see #getArrayDecl()
+	 * @generated
+	 */
+	EReference getArrayDecl_Values();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.BoolConst <em>Bool Const</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bool Const</em>'.
+	 * @see imp.model.imp.BoolConst
+	 * @generated
+	 */
+	EClass getBoolConst();
+
+	/**
+	 * Returns the meta object for the attribute '{@link imp.model.imp.BoolConst#isValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see imp.model.imp.BoolConst#isValue()
+	 * @see #getBoolConst()
+	 * @generated
+	 */
+	EAttribute getBoolConst_Value();
+
+	/**
 	 * Returns the meta object for enum '{@link imp.model.imp.UnaryOp <em>Unary Op</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1175,6 +1389,14 @@ public interface ImpPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ASSIGN__EXP = eINSTANCE.getAssign_Exp();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ASSIGN__INDEX = eINSTANCE.getAssign_Index();
 
 		/**
 		 * The meta object literal for the '{@link imp.model.imp.impl.ExprImpl <em>Expr</em>}' class.
@@ -1280,7 +1502,7 @@ public interface ImpPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute INT_CONST__VALUE = eINSTANCE.getInt_const_Value();
+		EAttribute INT_CONST__VALUE = eINSTANCE.getIntConst_Value();
 
 		/**
 		 * The meta object literal for the '{@link imp.model.imp.impl.VarImpl <em>Var</em>}' class.
@@ -1299,6 +1521,14 @@ public interface ImpPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute VAR__NAME = eINSTANCE.getVar_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VAR__INDEX = eINSTANCE.getVar_Index();
 
 		/**
 		 * The meta object literal for the '{@link imp.model.imp.impl.UnaryImpl <em>Unary</em>}' class.
@@ -1449,6 +1679,60 @@ public interface ImpPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute BOOL_VALUE__VALUE = eINSTANCE.getBoolValue_Value();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.ArrayValueImpl <em>Array Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.ArrayValueImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getArrayValue()
+		 * @generated
+		 */
+		EClass ARRAY_VALUE = eINSTANCE.getArrayValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ARRAY_VALUE__VALUES = eINSTANCE.getArrayValue_Values();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.ArrayDeclImpl <em>Array Decl</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.ArrayDeclImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getArrayDecl()
+		 * @generated
+		 */
+		EClass ARRAY_DECL = eINSTANCE.getArrayDecl();
+
+		/**
+		 * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ARRAY_DECL__VALUES = eINSTANCE.getArrayDecl_Values();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.BoolConstImpl <em>Bool Const</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.BoolConstImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getBoolConst()
+		 * @generated
+		 */
+		EClass BOOL_CONST = eINSTANCE.getBoolConst();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOOL_CONST__VALUE = eINSTANCE.getBoolConst_Value();
 
 		/**
 		 * The meta object literal for the '{@link imp.model.imp.UnaryOp <em>Unary Op</em>}' enum.

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Interpreter
+Bundle-SymbolicName: imp.benchmark.interpreter
+Bundle-Version: 1.0.0.qualifier
+Export-Package: imp.benchmark.interpreter
+Require-Bundle: imp.lang.interpreter;bundle-version="1.0.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi,
+ imp.services;bundle-version="1.0.0"

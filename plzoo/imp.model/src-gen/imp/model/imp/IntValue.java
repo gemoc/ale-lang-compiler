@@ -28,12 +28,12 @@ public interface IntValue extends Value {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
-	 * @see #setValue(int)
+	 * @see #setValue(long)
 	 * @see imp.model.imp.ImpPackage#getIntValue_Value()
 	 * @model
 	 * @generated
 	 */
-	int getValue();
+	long getValue();
 
 	/**
 	 * Sets the value of the '{@link imp.model.imp.IntValue#getValue <em>Value</em>}' attribute.
@@ -43,6 +43,6 @@ public interface IntValue extends Value {
 	 * @see #getValue()
 	 * @generated
 	 */
-	void setValue(int value);
+	void setValue(long value);
 
 } // IntValue
