@@ -1,5 +1,5 @@
 if [ -z ${JAVA8_HOME+x} ]; then JAVA8_HOME=$PWD/java-8-oracle; fi
-if [ -z ${GRAALVM_HOME+x} ]; then GRAALVM_HOME=$PWD/graalvm-ee-1.0.0-rc7; fi
+if [ -z ${GRAALVM_HOME+x} ]; then GRAALVM_HOME=$PWD/graalvm-ee-1.0.0-rc9; fi
 if [ -z ${OPENJ9_HOME+x} ]; then OPENJ9_HOME=$PWD/openj9-9-0.11.0; fi
 if [ -z ${ITERATIONS+x} ]; then ITERATIONS=100; fi
 if [ ! -d "$JAVA8_HOME" ]; then echo JAVA8_HOME=$JAVA8_HOME does not exist; exit 1 ; fi

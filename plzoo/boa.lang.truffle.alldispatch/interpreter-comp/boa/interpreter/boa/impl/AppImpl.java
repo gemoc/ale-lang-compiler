@@ -30,15 +30,15 @@ public class AppImpl extends ExprImpl implements App {
   @CompilationFinal
   private AppDispatchWrapperCallFunc cachedCallFunc;
 
-  private ExprDispatchEval dispatchExprEval;
-
   private AppDispatchCallFunc dispatchAppCallFunc;
+
+  private ExprDispatchEval dispatchExprEval;
 
   protected AppImpl() {
     super();
     this.cachedCallFunc = new boa.interpreter.boa.impl.AppDispatchWrapperCallFunc(this);
-    this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
     this.dispatchAppCallFunc = boa.interpreter.boa.impl.AppDispatchCallFuncNodeGen.create(); 
+    this.dispatchExprEval = boa.interpreter.boa.impl.ExprDispatchEvalNodeGen.create(); 
   }
 
   @TruffleBoundary

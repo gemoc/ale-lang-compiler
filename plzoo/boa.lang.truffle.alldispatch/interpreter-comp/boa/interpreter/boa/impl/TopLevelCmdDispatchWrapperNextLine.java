@@ -12,7 +12,7 @@ public class TopLevelCmdDispatchWrapperNextLine {
   private final CyclicAssumption callTargetStable;
 
   protected TopLevelCmdDispatchWrapperNextLine(TopLevelCmd it) {
-    this.callTargetStable = new CyclicAssumption("TopLevelCmdDispatchWrapperNextLine_8.926405886470462E7");
+    this.callTargetStable = new CyclicAssumption("TopLevelCmdDispatchWrapperNextLine_7.35958362721455E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new TopLevelCmdNextLineRootNode(it));
   }
 

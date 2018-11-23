@@ -120,7 +120,7 @@ checkdirexists dir = "if [ ! -d \"$" ++ dir ++ "\" ]; then echo " ++ dir ++ "=$"
 main :: IO ()
 main = do
   putStrLn $ setifnull "JAVA8_HOME" "$PWD/java-8-oracle"
-  putStrLn $ setifnull "GRAALVM_HOME" "$PWD/graalvm-ee-1.0.0-rc7"
+  putStrLn $ setifnull "GRAALVM_HOME" "$PWD/graalvm-ee-1.0.0-rc9"
   putStrLn $ setifnull "OPENJ9_HOME" "$PWD/openj9-9-0.11.0"
   putStrLn $ setifnull "ITERATIONS" "100"
   putStrLn $ checkdirexists "JAVA8_HOME"

@@ -12,7 +12,7 @@ public class LogoProgramDispatchWrapperCreateTurtle {
   private final CyclicAssumption callTargetStable;
 
   protected LogoProgramDispatchWrapperCreateTurtle(LogoProgram it) {
-    this.callTargetStable = new CyclicAssumption("LogoProgramDispatchWrapperCreateTurtle_9.152163853367119E7");
+    this.callTargetStable = new CyclicAssumption("LogoProgramDispatchWrapperCreateTurtle_2.14537692272928E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new LogoProgramCreateTurtleRootNode(it));
   }
 

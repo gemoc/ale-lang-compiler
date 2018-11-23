@@ -12,7 +12,7 @@ public class TurtleDispatchWrapperMove {
   private final CyclicAssumption callTargetStable;
 
   protected TurtleDispatchWrapperMove(Turtle it) {
-    this.callTargetStable = new CyclicAssumption("TurtleDispatchWrapperMove_8.019365559417725E7");
+    this.callTargetStable = new CyclicAssumption("TurtleDispatchWrapperMove_101694.03438573705");
     this.callTarget = Truffle.getRuntime().createCallTarget(new TurtleMoveRootNode(it));
   }
 
