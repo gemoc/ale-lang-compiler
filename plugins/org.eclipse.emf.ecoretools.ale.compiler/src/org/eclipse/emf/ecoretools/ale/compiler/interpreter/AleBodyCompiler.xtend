@@ -3,13 +3,16 @@ package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
 import com.squareup.javapoet.ParameterizedTypeName
+import java.security.MessageDigest
 import java.util.List
 import java.util.Map
+import java.util.Set
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.EClassImplementationCompiler.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -26,17 +29,21 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
-import java.util.Set
+import java.math.BigInteger
 
 class AleBodyCompiler {
 
 	extension TypeSystemUtils tsu
 	extension AleExpressionsCompiler aec
+	extension InterpreterNamingUtils = new InterpreterNamingUtils
+	val boolean isTruffle
+	
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray, Map<String, Class<?>> registeredServices, boolean isTruffle) {
 		tsu = new TypeSystemUtils(syntaxes, packageRoot, base, resolved)
 		aec = new AleExpressionsCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registeredArray, registeredServices, isTruffle)
+		this.isTruffle = isTruffle
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, FeatureAssignment body,
@@ -158,8 +165,14 @@ class AleBodyCompiler {
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, While body, CompilerExpressionCtx ctx) {
-		builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression(ctx)).compileBody(body.body, ctx).
-			endControlFlow
+		if(this.isTruffle) {
+	     	
+			builderSeed.addStatement('''«body.whileFieldName».executeLoop(com.oracle.truffle.api.Truffle.getRuntime().createVirtualFrame(new Object[0], new com.oracle.truffle.api.frame.FrameDescriptor()))''')
+		} else {
+			builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression(ctx)).compileBody(body.body, ctx).
+				endControlFlow
+			
+		}
 	}
 
 	def escapeDollar(String s) {

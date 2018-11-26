@@ -160,6 +160,7 @@ class ALEInterpreterImplementationCompiler {
 			}
 
 		]
+		//resolved.filter[it.aleCls !== null].map[it.aleCls.]
 	}
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {

@@ -6,7 +6,7 @@
 	<artifactId>org.eclipse.emf.ecoretools.ale.compiler.lib</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<graalvm.version>1.0.0-rc7</graalvm.version>
+		<graalvm.version>1.0.0-rc9</graalvm.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -17,18 +17,18 @@
 			<version>2.15.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle.truffle</groupId>
+			<groupId>org.graalvm.truffle</groupId>
 			<artifactId>truffle-api</artifactId>
 			<version>${graalvm.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle.truffle</groupId>
+			<groupId>org.graalvm.truffle</groupId>
 			<artifactId>truffle-dsl-processor</artifactId>
 			<version>${graalvm.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle.truffle</groupId>
+			<groupId>org.graalvm.truffle</groupId>
 			<artifactId>truffle-tck</artifactId>
 			<version>${graalvm.version}</version>
 			<scope>provided</scope>

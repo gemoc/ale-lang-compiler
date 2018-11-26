@@ -40,16 +40,9 @@ public class BoaLang extends TruffleLanguage<Void> {
 
 	@Override
 	public CallTarget parse(final TruffleLanguage.ParsingRequest request) throws Exception {
-		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		final Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("xmi", new XMIResourceFactoryImpl());
 
-		final ResourceSetImpl resSet = new ResourceSetImpl();
-		final URI createFileURI = URI.createFileURI(BoaBenchmarkTruffle.file);
-		final Resource resource = resSet.getResource(createFileURI, true);
-		final File result = (File) resource.getContents().get(0);
-
-		return Truffle.getRuntime().createCallTarget(new MainRootNodeExtension(BoaLang.this, result));
+		return Truffle.getRuntime()
+				.createCallTarget(new MainRootNodeExtension(BoaLang.this, BoaBenchmarkTruffleJmh.result));
 	}
 
 }

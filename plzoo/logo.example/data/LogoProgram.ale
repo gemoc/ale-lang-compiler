@@ -11,7 +11,7 @@ open class LogoProgram {
 		Turtle turtle :=  self.createTurtle();
 		result := turtle;
 		
-		for(it in self.instructions){
+		for(it in self.instructions) {
 			it.eval(turtle);
 		}
 		result := turtle;
@@ -22,7 +22,7 @@ open class LogoProgram {
 		
 	}
 	
-	def dispatch Turtle createTurtle() {
+	def Turtle createTurtle() {
 		Turtle turtle := kmLogo::Turtle.create();
 		turtle.position := kmLogo::Point.create();
 		turtle.position.x := 0.0;
@@ -34,20 +34,20 @@ open class LogoProgram {
 }
 
 open class Instruction {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }
 
 open class PenDown {
-	def  double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		turtle.penUp := false;
 		result := 0.0;
 	}
 }
 
 open class PenUp {
-	def  double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		turtle.penUp := true;
 		result := 0.0;
 	}
@@ -55,9 +55,9 @@ open class PenUp {
 
 
 open class Repeat {
-	def  double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		double time := self.condition.eval(turtle);
-		while( time > 0.0 ){
+		while( time > 0.0 ) {
 			self.block.eval(turtle);
 			time := time - 1.0;
 		}
@@ -66,8 +66,8 @@ open class Repeat {
 }
 
 open class While {
-	def  double eval(Turtle turtle) {
-		while(self.condition.eval(turtle) > 0.0){
+	def double eval(Turtle turtle) {
+		while(self.condition.eval(turtle) > 0.0) {
 			self.block.eval(turtle);
 		}
 		result := 0.0;
@@ -75,7 +75,7 @@ open class While {
 }
 
 open class If {
-	def  double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		if (self.condition.eval(turtle) != 0.0) {
 			result := self.thenPart.eval(turtle);
 		}
@@ -90,14 +90,14 @@ open class If {
 }
 
 open class Constant {
-	def  double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := self.value;
 	}
 }
 
 open class Block {
-	def  double eval(Turtle turtle) {
-		for(inst in self.instructions){
+	def double eval(Turtle turtle) {
+		for(inst in self.instructions) {
 			inst.eval(turtle);
 		}
 		result := 0.0;
@@ -105,7 +105,7 @@ open class Block {
 }
 
 open class Clear {
-	def  double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }
@@ -135,7 +135,7 @@ open class Left {
 }
 
 open class Right {
-	def  double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		double angle := self.angle.eval(turtle);
 		turtle.rotate(-angle);
 		result := 0.0;
@@ -168,8 +168,8 @@ open class Mult {
 }
 
 open class Div {
-	def  double eval(Turtle turtle) {
-		if(self.rhs.eval(turtle) != 0.0){
+	def double eval(Turtle turtle) {
+		if(self.rhs.eval(turtle) != 0.0) {
 			result := self.lhs.eval(turtle) / self.rhs.eval(turtle);
 		}
 		else{
@@ -179,8 +179,8 @@ open class Div {
 }
 
 open class Equals {
-	def  double eval(Turtle turtle) {
-		if(self.lhs.eval(turtle) = self.rhs.eval(turtle)){
+	def double eval(Turtle turtle) {
+		if(self.lhs.eval(turtle) = self.rhs.eval(turtle)) {
 			result := 1.0;
 		}
 		else{
@@ -190,8 +190,8 @@ open class Equals {
 }
 
 open class Lower {
-	def  double eval(Turtle turtle) {
-		if(self.lhs.eval(turtle) < self.rhs.eval(turtle)){
+	def double eval(Turtle turtle) {
+		if(self.lhs.eval(turtle) < self.rhs.eval(turtle)) {
 			result := 1.0;
 		}
 		else{
@@ -202,7 +202,7 @@ open class Lower {
 
 open class Greater {
 	def double eval(Turtle turtle) {
-		if(self.lhs.eval(turtle) > self.rhs.eval(turtle)){
+		if(self.lhs.eval(turtle) > self.rhs.eval(turtle)) {
 			result := 1.0;
 		}
 		else{
@@ -218,7 +218,7 @@ open class Cos {
 }
 
 open class Sin {
-	def  double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := self.expression.eval(turtle).sinus();
 	}
 }
@@ -235,7 +235,7 @@ open class ProcCall {
 	
 		StackFrame newFrame := kmLogo::StackFrame.create();
 		int i := 1;
-		for (exp in self.actualArgs){
+		for (exp in self.actualArgs) {
 			Variable newVar := kmLogo::Variable.create();
 			newVar.name := self.declaration.args->at(i).name;
 			newVar.value := exp.eval(turtle);
@@ -256,20 +256,20 @@ open class ProcCall {
 }
 
 open class ProcDeclaration {
-	def  dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := 0.0;
-		for(instr in self.instructions){
+		for(instr in self.instructions) {
 			result := instr.eval(turtle);
 		}
 	}
 }
 
 open class ParameterCall {
-	def double eval(Turtle turtle){
+	def double eval(Turtle turtle) {
 		result := 0.0;
-		for(frame in turtle.callStack.frames){
-			for(var in frame.variables){
-				if(var.name = self.parameter.name){
+		for(frame in turtle.callStack.frames) {
+			for(var in frame.variables) {
+				if(var.name = self.parameter.name) {
 					result := var.value;
 				}
 			}
@@ -283,7 +283,7 @@ open class Turtle {
 	double originalSize := 0.0;
 	double anotherAttrib := 0.0;
 	
-	def dispatch void move(double dx, double dy) {
+	def void move(double dx, double dy) {
 		Point newPos := kmLogo::Point.create();
 		newPos.x := self.position.x + dx;
 		newPos.y := self.position.y  + dy;
@@ -301,18 +301,18 @@ open class Turtle {
 		self.position := newPosCopy;
 	}
 	
-	def dispatch void forward(double steps) {
+	def void forward(double steps) {
 		self.move(steps*(self.heading.cosinus()), steps*(self.heading.sinus()));
 	}
 	
-	def dispatch void rotate(double angle) {
+	def void rotate(double angle) {
 		double newAngle := self.heading + angle;
-		if(newAngle > 360.0){
+		if(newAngle > 360.0) {
 				newAngle := newAngle - 360.0;
 				self.heading := newAngle;
 		}
 		else{
-			if(newAngle < 0.0){
+			if(newAngle < 0.0) {
 				newAngle := 360.0 + newAngle;
 				self.heading := newAngle;
 			}

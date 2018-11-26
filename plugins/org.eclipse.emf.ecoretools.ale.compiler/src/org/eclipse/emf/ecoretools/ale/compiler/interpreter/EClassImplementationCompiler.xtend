@@ -45,6 +45,8 @@ import org.eclipse.emf.ecoretools.ale.implementation.Statement
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecore.EEnum
 import java.util.Comparator
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.emf.ecoretools.ale.implementation.While
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -623,6 +625,10 @@ class EClassImplementationCompiler {
 			ret
 		} else #[]
 		
+		val whileOps = if(aleClass !== null) {
+			EcoreUtil2.getAllContentsOfType(aleClass, While)
+		} else #[]
+		
 		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass, aleClass)
 			.applyIfTrue(aleClass !== null, [addMethods(aleMethods)])
 			.applyIfTrue(isTruffle, [addFields(registreredArrays.map[fieldName|
@@ -668,11 +674,19 @@ class EClassImplementationCompiler {
 					.builder(ClassName.get(implPackage, '''«(method.eContainer as ExtendedClass).normalizeExtendedClassName»Dispatch«method.operationRef.name.toFirstUpper»'''), '''dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper»''', PRIVATE)
 					.build
 			])])
+			.addFields(whileOps.map[FieldSpec
+				.builder(ClassName.get('com.oracle.truffle.api.nodes', 'LoopNode'), it.whileFieldName)
+				.addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Child'))
+				.addModifiers(PRIVATE).build
+			])
 			.addMethod(MethodSpec.constructorBuilder.addCode('''
 				super();
 				«IF aleClass !== null»
 					«FOR method: aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true']»
 						this.cached«method.operationRef.name.toFirstUpper» = new «eClass.classImplementationPackageName(packageRoot)».«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»(this);
+					«ENDFOR»
+					«FOR w:whileOps»
+					this.«w.whileFieldName» = com.oracle.truffle.api.Truffle.getRuntime().createLoopNode(null);
 					«ENDFOR»
 				«ENDIF»
 				«IF isTruffle»

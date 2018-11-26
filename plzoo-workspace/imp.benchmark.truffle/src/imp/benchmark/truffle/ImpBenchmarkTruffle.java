@@ -13,7 +13,6 @@ import interpreter.imp.interpreter.imp.ImpPackage;
 import interpreter.imp.interpreter.imp.IntValue;
 import interpreter.imp.interpreter.imp.Store;
 
-
 public class ImpBenchmarkTruffle {
 	static String file;
 
@@ -21,8 +20,6 @@ public class ImpBenchmarkTruffle {
 
 		file = args[0];
 		final int itt = Integer.parseInt(args[1]);
-
-		EPackage.Registry.INSTANCE.put("http://www.example.org/boa", ImpPackage.eINSTANCE);
 
 		final int SIZE = itt;
 		final long[] times = new long[SIZE];

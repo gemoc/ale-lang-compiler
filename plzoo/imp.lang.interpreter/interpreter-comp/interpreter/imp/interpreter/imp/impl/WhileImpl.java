@@ -141,7 +141,8 @@ public class WhileImpl extends StmtImpl implements While {
           interpreter.imp.interpreter.imp.Value conde = ((interpreter.imp.interpreter.imp.Value)this.cond.evaluate(s));
           if(conde instanceof interpreter.imp.interpreter.imp.BoolValue) {
             interpreter.imp.interpreter.imp.BoolValue condeb = ((interpreter.imp.interpreter.imp.BoolValue)conde);
-            if(condeb.isValue()) {
+            boolean value = condeb.isValue();
+			if(value) {
               tmp = this.body.execute(tmp);
             }
             else {

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
@@ -47,12 +48,16 @@ public class ImpLang extends TruffleLanguage<Void> {
 
 	@Override
 	public CallTarget parse(final TruffleLanguage.ParsingRequest request) throws Exception {
+		EPackage.Registry.INSTANCE.put("http://www.example.org/imp", ImpPackage.eINSTANCE);
+		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+		final Map<String, Object> m = reg.getExtensionToFactoryMap();
+		m.put("xmi", new XMIResourceFactoryImpl());
 		final ResourceSetImpl resSet = new ResourceSetImpl();
 		final URI createFileURI = URI.createFileURI(ImpBenchmarkTruffle.file);
 		final Resource resource = resSet.getResource(createFileURI, true);
 		final Stmt result = (Stmt) resource.getContents().get(0);
 
-		final Store s = ImpBenchmarkTruffle.initState(500);
+		final Store s = ImpBenchmarkTruffle.initState(200_000);
 
 //		final ArrayValue arrayValue = (ArrayValue) sorted.getValues().get("a");
 //		final List<Integer> arr = arrayValue.getValues().stream().map(x -> ((IntValue) x).getValue())
