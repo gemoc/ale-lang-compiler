@@ -11,4 +11,6 @@ do
   cd ../../
   ./app/eclipse/eclipse
   mvn -f workspace/standaloneboainterpreter/pom.xml package
+  git add .
+  git commit -m "version $i"
 done
