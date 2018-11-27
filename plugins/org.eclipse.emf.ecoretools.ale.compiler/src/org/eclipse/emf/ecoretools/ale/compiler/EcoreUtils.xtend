@@ -269,7 +269,7 @@ class EcoreUtils {
 				else if (path.startsWith("/"))
 					rs.getResource(URI::createPlatformResourceURI(path, true), true)
 				else
-					rs.getResource(URI::createFileURI(path), true)
+					rs.getResource(URI::createURI(path), true)
 
 			return resource.contents.head as EPackage
 		} catch (Exception e) {
@@ -295,7 +295,7 @@ class EcoreUtils {
 				else if (path.startsWith("/"))
 					rs.getResource(URI::createPlatformResourceURI(path, true), true)
 				else
-					rs.getResource(URI::createFileURI(path), true)
+					rs.getResource(URI::createURI(path), true)
 
 			return resource.contents.head as GenModel
 		} catch (Exception e) {

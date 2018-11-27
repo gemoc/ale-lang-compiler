@@ -165,14 +165,14 @@ class AleBodyCompiler {
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, While body, CompilerExpressionCtx ctx) {
-		if(this.isTruffle) {
-	     	
-			builderSeed.addStatement('''«body.whileFieldName».executeLoop(com.oracle.truffle.api.Truffle.getRuntime().createVirtualFrame(new Object[0], new com.oracle.truffle.api.frame.FrameDescriptor()))''')
-		} else {
+//		if(this.isTruffle) {
+//	     	
+//			builderSeed.addStatement('''«body.whileFieldName».executeLoop(com.oracle.truffle.api.Truffle.getRuntime().createVirtualFrame(new Object[0], new com.oracle.truffle.api.frame.FrameDescriptor()))''')
+//		} else {
 			builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression(ctx)).compileBody(body.body, ctx).
 				endControlFlow
 			
-		}
+//		}
 	}
 
 	def escapeDollar(String s) {

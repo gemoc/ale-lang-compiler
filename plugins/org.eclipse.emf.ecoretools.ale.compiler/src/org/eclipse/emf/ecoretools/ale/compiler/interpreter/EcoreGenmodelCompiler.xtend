@@ -14,7 +14,8 @@ class EcoreGenmodelCompiler {
 		val resSet = new ResourceSetImpl
 
 		ePackages.forEach [ ePackage |
-			val ecoreRes = resSet.createResource(URI.createFileURI('''«path»/«ePackage.name».ecore'''))
+			val tmp = URI.createFileURI('''«path»/«ePackage.name».ecore''')
+			val ecoreRes = resSet.createResource(tmp)
 			ecoreRes.contents += EcoreUtil2.copy(ePackage) => [
 				it.nsURI = '''http://«ePackage.name».«ePackage.name».«ePackage.name»/'''
 			]

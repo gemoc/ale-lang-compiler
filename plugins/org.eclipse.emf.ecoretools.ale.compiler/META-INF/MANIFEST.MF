@@ -21,3 +21,4 @@ Export-Package: org.eclipse.emf.ecoretools.ale.compiler,
  org.eclipse.emf.ecoretools.ale.compiler.interpreter,
  org.eclipse.emf.ecoretools.ale.compiler.revisitor,
  org.eclipse.emf.ecoretools.ale.compiler.visitor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

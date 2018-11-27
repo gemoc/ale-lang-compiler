@@ -3,7 +3,8 @@ import           Data.Char     (toLower)
 import           Data.List     (intersperse)
 
 -- Datas
-data Language=Boa|BoaAllDispatch|Petrinet|Logo|LogoAllDispatch deriving (Show)
+data Language=Imp -- Boa|BoaAllDispatch|Petrinet|Logo|LogoAllDispatch
+  deriving (Show)
 
 languages :: [Language]
 
@@ -12,9 +13,11 @@ data Program = Program {
   name     :: String
 } deriving (Show)
 
-data Runtime=Graalvm|Java8|GraalvmTruffle|OpenJ9 deriving (Show)
+data Runtime=Graalvm|GraalvmTruffle -- |Java8|OpenJ9
+  deriving (Show)
 
-data CompileTarget=Visitor|Revisitor|Interpreter|Truffle|Switch deriving (Show)
+data CompileTarget=Interpreter|Truffle -- |Visitor|Revisitor|Switch
+  deriving (Show)
 
 type Programs = [Program]
 
@@ -22,8 +25,8 @@ type Programs = [Program]
 runtimeToVar :: Runtime -> String
 runtimeToVar Graalvm        = "$GRAALVM_HOME"
 runtimeToVar GraalvmTruffle = "$GRAALVM_HOME"
-runtimeToVar Java8          = "$JAVA8_HOME"
-runtimeToVar OpenJ9         = "$OPENJ9_HOME"
+--runtimeToVar Java8          = "$JAVA8_HOME"
+--runtimeToVar OpenJ9         = "$OPENJ9_HOME"
 
 
 flattenedtargets :: Foldable t2 => t2 (t, [t1]) -> [(t, t1)]
@@ -81,12 +84,13 @@ targets = [
   , (Truffle, [GraalvmTruffle])
   ]
 
-languages = [Logo, LogoAllDispatch] --Logo,  Boa, Petrinet,
+languages = [Imp] --Logo,  Boa, Petrinet,
 
 programs :: Programs
 programs = [
-  p Logo "fractal",
-  p LogoAllDispatch "fractal"
+  p Imp "bubble"
+  --p Logo "fractal",
+  --p LogoAllDispatch "fractal"
   -- p Boa "fib20",
   -- p Boa "fib30",
   -- p BoaAllDispatch "fib20",

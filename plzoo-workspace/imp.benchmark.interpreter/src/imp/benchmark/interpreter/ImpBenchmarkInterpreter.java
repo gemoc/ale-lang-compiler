@@ -21,8 +21,8 @@ import interpreter.imp.interpreter.imp.Store;
 public class ImpBenchmarkInterpreter {
 	public static void main(final String[] args) {
 		final String file = args[0];
-//		final int itt = Integer.parseInt(args[1]);
-		final int itt = 200;
+		final int itt = Integer.parseInt(args[1]);
+//		final int itt = 200;
 
 		EPackage.Registry.INSTANCE.put("http://www.example.org/imp", ImpPackage.eINSTANCE);
 
@@ -39,7 +39,7 @@ public class ImpBenchmarkInterpreter {
 			final Resource resource = resSet.getResource(createFileURI, true);
 			final Stmt result = (Stmt) resource.getContents().get(0);
 
-			final Store s = initState(i);
+			final Store s = initState(500);
 			final long start = System.currentTimeMillis();
 			final Store sorted = result.execute(s);
 			times[i] = System.currentTimeMillis() - start;

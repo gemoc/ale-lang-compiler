@@ -16,7 +16,6 @@
 	<classpathentry exported="true" kind="lib" path="mvn/com.squareup.javapoet-1.11.1.jar" sourcepath="/home/manuel/.m2/repository/com/squareup/javapoet/1.11.1/javapoet-1.11.1-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
-			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>

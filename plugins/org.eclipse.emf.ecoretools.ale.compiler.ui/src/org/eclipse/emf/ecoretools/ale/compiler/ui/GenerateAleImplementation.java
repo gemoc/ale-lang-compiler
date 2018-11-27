@@ -1,11 +1,10 @@
 package org.eclipse.emf.ecoretools.ale.compiler.ui;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
@@ -30,7 +29,8 @@ public class GenerateAleImplementation implements IObjectActionDelegate {
 		try {
 			IPath location = this.selectedIFile.getLocation();
 			new ALEImplementationCompiler().compile(location.toOSString(),
-					selectedIFile.getProject().getLocation().toFile(), selectedIFile.getProject().getName());
+					selectedIFile.getProject().getLocation().toFile(), selectedIFile.getProject().getName(),
+					new HashMap<String, Class<?>>());
 			selectedIFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

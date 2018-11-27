@@ -1,21 +1,22 @@
 package interpreter.imp.interpreter.imp.impl;
 
-import interpreter.imp.interpreter.imp.Expr;
-import interpreter.imp.interpreter.imp.ImpPackage;
-import interpreter.imp.interpreter.imp.Stmt;
-import interpreter.imp.interpreter.imp.Store;
-import interpreter.imp.interpreter.imp.While;
-import java.lang.Object;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import interpreter.imp.interpreter.imp.Expr;
+import interpreter.imp.interpreter.imp.ImpPackage;
+import interpreter.imp.interpreter.imp.Stmt;
+import interpreter.imp.interpreter.imp.Store;
+import interpreter.imp.interpreter.imp.While;
+
 public class WhileImpl extends StmtImpl implements While {
   protected Expr cond;
 
   protected Stmt body;
+
 
   protected WhileImpl() {
     super();
@@ -141,8 +142,7 @@ public class WhileImpl extends StmtImpl implements While {
           interpreter.imp.interpreter.imp.Value conde = ((interpreter.imp.interpreter.imp.Value)this.cond.evaluate(s));
           if(conde instanceof interpreter.imp.interpreter.imp.BoolValue) {
             interpreter.imp.interpreter.imp.BoolValue condeb = ((interpreter.imp.interpreter.imp.BoolValue)conde);
-            boolean value = condeb.isValue();
-			if(value) {
+            if(condeb.isValue()) {
               tmp = this.body.execute(tmp);
             }
             else {

@@ -1,35 +1,22 @@
 package interpreter.imp.interpreter.imp.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.dsl.UnsupportedSpecializationException;
-import com.oracle.truffle.api.nodes.LoopNode;
-import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.RootCallTarget;
+import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import com.oracle.truffle.api.nodes.UnexpectedResultException;
-import com.oracle.truffle.api.profiles.BranchProfile;
 
 import interpreter.imp.interpreter.imp.Expr;
 import interpreter.imp.interpreter.imp.ImpPackage;
 import interpreter.imp.interpreter.imp.Stmt;
 import interpreter.imp.interpreter.imp.Store;
 import interpreter.imp.interpreter.imp.While;
-import java.lang.Object;
-import java.lang.reflect.InvocationTargetException;
-
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.resource.Resource;
+import interpreter.imp.interpreter.imp.impl.WhileInnerRootNode.Data;
 
 @NodeInfo(description = "While")
 public class WhileImpl extends StmtImpl implements While {
@@ -39,14 +26,15 @@ public class WhileImpl extends StmtImpl implements While {
 	@Child
 	protected Stmt body;
 
-	@Child
-	private LoopNode loopNode004029A75A95734E15203C1CE2BFF012;
+	private RootCallTarget callTarget;
 
-	@CompilationFinal
-	private GenericWhileNode body2;
+	private WhileDispatchCallInner dispatchAppCallFunc;
+
+	private Object aaa;
 
 	protected WhileImpl() {
 		super();
+		this.dispatchAppCallFunc = WhileDispatchCallInnerNodeGen.create();
 	}
 
 	@TruffleBoundary
@@ -190,21 +178,25 @@ public class WhileImpl extends StmtImpl implements While {
 	}
 
 	public Store execute(Store s) {
+		if (this.callTarget == null) {
+			this.callTarget = Truffle.getRuntime().createCallTarget(new WhileInnerRootNode(null, this.body, this.cond));
+		}
+
+		if (this.aaa == null) {
+			this.aaa = new WhileDispatchWrapperCallInner(body, cond);
+		}
+
 		Store result;
 		boolean stop = ((boolean) false);
-		if (this.loopNode004029A75A95734E15203C1CE2BFF012 == null) {
-			com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-			this.body2 = new GenericWhileNode(new ConditionNodeImplementation(), new StmtContinuation(cond, body));
-			this.loopNode004029A75A95734E15203C1CE2BFF012 = com.oracle.truffle.api.Truffle.getRuntime()
-					.createLoopNode(body2);
+		interpreter.imp.interpreter.imp.Store tmp = ((interpreter.imp.interpreter.imp.Store) s);
+		while (!(stop)) {
+			Data it = new Data(stop, tmp, s);
+			dispatchAppCallFunc.executeDispatch(aaa, new Object[] { it });
+			stop = it.stop;
+			tmp = it.tmp;
+			s = it.s;
 		}
-		body2.stop = stop;
-		body2.s = s;
-		body2.tmp = ((interpreter.imp.interpreter.imp.Store) s);
-
-		loopNode004029A75A95734E15203C1CE2BFF012.executeLoop(com.oracle.truffle.api.Truffle.getRuntime()
-				.createVirtualFrame(new Object[0], new com.oracle.truffle.api.frame.FrameDescriptor()));
-		result = body2.tmp;
+		result = tmp;
 		;
 		return result;
 	}

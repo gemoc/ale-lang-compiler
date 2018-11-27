@@ -81,15 +81,20 @@ class ALEInterpreterImplementationCompiler {
 		newEnv
 	}
 
-	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
+	def IStatus compile(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
-		registerServices(projectName)
+		if (services !== null) {
+			registeredServices.putAll(services)
+		} else {
+			registerServices(projectName)
+
+		}
 
 		// must be last !
 		compile(projectRoot, projectName)
-		
+
 		Status.OK_STATUS
 	}
 
@@ -160,7 +165,7 @@ class ALEInterpreterImplementationCompiler {
 			}
 
 		]
-		//resolved.filter[it.aleCls !== null].map[it.aleCls.]
+	// resolved.filter[it.aleCls !== null].map[it.aleCls.]
 	}
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {

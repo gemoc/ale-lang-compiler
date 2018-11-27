@@ -35,7 +35,7 @@ public class AppImpl extends ExprImpl implements App {
   protected AppImpl() {
     super();
     this.cachedCallFunc = new boa.interpreter.boa.impl.AppDispatchWrapperCallFunc(this);
-    this.dispatchAppCallFunc = boa.interpreter.boa.impl.AppDispatchCallFuncNodeGen.create(); 
+//    this.dispatchAppCallFunc = boa.interpreter.boa.impl.AppDispatchCallFuncNodeGen.create(); 
   }
 
   @TruffleBoundary

@@ -57,7 +57,7 @@ public class ImpLang extends TruffleLanguage<Void> {
 		final Resource resource = resSet.getResource(createFileURI, true);
 		final Stmt result = (Stmt) resource.getContents().get(0);
 
-		final Store s = ImpBenchmarkTruffle.initState(200_000);
+		final Store s = ImpBenchmarkTruffle.initState(500);
 
 //		final ArrayValue arrayValue = (ArrayValue) sorted.getValues().get("a");
 //		final List<Integer> arr = arrayValue.getValues().stream().map(x -> ((IntValue) x).getValue())

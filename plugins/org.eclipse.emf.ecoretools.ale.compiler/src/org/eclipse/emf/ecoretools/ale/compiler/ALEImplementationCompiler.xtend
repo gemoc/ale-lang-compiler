@@ -9,10 +9,17 @@ import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationC
 import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.core.resources.ResourcesPlugin
+import java.util.Map
 
 class ALEImplementationCompiler {
 
-	def void compile(String dslStr, File projectRoot, String projectName) throws FileNotFoundException {
+	/**
+	 * 
+	 * @param dslStr absolute path to the dsl file
+	 * @param projectRoot absolute path to the project root
+	 * @param projectName project name
+	 */
+	def void compile(String dslStr, File projectRoot, String projectName, Map<String,Class<?>> services) throws FileNotFoundException {
 
 		val Job a = Job.create('''ALE Compilation''', [ monitor |
 			val dsl = new WorkbenchDsl(dslStr)
@@ -22,7 +29,7 @@ class ALEImplementationCompiler {
 					case "revisitor":
 						new ALERevisitorImplementationCompiler().compile(projectName, projectRoot, dsl)
 					case "interpreter":
-						new ALEInterpreterImplementationCompiler().compile(projectName, projectRoot, dsl)
+						new ALEInterpreterImplementationCompiler().compile(projectName, projectRoot, dsl, services)
 					case "visitor":
 						new ALEVisitorImplementationCompiler().compile(projectName, projectRoot, dsl)
 					case "switch":
