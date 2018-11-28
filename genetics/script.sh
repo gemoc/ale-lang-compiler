@@ -3,15 +3,14 @@ MAVEN_HOME=$PWD/apache-maven-3.6.0
 PATH=$PATH:$MAVEN_HOME/bin
 pwd=$PWD
 
-
-for i in $(seq 0 7)
+for i in $(seq 0 15)
 do
   echo $i
   cd ./workspace/standaloneboainterpreter
   java -jar ../../genetic.jar src/boa_exec.ale $i
   cd $pwd
   ./app/eclipse/eclipse
-  mvn -f workspace/standaloneboainterpreter/pom.xml clean package
+  mvn -Dmaven.repo.local=$pwd/.m2 -f workspace/standaloneboainterpreter/pom.xml clean package
   cd workspace
   git add .
   git commit -m "version $i"
