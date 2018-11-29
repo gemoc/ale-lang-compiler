@@ -3,7 +3,6 @@ package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
 import com.squareup.javapoet.ParameterizedTypeName
-import java.security.MessageDigest
 import java.util.List
 import java.util.Map
 import java.util.Set
@@ -12,7 +11,6 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.EClassImplementationCompiler.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -29,13 +27,11 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
-import java.math.BigInteger
 
 class AleBodyCompiler {
 
 	extension TypeSystemUtils tsu
 	extension AleExpressionsCompiler aec
-	extension InterpreterNamingUtils = new InterpreterNamingUtils
 	val boolean isTruffle
 	
 

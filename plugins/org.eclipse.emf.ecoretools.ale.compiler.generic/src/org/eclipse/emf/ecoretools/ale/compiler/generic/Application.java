@@ -112,9 +112,11 @@ public class Application {
 		System.out.println(features);
 		final Codec<ISeq<MethodRef>, BitGene> codec = Codecs.ofSubSet(features.stream().collect(ISeq.toISeq()));
 		final Engine<BitGene, Double> engine = Engine.builder(fitness(alePath), codec)
+				.minimizing()
 				// default population size = 50
-				.populationSize(20).executor(Executors.newSingleThreadExecutor()).build();
-		final Genotype<BitGene> best = engine.stream().limit(Limits.bySteadyFitness(7)).limit(20)
+//				.populationSize(20)
+				.executor(Executors.newSingleThreadExecutor()).build();
+		final Genotype<BitGene> best = engine.stream().limit(Limits.bySteadyFitness(10)).limit(200)
 				.collect(EvolutionResult.toBestGenotype());
 		System.out.println(best);
 		System.out.println(codec.decode(best));
