@@ -96,8 +96,7 @@ public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer impleme
         				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
         				this.commandsArr = this.commands.toArray(new boa.interpreter.boa.TopLevelCmd[0]);
         			};
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("v2");
-        boa.interpreter.boa.Ctx ctx = ((boa.interpreter.boa.Ctx)boa.interpreter.boa.BoaFactory.eINSTANCE.createCtx());
+    boa.interpreter.boa.Ctx ctx = ((boa.interpreter.boa.Ctx)boa.interpreter.boa.BoaFactory.eINSTANCE.createCtx());
         for(boa.interpreter.boa.TopLevelCmd it: this.commandsArr) {
           dispatchTopLevelCmdNextLine.executeDispatch(it.getCachedNextLine(), new Object[] {ctx});
         }

@@ -44,12 +44,12 @@ public class WorkbenchDsl extends Dsl {
 }
 	
 	private void resolveUris() {
-//		ArrayList<String> newSemantics = new ArrayList<String>();
-//		getAllSemantics()
-//			.stream()
-//			.forEach(elem -> newSemantics.add(URI.createFileURI(convertToFile(elem)).toFileString()));//expect system file path
-//		getAllSemantics().clear();
-//		getAllSemantics().addAll(newSemantics);
+		ArrayList<String> newSemantics = new ArrayList<String>();
+		getAllSemantics()
+			.stream()
+			.forEach(elem -> newSemantics.add(URI.createFileURI(convertToFile(elem)).toFileString()));//expect system file path
+		getAllSemantics().clear();
+		getAllSemantics().addAll(newSemantics);
 	}
 	
 	/**

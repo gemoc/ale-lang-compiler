@@ -16,6 +16,41 @@
 					<downloadJavadocs>true</downloadJavadocs>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<finalName>${artifactId}</finalName>
+							<artifactSet>
+								<excludes>
+									<exclude>junit:junit</exclude>
+									<exclude>org.graalvm.truffle:truffle-api</exclude>
+									<exclude>org.graalvm.truffle:truffle-dsl-processor</exclude>
+									<exclude>org.graalvm.truffle:truffle-tck</exclude>
+									<exclude>org.graalvm:graal-sdk</exclude>
+								</excludes>
+							</artifactSet>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<properties>
@@ -28,17 +63,20 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.graalvm.truffle</groupId>
+			<!-- <groupId>com.oracle.truffle</groupId> -->
 			<artifactId>truffle-api</artifactId>
 			<version>${graalvm.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.graalvm.truffle</groupId>
+			<!-- <groupId>com.oracle.truffle</groupId> -->
 			<artifactId>truffle-dsl-processor</artifactId>
 			<version>${graalvm.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.graalvm.truffle</groupId>
+			<!-- <groupId>com.oracle.truffle</groupId> -->
 			<artifactId>truffle-tck</artifactId>
 			<version>${graalvm.version}</version>
 			<scope>provided</scope>
@@ -59,8 +97,8 @@
 			<version>2.15.0</version>
 		</dependency>
 		<dependency>
-			<groupId>boa.lang.truffle</groupId>
-			<artifactId>boa.lang.truffle</artifactId>
+			<groupId>boa.lang.truffle.alldispatch</groupId>
+			<artifactId>boa.lang.truffle.alldispatch</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

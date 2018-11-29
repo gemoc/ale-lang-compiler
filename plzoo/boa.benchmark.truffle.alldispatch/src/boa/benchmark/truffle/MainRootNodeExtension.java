@@ -6,6 +6,7 @@ import com.oracle.truffle.api.nodes.RootNode;
 
 import boa.interpreter.boa.File;
 
+
 final class MainRootNodeExtension extends RootNode {
 	@Child
 	private File result;

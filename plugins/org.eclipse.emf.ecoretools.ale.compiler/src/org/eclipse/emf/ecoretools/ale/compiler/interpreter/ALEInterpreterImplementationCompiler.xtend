@@ -85,7 +85,7 @@ class ALEInterpreterImplementationCompiler {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
-		if (services !== null) {
+		if (services !== null && !services.empty) {
 			registeredServices.putAll(services)
 		} else {
 			registerServices(projectName)

@@ -12,7 +12,7 @@ public class AppDispatchWrapperCallFunc {
   private final CyclicAssumption callTargetStable;
 
   protected AppDispatchWrapperCallFunc(App it) {
-    this.callTargetStable = new CyclicAssumption("AppDispatchWrapperCallFunc_5.639283166192364E7");
+    this.callTargetStable = new CyclicAssumption("AppDispatchWrapperCallFunc_3.67477635395637E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new AppCallFuncRootNode(it));
   }
 

@@ -7,7 +7,6 @@ use execboa.SerializeService;
 open class boa.File {
 	@main
 	def void eval() {
-		'v2'.log();
 		Ctx ctx := boa::Ctx.create();
 		for(it in self.commands) {
 			it.nextLine(ctx);

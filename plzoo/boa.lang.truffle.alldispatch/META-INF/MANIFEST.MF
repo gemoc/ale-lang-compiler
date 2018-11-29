@@ -7,3 +7,5 @@ Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0",
  boa.lang;bundle-version="1.0.0",
  boa.lang.services;bundle-version="1.0.0"
+Export-Package: boa.interpreter.boa,
+ boa.interpreter.boa.impl

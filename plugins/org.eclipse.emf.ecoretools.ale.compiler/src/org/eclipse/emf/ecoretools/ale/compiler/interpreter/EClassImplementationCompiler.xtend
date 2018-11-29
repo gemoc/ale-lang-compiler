@@ -788,21 +788,21 @@ class EClassImplementationCompiler {
 					].map[resolved -> it]
 				].flatten
 
-				val overridenMethods = s2.sortWith(new Comparator<Pair<ResolvedClass, Method>>() {
-					
-					override compare(Pair<ResolvedClass, Method> arg0, Pair<ResolvedClass, Method> arg1) {
-						if(arg0.key.eCls instanceof EClass) {
-							val eCls = arg0.key.eCls as EClass
-							if(eCls.EAllSuperTypes.contains(arg1.key.eCls)) {
-								-1
+				val overridenMethods = s2.filter[x | x.value.dispatch ]
+					.sortWith(new Comparator<Pair<ResolvedClass, Method>>() {
+						override compare(Pair<ResolvedClass, Method> arg0, Pair<ResolvedClass, Method> arg1) {
+							if(arg0.key.eCls instanceof EClass) {
+								val eCls = arg0.key.eCls as EClass
+								if(eCls.EAllSuperTypes.contains(arg1.key.eCls)) {
+									-1
+								} else {
+									1
+								}
 							} else {
-								1
+								0
 							}
-						} else {
-							0
 						}
-					}
-				}).head
+					}).head
 
 				val factoryDispatch = TypeSpec.classBuilder(namingUtils.dispatchWrapperClassName(eClass, method))
 					.applyIfTrue(overridenMethods !== null, [it.superclass(ClassName.get(packageFQN, namingUtils.dispatchWrapperClassName(overridenMethods.key.eCls as EClass, overridenMethods.value)))])
