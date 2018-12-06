@@ -3,6 +3,7 @@ package boa.interpreter.boa.impl;
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.File;
 import boa.interpreter.boa.TopLevelCmd;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -23,11 +24,12 @@ public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer impleme
   @Children
   private TopLevelCmd[] commandsArr;
 
-  private TopLevelCmdDispatchNextLine dispatchTopLevelCmdNextLine;
+  @CompilationFinal
+  private FileDispatchWrapperEval cachedEval;
 
   protected FileImpl() {
     super();
-    this.dispatchTopLevelCmdNextLine = boa.interpreter.boa.impl.TopLevelCmdDispatchNextLineNodeGen.create(); 
+    this.cachedEval = new boa.interpreter.boa.impl.FileDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -96,11 +98,14 @@ public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer impleme
         				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
         				this.commandsArr = this.commands.toArray(new boa.interpreter.boa.TopLevelCmd[0]);
         			};
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("v2");
-        boa.interpreter.boa.Ctx ctx = ((boa.interpreter.boa.Ctx)boa.interpreter.boa.BoaFactory.eINSTANCE.createCtx());
+    boa.interpreter.boa.Ctx ctx = ((boa.interpreter.boa.Ctx)boa.interpreter.boa.BoaFactory.eINSTANCE.createCtx());
         for(boa.interpreter.boa.TopLevelCmd it: this.commandsArr) {
-          dispatchTopLevelCmdNextLine.executeDispatch(it.getCachedNextLine(), new Object[] {ctx});
+          it.nextLine(ctx);
         }
         ;
+  }
+
+  public FileDispatchWrapperEval getCachedEval() {
+    return this.cachedEval;
   }
 }

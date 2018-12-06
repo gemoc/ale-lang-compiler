@@ -5,6 +5,7 @@ import boa.interpreter.boa.Copy;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -22,8 +23,12 @@ public class CopyImpl extends ExprImpl implements Copy {
   @Child
   protected Expr copy;
 
+  @CompilationFinal
+  private CopyDispatchWrapperEval cachedEval;
+
   protected CopyImpl() {
     super();
+    this.cachedEval = new boa.interpreter.boa.impl.CopyDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -122,5 +127,9 @@ public class CopyImpl extends ExprImpl implements Copy {
         }
         ;
     return result;
+  }
+
+  public CopyDispatchWrapperEval getCachedEval() {
+    return this.cachedEval;
   }
 }

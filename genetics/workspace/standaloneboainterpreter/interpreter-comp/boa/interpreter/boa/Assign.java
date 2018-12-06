@@ -1,5 +1,6 @@
 package boa.interpreter.boa;
 
+import boa.interpreter.boa.impl.AssignDispatchWrapperEval;
 import com.oracle.truffle.api.nodes.NodeInterface;
 import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
@@ -18,4 +19,6 @@ public interface Assign extends EObject, NodeInterface, Expr {
   void setRhs(Expr value);
 
   EvalRes eval(Ctx ctx);
+
+  AssignDispatchWrapperEval getCachedEval();
 }

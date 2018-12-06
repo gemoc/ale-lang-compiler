@@ -5,6 +5,7 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.With;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -25,8 +26,12 @@ public class WithImpl extends ExprImpl implements With {
   @Child
   protected Expr rhs;
 
+  @CompilationFinal
+  private WithDispatchWrapperEval cachedEval;
+
   protected WithImpl() {
     super();
+    this.cachedEval = new boa.interpreter.boa.impl.WithDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -175,5 +180,9 @@ public class WithImpl extends ExprImpl implements With {
         }
         ;
     return result;
+  }
+
+  public WithDispatchWrapperEval getCachedEval() {
+    return this.cachedEval;
   }
 }

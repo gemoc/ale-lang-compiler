@@ -4,6 +4,7 @@ import boa.interpreter.boa.ArithOpMinus;
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,8 +16,12 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "ArithOpMinus"
 )
 public class ArithOpMinusImpl extends ArithOpImpl implements ArithOpMinus {
+  @CompilationFinal
+  private ArithOpMinusDispatchWrapperEval cachedEval;
+
   protected ArithOpMinusImpl() {
     super();
+    this.cachedEval = new boa.interpreter.boa.impl.ArithOpMinusDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -80,5 +85,9 @@ public class ArithOpMinusImpl extends ArithOpImpl implements ArithOpMinus {
         }
         ;
     return result;
+  }
+
+  public ArithOpMinusDispatchWrapperEval getCachedEval() {
+    return this.cachedEval;
   }
 }

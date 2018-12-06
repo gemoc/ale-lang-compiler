@@ -3,7 +3,6 @@ package boa.interpreter.boa.impl;
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.TopLevelCmd;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -16,12 +15,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
     description = "TopLevelCmd"
 )
 public abstract class TopLevelCmdImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements TopLevelCmd {
-  @CompilationFinal
-  private TopLevelCmdDispatchWrapperNextLine cachedNextLine;
-
   protected TopLevelCmdImpl() {
     super();
-    this.cachedNextLine = new boa.interpreter.boa.impl.TopLevelCmdDispatchWrapperNextLine(this);
   }
 
   @TruffleBoundary
@@ -66,9 +61,5 @@ public abstract class TopLevelCmdImpl extends MinimalTruffleEObjectImpl.TruffleC
 
   public void nextLine(Ctx ctx) {
     ;
-  }
-
-  public TopLevelCmdDispatchWrapperNextLine getCachedNextLine() {
-    return this.cachedNextLine;
   }
 }

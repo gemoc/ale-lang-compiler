@@ -4,6 +4,7 @@ import boa.interpreter.boa.ArithOpTimes;
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -15,8 +16,12 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "ArithOpTimes"
 )
 public class ArithOpTimesImpl extends ArithOpImpl implements ArithOpTimes {
+  @CompilationFinal
+  private ArithOpTimesDispatchWrapperEval cachedEval;
+
   protected ArithOpTimesImpl() {
     super();
+    this.cachedEval = new boa.interpreter.boa.impl.ArithOpTimesDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -80,5 +85,9 @@ public class ArithOpTimesImpl extends ArithOpImpl implements ArithOpTimes {
         }
         ;
     return result;
+  }
+
+  public ArithOpTimesDispatchWrapperEval getCachedEval() {
+    return this.cachedEval;
   }
 }
