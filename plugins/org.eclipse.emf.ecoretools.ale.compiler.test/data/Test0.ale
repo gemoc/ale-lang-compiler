@@ -1,0 +1,14 @@
+behavior test0;
+
+open class A {
+	
+	@main
+	def void test() {
+		self.m := 1;
+		self.ms += a::B.create();
+		Sequence(a::B) xs := self.ms;
+		xs.log();
+		xs += a::B.create();
+		xs.log();
+	}
+}

@@ -1,0 +1,2 @@
+syntax=/home/manuel/dev/java/ale-lang/plugins/org.eclipse.emf.ecoretools.ale.compiler.test/data/Test0.ecore
+behavior=/home/manuel/dev/java/ale-lang/plugins/org.eclipse.emf.ecoretools.ale.compiler.test/data/Test0.ale

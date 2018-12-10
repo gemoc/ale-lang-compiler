@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecoretools.ale.implementation.Attribute;
 import org.eclipse.emf.ecoretools.ale.implementation.Block;
 import org.eclipse.emf.ecoretools.ale.implementation.ConditionalBlock;
@@ -110,7 +111,9 @@ public class MethodEvaluator extends ImplementationSwitch<Object> {
 		variablesStack.push(newScope);
 		block.getStatements()
 			.stream()
-			.forEach(stmt -> doSwitch(stmt));
+			.forEach(stmt -> {
+				doSwitch(stmt);
+			});
 		variablesStack.pop();
 		return null;
 	}
@@ -206,6 +209,10 @@ public class MethodEvaluator extends ImplementationSwitch<Object> {
 			else {
 				dynamicFeatureAccess.insertDynamicFeatureValue(((EObject)assigned),featInsert.getTargetFeature(),value);
 			}
+		} else if (assigned instanceof EcoreEList) {
+			EcoreEList ecoreEList = (EcoreEList) assigned;
+			ecoreEList.add(value);
+			
 		}
 		return null;
 	}
