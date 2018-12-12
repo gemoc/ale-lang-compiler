@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EOperation;
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.Method#getOperationRef <em>Operation Ref</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.Method#getBody <em>Body</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.Method#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.Method#isDispatch <em>Dispatch</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage#getMethod()
@@ -109,5 +110,31 @@ public interface Method extends EObject {
 	 * @generated
 	 */
 	EList<String> getTags();
+
+	/**
+	 * Returns the value of the '<em><b>Dispatch</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Dispatch</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Dispatch</em>' attribute.
+	 * @see #setDispatch(boolean)
+	 * @see org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage#getMethod_Dispatch()
+	 * @model
+	 * @generated
+	 */
+	boolean isDispatch();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecoretools.ale.implementation.Method#isDispatch <em>Dispatch</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Dispatch</em>' attribute.
+	 * @see #isDispatch()
+	 * @generated
+	 */
+	void setDispatch(boolean value);
 
 } // Method

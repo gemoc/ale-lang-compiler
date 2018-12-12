@@ -285,13 +285,22 @@ public interface ImplementationPackage extends EPackage {
 	int EXTENDED_CLASS__CHILDREN = BEHAVIORED_CLASS_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Mutable</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EXTENDED_CLASS__MUTABLE = BEHAVIORED_CLASS_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Extended Class</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENDED_CLASS_FEATURE_COUNT = BEHAVIORED_CLASS_FEATURE_COUNT + 3;
+	int EXTENDED_CLASS_FEATURE_COUNT = BEHAVIORED_CLASS_FEATURE_COUNT + 4;
 
 	/**
 	 * The operation id for the '<em>Get EAnnotation</em>' operation.
@@ -431,13 +440,22 @@ public interface ImplementationPackage extends EPackage {
 	int METHOD__TAGS = 2;
 
 	/**
+	 * The feature id for the '<em><b>Dispatch</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD__DISPATCH = 3;
+
+	/**
 	 * The number of structural features of the '<em>Method</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int METHOD_FEATURE_COUNT = 3;
+	int METHOD_FEATURE_COUNT = 4;
 
 	/**
 	 * The number of operations of the '<em>Method</em>' class.
@@ -963,98 +981,6 @@ public interface ImplementationPackage extends EPackage {
 	int FEATURE_REMOVE_OPERATION_COUNT = ASSIGNMENT_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.VariableInsertImpl <em>Variable Insert</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.VariableInsertImpl
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getVariableInsert()
-	 * @generated
-	 */
-	int VARIABLE_INSERT = 15;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INSERT__VALUE = ASSIGNMENT__VALUE;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INSERT__NAME = ASSIGNMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Variable Insert</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INSERT_FEATURE_COUNT = ASSIGNMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of operations of the '<em>Variable Insert</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_INSERT_OPERATION_COUNT = ASSIGNMENT_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.VariableRemoveImpl <em>Variable Remove</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.VariableRemoveImpl
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getVariableRemove()
-	 * @generated
-	 */
-	int VARIABLE_REMOVE = 16;
-
-	/**
-	 * The feature id for the '<em><b>Value</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_REMOVE__VALUE = ASSIGNMENT__VALUE;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_REMOVE__NAME = ASSIGNMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Variable Remove</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_REMOVE_FEATURE_COUNT = ASSIGNMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of operations of the '<em>Variable Remove</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VARIABLE_REMOVE_OPERATION_COUNT = ASSIGNMENT_OPERATION_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.FeaturePutImpl <em>Feature Put</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1062,7 +988,7 @@ public interface ImplementationPackage extends EPackage {
 	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getFeaturePut()
 	 * @generated
 	 */
-	int FEATURE_PUT = 17;
+	int FEATURE_PUT = 15;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' containment reference.
@@ -1126,7 +1052,7 @@ public interface ImplementationPackage extends EPackage {
 	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getForEach()
 	 * @generated
 	 */
-	int FOR_EACH = 18;
+	int FOR_EACH = 16;
 
 	/**
 	 * The feature id for the '<em><b>Variable</b></em>' attribute.
@@ -1181,7 +1107,7 @@ public interface ImplementationPackage extends EPackage {
 	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getWhile()
 	 * @generated
 	 */
-	int WHILE = 19;
+	int WHILE = 17;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -1227,7 +1153,7 @@ public interface ImplementationPackage extends EPackage {
 	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getIf()
 	 * @generated
 	 */
-	int IF = 20;
+	int IF = 18;
 
 	/**
 	 * The feature id for the '<em><b>Blocks</b></em>' containment reference list.
@@ -1273,7 +1199,7 @@ public interface ImplementationPackage extends EPackage {
 	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getConditionalBlock()
 	 * @generated
 	 */
-	int CONDITIONAL_BLOCK = 21;
+	int CONDITIONAL_BLOCK = 19;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -1319,7 +1245,7 @@ public interface ImplementationPackage extends EPackage {
 	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getExpressionStatement()
 	 * @generated
 	 */
-	int EXPRESSION_STATEMENT = 22;
+	int EXPRESSION_STATEMENT = 20;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1357,7 +1283,7 @@ public interface ImplementationPackage extends EPackage {
 	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getSwitch()
 	 * @generated
 	 */
-	int SWITCH = 23;
+	int SWITCH = 21;
 
 	/**
 	 * The feature id for the '<em><b>Param</b></em>' containment reference.
@@ -1412,7 +1338,7 @@ public interface ImplementationPackage extends EPackage {
 	 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getCase()
 	 * @generated
 	 */
-	int CASE = 24;
+	int CASE = 22;
 
 	/**
 	 * The feature id for the '<em><b>Guard</b></em>' reference.
@@ -1536,6 +1462,17 @@ public interface ImplementationPackage extends EPackage {
 	EReference getExtendedClass_Children();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass#getMutable <em>Mutable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Mutable</em>'.
+	 * @see org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass#getMutable()
+	 * @see #getExtendedClass()
+	 * @generated
+	 */
+	EAttribute getExtendedClass_Mutable();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.implementation.RuntimeClass <em>Runtime Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1587,6 +1524,17 @@ public interface ImplementationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getMethod_Tags();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecoretools.ale.implementation.Method#isDispatch <em>Dispatch</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Dispatch</em>'.
+	 * @see org.eclipse.emf.ecoretools.ale.implementation.Method#isDispatch()
+	 * @see #getMethod()
+	 * @generated
+	 */
+	EAttribute getMethod_Dispatch();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.implementation.ModelUnit <em>Model Unit</em>}'.
@@ -1917,48 +1865,6 @@ public interface ImplementationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getFeatureRemove_TargetFeature();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.implementation.VariableInsert <em>Variable Insert</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Variable Insert</em>'.
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.VariableInsert
-	 * @generated
-	 */
-	EClass getVariableInsert();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecoretools.ale.implementation.VariableInsert#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.VariableInsert#getName()
-	 * @see #getVariableInsert()
-	 * @generated
-	 */
-	EAttribute getVariableInsert_Name();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.implementation.VariableRemove <em>Variable Remove</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Variable Remove</em>'.
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.VariableRemove
-	 * @generated
-	 */
-	EClass getVariableRemove();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecoretools.ale.implementation.VariableRemove#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.VariableRemove#getName()
-	 * @see #getVariableRemove()
-	 * @generated
-	 */
-	EAttribute getVariableRemove_Name();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecoretools.ale.implementation.FeaturePut <em>Feature Put</em>}'.
@@ -2344,6 +2250,14 @@ public interface ImplementationPackage extends EPackage {
 		EReference EXTENDED_CLASS__CHILDREN = eINSTANCE.getExtendedClass_Children();
 
 		/**
+		 * The meta object literal for the '<em><b>Mutable</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute EXTENDED_CLASS__MUTABLE = eINSTANCE.getExtendedClass_Mutable();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.RuntimeClassImpl <em>Runtime Class</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2386,6 +2300,14 @@ public interface ImplementationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute METHOD__TAGS = eINSTANCE.getMethod_Tags();
+
+		/**
+		 * The meta object literal for the '<em><b>Dispatch</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute METHOD__DISPATCH = eINSTANCE.getMethod_Dispatch();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.ModelUnitImpl <em>Model Unit</em>}' class.
@@ -2656,42 +2578,6 @@ public interface ImplementationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute FEATURE_REMOVE__TARGET_FEATURE = eINSTANCE.getFeatureRemove_TargetFeature();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.VariableInsertImpl <em>Variable Insert</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.VariableInsertImpl
-		 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getVariableInsert()
-		 * @generated
-		 */
-		EClass VARIABLE_INSERT = eINSTANCE.getVariableInsert();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute VARIABLE_INSERT__NAME = eINSTANCE.getVariableInsert_Name();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.VariableRemoveImpl <em>Variable Remove</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.VariableRemoveImpl
-		 * @see org.eclipse.emf.ecoretools.ale.implementation.impl.ImplementationPackageImpl#getVariableRemove()
-		 * @generated
-		 */
-		EClass VARIABLE_REMOVE = eINSTANCE.getVariableRemove();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute VARIABLE_REMOVE__NAME = eINSTANCE.getVariableRemove_Name();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecoretools.ale.implementation.impl.FeaturePutImpl <em>Feature Put</em>}' class.

@@ -12,6 +12,7 @@ package org.eclipse.emf.ecoretools.ale.core.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,8 +21,10 @@ import org.eclipse.acceleo.query.runtime.IValidationMessage;
 import org.eclipse.acceleo.query.runtime.ValidationMessageLevel;
 import org.eclipse.acceleo.query.runtime.impl.ValidationMessage;
 import org.eclipse.acceleo.query.validation.type.IType;
+import org.eclipse.acceleo.query.validation.type.SequenceType;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -44,7 +47,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.While;
  * This validator checks validity, conflict and existence of named elements
  */
 public class NameValidator implements IValidator {
-
+	
 	public static final String NAME_ALREADY_USED = "The name %s is already used";
 	public static final String SELF_RESERVED = "'self' is a reserved name";
 	public static final String RESULT_RESERVED = "'result' is a reserved name";
@@ -273,10 +276,12 @@ public class NameValidator implements IValidator {
 		 */
 		boolean isExistingFeature = false;
 		Set<IType> targetTypes = base.getPossibleTypes(featInsert.getTarget());
+		String targetFeature = featInsert.getTargetFeature();
 		for (IType type : targetTypes) {
-			if (type.getType() instanceof EClass) {
-				EClass realType = (EClass) type.getType();
-				EStructuralFeature feature = realType.getEStructuralFeature(featInsert.getTargetFeature());
+			Object type2 = type.getType();
+			if (type2 instanceof EClass) {
+				EClass realType = (EClass) type2;
+				EStructuralFeature feature = realType.getEStructuralFeature(targetFeature);
 
 				if (feature != null) { // static features
 					isExistingFeature = true;
@@ -284,18 +289,36 @@ public class NameValidator implements IValidator {
 					List<ExtendedClass> extensions = base.findExtensions(realType);
 					Optional<Attribute> foundDynamicAttribute = // FIXME: take inheritance in account
 							extensions.stream().flatMap(xtdCls -> xtdCls.getAttributes().stream()).filter(
-									field -> field.getFeatureRef().getName().equals(featInsert.getTargetFeature()))
+									field -> field.getFeatureRef().getName().equals(targetFeature))
 									.findFirst();
 					if (foundDynamicAttribute.isPresent()) {
 						isExistingFeature = true;
 					}
 				}
+			} else if (type instanceof SequenceType) {
+//				SequenceType sequenceType = (SequenceType) type;
+//				IType collectionType = sequenceType.getCollectionType();
+//				Object type3 = collectionType.getType();
+//				if (type3 instanceof EClass) {
+//					EClass realType = (EClass) type3;
+//					EStructuralFeature feature = realType.getEStructuralFeature(targetFeature);
+//					System.out.println(feature);
+//				}
+//				System.out.println(sequenceType);
+				
+				isExistingFeature = true; // maybe super permissive ?
+			} else if(type.getType() instanceof EDataType) {
+				EDataType eDataType = (EDataType) type.getType();
+				if(eDataType.getInstanceClass().isInstance(EList.class)) {
+					System.out.println(eDataType);
+				}
+				
 			}
 		}
 
 		if (!isExistingFeature) {
 			msgs.add(new ValidationMessage(ValidationMessageLevel.ERROR,
-					String.format(FEATURE_UNDEFINED, featInsert.getTargetFeature()), base.getStartOffset(featInsert),
+					String.format(FEATURE_UNDEFINED, targetFeature), base.getStartOffset(featInsert),
 					base.getEndOffset(featInsert)));
 		}
 

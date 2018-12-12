@@ -2,7 +2,6 @@
 '('=51
 ')'=52
 '+'=19
-<<<<<<< HEAD
 '+='=58
 ','=49
 '-'=20
@@ -13,18 +12,6 @@
 ':'=69
 '::'=87
 ':='=55
-=======
-'+='=57
-','=50
-'-'=20
-'-='=58
-'->'=71
-'.'=70
-'..'=55
-':'=68
-'::'=86
-':='=54
->>>>>>> origin/master
 ';'=40
 '<'=27
 '<='=21
@@ -33,7 +20,6 @@
 '=='=26
 '>'=28
 '>='=22
-<<<<<<< HEAD
 '@'=54
 'Boolean'=91
 'Integer'=89
@@ -50,31 +36,10 @@
 'behavior'=39
 'case'=70
 'class'=45
-=======
-'@'=53
-'Boolean'=90
-'Integer'=88
-'OrderedSet('=92
-'OrderedSet{'=85
-'Real'=89
-'Sequence('=91
-'Sequence{'=84
-'String'=87
-'['=61
-'\n;'=43
-']'=62
-'and'=73
-'any'=32
-'as'=42
-'behavior'=39
-'case'=69
-'class'=46
->>>>>>> origin/master
 'closure'=38
 'collect'=31
 'contains'=17
 'def'=15
-<<<<<<< HEAD
 'default'=68
 'dispatch'=92
 'else'=65
@@ -97,33 +62,10 @@
 'open'=44
 'opposite'=57
 'or'=75
-=======
-'default'=67
-'else'=64
-'endif'=79
-'exists'=33
-'extends'=49
-'false'=82
-'for'=59
-'forAll'=34
-'if'=63
-'implie'=76
-'import'=41
-'in'=60
-'isUnique'=35
-'let'=80
-'not'=77
-'null'=83
-'one'=36
-'open'=45
-'opposite'=56
-'or'=74
->>>>>>> origin/master
 'override'=16
 'reject'=30
 'select'=29
 'sortedBy'=37
-<<<<<<< HEAD
 'switch'=67
 'then'=79
 'true'=82
@@ -144,28 +86,6 @@ RULE_MULTOP=5
 RULE_REAL=9
 RULE_SL_COMMENT=12
 RULE_STRING=8
-=======
-'switch'=66
-'then'=78
-'true'=81
-'unique'=18
-'use'=44
-'while'=65
-'xor'=75
-'{'=47
-'|'=72
-'}'=48
-RULE_ANY_OTHER=14
-RULE_ID=10
-RULE_IDENT=6
-RULE_INT=4
-RULE_LETTER=9
-RULE_ML_COMMENT=11
-RULE_MULTOP=5
-RULE_REAL=8
-RULE_SL_COMMENT=12
-RULE_STRING=7
->>>>>>> origin/master
 RULE_WS=13
 T__15=15
 T__16=16

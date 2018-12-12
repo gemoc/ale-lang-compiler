@@ -42,6 +42,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method;
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl#getOperationRef <em>Operation Ref</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl#getBody <em>Body</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl#isDispatch <em>Dispatch</em>}</li>
  * </ul>
  *
  * @generated
@@ -83,6 +84,26 @@ public class MethodImpl extends MinimalEObjectImpl.Container implements Method {
 	 * @ordered
 	 */
 	protected EList<String> tags;
+
+	/**
+	 * The default value of the '{@link #isDispatch() <em>Dispatch</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDispatch()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean DISPATCH_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isDispatch() <em>Dispatch</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isDispatch()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean dispatch = DISPATCH_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -201,6 +222,27 @@ public class MethodImpl extends MinimalEObjectImpl.Container implements Method {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isDispatch() {
+		return dispatch;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDispatch(boolean newDispatch) {
+		boolean oldDispatch = dispatch;
+		dispatch = newDispatch;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ImplementationPackage.METHOD__DISPATCH, oldDispatch, dispatch));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -225,6 +267,8 @@ public class MethodImpl extends MinimalEObjectImpl.Container implements Method {
 				return getBody();
 			case ImplementationPackage.METHOD__TAGS:
 				return getTags();
+			case ImplementationPackage.METHOD__DISPATCH:
+				return isDispatch();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -248,6 +292,9 @@ public class MethodImpl extends MinimalEObjectImpl.Container implements Method {
 				getTags().clear();
 				getTags().addAll((Collection<? extends String>)newValue);
 				return;
+			case ImplementationPackage.METHOD__DISPATCH:
+				setDispatch((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -269,6 +316,9 @@ public class MethodImpl extends MinimalEObjectImpl.Container implements Method {
 			case ImplementationPackage.METHOD__TAGS:
 				getTags().clear();
 				return;
+			case ImplementationPackage.METHOD__DISPATCH:
+				setDispatch(DISPATCH_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -287,6 +337,8 @@ public class MethodImpl extends MinimalEObjectImpl.Container implements Method {
 				return body != null;
 			case ImplementationPackage.METHOD__TAGS:
 				return tags != null && !tags.isEmpty();
+			case ImplementationPackage.METHOD__DISPATCH:
+				return dispatch != DISPATCH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -303,6 +355,8 @@ public class MethodImpl extends MinimalEObjectImpl.Container implements Method {
 		StringBuilder result = new StringBuilder(super.toString());
 		result.append(" (tags: ");
 		result.append(tags);
+		result.append(", dispatch: ");
+		result.append(dispatch);
 		result.append(')');
 		return result.toString();
 	}

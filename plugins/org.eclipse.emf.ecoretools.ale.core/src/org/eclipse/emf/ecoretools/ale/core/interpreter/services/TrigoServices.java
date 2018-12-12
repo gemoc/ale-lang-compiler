@@ -10,19 +10,24 @@
  *******************************************************************************/
 package org.eclipse.emf.ecoretools.ale.core.interpreter.services;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+
 /**
  * AQL service providing basic trigonometry
  */
 public class TrigoServices {
-	
+
+	@TruffleBoundary
 	public static double cosinus(Double angle) {
 		return Math.cos((angle/360.0)*Math.PI*2);
 	}
 	
+	@TruffleBoundary
 	public static double sinus(Double angle) {
 		return Math.sin((angle/360.0)*Math.PI*2);
 	}
 	
+	@TruffleBoundary
 	public static double tan(Double angle) {
 		return Math.tan((angle/360.0)*Math.PI*2);
 	}

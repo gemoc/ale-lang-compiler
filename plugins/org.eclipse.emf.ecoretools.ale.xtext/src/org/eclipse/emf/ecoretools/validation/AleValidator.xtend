@@ -3,6 +3,8 @@
  */
 package org.eclipse.emf.ecoretools.validation
 
+import com.google.common.collect.Sets
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.acceleo.query.runtime.IValidationMessage
 import org.eclipse.core.resources.IFile
@@ -11,19 +13,16 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IWorkspaceRoot
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IPath
+import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecoretools.ale.ALEInterpreter
+import org.eclipse.emf.ecoretools.ale.Unit
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.ALEValidator
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer
 import org.eclipse.xtext.validation.Check
-import java.util.ArrayList
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecoretools.ale.Unit
-import com.google.common.collect.Sets
-import java.util.Set
 
 /**
  * Delegate validation to ALE validator
@@ -49,7 +48,7 @@ class AleValidator extends AbstractAleValidator {
 		/*
     	 * Register services
     	 */
-    	val List<java.lang.String> services = 
+    	val List<String> services = 
     		parsedSemantics
 	    	.map[getRoot()]
 	    	.filterNull

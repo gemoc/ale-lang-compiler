@@ -45,8 +45,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.Statement;
 import org.eclipse.emf.ecoretools.ale.implementation.Switch;
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment;
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration;
-import org.eclipse.emf.ecoretools.ale.implementation.VariableInsert;
-import org.eclipse.emf.ecoretools.ale.implementation.VariableRemove;
 import org.eclipse.emf.ecoretools.ale.implementation.While;
 
 /**
@@ -167,20 +165,6 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 	 * @generated
 	 */
 	private EClass featureRemoveEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass variableInsertEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass variableRemoveEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -371,6 +355,15 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getExtendedClass_Mutable() {
+		return (EAttribute)extendedClassEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getRuntimeClass() {
 		return runtimeClassEClass;
 	}
@@ -409,6 +402,15 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 	 */
 	public EAttribute getMethod_Tags() {
 		return (EAttribute)methodEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMethod_Dispatch() {
+		return (EAttribute)methodEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -688,42 +690,6 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 	 */
 	public EAttribute getFeatureRemove_TargetFeature() {
 		return (EAttribute)featureRemoveEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getVariableInsert() {
-		return variableInsertEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getVariableInsert_Name() {
-		return (EAttribute)variableInsertEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getVariableRemove() {
-		return variableRemoveEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getVariableRemove_Name() {
-		return (EAttribute)variableRemoveEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1014,6 +980,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		createEReference(extendedClassEClass, EXTENDED_CLASS__BASE_CLASS);
 		createEReference(extendedClassEClass, EXTENDED_CLASS__EXTENDS);
 		createEReference(extendedClassEClass, EXTENDED_CLASS__CHILDREN);
+		createEAttribute(extendedClassEClass, EXTENDED_CLASS__MUTABLE);
 
 		runtimeClassEClass = createEClass(RUNTIME_CLASS);
 
@@ -1021,6 +988,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		createEReference(methodEClass, METHOD__OPERATION_REF);
 		createEReference(methodEClass, METHOD__BODY);
 		createEAttribute(methodEClass, METHOD__TAGS);
+		createEAttribute(methodEClass, METHOD__DISPATCH);
 
 		modelUnitEClass = createEClass(MODEL_UNIT);
 		createEAttribute(modelUnitEClass, MODEL_UNIT__SERVICES);
@@ -1063,12 +1031,6 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		featureRemoveEClass = createEClass(FEATURE_REMOVE);
 		createEReference(featureRemoveEClass, FEATURE_REMOVE__TARGET);
 		createEAttribute(featureRemoveEClass, FEATURE_REMOVE__TARGET_FEATURE);
-
-		variableInsertEClass = createEClass(VARIABLE_INSERT);
-		createEAttribute(variableInsertEClass, VARIABLE_INSERT__NAME);
-
-		variableRemoveEClass = createEClass(VARIABLE_REMOVE);
-		createEAttribute(variableRemoveEClass, VARIABLE_REMOVE__NAME);
 
 		featurePutEClass = createEClass(FEATURE_PUT);
 		createEReference(featurePutEClass, FEATURE_PUT__TARGET);
@@ -1151,8 +1113,6 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		featureAssignmentEClass.getESuperTypes().add(this.getAssignment());
 		featureInsertEClass.getESuperTypes().add(this.getAssignment());
 		featureRemoveEClass.getESuperTypes().add(this.getAssignment());
-		variableInsertEClass.getESuperTypes().add(this.getAssignment());
-		variableRemoveEClass.getESuperTypes().add(this.getAssignment());
 		featurePutEClass.getESuperTypes().add(this.getStatement());
 		forEachEClass.getESuperTypes().add(this.getStatement());
 		whileEClass.getESuperTypes().add(this.getStatement());
@@ -1170,6 +1130,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		initEReference(getExtendedClass_BaseClass(), ecorePackage.getEClass(), null, "baseClass", null, 1, 1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExtendedClass_Extends(), this.getExtendedClass(), this.getExtendedClass_Children(), "extends", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getExtendedClass_Children(), this.getExtendedClass(), this.getExtendedClass_Extends(), "children", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getExtendedClass_Mutable(), ecorePackage.getEString(), "mutable", null, 0, -1, ExtendedClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(runtimeClassEClass, RuntimeClass.class, "RuntimeClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1177,6 +1138,7 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		initEReference(getMethod_OperationRef(), ecorePackage.getEOperation(), null, "operationRef", null, 1, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMethod_Body(), this.getBlock(), null, "body", null, 1, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getMethod_Tags(), ecorePackage.getEString(), "tags", null, 0, -1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getMethod_Dispatch(), ecorePackage.getEBoolean(), "dispatch", null, 0, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelUnitEClass, ModelUnit.class, "ModelUnit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModelUnit_Services(), ecorePackage.getEString(), "services", null, 0, -1, ModelUnit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1219,12 +1181,6 @@ public class ImplementationPackageImpl extends EPackageImpl implements Implement
 		initEClass(featureRemoveEClass, FeatureRemove.class, "FeatureRemove", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFeatureRemove_Target(), theAstPackage.getExpression(), null, "target", null, 1, 1, FeatureRemove.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFeatureRemove_TargetFeature(), ecorePackage.getEString(), "targetFeature", null, 1, 1, FeatureRemove.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(variableInsertEClass, VariableInsert.class, "VariableInsert", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getVariableInsert_Name(), ecorePackage.getEString(), "name", null, 1, 1, VariableInsert.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(variableRemoveEClass, VariableRemove.class, "VariableRemove", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getVariableRemove_Name(), ecorePackage.getEString(), "name", null, 1, 1, VariableRemove.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(featurePutEClass, FeaturePut.class, "FeaturePut", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getFeaturePut_Target(), theAstPackage.getExpression(), null, "target", null, 1, 1, FeaturePut.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

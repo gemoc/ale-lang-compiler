@@ -26,8 +26,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEBaseVisitor;
-import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.CallExpContext;
-import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.CallOrApplyContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ExpressionContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.FeatureContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.NavContext;
@@ -35,14 +33,15 @@ import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.NavigationSegmentCon
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RAssignContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RAttributeContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RBlockContext;
+import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RConcreteOperationContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RExpressionContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RExpressionStmtContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RForEachContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RIfContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RInsertContext;
+import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RMutableRefContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RNewClassContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ROpenClassContext;
-import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ROperationContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RParametersContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RRemoveContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RRootContext;
@@ -52,7 +51,6 @@ import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RTypeContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RVarDeclContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RVariableContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.RWhileContext;
-import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.ServiceCallContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.ALEParser.VarRefContext;
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ModelBuilder.Parameter;
 import org.eclipse.emf.ecoretools.ale.implementation.Attribute;
@@ -103,8 +101,9 @@ public class AstVisitors {
 		public Block visitRBlock(RBlockContext ctx) {
 			StatementVisitor subVisitor = new StatementVisitor(parseRes);
 			List<RStatementContext> stmt = ctx.rStatement();
-			List<Statement> body = ctx.rStatement().stream().map(s -> subVisitor.visit(s)).filter(elem -> elem != null)
-					.collect(Collectors.toList());
+			List<Statement> body = ctx.rStatement().stream().map(s -> {
+				return subVisitor.visit(s);
+			}).filter(elem -> elem != null).collect(Collectors.toList());
 
 			Block res = ModelBuilder.singleton.buildBlock(body);
 			parseRes.getStartPositions().put(res, ctx.start.getStartIndex());
@@ -182,8 +181,11 @@ public class AstVisitors {
 					res = ModelBuilder.singleton.buildFeatureInsert(target, feature, value.expression(), parseRes);
 				}
 			} else if (left instanceof VarRefContext) {
-				VarRefContext varRef = (VarRefContext) left;
-				res = ModelBuilder.singleton.buildVariableInsert(varRef.Ident().getText(), value, parseRes);
+				final VarRefContext varRefCtx = (VarRefContext) left;
+				final ExpressionContext target = varRefCtx;
+				final String feature = varRefCtx.Ident().getText();
+				final ExpressionContext valueExp = value.expression();
+				res = ModelBuilder.singleton.buildFeatureInsert(target, feature, valueExp, parseRes);
 			}
 
 			parseRes.getStartPositions().put(res, ctx.start.getStartIndex());
@@ -206,9 +208,6 @@ public class AstVisitors {
 					ExpressionContext target = navCtx.expression();
 					res = ModelBuilder.singleton.buildFeatureRemove(target, feature, value.expression(), parseRes);
 				}
-			} else if (left instanceof VarRefContext) {
-				VarRefContext varRef = (VarRefContext) left;
-				res = ModelBuilder.singleton.buildVariableRemove(varRef.Ident().getText(), value, parseRes);
 			}
 
 			parseRes.getStartPositions().put(res, ctx.start.getStartIndex());
@@ -289,7 +288,7 @@ public class AstVisitors {
 		}
 
 		@Override
-		public Method visitROperation(ROperationContext ctx) {
+		public Method visitRConcreteOperation(RConcreteOperationContext ctx) {
 			String keyword = ctx.children.stream().filter(c -> c instanceof TerminalNode).findFirst().get().getText();
 
 			final RTypeContext returnType = ctx.type;
@@ -303,9 +302,9 @@ public class AstVisitors {
 
 			Block body = (new BlockVisitor(parseRes)).visit(ctx.rBlock());
 
-			String className = ctx.parent.getChild(1).getText();
+			String className = ctx.parent.parent.getChild(2).getText();
 
-			RuleContext parent = ctx.parent;
+			RuleContext parent = ctx.parent.parent;
 			if (parent instanceof RNewClassContext) {
 				className = ((RNewClassContext) parent).name.getText();
 			} else if (parent instanceof ROpenClassContext) {
@@ -316,13 +315,16 @@ public class AstVisitors {
 
 			Method res = null;
 			if (keyword.equals("def")) {
-				res = ModelBuilder.singleton.buildMethod(fragment, operationName, parameters, returnType, body, tags);
+				boolean dispatch = ctx.dispatch != null;
+				res = ModelBuilder.singleton.buildMethod(fragment, operationName, parameters, returnType, body, tags,
+						dispatch);
 			} else if (keyword.equals("override")) {
 				res = ModelBuilder.singleton.buildImplementation(className, operationName, parameters, returnType, body,
-						tags);
+						tags, false);
 			} else {
 				// TODO: error: should not happen
-				res = ModelBuilder.singleton.buildMethod(fragment, operationName, parameters, returnType, body, tags);
+				res = ModelBuilder.singleton.buildMethod(fragment, operationName, parameters, returnType, body, tags,
+						false);
 			}
 
 			parseRes.getStartPositions().put(res, ctx.start.getStartIndex());
@@ -395,12 +397,16 @@ public class AstVisitors {
 			List<Attribute> attributes = ctx.rAttribute().stream()
 					.map(attr -> (Attribute) subVisitor1.visitRAttribute(attr)).collect(Collectors.toList());
 			OpVisitor subVisitor2 = new OpVisitor(parseRes, fragment);
-			List<Method> operations = ctx.rOperation().stream().map(op -> subVisitor2.visit(op))
-					.filter(elem -> elem != null).collect(Collectors.toList());
+			List<Method> operations = ctx.rOperation().stream().map(op -> {
+				return subVisitor2.visit(op);
+			}).filter(elem -> elem != null).collect(Collectors.toList());
 			List<String> extended = ctx.rQualified().stream().skip(1) // the first one is the the name
 					.map(q -> aliasToRealName(q.getText(), importedBehaviors)).collect(Collectors.toList());
 
-			ExtendedClass res = ModelBuilder.singleton.buildExtendedClass(name, attributes, operations, extended);
+			final List<String> mutable = ctx.rMutableRef().stream().map(RMutableRefContext::getText)
+					.collect(Collectors.toList());
+			ExtendedClass res = ModelBuilder.singleton.buildExtendedClass(name, attributes, operations, extended,
+					mutable);
 			res.setFragment(fragment);
 			parseRes.getStartPositions().put(res, ctx.start.getStartIndex());
 			parseRes.getEndPositions().put(res, ctx.stop.getStopIndex());
@@ -524,8 +530,12 @@ public class AstVisitors {
 					.forEach(imp -> importedBehaviors.put(imp.Ident().getText(), imp.rQualified().getText()));
 
 			OpenClassVisitor subVisitor1 = new OpenClassVisitor(parseRes, importedBehaviors);
-			res.getClassExtensions().addAll(ctx.rClass().stream().map(c -> c.rOpenClass()).filter(c -> c != null)
-					.map(cls -> subVisitor1.visit(cls)).collect(Collectors.toList()));
+			res.getClassExtensions()
+					.addAll(ctx.rClass().stream().map(c -> c.rOpenClass()).filter(c -> c != null).map(cls -> {
+						return subVisitor1.visit(cls);
+					})
+
+							.collect(Collectors.toList()));
 			NewClassVisitor subVisitor2 = new NewClassVisitor(parseRes);
 			res.getClassDefinitions().addAll(ctx.rClass().stream().map(c -> c.rNewClass()).filter(c -> c != null)
 					.map(cls -> subVisitor2.visit(cls)).collect(Collectors.toList()));
