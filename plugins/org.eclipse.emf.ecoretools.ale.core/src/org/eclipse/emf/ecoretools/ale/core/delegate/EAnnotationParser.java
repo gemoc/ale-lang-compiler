@@ -119,7 +119,7 @@ public class EAnnotationParser {
 			try {
 				RBlockContext blockAst = parse(body);
 				Block block = new BlockVisitor(parseRes).visit(blockAst);
-				return Optional.of(ModelBuilder.singleton.buildMethod(op, block, Arrays.asList(), false));
+				return Optional.of(ModelBuilder.singleton.buildMethod(op,block,Arrays.asList()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

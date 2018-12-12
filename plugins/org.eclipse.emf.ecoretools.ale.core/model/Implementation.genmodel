@@ -18,14 +18,12 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Implementation.ecore#//ExtendedClass/baseClass"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Implementation.ecore#//ExtendedClass/extends"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Implementation.ecore#//ExtendedClass/children"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//ExtendedClass/mutable"/>
     </genClasses>
     <genClasses ecoreClass="Implementation.ecore#//RuntimeClass"/>
     <genClasses ecoreClass="Implementation.ecore#//Method">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Implementation.ecore#//Method/operationRef"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Implementation.ecore#//Method/body"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//Method/tags"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//Method/dispatch"/>
     </genClasses>
     <genClasses ecoreClass="Implementation.ecore#//ModelUnit">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//ModelUnit/services"/>
@@ -67,6 +65,12 @@
     <genClasses ecoreClass="Implementation.ecore#//FeatureRemove">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Implementation.ecore#//FeatureRemove/target"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//FeatureRemove/targetFeature"/>
+    </genClasses>
+    <genClasses ecoreClass="Implementation.ecore#//VariableInsert">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//VariableInsert/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Implementation.ecore#//VariableRemove">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Implementation.ecore#//VariableRemove/name"/>
     </genClasses>
     <genClasses ecoreClass="Implementation.ecore#//FeaturePut">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Implementation.ecore#//FeaturePut/target"/>

@@ -12,7 +12,7 @@ package drawing;
 
 import javax.swing.JFrame;
 
-import kmLogo.Turtle;
+import vmlogo.Turtle;
 
 public class Window {
 	

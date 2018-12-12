@@ -18,12 +18,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.acceleo.query.runtime.IService;
 import org.eclipse.acceleo.query.runtime.ServiceUtils;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -950,5 +952,42 @@ public class EvalTest {
 		assertEquals("In:aqlFeatureAccess\nOut:aqlFeatureAccess\nIn:getSelf\nOut:getSelf\n", outContent.toString());
 		
 		System.setOut(null);
+	}
+	
+	@Test
+	public void testAssignCollectionAttribute() {
+		Dsl environment = new Dsl(Arrays.asList("model/test.ecore"),Arrays.asList("input/eval/assignCollectionAttribute.implem"));
+		List<ParseResult<ModelUnit>> parsedSemantics = (new DslBuilder(interpreter.getQueryEnvironment())).parse(environment);
+		EObject caller = interpreter.loadModel("model/ClassA.xmi").getContents().get(0);
+		IEvaluationResult res = interpreter.eval(caller, Arrays.asList(), parsedSemantics);
+		
+		assertEquals("1 1", res.getValue());
+	}
+	
+	@Test
+	public void testInsertLocalVariable() {
+		Dsl environment = new Dsl(Arrays.asList("model/test.ecore"),Arrays.asList("input/eval/insertLocalVariable.implem"));
+		List<ParseResult<ModelUnit>> parsedSemantics = (new DslBuilder(interpreter.getQueryEnvironment())).parse(environment);
+		EObject caller = interpreter.loadModel("model/ClassA.xmi").getContents().get(0);
+		IEvaluationResult res = interpreter.eval(caller, Arrays.asList(), parsedSemantics);
+		
+		assertTrue(res.getValue() instanceof List);
+		assertEquals(3, ((List)res.getValue()).size());
+		assertEquals(caller.eClass(), ((EObject)((List)res.getValue()).get(0)).eClass());
+		assertEquals(caller.eClass(), ((EObject)((List)res.getValue()).get(1)).eClass());
+		assertEquals(caller.eClass(), ((EObject)((List)res.getValue()).get(2)).eClass());
+	}
+	
+	@Test
+	public void testRemoveLocalVariable() {
+		Dsl environment = new Dsl(Arrays.asList("model/test.ecore"),Arrays.asList("input/eval/removeLocalVariable.implem"));
+		List<ParseResult<ModelUnit>> parsedSemantics = (new DslBuilder(interpreter.getQueryEnvironment())).parse(environment);
+		EObject caller = interpreter.loadModel("model/ClassA.xmi").getContents().get(0);
+		IEvaluationResult res = interpreter.eval(caller, Arrays.asList(), parsedSemantics);
+		
+		assertTrue(res.getValue() instanceof List);
+		assertEquals(2, ((List)res.getValue()).size());
+		assertEquals(caller.eClass(), ((EObject)((List)res.getValue()).get(0)).eClass());
+		assertEquals(caller.eClass(), ((EObject)((List)res.getValue()).get(1)).eClass());
 	}
 }

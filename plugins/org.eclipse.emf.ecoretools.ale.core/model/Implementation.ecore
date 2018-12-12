@@ -14,8 +14,6 @@
         eType="#//ExtendedClass" eOpposite="#//ExtendedClass/children"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//ExtendedClass" eOpposite="#//ExtendedClass/extends"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mutable" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RuntimeClass" eSuperTypes="#//BehavioredClass"/>
   <eClassifiers xsi:type="ecore:EClass" name="Method">
@@ -24,7 +22,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1" eType="#//Block"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tags" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dispatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelUnit" eSuperTypes="../../org.eclipse.emf.ecore/model/Ecore.ecore#//ENamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="services" upperBound="-1"
@@ -86,6 +83,12 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetFeature" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableInsert" eSuperTypes="#//Assignment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableRemove" eSuperTypes="#//Assignment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FeaturePut" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"

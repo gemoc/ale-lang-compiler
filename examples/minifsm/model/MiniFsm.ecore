@@ -9,8 +9,11 @@
         eType="#//State" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1"
         eType="#//Transition" containment="true" eOpposite="#//Transition/fsm"/>
+<<<<<<< HEAD
     <eStructuralFeatures xsi:type="ecore:EReference" name="currentState" eType="#//State"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+=======
+>>>>>>> origin/master
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State">
     <eOperations name="execute"/>

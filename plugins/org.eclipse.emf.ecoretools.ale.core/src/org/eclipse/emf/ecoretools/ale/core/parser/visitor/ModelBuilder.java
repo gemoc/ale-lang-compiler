@@ -69,6 +69,8 @@ import org.eclipse.emf.ecoretools.ale.implementation.Statement;
 import org.eclipse.emf.ecoretools.ale.implementation.Switch;
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment;
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration;
+import org.eclipse.emf.ecoretools.ale.implementation.VariableInsert;
+import org.eclipse.emf.ecoretools.ale.implementation.VariableRemove;
 import org.eclipse.emf.ecoretools.ale.implementation.While;
 
 import com.google.common.collect.Lists;
@@ -129,7 +131,7 @@ public class ModelBuilder {
 		aqlFactory = (AstFactory) qryEnv.getEPackageProvider().getEPackage("ast").iterator().next().getEFactoryInstance();
 	}
 	
-	public Method buildMethod(EClass fragment, String name, List<Parameter> params, RTypeContext returnType, Block body, List<String> tags, boolean dispatch) {
+	public Method buildMethod(EClass fragment, String name, List<Parameter> params, RTypeContext returnType, Block body, List<String> tags) {
 		EOperation operation = ecoreFactory.createEOperation();
 		operation.setName(name);
 		
@@ -144,27 +146,26 @@ public class ModelBuilder {
 		operation.setEType(type);
 		fragment.getEOperations().add(operation);
 		
-		return buildMethod(operation,body,tags, dispatch);
+		return buildMethod(operation,body,tags);
 	}
 	
-	public Method buildMethod(EOperation operation, Block body, List<String> tags, boolean dispatch) {
+	public Method buildMethod(EOperation operation, Block body, List<String> tags) {
 		Method newMethod = implemFactory.createMethod();
 		newMethod.setOperationRef(operation);
 		newMethod.setBody(body);
 		newMethod.getTags().addAll(tags);
-		newMethod.setDispatch(dispatch);
 		
 		return newMethod;
 	}
 	
-	public Method buildImplementation(String containingClass, String name, List<Parameter> params, RTypeContext returnType, Block body, List<String> tags, boolean dispatch) {
+	public Method buildImplementation(String containingClass, String name, List<Parameter> params, RTypeContext returnType, Block body, List<String> tags) {
 		Optional<EOperation> existingOperation = resolve(containingClass, name, params.size(), returnType);
 		
 		if(!existingOperation.isPresent()){
-			return buildMethod(null,body,tags, dispatch);
+			return buildMethod(null,body,tags);
 		}
 		
-		return buildMethod(existingOperation.get(),body,tags, dispatch);
+		return buildMethod(existingOperation.get(),body,tags);
 	}
 	
 	
@@ -278,6 +279,21 @@ public class ModelBuilder {
 		return loop;
 	}
 	
+	
+	public VariableInsert buildVariableInsert(String name, RExpressionContext exp, ParseResult<ModelUnit> parseRes) {
+		VariableInsert varInsert = implemFactory. createVariableInsert();
+		varInsert.setName(name);
+		varInsert.setValue(parseExp(exp,parseRes));
+		return varInsert; 
+	}
+	
+	public VariableRemove buildVariableRemove(String name, RExpressionContext exp, ParseResult<ModelUnit> parseRes) {
+		VariableRemove varRemove = implemFactory. createVariableRemove();
+		varRemove.setName(name);
+		varRemove.setValue(parseExp(exp,parseRes));
+		return varRemove; 
+	}
+	
 	public FeatureAssignment buildFeatureAssign(ExpressionContext target, String feature, RExpressionContext valueExp, ParseResult<ModelUnit> parseRes) {
 		FeatureAssignment featSetting = implemFactory.createFeatureAssignment();
 		featSetting.setTarget(parseAQL(target,parseRes));
@@ -311,7 +327,7 @@ public class ModelBuilder {
 		return featSetting;
 	}
 	
-	public ExtendedClass buildExtendedClass(String baseCls, List<Attribute> attributes, List<Method> operations, List<String> extendedCls, List<String> mutable) {
+	public ExtendedClass buildExtendedClass(String baseCls, List<Attribute> attributes, List<Method> operations, List<String> extendedCls) {
 		ExtendedClass cls = implemFactory.createExtendedClass();
 		EClassifier resolvedType = resolve(baseCls);
 		if(resolvedType instanceof EClass)
@@ -319,7 +335,6 @@ public class ModelBuilder {
 		cls.getMethods().addAll(operations);
 		cls.getAttributes().addAll(attributes);
 		cls.setName(baseCls);
-		cls.getMutable().addAll(mutable);
 		
 		//Add metadata for ID to be resolved
 		extendedCls

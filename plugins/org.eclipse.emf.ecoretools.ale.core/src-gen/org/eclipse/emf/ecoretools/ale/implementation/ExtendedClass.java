@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EClass;
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass#getBaseClass <em>Base Class</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass#getMutable <em>Mutable</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage#getExtendedClass()
@@ -103,21 +102,5 @@ public interface ExtendedClass extends BehavioredClass {
 	 * @generated
 	 */
 	EList<ExtendedClass> getChildren();
-
-	/**
-	 * Returns the value of the '<em><b>Mutable</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Mutable</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Mutable</em>' attribute list.
-	 * @see org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage#getExtendedClass_Mutable()
-	 * @model
-	 * @generated
-	 */
-	EList<String> getMutable();
 
 } // ExtendedClass

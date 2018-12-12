@@ -35,4 +35,3 @@ Export-Package: org.eclipse.emf.ecoretools.ale.ide,
  org.eclipse.emf.ecoretools.ale.ide.launchconfig,
  org.eclipse.emf.ecoretools.ale.ide.services,
  org.eclipse.emf.ecoretools.ale.ide.listener
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8

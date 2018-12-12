@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+<<<<<<< HEAD
 	<classpathentry kind="src" path="revisitor-comp"/>
 	<classpathentry kind="src" path="interpreter-comp"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
@@ -29,5 +30,9 @@
 			<attribute name="plugin_id" value="org.eclipse.emf.ecore"/>
 		</attributes>
 	</classpathentry>
+=======
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+>>>>>>> origin/master
 	<classpathentry kind="output" path="bin"/>
 </classpath>

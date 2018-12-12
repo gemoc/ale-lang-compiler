@@ -1,13 +1,11 @@
 behavior logo;
 
 use logo.example.service.Display;
-use logo.example.service.TimeService;
 
-open class LogoProgram {
+open class kmLogo.ASM.LogoProgram {
 
 	@main
 	def Turtle eval() {
-		ELong start := self.time();
 		Turtle turtle :=  self.createTurtle();
 		result := turtle;
 		
@@ -15,21 +13,17 @@ open class LogoProgram {
 			it.eval(turtle);
 		}
 		result := turtle;
-		ELong stop := self.time();
-		ELong time := stop - start;
-		time.log();
-		turtle.drawings->size().log();
 		turtle.show();
 		
 	}
 	
 	def Turtle createTurtle() {
-		Turtle turtle := kmLogo::Turtle.create();
-		turtle.position := kmLogo::Point.create();
+		Turtle turtle := vmlogo::Turtle.create();
+		turtle.position := vmlogo::Point.create();
 		turtle.position.x := 0.0;
 		turtle.position.y := 0.0;
-		turtle.callStack := kmLogo::CallStack.create();
-		turtle.callStack.frames += kmLogo::StackFrame.create();
+		turtle.callStack := vmlogo::CallStack.create();
+		turtle.callStack.frames += vmlogo::StackFrame.create();
 		result := turtle;
 	}
 }
@@ -43,14 +37,12 @@ open class Instruction {
 open class PenDown {
 	def double eval(Turtle turtle) {
 		turtle.penUp := false;
-		result := 0.0;
 	}
 }
 
 open class PenUp {
 	def double eval(Turtle turtle) {
 		turtle.penUp := true;
-		result := 0.0;
 	}
 }
 
@@ -62,13 +54,12 @@ open class Repeat {
 			self.block.eval(turtle);
 			time := time - 1.0;
 		}
-		result := 0.0;
 	}
 }
 
 open class While {
 	def double eval(Turtle turtle) {
-		while(self.condition.eval(turtle) > 0.0){
+		while(self.condition.eval(turtle) > 0){
 			self.block.eval(turtle);
 		}
 		result := 0.0;
@@ -80,12 +71,8 @@ open class If {
 		if (self.condition.eval(turtle) != 0.0) {
 			result := self.thenPart.eval(turtle);
 		}
-		else {
-			if(self.elsePart != null) {
-				result := self.elsePart.eval(turtle);
-			} else {
-				result := 0.0;
-			}
+		else{
+			result := self.elsePart.eval(turtle);
 		}
 	}
 }
@@ -101,21 +88,18 @@ open class Block {
 		for(inst in self.instructions){
 			inst.eval(turtle);
 		}
-		result := 0.0;
 	}
 }
 
 open class Clear {
-	def double eval(Turtle turtle) {
-		result := 0.0;
+	def double eval(CTurtle turtle) {
 	}
 }
 
-open class Forward {
+open class kmLogo.ASM.Forward {
 	def double eval(Turtle turtle) {
 		double move := self.steps.eval(turtle);
 		turtle.forward(move);
-		result := 0.0;
 	}
 }
 
@@ -123,7 +107,6 @@ open class Back {
 	def double eval(Turtle turtle) {
 		double move := self.steps.eval(turtle);
 		turtle.forward(-move);
-		result := 0.0;
 	}
 }
 
@@ -131,7 +114,6 @@ open class Left {
 	def double eval(Turtle turtle) {
 		double angle := self.angle.eval(turtle);
 		turtle.rotate(angle);
-		result := 0.0;
 	}
 }
 
@@ -139,7 +121,6 @@ open class Right {
 	def double eval(Turtle turtle) {
 		double angle := self.angle.eval(turtle);
 		turtle.rotate(-angle);
-		result := 0.0;
 	}
 }
 
@@ -234,10 +215,10 @@ open class ProcCall {
 	def double eval(Turtle turtle) {
 		('Calling '+self.declaration.name).log();
 	
-		StackFrame newFrame := kmLogo::StackFrame.create();
+		StackFrame newFrame := vmlogo::StackFrame.create();
 		int i := 1;
 		for (exp in self.actualArgs){
-			Variable newVar := kmLogo::Variable.create();
+			Variable newVar := vmlogo::Variable.create();
 			newVar.name := self.declaration.args->at(i).name;
 			newVar.value := exp.eval(turtle);
 			newFrame.variables += newVar;
@@ -262,7 +243,6 @@ open class ProcDeclaration {
 
 open class ParameterCall {
 	def double eval(Turtle turtle){
-		result := 0.0;
 		for(frame in turtle.callStack.frames){
 			for(var in frame.variables){
 				if(var.name = self.parameter.name){
@@ -280,18 +260,18 @@ open class Turtle {
 	double anotherAttrib := 0.0;
 	
 	def void move(double dx, double dy) {
-		Point newPos := kmLogo::Point.create();
+		Point newPos := vmlogo::Point.create();
 		newPos.x := self.position.x + dx;
 		newPos.y := self.position.y  + dy;
 		if(self.penUp) {
 		}
 		else {
-			Segment newSegment := kmLogo::Segment.create();
+			Segment newSegment := vmlogo::Segment.create();
 			newSegment.begin := self.position;
 			newSegment.end := newPos;
 			self.drawings += newSegment;
 		}
-		Point newPosCopy := kmLogo::Point.create();
+		Point newPosCopy := vmlogo::Point.create();
 		newPosCopy.x := newPos.x;
 		newPosCopy.y := newPos.y;
 		self.position := newPosCopy;

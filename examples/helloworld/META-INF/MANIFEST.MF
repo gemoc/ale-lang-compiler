@@ -1,5 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+<<<<<<< HEAD
 Bundle-Name: %pluginName
 Bundle-SymbolicName: helloworld;singleton:=true
 Automatic-Module-Name: helloworld
@@ -15,3 +16,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
+=======
+Bundle-Name: helloworld
+Bundle-SymbolicName: helloworld; singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Require-Bundle: org.eclipse.emf.ecore
+>>>>>>> origin/master

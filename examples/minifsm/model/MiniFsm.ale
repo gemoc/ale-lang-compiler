@@ -2,8 +2,13 @@ behavior MiniFsm;
 
 open class FSM {
 
+<<<<<<< HEAD
 //	State currentState;
 //	String currentEvent;
+=======
+	State currentState;
+	String currentEvent;
+>>>>>>> origin/master
 	
 	override void handle (EString event) {
 		('Handle ' + event).log();
@@ -13,6 +18,10 @@ open class FSM {
 	
 	@main
 	def void entryPoint() {
+<<<<<<< HEAD
+=======
+		
+>>>>>>> origin/master
 		Sequence(String) events := Sequence{'event1','event2'};
 		
 		'Start'.log();

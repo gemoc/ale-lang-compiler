@@ -51,26 +51,13 @@ rService : 'use' Ident ('.' Ident)* ';'
 rClass : rOpenClass | rNewClass
 ;
 
-rOpenClass : 'open' (abstr='abstract')? 'class' name=rQualified ('extends' rQualified (',' rQualified)* )? '{'
-	('mutable' rMutableRef*)?
-	rAttribute* rOperation*
-	'}'
+rOpenClass : 'open' 'class' name=rQualified ('extends' rQualified (',' rQualified)* )? '{' rAttribute* rOperation* '}'
 ;
-
-rMutableRef: Ident;
 
 rNewClass : 'class' name=Ident '{' rAttribute* rOperation* '}'
 ; 
 
-rOperation : 
-	rConcreteOperation | rAbstractOperation;
-	
-rConcreteOperation:
-(rTag)* ('def' | 'override') (dispatch='dispatch')? type=rType name=Ident '(' rParameters? ')' rBlock
-;
-
-rAbstractOperation:
-	(rTag)* 'def' 'abstract' type=rType name=Ident '(' rParameters? ')'
+rOperation : (rTag)* ('def' | 'override') type=rType name=Ident '(' rParameters? ')' rBlock
 ;
 
 rTag : '@'Ident

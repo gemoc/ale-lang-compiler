@@ -2,10 +2,17 @@ behavior HelloWorld;
 
 open class HelloWorld {
 	
+<<<<<<< HEAD
 	
 	override EString greeting () {
 		String msg := 'Hello world!';
 		result := msg;
+=======
+	String msg := 'Hello world!';
+	
+	override EString greeting () {
+		result := self.msg;
+>>>>>>> origin/master
 	}
 	
 	@main

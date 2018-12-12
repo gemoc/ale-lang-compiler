@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<kmlogo:LogoProgram
+<ASM:LogoProgram
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:kmlogo="http://kmLogo">
+    xmlns:ASM="http://kmLogo/ASM">
   <instructions
-      xsi:type="kmlogo:ProcDeclaration"
+      xsi:type="ASM:ProcDeclaration"
       name="Square"
       procCall="//@instructions.2 //@instructions.1/@instructions.4 //@instructions.1/@instructions.10">
     <args name="size"/>
     <instructions
-        xsi:type="kmlogo:Block">
+        xsi:type="ASM:Block">
       <instructions
-          xsi:type="kmlogo:PenDown"/>
+          xsi:type="ASM:PenDown"/>
       <instructions
-          xsi:type="kmlogo:Repeat">
+          xsi:type="ASM:Repeat">
         <condition
-            xsi:type="kmlogo:Constant"
+            xsi:type="ASM:Constant"
             value="4.0"/>
         <block>
           <instructions
-              xsi:type="kmlogo:Forward">
+              xsi:type="ASM:Forward">
             <steps
-                xsi:type="kmlogo:ParameterCall"
+                xsi:type="ASM:ParameterCall"
                 parameter="//@instructions.0/@args.0"/>
           </instructions>
           <instructions
-              xsi:type="kmlogo:Left">
+              xsi:type="ASM:Left">
             <angle
-                xsi:type="kmlogo:Constant"
+                xsi:type="ASM:Constant"
                 value="90.0"/>
           </instructions>
         </block>
       </instructions>
       <instructions
-          xsi:type="kmlogo:PenUp"/>
+          xsi:type="ASM:PenUp"/>
     </instructions>
   </instructions>
   <instructions
-      xsi:type="kmlogo:ProcDeclaration"
+      xsi:type="ASM:ProcDeclaration"
       name="Tree"
       procCall="//@instructions.1/@instructions.5/@thenPart/@instructions.0 //@instructions.3 //@instructions.1/@instructions.11/@thenPart/@instructions.0">
     <args name="baseSize"/>
     <args name="depth"/>
     <args name="direction"/>
     <instructions
-        xsi:type="kmlogo:ProcDeclaration"
+        xsi:type="ASM:ProcDeclaration"
         name="SubSquareSize"
         procCall="//@instructions.1/@instructions.4/@actualArgs.0 //@instructions.1/@instructions.9/@steps //@instructions.1/@instructions.10/@actualArgs.0 //@instructions.1/@instructions.12/@steps //@instructions.1/@instructions.5/@thenPart/@instructions.0/@actualArgs.0 //@instructions.1/@instructions.11/@thenPart/@instructions.0/@actualArgs.0">
       <args
@@ -53,293 +53,293 @@
       <args
           name="angle"/>
       <instructions
-          xsi:type="kmlogo:Mult">
+          xsi:type="ASM:Mult">
         <lhs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@instructions.0/@args.0"/>
         <rhs
-            xsi:type="kmlogo:Cos">
+            xsi:type="ASM:Cos">
           <expression
-              xsi:type="kmlogo:ParameterCall"
+              xsi:type="ASM:ParameterCall"
               parameter="//@instructions.1/@instructions.0/@args.1"/>
         </rhs>
       </instructions>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Left">
+        xsi:type="ASM:Left">
       <angle
-          xsi:type="kmlogo:Constant"
+          xsi:type="ASM:Constant"
           value="90.0"/>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Forward">
+        xsi:type="ASM:Forward">
       <steps
-          xsi:type="kmlogo:ParameterCall"
+          xsi:type="ASM:ParameterCall"
           parameter="//@instructions.1/@args.0"/>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Right">
+        xsi:type="ASM:Right">
       <angle
-          xsi:type="kmlogo:Minus">
+          xsi:type="ASM:Minus">
         <lhs
-            xsi:type="kmlogo:Constant"
+            xsi:type="ASM:Constant"
             value="45.0"/>
         <rhs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.2"/>
       </angle>
     </instructions>
     <instructions
-        xsi:type="kmlogo:ProcCall"
+        xsi:type="ASM:ProcCall"
         declaration="//@instructions.0">
       <actualArgs
-          xsi:type="kmlogo:ProcCall"
+          xsi:type="ASM:ProcCall"
           declaration="//@instructions.1/@instructions.0">
         <actualArgs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.0"/>
         <actualArgs
-            xsi:type="kmlogo:Plus">
+            xsi:type="ASM:Plus">
           <lhs
-              xsi:type="kmlogo:Constant"
+              xsi:type="ASM:Constant"
               value="45.0"/>
           <rhs
-              xsi:type="kmlogo:ParameterCall"
+              xsi:type="ASM:ParameterCall"
               parameter="//@instructions.1/@args.2"/>
         </actualArgs>
       </actualArgs>
     </instructions>
     <instructions
-        xsi:type="kmlogo:If">
+        xsi:type="ASM:If">
       <condition
-          xsi:type="kmlogo:Greater">
+          xsi:type="ASM:Greater">
         <lhs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.1"/>
         <rhs
-            xsi:type="kmlogo:Constant"/>
+            xsi:type="ASM:Constant"/>
       </condition>
       <thenPart>
         <instructions
-            xsi:type="kmlogo:ProcCall"
+            xsi:type="ASM:ProcCall"
             declaration="//@instructions.1">
           <actualArgs
-              xsi:type="kmlogo:ProcCall"
+              xsi:type="ASM:ProcCall"
               declaration="//@instructions.1/@instructions.0">
             <actualArgs
-                xsi:type="kmlogo:ParameterCall"
+                xsi:type="ASM:ParameterCall"
                 parameter="//@instructions.1/@args.0"/>
             <actualArgs
-                xsi:type="kmlogo:Plus">
+                xsi:type="ASM:Plus">
               <lhs
-                  xsi:type="kmlogo:Constant"
+                  xsi:type="ASM:Constant"
                   value="45.0"/>
               <rhs
-                  xsi:type="kmlogo:ParameterCall"
+                  xsi:type="ASM:ParameterCall"
                   parameter="//@instructions.1/@args.2"/>
             </actualArgs>
           </actualArgs>
           <actualArgs
-              xsi:type="kmlogo:Minus">
+              xsi:type="ASM:Minus">
             <lhs
-                xsi:type="kmlogo:ParameterCall"
+                xsi:type="ASM:ParameterCall"
                 parameter="//@instructions.1/@args.1"/>
             <rhs
-                xsi:type="kmlogo:Constant"
+                xsi:type="ASM:Constant"
                 value="1.0"/>
           </actualArgs>
           <actualArgs
-              xsi:type="kmlogo:Constant"/>
+              xsi:type="ASM:Constant"/>
         </instructions>
       </thenPart>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Right">
+        xsi:type="ASM:Right">
       <angle
-          xsi:type="kmlogo:Plus">
+          xsi:type="ASM:Plus">
         <lhs
-            xsi:type="kmlogo:Constant"
+            xsi:type="ASM:Constant"
             value="45.0"/>
         <rhs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.2"/>
       </angle>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Forward">
+        xsi:type="ASM:Forward">
       <steps
-          xsi:type="kmlogo:ParameterCall"
+          xsi:type="ASM:ParameterCall"
           parameter="//@instructions.1/@args.0"/>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Right">
+        xsi:type="ASM:Right">
       <angle
-          xsi:type="kmlogo:Minus">
+          xsi:type="ASM:Minus">
         <lhs
-            xsi:type="kmlogo:Constant"
+            xsi:type="ASM:Constant"
             value="45.0"/>
         <rhs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.2"/>
       </angle>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Back">
+        xsi:type="ASM:Back">
       <steps
-          xsi:type="kmlogo:ProcCall"
+          xsi:type="ASM:ProcCall"
           declaration="//@instructions.1/@instructions.0">
         <actualArgs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.0"/>
         <actualArgs
-            xsi:type="kmlogo:Minus">
+            xsi:type="ASM:Minus">
           <lhs
-              xsi:type="kmlogo:Constant"
+              xsi:type="ASM:Constant"
               value="45.0"/>
           <rhs
-              xsi:type="kmlogo:ParameterCall"
+              xsi:type="ASM:ParameterCall"
               parameter="//@instructions.1/@args.2"/>
         </actualArgs>
       </steps>
     </instructions>
     <instructions
-        xsi:type="kmlogo:ProcCall"
+        xsi:type="ASM:ProcCall"
         declaration="//@instructions.0">
       <actualArgs
-          xsi:type="kmlogo:ProcCall"
+          xsi:type="ASM:ProcCall"
           declaration="//@instructions.1/@instructions.0">
         <actualArgs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.0"/>
         <actualArgs
-            xsi:type="kmlogo:Minus">
+            xsi:type="ASM:Minus">
           <lhs
-              xsi:type="kmlogo:Constant"
+              xsi:type="ASM:Constant"
               value="45.0"/>
           <rhs
-              xsi:type="kmlogo:ParameterCall"
+              xsi:type="ASM:ParameterCall"
               parameter="//@instructions.1/@args.2"/>
         </actualArgs>
       </actualArgs>
     </instructions>
     <instructions
-        xsi:type="kmlogo:If">
+        xsi:type="ASM:If">
       <condition
-          xsi:type="kmlogo:Greater">
+          xsi:type="ASM:Greater">
         <lhs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.1"/>
         <rhs
-            xsi:type="kmlogo:Constant"/>
+            xsi:type="ASM:Constant"/>
       </condition>
       <thenPart>
         <instructions
-            xsi:type="kmlogo:ProcCall"
+            xsi:type="ASM:ProcCall"
             declaration="//@instructions.1">
           <actualArgs
-              xsi:type="kmlogo:ProcCall"
+              xsi:type="ASM:ProcCall"
               declaration="//@instructions.1/@instructions.0">
             <actualArgs
-                xsi:type="kmlogo:ParameterCall"
+                xsi:type="ASM:ParameterCall"
                 parameter="//@instructions.1/@args.0"/>
             <actualArgs
-                xsi:type="kmlogo:Minus">
+                xsi:type="ASM:Minus">
               <lhs
-                  xsi:type="kmlogo:Constant"
+                  xsi:type="ASM:Constant"
                   value="45.0"/>
               <rhs
-                  xsi:type="kmlogo:ParameterCall"
+                  xsi:type="ASM:ParameterCall"
                   parameter="//@instructions.1/@args.2"/>
             </actualArgs>
           </actualArgs>
           <actualArgs
-              xsi:type="kmlogo:Minus">
+              xsi:type="ASM:Minus">
             <lhs
-                xsi:type="kmlogo:ParameterCall"
+                xsi:type="ASM:ParameterCall"
                 parameter="//@instructions.1/@args.1"/>
             <rhs
-                xsi:type="kmlogo:Constant"
+                xsi:type="ASM:Constant"
                 value="1.0"/>
           </actualArgs>
           <actualArgs
-              xsi:type="kmlogo:Constant"/>
+              xsi:type="ASM:Constant"/>
         </instructions>
       </thenPart>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Forward">
+        xsi:type="ASM:Forward">
       <steps
-          xsi:type="kmlogo:ProcCall"
+          xsi:type="ASM:ProcCall"
           declaration="//@instructions.1/@instructions.0">
         <actualArgs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.0"/>
         <actualArgs
-            xsi:type="kmlogo:Minus">
+            xsi:type="ASM:Minus">
           <lhs
-              xsi:type="kmlogo:Constant"
+              xsi:type="ASM:Constant"
               value="45.0"/>
           <rhs
-              xsi:type="kmlogo:ParameterCall"
+              xsi:type="ASM:ParameterCall"
               parameter="//@instructions.1/@args.2"/>
         </actualArgs>
       </steps>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Left">
+        xsi:type="ASM:Left">
       <angle
-          xsi:type="kmlogo:Minus">
+          xsi:type="ASM:Minus">
         <lhs
-            xsi:type="kmlogo:Constant"
+            xsi:type="ASM:Constant"
             value="45.0"/>
         <rhs
-            xsi:type="kmlogo:ParameterCall"
+            xsi:type="ASM:ParameterCall"
             parameter="//@instructions.1/@args.2"/>
       </angle>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Back">
+        xsi:type="ASM:Back">
       <steps
-          xsi:type="kmlogo:ParameterCall"
+          xsi:type="ASM:ParameterCall"
           parameter="//@instructions.1/@args.0"/>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Left">
+        xsi:type="ASM:Left">
       <angle
-          xsi:type="kmlogo:Constant"
+          xsi:type="ASM:Constant"
           value="90.0"/>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Back">
+        xsi:type="ASM:Back">
       <steps
-          xsi:type="kmlogo:ParameterCall"
+          xsi:type="ASM:ParameterCall"
           parameter="//@instructions.1/@args.0"/>
     </instructions>
     <instructions
-        xsi:type="kmlogo:Right">
+        xsi:type="ASM:Right">
       <angle
-          xsi:type="kmlogo:Constant"
+          xsi:type="ASM:Constant"
           value="90.0"/>
     </instructions>
   </instructions>
   <instructions
-      xsi:type="kmlogo:ProcCall"
+      xsi:type="ASM:ProcCall"
       declaration="//@instructions.0">
     <actualArgs
-        xsi:type="kmlogo:Constant"
+        xsi:type="ASM:Constant"
         value="150.0"/>
   </instructions>
   <instructions
-      xsi:type="kmlogo:ProcCall"
+      xsi:type="ASM:ProcCall"
       declaration="//@instructions.1">
     <actualArgs
-        xsi:type="kmlogo:Constant"
+        xsi:type="ASM:Constant"
         value="150.0"/>
     <actualArgs
-        xsi:type="kmlogo:Constant"
-        value="10.0"/>
+        xsi:type="ASM:Constant"
+        value="8.0"/>
     <actualArgs
-        xsi:type="kmlogo:Constant"
+        xsi:type="ASM:Constant"
         value="5.0"/>
   </instructions>
-</kmlogo:LogoProgram>
+</ASM:LogoProgram>
