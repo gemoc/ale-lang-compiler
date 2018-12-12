@@ -82,4 +82,10 @@ public class BlockImpl extends StatementImpl implements Block {
         }
         ;
   }
+
+  public void evaluateStatement(State state) {
+    this.evaluateStatementKeepContext(state);
+        state.popCurrentContext();
+        ;
+  }
 }

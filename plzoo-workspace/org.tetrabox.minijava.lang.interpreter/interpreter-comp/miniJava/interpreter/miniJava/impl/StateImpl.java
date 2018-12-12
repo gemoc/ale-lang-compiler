@@ -260,4 +260,12 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
         this.setContextCache(newContext);
         ;
   }
+
+  public void popCurrentContext() {
+    miniJava.interpreter.miniJava.Context currContext = ((miniJava.interpreter.miniJava.Context)this.findCurrentContext());
+        miniJava.interpreter.miniJava.Context newCurrent = ((miniJava.interpreter.miniJava.Context)currContext.getParentContext());
+        currContext.setParentContext(null);
+        this.setContextCache(newCurrent);
+        ;
+  }
 }

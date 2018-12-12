@@ -1,6 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
 import java.lang.Object;
+import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.ObjectInstance;
 import miniJava.interpreter.miniJava.ObjectRefValue;
@@ -69,5 +70,12 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public String customToString() {
+    String result;
+    result = this.instance.toString();
+        ;
+    return result;
   }
 }

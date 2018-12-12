@@ -5,6 +5,7 @@ import miniJava.interpreter.miniJava.Block;
 import miniJava.interpreter.miniJava.Method;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Parameter;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -153,5 +154,10 @@ public class MethodImpl extends MemberImpl implements Method {
     	return basicSetBody(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public void evaluateStatement(State state) {
+    this.body.evaluateStatement(state);
+        ;
   }
 }

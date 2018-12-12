@@ -5,6 +5,7 @@ import miniJava.interpreter.miniJava.Block;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.IfStatement;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -171,5 +172,18 @@ public class IfStatementImpl extends StatementImpl implements IfStatement {
     	return basicSetElseBlock(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public void evaluateStatement(State state) {
+    miniJava.interpreter.miniJava.BooleanValue booleanValue = ((miniJava.interpreter.miniJava.BooleanValue)this.expression.evaluateExpression(state));
+        if(booleanValue.isValue()) {
+          this.thenBlock.evaluateStatement(state);
+        }
+        else {
+          if((this.elseBlock) != (null)) {
+            this.elseBlock.evaluateStatement(state);
+          }
+        }
+        ;
   }
 }

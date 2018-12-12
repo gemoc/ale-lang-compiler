@@ -7,4 +7,6 @@ public interface StringValue extends EObject, Value {
   String getValue();
 
   void setValue(String value);
+
+  String customToString();
 }

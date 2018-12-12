@@ -30,9 +30,12 @@ open class Program {
 	}
 }
 
+
+/////// STATEMENTS
+
 open class Statement {
 	def void evaluateStatement(miniJava::State state) {
-		
+		// EMPTY
 	} 
 }
 
@@ -45,8 +48,143 @@ open class Block {
 		while(i < lgt and currentFrame.returnValue == null) {
 			self.statements->at(i).evaluateStatement(state);
 		}
-	}	
+	}
+	
+	def void evaluateStatement(miniJava::State state) {
+		self.evaluateStatementKeepContext(state);
+		state.popCurrentContext();
+	}
 }
+
+open class Assignment {
+	def void evaluateStatement(miniJava::State state) {
+		miniJava::Context context := state.findCurrentContext();
+		miniJava::Value right := self.value.evaluateExpression(state);
+		miniJava::Assignee assignee := self.assignee;
+		if(assignee.oclIsKindOf(miniJava::SymbolRef)) {
+			miniJava::SymbolRef assigneeSymbolRef := assignee;
+			context.findBinding(assigneeSymbolRef.symbol);
+		} else {
+			if(assignee.oclIsKindOf(miniJava::VariableDeclaration)) {
+				miniJava::VariableDeclaration assigneeVariableDeclaration := assignee;
+				miniJava::SymbolBinding binding := miniJava::SymbolBinding.create();
+				binding.symbol := assigneeVariableDeclaration;
+				binding.value := right;
+				context.bindings += binding;
+			} else {
+				if(assignee.oclIsKindOf(miniJava::FieldAccess)) {
+					miniJava::FieldAccess assigneeFieldAccess := assignee;
+					miniJava::Field f := assigneeFieldAccess.field;
+					
+//					val realReceiver = (assignee.receiver.evaluateExpression(state) as ObjectRefValue).instance
+					miniJava::ObjectRefValue realReceiverValue := assigneeFieldAccess.receiver.evaluateExpression(state);
+					miniJava::ObjectInstance realReceiver := realReceiverValue.instance;
+
+//					val existingBinding = realReceiver.fieldbindings.findFirst[it.field === f]
+//					self.nodes->select(n |n.canFire())->first();
+					miniJava::FieldBinding existingBinding := realReceiver.fieldbindings->select(x | x.field == f)->first();
+					if(existingBinding == null) {
+						miniJava::FieldBinding binding := miniJava::FieldBinding.create();
+						binding.field := f;
+						binding.value := right;
+						realReceiver.fieldbindings += binding;
+					} else {
+						existingBinding.setValue(right); // implicit assignment does not work...
+					}
+				} else {
+					if(assignee.oclIsKindOf(miniJava::ArrayAccess)) {
+//				val array = (assignee.object.evaluateExpression(state) as ArrayRefValue).instance
+//				val index = (assignee.index.evaluateExpression(state) as IntegerValue).value
+//				array.value.set(index,right)
+						miniJava::ArrayAccess assigneeArrayAccess := assignee;
+						miniJava::ArrayRefValue arrayRefValue := assigneeArrayAccess.object.evaluateExpression(state);
+						miniJava::ArrayInstance array := arrayRefValue.instance;
+						miniJava::IntegerValue integerValue := assigneeArrayAccess.index.evaluateExpression(state);
+						int index := integerValue.value;
+						array.value.set(index, right);
+ 
+					} else {
+						// ERROR
+					}	
+				}
+			}
+		}
+	} 
+}
+
+open class PrintStatement {
+	def void evaluateStatement(miniJava::State state) {
+		self.expression.evaluateExpression(state).customToString().log();
+	}
+}
+
+open class ForStatement {
+	def void evaluateStatement(miniJava::State state) {
+		state.pushNewContext();
+		self.declaration.evaluateStatement(state);
+		miniJava::BooleanValue continueFor := self.condition.evaluateExpression(state); 
+		while(continueFor.isValue()) {
+			self.block.evaluateStatement(state);
+			self.progression.evaluateStatement(state);
+			miniJava::BooleanValue continueFor2 := self.condition.evaluateExpression(state);
+			continueFor := continueFor2;
+		}
+		state.popCurrentContext();
+	}
+}
+
+open class IfStatement {
+	def void evaluateStatement(miniJava::State state) {
+		miniJava::BooleanValue booleanValue := self.expression.evaluateExpression(state);
+		if(booleanValue.isValue()) {
+			self.thenBlock.evaluateStatement(state);
+		} else {
+			if(self.elseBlock != null) {
+				self.elseBlock.evaluateStatement(state);
+			}
+		}
+	}
+}
+
+open class WhileStatement {
+	def void evaluateStatement(miniJava::State state) {
+		miniJava::BooleanValue continueWhile := self.condition.evaluateExpression(state);
+		while(continueWhile.isValue()) {
+			self.block.evaluateStatement(state);
+			miniJava::BooleanValue continueWhile2 := self.condition.evaluateExpression(state);
+			continueWhile := continueWhile2;
+		}
+	}
+}
+
+open class Return {
+	def void evaluateStatement(miniJava::State state) {
+		miniJava::Value value := self.expression.evaluateExpression(state);
+		state.findCurrentFrame().returnValue := value;
+	}
+}
+
+open class Method {
+	def void evaluateStatement(miniJava::State state) {
+		self.body.evaluateStatement(state);
+	}
+}
+
+/// EXPRESSIONS
+
+open class Expression {
+	def void evaluateStatement(miniJava::State state) {
+		self.evaluateExpression(state);
+	}
+	
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		// EMPTY
+		result := null;
+	} 
+}
+
+
+/// DYNAMIC VALUES
 
 open class State {
 	
@@ -76,6 +214,13 @@ open class State {
 		self.contextCache := newContext;
 	}
 	
+	def void popCurrentContext() {
+		miniJava::Context currContext := self.findCurrentContext();
+		miniJava::Context newCurrent := currContext.parentContext;
+		currContext.parentContext := null;
+		self.contextCache := newCurrent;
+	}
+	
 }
 
 open class Frame {
@@ -88,6 +233,43 @@ open class Frame {
 		// TODO
 		result := miniJava::Frame.create();
 	}
-	
-	
+}
+
+open class Context {
+	def miniJava::SymbolBinding findBinding(miniJava::Symbol symbol) {
+		//TODO
+		result := null;
+	}
+}
+
+
+open class Value {
+	def String customToString() {
+		result := 'ERROR customToString not overloaded';
+	}
+}
+
+open class ObjectRefValue {
+	def String customToString() {
+		// TODO
+		result := self.instance.toString();
+	}
+}
+
+open class IntegerValue {
+	def String customToString() {
+		result := self.value + '';
+	}
+}
+
+open class BooleanValue {
+	def String customToString() {
+		result := self.value + '';
+	}
+}
+
+open class StringValue {
+	def String customToString() {
+		result := self.value.toString();
+	}
 }

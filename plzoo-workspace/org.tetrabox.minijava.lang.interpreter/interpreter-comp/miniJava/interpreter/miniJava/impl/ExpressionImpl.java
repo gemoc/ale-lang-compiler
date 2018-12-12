@@ -3,6 +3,8 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -44,5 +46,17 @@ public class ExpressionImpl extends StatementImpl implements Expression {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public void evaluateStatement(State state) {
+    this.evaluateExpression(state);
+        ;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    result = null;
+        ;
+    return result;
   }
 }

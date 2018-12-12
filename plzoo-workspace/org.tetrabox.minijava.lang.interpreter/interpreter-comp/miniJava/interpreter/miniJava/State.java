@@ -29,4 +29,6 @@ public interface State extends EObject {
   Context findCurrentContext();
 
   void pushNewContext();
+
+  void popCurrentContext();
 }

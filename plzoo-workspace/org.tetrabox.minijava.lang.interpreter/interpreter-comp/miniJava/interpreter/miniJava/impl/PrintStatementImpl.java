@@ -4,6 +4,7 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.PrintStatement;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -88,5 +89,10 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     	return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public void evaluateStatement(State state) {
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(this.expression.evaluateExpression(state).customToString());
+        ;
   }
 }

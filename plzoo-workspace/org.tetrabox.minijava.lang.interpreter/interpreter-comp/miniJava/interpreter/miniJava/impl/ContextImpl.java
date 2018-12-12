@@ -4,6 +4,7 @@ import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Symbol;
 import miniJava.interpreter.miniJava.SymbolBinding;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -178,5 +179,12 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
     	return basicSetChildContext((miniJava.interpreter.miniJava.Context) otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
+  }
+
+  public SymbolBinding findBinding(Symbol symbol) {
+    SymbolBinding result;
+    result = null;
+        ;
+    return result;
   }
 }

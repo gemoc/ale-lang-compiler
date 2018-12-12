@@ -1,6 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
 import java.lang.Object;
+import java.lang.String;
 import miniJava.interpreter.miniJava.BooleanValue;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -64,5 +65,12 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public String customToString() {
+    String result;
+    result = (this.value) + ("");
+        ;
+    return result;
   }
 }

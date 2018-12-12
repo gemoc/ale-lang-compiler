@@ -4,6 +4,7 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Return;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -88,5 +89,11 @@ public class ReturnImpl extends StatementImpl implements Return {
     	return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public void evaluateStatement(State state) {
+    miniJava.interpreter.miniJava.Value value = ((miniJava.interpreter.miniJava.Value)this.expression.evaluateExpression(state));
+        state.findCurrentFrame().setReturnValue(value);
+        ;
   }
 }

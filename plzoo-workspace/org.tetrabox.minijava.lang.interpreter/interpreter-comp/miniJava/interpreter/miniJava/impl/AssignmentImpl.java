@@ -5,6 +5,7 @@ import miniJava.interpreter.miniJava.Assignee;
 import miniJava.interpreter.miniJava.Assignment;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -130,5 +131,55 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     	return basicSetValue(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public void evaluateStatement(State state) {
+    miniJava.interpreter.miniJava.Context context = ((miniJava.interpreter.miniJava.Context)state.findCurrentContext());
+        miniJava.interpreter.miniJava.Value right = ((miniJava.interpreter.miniJava.Value)this.value.evaluateExpression(state));
+        miniJava.interpreter.miniJava.Assignee assignee = ((miniJava.interpreter.miniJava.Assignee)this.assignee);
+        if(assignee instanceof miniJava.interpreter.miniJava.SymbolRef) {
+          miniJava.interpreter.miniJava.SymbolRef assigneeSymbolRef = ((miniJava.interpreter.miniJava.SymbolRef)assignee);
+          context.findBinding(assigneeSymbolRef.getSymbol());
+        }
+        else {
+          if(assignee instanceof miniJava.interpreter.miniJava.VariableDeclaration) {
+            miniJava.interpreter.miniJava.VariableDeclaration assigneeVariableDeclaration = ((miniJava.interpreter.miniJava.VariableDeclaration)assignee);
+            miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createSymbolBinding());
+            binding.setSymbol(assigneeVariableDeclaration);
+            binding.setValue(right);
+            context.getBindings().add(binding);
+          }
+          else {
+            if(assignee instanceof miniJava.interpreter.miniJava.FieldAccess) {
+              miniJava.interpreter.miniJava.FieldAccess assigneeFieldAccess = ((miniJava.interpreter.miniJava.FieldAccess)assignee);
+              miniJava.interpreter.miniJava.Field f = ((miniJava.interpreter.miniJava.Field)assigneeFieldAccess.getField());
+              miniJava.interpreter.miniJava.ObjectRefValue realReceiverValue = ((miniJava.interpreter.miniJava.ObjectRefValue)assigneeFieldAccess.getReceiver().evaluateExpression(state));
+              miniJava.interpreter.miniJava.ObjectInstance realReceiver = ((miniJava.interpreter.miniJava.ObjectInstance)realReceiverValue.getInstance());
+              miniJava.interpreter.miniJava.FieldBinding existingBinding = ((miniJava.interpreter.miniJava.FieldBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(realReceiver.getFieldbindings(), (x) -> java.util.Objects.equals((x.getField()), (f)))));
+              if(java.util.Objects.equals((existingBinding), (null))) {
+                miniJava.interpreter.miniJava.FieldBinding binding = ((miniJava.interpreter.miniJava.FieldBinding)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createFieldBinding());
+                binding.setField(f);
+                binding.setValue(right);
+                realReceiver.getFieldbindings().add(binding);
+              }
+              else {
+                existingBinding.setValue(right);
+              }
+            }
+            else {
+              if(assignee instanceof miniJava.interpreter.miniJava.ArrayAccess) {
+                miniJava.interpreter.miniJava.ArrayAccess assigneeArrayAccess = ((miniJava.interpreter.miniJava.ArrayAccess)assignee);
+                miniJava.interpreter.miniJava.ArrayRefValue arrayRefValue = ((miniJava.interpreter.miniJava.ArrayRefValue)assigneeArrayAccess.getObject().evaluateExpression(state));
+                miniJava.interpreter.miniJava.ArrayInstance array = ((miniJava.interpreter.miniJava.ArrayInstance)arrayRefValue.getInstance());
+                miniJava.interpreter.miniJava.IntegerValue integerValue = ((miniJava.interpreter.miniJava.IntegerValue)assigneeArrayAccess.getIndex().evaluateExpression(state));
+                int index = ((int)integerValue.getValue());
+                array.getValue().set(index,right);
+              }
+              else {
+              }
+            }
+          }
+        }
+        ;
   }
 }

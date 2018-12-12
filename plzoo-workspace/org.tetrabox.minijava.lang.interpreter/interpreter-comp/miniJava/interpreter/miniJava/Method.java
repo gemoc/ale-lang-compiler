@@ -17,4 +17,6 @@ public interface Method extends EObject, Member {
   Block getBody();
 
   void setBody(Block value);
+
+  void evaluateStatement(State state);
 }

@@ -6,6 +6,7 @@ import miniJava.interpreter.miniJava.Block;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.ForStatement;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -213,5 +214,19 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     	return basicSetBlock(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public void evaluateStatement(State state) {
+    state.pushNewContext();
+        this.declaration.evaluateStatement(state);
+        miniJava.interpreter.miniJava.BooleanValue continueFor = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
+        while (continueFor.isValue()) {
+          this.block.evaluateStatement(state);
+          this.progression.evaluateStatement(state);
+          miniJava.interpreter.miniJava.BooleanValue continueFor2 = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
+          continueFor = continueFor2;
+        }
+        state.popCurrentContext();
+        ;
   }
 }

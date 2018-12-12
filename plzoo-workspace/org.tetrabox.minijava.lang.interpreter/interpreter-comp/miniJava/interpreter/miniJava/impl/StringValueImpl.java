@@ -66,4 +66,11 @@ public class StringValueImpl extends ValueImpl implements StringValue {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
+
+  public String customToString() {
+    String result;
+    result = this.value.toString();
+        ;
+    return result;
+  }
 }

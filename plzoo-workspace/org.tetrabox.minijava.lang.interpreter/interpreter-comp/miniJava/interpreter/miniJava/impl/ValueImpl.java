@@ -1,6 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
 import java.lang.Object;
+import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -45,5 +46,12 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public String customToString() {
+    String result;
+    result = "ERROR customToString not overloaded";
+        ;
+    return result;
   }
 }

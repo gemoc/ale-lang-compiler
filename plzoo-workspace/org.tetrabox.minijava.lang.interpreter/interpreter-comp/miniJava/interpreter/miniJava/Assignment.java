@@ -10,4 +10,6 @@ public interface Assignment extends EObject, Statement {
   Expression getValue();
 
   void setValue(Expression value);
+
+  void evaluateStatement(State state);
 }
