@@ -31,13 +31,13 @@ public interface ImpFactory extends EFactory {
 	Skip createSkip();
 
 	/**
-	 * Returns a new object of class '<em>Assign</em>'.
+	 * Returns a new object of class '<em>Declaration</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Assign</em>'.
+	 * @return a new object of class '<em>Declaration</em>'.
 	 * @generated
 	 */
-	Assign createAssign();
+	Declaration createDeclaration();
 
 	/**
 	 * Returns a new object of class '<em>Block</em>'.
@@ -74,15 +74,6 @@ public interface ImpFactory extends EFactory {
 	 * @generated
 	 */
 	IntConst createIntConst();
-
-	/**
-	 * Returns a new object of class '<em>Var</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Var</em>'.
-	 * @generated
-	 */
-	Var createVar();
 
 	/**
 	 * Returns a new object of class '<em>Unary</em>'.
@@ -155,6 +146,132 @@ public interface ImpFactory extends EFactory {
 	 * @generated
 	 */
 	BoolConst createBoolConst();
+
+	/**
+	 * Returns a new object of class '<em>Program</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Program</em>'.
+	 * @generated
+	 */
+	Program createProgram();
+
+	/**
+	 * Returns a new object of class '<em>Method Decl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Method Decl</em>'.
+	 * @generated
+	 */
+	MethodDecl createMethodDecl();
+
+	/**
+	 * Returns a new object of class '<em>Return</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Return</em>'.
+	 * @generated
+	 */
+	Return createReturn();
+
+	/**
+	 * Returns a new object of class '<em>Print</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Print</em>'.
+	 * @generated
+	 */
+	Print createPrint();
+
+	/**
+	 * Returns a new object of class '<em>String Const</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>String Const</em>'.
+	 * @generated
+	 */
+	StringConst createStringConst();
+
+	/**
+	 * Returns a new object of class '<em>String Value</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>String Value</em>'.
+	 * @generated
+	 */
+	StringValue createStringValue();
+
+	/**
+	 * Returns a new object of class '<em>Param Decl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Param Decl</em>'.
+	 * @generated
+	 */
+	ParamDecl createParamDecl();
+
+	/**
+	 * Returns a new object of class '<em>Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Class</em>'.
+	 * @generated
+	 */
+	Class createClass();
+
+	/**
+	 * Returns a new object of class '<em>Attribute Decl</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Attribute Decl</em>'.
+	 * @generated
+	 */
+	AttributeDecl createAttributeDecl();
+
+	/**
+	 * Returns a new object of class '<em>This</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>This</em>'.
+	 * @generated
+	 */
+	This createThis();
+
+	/**
+	 * Returns a new object of class '<em>New Class</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>New Class</em>'.
+	 * @generated
+	 */
+	NewClass createNewClass();
+
+	/**
+	 * Returns a new object of class '<em>Assignment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Assignment</em>'.
+	 * @generated
+	 */
+	Assignment createAssignment();
+
+	/**
+	 * Returns a new object of class '<em>Project</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Project</em>'.
+	 * @generated
+	 */
+	Project createProject();
+
+	/**
+	 * Returns a new object of class '<em>Var Ref</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Var Ref</em>'.
+	 * @generated
+	 */
+	VarRef createVarRef();
 
 	/**
 	 * Returns the package supported by this factory.

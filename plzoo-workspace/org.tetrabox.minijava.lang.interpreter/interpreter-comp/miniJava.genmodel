@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.tetrabox.minijava.lang.interpreter/interpreter-comp"
+    complianceLevel="8.0" copyrightFields="false">
+  <foreignModel>miniJava.ecore</foreignModel>
+  <genPackages prefix="MiniJava" basePackage="miniJava.interpreter" disposableProviderFactory="true"
+      ecorePackage="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//AccessLevel">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//AccessLevel/PRIVATE"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//AccessLevel/PROTECTED"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//AccessLevel/PUBLIC"/>
+    </genEnums>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Program">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Program/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Program/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Program/classes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Program/state"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Import">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Import/importedNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//TypeDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//TypeDeclaration/accessLevel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//TypeDeclaration/implementz"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//TypeDeclaration/members"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Clazz">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Clazz/isabstract"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Clazz/superClass"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Interface"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Member">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Member/access"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method/isabstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method/isstatic"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method/params"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method/body"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Parameter"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Field">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Field/defaultValue"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Block">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Block/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Statement"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//PrintStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//PrintStatement/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Return">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Return/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IfStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IfStatement/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IfStatement/thenBlock"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IfStatement/elseBlock"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//WhileStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//WhileStatement/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//WhileStatement/block"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ForStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ForStatement/declaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ForStatement/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ForStatement/progression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ForStatement/block"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//TypeRef"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SingleTypeRef"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ClassRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ClassRef/referencedClass"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NamedElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//TypedDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//TypedDeclaration/typeRef"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Symbol"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//VariableDeclaration"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Assignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Assignment/assignee"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Assignment/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Assignee"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Expression"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayTypeRef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayTypeRef/typeRef"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IntegerTypeRef"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//BooleanTypeRef"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//StringTypeRef"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//VoidTypeRef"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Or">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Or/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Or/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//And">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//And/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//And/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Equality">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Equality/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Equality/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Inequality">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Inequality/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Inequality/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SuperiorOrEqual">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SuperiorOrEqual/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SuperiorOrEqual/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//InferiorOrEqual">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//InferiorOrEqual/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//InferiorOrEqual/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Superior">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Superior/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Superior/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Inferior">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Inferior/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Inferior/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Plus">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Plus/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Plus/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Minus">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Minus/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Minus/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Multiplication">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Multiplication/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Multiplication/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Division">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Division/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Division/right"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayAccess">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayAccess/object"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayAccess/index"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayLength">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayLength/array"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Not">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Not/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Neg">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Neg/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//FieldAccess">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//FieldAccess/receiver"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//FieldAccess/field"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//MethodCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//MethodCall/receiver"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//MethodCall/method"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//MethodCall/args"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//StringConstant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//StringConstant/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IntConstant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IntConstant/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//BoolConstant">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//BoolConstant/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//This"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Super"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Null"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NewObject">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NewObject/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NewObject/args"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NewArray">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NewArray/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NewArray/size"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SymbolRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SymbolRef/symbol"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Context">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Context/bindings"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Context/parentContext"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Context/childContext"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Value"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IntegerValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//IntegerValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SymbolBinding">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SymbolBinding/value"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SymbolBinding/symbol"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//FieldBinding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//FieldBinding/field"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//FieldBinding/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//StringValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//StringValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//BooleanValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//BooleanValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//OutputStream">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//OutputStream/stream"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//State">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//State/rootFrame"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//State/objectsHeap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//State/outputStream"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//State/arraysHeap"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//State/contextCache"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//State/frameCache"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Frame">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Frame/call"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Frame/instance"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Frame/childFrame"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Frame/parentFrame"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Frame/rootContext"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Frame/returnValue"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NullValue"/>
+    <genClasses image="false" ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Call"/>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NewCall">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//NewCall/newz"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//MethodCall2">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//MethodCall2/methodcall"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ObjectInstance">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ObjectInstance/fieldbindings"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ObjectInstance/type"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayInstance">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayInstance/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayInstance/size"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ObjectRefValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ObjectRefValue/instance"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayRefValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ArrayRefValue/instance"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

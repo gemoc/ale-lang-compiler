@@ -114,14 +114,14 @@ public interface ImpPackage extends EPackage {
 	int SKIP_OPERATION_COUNT = STMT_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link imp.model.imp.impl.AssignImpl <em>Assign</em>}' class.
+	 * The meta object id for the '{@link imp.model.imp.impl.DeclarationImpl <em>Declaration</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see imp.model.imp.impl.AssignImpl
-	 * @see imp.model.imp.impl.ImpPackageImpl#getAssign()
+	 * @see imp.model.imp.impl.DeclarationImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getDeclaration()
 	 * @generated
 	 */
-	int ASSIGN = 2;
+	int DECLARATION = 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -130,7 +130,7 @@ public interface ImpPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSIGN__NAME = STMT_FEATURE_COUNT + 0;
+	int DECLARATION__NAME = STMT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Exp</b></em>' containment reference.
@@ -139,7 +139,7 @@ public interface ImpPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSIGN__EXP = STMT_FEATURE_COUNT + 1;
+	int DECLARATION__EXP = STMT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Index</b></em>' containment reference.
@@ -148,25 +148,25 @@ public interface ImpPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ASSIGN__INDEX = STMT_FEATURE_COUNT + 2;
+	int DECLARATION__INDEX = STMT_FEATURE_COUNT + 2;
 
 	/**
-	 * The number of structural features of the '<em>Assign</em>' class.
+	 * The number of structural features of the '<em>Declaration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSIGN_FEATURE_COUNT = STMT_FEATURE_COUNT + 3;
+	int DECLARATION_FEATURE_COUNT = STMT_FEATURE_COUNT + 3;
 
 	/**
-	 * The number of operations of the '<em>Assign</em>' class.
+	 * The number of operations of the '<em>Declaration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ASSIGN_OPERATION_COUNT = STMT_OPERATION_COUNT + 0;
+	int DECLARATION_OPERATION_COUNT = STMT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link imp.model.imp.impl.ExprImpl <em>Expr</em>}' class.
@@ -185,7 +185,7 @@ public interface ImpPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPR_FEATURE_COUNT = 0;
+	int EXPR_FEATURE_COUNT = STMT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of operations of the '<em>Expr</em>' class.
@@ -194,7 +194,7 @@ public interface ImpPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXPR_OPERATION_COUNT = 0;
+	int EXPR_OPERATION_COUNT = STMT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link imp.model.imp.impl.BlockImpl <em>Block</em>}' class.
@@ -372,52 +372,6 @@ public interface ImpPackage extends EPackage {
 	int INT_CONST_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link imp.model.imp.impl.VarImpl <em>Var</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see imp.model.imp.impl.VarImpl
-	 * @see imp.model.imp.impl.ImpPackageImpl#getVar()
-	 * @generated
-	 */
-	int VAR = 8;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VAR__NAME = EXPR_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Index</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VAR__INDEX = EXPR_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Var</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VAR_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of operations of the '<em>Var</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VAR_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
-
-	/**
 	 * The meta object id for the '{@link imp.model.imp.impl.UnaryImpl <em>Unary</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -425,7 +379,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getUnary()
 	 * @generated
 	 */
-	int UNARY = 9;
+	int UNARY = 8;
 
 	/**
 	 * The feature id for the '<em><b>Op</b></em>' attribute.
@@ -471,7 +425,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getBinary()
 	 * @generated
 	 */
-	int BINARY = 10;
+	int BINARY = 9;
 
 	/**
 	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
@@ -526,7 +480,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getStore()
 	 * @generated
 	 */
-	int STORE = 11;
+	int STORE = 10;
 
 	/**
 	 * The feature id for the '<em><b>Values</b></em>' map.
@@ -563,7 +517,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getStringToValueMap()
 	 * @generated
 	 */
-	int STRING_TO_VALUE_MAP = 12;
+	int STRING_TO_VALUE_MAP = 11;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -609,7 +563,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getValue()
 	 * @generated
 	 */
-	int VALUE = 13;
+	int VALUE = 12;
 
 	/**
 	 * The number of structural features of the '<em>Value</em>' class.
@@ -637,7 +591,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getIntValue()
 	 * @generated
 	 */
-	int INT_VALUE = 14;
+	int INT_VALUE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -674,7 +628,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getBoolValue()
 	 * @generated
 	 */
-	int BOOL_VALUE = 15;
+	int BOOL_VALUE = 14;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -711,7 +665,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getArrayValue()
 	 * @generated
 	 */
-	int ARRAY_VALUE = 16;
+	int ARRAY_VALUE = 15;
 
 	/**
 	 * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -748,7 +702,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getArrayDecl()
 	 * @generated
 	 */
-	int ARRAY_DECL = 17;
+	int ARRAY_DECL = 16;
 
 	/**
 	 * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -785,7 +739,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getBoolConst()
 	 * @generated
 	 */
-	int BOOL_CONST = 18;
+	int BOOL_CONST = 17;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -815,6 +769,680 @@ public interface ImpPackage extends EPackage {
 	int BOOL_CONST_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.ProgramImpl <em>Program</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.ProgramImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getProgram()
+	 * @generated
+	 */
+	int PROGRAM = 18;
+
+	/**
+	 * The feature id for the '<em><b>Methods</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROGRAM__METHODS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Classes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROGRAM__CLASSES = 1;
+
+	/**
+	 * The number of structural features of the '<em>Program</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROGRAM_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Program</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROGRAM_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.MemberImpl <em>Member</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.MemberImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getMember()
+	 * @generated
+	 */
+	int MEMBER = 33;
+
+	/**
+	 * The number of structural features of the '<em>Member</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MEMBER_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Member</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MEMBER_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.MethodDeclImpl <em>Method Decl</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.MethodDeclImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getMethodDecl()
+	 * @generated
+	 */
+	int METHOD_DECL = 19;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECL__NAME = MEMBER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Stmt</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECL__STMT = MEMBER_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Params</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECL__PARAMS = MEMBER_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Method Decl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECL_FEATURE_COUNT = MEMBER_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Method Decl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int METHOD_DECL_OPERATION_COUNT = MEMBER_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.ReturnImpl <em>Return</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.ReturnImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getReturn()
+	 * @generated
+	 */
+	int RETURN = 20;
+
+	/**
+	 * The feature id for the '<em><b>Expr</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN__EXPR = STMT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Return</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_FEATURE_COUNT = STMT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Return</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RETURN_OPERATION_COUNT = STMT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.PrintImpl <em>Print</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.PrintImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getPrint()
+	 * @generated
+	 */
+	int PRINT = 21;
+
+	/**
+	 * The feature id for the '<em><b>Expr</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRINT__EXPR = STMT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Print</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRINT_FEATURE_COUNT = STMT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Print</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRINT_OPERATION_COUNT = STMT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.StringConstImpl <em>String Const</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.StringConstImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getStringConst()
+	 * @generated
+	 */
+	int STRING_CONST = 22;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_CONST__VALUE = EXPR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>String Const</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_CONST_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>String Const</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_CONST_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.StringValueImpl <em>String Value</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.StringValueImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getStringValue()
+	 * @generated
+	 */
+	int STRING_VALUE = 23;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_VALUE__VALUE = VALUE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>String Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>String Value</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.NamedElementImpl <em>Named Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.NamedElementImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getNamedElement()
+	 * @generated
+	 */
+	int NAMED_ELEMENT = 25;
+
+	/**
+	 * The number of structural features of the '<em>Named Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Named Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NAMED_ELEMENT_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.SymbolImpl <em>Symbol</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.SymbolImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getSymbol()
+	 * @generated
+	 */
+	int SYMBOL = 32;
+
+	/**
+	 * The number of structural features of the '<em>Symbol</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYMBOL_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Symbol</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SYMBOL_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.ParamDeclImpl <em>Param Decl</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.ParamDeclImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getParamDecl()
+	 * @generated
+	 */
+	int PARAM_DECL = 24;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAM_DECL__NAME = SYMBOL_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Param Decl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAM_DECL_FEATURE_COUNT = SYMBOL_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Param Decl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PARAM_DECL_OPERATION_COUNT = SYMBOL_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.ClassImpl <em>Class</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.ClassImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getClass_()
+	 * @generated
+	 */
+	int CLASS = 26;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__NAME = NAMED_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__ATTRIBUTES = NAMED_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Methods</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS__METHODS = NAMED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CLASS_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.AttributeDeclImpl <em>Attribute Decl</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.AttributeDeclImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getAttributeDecl()
+	 * @generated
+	 */
+	int ATTRIBUTE_DECL = 27;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_DECL__NAME = MEMBER_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Attribute Decl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_DECL_FEATURE_COUNT = MEMBER_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Attribute Decl</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_DECL_OPERATION_COUNT = MEMBER_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.ThisImpl <em>This</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.ThisImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getThis()
+	 * @generated
+	 */
+	int THIS = 28;
+
+	/**
+	 * The number of structural features of the '<em>This</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_FEATURE_COUNT = EXPR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>This</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int THIS_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.NewClassImpl <em>New Class</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.NewClassImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getNewClass()
+	 * @generated
+	 */
+	int NEW_CLASS = 29;
+
+	/**
+	 * The feature id for the '<em><b>Class</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_CLASS__CLASS = EXPR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>New Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_CLASS_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>New Class</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NEW_CLASS_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.AssignmentImpl <em>Assignment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.AssignmentImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getAssignment()
+	 * @generated
+	 */
+	int ASSIGNMENT = 30;
+
+	/**
+	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGNMENT__LHS = STMT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Rhs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGNMENT__RHS = STMT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Assignment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGNMENT_FEATURE_COUNT = STMT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Assignment</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ASSIGNMENT_OPERATION_COUNT = STMT_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.ProjectImpl <em>Project</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.ProjectImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getProject()
+	 * @generated
+	 */
+	int PROJECT = 31;
+
+	/**
+	 * The feature id for the '<em><b>Lhs</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT__LHS = EXPR_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Rhs</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT__RHS = EXPR_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Ismethodcall</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT__ISMETHODCALL = EXPR_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Params</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT__PARAMS = EXPR_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Project</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT_FEATURE_COUNT = EXPR_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of operations of the '<em>Project</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PROJECT_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link imp.model.imp.impl.VarRefImpl <em>Var Ref</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see imp.model.imp.impl.VarRefImpl
+	 * @see imp.model.imp.impl.ImpPackageImpl#getVarRef()
+	 * @generated
+	 */
+	int VAR_REF = 34;
+
+	/**
+	 * The feature id for the '<em><b>Ref</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_REF__REF = EXPR_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Var Ref</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_REF_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Var Ref</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VAR_REF_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link imp.model.imp.UnaryOp <em>Unary Op</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -822,7 +1450,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getUnaryOp()
 	 * @generated
 	 */
-	int UNARY_OP = 19;
+	int UNARY_OP = 35;
 
 	/**
 	 * The meta object id for the '{@link imp.model.imp.BinaryOp <em>Binary Op</em>}' enum.
@@ -832,7 +1460,7 @@ public interface ImpPackage extends EPackage {
 	 * @see imp.model.imp.impl.ImpPackageImpl#getBinaryOp()
 	 * @generated
 	 */
-	int BINARY_OP = 20;
+	int BINARY_OP = 36;
 
 	/**
 	 * Returns the meta object for class '{@link imp.model.imp.Stmt <em>Stmt</em>}'.
@@ -855,47 +1483,47 @@ public interface ImpPackage extends EPackage {
 	EClass getSkip();
 
 	/**
-	 * Returns the meta object for class '{@link imp.model.imp.Assign <em>Assign</em>}'.
+	 * Returns the meta object for class '{@link imp.model.imp.Declaration <em>Declaration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Assign</em>'.
-	 * @see imp.model.imp.Assign
+	 * @return the meta object for class '<em>Declaration</em>'.
+	 * @see imp.model.imp.Declaration
 	 * @generated
 	 */
-	EClass getAssign();
+	EClass getDeclaration();
 
 	/**
-	 * Returns the meta object for the attribute '{@link imp.model.imp.Assign#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link imp.model.imp.Declaration#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see imp.model.imp.Assign#getName()
-	 * @see #getAssign()
+	 * @see imp.model.imp.Declaration#getName()
+	 * @see #getDeclaration()
 	 * @generated
 	 */
-	EAttribute getAssign_Name();
+	EAttribute getDeclaration_Name();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link imp.model.imp.Assign#getExp <em>Exp</em>}'.
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Declaration#getExp <em>Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Exp</em>'.
-	 * @see imp.model.imp.Assign#getExp()
-	 * @see #getAssign()
+	 * @see imp.model.imp.Declaration#getExp()
+	 * @see #getDeclaration()
 	 * @generated
 	 */
-	EReference getAssign_Exp();
+	EReference getDeclaration_Exp();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link imp.model.imp.Assign#getIndex <em>Index</em>}'.
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Declaration#getIndex <em>Index</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Index</em>'.
-	 * @see imp.model.imp.Assign#getIndex()
-	 * @see #getAssign()
+	 * @see imp.model.imp.Declaration#getIndex()
+	 * @see #getDeclaration()
 	 * @generated
 	 */
-	EReference getAssign_Index();
+	EReference getDeclaration_Index();
 
 	/**
 	 * Returns the meta object for class '{@link imp.model.imp.Expr <em>Expr</em>}'.
@@ -1023,38 +1651,6 @@ public interface ImpPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getIntConst_Value();
-
-	/**
-	 * Returns the meta object for class '{@link imp.model.imp.Var <em>Var</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Var</em>'.
-	 * @see imp.model.imp.Var
-	 * @generated
-	 */
-	EClass getVar();
-
-	/**
-	 * Returns the meta object for the attribute '{@link imp.model.imp.Var#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see imp.model.imp.Var#getName()
-	 * @see #getVar()
-	 * @generated
-	 */
-	EAttribute getVar_Name();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link imp.model.imp.Var#getIndex <em>Index</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Index</em>'.
-	 * @see imp.model.imp.Var#getIndex()
-	 * @see #getVar()
-	 * @generated
-	 */
-	EReference getVar_Index();
 
 	/**
 	 * Returns the meta object for class '{@link imp.model.imp.Unary <em>Unary</em>}'.
@@ -1302,6 +1898,418 @@ public interface ImpPackage extends EPackage {
 	EAttribute getBoolConst_Value();
 
 	/**
+	 * Returns the meta object for class '{@link imp.model.imp.Program <em>Program</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Program</em>'.
+	 * @see imp.model.imp.Program
+	 * @generated
+	 */
+	EClass getProgram();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link imp.model.imp.Program#getMethods <em>Methods</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Methods</em>'.
+	 * @see imp.model.imp.Program#getMethods()
+	 * @see #getProgram()
+	 * @generated
+	 */
+	EReference getProgram_Methods();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link imp.model.imp.Program#getClasses <em>Classes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Classes</em>'.
+	 * @see imp.model.imp.Program#getClasses()
+	 * @see #getProgram()
+	 * @generated
+	 */
+	EReference getProgram_Classes();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.MethodDecl <em>Method Decl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Method Decl</em>'.
+	 * @see imp.model.imp.MethodDecl
+	 * @generated
+	 */
+	EClass getMethodDecl();
+
+	/**
+	 * Returns the meta object for the attribute '{@link imp.model.imp.MethodDecl#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see imp.model.imp.MethodDecl#getName()
+	 * @see #getMethodDecl()
+	 * @generated
+	 */
+	EAttribute getMethodDecl_Name();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link imp.model.imp.MethodDecl#getParams <em>Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Params</em>'.
+	 * @see imp.model.imp.MethodDecl#getParams()
+	 * @see #getMethodDecl()
+	 * @generated
+	 */
+	EReference getMethodDecl_Params();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.MethodDecl#getStmt <em>Stmt</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Stmt</em>'.
+	 * @see imp.model.imp.MethodDecl#getStmt()
+	 * @see #getMethodDecl()
+	 * @generated
+	 */
+	EReference getMethodDecl_Stmt();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.Return <em>Return</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Return</em>'.
+	 * @see imp.model.imp.Return
+	 * @generated
+	 */
+	EClass getReturn();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Return#getExpr <em>Expr</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expr</em>'.
+	 * @see imp.model.imp.Return#getExpr()
+	 * @see #getReturn()
+	 * @generated
+	 */
+	EReference getReturn_Expr();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.Print <em>Print</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Print</em>'.
+	 * @see imp.model.imp.Print
+	 * @generated
+	 */
+	EClass getPrint();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Print#getExpr <em>Expr</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Expr</em>'.
+	 * @see imp.model.imp.Print#getExpr()
+	 * @see #getPrint()
+	 * @generated
+	 */
+	EReference getPrint_Expr();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.StringConst <em>String Const</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String Const</em>'.
+	 * @see imp.model.imp.StringConst
+	 * @generated
+	 */
+	EClass getStringConst();
+
+	/**
+	 * Returns the meta object for the attribute '{@link imp.model.imp.StringConst#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see imp.model.imp.StringConst#getValue()
+	 * @see #getStringConst()
+	 * @generated
+	 */
+	EAttribute getStringConst_Value();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.StringValue <em>String Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String Value</em>'.
+	 * @see imp.model.imp.StringValue
+	 * @generated
+	 */
+	EClass getStringValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link imp.model.imp.StringValue#getValue <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see imp.model.imp.StringValue#getValue()
+	 * @see #getStringValue()
+	 * @generated
+	 */
+	EAttribute getStringValue_Value();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.ParamDecl <em>Param Decl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Param Decl</em>'.
+	 * @see imp.model.imp.ParamDecl
+	 * @generated
+	 */
+	EClass getParamDecl();
+
+	/**
+	 * Returns the meta object for the attribute '{@link imp.model.imp.ParamDecl#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see imp.model.imp.ParamDecl#getName()
+	 * @see #getParamDecl()
+	 * @generated
+	 */
+	EAttribute getParamDecl_Name();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.NamedElement <em>Named Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Named Element</em>'.
+	 * @see imp.model.imp.NamedElement
+	 * @generated
+	 */
+	EClass getNamedElement();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.Class <em>Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Class</em>'.
+	 * @see imp.model.imp.Class
+	 * @generated
+	 */
+	EClass getClass_();
+
+	/**
+	 * Returns the meta object for the attribute '{@link imp.model.imp.Class#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see imp.model.imp.Class#getName()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EAttribute getClass_Name();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link imp.model.imp.Class#getAttributes <em>Attributes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Attributes</em>'.
+	 * @see imp.model.imp.Class#getAttributes()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EReference getClass_Attributes();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link imp.model.imp.Class#getMethods <em>Methods</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Methods</em>'.
+	 * @see imp.model.imp.Class#getMethods()
+	 * @see #getClass_()
+	 * @generated
+	 */
+	EReference getClass_Methods();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.AttributeDecl <em>Attribute Decl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Decl</em>'.
+	 * @see imp.model.imp.AttributeDecl
+	 * @generated
+	 */
+	EClass getAttributeDecl();
+
+	/**
+	 * Returns the meta object for the attribute '{@link imp.model.imp.AttributeDecl#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see imp.model.imp.AttributeDecl#getName()
+	 * @see #getAttributeDecl()
+	 * @generated
+	 */
+	EAttribute getAttributeDecl_Name();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.This <em>This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>This</em>'.
+	 * @see imp.model.imp.This
+	 * @generated
+	 */
+	EClass getThis();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.NewClass <em>New Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>New Class</em>'.
+	 * @see imp.model.imp.NewClass
+	 * @generated
+	 */
+	EClass getNewClass();
+
+	/**
+	 * Returns the meta object for the reference '{@link imp.model.imp.NewClass#getClass_ <em>Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Class</em>'.
+	 * @see imp.model.imp.NewClass#getClass_()
+	 * @see #getNewClass()
+	 * @generated
+	 */
+	EReference getNewClass_Class();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.Assignment <em>Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Assignment</em>'.
+	 * @see imp.model.imp.Assignment
+	 * @generated
+	 */
+	EClass getAssignment();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Assignment#getLhs <em>Lhs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Lhs</em>'.
+	 * @see imp.model.imp.Assignment#getLhs()
+	 * @see #getAssignment()
+	 * @generated
+	 */
+	EReference getAssignment_Lhs();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Assignment#getRhs <em>Rhs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Rhs</em>'.
+	 * @see imp.model.imp.Assignment#getRhs()
+	 * @see #getAssignment()
+	 * @generated
+	 */
+	EReference getAssignment_Rhs();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.Project <em>Project</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Project</em>'.
+	 * @see imp.model.imp.Project
+	 * @generated
+	 */
+	EClass getProject();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link imp.model.imp.Project#getLhs <em>Lhs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Lhs</em>'.
+	 * @see imp.model.imp.Project#getLhs()
+	 * @see #getProject()
+	 * @generated
+	 */
+	EReference getProject_Lhs();
+
+	/**
+	 * Returns the meta object for the reference '{@link imp.model.imp.Project#getRhs <em>Rhs</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Rhs</em>'.
+	 * @see imp.model.imp.Project#getRhs()
+	 * @see #getProject()
+	 * @generated
+	 */
+	EReference getProject_Rhs();
+
+	/**
+	 * Returns the meta object for the attribute '{@link imp.model.imp.Project#isIsmethodcall <em>Ismethodcall</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Ismethodcall</em>'.
+	 * @see imp.model.imp.Project#isIsmethodcall()
+	 * @see #getProject()
+	 * @generated
+	 */
+	EAttribute getProject_Ismethodcall();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link imp.model.imp.Project#getParams <em>Params</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Params</em>'.
+	 * @see imp.model.imp.Project#getParams()
+	 * @see #getProject()
+	 * @generated
+	 */
+	EReference getProject_Params();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.Symbol <em>Symbol</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Symbol</em>'.
+	 * @see imp.model.imp.Symbol
+	 * @generated
+	 */
+	EClass getSymbol();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.Member <em>Member</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Member</em>'.
+	 * @see imp.model.imp.Member
+	 * @generated
+	 */
+	EClass getMember();
+
+	/**
+	 * Returns the meta object for class '{@link imp.model.imp.VarRef <em>Var Ref</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Var Ref</em>'.
+	 * @see imp.model.imp.VarRef
+	 * @generated
+	 */
+	EClass getVarRef();
+
+	/**
+	 * Returns the meta object for the reference '{@link imp.model.imp.VarRef#getRef <em>Ref</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Ref</em>'.
+	 * @see imp.model.imp.VarRef#getRef()
+	 * @see #getVarRef()
+	 * @generated
+	 */
+	EReference getVarRef_Ref();
+
+	/**
 	 * Returns the meta object for enum '{@link imp.model.imp.UnaryOp <em>Unary Op</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1365,14 +2373,14 @@ public interface ImpPackage extends EPackage {
 		EClass SKIP = eINSTANCE.getSkip();
 
 		/**
-		 * The meta object literal for the '{@link imp.model.imp.impl.AssignImpl <em>Assign</em>}' class.
+		 * The meta object literal for the '{@link imp.model.imp.impl.DeclarationImpl <em>Declaration</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see imp.model.imp.impl.AssignImpl
-		 * @see imp.model.imp.impl.ImpPackageImpl#getAssign()
+		 * @see imp.model.imp.impl.DeclarationImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getDeclaration()
 		 * @generated
 		 */
-		EClass ASSIGN = eINSTANCE.getAssign();
+		EClass DECLARATION = eINSTANCE.getDeclaration();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1380,7 +2388,7 @@ public interface ImpPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ASSIGN__NAME = eINSTANCE.getAssign_Name();
+		EAttribute DECLARATION__NAME = eINSTANCE.getDeclaration_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Exp</b></em>' containment reference feature.
@@ -1388,7 +2396,7 @@ public interface ImpPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ASSIGN__EXP = eINSTANCE.getAssign_Exp();
+		EReference DECLARATION__EXP = eINSTANCE.getDeclaration_Exp();
 
 		/**
 		 * The meta object literal for the '<em><b>Index</b></em>' containment reference feature.
@@ -1396,7 +2404,7 @@ public interface ImpPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ASSIGN__INDEX = eINSTANCE.getAssign_Index();
+		EReference DECLARATION__INDEX = eINSTANCE.getDeclaration_Index();
 
 		/**
 		 * The meta object literal for the '{@link imp.model.imp.impl.ExprImpl <em>Expr</em>}' class.
@@ -1503,32 +2511,6 @@ public interface ImpPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INT_CONST__VALUE = eINSTANCE.getIntConst_Value();
-
-		/**
-		 * The meta object literal for the '{@link imp.model.imp.impl.VarImpl <em>Var</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see imp.model.imp.impl.VarImpl
-		 * @see imp.model.imp.impl.ImpPackageImpl#getVar()
-		 * @generated
-		 */
-		EClass VAR = eINSTANCE.getVar();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute VAR__NAME = eINSTANCE.getVar_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Index</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference VAR__INDEX = eINSTANCE.getVar_Index();
 
 		/**
 		 * The meta object literal for the '{@link imp.model.imp.impl.UnaryImpl <em>Unary</em>}' class.
@@ -1733,6 +2715,352 @@ public interface ImpPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute BOOL_CONST__VALUE = eINSTANCE.getBoolConst_Value();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.ProgramImpl <em>Program</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.ProgramImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getProgram()
+		 * @generated
+		 */
+		EClass PROGRAM = eINSTANCE.getProgram();
+
+		/**
+		 * The meta object literal for the '<em><b>Methods</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROGRAM__METHODS = eINSTANCE.getProgram_Methods();
+
+		/**
+		 * The meta object literal for the '<em><b>Classes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROGRAM__CLASSES = eINSTANCE.getProgram_Classes();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.MethodDeclImpl <em>Method Decl</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.MethodDeclImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getMethodDecl()
+		 * @generated
+		 */
+		EClass METHOD_DECL = eINSTANCE.getMethodDecl();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute METHOD_DECL__NAME = eINSTANCE.getMethodDecl_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Params</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference METHOD_DECL__PARAMS = eINSTANCE.getMethodDecl_Params();
+
+		/**
+		 * The meta object literal for the '<em><b>Stmt</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference METHOD_DECL__STMT = eINSTANCE.getMethodDecl_Stmt();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.ReturnImpl <em>Return</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.ReturnImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getReturn()
+		 * @generated
+		 */
+		EClass RETURN = eINSTANCE.getReturn();
+
+		/**
+		 * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RETURN__EXPR = eINSTANCE.getReturn_Expr();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.PrintImpl <em>Print</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.PrintImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getPrint()
+		 * @generated
+		 */
+		EClass PRINT = eINSTANCE.getPrint();
+
+		/**
+		 * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRINT__EXPR = eINSTANCE.getPrint_Expr();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.StringConstImpl <em>String Const</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.StringConstImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getStringConst()
+		 * @generated
+		 */
+		EClass STRING_CONST = eINSTANCE.getStringConst();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_CONST__VALUE = eINSTANCE.getStringConst_Value();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.StringValueImpl <em>String Value</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.StringValueImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getStringValue()
+		 * @generated
+		 */
+		EClass STRING_VALUE = eINSTANCE.getStringValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_VALUE__VALUE = eINSTANCE.getStringValue_Value();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.ParamDeclImpl <em>Param Decl</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.ParamDeclImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getParamDecl()
+		 * @generated
+		 */
+		EClass PARAM_DECL = eINSTANCE.getParamDecl();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PARAM_DECL__NAME = eINSTANCE.getParamDecl_Name();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.NamedElementImpl <em>Named Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.NamedElementImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getNamedElement()
+		 * @generated
+		 */
+		EClass NAMED_ELEMENT = eINSTANCE.getNamedElement();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.ClassImpl <em>Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.ClassImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getClass_()
+		 * @generated
+		 */
+		EClass CLASS = eINSTANCE.getClass_();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CLASS__NAME = eINSTANCE.getClass_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Attributes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASS__ATTRIBUTES = eINSTANCE.getClass_Attributes();
+
+		/**
+		 * The meta object literal for the '<em><b>Methods</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CLASS__METHODS = eINSTANCE.getClass_Methods();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.AttributeDeclImpl <em>Attribute Decl</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.AttributeDeclImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getAttributeDecl()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_DECL = eINSTANCE.getAttributeDecl();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE_DECL__NAME = eINSTANCE.getAttributeDecl_Name();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.ThisImpl <em>This</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.ThisImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getThis()
+		 * @generated
+		 */
+		EClass THIS = eINSTANCE.getThis();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.NewClassImpl <em>New Class</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.NewClassImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getNewClass()
+		 * @generated
+		 */
+		EClass NEW_CLASS = eINSTANCE.getNewClass();
+
+		/**
+		 * The meta object literal for the '<em><b>Class</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NEW_CLASS__CLASS = eINSTANCE.getNewClass_Class();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.AssignmentImpl <em>Assignment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.AssignmentImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getAssignment()
+		 * @generated
+		 */
+		EClass ASSIGNMENT = eINSTANCE.getAssignment();
+
+		/**
+		 * The meta object literal for the '<em><b>Lhs</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ASSIGNMENT__LHS = eINSTANCE.getAssignment_Lhs();
+
+		/**
+		 * The meta object literal for the '<em><b>Rhs</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ASSIGNMENT__RHS = eINSTANCE.getAssignment_Rhs();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.ProjectImpl <em>Project</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.ProjectImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getProject()
+		 * @generated
+		 */
+		EClass PROJECT = eINSTANCE.getProject();
+
+		/**
+		 * The meta object literal for the '<em><b>Lhs</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROJECT__LHS = eINSTANCE.getProject_Lhs();
+
+		/**
+		 * The meta object literal for the '<em><b>Rhs</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROJECT__RHS = eINSTANCE.getProject_Rhs();
+
+		/**
+		 * The meta object literal for the '<em><b>Ismethodcall</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PROJECT__ISMETHODCALL = eINSTANCE.getProject_Ismethodcall();
+
+		/**
+		 * The meta object literal for the '<em><b>Params</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PROJECT__PARAMS = eINSTANCE.getProject_Params();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.SymbolImpl <em>Symbol</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.SymbolImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getSymbol()
+		 * @generated
+		 */
+		EClass SYMBOL = eINSTANCE.getSymbol();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.MemberImpl <em>Member</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.MemberImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getMember()
+		 * @generated
+		 */
+		EClass MEMBER = eINSTANCE.getMember();
+
+		/**
+		 * The meta object literal for the '{@link imp.model.imp.impl.VarRefImpl <em>Var Ref</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see imp.model.imp.impl.VarRefImpl
+		 * @see imp.model.imp.impl.ImpPackageImpl#getVarRef()
+		 * @generated
+		 */
+		EClass VAR_REF = eINSTANCE.getVarRef();
+
+		/**
+		 * The meta object literal for the '<em><b>Ref</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VAR_REF__REF = eINSTANCE.getVarRef_Ref();
 
 		/**
 		 * The meta object literal for the '{@link imp.model.imp.UnaryOp <em>Unary Op</em>}' enum.

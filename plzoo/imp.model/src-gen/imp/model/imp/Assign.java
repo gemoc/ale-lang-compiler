@@ -20,7 +20,7 @@ package imp.model.imp;
  * @model
  * @generated
  */
-public interface Assign extends Stmt {
+public interface Assign extends Stmt, NamedValue {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

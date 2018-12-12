@@ -1,0 +1,93 @@
+behavior minijava_exec;
+
+open class Program {
+	@main
+	def void main() {
+		self.initialize();
+		self.execute();
+	}
+	
+	def void initialize() {
+		// possibly useless if we assume a main is available
+	}
+	
+	def miniJava::State execute() {
+		miniJava::Method main := self.findMain();
+		main.body.evaluateStatementKeepContext(self.state);
+		result := self.state;
+	}
+	
+	def miniJava::Method findMain() {
+		result := null; // sould typecheck ?
+		for(clazz in self.classes) {
+			for(member in clazz.members) {
+				if(member.oclIsKindOf(miniJava::Method)) {
+					miniJava::Method method := member;
+					result := method;
+				}
+			}
+		}
+	}
+}
+
+open class Statement {
+	def void evaluateStatement(miniJava::State state) {
+		
+	} 
+}
+
+open class Block {
+	def void evaluateStatementKeepContext(miniJava::State state) {
+		state.pushNewContext();
+		miniJava::Frame currentFrame := state.findCurrentFrame();
+		int lgt := self.statements->size();
+		int i := 0;
+		while(i < lgt and currentFrame.returnValue == null) {
+			self.statements->at(i).evaluateStatement(state);
+		}
+	}	
+}
+
+open class State {
+	
+	def miniJava::Frame findCurrentFrame() {
+		if(self.frameCache == null) {
+			self.frameCache = self.rootFrame.findCurrentFrame();
+		}
+		result := self.frameCache;
+	}
+	
+	def miniJava::Context findCurrentContext() {
+		if(self.contextCache == null) {
+			self.contextCache := self.rootFrame.findCurrentContext();
+		}
+		result := self.contextCache;
+	}
+	
+	def void pushNewContext() {
+		miniJava::Context newContext := miniJava::Context.create();
+		miniJava::Context currCtx := self.findCurrentContext();
+		if(currCtx != null) {
+			currCtx.childContext := newContext;
+		} else {
+			miniJava::Frame cf := self.findCurrentFrame();
+			cf.rootContext := newContext;
+		}
+		self.contextCache := newContext;
+	}
+	
+}
+
+open class Frame {
+	def miniJava::Context findCurrentContext() {
+		// TODO
+		result := miniJava::Context.create();
+	}
+	
+	def miniJava::Frame findCurrentFrame() {
+		// TODO
+		result := miniJava::Frame.create();
+	}
+	
+	
+}

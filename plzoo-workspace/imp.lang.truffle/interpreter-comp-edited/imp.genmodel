@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/imp.lang.truffle/interpreter-comp" complianceLevel="8.0"
+    copyrightFields="false">
+  <foreignModel>imp.ecore</foreignModel>
+  <genPackages prefix="Imp" basePackage="imp.interpreter" disposableProviderFactory="true"
+      ecorePackage="platform:/resource/imp.model/model/imp.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/imp.model/model/imp.ecore#//UnaryOp">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//UnaryOp/NEGATE"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//UnaryOp/NOT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/imp.model/model/imp.ecore#//BinaryOp">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/SUB"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/MUL"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/LT"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/LEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/GEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/GT"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/imp.model/model/imp.ecore#//BinaryOp/OR"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Stmt"/>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Skip"/>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Assign">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//Assign/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//Assign/exp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//Assign/index"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Expr"/>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Block">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//Block/stmts"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//If">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//If/cond"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//If/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//If/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//While">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//While/cond"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//While/body"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//IntConst">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//IntConst/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Var">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//Var/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//Var/index"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Unary">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//Unary/op"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//Unary/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Binary">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//Binary/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//Binary/rhs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//Binary/op"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Store">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//Store/values"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//StringToValueMap">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//StringToValueMap/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//StringToValueMap/value"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="platform:/resource/imp.model/model/imp.ecore#//Value"/>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//IntValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//IntValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//BoolValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//BoolValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//ArrayValue">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//ArrayValue/values"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//ArrayDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/imp.model/model/imp.ecore#//ArrayDecl/values"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/imp.model/model/imp.ecore#//BoolConst">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/imp.model/model/imp.ecore#//BoolConst/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

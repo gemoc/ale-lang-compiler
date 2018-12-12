@@ -28,10 +28,10 @@
     </genEnums>
     <genClasses ecoreClass="imp.ecore#//Stmt"/>
     <genClasses ecoreClass="imp.ecore#//Skip"/>
-    <genClasses ecoreClass="imp.ecore#//Assign">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//Assign/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Assign/exp"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Assign/index"/>
+    <genClasses ecoreClass="imp.ecore#//Declaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//Declaration/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Declaration/exp"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Declaration/index"/>
     </genClasses>
     <genClasses ecoreClass="imp.ecore#//Expr"/>
     <genClasses ecoreClass="imp.ecore#//Block">
@@ -48,10 +48,6 @@
     </genClasses>
     <genClasses ecoreClass="imp.ecore#//IntConst">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//IntConst/value"/>
-    </genClasses>
-    <genClasses ecoreClass="imp.ecore#//Var">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//Var/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Var/index"/>
     </genClasses>
     <genClasses ecoreClass="imp.ecore#//Unary">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//Unary/op"/>
@@ -84,6 +80,58 @@
     </genClasses>
     <genClasses ecoreClass="imp.ecore#//BoolConst">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//BoolConst/value"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//Program">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Program/methods"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Program/classes"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//MethodDecl">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//MethodDecl/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//MethodDecl/stmt"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//MethodDecl/params"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//Return">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Return/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//Print">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Print/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//StringConst">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//StringConst/value"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//StringValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//StringValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//ParamDecl">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//ParamDecl/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="imp.ecore#//NamedElement"/>
+    <genClasses ecoreClass="imp.ecore#//Class">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//Class/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Class/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Class/methods"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//AttributeDecl">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//AttributeDecl/name"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//This"/>
+    <genClasses ecoreClass="imp.ecore#//NewClass">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//NewClass/class"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//Assignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Assignment/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Assignment/rhs"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//Project">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Project/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Project/rhs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute imp.ecore#//Project/ismethodcall"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference imp.ecore#//Project/params"/>
+    </genClasses>
+    <genClasses ecoreClass="imp.ecore#//Symbol"/>
+    <genClasses ecoreClass="imp.ecore#//Member"/>
+    <genClasses ecoreClass="imp.ecore#//VarRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference imp.ecore#//VarRef/ref"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -95,7 +95,7 @@ class EClassImplementationCompiler {
 			val edefault = if(fet instanceof EEnum) {
 				FieldSpec
 					.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
-					.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«namingUtils.classInterfacePackageName(fet, packageRoot)».«namingUtils.classInterfaceClassName(fet)».«field.defaultValue»«ENDIF»''')
+					.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«namingUtils.classInterfacePackageName(fet, packageRoot)».«namingUtils.classInterfaceClassName(fet)».valueOf("«field.defaultValue»")«ENDIF»''')
 					.addModifiers(PROTECTED, STATIC, FINAL).build
 			} else {
 				FieldSpec
@@ -232,8 +232,8 @@ class EClassImplementationCompiler {
 									if (eInternalContainer() != null)
 										msgs = eBasicRemoveFromContainer(msgs);
 									if («newName» != null)
-										msgs = (($5T)«newName»).eInverseAdd(this, $1T.«field.name.normalizeUpperField(eClass.name)» , $6T.class, msgs);
-									msgs = basicSetFsm(«newName», msgs);
+										msgs = (($5T)«newName»).eInverseAdd(this, $1T.«field.EOpposite.name.normalizeUpperField(eClass.name)» , $6T.class, msgs);
+									msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
 									if (msgs != null) msgs.dispatch();
 								}
 								else if (eNotificationRequired())
@@ -246,9 +246,9 @@ class EClassImplementationCompiler {
 								NotificationChain).addParameter(
 								ParameterSpec.builder(fieldType, '''new«field.name.toFirstUpper»''').build).addParameter(
 								ParameterSpec.builder(NotificationChain, 'msgs').build).addCode('''
-								msgs = eBasicSetContainer(($1T)newFsm, $2T.«field.name.normalizeUpperField(eClass.name)», msgs);
+								msgs = eBasicSetContainer(($1T)new«field.name.toFirstUpper», $2T.«field.name.normalizeUpperField(eClass.name)», msgs);
 								return msgs;
-							''', InternalEObject, ePackageInterfaceType).addModifiers(PRIVATE).build
+							''', InternalEObject, ePackageInterfaceType).addModifiers(PUBLIC).build
 							#[setter, basicSetMethod]
 							}
 
@@ -521,7 +521,7 @@ class EClassImplementationCompiler {
 									«IF ref.EOpposite !== null && ref.EOpposite.containment»
 									if (eInternalContainer() != null)
 											msgs = eBasicRemoveFromContainer(msgs);
-										return basicSetFsm((«(ref.EType as EClass).classInterfacePackageName(packageRoot)».«(ref.EType as EClass).classInterfaceClassName»)otherEnd, msgs);
+										return basicSet«ref.name.toFirstUpper»((«(ref.EType as EClass).classInterfacePackageName(packageRoot)».«(ref.EType as EClass).classInterfaceClassName»)otherEnd, msgs);
 									«ELSE»
 									if («ref.name» != null)
 										msgs = ((org.eclipse.emf.ecore.InternalEObject) «ref.name»).eInverseRemove(this, $2T.«ref.EOpposite.name.normalizeUpperField((ref.EOpposite.eContainer as EClass).name)», «(ref.EOpposite.eContainer as EClass).name».class,
@@ -546,7 +546,8 @@ class EClassImplementationCompiler {
 				ParameterSpec.builder(int, 'featureID').build).addParameter(
 				ParameterSpec.builder(NotificationChain, 'msgs').build).addCode('''
 				switch(featureID) {
-				«FOR ref: eClass.EReferences.filter[it.containment]»
+«««					isContainment || isBidirectional || isFeatureMapTYpe
+				«FOR ref: eClass.EReferences.filter[it.containment || it.EOpposite !== null]» 
 				case «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«ref.name.normalizeUpperField(eClass.name)»:
 					«IF ref.upperBound == 0 || ref.upperBound == 1»
 					return basicSet«ref.name.toFirstUpper»(null, msgs);
@@ -674,11 +675,11 @@ class EClassImplementationCompiler {
 					.builder(ClassName.get(implPackage, '''«(method.eContainer as ExtendedClass).normalizeExtendedClassName»Dispatch«method.operationRef.name.toFirstUpper»'''), '''dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper»''', PRIVATE)
 					.build
 			])])
-			.addFields(whileOps.map[FieldSpec
-				.builder(ClassName.get('com.oracle.truffle.api.nodes', 'LoopNode'), it.whileFieldName)
-				.addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Child'))
-				.addModifiers(PRIVATE).build
-			])
+//			.addFields(whileOps.map[FieldSpec
+//				.builder(ClassName.get('com.oracle.truffle.api.nodes', 'LoopNode'), it.whileFieldName)
+//				.addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Child'))
+//				.addModifiers(PRIVATE).build
+//			])
 			.addMethod(MethodSpec.constructorBuilder.addCode('''
 				super();
 				«IF aleClass !== null»
@@ -686,7 +687,7 @@ class EClassImplementationCompiler {
 						this.cached«method.operationRef.name.toFirstUpper» = new «eClass.classImplementationPackageName(packageRoot)».«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»(this);
 					«ENDFOR»
 					«FOR w:whileOps»
-					this.«w.whileFieldName» = com.oracle.truffle.api.Truffle.getRuntime().createLoopNode(null);
+«««					this.«w.whileFieldName» = com.oracle.truffle.api.Truffle.getRuntime().createLoopNode(null);
 					«ENDFOR»
 				«ENDIF»
 				«IF isTruffle»

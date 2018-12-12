@@ -27,7 +27,7 @@ public class ImpParser extends AbstractAntlrParser {
 
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Stmt";
+		return "Program";
 	}
 
 	public ImpGrammarAccess getGrammarAccess() {

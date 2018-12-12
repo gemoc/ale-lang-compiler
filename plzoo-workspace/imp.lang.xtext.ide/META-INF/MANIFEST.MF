@@ -11,7 +11,6 @@ Require-Bundle: imp.lang.xtext,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide,
  org.antlr.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: imp.lang.xtext.ide.contentassist.antlr.internal,
  imp.lang.xtext.ide.contentassist.antlr
 

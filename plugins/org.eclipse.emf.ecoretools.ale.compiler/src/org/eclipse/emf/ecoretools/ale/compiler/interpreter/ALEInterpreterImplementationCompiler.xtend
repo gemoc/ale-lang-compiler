@@ -149,19 +149,30 @@ class ALEInterpreterImplementationCompiler {
 		// TODO: generate ecore + genmodel !
 		val isTruffle = dsl.dslProp.getProperty('truffle', "false") == "true"
 		syntaxes.forEach [ key, pairEPackageGenModel |
-			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
-			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot, isTruffle)
+			try {
+				fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot, isTruffle)
 
-			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
-			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
-			val eClassifiersLst = pairEPackageGenModel.key.allClassifiers
-			for (EClassifier eclazz : eClassifiersLst.filter[!(it instanceof EDataType) || (it instanceof EEnum)]) {
-				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
-					head
-				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
-				eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
-					registeredServices, dsl, base)
+				val eClassifiersLst = pairEPackageGenModel.key.allClassifiers
+				for (EClassifier eclazz : eClassifiersLst.filter[!(it instanceof EDataType) || (it instanceof EEnum)]) {
+					try {
+						val rc = resolved.filter [
+							it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name
+						].head
+						eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
+						eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
+							registeredServices, dsl, base)
+
+					} catch (Exception e) {
+						e.printStackTrace
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace
 			}
 
 		]

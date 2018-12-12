@@ -4,25 +4,40 @@ package imp.model.imp.impl;
 
 import imp.model.imp.ArrayDecl;
 import imp.model.imp.ArrayValue;
-import imp.model.imp.Assign;
+import imp.model.imp.Assignment;
+import imp.model.imp.AttributeDecl;
 import imp.model.imp.Binary;
 import imp.model.imp.BinaryOp;
 import imp.model.imp.Block;
 import imp.model.imp.BoolConst;
 import imp.model.imp.BoolValue;
+import imp.model.imp.Declaration;
 import imp.model.imp.Expr;
 import imp.model.imp.If;
 import imp.model.imp.ImpFactory;
 import imp.model.imp.ImpPackage;
 import imp.model.imp.IntConst;
 import imp.model.imp.IntValue;
+import imp.model.imp.Member;
+import imp.model.imp.MethodDecl;
+import imp.model.imp.NamedElement;
+import imp.model.imp.NewClass;
+import imp.model.imp.ParamDecl;
+import imp.model.imp.Print;
+import imp.model.imp.Program;
+import imp.model.imp.Project;
+import imp.model.imp.Return;
 import imp.model.imp.Skip;
 import imp.model.imp.Stmt;
 import imp.model.imp.Store;
+import imp.model.imp.StringConst;
+import imp.model.imp.StringValue;
+import imp.model.imp.Symbol;
+import imp.model.imp.This;
 import imp.model.imp.Unary;
 import imp.model.imp.UnaryOp;
 import imp.model.imp.Value;
-import imp.model.imp.Var;
+import imp.model.imp.VarRef;
 import imp.model.imp.While;
 
 import java.util.Map;
@@ -61,7 +76,7 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass assignEClass = null;
+	private EClass declarationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -97,13 +112,6 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 * @generated
 	 */
 	private EClass intConstEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass varEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -174,6 +182,125 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 * @generated
 	 */
 	private EClass boolConstEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass programEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass methodDeclEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass returnEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass printEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringConstEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass stringValueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass paramDeclEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass namedElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass classEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeDeclEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass thisEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass newClassEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass assignmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass projectEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass symbolEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass memberEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass varRefEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -276,8 +403,8 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getAssign() {
-		return assignEClass;
+	public EClass getDeclaration() {
+		return declarationEClass;
 	}
 
 	/**
@@ -285,8 +412,8 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getAssign_Name() {
-		return (EAttribute) assignEClass.getEStructuralFeatures().get(0);
+	public EAttribute getDeclaration_Name() {
+		return (EAttribute) declarationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -294,8 +421,8 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getAssign_Exp() {
-		return (EReference) assignEClass.getEStructuralFeatures().get(1);
+	public EReference getDeclaration_Exp() {
+		return (EReference) declarationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -303,8 +430,8 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getAssign_Index() {
-		return (EReference) assignEClass.getEStructuralFeatures().get(2);
+	public EReference getDeclaration_Index() {
+		return (EReference) declarationEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -413,33 +540,6 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 */
 	public EAttribute getIntConst_Value() {
 		return (EAttribute) intConstEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getVar() {
-		return varEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getVar_Name() {
-		return (EAttribute) varEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getVar_Index() {
-		return (EReference) varEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -654,6 +754,357 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getProgram() {
+		return programEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProgram_Methods() {
+		return (EReference) programEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProgram_Classes() {
+		return (EReference) programEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getMethodDecl() {
+		return methodDeclEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getMethodDecl_Name() {
+		return (EAttribute) methodDeclEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMethodDecl_Params() {
+		return (EReference) methodDeclEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getMethodDecl_Stmt() {
+		return (EReference) methodDeclEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getReturn() {
+		return returnEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getReturn_Expr() {
+		return (EReference) returnEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPrint() {
+		return printEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPrint_Expr() {
+		return (EReference) printEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringConst() {
+		return stringConstEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringConst_Value() {
+		return (EAttribute) stringConstEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getStringValue() {
+		return stringValueEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getStringValue_Value() {
+		return (EAttribute) stringValueEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getParamDecl() {
+		return paramDeclEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getParamDecl_Name() {
+		return (EAttribute) paramDeclEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNamedElement() {
+		return namedElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getClass_() {
+		return classEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getClass_Name() {
+		return (EAttribute) classEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClass_Attributes() {
+		return (EReference) classEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getClass_Methods() {
+		return (EReference) classEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAttributeDecl() {
+		return attributeDeclEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttributeDecl_Name() {
+		return (EAttribute) attributeDeclEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getThis() {
+		return thisEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNewClass() {
+		return newClassEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNewClass_Class() {
+		return (EReference) newClassEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAssignment() {
+		return assignmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAssignment_Lhs() {
+		return (EReference) assignmentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAssignment_Rhs() {
+		return (EReference) assignmentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getProject() {
+		return projectEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProject_Lhs() {
+		return (EReference) projectEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProject_Rhs() {
+		return (EReference) projectEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getProject_Ismethodcall() {
+		return (EAttribute) projectEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getProject_Params() {
+		return (EReference) projectEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSymbol() {
+		return symbolEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getMember() {
+		return memberEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getVarRef() {
+		return varRefEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getVarRef_Ref() {
+		return (EReference) varRefEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getUnaryOp() {
 		return unaryOpEEnum;
 	}
@@ -700,10 +1151,10 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
 		skipEClass = createEClass(SKIP);
 
-		assignEClass = createEClass(ASSIGN);
-		createEAttribute(assignEClass, ASSIGN__NAME);
-		createEReference(assignEClass, ASSIGN__EXP);
-		createEReference(assignEClass, ASSIGN__INDEX);
+		declarationEClass = createEClass(DECLARATION);
+		createEAttribute(declarationEClass, DECLARATION__NAME);
+		createEReference(declarationEClass, DECLARATION__EXP);
+		createEReference(declarationEClass, DECLARATION__INDEX);
 
 		exprEClass = createEClass(EXPR);
 
@@ -721,10 +1172,6 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
 		intConstEClass = createEClass(INT_CONST);
 		createEAttribute(intConstEClass, INT_CONST__VALUE);
-
-		varEClass = createEClass(VAR);
-		createEAttribute(varEClass, VAR__NAME);
-		createEReference(varEClass, VAR__INDEX);
 
 		unaryEClass = createEClass(UNARY);
 		createEAttribute(unaryEClass, UNARY__OP);
@@ -758,6 +1205,62 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
 		boolConstEClass = createEClass(BOOL_CONST);
 		createEAttribute(boolConstEClass, BOOL_CONST__VALUE);
+
+		programEClass = createEClass(PROGRAM);
+		createEReference(programEClass, PROGRAM__METHODS);
+		createEReference(programEClass, PROGRAM__CLASSES);
+
+		methodDeclEClass = createEClass(METHOD_DECL);
+		createEAttribute(methodDeclEClass, METHOD_DECL__NAME);
+		createEReference(methodDeclEClass, METHOD_DECL__STMT);
+		createEReference(methodDeclEClass, METHOD_DECL__PARAMS);
+
+		returnEClass = createEClass(RETURN);
+		createEReference(returnEClass, RETURN__EXPR);
+
+		printEClass = createEClass(PRINT);
+		createEReference(printEClass, PRINT__EXPR);
+
+		stringConstEClass = createEClass(STRING_CONST);
+		createEAttribute(stringConstEClass, STRING_CONST__VALUE);
+
+		stringValueEClass = createEClass(STRING_VALUE);
+		createEAttribute(stringValueEClass, STRING_VALUE__VALUE);
+
+		paramDeclEClass = createEClass(PARAM_DECL);
+		createEAttribute(paramDeclEClass, PARAM_DECL__NAME);
+
+		namedElementEClass = createEClass(NAMED_ELEMENT);
+
+		classEClass = createEClass(CLASS);
+		createEAttribute(classEClass, CLASS__NAME);
+		createEReference(classEClass, CLASS__ATTRIBUTES);
+		createEReference(classEClass, CLASS__METHODS);
+
+		attributeDeclEClass = createEClass(ATTRIBUTE_DECL);
+		createEAttribute(attributeDeclEClass, ATTRIBUTE_DECL__NAME);
+
+		thisEClass = createEClass(THIS);
+
+		newClassEClass = createEClass(NEW_CLASS);
+		createEReference(newClassEClass, NEW_CLASS__CLASS);
+
+		assignmentEClass = createEClass(ASSIGNMENT);
+		createEReference(assignmentEClass, ASSIGNMENT__LHS);
+		createEReference(assignmentEClass, ASSIGNMENT__RHS);
+
+		projectEClass = createEClass(PROJECT);
+		createEReference(projectEClass, PROJECT__LHS);
+		createEReference(projectEClass, PROJECT__RHS);
+		createEAttribute(projectEClass, PROJECT__ISMETHODCALL);
+		createEReference(projectEClass, PROJECT__PARAMS);
+
+		symbolEClass = createEClass(SYMBOL);
+
+		memberEClass = createEClass(MEMBER);
+
+		varRefEClass = createEClass(VAR_REF);
+		createEReference(varRefEClass, VAR_REF__REF);
 
 		// Create enums
 		unaryOpEEnum = createEEnum(UNARY_OP);
@@ -794,12 +1297,14 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
 		// Add supertypes to classes
 		skipEClass.getESuperTypes().add(this.getStmt());
-		assignEClass.getESuperTypes().add(this.getStmt());
+		declarationEClass.getESuperTypes().add(this.getStmt());
+		declarationEClass.getESuperTypes().add(this.getSymbol());
+		declarationEClass.getESuperTypes().add(this.getMember());
+		exprEClass.getESuperTypes().add(this.getStmt());
 		blockEClass.getESuperTypes().add(this.getStmt());
 		ifEClass.getESuperTypes().add(this.getStmt());
 		whileEClass.getESuperTypes().add(this.getStmt());
 		intConstEClass.getESuperTypes().add(this.getExpr());
-		varEClass.getESuperTypes().add(this.getExpr());
 		unaryEClass.getESuperTypes().add(this.getExpr());
 		binaryEClass.getESuperTypes().add(this.getExpr());
 		intValueEClass.getESuperTypes().add(this.getValue());
@@ -807,21 +1312,37 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 		arrayValueEClass.getESuperTypes().add(this.getValue());
 		arrayDeclEClass.getESuperTypes().add(this.getExpr());
 		boolConstEClass.getESuperTypes().add(this.getExpr());
+		methodDeclEClass.getESuperTypes().add(this.getMember());
+		returnEClass.getESuperTypes().add(this.getStmt());
+		printEClass.getESuperTypes().add(this.getStmt());
+		stringConstEClass.getESuperTypes().add(this.getExpr());
+		stringValueEClass.getESuperTypes().add(this.getValue());
+		paramDeclEClass.getESuperTypes().add(this.getSymbol());
+		paramDeclEClass.getESuperTypes().add(this.getMember());
+		classEClass.getESuperTypes().add(this.getNamedElement());
+		attributeDeclEClass.getESuperTypes().add(this.getMember());
+		thisEClass.getESuperTypes().add(this.getExpr());
+		newClassEClass.getESuperTypes().add(this.getExpr());
+		assignmentEClass.getESuperTypes().add(this.getStmt());
+		projectEClass.getESuperTypes().add(this.getExpr());
+		symbolEClass.getESuperTypes().add(this.getNamedElement());
+		varRefEClass.getESuperTypes().add(this.getExpr());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(stmtEClass, Stmt.class, "Stmt", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(skipEClass, Skip.class, "Skip", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(assignEClass, Assign.class, "Assign", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAssign_Name(), ecorePackage.getEString(), "name", null, 0, 1, Assign.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAssign_Exp(), this.getExpr(), null, "exp", null, 1, 1, Assign.class, !IS_TRANSIENT,
+		initEClass(declarationEClass, Declaration.class, "Declaration", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, Declaration.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDeclaration_Exp(), this.getExpr(), null, "exp", null, 1, 1, Declaration.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 				IS_ORDERED);
-		initEReference(getAssign_Index(), this.getExpr(), null, "index", null, 0, 1, Assign.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
+		initEReference(getDeclaration_Index(), this.getExpr(), null, "index", null, 0, 1, Declaration.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(exprEClass, Expr.class, "Expr", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -851,13 +1372,6 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 		initEAttribute(getIntConst_Value(), ecorePackage.getEInt(), "value", null, 0, 1, IntConst.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(varEClass, Var.class, "Var", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getVar_Name(), ecorePackage.getEString(), "name", null, 0, 1, Var.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getVar_Index(), this.getExpr(), null, "index", null, 0, 1, Var.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
-
 		initEClass(unaryEClass, Unary.class, "Unary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getUnary_Op(), this.getUnaryOp(), "op", null, 0, 1, Unary.class, !IS_TRANSIENT, !IS_VOLATILE,
 				IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -866,7 +1380,7 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 				IS_ORDERED);
 
 		initEClass(binaryEClass, Binary.class, "Binary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getBinary_Lhs(), this.getExpr(), null, "lhs", null, 1, 1, Binary.class, !IS_TRANSIENT,
+		initEReference(getBinary_Lhs(), this.getExpr(), null, "lhs", null, 0, 1, Binary.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 				IS_ORDERED);
 		initEReference(getBinary_Rhs(), this.getExpr(), null, "rhs", null, 1, 1, Binary.class, !IS_TRANSIENT,
@@ -892,7 +1406,7 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 
 		initEClass(intValueEClass, IntValue.class, "IntValue", !IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getIntValue_Value(), ecorePackage.getELong(), "value", null, 0, 1, IntValue.class, !IS_TRANSIENT,
+		initEAttribute(getIntValue_Value(), ecorePackage.getEInt(), "value", null, 0, 1, IntValue.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(boolValueEClass, BoolValue.class, "BoolValue", !IS_ABSTRACT, !IS_INTERFACE,
@@ -916,6 +1430,108 @@ public class ImpPackageImpl extends EPackageImpl implements ImpPackage {
 				IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getBoolConst_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1, BoolConst.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProgram_Methods(), this.getMethodDecl(), null, "methods", null, 0, -1, Program.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProgram_Classes(), this.getClass_(), null, "classes", null, 0, -1, Program.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(methodDeclEClass, MethodDecl.class, "MethodDecl", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getMethodDecl_Name(), ecorePackage.getEString(), "name", null, 0, 1, MethodDecl.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMethodDecl_Stmt(), this.getStmt(), null, "stmt", null, 1, 1, MethodDecl.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+		initEReference(getMethodDecl_Params(), this.getParamDecl(), null, "params", null, 0, -1, MethodDecl.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(returnEClass, Return.class, "Return", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getReturn_Expr(), this.getExpr(), null, "expr", null, 1, 1, Return.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+
+		initEClass(printEClass, Print.class, "Print", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getPrint_Expr(), this.getExpr(), null, "expr", null, 1, 1, Print.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+
+		initEClass(stringConstEClass, StringConst.class, "StringConst", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringConst_Value(), ecorePackage.getEString(), "value", null, 0, 1, StringConst.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(stringValueEClass, StringValue.class, "StringValue", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringValue_Value(), ecorePackage.getEString(), "value", null, 0, 1, StringValue.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(paramDeclEClass, ParamDecl.class, "ParamDecl", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getParamDecl_Name(), ecorePackage.getEString(), "name", null, 0, 1, ParamDecl.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(namedElementEClass, NamedElement.class, "NamedElement", IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(classEClass, imp.model.imp.Class.class, "Class", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, imp.model.imp.Class.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getClass_Attributes(), this.getAttributeDecl(), null, "attributes", null, 0, -1,
+				imp.model.imp.Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getClass_Methods(), this.getMethodDecl(), null, "methods", null, 0, -1,
+				imp.model.imp.Class.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+				!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(attributeDeclEClass, AttributeDecl.class, "AttributeDecl", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAttributeDecl_Name(), ecorePackage.getEString(), "name", null, 0, 1, AttributeDecl.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(thisEClass, This.class, "This", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(newClassEClass, NewClass.class, "NewClass", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getNewClass_Class(), this.getClass_(), null, "class", null, 1, 1, NewClass.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+
+		initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE,
+				IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAssignment_Lhs(), this.getExpr(), null, "lhs", null, 1, 1, Assignment.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+		initEReference(getAssignment_Rhs(), this.getExpr(), null, "rhs", null, 1, 1, Assignment.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+
+		initEClass(projectEClass, Project.class, "Project", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getProject_Lhs(), this.getExpr(), null, "lhs", null, 1, 1, Project.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+		initEReference(getProject_Rhs(), this.getMember(), null, "rhs", null, 1, 1, Project.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+		initEAttribute(getProject_Ismethodcall(), ecorePackage.getEBoolean(), "ismethodcall", null, 0, 1, Project.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getProject_Params(), this.getExpr(), null, "params", null, 0, -1, Project.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+
+		initEClass(symbolEClass, Symbol.class, "Symbol", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(memberEClass, Member.class, "Member", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(varRefEClass, VarRef.class, "VarRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getVarRef_Ref(), this.getSymbol(), null, "ref", null, 1, 1, VarRef.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(unaryOpEEnum, UnaryOp.class, "UnaryOp");

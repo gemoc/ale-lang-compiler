@@ -2,8 +2,40 @@
  */
 package imp.model.imp.util;
 
-import imp.model.imp.*;
-
+import imp.model.imp.ArrayDecl;
+import imp.model.imp.ArrayValue;
+import imp.model.imp.Assignment;
+import imp.model.imp.AttributeDecl;
+import imp.model.imp.Binary;
+import imp.model.imp.Block;
+import imp.model.imp.BoolConst;
+import imp.model.imp.BoolValue;
+import imp.model.imp.Declaration;
+import imp.model.imp.Expr;
+import imp.model.imp.If;
+import imp.model.imp.ImpPackage;
+import imp.model.imp.IntConst;
+import imp.model.imp.IntValue;
+import imp.model.imp.Member;
+import imp.model.imp.MethodDecl;
+import imp.model.imp.NamedElement;
+import imp.model.imp.NewClass;
+import imp.model.imp.ParamDecl;
+import imp.model.imp.Print;
+import imp.model.imp.Program;
+import imp.model.imp.Project;
+import imp.model.imp.Return;
+import imp.model.imp.Skip;
+import imp.model.imp.Stmt;
+import imp.model.imp.Store;
+import imp.model.imp.StringConst;
+import imp.model.imp.StringValue;
+import imp.model.imp.Symbol;
+import imp.model.imp.This;
+import imp.model.imp.Unary;
+import imp.model.imp.Value;
+import imp.model.imp.VarRef;
+import imp.model.imp.While;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -79,8 +111,8 @@ public class ImpAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseAssign(Assign object) {
-			return createAssignAdapter();
+		public Adapter caseDeclaration(Declaration object) {
+			return createDeclarationAdapter();
 		}
 
 		@Override
@@ -106,11 +138,6 @@ public class ImpAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseIntConst(IntConst object) {
 			return createIntConstAdapter();
-		}
-
-		@Override
-		public Adapter caseVar(Var object) {
-			return createVarAdapter();
 		}
 
 		@Override
@@ -164,6 +191,91 @@ public class ImpAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseProgram(Program object) {
+			return createProgramAdapter();
+		}
+
+		@Override
+		public Adapter caseMethodDecl(MethodDecl object) {
+			return createMethodDeclAdapter();
+		}
+
+		@Override
+		public Adapter caseReturn(Return object) {
+			return createReturnAdapter();
+		}
+
+		@Override
+		public Adapter casePrint(Print object) {
+			return createPrintAdapter();
+		}
+
+		@Override
+		public Adapter caseStringConst(StringConst object) {
+			return createStringConstAdapter();
+		}
+
+		@Override
+		public Adapter caseStringValue(StringValue object) {
+			return createStringValueAdapter();
+		}
+
+		@Override
+		public Adapter caseParamDecl(ParamDecl object) {
+			return createParamDeclAdapter();
+		}
+
+		@Override
+		public Adapter caseNamedElement(NamedElement object) {
+			return createNamedElementAdapter();
+		}
+
+		@Override
+		public Adapter caseClass(imp.model.imp.Class object) {
+			return createClassAdapter();
+		}
+
+		@Override
+		public Adapter caseAttributeDecl(AttributeDecl object) {
+			return createAttributeDeclAdapter();
+		}
+
+		@Override
+		public Adapter caseThis(This object) {
+			return createThisAdapter();
+		}
+
+		@Override
+		public Adapter caseNewClass(NewClass object) {
+			return createNewClassAdapter();
+		}
+
+		@Override
+		public Adapter caseAssignment(Assignment object) {
+			return createAssignmentAdapter();
+		}
+
+		@Override
+		public Adapter caseProject(Project object) {
+			return createProjectAdapter();
+		}
+
+		@Override
+		public Adapter caseSymbol(Symbol object) {
+			return createSymbolAdapter();
+		}
+
+		@Override
+		public Adapter caseMember(Member object) {
+			return createMemberAdapter();
+		}
+
+		@Override
+		public Adapter caseVarRef(VarRef object) {
+			return createVarRefAdapter();
+		}
+
+		@Override
 		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
@@ -211,16 +323,16 @@ public class ImpAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link imp.model.imp.Assign <em>Assign</em>}'.
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Declaration <em>Declaration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see imp.model.imp.Assign
+	 * @see imp.model.imp.Declaration
 	 * @generated
 	 */
-	public Adapter createAssignAdapter() {
+	public Adapter createDeclarationAdapter() {
 		return null;
 	}
 
@@ -291,20 +403,6 @@ public class ImpAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createIntConstAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link imp.model.imp.Var <em>Var</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see imp.model.imp.Var
-	 * @generated
-	 */
-	public Adapter createVarAdapter() {
 		return null;
 	}
 
@@ -445,6 +543,244 @@ public class ImpAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createBoolConstAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Program <em>Program</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.Program
+	 * @generated
+	 */
+	public Adapter createProgramAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.MethodDecl <em>Method Decl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.MethodDecl
+	 * @generated
+	 */
+	public Adapter createMethodDeclAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Return <em>Return</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.Return
+	 * @generated
+	 */
+	public Adapter createReturnAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Print <em>Print</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.Print
+	 * @generated
+	 */
+	public Adapter createPrintAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.StringConst <em>String Const</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.StringConst
+	 * @generated
+	 */
+	public Adapter createStringConstAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.StringValue <em>String Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.StringValue
+	 * @generated
+	 */
+	public Adapter createStringValueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.ParamDecl <em>Param Decl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.ParamDecl
+	 * @generated
+	 */
+	public Adapter createParamDeclAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.NamedElement <em>Named Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.NamedElement
+	 * @generated
+	 */
+	public Adapter createNamedElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Class <em>Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.Class
+	 * @generated
+	 */
+	public Adapter createClassAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.AttributeDecl <em>Attribute Decl</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.AttributeDecl
+	 * @generated
+	 */
+	public Adapter createAttributeDeclAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.This <em>This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.This
+	 * @generated
+	 */
+	public Adapter createThisAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.NewClass <em>New Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.NewClass
+	 * @generated
+	 */
+	public Adapter createNewClassAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Assignment <em>Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.Assignment
+	 * @generated
+	 */
+	public Adapter createAssignmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Project <em>Project</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.Project
+	 * @generated
+	 */
+	public Adapter createProjectAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Symbol <em>Symbol</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.Symbol
+	 * @generated
+	 */
+	public Adapter createSymbolAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.Member <em>Member</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.Member
+	 * @generated
+	 */
+	public Adapter createMemberAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link imp.model.imp.VarRef <em>Var Ref</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see imp.model.imp.VarRef
+	 * @generated
+	 */
+	public Adapter createVarRefAdapter() {
 		return null;
 	}
 

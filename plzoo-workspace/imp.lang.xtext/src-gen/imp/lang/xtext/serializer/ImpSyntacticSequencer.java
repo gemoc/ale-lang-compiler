@@ -11,6 +11,8 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
+import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 
@@ -18,10 +20,14 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public class ImpSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected ImpGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Unary_LeftParenthesisKeyword_0_0_a;
+	protected AbstractElementAlias match_Unary_LeftParenthesisKeyword_0_0_p;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (ImpGrammarAccess) access;
+		match_Unary_LeftParenthesisKeyword_0_0_a = new TokenAlias(true, true, grammarAccess.getUnaryAccess().getLeftParenthesisKeyword_0_0());
+		match_Unary_LeftParenthesisKeyword_0_0_p = new TokenAlias(true, false, grammarAccess.getUnaryAccess().getLeftParenthesisKeyword_0_0());
 	}
 	
 	@Override
@@ -36,8 +42,46 @@ public class ImpSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			acceptNodes(getLastNavigableState(), syntaxNodes);
+			if (match_Unary_LeftParenthesisKeyword_0_0_a.equals(syntax))
+				emit_Unary_LeftParenthesisKeyword_0_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Unary_LeftParenthesisKeyword_0_0_p.equals(syntax))
+				emit_Unary_LeftParenthesisKeyword_0_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     '('*
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) 'false' ';' (rule start)
+	 *     (rule start) (ambiguity) 'false' (rule start)
+	 *     (rule start) (ambiguity) 'new' class=[Class|ID]
+	 *     (rule start) (ambiguity) 'this' ';' (rule start)
+	 *     (rule start) (ambiguity) 'this' (rule start)
+	 *     (rule start) (ambiguity) op=UnaryOp
+	 *     (rule start) (ambiguity) ref=[Symbol|ID]
+	 *     (rule start) (ambiguity) value=EInt
+	 *     (rule start) (ambiguity) value=STRING
+	 *     (rule start) (ambiguity) value?='true'
+	 *     (rule start) (ambiguity) {Binary.lhs=}
+	 *     (rule start) (ambiguity) {Project.lhs=}
+	 */
+	protected void emit_Unary_LeftParenthesisKeyword_0_0_a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '('+
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) {Binary.lhs=}
+	 *     (rule start) (ambiguity) {Project.lhs=}
+	 */
+	protected void emit_Unary_LeftParenthesisKeyword_0_0_p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 }

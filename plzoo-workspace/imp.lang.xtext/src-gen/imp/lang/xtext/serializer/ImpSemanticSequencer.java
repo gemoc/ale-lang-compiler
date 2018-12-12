@@ -5,17 +5,26 @@ package imp.lang.xtext.serializer;
 
 import com.google.inject.Inject;
 import imp.lang.xtext.services.ImpGrammarAccess;
-import imp.model.imp.ArrayDecl;
-import imp.model.imp.Assign;
+import imp.model.imp.Assignment;
+import imp.model.imp.AttributeDecl;
 import imp.model.imp.Binary;
 import imp.model.imp.Block;
 import imp.model.imp.BoolConst;
+import imp.model.imp.Declaration;
 import imp.model.imp.If;
 import imp.model.imp.ImpPackage;
 import imp.model.imp.IntConst;
-import imp.model.imp.Skip;
+import imp.model.imp.MethodDecl;
+import imp.model.imp.NewClass;
+import imp.model.imp.ParamDecl;
+import imp.model.imp.Print;
+import imp.model.imp.Program;
+import imp.model.imp.Project;
+import imp.model.imp.Return;
+import imp.model.imp.StringConst;
+import imp.model.imp.This;
 import imp.model.imp.Unary;
-import imp.model.imp.Var;
+import imp.model.imp.VarRef;
 import imp.model.imp.While;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -42,11 +51,11 @@ public class ImpSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == ImpPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case ImpPackage.ARRAY_DECL:
-				sequence_ArrayDecl(context, (ArrayDecl) semanticObject); 
+			case ImpPackage.ASSIGNMENT:
+				sequence_Assignment(context, (Assignment) semanticObject); 
 				return; 
-			case ImpPackage.ASSIGN:
-				sequence_Assign(context, (Assign) semanticObject); 
+			case ImpPackage.ATTRIBUTE_DECL:
+				sequence_AttributeDecl(context, (AttributeDecl) semanticObject); 
 				return; 
 			case ImpPackage.BINARY:
 				sequence_Binary(context, (Binary) semanticObject); 
@@ -57,20 +66,50 @@ public class ImpSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case ImpPackage.BOOL_CONST:
 				sequence_BoolConst(context, (BoolConst) semanticObject); 
 				return; 
+			case ImpPackage.CLASS:
+				sequence_Class(context, (imp.model.imp.Class) semanticObject); 
+				return; 
+			case ImpPackage.DECLARATION:
+				sequence_Declaration(context, (Declaration) semanticObject); 
+				return; 
 			case ImpPackage.IF:
 				sequence_If(context, (If) semanticObject); 
 				return; 
 			case ImpPackage.INT_CONST:
 				sequence_IntConst(context, (IntConst) semanticObject); 
 				return; 
-			case ImpPackage.SKIP:
-				sequence_Skip(context, (Skip) semanticObject); 
+			case ImpPackage.METHOD_DECL:
+				sequence_MethodDecl(context, (MethodDecl) semanticObject); 
+				return; 
+			case ImpPackage.NEW_CLASS:
+				sequence_NewClass(context, (NewClass) semanticObject); 
+				return; 
+			case ImpPackage.PARAM_DECL:
+				sequence_ParamDecl(context, (ParamDecl) semanticObject); 
+				return; 
+			case ImpPackage.PRINT:
+				sequence_Print(context, (Print) semanticObject); 
+				return; 
+			case ImpPackage.PROGRAM:
+				sequence_Program(context, (Program) semanticObject); 
+				return; 
+			case ImpPackage.PROJECT:
+				sequence_Project(context, (Project) semanticObject); 
+				return; 
+			case ImpPackage.RETURN:
+				sequence_Return(context, (Return) semanticObject); 
+				return; 
+			case ImpPackage.STRING_CONST:
+				sequence_StringConst(context, (StringConst) semanticObject); 
+				return; 
+			case ImpPackage.THIS:
+				sequence_This(context, (This) semanticObject); 
 				return; 
 			case ImpPackage.UNARY:
 				sequence_Unary(context, (Unary) semanticObject); 
 				return; 
-			case ImpPackage.VAR:
-				sequence_Var(context, (Var) semanticObject); 
+			case ImpPackage.VAR_REF:
+				sequence_VarRef(context, (VarRef) semanticObject); 
 				return; 
 			case ImpPackage.WHILE:
 				sequence_While(context, (While) semanticObject); 
@@ -82,51 +121,71 @@ public class ImpSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     Expr returns ArrayDecl
-	 *     ArrayDecl returns ArrayDecl
+	 *     Stmt returns Assignment
+	 *     Assignment returns Assignment
 	 *
 	 * Constraint:
-	 *     (values+=Expr values+=Expr*)?
+	 *     (lhs=Expr rhs=Project)
 	 */
-	protected void sequence_ArrayDecl(ISerializationContext context, ArrayDecl semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+	protected void sequence_Assignment(ISerializationContext context, Assignment semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.ASSIGNMENT__LHS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.ASSIGNMENT__LHS));
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.ASSIGNMENT__RHS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.ASSIGNMENT__RHS));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAssignmentAccess().getLhsExprParserRuleCall_1_0(), semanticObject.getLhs());
+		feeder.accept(grammarAccess.getAssignmentAccess().getRhsProjectParserRuleCall_3_0(), semanticObject.getRhs());
+		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Stmt returns Assign
-	 *     Assign returns Assign
+	 *     AttributeDecl returns AttributeDecl
+	 *     Member returns AttributeDecl
 	 *
 	 * Constraint:
-	 *     (name=EString index=Expr? exp=Expr)
+	 *     name=ID
 	 */
-	protected void sequence_Assign(ISerializationContext context, Assign semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+	protected void sequence_AttributeDecl(ISerializationContext context, AttributeDecl semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.ATTRIBUTE_DECL__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.ATTRIBUTE_DECL__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAttributeDeclAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
+	 *     Stmt returns Binary
 	 *     Expr returns Binary
+	 *     Project returns Binary
+	 *     Project.Project_1_0 returns Binary
 	 *     Binary returns Binary
+	 *     Binary.Binary_1_0 returns Binary
+	 *     Unary returns Binary
 	 *
 	 * Constraint:
-	 *     (op=BinaryOp lhs=Expr rhs=Expr)
+	 *     (lhs=Binary_Binary_1_0 op=BinaryOp rhs=Unary)
 	 */
 	protected void sequence_Binary(ISerializationContext context, Binary semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.BINARY__OP) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.BINARY__OP));
 			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.BINARY__LHS) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.BINARY__LHS));
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.BINARY__OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.BINARY__OP));
 			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.BINARY__RHS) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.BINARY__RHS));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getBinaryAccess().getOpBinaryOpEnumRuleCall_2_0(), semanticObject.getOp());
-		feeder.accept(grammarAccess.getBinaryAccess().getLhsExprParserRuleCall_4_0(), semanticObject.getLhs());
-		feeder.accept(grammarAccess.getBinaryAccess().getRhsExprParserRuleCall_6_0(), semanticObject.getRhs());
+		feeder.accept(grammarAccess.getBinaryAccess().getBinaryLhsAction_1_0(), semanticObject.getLhs());
+		feeder.accept(grammarAccess.getBinaryAccess().getOpBinaryOpEnumRuleCall_1_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getBinaryAccess().getRhsUnaryParserRuleCall_1_2_0(), semanticObject.getRhs());
 		feeder.finish();
 	}
 	
@@ -146,7 +205,14 @@ public class ImpSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Stmt returns BoolConst
 	 *     Expr returns BoolConst
+	 *     Project returns BoolConst
+	 *     Project.Project_1_0 returns BoolConst
+	 *     Binary returns BoolConst
+	 *     Binary.Binary_1_0 returns BoolConst
+	 *     Unary returns BoolConst
+	 *     Atomic returns BoolConst
 	 *     BoolConst returns BoolConst
 	 *
 	 * Constraint:
@@ -154,6 +220,40 @@ public class ImpSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 */
 	protected void sequence_BoolConst(ISerializationContext context, BoolConst semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Class returns Class
+	 *
+	 * Constraint:
+	 *     (name=ID attributes+=AttributeDecl* methods+=MethodDecl*)
+	 */
+	protected void sequence_Class(ISerializationContext context, imp.model.imp.Class semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Stmt returns Declaration
+	 *     Declaration returns Declaration
+	 *
+	 * Constraint:
+	 *     (name=EString exp=Expr)
+	 */
+	protected void sequence_Declaration(ISerializationContext context, Declaration semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.DECLARATION__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.DECLARATION__NAME));
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.DECLARATION__EXP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.DECLARATION__EXP));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDeclarationAccess().getNameEStringParserRuleCall_1_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getDeclarationAccess().getExpExprParserRuleCall_3_0(), semanticObject.getExp());
+		feeder.finish();
 	}
 	
 	
@@ -184,7 +284,14 @@ public class ImpSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Stmt returns IntConst
 	 *     Expr returns IntConst
+	 *     Project returns IntConst
+	 *     Project.Project_1_0 returns IntConst
+	 *     Binary returns IntConst
+	 *     Binary.Binary_1_0 returns IntConst
+	 *     Unary returns IntConst
+	 *     Atomic returns IntConst
 	 *     IntConst returns IntConst
 	 *
 	 * Constraint:
@@ -203,24 +310,187 @@ public class ImpSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     Stmt returns Skip
-	 *     Skip returns Skip
+	 *     MethodDecl returns MethodDecl
+	 *     Member returns MethodDecl
 	 *
 	 * Constraint:
-	 *     {Skip}
+	 *     (name=ID (params+=ParamDecl params+=ParamDecl*)? stmt=Stmt)
 	 */
-	protected void sequence_Skip(ISerializationContext context, Skip semanticObject) {
+	protected void sequence_MethodDecl(ISerializationContext context, MethodDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
+	 *     Stmt returns NewClass
+	 *     Expr returns NewClass
+	 *     Project returns NewClass
+	 *     Project.Project_1_0 returns NewClass
+	 *     Binary returns NewClass
+	 *     Binary.Binary_1_0 returns NewClass
+	 *     Unary returns NewClass
+	 *     Atomic returns NewClass
+	 *     NewClass returns NewClass
+	 *
+	 * Constraint:
+	 *     class=[Class|ID]
+	 */
+	protected void sequence_NewClass(ISerializationContext context, NewClass semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.NEW_CLASS__CLASS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.NEW_CLASS__CLASS));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getNewClassAccess().getClassClassIDTerminalRuleCall_1_0_1(), semanticObject.eGet(ImpPackage.Literals.NEW_CLASS__CLASS, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ParamDecl returns ParamDecl
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_ParamDecl(ISerializationContext context, ParamDecl semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.PARAM_DECL__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.PARAM_DECL__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getParamDeclAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Stmt returns Print
+	 *     Print returns Print
+	 *
+	 * Constraint:
+	 *     expr=Expr
+	 */
+	protected void sequence_Print(ISerializationContext context, Print semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.PRINT__EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.PRINT__EXPR));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrintAccess().getExprExprParserRuleCall_2_0(), semanticObject.getExpr());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Program returns Program
+	 *
+	 * Constraint:
+	 *     ((classes+=Class+ methods+=MethodDecl+) | methods+=MethodDecl+)?
+	 */
+	protected void sequence_Program(ISerializationContext context, Program semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Stmt returns Project
+	 *     Expr returns Project
+	 *     Project returns Project
+	 *     Project.Project_1_0 returns Project
+	 *     Binary returns Project
+	 *     Binary.Binary_1_0 returns Project
+	 *     Unary returns Project
+	 *
+	 * Constraint:
+	 *     (lhs=Project_Project_1_0 rhs=[Member|ID] (ismethodcall?='(' (params+=Expr params+=Expr*)?)?)
+	 */
+	protected void sequence_Project(ISerializationContext context, Project semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Stmt returns Return
+	 *     Return returns Return
+	 *
+	 * Constraint:
+	 *     expr=Expr
+	 */
+	protected void sequence_Return(ISerializationContext context, Return semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.RETURN__EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.RETURN__EXPR));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getReturnAccess().getExprExprParserRuleCall_1_0(), semanticObject.getExpr());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Stmt returns StringConst
+	 *     Expr returns StringConst
+	 *     Project returns StringConst
+	 *     Project.Project_1_0 returns StringConst
+	 *     Binary returns StringConst
+	 *     Binary.Binary_1_0 returns StringConst
+	 *     Unary returns StringConst
+	 *     Atomic returns StringConst
+	 *     StringConst returns StringConst
+	 *
+	 * Constraint:
+	 *     value=STRING
+	 */
+	protected void sequence_StringConst(ISerializationContext context, StringConst semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.STRING_CONST__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.STRING_CONST__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getStringConstAccess().getValueSTRINGTerminalRuleCall_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Stmt returns This
+	 *     Expr returns This
+	 *     Project returns This
+	 *     Project.Project_1_0 returns This
+	 *     Binary returns This
+	 *     Binary.Binary_1_0 returns This
+	 *     Unary returns This
+	 *     Atomic returns This
+	 *     This returns This
+	 *
+	 * Constraint:
+	 *     {This}
+	 */
+	protected void sequence_This(ISerializationContext context, This semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Stmt returns Unary
 	 *     Expr returns Unary
+	 *     Project returns Unary
+	 *     Project.Project_1_0 returns Unary
+	 *     Binary returns Unary
+	 *     Binary.Binary_1_0 returns Unary
 	 *     Unary returns Unary
 	 *
 	 * Constraint:
-	 *     (op=UnaryOp expr=Expr)
+	 *     (op=UnaryOp expr=Unary)
 	 */
 	protected void sequence_Unary(ISerializationContext context, Unary semanticObject) {
 		if (errorAcceptor != null) {
@@ -230,22 +500,35 @@ public class ImpSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.UNARY__EXPR));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getUnaryAccess().getOpUnaryOpEnumRuleCall_2_0(), semanticObject.getOp());
-		feeder.accept(grammarAccess.getUnaryAccess().getExprExprParserRuleCall_3_0(), semanticObject.getExpr());
+		feeder.accept(grammarAccess.getUnaryAccess().getOpUnaryOpEnumRuleCall_1_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getUnaryAccess().getExprUnaryParserRuleCall_1_2_0(), semanticObject.getExpr());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Expr returns Var
-	 *     Var returns Var
+	 *     Stmt returns VarRef
+	 *     Expr returns VarRef
+	 *     Project returns VarRef
+	 *     Project.Project_1_0 returns VarRef
+	 *     Binary returns VarRef
+	 *     Binary.Binary_1_0 returns VarRef
+	 *     Unary returns VarRef
+	 *     Atomic returns VarRef
+	 *     VarRef returns VarRef
 	 *
 	 * Constraint:
-	 *     (name=EString index=Expr?)
+	 *     ref=[Symbol|ID]
 	 */
-	protected void sequence_Var(ISerializationContext context, Var semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+	protected void sequence_VarRef(ISerializationContext context, VarRef semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ImpPackage.Literals.VAR_REF__REF) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ImpPackage.Literals.VAR_REF__REF));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getVarRefAccess().getRefSymbolIDTerminalRuleCall_1_0_1(), semanticObject.eGet(ImpPackage.Literals.VAR_REF__REF, false));
+		feeder.finish();
 	}
 	
 	

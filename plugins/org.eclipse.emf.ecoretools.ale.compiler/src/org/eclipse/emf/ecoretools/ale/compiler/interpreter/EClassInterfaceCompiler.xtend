@@ -43,14 +43,14 @@ class EClassInterfaceCompiler {
 			.enumBuilder(selfClassName)
 			.addSuperinterface(ClassName.get('org.eclipse.emf.common.util', 'Enumerator'))
 			.addEnumConstants(eEnum.ELiterals.map [
-				it.name -> TypeSpec.anonymousClassBuilder('''$L, $S, $S''', it.value, it.literal, it.literal).build
+				it.name -> TypeSpec.anonymousClassBuilder('''$L, $S, $S''', it.value, it.name, it.name).build
 			])
 			.addFields(eEnum.ELiterals.map[
 				FieldSpec.builder(int, '''«it.name.toUpperCase»_VALUE''', PUBLIC, STATIC, FINAL).initializer('''«it.value»''').build
 			])
 			.addField(FieldSpec
 				.builder(selfArrayClass, 'VALUES_ARRAY', PRIVATE, STATIC, FINAL)
-				.initializer('''new $T { «FOR lit:eEnum.ELiterals SEPARATOR ', '»«lit.literal»«ENDFOR» }''', selfArrayClass)
+				.initializer('''new $T { «FOR lit:eEnum.ELiterals SEPARATOR ', '»«lit.name»«ENDFOR» }''', selfArrayClass)
 				.build
 			)
 			.addField(FieldSpec
@@ -97,8 +97,8 @@ class EClassInterfaceCompiler {
 				.addCode('''
 				switch (value) {
 				«FOR lit:eEnum.ELiterals»
-				case «lit.literal»_VALUE:
-					return «lit.literal»;
+				case «lit.name»_VALUE:
+					return «lit.name»;
 				«ENDFOR»
 				}
 				return null;

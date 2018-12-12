@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.tetrabox.minijava.semantics.modelstate/src" modelPluginID="org.tetrabox.minijava.semantics.modelstate" modelName="MiniJavaDynamicData" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>MiniJavaDynamicData.ecore</foreignModel>
+  <genPackages prefix="Minijavadynamicdata" basePackage="org.tetrabox.minijava.dynamic" disposableProviderFactory="true">
+    <ecorePackage href="MiniJavaDynamicData.ecore#/"/>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//Context"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Context/bindings"/>
+      </genFeatures>
+      <genFeatures property="None" notify="false" createChild="false">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Context/parentContext"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Context/childContext"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//Value"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//IntegerValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="MiniJavaDynamicData.ecore#//IntegerValue/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//Instance"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Instance/fieldbindings"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Instance/type"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//SymbolBinding"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//SymbolBinding/value"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//SymbolBinding/symbol"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//FieldBinding"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//FieldBinding/field"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//FieldBinding/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//StringValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="MiniJavaDynamicData.ecore#//StringValue/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//BooleanValue"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="MiniJavaDynamicData.ecore#//BooleanValue/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//OutputStream"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="MiniJavaDynamicData.ecore#//OutputStream/stream"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//RefValue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//RefValue/instance"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//State"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//State/rootFrame"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//State/heap"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//State/outputStream"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//Frame"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Frame/methodcall"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Frame/instance"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Frame/childFrame"/>
+      </genFeatures>
+      <genFeatures property="None" notify="false" createChild="false">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Frame/parentFrame"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Frame/rootContext"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="MiniJavaDynamicData.ecore#//Frame/returnValue"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="MiniJavaDynamicData.ecore#//NullValue"/>
+    </genClasses>
+  </genPackages>
+  <usedGenPackages href="../../org.tetrabox.minijava.xtext/model/generated/MiniJava.genmodel#//miniJava"/>
+</genmodel:GenModel>

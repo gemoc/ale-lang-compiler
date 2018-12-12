@@ -6,7 +6,7 @@ import org.eclipse.xtext.xtext.generator.model.project.*
 var rootPath = ".."
 
 Workflow {
-	
+
 	component = XtextGenerator {
 		configuration = {
 			project = StandardProjectConfig {
@@ -33,7 +33,6 @@ Workflow {
 			name = "imp.lang.xtext.Imp"
 			fileExtensions = "imp"
 			referencedResource = "platform:/resource/imp.model/model/imp.genmodel"
-			
 			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment2 auto-inject {}
 
 			formatter = {
@@ -44,7 +43,12 @@ Workflow {
 				generateStub = false
 			}
 			validator = {
-				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+			// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+			}
+			parserGenerator = {
+				options = {
+					backtrack = true
+				}
 			}
 		}
 	}

@@ -1,0 +1,103 @@
+class Tree {
+
+	private Tree left;
+
+	private Tree right;
+
+	private Tree (Tree _left, Tree _right) {
+		this.left = _left;
+		this.right = _right;
+	}
+
+	public static Tree createNode(int _depth) {
+		Tree bottomTree = new Tree(null, null);
+		Tree ret = bottomTree;
+		if (_depth == 0) {
+			ret = this.createNodeRec(_depth, bottomTree);
+		}
+		return ret;
+	}
+
+	private static Tree createNodeRec(int _depth, Tree _accum) {
+		Tree accum = _accum;
+		if (_depth > 0) {
+			int depth = _depth - 1;
+			accum.left = this.createNode(depth);
+			accum.right = this.createNode(depth);
+		}
+		return accum;
+	}
+
+	public int checkNode() {
+		int ret = 0;
+		if (this.left == null) {
+			ret = 1;
+		} else {
+			ret = this.left.checkNode() + this.right.checkNode() + 1;
+		}
+		return ret;
+	}
+
+}
+
+class Main {
+
+	public int max(int a, int b) {
+		int ret = 0;
+		if (a > b) {
+			ret = a;
+		} else {
+			ret = b;
+		}
+		return ret;
+	}
+
+	public int pow(int a, int b) {
+		int ret = 0;
+		if (b == 0) {
+			ret = 1;
+		} else {
+			if (b == 1) {
+				ret = a;
+			} else {
+				ret = a * this.pow(a, b-1);
+			}
+		}
+		return ret;
+	}
+
+	public void exec() {
+		int n = 0;
+		int minDepth = 4;
+		int maxDepth = this.max(minDepth + 1, n);
+		int stretchDepth = maxDepth + 1;
+		Tree node = new Tree().createNode(stretchDepth);
+		int checkNode = node.checkNode();
+		System.out.println('stretch tree of depth' + (maxDepth + 1) + "\t check" + checkNode);
+		
+		Tree longLivedTree = node.createNode(maxDepth);
+		for (int depth = minDepth; depth <= maxDepth; depth = depth+2) {
+			int iterations = this.pow(2, maxDepth - depth + minDepth);
+			int check = 0;
+			
+			for (int i = 1; i<= iterations; i = i+1) {
+				check = check + node.createNode(depth).checkNode();
+			}
+			 System.out.println(iterations
+                                + "\t trees of depth " 
+                                + depth 
+                                + "\t check: "
+                                + check);
+		}
+		   System.out.println("long lived tree of depth " 
+                           + maxDepth 
+                           + "\t check: " 
+                           + longLivedTree.checkNode());
+	}
+
+	public static void main() {
+		new Main().exec();
+	}
+
+}
+

@@ -32,7 +32,7 @@ public interface Binary extends Expr {
 	 * @return the value of the '<em>Lhs</em>' containment reference.
 	 * @see #setLhs(Expr)
 	 * @see imp.model.imp.ImpPackage#getBinary_Lhs()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	Expr getLhs();

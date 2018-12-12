@@ -1,0 +1,33 @@
+class Tree {
+	left
+	right
+	
+	def createNode(depth) {
+		if(depth == 0) return new Tree()
+		else return this.createNodeRec(depth, new Tree())
+	}
+	
+	def createNodeRec(depth, accum) {
+		if(depth > 0) {
+			accum.left = this.createNode(depth + -1)
+			accum.right = this.createNode(depth + -1)
+		} else {}
+		return accum
+	}
+}
+
+def max(a, b) {
+	if (a > b) return a
+	else return b
+}
+
+def main(n) {
+	let minimumDepth = 4
+	let maximumDepth =  this.max(minimumDepth + 2, n)
+	let stretchDepth = maximumDepth + 2
+	// DATA STRUCTURE as object ?
+	let node = new Tree()
+	let n = node.createNode()
+	let checkNode = n.test()
+	print("stretch tree of depth " + (maximumDepth + 1) + "\t check " + checkNode)
+}

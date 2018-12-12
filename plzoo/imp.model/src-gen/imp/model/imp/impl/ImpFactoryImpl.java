@@ -2,8 +2,38 @@
  */
 package imp.model.imp.impl;
 
-import imp.model.imp.*;
-
+import imp.model.imp.ArrayDecl;
+import imp.model.imp.ArrayValue;
+import imp.model.imp.Assignment;
+import imp.model.imp.AttributeDecl;
+import imp.model.imp.Binary;
+import imp.model.imp.BinaryOp;
+import imp.model.imp.Block;
+import imp.model.imp.BoolConst;
+import imp.model.imp.BoolValue;
+import imp.model.imp.Declaration;
+import imp.model.imp.If;
+import imp.model.imp.ImpFactory;
+import imp.model.imp.ImpPackage;
+import imp.model.imp.IntConst;
+import imp.model.imp.IntValue;
+import imp.model.imp.MethodDecl;
+import imp.model.imp.NewClass;
+import imp.model.imp.ParamDecl;
+import imp.model.imp.Print;
+import imp.model.imp.Program;
+import imp.model.imp.Project;
+import imp.model.imp.Return;
+import imp.model.imp.Skip;
+import imp.model.imp.Store;
+import imp.model.imp.StringConst;
+import imp.model.imp.StringValue;
+import imp.model.imp.This;
+import imp.model.imp.Unary;
+import imp.model.imp.UnaryOp;
+import imp.model.imp.Value;
+import imp.model.imp.VarRef;
+import imp.model.imp.While;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
@@ -60,8 +90,8 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
 		switch (eClass.getClassifierID()) {
 		case ImpPackage.SKIP:
 			return createSkip();
-		case ImpPackage.ASSIGN:
-			return createAssign();
+		case ImpPackage.DECLARATION:
+			return createDeclaration();
 		case ImpPackage.BLOCK:
 			return createBlock();
 		case ImpPackage.IF:
@@ -70,8 +100,6 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
 			return createWhile();
 		case ImpPackage.INT_CONST:
 			return createIntConst();
-		case ImpPackage.VAR:
-			return createVar();
 		case ImpPackage.UNARY:
 			return createUnary();
 		case ImpPackage.BINARY:
@@ -90,6 +118,34 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
 			return createArrayDecl();
 		case ImpPackage.BOOL_CONST:
 			return createBoolConst();
+		case ImpPackage.PROGRAM:
+			return createProgram();
+		case ImpPackage.METHOD_DECL:
+			return createMethodDecl();
+		case ImpPackage.RETURN:
+			return createReturn();
+		case ImpPackage.PRINT:
+			return createPrint();
+		case ImpPackage.STRING_CONST:
+			return createStringConst();
+		case ImpPackage.STRING_VALUE:
+			return createStringValue();
+		case ImpPackage.PARAM_DECL:
+			return createParamDecl();
+		case ImpPackage.CLASS:
+			return createClass();
+		case ImpPackage.ATTRIBUTE_DECL:
+			return createAttributeDecl();
+		case ImpPackage.THIS:
+			return createThis();
+		case ImpPackage.NEW_CLASS:
+			return createNewClass();
+		case ImpPackage.ASSIGNMENT:
+			return createAssignment();
+		case ImpPackage.PROJECT:
+			return createProject();
+		case ImpPackage.VAR_REF:
+			return createVarRef();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -144,9 +200,9 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Assign createAssign() {
-		AssignImpl assign = new AssignImpl();
-		return assign;
+	public Declaration createDeclaration() {
+		DeclarationImpl declaration = new DeclarationImpl();
+		return declaration;
 	}
 
 	/**
@@ -187,16 +243,6 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
 	public IntConst createIntConst() {
 		IntConstImpl intConst = new IntConstImpl();
 		return intConst;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Var createVar() {
-		VarImpl var = new VarImpl();
-		return var;
 	}
 
 	/**
@@ -287,6 +333,146 @@ public class ImpFactoryImpl extends EFactoryImpl implements ImpFactory {
 	public BoolConst createBoolConst() {
 		BoolConstImpl boolConst = new BoolConstImpl();
 		return boolConst;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Program createProgram() {
+		ProgramImpl program = new ProgramImpl();
+		return program;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MethodDecl createMethodDecl() {
+		MethodDeclImpl methodDecl = new MethodDeclImpl();
+		return methodDecl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Return createReturn() {
+		ReturnImpl return_ = new ReturnImpl();
+		return return_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Print createPrint() {
+		PrintImpl print = new PrintImpl();
+		return print;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringConst createStringConst() {
+		StringConstImpl stringConst = new StringConstImpl();
+		return stringConst;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public StringValue createStringValue() {
+		StringValueImpl stringValue = new StringValueImpl();
+		return stringValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ParamDecl createParamDecl() {
+		ParamDeclImpl paramDecl = new ParamDeclImpl();
+		return paramDecl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public imp.model.imp.Class createClass() {
+		ClassImpl class_ = new ClassImpl();
+		return class_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AttributeDecl createAttributeDecl() {
+		AttributeDeclImpl attributeDecl = new AttributeDeclImpl();
+		return attributeDecl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public This createThis() {
+		ThisImpl this_ = new ThisImpl();
+		return this_;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NewClass createNewClass() {
+		NewClassImpl newClass = new NewClassImpl();
+		return newClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Assignment createAssignment() {
+		AssignmentImpl assignment = new AssignmentImpl();
+		return assignment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Project createProject() {
+		ProjectImpl project = new ProjectImpl();
+		return project;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VarRef createVarRef() {
+		VarRefImpl varRef = new VarRefImpl();
+		return varRef;
 	}
 
 	/**
