@@ -4,6 +4,8 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.Equality;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -129,5 +131,56 @@ public class EqualityImpl extends ExpressionImpl implements Equality {
     	return basicSetRight(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.Value left = ((miniJava.interpreter.miniJava.Value)this.left.evaluateExpression(state));
+        miniJava.interpreter.miniJava.Value right = ((miniJava.interpreter.miniJava.Value)this.right.evaluateExpression(state));
+        boolean tmp = ((boolean)false);
+        if(left instanceof miniJava.interpreter.miniJava.IntegerValue) {
+          if(right instanceof miniJava.interpreter.miniJava.IntegerValue) {
+            miniJava.interpreter.miniJava.IntegerValue ileft = ((miniJava.interpreter.miniJava.IntegerValue)left);
+            miniJava.interpreter.miniJava.IntegerValue iright = ((miniJava.interpreter.miniJava.IntegerValue)right);
+            tmp = java.util.Objects.equals((ileft.getValue()), (iright.getValue()));
+          }
+        }
+        else {
+          if(left instanceof miniJava.interpreter.miniJava.StringValue) {
+            if(right instanceof miniJava.interpreter.miniJava.StringValue) {
+              miniJava.interpreter.miniJava.StringValue ileft = ((miniJava.interpreter.miniJava.StringValue)left);
+              miniJava.interpreter.miniJava.StringValue iright = ((miniJava.interpreter.miniJava.StringValue)right);
+              tmp = java.util.Objects.equals((ileft.getValue()), (iright.getValue()));
+            }
+          }
+          else {
+            if(left instanceof miniJava.interpreter.miniJava.BooleanValue) {
+              if(right instanceof miniJava.interpreter.miniJava.BooleanValue) {
+                miniJava.interpreter.miniJava.BooleanValue ileft = ((miniJava.interpreter.miniJava.BooleanValue)left);
+                miniJava.interpreter.miniJava.BooleanValue iright = ((miniJava.interpreter.miniJava.BooleanValue)right);
+                tmp = java.util.Objects.equals((ileft.isValue()), (iright.isValue()));
+              }
+            }
+            else {
+              if(left instanceof miniJava.interpreter.miniJava.NullValue) {
+                if(right instanceof miniJava.interpreter.miniJava.NullValue) {
+                  tmp = true;
+                }
+              }
+              else {
+                if (left instanceof miniJava.interpreter.miniJava.ObjectRefValue && right instanceof miniJava.interpreter.miniJava.ObjectRefValue) {
+                    miniJava.interpreter.miniJava.ObjectRefValue ileft = ((miniJava.interpreter.miniJava.ObjectRefValue)left);
+                    miniJava.interpreter.miniJava.ObjectRefValue iright = ((miniJava.interpreter.miniJava.ObjectRefValue)right);
+                    tmp = java.util.Objects.equals((ileft.getInstance()), (iright.getInstance()));
+                  }
+              }
+            }
+          }
+        }
+        miniJava.interpreter.miniJava.BooleanValue tmpo = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
+        tmpo.setValue(tmp);
+        result = tmpo;
+        ;
+    return result;
   }
 }

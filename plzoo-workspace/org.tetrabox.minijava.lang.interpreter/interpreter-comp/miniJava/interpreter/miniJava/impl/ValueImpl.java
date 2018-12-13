@@ -54,4 +54,12 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value {
         ;
     return result;
   }
+
+  public Value copy() {
+    Value result;
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("ERROR copy not implemented");
+        result = null;
+        ;
+    return result;
+  }
 }

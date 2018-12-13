@@ -4,6 +4,8 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.ArrayLength;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -88,5 +90,16 @@ public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
     	return basicSetArray(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.ArrayRefValue arrayRef = ((miniJava.interpreter.miniJava.ArrayRefValue)this.array.evaluateExpression(state));
+        int size = ((int)arrayRef.getInstance().getSize());
+        miniJava.interpreter.miniJava.IntegerValue tmp = ((miniJava.interpreter.miniJava.IntegerValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createIntegerValue());
+        tmp.setValue(size);
+        result = tmp;
+        ;
+    return result;
   }
 }

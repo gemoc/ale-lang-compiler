@@ -4,6 +4,8 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.ArrayAccess;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -129,5 +131,14 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     	return basicSetIndex(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.ArrayRefValue arrayVal = ((miniJava.interpreter.miniJava.ArrayRefValue)this.object.evaluateExpression(state));
+        miniJava.interpreter.miniJava.IntegerValue indexVal = ((miniJava.interpreter.miniJava.IntegerValue)this.index.evaluateExpression(state));
+        result = arrayVal.getInstance().getValue().get(indexVal.getValue()).copy();
+        ;
+    return result;
   }
 }

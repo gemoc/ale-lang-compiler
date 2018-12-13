@@ -9,4 +9,6 @@ public interface BooleanValue extends EObject, Value {
   void setValue(boolean value);
 
   String customToString();
+
+  Value copy();
 }

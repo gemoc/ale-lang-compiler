@@ -4,6 +4,7 @@ import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.BooleanValue;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -70,6 +71,15 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
   public String customToString() {
     String result;
     result = (this.value) + ("");
+        ;
+    return result;
+  }
+
+  public Value copy() {
+    Value result;
+    miniJava.interpreter.miniJava.BooleanValue tmp = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
+        tmp.setValue(this.value);
+        result = tmp;
         ;
     return result;
   }

@@ -6,4 +6,6 @@ public interface ArrayRefValue extends EObject, Value {
   ArrayInstance getInstance();
 
   void setInstance(ArrayInstance value);
+
+  Value copy();
 }

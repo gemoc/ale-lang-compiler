@@ -10,4 +10,6 @@ public interface ArrayAccess extends EObject, Expression {
   Expression getIndex();
 
   void setIndex(Expression value);
+
+  Value evaluateExpression(State state);
 }

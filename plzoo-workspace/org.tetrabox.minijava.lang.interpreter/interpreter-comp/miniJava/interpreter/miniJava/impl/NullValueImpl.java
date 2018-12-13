@@ -3,6 +3,7 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.NullValue;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -44,5 +45,13 @@ public class NullValueImpl extends ValueImpl implements NullValue {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value copy() {
+    Value result;
+    miniJava.interpreter.miniJava.NullValue tmp = ((miniJava.interpreter.miniJava.NullValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createNullValue());
+        result = tmp;
+        ;
+    return result;
   }
 }

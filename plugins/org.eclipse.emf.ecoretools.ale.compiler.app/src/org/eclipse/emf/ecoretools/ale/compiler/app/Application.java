@@ -18,27 +18,16 @@ import execboa.ToStringService;
  */
 public class Application implements IApplication {
 
-//	public static BundleContext context;
-
 	@Override
 	public Object start(final IApplicationContext context) throws Exception {
 
-//		ExtensibleURIConverterImpl.URI_MAP.put(URI.createURI("platform:/plugin/"), URI.createURI("file:///tmp/workspace/"));
-//		ExtensibleURIConverterImpl.URI_MAP.put(URI.createURI("platform:/resource/"), URI.createURI("file:///tmp/workspace/"));
-
-//		PDECore pde = new PDECore();
-////		Object a;
-//		pde.start(Application.context);
-
-//		pde.
-
-		HashMap<String, Class<?>> services = new HashMap<String, Class<?>>();
+		final HashMap<String, Class<?>> services = new HashMap<String, Class<?>>();
 		services.put("org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices", TrigoServices.class);
 		services.put("execboa.SerializeService", SerializeService.class);
 		services.put("execboa.MapService", MapService.class);
 		services.put("execboa.MathService", MathService.class);
 		services.put("execboa.ToString", ToStringService.class);
-		String pwd = new File("").getAbsolutePath();
+		final String pwd = new File("").getAbsolutePath();
 		new ALEImplementationCompiler().compile(
 				pwd + "/workspace/standaloneboainterpreter/src/boa_exec_interpreter_truffle.dsl",
 				new File(pwd + "/workspace/standaloneboainterpreter/"), "standaloneboainterpreter", services);

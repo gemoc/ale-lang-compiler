@@ -5,4 +5,6 @@ import org.eclipse.emf.ecore.EObject;
 
 public interface Value extends EObject {
   String customToString();
+
+  Value copy();
 }

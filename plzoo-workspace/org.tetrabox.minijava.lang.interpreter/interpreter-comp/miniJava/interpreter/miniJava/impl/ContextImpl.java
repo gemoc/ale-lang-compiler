@@ -218,6 +218,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
               minijava.MapService.put(this.getCache(), symbol, binding2);
             }
             else {
+              org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(("No binding for symbol ") + (symbol));
             }
           }
         }

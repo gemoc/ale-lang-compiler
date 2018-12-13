@@ -5,6 +5,7 @@ import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.ObjectInstance;
 import miniJava.interpreter.miniJava.ObjectRefValue;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -75,6 +76,15 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
   public String customToString() {
     String result;
     result = this.instance.toString();
+        ;
+    return result;
+  }
+
+  public Value copy() {
+    Value result;
+    miniJava.interpreter.miniJava.ObjectRefValue tmp = ((miniJava.interpreter.miniJava.ObjectRefValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createObjectRefValue());
+        tmp.setInstance(this.instance);
+        result = tmp;
         ;
     return result;
   }

@@ -186,7 +186,9 @@ class ObjectRefValueAspect extends ValueAspect {
 class ArrayRefValueAspect extends ValueAspect {
 	@OverrideAspectMethod
 	def Value copy() {
-		return MinijavadynamicdataFactory::eINSTANCE.createArrayRefValue => [instance = _self.instance]
+		return MinijavadynamicdataFactory::eINSTANCE.createArrayRefValue => [
+			instance = _self.instance
+		]
 	}
 }
 

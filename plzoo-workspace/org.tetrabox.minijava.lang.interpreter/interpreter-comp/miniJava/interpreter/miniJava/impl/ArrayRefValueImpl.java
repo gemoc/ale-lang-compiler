@@ -4,6 +4,7 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.ArrayInstance;
 import miniJava.interpreter.miniJava.ArrayRefValue;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -69,5 +70,14 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value copy() {
+    Value result;
+    miniJava.interpreter.miniJava.ArrayRefValue tmp = ((miniJava.interpreter.miniJava.ArrayRefValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createArrayRefValue());
+        tmp.setInstance(this.instance);
+        result = tmp;
+        ;
+    return result;
   }
 }

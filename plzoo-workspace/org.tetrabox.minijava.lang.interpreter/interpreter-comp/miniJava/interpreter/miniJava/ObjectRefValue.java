@@ -9,4 +9,6 @@ public interface ObjectRefValue extends EObject, Value {
   void setInstance(ObjectInstance value);
 
   String customToString();
+
+  Value copy();
 }

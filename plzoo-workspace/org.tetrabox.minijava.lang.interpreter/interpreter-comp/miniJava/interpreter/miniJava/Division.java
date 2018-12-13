@@ -10,4 +10,6 @@ public interface Division extends EObject, Expression {
   Expression getRight();
 
   void setRight(Expression value);
+
+  Value evaluateExpression(State state);
 }

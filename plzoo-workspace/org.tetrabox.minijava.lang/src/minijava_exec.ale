@@ -244,6 +244,92 @@ open class Or {
 	}
 }
 
+open class ArrayAccess {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::ArrayRefValue arrayVal := self.object.evaluateExpression(state);
+		miniJava::IntegerValue indexVal := self.index.evaluateExpression(state);
+		result := arrayVal.instance.value.get(indexVal.value).copy();
+	}
+}
+
+open class ArrayLength {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::ArrayRefValue arrayRef := self.array.evaluateExpression(state);
+		int size := arrayRef.instance.size;
+		miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
+		tmp.value := size;
+		result := tmp;
+	}
+}
+
+open class Division {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		if(left.oclIsKindOf(miniJava::IntegerValue)) {
+			if(right.oclIsKindOf(miniJava::IntegerValue)) {
+				miniJava::IntegerValue bleft := left;
+				miniJava::IntegerValue bright := right;
+				miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
+				tmp.value := bleft.value / bright.value;
+				result := tmp;
+			} else { 
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class Equality {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		boolean tmp := false;
+		if(left.oclIsKindOf(miniJava::IntegerValue)) {
+			if(right.oclIsKindOf(miniJava::IntegerValue)) {
+				miniJava::IntegerValue ileft := left;
+				miniJava::IntegerValue iright := right;
+				tmp := ileft.value == iright.value;
+			}
+		} else {
+			if(left.oclIsKindOf(miniJava::StringValue)) {
+				if(right.oclIsKindOf(miniJava::StringValue)) {
+					miniJava::StringValue ileft := left;
+					miniJava::StringValue iright := right;
+					tmp := ileft.value == iright.value;
+				}
+			} else {
+				if(left.oclIsKindOf(miniJava::BooleanValue)) {
+					if(right.oclIsKindOf(miniJava::BooleanValue)) {
+						miniJava::BooleanValue ileft := left;
+						miniJava::BooleanValue iright := right;
+						tmp := ileft.isValue() == iright.isValue();
+					}
+				} else {
+					if(left.oclIsKindOf(miniJava::NullValue)) {
+						if(right.oclIsKindOf(miniJava::NullValue)) {
+							tmp := true;
+						}
+					} else {
+						if(left.oclIsKindOf(miniJava::ObjectRefValue)) {
+							if(right.oclIsKindOf(miniJava::ObjectRefValue)) {
+								miniJava::ObjectRefValue ileft := left;
+								miniJava::ObjectRefValue iright := right;
+								tmp := ileft.instance == iright.instance;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		miniJava::BooleanValue tmpo := miniJava::BooleanValue.create();
+		tmpo.value := tmp;
+		result := tmpo; 
+	}
+}
 
 /// DYNAMIC VALUES
 
@@ -322,7 +408,7 @@ open class Context {
 					miniJava::SymbolBinding binding2 := self.getParentContext().findBinding(symbol);
 					self.cache.put(symbol, binding2);
 				} else {
-					("No binding for symbol " + symbol).log();
+					('No binding for symbol ' + symbol).log();
 				}
 			}
 		}
@@ -343,6 +429,11 @@ open class Value {
 	def String customToString() {
 		result := 'ERROR customToString not overloaded';
 	}
+	
+	def miniJava::Value copy() {
+		'ERROR copy not implemented'.log();
+		result := null;
+	}
 }
 
 open class ObjectRefValue {
@@ -350,11 +441,31 @@ open class ObjectRefValue {
 		// TODO
 		result := self.instance.toString();
 	}
+	
+	def miniJava::Value copy() {
+		miniJava::ObjectRefValue tmp := miniJava::ObjectRefValue.create();
+		tmp.instance := self.instance;
+		result := tmp; 
+	}
+}
+
+open class ArrayRefValue {
+	def miniJava::Value copy() {
+		miniJava::ArrayRefValue tmp := miniJava::ArrayRefValue.create();
+		tmp.instance := self.instance;
+		result := tmp; 
+	}
 }
 
 open class IntegerValue {
 	def String customToString() {
 		result := self.value + '';
+	}
+	
+	def miniJava::Value copy() {
+		miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
+		tmp.value := self.value;
+		result := tmp; 
 	}
 }
 
@@ -362,10 +473,29 @@ open class BooleanValue {
 	def String customToString() {
 		result := self.value + '';
 	}
+	
+	def miniJava::Value copy() {
+		miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
+		tmp.value := self.value;
+		result := tmp; 
+	}
 }
 
 open class StringValue {
 	def String customToString() {
 		result := self.value.toString();
+	}
+	
+	def miniJava::Value copy() {
+		miniJava::StringValue tmp := miniJava::StringValue.create();
+		tmp.value := self.value;
+		result := tmp; 
+	}
+}
+
+open class NullValue {
+	def miniJava::Value copy() {
+		miniJava::NullValue tmp := miniJava::NullValue.create();
+		result := tmp; 
 	}
 }

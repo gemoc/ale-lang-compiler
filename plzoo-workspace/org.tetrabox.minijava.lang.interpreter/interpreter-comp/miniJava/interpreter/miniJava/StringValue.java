@@ -9,4 +9,6 @@ public interface StringValue extends EObject, Value {
   void setValue(String value);
 
   String customToString();
+
+  Value copy();
 }

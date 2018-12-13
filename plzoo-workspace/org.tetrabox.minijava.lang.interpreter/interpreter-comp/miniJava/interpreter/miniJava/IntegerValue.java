@@ -9,4 +9,6 @@ public interface IntegerValue extends EObject, Value {
   void setValue(int value);
 
   String customToString();
+
+  Value copy();
 }
