@@ -168,6 +168,8 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   private EClass arrayRefValueEClass = null;
 
+  private EClass symbolToSymbolBindingMapEClass = null;
+
   private EEnum accessLevelEEnum = null;
 
   private MiniJavaPackageImpl() {
@@ -345,6 +347,7 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     createEReference(contextEClass, CONTEXT__BINDINGS);
     createEReference(contextEClass, CONTEXT__PARENT_CONTEXT);
     createEReference(contextEClass, CONTEXT__CHILD_CONTEXT);
+    createEReference(contextEClass, CONTEXT__CACHE);
     valueEClass = createEClass(VALUE);
     integerValueEClass = createEClass(INTEGER_VALUE);
     createEAttribute(integerValueEClass, INTEGER_VALUE__VALUE);
@@ -390,6 +393,9 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     createEReference(objectRefValueEClass, OBJECT_REF_VALUE__INSTANCE);
     arrayRefValueEClass = createEClass(ARRAY_REF_VALUE);
     createEReference(arrayRefValueEClass, ARRAY_REF_VALUE__INSTANCE);
+    symbolToSymbolBindingMapEClass = createEClass(SYMBOL_TO_SYMBOL_BINDING_MAP);
+    createEReference(symbolToSymbolBindingMapEClass, SYMBOL_TO_SYMBOL_BINDING_MAP__KEY);
+    createEReference(symbolToSymbolBindingMapEClass, SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE);
     accessLevelEEnum = createEEnum(ACCESS_LEVEL);
   }
 
@@ -678,6 +684,8 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     	this.getContext_Child_context(), "parentContext", null, 0, 1,  miniJava.interpreter.miniJava.Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getContext_Child_context(), this.getContext(),  
     	this.getContext_Parent_context(), "childContext", null, 0, 1,  miniJava.interpreter.miniJava.Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getContext_Cache(), this.getSymbolToSymbolBindingMap(),  
+    	null, "cache", null, 0, -1,  miniJava.interpreter.miniJava.Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(valueEClass, miniJava.interpreter.miniJava.Value.class, "Value", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(integerValueEClass, miniJava.interpreter.miniJava.IntegerValue.class, "IntegerValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInteger_value_Value(), ecorePackage.getEInt(), "value", null, 0, 1,  miniJava.interpreter.miniJava.IntegerValue.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
@@ -746,6 +754,11 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     initEClass(arrayRefValueEClass, miniJava.interpreter.miniJava.ArrayRefValue.class, "ArrayRefValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getArray_ref_value_Instance(), this.getArrayInstance(),  
     	null, "instance", null, 0, 1,  miniJava.interpreter.miniJava.ArrayRefValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(symbolToSymbolBindingMapEClass, miniJava.interpreter.miniJava.SymbolToSymbolBindingMap.class, "SymbolToSymbolBindingMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSymbol_to_symbol_binding_map_Key(), this.getSymbol(),  
+    	null, "key", null, 0, 1,  miniJava.interpreter.miniJava.SymbolToSymbolBindingMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSymbol_to_symbol_binding_map_Value(), this.getSymbolBinding(),  
+    	null, "value", null, 0, 1,  miniJava.interpreter.miniJava.SymbolToSymbolBindingMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEEnum(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.class, "AccessLevel");
     addEEnumLiteral(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.PRIVATE);
     addEEnumLiteral(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.PROTECTED);
@@ -1060,6 +1073,10 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   public EClass getArrayRefValue() {
     return arrayRefValueEClass;
+  }
+
+  public EClass getSymbolToSymbolBindingMap() {
+    return symbolToSymbolBindingMapEClass;
   }
 
   public EEnum getAccessLevel() {
@@ -1382,6 +1399,10 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     return (EReference) contextEClass.getEStructuralFeatures().get(2);
   }
 
+  public EReference getContext_Cache() {
+    return (EReference) contextEClass.getEStructuralFeatures().get(3);
+  }
+
   public EAttribute getInteger_value_Value() {
     return (EAttribute) integerValueEClass.getEStructuralFeatures().get(0);
   }
@@ -1492,5 +1513,13 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   public EReference getArray_ref_value_Instance() {
     return (EReference) arrayRefValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getSymbol_to_symbol_binding_map_Key() {
+    return (EReference) symbolToSymbolBindingMapEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getSymbol_to_symbol_binding_map_Value() {
+    return (EReference) symbolToSymbolBindingMapEClass.getEStructuralFeatures().get(1);
   }
 }

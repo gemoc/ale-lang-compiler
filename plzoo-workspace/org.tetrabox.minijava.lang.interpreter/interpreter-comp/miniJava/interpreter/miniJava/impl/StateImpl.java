@@ -1,6 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
 import java.lang.Object;
+import java.lang.String;
 import miniJava.interpreter.miniJava.ArrayInstance;
 import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.Frame;
@@ -266,6 +267,12 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
         miniJava.interpreter.miniJava.Context newCurrent = ((miniJava.interpreter.miniJava.Context)currContext.getParentContext());
         currContext.setParentContext(null);
         this.setContextCache(newCurrent);
+        ;
+  }
+
+  public void println(String str) {
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(str);
+        this.outputStream.getStream().add(str);
         ;
   }
 }

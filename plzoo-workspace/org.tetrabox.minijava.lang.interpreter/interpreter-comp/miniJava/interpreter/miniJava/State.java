@@ -1,5 +1,6 @@
 package miniJava.interpreter.miniJava;
 
+import java.lang.String;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -31,4 +32,6 @@ public interface State extends EObject {
   void pushNewContext();
 
   void popCurrentContext();
+
+  void println(String str);
 }

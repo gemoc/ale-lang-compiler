@@ -248,6 +248,8 @@
         eOpposite="#//Context/childContext"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="childContext" eType="#//Context"
         containment="true" eOpposite="#//Context/parentContext"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cache" upperBound="-1"
+        eType="#//SymbolToSymbolBindingMap"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Value">
     <eAnnotations source="aspect"/>
@@ -342,5 +344,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="ArrayRefValue" eSuperTypes="#//Value">
     <eAnnotations source="aspect"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="instance" eType="#//ArrayInstance"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SymbolToSymbolBindingMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//Symbol"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//SymbolBinding"/>
   </eClassifiers>
 </ecore:EPackage>

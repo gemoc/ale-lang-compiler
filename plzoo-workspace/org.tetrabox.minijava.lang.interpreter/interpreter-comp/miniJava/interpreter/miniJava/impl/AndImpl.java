@@ -4,6 +4,8 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.And;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -129,5 +131,28 @@ public class AndImpl extends ExpressionImpl implements And {
     	return basicSetRight(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.Value left = ((miniJava.interpreter.miniJava.Value)this.left.evaluateExpression(state));
+        miniJava.interpreter.miniJava.Value right = ((miniJava.interpreter.miniJava.Value)this.right.evaluateExpression(state));
+        if(left instanceof miniJava.interpreter.miniJava.BooleanValue) {
+          if(right instanceof miniJava.interpreter.miniJava.BooleanValue) {
+            miniJava.interpreter.miniJava.BooleanValue bleft = ((miniJava.interpreter.miniJava.BooleanValue)left);
+            miniJava.interpreter.miniJava.BooleanValue bright = ((miniJava.interpreter.miniJava.BooleanValue)right);
+            miniJava.interpreter.miniJava.BooleanValue tmp = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
+            tmp.setValue(((bleft.isValue()) && (bright.isValue())));
+            result = tmp;
+          }
+          else {
+            result = null;
+          }
+        }
+        else {
+          result = null;
+        }
+        ;
+    return result;
   }
 }

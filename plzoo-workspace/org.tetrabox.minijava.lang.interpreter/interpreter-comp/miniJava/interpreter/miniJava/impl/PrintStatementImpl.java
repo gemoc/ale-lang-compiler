@@ -92,7 +92,8 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
   }
 
   public void evaluateStatement(State state) {
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(this.expression.evaluateExpression(state).customToString());
+    java.lang.String res = ((java.lang.String)this.expression.evaluateExpression(state).customToString());
+        state.println(res);
         ;
   }
 }

@@ -9,17 +9,21 @@ import miniJava.interpreter.miniJava.SymbolBinding;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 public class ContextImpl extends MinimalEObjectImpl.Container implements Context {
   protected EList<SymbolBinding> bindings;
 
   protected Context childContext;
+
+  protected EMap<Symbol, SymbolBinding> cache;
 
   protected ContextImpl() {
     super();
@@ -91,6 +95,13 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
   public Context getChildContext() {
     return childContext;}
 
+  public EMap<Symbol, SymbolBinding> getCache() {
+    if (cache == null) {
+    	cache = new EcoreEMap<Symbol, SymbolBinding>(MiniJavaPackage.Literals.SYMBOL_TO_SYMBOL_BINDING_MAP, SymbolToSymbolBindingMapImpl.class, this, MiniJavaPackage.CONTEXT__CACHE);
+    }
+    return cache;
+  }
+
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.CONTEXT;}
 
@@ -105,6 +116,9 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
     return;
     case MiniJavaPackage.CONTEXT__CHILD_CONTEXT:
     	setChildContext((miniJava.interpreter.miniJava.Context) newValue);
+    return;
+    case MiniJavaPackage.CONTEXT__CACHE:
+    	((org.eclipse.emf.ecore.EStructuralFeature.Setting)getCache()).set(newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -121,6 +135,9 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
     case MiniJavaPackage.CONTEXT__CHILD_CONTEXT:
     	setChildContext((miniJava.interpreter.miniJava.Context) null);
     return;
+    case MiniJavaPackage.CONTEXT__CACHE:
+    	getCache().clear();
+    return;
     }
     super.eUnset(featureID);
   }
@@ -133,6 +150,11 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
     return getParentContext();
     case MiniJavaPackage.CONTEXT__CHILD_CONTEXT:
     return getChildContext();
+    case MiniJavaPackage.CONTEXT__CACHE:
+    if (coreType)
+    	return getCache();
+    else
+    	return getCache().map();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -145,6 +167,8 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
     	return getParentContext() != null;
     case MiniJavaPackage.CONTEXT__CHILD_CONTEXT:
     	return childContext != null;
+    case MiniJavaPackage.CONTEXT__CACHE:
+    	return cache != null && !cache.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -183,8 +207,21 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 
   public SymbolBinding findBinding(Symbol symbol) {
     SymbolBinding result;
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("TODO findBinding");
-        result = null;
+    if(!(minijava.MapService.containsKey(this.getCache(), symbol))) {
+          miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.getBindings(), (x) -> java.util.Objects.equals((x.getSymbol()), (symbol)))));
+          if((binding) != (null)) {
+            minijava.MapService.put(this.getCache(), symbol, binding);
+          }
+          else {
+            if((this.getParentContext()) != (null)) {
+              miniJava.interpreter.miniJava.SymbolBinding binding2 = ((miniJava.interpreter.miniJava.SymbolBinding)this.getParentContext().findBinding(symbol));
+              minijava.MapService.put(this.getCache(), symbol, binding2);
+            }
+            else {
+            }
+          }
+        }
+        result = this.getCache().get(symbol);
         ;
     return result;
   }

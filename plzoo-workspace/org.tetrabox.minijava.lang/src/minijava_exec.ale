@@ -1,5 +1,7 @@
 behavior minijava_exec;
 
+use minijava.MapService;
+
 open class Program {
 	@main
 	def void main() {
@@ -116,7 +118,8 @@ open class Assignment {
 
 open class PrintStatement {
 	def void evaluateStatement(miniJava::State state) {
-		self.expression.evaluateExpression(state).customToString().log();
+		String res := self.expression.evaluateExpression(state).customToString();
+		state.println(res);
 	}
 }
 
@@ -185,6 +188,62 @@ open class Expression {
 	} 
 }
 
+open class BoolConstant {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::BooleanValue ret := miniJava::BooleanValue.create();
+		ret.value := self.value == 'true';
+		result := ret;
+	}
+}
+
+open class StringConstant {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::StringValue ret := miniJava::StringValue.create();
+		ret.value := self.value;
+		result := ret;
+	}
+}
+
+open class And {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		if(left.oclIsKindOf(miniJava::BooleanValue)) {
+			if(right.oclIsKindOf(miniJava::BooleanValue)) {
+				miniJava::BooleanValue bleft := left;
+				miniJava::BooleanValue bright := right;
+				miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
+				tmp.value := bleft.isValue() and bright.isValue();
+				result := tmp;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class Or {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		if(left.oclIsKindOf(miniJava::BooleanValue)) {
+			if(right.oclIsKindOf(miniJava::BooleanValue)) {
+				miniJava::BooleanValue bleft := left;
+				miniJava::BooleanValue bright := right;
+				miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
+				tmp.value := bleft.isValue() or bright.isValue();
+				result := tmp;
+			} else {
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
 
 /// DYNAMIC VALUES
 
@@ -223,6 +282,11 @@ open class State {
 		self.contextCache := newCurrent;
 	}
 	
+	def void println(String str) {
+		str.log();
+		self.outputStream.stream += str;
+	}
+	
 }
 
 open class Frame {
@@ -249,9 +313,20 @@ open class Frame {
 
 open class Context {
 	def miniJava::SymbolBinding findBinding(miniJava::Symbol symbol) {
-		//TODO
-		'TODO findBinding'.log();
-		result := null;
+		if (not self.cache.containsKey(symbol)) {
+			miniJava::SymbolBinding binding := self.bindings->select(x | x.symbol == symbol)->first();
+			if (binding != null) {
+				self.cache.put(symbol, binding);
+			} else {
+				if (self.getParentContext() != null) {
+					miniJava::SymbolBinding binding2 := self.getParentContext().findBinding(symbol);
+					self.cache.put(symbol, binding2);
+				} else {
+					("No binding for symbol " + symbol).log();
+				}
+			}
+		}
+		result := self.cache.get(symbol);
 	}
 	
 	def miniJava::Context findCurrentContext() {

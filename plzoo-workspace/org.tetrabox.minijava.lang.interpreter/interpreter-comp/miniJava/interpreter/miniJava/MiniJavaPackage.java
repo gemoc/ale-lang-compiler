@@ -169,7 +169,9 @@ public interface MiniJavaPackage extends EPackage {
 
   int ARRAY_REF_VALUE = 75;
 
-  int ACCESS_LEVEL = 76;
+  int SYMBOL_TO_SYMBOL_BINDING_MAP = 76;
+
+  int ACCESS_LEVEL = 77;
 
   int PROGRAM__NAME = 0;
 
@@ -329,6 +331,8 @@ public interface MiniJavaPackage extends EPackage {
 
   int CONTEXT__CHILD_CONTEXT = 2;
 
+  int CONTEXT__CACHE = 3;
+
   int INTEGER_VALUE__VALUE = 0;
 
   int SYMBOL_BINDING__VALUE = 0;
@@ -384,6 +388,10 @@ public interface MiniJavaPackage extends EPackage {
   int OBJECT_REF_VALUE__INSTANCE = 0;
 
   int ARRAY_REF_VALUE__INSTANCE = 0;
+
+  int SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = 0;
+
+  int SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = 1;
 
   EClass getProgram();
 
@@ -537,6 +545,8 @@ public interface MiniJavaPackage extends EPackage {
 
   EClass getArrayRefValue();
 
+  EClass getSymbolToSymbolBindingMap();
+
   EEnum getAccessLevel();
 
   EReference getProgram_Imports();
@@ -675,6 +685,8 @@ public interface MiniJavaPackage extends EPackage {
 
   EReference getContext_Child_context();
 
+  EReference getContext_Cache();
+
   EReference getSymbol_binding_Value();
 
   EReference getSymbol_binding_Symbol();
@@ -720,6 +732,10 @@ public interface MiniJavaPackage extends EPackage {
   EReference getObject_ref_value_Instance();
 
   EReference getArray_ref_value_Instance();
+
+  EReference getSymbol_to_symbol_binding_map_Key();
+
+  EReference getSymbol_to_symbol_binding_map_Value();
 
   EAttribute getProgram_Name();
 
@@ -908,6 +924,8 @@ public interface MiniJavaPackage extends EPackage {
 
     EClass ARRAY_REF_VALUE = eINSTANCE.getArrayRefValue();
 
+    EClass SYMBOL_TO_SYMBOL_BINDING_MAP = eINSTANCE.getSymbolToSymbolBindingMap();
+
     EReference PROGRAM__IMPORTS = eINSTANCE.getProgram_Imports();
 
     EReference PROGRAM__CLASSES = eINSTANCE.getProgram_Classes();
@@ -1044,6 +1062,8 @@ public interface MiniJavaPackage extends EPackage {
 
     EReference CONTEXT__CHILD_CONTEXT = eINSTANCE.getContext_Child_context();
 
+    EReference CONTEXT__CACHE = eINSTANCE.getContext_Cache();
+
     EReference SYMBOL_BINDING__VALUE = eINSTANCE.getSymbol_binding_Value();
 
     EReference SYMBOL_BINDING__SYMBOL = eINSTANCE.getSymbol_binding_Symbol();
@@ -1089,6 +1109,10 @@ public interface MiniJavaPackage extends EPackage {
     EReference OBJECT_REF_VALUE__INSTANCE = eINSTANCE.getObject_ref_value_Instance();
 
     EReference ARRAY_REF_VALUE__INSTANCE = eINSTANCE.getArray_ref_value_Instance();
+
+    EReference SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = eINSTANCE.getSymbol_to_symbol_binding_map_Key();
+
+    EReference SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = eINSTANCE.getSymbol_to_symbol_binding_map_Value();
 
     EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 

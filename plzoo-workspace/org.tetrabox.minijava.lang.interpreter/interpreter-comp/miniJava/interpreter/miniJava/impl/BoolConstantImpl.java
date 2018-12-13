@@ -4,6 +4,8 @@ import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.BoolConstant;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -65,5 +67,14 @@ public class BoolConstantImpl extends ExpressionImpl implements BoolConstant {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.BooleanValue ret = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
+        ret.setValue(java.util.Objects.equals((this.value), ("true")));
+        result = ret;
+        ;
+    return result;
   }
 }

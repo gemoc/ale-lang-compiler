@@ -3,6 +3,7 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import java.lang.String;
+import java.util.Map;
 import miniJava.interpreter.miniJava.AccessLevel;
 import miniJava.interpreter.miniJava.And;
 import miniJava.interpreter.miniJava.ArrayAccess;
@@ -256,6 +257,8 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
     	return createObjectRefValue();
     case MiniJavaPackage.ARRAY_REF_VALUE:
     	return createArrayRefValue();
+    case MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP:
+    	return (org.eclipse.emf.ecore.EObject) createSymbolToSymbolBindingMap();
     default:
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -654,6 +657,11 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
 
   public ArrayRefValue createArrayRefValue() {
     ArrayRefValueImpl ret = new ArrayRefValueImpl();
+    return ret;
+  }
+
+  public Map.Entry<Symbol, SymbolBinding> createSymbolToSymbolBindingMap() {
+    SymbolToSymbolBindingMapImpl ret = new SymbolToSymbolBindingMapImpl();
     return ret;
   }
 
