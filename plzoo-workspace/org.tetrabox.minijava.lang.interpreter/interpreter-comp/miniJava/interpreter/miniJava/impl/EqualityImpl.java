@@ -168,11 +168,13 @@ public class EqualityImpl extends ExpressionImpl implements Equality {
                 }
               }
               else {
-                if (left instanceof miniJava.interpreter.miniJava.ObjectRefValue && right instanceof miniJava.interpreter.miniJava.ObjectRefValue) {
+                if(left instanceof miniJava.interpreter.miniJava.ObjectRefValue) {
+                  if(right instanceof miniJava.interpreter.miniJava.ObjectRefValue) {
                     miniJava.interpreter.miniJava.ObjectRefValue ileft = ((miniJava.interpreter.miniJava.ObjectRefValue)left);
                     miniJava.interpreter.miniJava.ObjectRefValue iright = ((miniJava.interpreter.miniJava.ObjectRefValue)right);
                     tmp = java.util.Objects.equals((ileft.getInstance()), (iright.getInstance()));
                   }
+                }
               }
             }
           }

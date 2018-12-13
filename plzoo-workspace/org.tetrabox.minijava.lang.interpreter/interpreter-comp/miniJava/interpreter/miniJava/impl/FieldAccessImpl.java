@@ -5,6 +5,8 @@ import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.Field;
 import miniJava.interpreter.miniJava.FieldAccess;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -111,5 +113,16 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     	return basicSetReceiver(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.ObjectRefValue tmp0 = ((miniJava.interpreter.miniJava.ObjectRefValue)this.receiver.evaluateExpression(state));
+        miniJava.interpreter.miniJava.ObjectInstance realReceiver = ((miniJava.interpreter.miniJava.ObjectInstance)tmp0.getInstance());
+        miniJava.interpreter.miniJava.Field fld = ((miniJava.interpreter.miniJava.Field)this.field);
+        miniJava.interpreter.miniJava.FieldBinding fb = ((miniJava.interpreter.miniJava.FieldBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(realReceiver.getFieldbindings(), (x) -> java.util.Objects.equals((x.getField()), (fld)))));
+        result = fb.getValue();
+        ;
+    return result;
   }
 }

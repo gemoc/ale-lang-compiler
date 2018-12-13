@@ -10,4 +10,6 @@ public interface FieldAccess extends EObject, Expression {
   Field getField();
 
   void setField(Field value);
+
+  Value evaluateExpression(State state);
 }

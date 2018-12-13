@@ -331,6 +331,85 @@ open class Equality {
 	}
 }
 
+open class FieldAccess {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::ObjectRefValue tmp0 := self.receiver.evaluateExpression(state);
+		miniJava::ObjectInstance realReceiver := tmp0.instance;
+		miniJava::Field fld := self.field;
+		miniJava::FieldBinding fb := realReceiver.fieldbindings->select( x | x.field == fld)->first();
+		result := fb.value;
+	}
+}
+
+open class Inequality {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		boolean tmp := false;
+		if(left.oclIsKindOf(miniJava::IntegerValue)) {
+			if(right.oclIsKindOf(miniJava::IntegerValue)) {
+				miniJava::IntegerValue ileft := left;
+				miniJava::IntegerValue iright := right;
+				tmp := ileft.value == iright.value;
+			}
+		} else {
+			if(left.oclIsKindOf(miniJava::StringValue)) {
+				if(right.oclIsKindOf(miniJava::StringValue)) {
+					miniJava::StringValue ileft := left;
+					miniJava::StringValue iright := right;
+					tmp := ileft.value == iright.value;
+				}
+			} else {
+				if(left.oclIsKindOf(miniJava::BooleanValue)) {
+					if(right.oclIsKindOf(miniJava::BooleanValue)) {
+						miniJava::BooleanValue ileft := left;
+						miniJava::BooleanValue iright := right;
+						tmp := ileft.isValue() == iright.isValue();
+					}
+				} else {
+					if(left.oclIsKindOf(miniJava::NullValue)) {
+						if(right.oclIsKindOf(miniJava::NullValue)) {
+							tmp := true;
+						}
+					} else {
+						if(left.oclIsKindOf(miniJava::ObjectRefValue)) {
+							if(right.oclIsKindOf(miniJava::ObjectRefValue)) {
+								miniJava::ObjectRefValue ileft := left;
+								miniJava::ObjectRefValue iright := right;
+								tmp := ileft.instance == iright.instance;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		miniJava::BooleanValue tmpo := miniJava::BooleanValue.create();
+		tmpo.value := not tmp;
+		result := tmpo; 
+	}
+}
+
+open class Inferior {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		if(left.oclIsKindOf(miniJava::IntegerValue)) {
+			if(right.oclIsKindOf(miniJava::IntegerValue)) {
+				miniJava::IntegerValue bleft := left;
+				miniJava::IntegerValue bright := right;
+				miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
+				tmp.value := bleft.value < bright.value;
+				result := tmp;
+			} else { 
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
 /// DYNAMIC VALUES
 
 open class State {
