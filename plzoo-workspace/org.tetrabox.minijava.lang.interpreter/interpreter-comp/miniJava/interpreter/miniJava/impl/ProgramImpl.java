@@ -143,13 +143,19 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   }
 
   public void main() {
-    this.initialize();
+    this.initialize(null);
         this.execute();
         ;
   }
 
-  public void initialize() {
-    ;
+  public void initialize(EList args) {
+    miniJava.interpreter.miniJava.Context rootCont = ((miniJava.interpreter.miniJava.Context)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createContext());
+        miniJava.interpreter.miniJava.State state = ((miniJava.interpreter.miniJava.State)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createState());
+        state.setOutputStream(miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createOutputStream());
+        state.setRootFrame(miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createFrame());
+        state.getRootFrame().setRootContext(rootCont);
+        this.setState(state);
+        ;
   }
 
   public State execute() {

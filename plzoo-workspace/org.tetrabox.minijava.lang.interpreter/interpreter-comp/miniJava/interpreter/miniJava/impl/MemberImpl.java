@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 public class MemberImpl extends TypedDeclarationImpl implements Member {
-  protected static final AccessLevel ACCESS_EDEFAULT = miniJava.interpreter.miniJava.AccessLevel.valueOf("private");
+  protected static final AccessLevel ACCESS_EDEFAULT = miniJava.interpreter.miniJava.AccessLevel.valueOf("PRIVATE");
 
   protected AccessLevel access = ACCESS_EDEFAULT;
 

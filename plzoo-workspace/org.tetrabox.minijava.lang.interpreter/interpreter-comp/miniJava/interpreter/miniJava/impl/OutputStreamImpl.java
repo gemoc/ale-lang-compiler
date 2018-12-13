@@ -5,24 +5,25 @@ import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.OutputStream;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 public class OutputStreamImpl extends MinimalEObjectImpl.Container implements OutputStream {
-  protected static final String STREAM_EDEFAULT = null;
-
-  protected String stream = STREAM_EDEFAULT;
+  protected EList<String> stream;
 
   protected OutputStreamImpl() {
     super();
   }
 
-  public String getStream() {
-    return stream;}
-
-  public void setStream(String stream) {
-    this.stream = stream;}
+  public EList<String> getStream() {
+    if (stream == null) {
+    	stream = new EDataTypeEList<String>(String.class, this, miniJava.interpreter.miniJava.MiniJavaPackage.OUTPUT_STREAM__STREAM);
+    }
+    return stream;					
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.OUTPUT_STREAM;}
@@ -30,7 +31,8 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.OUTPUT_STREAM__STREAM:
-    	setStream((java.lang.String) newValue);
+    	getStream().clear();
+    	getStream().addAll((java.util.Collection<? extends String>) newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -39,7 +41,7 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OUTPUT_STREAM__STREAM:
-    	setStream(STREAM_EDEFAULT);
+    	getStream().clear();
     return;
     }
     super.eUnset(featureID);
@@ -56,7 +58,7 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OUTPUT_STREAM__STREAM:
-    	return stream != STREAM_EDEFAULT;
+    	return stream != null && !stream.isEmpty();
     }
     return super.eIsSet(featureID);
   }

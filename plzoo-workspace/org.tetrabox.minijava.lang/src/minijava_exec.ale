@@ -3,12 +3,19 @@ behavior minijava_exec;
 open class Program {
 	@main
 	def void main() {
-		self.initialize();
+		self.initialize(null);
 		self.execute();
 	}
 	
-	def void initialize() {
+	def void initialize(Sequence(String) args) {
 		// possibly useless if we assume a main is available
+		
+		miniJava::Context rootCont := miniJava::Context.create();
+		miniJava::State state := miniJava::State.create();
+		state.outputStream := miniJava::OutputStream.create();
+		state.rootFrame := miniJava::Frame.create();
+		state.rootFrame.rootContext := rootCont;
+		self.state := state;
 	}
 	
 	def miniJava::State execute() {
@@ -47,6 +54,7 @@ open class Block {
 		int i := 0;
 		while(i < lgt and currentFrame.returnValue == null) {
 			self.statements->at(i).evaluateStatement(state);
+			i := i+1;
 		}
 	}
 	
@@ -76,12 +84,9 @@ open class Assignment {
 					miniJava::FieldAccess assigneeFieldAccess := assignee;
 					miniJava::Field f := assigneeFieldAccess.field;
 					
-//					val realReceiver = (assignee.receiver.evaluateExpression(state) as ObjectRefValue).instance
 					miniJava::ObjectRefValue realReceiverValue := assigneeFieldAccess.receiver.evaluateExpression(state);
 					miniJava::ObjectInstance realReceiver := realReceiverValue.instance;
 
-//					val existingBinding = realReceiver.fieldbindings.findFirst[it.field === f]
-//					self.nodes->select(n |n.canFire())->first();
 					miniJava::FieldBinding existingBinding := realReceiver.fieldbindings->select(x | x.field == f)->first();
 					if(existingBinding == null) {
 						miniJava::FieldBinding binding := miniJava::FieldBinding.create();
@@ -93,9 +98,6 @@ open class Assignment {
 					}
 				} else {
 					if(assignee.oclIsKindOf(miniJava::ArrayAccess)) {
-//				val array = (assignee.object.evaluateExpression(state) as ArrayRefValue).instance
-//				val index = (assignee.index.evaluateExpression(state) as IntegerValue).value
-//				array.value.set(index,right)
 						miniJava::ArrayAccess assigneeArrayAccess := assignee;
 						miniJava::ArrayRefValue arrayRefValue := assigneeArrayAccess.object.evaluateExpression(state);
 						miniJava::ArrayInstance array := arrayRefValue.instance;
@@ -190,7 +192,7 @@ open class State {
 	
 	def miniJava::Frame findCurrentFrame() {
 		if(self.frameCache == null) {
-			self.frameCache = self.rootFrame.findCurrentFrame();
+			self.frameCache := self.rootFrame.findCurrentFrame();
 		}
 		result := self.frameCache;
 	}
@@ -225,20 +227,39 @@ open class State {
 
 open class Frame {
 	def miniJava::Context findCurrentContext() {
-		// TODO
-		result := miniJava::Context.create();
+		if (self.childFrame != null) {
+			result := self.childFrame.findCurrentContext();
+		} else {
+			if (self.rootContext != null) {
+				result := self.rootContext.findCurrentContext();
+			} else {
+				result := null;
+			}
+		}
 	}
 	
 	def miniJava::Frame findCurrentFrame() {
-		// TODO
-		result := miniJava::Frame.create();
+		if(self.childFrame != null) {
+			result := self.childFrame.findCurrentFrame();
+		} else {
+			result := self;
+		}
 	}
 }
 
 open class Context {
 	def miniJava::SymbolBinding findBinding(miniJava::Symbol symbol) {
 		//TODO
+		'TODO findBinding'.log();
 		result := null;
+	}
+	
+	def miniJava::Context findCurrentContext() {
+		if (self.childContext != null) {
+			result := self.childContext.findCurrentContext();
+		} else {
+			result :=  self;
+		}
 	}
 }
 

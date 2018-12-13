@@ -47,6 +47,7 @@ import org.eclipse.emf.ecore.EEnum
 import java.util.Comparator
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.emf.ecoretools.ale.implementation.While
+import org.eclipse.emf.ecore.util.EDataTypeEList
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -92,33 +93,53 @@ class EClassImplementationCompiler {
 		val fieldsEAttributes = eClass.EAttributes.map [ field |
 			val fet = field.EType
 			val type = fet.scopedTypeRef(packageRoot)
-			val edefault = if(fet instanceof EEnum) {
-				FieldSpec
-					.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
-					.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«namingUtils.classInterfacePackageName(fet, packageRoot)».«namingUtils.classInterfaceClassName(fet)».valueOf("«field.defaultValue»")«ENDIF»''')
-					.addModifiers(PROTECTED, STATIC, FINAL).build
+			val isMultiple = field.upperBound > 1 || field.upperBound < 0
+			if(isMultiple) {
+				val fieldField = FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(EList), type), '''«field.name»''', PROTECTED).build
+				#[fieldField]
 			} else {
-				FieldSpec
-					.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
-					.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''')
-					.addModifiers(PROTECTED, STATIC, FINAL).build
+				val edefault = if(fet instanceof EEnum) {
+					FieldSpec
+						.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
+						.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«namingUtils.classInterfacePackageName(fet, packageRoot)».«namingUtils.classInterfaceClassName(fet)».valueOf("«field.defaultValue.toString.toUpperCase»")«ENDIF»''')
+						.addModifiers(PROTECTED, STATIC, FINAL).build
+				} else {
+					FieldSpec
+						.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
+						.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''')
+						.addModifiers(PROTECTED, STATIC, FINAL).build
+				}
+	
+				val fieldField = FieldSpec.builder(type, field.name).initializer('''«field.name.toUpperCase»_EDEFAULT''').
+					addModifiers(PROTECTED).build
+				#[edefault, fieldField]
+				
 			}
-
-			val fieldField = FieldSpec.builder(type, field.name).initializer('''«field.name.toUpperCase»_EDEFAULT''').
-				addModifiers(PROTECTED).build
-			#[edefault, fieldField]
 		].flatten
 
 		val methodsEAttributes = eClass.EAttributes.map [ field |
 			val type = field.EType.scopedTypeRef(packageRoot)
 
-			val getter = MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').addModifiers(PUBLIC).
-				addCode('''return «field.name»;''').returns(type).build
-			val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
-				ParameterSpec.builder(type, field.name).build).addCode('''this.«field.name» = «field.name»;''').
-				addModifiers(PUBLIC).build
-
-			#[getter, setter]
+			val isMultiple = field.upperBound > 1 || field.upperBound < 0
+			if(isMultiple) {
+				val typeList = ParameterizedTypeName.get(ClassName.get(EDataTypeEList), type)
+				val getter = MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').addModifiers(PUBLIC).
+					addCode('''
+					if («field.name» == null) {
+						«field.name» = new $T($T.class, this, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)»);
+					}
+					return «field.name»;					
+					''', typeList, type).returns(ParameterizedTypeName.get(ClassName.get(EList), type)).build
+				#[getter]
+			} else {
+				val getter = MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').addModifiers(PUBLIC).
+					addCode('''return «field.name»;''').returns(type).build
+				val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
+					ParameterSpec.builder(type, field.name).build).addCode('''this.«field.name» = «field.name»;''').
+					addModifiers(PUBLIC).build
+	
+				#[getter, setter]
+			}
 		].flatten
 
 		/*
@@ -420,7 +441,12 @@ class EClassImplementationCompiler {
 			«FOR esf : eClass.EStructuralFeatures»
 				case $1T.«esf.name.normalizeUpperField(eClass.name)»:
 					«IF esf instanceof EAttribute»
+						«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 						set«esf.name.toFirstUpper»((«esf.EType.scopedTypeRef(packageRoot)») newValue);
+						«ELSE»
+						get«esf.name.toFirstUpper»().clear();
+						get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends String>) newValue);
+						«ENDIF»
 					«ELSE»
 						«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 							set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName(packageRoot)».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») newValue);
@@ -446,7 +472,11 @@ class EClassImplementationCompiler {
 				«FOR esf : eClass.EStructuralFeatures»
 					case $1T.«esf.name.normalizeUpperField(eClass.name)»:
 						«IF esf instanceof EAttribute»
+							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 							set«esf.name.toFirstUpper»(«esf.name.toUpperCase»_EDEFAULT);
+							«ELSE»
+							get«esf.name.toFirstUpper»().clear();
+							«ENDIF»
 						«ELSE»
 							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 								set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName(packageRoot)».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») null);
@@ -486,7 +516,11 @@ class EClassImplementationCompiler {
 				«FOR esf : eClass.EStructuralFeatures»
 					case $1T.«esf.name.normalizeUpperField(eClass.name)»:
 						«IF esf instanceof EAttribute»
+							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 							return «esf.name» != «esf.name.toUpperCase»_EDEFAULT;
+							«ELSE»
+							return «esf.name» != null && !«esf.name».isEmpty();
+							«ENDIF»
 						«ELSE»
 							«IF esf.upperBound <= 1»
 								«IF (esf as EReference).EOpposite !== null && (esf as EReference).EOpposite.containment»

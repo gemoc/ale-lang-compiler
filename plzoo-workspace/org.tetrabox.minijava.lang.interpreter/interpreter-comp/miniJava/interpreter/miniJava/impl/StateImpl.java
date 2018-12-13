@@ -230,7 +230,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
   public Frame findCurrentFrame() {
     Frame result;
     if(java.util.Objects.equals((this.frameCache), (null))) {
-          java.util.Objects.equals((this.frameCache), (this.rootFrame.findCurrentFrame()));
+          this.setFrameCache(this.rootFrame.findCurrentFrame());
         }
         result = this.frameCache;
         ;

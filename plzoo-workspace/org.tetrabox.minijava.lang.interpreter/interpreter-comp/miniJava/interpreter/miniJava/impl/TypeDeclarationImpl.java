@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
 public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclaration {
-  protected static final AccessLevel ACCESSLEVEL_EDEFAULT = miniJava.interpreter.miniJava.AccessLevel.valueOf("private");
+  protected static final AccessLevel ACCESSLEVEL_EDEFAULT = miniJava.interpreter.miniJava.AccessLevel.valueOf("PRIVATE");
 
   protected AccessLevel accessLevel = ACCESSLEVEL_EDEFAULT;
 

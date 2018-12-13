@@ -306,14 +306,29 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
 
   public Context findCurrentContext() {
     Context result;
-    result = miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createContext();
+    if((this.childFrame) != (null)) {
+          result = this.childFrame.findCurrentContext();
+        }
+        else {
+          if((this.rootContext) != (null)) {
+            result = this.rootContext.findCurrentContext();
+          }
+          else {
+            result = null;
+          }
+        }
         ;
     return result;
   }
 
   public Frame findCurrentFrame() {
     Frame result;
-    result = miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createFrame();
+    if((this.childFrame) != (null)) {
+          result = this.childFrame.findCurrentFrame();
+        }
+        else {
+          result = this;
+        }
         ;
     return result;
   }

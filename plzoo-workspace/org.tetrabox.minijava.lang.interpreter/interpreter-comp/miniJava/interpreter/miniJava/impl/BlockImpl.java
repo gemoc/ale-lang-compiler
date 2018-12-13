@@ -79,6 +79,7 @@ public class BlockImpl extends StatementImpl implements Block {
         int i = ((int)0);
         while ((((i) < (lgt)) && (java.util.Objects.equals((currentFrame.getReturnValue()), (null))))) {
           org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.getStatements(), i).evaluateStatement(state);
+          i = (i) + (1);
         }
         ;
   }

@@ -71,7 +71,7 @@ public class CollectionService {
 	public static <T> T get(final Iterable<T> collection, int idx) {
 		final Iterator<T> iterator = collection.iterator();
 		T ret = null;
-		for (int i = 0; i < idx; i++) {
+		for (int i = 0; i <= idx; i++) {
 			if (iterator.hasNext())
 				ret = iterator.next();
 			else

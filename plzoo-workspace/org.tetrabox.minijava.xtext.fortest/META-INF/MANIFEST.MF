@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: org.tetrabox.minijava.xtext.fortest
+Bundle-ManifestVersion: 2
+Bundle-Name: org.tetrabox.minijava.xtext.fortest
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.tetrabox.minijava.xtext.fortest;singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.tetrabox.minijava.lang.interpreter;bundle-version="1.0.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib;bundle-version="2.14.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.tetrabox.minijava.xtext.fortest.services,
+ org.tetrabox.minijava.xtext.fortest.serializer,
+ org.tetrabox.minijava.xtext.fortest,
+ org.tetrabox.minijava.xtext.fortest.parser.antlr,
+ org.tetrabox.minijava.xtext.fortest.validation,
+ org.tetrabox.minijava.xtext.fortest.scoping,
+ org.tetrabox.minijava.xtext.fortest.formatting2,
+ org.tetrabox.minijava.xtext.fortest.parser.antlr.internal,
+ org.tetrabox.minijava.xtext.fortest.generator
+Import-Package: org.apache.log4j

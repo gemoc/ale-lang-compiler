@@ -178,12 +178,22 @@ class EClassInterfaceCompiler {
 		// TODO: weave the dynamically declared fields on the class
 		val attributesMethods = eClass.EAttributes.map [ field |
 			val fieldType = field.EType.scopedInterfaceTypeRef(packageRoot)
-			val getter = MethodSpec.
-				methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').
-				returns(fieldType).addModifiers(ABSTRACT, PUBLIC).build
-			val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType, 'value').
-				addModifiers(ABSTRACT, PUBLIC).build
-			#[getter, setter]
+			val isMultiple = field.upperBound > 1 || field.upperBound < 0
+			if(isMultiple) {
+				val elistType = ParameterizedTypeName.get(ClassName.get(EList), fieldType)
+				val getter = MethodSpec.
+					methodBuilder('''get«field.name.toFirstUpper»''').
+					returns(elistType).addModifiers(ABSTRACT, PUBLIC).build
+				#[getter]
+			} else {		
+				val getter = MethodSpec.
+					methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').
+					returns(fieldType).addModifiers(ABSTRACT, PUBLIC).build
+				val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType, 'value').
+					addModifiers(ABSTRACT, PUBLIC).build
+				#[getter, setter]
+			
+			}
 		].flatten
 
 		val referencesMethods = eClass.EReferences.map [ field |

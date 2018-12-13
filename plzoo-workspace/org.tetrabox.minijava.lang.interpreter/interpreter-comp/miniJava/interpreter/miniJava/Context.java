@@ -15,4 +15,6 @@ public interface Context extends EObject {
   void setChildContext(Context value);
 
   SymbolBinding findBinding(Symbol symbol);
+
+  Context findCurrentContext();
 }

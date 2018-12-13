@@ -19,7 +19,7 @@ public interface Program extends EObject {
 
   void main();
 
-  void initialize();
+  void initialize(EList args);
 
   State execute();
 

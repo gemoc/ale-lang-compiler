@@ -183,7 +183,20 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 
   public SymbolBinding findBinding(Symbol symbol) {
     SymbolBinding result;
-    result = null;
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("TODO findBinding");
+        result = null;
+        ;
+    return result;
+  }
+
+  public Context findCurrentContext() {
+    Context result;
+    if((this.childContext) != (null)) {
+          result = this.childContext.findCurrentContext();
+        }
+        else {
+          result = this;
+        }
         ;
     return result;
   }
