@@ -196,6 +196,14 @@ open class BoolConstant {
 	}
 }
 
+open class IntConstant {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::IntegerValue ret := miniJava::IntegerValue.create();
+		ret.value := self.value;
+		result := ret;
+	}
+}
+
 open class StringConstant {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 		miniJava::StringValue ret := miniJava::StringValue.create();
@@ -400,6 +408,26 @@ open class Inferior {
 				miniJava::IntegerValue bright := right;
 				miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
 				tmp.value := bleft.value < bright.value;
+				result := tmp;
+			} else { 
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class InferiorOrEqual {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		if(left.oclIsKindOf(miniJava::IntegerValue)) {
+			if(right.oclIsKindOf(miniJava::IntegerValue)) {
+				miniJava::IntegerValue bleft := left;
+				miniJava::IntegerValue bright := right;
+				miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
+				tmp.value := bleft.value <= bright.value;
 				result := tmp;
 			} else { 
 				result := null;

@@ -3,6 +3,8 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.IntConstant;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -64,5 +66,14 @@ public class IntConstantImpl extends ExpressionImpl implements IntConstant {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.IntegerValue ret = ((miniJava.interpreter.miniJava.IntegerValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createIntegerValue());
+        ret.setValue(this.value);
+        result = ret;
+        ;
+    return result;
   }
 }
