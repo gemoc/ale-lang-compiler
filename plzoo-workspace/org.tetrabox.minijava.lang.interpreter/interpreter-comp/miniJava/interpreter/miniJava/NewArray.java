@@ -10,4 +10,6 @@ public interface NewArray extends EObject, Expression {
   Expression getSize();
 
   void setSize(Expression value);
+
+  Value evaluateExpression(State state);
 }

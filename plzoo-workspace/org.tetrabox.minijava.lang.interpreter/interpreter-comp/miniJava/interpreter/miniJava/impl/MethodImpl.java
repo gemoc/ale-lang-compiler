@@ -2,6 +2,7 @@ package miniJava.interpreter.miniJava.impl;
 
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.Clazz;
 import miniJava.interpreter.miniJava.Method;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Parameter;
@@ -157,6 +158,19 @@ public class MethodImpl extends MemberImpl implements Method {
   }
 
   public void evaluateStatement(State state) {
+    this.body.evaluateStatement(state);
+        ;
+  }
+
+  public Method findOverride(Clazz c) {
+    Method result;
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("TODO findOverride");
+        result = null;
+        ;
+    return result;
+  }
+
+  public void call(State state) {
     this.body.evaluateStatement(state);
         ;
   }

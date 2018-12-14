@@ -115,6 +115,9 @@ class AleExpressionsCompiler {
 				if (call.type == CallType.COLLECTIONCALL)
 					CodeBlock.
 						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression(ctx)»)''')
+				else if (call.type == CallType.CALLORAPPLY)
+					CodeBlock.
+						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression(ctx)»)''')
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "at":

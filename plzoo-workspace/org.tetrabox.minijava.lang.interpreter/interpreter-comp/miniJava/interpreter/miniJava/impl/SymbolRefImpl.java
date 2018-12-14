@@ -2,8 +2,10 @@ package miniJava.interpreter.miniJava.impl;
 
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
 import miniJava.interpreter.miniJava.Symbol;
 import miniJava.interpreter.miniJava.SymbolRef;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -69,5 +71,12 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    result = state.findCurrentContext().findBinding(this.symbol).getValue().copy();
+        ;
+    return result;
   }
 }

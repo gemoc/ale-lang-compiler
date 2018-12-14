@@ -3,6 +3,7 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.ArrayInstance;
+import miniJava.interpreter.miniJava.Call;
 import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.Frame;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -273,6 +274,25 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
   public void println(String str) {
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(str);
         this.outputStream.getStream().add(str);
+        ;
+  }
+
+  public void pushNewFrame(ObjectInstance receiver, Call c, Context newContext) {
+    miniJava.interpreter.miniJava.Frame newFrame = ((miniJava.interpreter.miniJava.Frame)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createFrame());
+        newFrame.setInstance(receiver);
+        newFrame.setCall(c);
+        newFrame.setRootContext(newContext);
+        this.findCurrentFrame().setChildFrame(newFrame);
+        this.setFrameCache(newFrame);
+        this.setContextCache(null);
+        ;
+  }
+
+  public void popCurrentFrame() {
+    miniJava.interpreter.miniJava.Frame newCurrent = ((miniJava.interpreter.miniJava.Frame)this.findCurrentFrame().getParentFrame());
+        this.findCurrentFrame().setParentFrame(null);
+        this.setContextCache(null);
+        this.setFrameCache(newCurrent);
         ;
   }
 }

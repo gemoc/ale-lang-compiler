@@ -4,7 +4,9 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.NewArray;
+import miniJava.interpreter.miniJava.State;
 import miniJava.interpreter.miniJava.TypeRef;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -130,5 +132,49 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     	return basicSetSize(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.ArrayInstance res = ((miniJava.interpreter.miniJava.ArrayInstance)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createArrayInstance());
+        miniJava.interpreter.miniJava.IntegerValue sizeArray = ((miniJava.interpreter.miniJava.IntegerValue)this.size.evaluateExpression(state));
+        res.setSize(sizeArray.getValue());
+        state.getArraysHeap().add(res);
+        miniJava.interpreter.miniJava.Value defaultValue = ((miniJava.interpreter.miniJava.Value)null);
+        if(this.type instanceof miniJava.interpreter.miniJava.IntegerTypeRef) {
+          miniJava.interpreter.miniJava.IntegerValue idv = ((miniJava.interpreter.miniJava.IntegerValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createIntegerValue());
+          idv.setValue(0);
+          defaultValue = idv;
+        }
+        else {
+          if(this.type instanceof miniJava.interpreter.miniJava.BooleanTypeRef) {
+            miniJava.interpreter.miniJava.BooleanValue idv = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
+            idv.setValue(false);
+            defaultValue = idv;
+          }
+          else {
+            if(this.type instanceof miniJava.interpreter.miniJava.StringTypeRef) {
+              miniJava.interpreter.miniJava.NullValue idv = ((miniJava.interpreter.miniJava.NullValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createNullValue());
+              defaultValue = idv;
+            }
+            else {
+              if(this.type instanceof miniJava.interpreter.miniJava.ClassRef) {
+                miniJava.interpreter.miniJava.NullValue idv = ((miniJava.interpreter.miniJava.NullValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createNullValue());
+                defaultValue = idv;
+              }
+            }
+          }
+        }
+        int i = ((int)0);
+        int sz = ((int)res.getSize());
+        while ((i) < (sz)) {
+          res.getValue().add(defaultValue.copy());
+          i = (i) + (1);
+        }
+        miniJava.interpreter.miniJava.ArrayRefValue ret = ((miniJava.interpreter.miniJava.ArrayRefValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createArrayRefValue());
+        ret.setInstance(res);
+        result = ret;
+        ;
+    return result;
   }
 }

@@ -19,4 +19,8 @@ public interface Method extends EObject, Member {
   void setBody(Block value);
 
   void evaluateStatement(State state);
+
+  Method findOverride(Clazz c);
+
+  void call(State state);
 }

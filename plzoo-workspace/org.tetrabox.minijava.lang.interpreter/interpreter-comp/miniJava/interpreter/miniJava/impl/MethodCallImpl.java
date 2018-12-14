@@ -5,6 +5,8 @@ import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.Method;
 import miniJava.interpreter.miniJava.MethodCall;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -135,5 +137,33 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getArgs()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.ObjectRefValue realReceiver0 = ((miniJava.interpreter.miniJava.ObjectRefValue)this.receiver.evaluateExpression(state));
+        miniJava.interpreter.miniJava.ObjectInstance realReceiver = ((miniJava.interpreter.miniJava.ObjectInstance)realReceiver0.getInstance());
+        miniJava.interpreter.miniJava.Method realMethod = ((miniJava.interpreter.miniJava.Method)this.method.findOverride(realReceiver.getType()));
+        miniJava.interpreter.miniJava.Context newContext = ((miniJava.interpreter.miniJava.Context)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createContext());
+        int argsLength = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getArgs()));
+        int i = ((int)0);
+        while ((i) <= (argsLength)) {
+          miniJava.interpreter.miniJava.Expression arg = ((miniJava.interpreter.miniJava.Expression)this.getArgs().get(i));
+          miniJava.interpreter.miniJava.Parameter param = ((miniJava.interpreter.miniJava.Parameter)realMethod.getParams().get(i));
+          miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createSymbolBinding());
+          binding.setSymbol(param);
+          binding.setValue(arg.evaluateExpression(state));
+          newContext.getBindings().add(binding);
+          i = (i) + (1);
+        }
+        miniJava.interpreter.miniJava.MethodCall2 call = ((miniJava.interpreter.miniJava.MethodCall2)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createMethodCall2());
+        call.setMethodcall(this);
+        state.pushNewFrame(realReceiver,call,newContext);
+        realMethod.call(state);
+        miniJava.interpreter.miniJava.Value returnValue = ((miniJava.interpreter.miniJava.Value)state.findCurrentFrame().getReturnValue());
+        state.popCurrentFrame();
+        result = returnValue;
+        ;
+    return result;
   }
 }

@@ -173,6 +173,15 @@ open class Method {
 	def void evaluateStatement(miniJava::State state) {
 		self.body.evaluateStatement(state);
 	}
+	
+	def miniJava::Method findOverride(Clazz c) {
+		'TODO findOverride'.log();
+		result := null;
+	}
+	
+	def void call(State state) {
+		self.body.evaluateStatement(state);
+	}
 }
 
 /// EXPRESSIONS
@@ -438,6 +447,83 @@ open class InferiorOrEqual {
 	}
 }
 
+
+open class MethodCall {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::ObjectRefValue realReceiver0 := self.receiver.evaluateExpression(state);  
+		miniJava::ObjectInstance realReceiver := realReceiver0.instance;
+		miniJava::Method realMethod := self.method.findOverride(realReceiver.type);
+		miniJava::Context newContext := miniJava::Context.create();
+		int argsLength := self.args.size();
+		int i := 0;
+		while(i <= argsLength) {
+			miniJava::Expression arg := self.args.get(i);
+			miniJava::Parameter param := realMethod.params.get(i);
+			miniJava::SymbolBinding binding := miniJava::SymbolBinding.create();
+			binding.symbol := param;
+			binding.value := arg.evaluateExpression(state);
+			newContext.bindings += binding;
+			i := i + 1;
+		}
+		miniJava::MethodCall2 call := miniJava::MethodCall2.create();
+		call.methodcall := self;
+		state.pushNewFrame(realReceiver, call, newContext);
+		realMethod.call(state);
+		miniJava::Value returnValue := state.findCurrentFrame().returnValue;
+		state.popCurrentFrame();
+		result := returnValue;
+	}
+}
+
+open class SymbolRef {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		result := state.findCurrentContext().findBinding(self.symbol).value.copy();
+	}
+}
+
+open class NewArray {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::ArrayInstance res := miniJava::ArrayInstance.create();
+		miniJava::IntegerValue sizeArray := self.size.evaluateExpression(state);
+		res.size := sizeArray.value;
+		state.arraysHeap += res;
+		
+		miniJava::Value defaultValue := null;
+		if(self.type.oclIsKindOf(miniJava::IntegerTypeRef)) {
+			miniJava::IntegerValue idv := miniJava::IntegerValue.create();
+			idv.value := 0;
+			defaultValue := idv;
+		} else {
+			if(self.type.oclIsKindOf(miniJava::BooleanTypeRef)) {
+				miniJava::BooleanValue idv := miniJava::BooleanValue.create();
+				idv.value := false;
+				defaultValue := idv;
+			} else {
+				if(self.type.oclIsKindOf(miniJava::StringTypeRef)) {
+					miniJava::NullValue idv := miniJava::NullValue.create();
+					defaultValue := idv;
+				} else {
+					if(self.type.oclIsKindOf(miniJava::ClassRef)) {
+						miniJava::NullValue idv := miniJava::NullValue.create();
+						defaultValue := idv;
+					}	
+				}
+			}
+		}
+		
+		int i := 0;
+		int sz := res.size;
+		while(i < sz) {
+			res.value += defaultValue.copy();
+			i:=i+1;
+		}
+		
+		miniJava::ArrayRefValue ret := miniJava::ArrayRefValue.create();
+		ret.instance := res;
+		result := ret; 
+	}
+}
+
 /// DYNAMIC VALUES
 
 open class State {
@@ -478,6 +564,24 @@ open class State {
 	def void println(String str) {
 		str.log();
 		self.outputStream.stream += str;
+	}
+	
+	def void pushNewFrame(miniJava::ObjectInstance receiver, miniJava::Call c, miniJava::Context newContext) {
+		miniJava::Frame newFrame := miniJava::Frame.create();
+		newFrame.instance := receiver;
+		newFrame.call := c;
+		newFrame.rootContext := newContext;
+		
+		self.findCurrentFrame().childFrame := newFrame;
+		self.frameCache := newFrame;
+		self.contextCache := null;
+	}
+	
+	def void popCurrentFrame() {
+		miniJava::Frame newCurrent := self.findCurrentFrame().parentFrame;
+		self.findCurrentFrame().parentFrame := null;
+		self.contextCache := null;
+		self.frameCache := newCurrent;
 	}
 	
 }

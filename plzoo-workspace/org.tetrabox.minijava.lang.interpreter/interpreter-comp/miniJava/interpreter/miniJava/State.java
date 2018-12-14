@@ -34,4 +34,8 @@ public interface State extends EObject {
   void popCurrentContext();
 
   void println(String str);
+
+  void pushNewFrame(ObjectInstance receiver, Call c, Context newContext);
+
+  void popCurrentFrame();
 }
