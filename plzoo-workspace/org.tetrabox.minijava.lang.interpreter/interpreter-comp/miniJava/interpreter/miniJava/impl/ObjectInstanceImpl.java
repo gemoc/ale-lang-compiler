@@ -38,7 +38,17 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
   }
 
   public Clazz getType() {
-    return type;}
+    if (type != null && type.eIsProxy()) {
+    	InternalEObject oldtype = (InternalEObject) type;
+    	type = (Clazz) eResolveProxy(oldtype);
+    	if (type != oldtype) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_INSTANCE__TYPE,
+    					oldtype, type));
+    	}
+    }
+    return type;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.OBJECT_INSTANCE;}

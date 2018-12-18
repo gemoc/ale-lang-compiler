@@ -46,7 +46,8 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
   }
 
   public Expression getObject() {
-    return object;}
+    return object;
+  }
 
   public void setIndex(Expression newIndex) {
     if (newIndex != index) {
@@ -73,7 +74,8 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
   }
 
   public Expression getIndex() {
-    return index;}
+    return index;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_ACCESS;}

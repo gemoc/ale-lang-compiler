@@ -26,7 +26,17 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
   }
 
   public ArrayInstance getInstance() {
-    return instance;}
+    if (instance != null && instance.eIsProxy()) {
+    	InternalEObject oldinstance = (InternalEObject) instance;
+    	instance = (ArrayInstance) eResolveProxy(oldinstance);
+    	if (instance != oldinstance) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE,
+    					oldinstance, instance));
+    	}
+    }
+    return instance;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_REF_VALUE;}

@@ -47,7 +47,8 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
   }
 
   public TypeRef getType() {
-    return type;}
+    return type;
+  }
 
   public void setSize(Expression newSize) {
     if (newSize != size) {
@@ -74,7 +75,8 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
   }
 
   public Expression getSize() {
-    return size;}
+    return size;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.NEW_ARRAY;}

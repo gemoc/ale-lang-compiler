@@ -27,7 +27,17 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
   }
 
   public ObjectInstance getInstance() {
-    return instance;}
+    if (instance != null && instance.eIsProxy()) {
+    	InternalEObject oldinstance = (InternalEObject) instance;
+    	instance = (ObjectInstance) eResolveProxy(oldinstance);
+    	if (instance != oldinstance) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE,
+    					oldinstance, instance));
+    	}
+    }
+    return instance;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.OBJECT_REF_VALUE;}

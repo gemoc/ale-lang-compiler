@@ -27,7 +27,17 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
   }
 
   public Symbol getSymbol() {
-    return symbol;}
+    if (symbol != null && symbol.eIsProxy()) {
+    	InternalEObject oldsymbol = (InternalEObject) symbol;
+    	symbol = (Symbol) eResolveProxy(oldsymbol);
+    	if (symbol != oldsymbol) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_REF__SYMBOL,
+    					oldsymbol, symbol));
+    	}
+    }
+    return symbol;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.SYMBOL_REF;}
@@ -75,7 +85,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
 
   public Value evaluateExpression(State state) {
     Value result;
-    result = state.findCurrentContext().findBinding(this.symbol).getValue().copy();
+    result = state.findCurrentContext().findBinding(this.getSymbol()).getValue().copy();
         ;
     return result;
   }

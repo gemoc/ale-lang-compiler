@@ -46,7 +46,8 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
   }
 
   public Assignee getAssignee() {
-    return assignee;}
+    return assignee;
+  }
 
   public void setValue(Expression newValue) {
     if (newValue != value) {
@@ -73,7 +74,8 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
   }
 
   public Expression getValue() {
-    return value;}
+    return value;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ASSIGNMENT;}
@@ -136,10 +138,11 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
   public void evaluateStatement(State state) {
     miniJava.interpreter.miniJava.Context context = ((miniJava.interpreter.miniJava.Context)state.findCurrentContext());
         miniJava.interpreter.miniJava.Value right = ((miniJava.interpreter.miniJava.Value)this.value.evaluateExpression(state));
-        miniJava.interpreter.miniJava.Assignee assignee = ((miniJava.interpreter.miniJava.Assignee)this.assignee);
+        miniJava.interpreter.miniJava.Assignee assignee = ((miniJava.interpreter.miniJava.Assignee)this.getAssignee());
         if(assignee instanceof miniJava.interpreter.miniJava.SymbolRef) {
           miniJava.interpreter.miniJava.SymbolRef assigneeSymbolRef = ((miniJava.interpreter.miniJava.SymbolRef)assignee);
-          context.findBinding(assigneeSymbolRef.getSymbol());
+          miniJava.interpreter.miniJava.SymbolBinding existingBinding = ((miniJava.interpreter.miniJava.SymbolBinding)context.findBinding(assigneeSymbolRef.getSymbol()));
+          existingBinding.setValue(right);
         }
         else {
           if(assignee instanceof miniJava.interpreter.miniJava.VariableDeclaration) {

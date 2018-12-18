@@ -32,7 +32,17 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
   }
 
   public Clazz getType() {
-    return type;}
+    if (type != null && type.eIsProxy()) {
+    	InternalEObject oldtype = (InternalEObject) type;
+    	type = (Clazz) eResolveProxy(oldtype);
+    	if (type != oldtype) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.NEW_OBJECT__TYPE,
+    					oldtype, type));
+    	}
+    }
+    return type;
+  }
 
   public EList<Expression> getArgs() {
     if(args == null) {

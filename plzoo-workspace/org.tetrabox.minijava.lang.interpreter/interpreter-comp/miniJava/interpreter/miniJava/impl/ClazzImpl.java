@@ -34,7 +34,17 @@ public class ClazzImpl extends TypeDeclarationImpl implements Clazz {
   }
 
   public Clazz getSuperClass() {
-    return superClass;}
+    if (superClass != null && superClass.eIsProxy()) {
+    	InternalEObject oldsuperClass = (InternalEObject) superClass;
+    	superClass = (Clazz) eResolveProxy(oldsuperClass);
+    	if (superClass != oldsuperClass) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLAZZ__SUPER_CLASS,
+    					oldsuperClass, superClass));
+    	}
+    }
+    return superClass;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.CLAZZ;}

@@ -29,7 +29,17 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
   }
 
   public Field getField() {
-    return field;}
+    if (field != null && field.eIsProxy()) {
+    	InternalEObject oldfield = (InternalEObject) field;
+    	field = (Field) eResolveProxy(oldfield);
+    	if (field != oldfield) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_BINDING__FIELD,
+    					oldfield, field));
+    	}
+    }
+    return field;
+  }
 
   public void setValue(Value newValue) {
     if (newValue != value) {
@@ -56,7 +66,8 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
   }
 
   public Value getValue() {
-    return value;}
+    return value;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FIELD_BINDING;}

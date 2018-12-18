@@ -44,7 +44,8 @@ public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
   }
 
   public Expression getArray() {
-    return array;}
+    return array;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_LENGTH;}

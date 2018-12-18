@@ -46,7 +46,8 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container implements S
   }
 
   public Value getValue() {
-    return value;}
+    return value;
+  }
 
   public void setSymbol(Symbol newSymbol) {
     Symbol oldSymbol = symbol;
@@ -56,7 +57,17 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container implements S
   }
 
   public Symbol getSymbol() {
-    return symbol;}
+    if (symbol != null && symbol.eIsProxy()) {
+    	InternalEObject oldsymbol = (InternalEObject) symbol;
+    	symbol = (Symbol) eResolveProxy(oldsymbol);
+    	if (symbol != oldsymbol) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_BINDING__SYMBOL,
+    					oldsymbol, symbol));
+    	}
+    }
+    return symbol;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.SYMBOL_BINDING;}

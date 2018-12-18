@@ -42,7 +42,8 @@ public class NegImpl extends ExpressionImpl implements Neg {
   }
 
   public Expression getExpression() {
-    return expression;}
+    return expression;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.NEG;}

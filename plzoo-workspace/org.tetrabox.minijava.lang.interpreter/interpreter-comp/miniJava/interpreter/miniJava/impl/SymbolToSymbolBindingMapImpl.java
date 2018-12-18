@@ -31,7 +31,17 @@ public class SymbolToSymbolBindingMapImpl extends MinimalEObjectImpl.Container i
   }
 
   public Symbol getKey() {
-    return key;}
+    if (key != null && key.eIsProxy()) {
+    	InternalEObject oldkey = (InternalEObject) key;
+    	key = (Symbol) eResolveProxy(oldkey);
+    	if (key != oldkey) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__KEY,
+    					oldkey, key));
+    	}
+    }
+    return key;
+  }
 
   public SymbolBinding setValue(SymbolBinding newValue) {
     SymbolBinding oldValue = this.value;
@@ -40,7 +50,17 @@ public class SymbolToSymbolBindingMapImpl extends MinimalEObjectImpl.Container i
   }
 
   public SymbolBinding getValue() {
-    return value;}
+    if (value != null && value.eIsProxy()) {
+    	InternalEObject oldvalue = (InternalEObject) value;
+    	value = (SymbolBinding) eResolveProxy(oldvalue);
+    	if (value != oldvalue) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE,
+    					oldvalue, value));
+    	}
+    }
+    return value;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.SYMBOL_TO_SYMBOL_BINDING_MAP;}

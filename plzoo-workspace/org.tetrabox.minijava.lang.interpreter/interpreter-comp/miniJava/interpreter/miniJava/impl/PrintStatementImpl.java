@@ -43,7 +43,8 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
   }
 
   public Expression getExpression() {
-    return expression;}
+    return expression;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.PRINT_STATEMENT;}

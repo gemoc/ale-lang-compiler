@@ -47,7 +47,8 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
   }
 
   public Expression getReceiver() {
-    return receiver;}
+    return receiver;
+  }
 
   public void setField(Field newField) {
     Field oldField = field;
@@ -57,7 +58,17 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
   }
 
   public Field getField() {
-    return field;}
+    if (field != null && field.eIsProxy()) {
+    	InternalEObject oldfield = (InternalEObject) field;
+    	field = (Field) eResolveProxy(oldfield);
+    	if (field != oldfield) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_ACCESS__FIELD,
+    					oldfield, field));
+    	}
+    }
+    return field;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FIELD_ACCESS;}

@@ -16,6 +16,8 @@ import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
@@ -27,6 +29,8 @@ class MiniJavaTestUtil {
 
 	@Inject
 	ParseHelper<Program> parseHelper
+	
+	@Inject XtextResourceSet rs
 
 	public static val String intTypeName = "int"
 	public static val String booleanTypeName = "boolean"
@@ -127,7 +131,9 @@ class MiniJavaTestUtil {
 
 	public def void genericTest(String program, List<String> args, Consumer<State> oracle) {
 		val helper = new ValidationTestHelper();
-		val Program result = parseHelper.parse(program)
+		rs.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+		val Program result = parseHelper.parse(program, rs)
+		
 		Assert.assertNotNull(result)
 //		helper.assertNoErrors(result)
 		result.initialize(new BasicEList(args))

@@ -42,7 +42,8 @@ public class NotImpl extends ExpressionImpl implements Not {
   }
 
   public Expression getExpression() {
-    return expression;}
+    return expression;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.NOT;}

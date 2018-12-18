@@ -92,15 +92,15 @@ class MiniJavaTypeComputer {
 			}
 			Return:
 				c.getContainerOfType(Method).typeRef.type
-			case f == ep.if_statement_Expression:
+			case f == ep.ifStatement_Expression:
 				BOOLEAN_TYPE
-			MethodCall case f == ep.method_call_Args: {
+			MethodCall case f == ep.methodCall_Args: {
 				if (c.method !== null) {
 				if (c.method.params.size > c.args.indexOf(e))
 					c.method.params.get(c.args.indexOf(e)).typeRef.type
 				}
 			}
-			NewObject case f == ep.new_object_Args: {
+			NewObject case f == ep.newObject_Args: {
 				c.type.members.filter(Method).findFirst[it.name === null && it.params.size === c.args.size].params.get(c.args.indexOf(e)).typeRef.type
 			}
 		}

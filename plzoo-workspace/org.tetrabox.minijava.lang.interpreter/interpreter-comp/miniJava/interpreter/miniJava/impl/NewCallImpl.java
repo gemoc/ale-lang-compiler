@@ -25,7 +25,17 @@ public class NewCallImpl extends CallImpl implements NewCall {
   }
 
   public NewObject getNewz() {
-    return newz;}
+    if (newz != null && newz.eIsProxy()) {
+    	InternalEObject oldnewz = (InternalEObject) newz;
+    	newz = (NewObject) eResolveProxy(oldnewz);
+    	if (newz != oldnewz) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.NEW_CALL__NEWZ,
+    					oldnewz, newz));
+    	}
+    }
+    return newz;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.NEW_CALL;}

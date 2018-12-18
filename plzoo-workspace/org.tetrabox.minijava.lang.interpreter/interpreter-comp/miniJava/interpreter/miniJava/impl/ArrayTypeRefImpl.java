@@ -42,7 +42,8 @@ public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
   }
 
   public SingleTypeRef getTypeRef() {
-    return typeRef;}
+    return typeRef;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_TYPE_REF;}

@@ -102,11 +102,7 @@ class MiniJavaSemanticsStatementsTests {
 
 	@Test
 	def void Assignment_field() {
-
-		genericStatementBindingsTest(
-			org.eclipse.emf.common.util.URI.createURI(
-				"/home/manuel/dev/java/ale-lang/plzoo-workspace/org.tetrabox.minijava.xtext.fortest.tests/dumps/Assignment_field.xmi"),
-			#{"y" -> new ObjectTemplate("X", #{"i" -> 76})})
+		genericStatementBindingsTest("X y = new X(); y.i = 76;", #{"y" -> new ObjectTemplate("X", #{"i" -> 76})})
 	}
 
 	@Test

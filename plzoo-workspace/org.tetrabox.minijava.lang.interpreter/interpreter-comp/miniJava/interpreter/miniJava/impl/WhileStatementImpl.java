@@ -46,7 +46,8 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
   }
 
   public Expression getCondition() {
-    return condition;}
+    return condition;
+  }
 
   public void setBlock(Block newBlock) {
     if (newBlock != block) {
@@ -73,7 +74,8 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
   }
 
   public Block getBlock() {
-    return block;}
+    return block;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.WHILE_STATEMENT;}

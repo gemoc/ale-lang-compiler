@@ -60,7 +60,17 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   }
 
   public State getState() {
-    return state;}
+    if (state != null && state.eIsProxy()) {
+    	InternalEObject oldstate = (InternalEObject) state;
+    	state = (State) eResolveProxy(oldstate);
+    	if (state != oldstate) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.PROGRAM__STATE,
+    					oldstate, state));
+    	}
+    }
+    return state;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.PROGRAM;}

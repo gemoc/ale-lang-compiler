@@ -104,7 +104,9 @@ public class Application {
                 // default population size = 50
 //				.populationSize(20)
                 .executor(Executors.newSingleThreadExecutor()).build();
-        final Genotype<BitGene> best = engine.stream().limit(Limits.bySteadyFitness(50)).limit(2000)
+        final Genotype<BitGene> best = engine.stream()
+        		//.limit(Limits.bySteadyFitness(50))
+        		.limit(2000)
                 .collect(EvolutionResult.toBestGenotype());
         System.out.println(best);
         System.out.println(codec.decode(best));
@@ -114,12 +116,13 @@ public class Application {
 
     private Function<ISeq<MethodRef>, Double> fitness(final String alePath) {
         return t -> {
+        	System.out.println(t);
             final String key = t.stream().map(Object::toString).collect(Collectors.joining("_"));
             if (!CACHE.containsKey(key)) {
                 try {
                     mutate(alePath, t);
                     bench(key);
-                } catch (final IOException e) {
+                } catch (final Exception e) {
                     return Double.MAX_VALUE;
                 }
             }

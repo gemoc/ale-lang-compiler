@@ -43,7 +43,8 @@ public class ReturnImpl extends StatementImpl implements Return {
   }
 
   public Expression getExpression() {
-    return expression;}
+    return expression;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.RETURN;}

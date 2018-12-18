@@ -42,7 +42,8 @@ public class TypedDeclarationImpl extends NamedElementImpl implements TypedDecla
   }
 
   public TypeRef getTypeRef() {
-    return typeRef;}
+    return typeRef;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.TYPED_DECLARATION;}

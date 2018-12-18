@@ -25,7 +25,17 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
   }
 
   public TypeDeclaration getReferencedClass() {
-    return referencedClass;}
+    if (referencedClass != null && referencedClass.eIsProxy()) {
+    	InternalEObject oldreferencedClass = (InternalEObject) referencedClass;
+    	referencedClass = (TypeDeclaration) eResolveProxy(oldreferencedClass);
+    	if (referencedClass != oldreferencedClass) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLASS_REF__REFERENCED_CLASS,
+    					oldreferencedClass, referencedClass));
+    	}
+    }
+    return referencedClass;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.CLASS_REF;}

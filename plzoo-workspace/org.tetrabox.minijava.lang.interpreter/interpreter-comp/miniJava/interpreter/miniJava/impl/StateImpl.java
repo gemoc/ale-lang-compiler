@@ -61,7 +61,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
   }
 
   public Frame getRootFrame() {
-    return rootFrame;}
+    return rootFrame;
+  }
 
   public EList<ObjectInstance> getObjectsHeap() {
     if(objectsHeap == null) {
@@ -96,7 +97,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
   }
 
   public OutputStream getOutputStream() {
-    return outputStream;}
+    return outputStream;
+  }
 
   public EList<ArrayInstance> getArraysHeap() {
     if(arraysHeap == null) {
@@ -113,7 +115,17 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
   }
 
   public Context getContextCache() {
-    return contextCache;}
+    if (contextCache != null && contextCache.eIsProxy()) {
+    	InternalEObject oldcontextCache = (InternalEObject) contextCache;
+    	contextCache = (Context) eResolveProxy(oldcontextCache);
+    	if (contextCache != oldcontextCache) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.STATE__CONTEXT_CACHE,
+    					oldcontextCache, contextCache));
+    	}
+    }
+    return contextCache;
+  }
 
   public void setFrameCache(Frame newFrameCache) {
     Frame oldFrameCache = frameCache;
@@ -123,7 +135,17 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
   }
 
   public Frame getFrameCache() {
-    return frameCache;}
+    if (frameCache != null && frameCache.eIsProxy()) {
+    	InternalEObject oldframeCache = (InternalEObject) frameCache;
+    	frameCache = (Frame) eResolveProxy(oldframeCache);
+    	if (frameCache != oldframeCache) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.STATE__FRAME_CACHE,
+    					oldframeCache, frameCache));
+    	}
+    }
+    return frameCache;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.STATE;}

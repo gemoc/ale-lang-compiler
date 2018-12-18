@@ -44,7 +44,8 @@ public class SuperiorOrEqualImpl extends ExpressionImpl implements SuperiorOrEqu
   }
 
   public Expression getLeft() {
-    return left;}
+    return left;
+  }
 
   public void setRight(Expression newRight) {
     if (newRight != right) {
@@ -71,7 +72,8 @@ public class SuperiorOrEqualImpl extends ExpressionImpl implements SuperiorOrEqu
   }
 
   public Expression getRight() {
-    return right;}
+    return right;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.SUPERIOR_OR_EQUAL;}

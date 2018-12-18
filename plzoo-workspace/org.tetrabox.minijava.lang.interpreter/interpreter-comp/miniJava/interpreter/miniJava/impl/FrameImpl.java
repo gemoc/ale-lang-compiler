@@ -56,7 +56,8 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
   }
 
   public Call getCall() {
-    return call;}
+    return call;
+  }
 
   public void setInstance(ObjectInstance newInstance) {
     ObjectInstance oldInstance = instance;
@@ -66,7 +67,17 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
   }
 
   public ObjectInstance getInstance() {
-    return instance;}
+    if (instance != null && instance.eIsProxy()) {
+    	InternalEObject oldinstance = (InternalEObject) instance;
+    	instance = (ObjectInstance) eResolveProxy(oldinstance);
+    	if (instance != oldinstance) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FRAME__INSTANCE,
+    					oldinstance, instance));
+    	}
+    }
+    return instance;
+  }
 
   public void setChildFrame(Frame newChildFrame) {
     if (newChildFrame != childFrame) {
@@ -99,7 +110,8 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
   }
 
   public Frame getChildFrame() {
-    return childFrame;}
+    return childFrame;
+  }
 
   public void setParentFrame(Frame newParentFrame) {
     if (newParentFrame != eInternalContainer() || (eContainerFeatureID() != MiniJavaPackage.FRAME__PARENT_FRAME && newParentFrame != null)) {
@@ -152,7 +164,8 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
   }
 
   public Context getRootContext() {
-    return rootContext;}
+    return rootContext;
+  }
 
   public void setReturnValue(Value newReturnValue) {
     if (newReturnValue != returnValue) {
@@ -179,7 +192,8 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
   }
 
   public Value getReturnValue() {
-    return returnValue;}
+    return returnValue;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FRAME;}

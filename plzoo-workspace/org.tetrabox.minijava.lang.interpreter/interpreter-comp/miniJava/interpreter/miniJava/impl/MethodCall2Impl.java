@@ -25,7 +25,17 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
   }
 
   public MethodCall getMethodcall() {
-    return methodcall;}
+    if (methodcall != null && methodcall.eIsProxy()) {
+    	InternalEObject oldmethodcall = (InternalEObject) methodcall;
+    	methodcall = (MethodCall) eResolveProxy(oldmethodcall);
+    	if (methodcall != oldmethodcall) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.METHOD_CALL2__METHODCALL,
+    					oldmethodcall, methodcall));
+    	}
+    }
+    return methodcall;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.METHOD_CALL2;}

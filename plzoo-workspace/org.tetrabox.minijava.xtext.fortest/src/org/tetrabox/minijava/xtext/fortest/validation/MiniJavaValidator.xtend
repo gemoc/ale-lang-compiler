@@ -74,7 +74,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 	@Check
 	def checkClassHierarchy(TypeDeclaration c) {
 		if (c.classHierarchy.contains(c)) {
-			error("Cycle in hierarchy of class '" + c.name + "'.", MiniJavaPackage.eINSTANCE.named_element_Name,
+			error("Cycle in hierarchy of class '" + c.name + "'.", MiniJavaPackage.eINSTANCE.namedElement_Name,
 				HIERARCHY_CYCLE, c.name)
 		}
 	}
@@ -127,7 +127,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 
 			if (abstract.exists[a|!nonAbstract.exists[na|na.isAnImplementionOf(a)]]) {
 				error('''All abstract methods must be implemented, or the class must be made abstract.''', c,
-					MiniJavaPackage.eINSTANCE.clazz_Super_class, ABSTRACT_METHOD_CLASS);
+					MiniJavaPackage.eINSTANCE.clazz_SuperClass, ABSTRACT_METHOD_CLASS);
 			}
 
 		}
@@ -198,13 +198,13 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 		val method = sel.method
 		if (method.params.size != sel.args.size) {
 			error("Invalid number of arguments: expected " + method.params.size + " but was " + sel.args.size,
-				MiniJavaPackage.eINSTANCE.method_call_Method, INVALID_ARGS)
+				MiniJavaPackage.eINSTANCE.methodCall_Method, INVALID_ARGS)
 		}
 	}
 
 	@Check def void checkConstructorAbstractClass(NewObject n) {
 		if (n.type.isIsabstract) {
-			error("Cannot construct an instance of an abstract class.", MiniJavaPackage.eINSTANCE.new_object_Type,
+			error("Cannot construct an instance of an abstract class.", MiniJavaPackage.eINSTANCE.newObject_Type,
 				CONSTRUCTOR_ABSTRACT)
 		}
 	}
@@ -218,7 +218,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 				typeRef
 			].map[type].elementsEqual(overridden.params.map[typeRef].map[type]))) {
 				error("The method '" + m.name + "' must override a superclass method", m,
-					MiniJavaPackage.eINSTANCE.named_element_Name, WRONG_METHOD_OVERRIDE)
+					MiniJavaPackage.eINSTANCE.namedElement_Name, WRONG_METHOD_OVERRIDE)
 			} else if (m.access < overridden.access) {
 				error("Cannot reduce access from " + overridden.access + " to " + m.access, m,
 					MiniJavaPackage.eINSTANCE.member_Access, REDUCED_ACCESSIBILITY)
@@ -251,7 +251,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 	@Check
 	def void checkInterfaceMembers(Interface i) {
 		if (i.members.exists[it instanceof Field]) {
-			error("An interface cannot contain a field.", i, MiniJavaPackage.eINSTANCE.type_declaration_Members,
+			error("An interface cannot contain a field.", i, MiniJavaPackage.eINSTANCE.typeDeclaration_Members,
 				INTERFACE_MEMBERS)
 		}
 
@@ -263,7 +263,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 			val parentClass = (constructor.eContainer as Clazz)
 			if ((constructor.typeRef as ClassRef).referencedClass !== parentClass) {
 				error("A constructor must be in the same class as its name.", constructor,
-					MiniJavaPackage.eINSTANCE.typed_declaration_Type_ref, CONSTRUCTOR_CLASS)
+					MiniJavaPackage.eINSTANCE.typedDeclaration_TypeRef, CONSTRUCTOR_CLASS)
 			}
 		}
 	}
@@ -273,7 +273,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 		if (field.name !== null && !field.isAccessibleFrom(sel))
 			error(
 				'''The «field.access» member «field.name» is not accessible here''',
-				MiniJavaPackage.eINSTANCE.field_access_Field,
+				MiniJavaPackage.eINSTANCE.fieldAccess_Field,
 				MEMBER_NOT_ACCESSIBLE
 			)
 	}
@@ -283,7 +283,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 		if (method.name !== null && !method.isAccessibleFrom(sel))
 			error(
 				'''The «method.access» member «method.name» is not accessible here''',
-				MiniJavaPackage.eINSTANCE.method_call_Method,
+				MiniJavaPackage.eINSTANCE.methodCall_Method,
 				MEMBER_NOT_ACCESSIBLE
 			)
 	}
@@ -295,7 +295,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 		if (!constructor.isAccessibleFrom(n))
 			error(
 				'''This constructor is not accessible here.''',
-				MiniJavaPackage.eINSTANCE.new_object_Type,
+				MiniJavaPackage.eINSTANCE.newObject_Type,
 				MEMBER_NOT_ACCESSIBLE
 			)
 	}
@@ -307,7 +307,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 		for (c : p.classes) {
 			val className = c.fullyQualifiedName
 			if (externalClasses.containsKey(className)) {
-				error("The type " + c.name + " is already defined", c, MiniJavaPackage.eINSTANCE.named_element_Name,
+				error("The type " + c.name + " is already defined", c, MiniJavaPackage.eINSTANCE.namedElement_Name,
 					DUPLICATE_CLASS)
 			}
 		}
@@ -315,8 +315,8 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 
 	@Check
 	def void checkSuper(Super s) {
-		if (s.eContainingFeature != MiniJavaPackage.eINSTANCE.method_call_Receiver &&
-			s.eContainingFeature != MiniJavaPackage.eINSTANCE.field_access_Receiver)
+		if (s.eContainingFeature != MiniJavaPackage.eINSTANCE.methodCall_Receiver &&
+			s.eContainingFeature != MiniJavaPackage.eINSTANCE.fieldAccess_Receiver)
 			error("'super' can be used only as member selection receiver", null, WRONG_SUPER_USAGE)
 	}
 
@@ -330,7 +330,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 			val duplicates = entry.value
 			if (duplicates.size > 1) {
 				for (d : duplicates)
-					error("Duplicate " + desc + " '" + d.name + "'", d, MiniJavaPackage.eINSTANCE.named_element_Name,
+					error("Duplicate " + desc + " '" + d.name + "'", d, MiniJavaPackage.eINSTANCE.namedElement_Name,
 						DUPLICATE_ELEMENT)
 			}
 		}

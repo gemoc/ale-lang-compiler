@@ -76,7 +76,8 @@ public class MethodImpl extends MemberImpl implements Method {
   }
 
   public Block getBody() {
-    return body;}
+    return body;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.METHOD;}

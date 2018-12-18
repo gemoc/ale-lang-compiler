@@ -3,69 +3,21 @@
  */
 package org.tetrabox.minijava.xtext.fortest.serializer;
 
-import java.util.Set;
+import com.google.inject.Inject;
 
+import miniJava.interpreter.miniJava.*;
+
+import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.Action;
+import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 import org.tetrabox.minijava.xtext.fortest.services.MiniJavaGrammarAccess;
-
-import com.google.inject.Inject;
-
-import miniJava.interpreter.miniJava.And;
-import miniJava.interpreter.miniJava.ArrayAccess;
-import miniJava.interpreter.miniJava.ArrayLength;
-import miniJava.interpreter.miniJava.ArrayTypeRef;
-import miniJava.interpreter.miniJava.Assignment;
-import miniJava.interpreter.miniJava.Block;
-import miniJava.interpreter.miniJava.BoolConstant;
-import miniJava.interpreter.miniJava.BooleanTypeRef;
-import miniJava.interpreter.miniJava.ClassRef;
-import miniJava.interpreter.miniJava.Clazz;
-import miniJava.interpreter.miniJava.Division;
-import miniJava.interpreter.miniJava.Equality;
-import miniJava.interpreter.miniJava.Field;
-import miniJava.interpreter.miniJava.FieldAccess;
-import miniJava.interpreter.miniJava.ForStatement;
-import miniJava.interpreter.miniJava.IfStatement;
-import miniJava.interpreter.miniJava.Import;
-import miniJava.interpreter.miniJava.Inequality;
-import miniJava.interpreter.miniJava.Inferior;
-import miniJava.interpreter.miniJava.InferiorOrEqual;
-import miniJava.interpreter.miniJava.IntConstant;
-import miniJava.interpreter.miniJava.IntegerTypeRef;
-import miniJava.interpreter.miniJava.Interface;
-import miniJava.interpreter.miniJava.Method;
-import miniJava.interpreter.miniJava.MethodCall;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.Minus;
-import miniJava.interpreter.miniJava.Multiplication;
-import miniJava.interpreter.miniJava.Neg;
-import miniJava.interpreter.miniJava.NewArray;
-import miniJava.interpreter.miniJava.NewObject;
-import miniJava.interpreter.miniJava.Not;
-import miniJava.interpreter.miniJava.Null;
-import miniJava.interpreter.miniJava.Or;
-import miniJava.interpreter.miniJava.Parameter;
-import miniJava.interpreter.miniJava.Plus;
-import miniJava.interpreter.miniJava.PrintStatement;
-import miniJava.interpreter.miniJava.Program;
-import miniJava.interpreter.miniJava.Return;
-import miniJava.interpreter.miniJava.StringConstant;
-import miniJava.interpreter.miniJava.StringTypeRef;
-import miniJava.interpreter.miniJava.Super;
-import miniJava.interpreter.miniJava.Superior;
-import miniJava.interpreter.miniJava.SuperiorOrEqual;
-import miniJava.interpreter.miniJava.SymbolRef;
-import miniJava.interpreter.miniJava.This;
-import miniJava.interpreter.miniJava.VariableDeclaration;
-import miniJava.interpreter.miniJava.VoidTypeRef;
-import miniJava.interpreter.miniJava.WhileStatement;
 
 @SuppressWarnings("all")
 public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -78,7 +30,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 		EPackage epackage = semanticObject.eClass().getEPackage();
 		ParserRule rule = context.getParserRule();
 		Action action = context.getAssignedAction();
-		Set<org.eclipse.xtext.Parameter> parameters = context.getEnabledBooleanParameters();
+		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == MiniJavaPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case MiniJavaPackage.AND:
@@ -181,7 +133,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 				sequence_Or(context, (Or) semanticObject); 
 				return; 
 			case MiniJavaPackage.PARAMETER:
-				sequence_Parameter(context, (Parameter) semanticObject); 
+				sequence_Parameter(context, (miniJava.interpreter.miniJava.Parameter) semanticObject); 
 				return; 
 			case MiniJavaPackage.PLUS:
 				sequence_PlusOrMinus(context, (Plus) semanticObject); 
@@ -965,7 +917,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 * Constraint:
 	 *     (typeRef=TypeRef name=ID)
 	 */
-	protected void sequence_Parameter(ISerializationContext context, Parameter semanticObject) {
+	protected void sequence_Parameter(ISerializationContext context, miniJava.interpreter.miniJava.Parameter semanticObject) {
 		if (errorAcceptor != null) {
 			if (transientValues.isValueTransient(semanticObject, MiniJavaPackage.Literals.TYPED_DECLARATION__TYPE_REF) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MiniJavaPackage.Literals.TYPED_DECLARATION__TYPE_REF));

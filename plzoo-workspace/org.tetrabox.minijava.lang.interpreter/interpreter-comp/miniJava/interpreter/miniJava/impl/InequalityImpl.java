@@ -46,7 +46,8 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
   }
 
   public Expression getLeft() {
-    return left;}
+    return left;
+  }
 
   public void setRight(Expression newRight) {
     if (newRight != right) {
@@ -73,7 +74,8 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
   }
 
   public Expression getRight() {
-    return right;}
+    return right;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.INEQUALITY;}

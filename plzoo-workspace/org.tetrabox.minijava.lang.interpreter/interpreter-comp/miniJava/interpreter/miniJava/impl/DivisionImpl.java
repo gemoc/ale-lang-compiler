@@ -46,7 +46,8 @@ public class DivisionImpl extends ExpressionImpl implements Division {
   }
 
   public Expression getLeft() {
-    return left;}
+    return left;
+  }
 
   public void setRight(Expression newRight) {
     if (newRight != right) {
@@ -73,7 +74,8 @@ public class DivisionImpl extends ExpressionImpl implements Division {
   }
 
   public Expression getRight() {
-    return right;}
+    return right;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.DIVISION;}

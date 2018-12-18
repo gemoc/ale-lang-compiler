@@ -51,7 +51,8 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
   }
 
   public Assignment getDeclaration() {
-    return declaration;}
+    return declaration;
+  }
 
   public void setCondition(Expression newCondition) {
     if (newCondition != condition) {
@@ -78,7 +79,8 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
   }
 
   public Expression getCondition() {
-    return condition;}
+    return condition;
+  }
 
   public void setProgression(Assignment newProgression) {
     if (newProgression != progression) {
@@ -105,7 +107,8 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
   }
 
   public Assignment getProgression() {
-    return progression;}
+    return progression;
+  }
 
   public void setBlock(Block newBlock) {
     if (newBlock != block) {
@@ -132,7 +135,8 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
   }
 
   public Block getBlock() {
-    return block;}
+    return block;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FOR_STATEMENT;}

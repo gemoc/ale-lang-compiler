@@ -44,7 +44,8 @@ public class MultiplicationImpl extends ExpressionImpl implements Multiplication
   }
 
   public Expression getLeft() {
-    return left;}
+    return left;
+  }
 
   public void setRight(Expression newRight) {
     if (newRight != right) {
@@ -71,7 +72,8 @@ public class MultiplicationImpl extends ExpressionImpl implements Multiplication
   }
 
   public Expression getRight() {
-    return right;}
+    return right;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.MULTIPLICATION;}

@@ -70,10 +70,11 @@ open class Assignment {
 	def void evaluateStatement(miniJava::State state) {
 		miniJava::Context context := state.findCurrentContext();
 		miniJava::Value right := self.value.evaluateExpression(state);
-		miniJava::Assignee assignee := self.assignee;
+		miniJava::Assignee assignee := self.getAssignee();
 		if(assignee.oclIsKindOf(miniJava::SymbolRef)) {
 			miniJava::SymbolRef assigneeSymbolRef := assignee;
-			context.findBinding(assigneeSymbolRef.symbol);
+			miniJava::SymbolBinding existingBinding := context.findBinding(assigneeSymbolRef.symbol);
+			existingBinding.setValue(right);
 		} else {
 			if(assignee.oclIsKindOf(miniJava::VariableDeclaration)) {
 				miniJava::VariableDeclaration assigneeVariableDeclaration := assignee;
@@ -427,6 +428,26 @@ open class Inferior {
 	}
 }
 
+open class Plus {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		if(left.oclIsKindOf(miniJava::IntegerValue)) {
+			if(right.oclIsKindOf(miniJava::IntegerValue)) {
+				miniJava::IntegerValue bleft := left;
+				miniJava::IntegerValue bright := right;
+				miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
+				tmp.value := bleft.value + bright.value;
+				result := tmp;
+			} else { 
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
 open class InferiorOrEqual {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 		miniJava::Value left := self.left.evaluateExpression(state);
@@ -477,7 +498,7 @@ open class MethodCall {
 
 open class SymbolRef {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
-		result := state.findCurrentContext().findBinding(self.symbol).value.copy();
+		result := state.findCurrentContext().findBinding(self.getSymbol()).value.copy();
 	}
 }
 

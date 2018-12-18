@@ -83,7 +83,7 @@ class EClassImplementationCompiler {
 		
 		
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
-		
+		val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
 			eClass.EPackage.packageInterfaceClassName)
 
@@ -421,9 +421,29 @@ class EClassImplementationCompiler {
 						return ($2T)eInternalContainer();
 						''', ePackageInterfaceType, fieldType).build
 					}  else {
+						if(field.isContainment) {
+							MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType)
+							.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+							.addModifiers(PUBLIC).addCode('''
+							return «field.name»;
+							''').build	
+						} else {
 						MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType)
 							.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
-							.addModifiers(PUBLIC).addCode('''return «field.name»;''').build
+							.addModifiers(PUBLIC).addCode('''
+							if («field.name» != null && «field.name».eIsProxy()) {
+								$T old«field.name» = ($T) «field.name»;
+								«field.name» = ($T) eResolveProxy(old«field.name»);
+								if («field.name» != old«field.name») {
+									if (eNotificationRequired())
+										eNotify(new $T(this, $T.RESOLVE, $T.«field.name.normalizeUpperField(eClass.name)»,
+												old«field.name», «field.name»));
+								}
+							}
+							return «field.name»;
+							''', TypeName.get(InternalEObject), TypeName.get(InternalEObject), fieldType, TypeName.get(ENotificationImpl), TypeName.get(Notification), ePackageInterfaceType).build
+							
+							}
 					}
 				}
 

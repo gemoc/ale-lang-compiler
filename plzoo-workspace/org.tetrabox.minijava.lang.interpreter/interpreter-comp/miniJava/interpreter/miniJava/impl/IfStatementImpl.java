@@ -48,7 +48,8 @@ public class IfStatementImpl extends StatementImpl implements IfStatement {
   }
 
   public Expression getExpression() {
-    return expression;}
+    return expression;
+  }
 
   public void setThenBlock(Block newThenBlock) {
     if (newThenBlock != thenBlock) {
@@ -75,7 +76,8 @@ public class IfStatementImpl extends StatementImpl implements IfStatement {
   }
 
   public Block getThenBlock() {
-    return thenBlock;}
+    return thenBlock;
+  }
 
   public void setElseBlock(Block newElseBlock) {
     if (newElseBlock != elseBlock) {
@@ -102,7 +104,8 @@ public class IfStatementImpl extends StatementImpl implements IfStatement {
   }
 
   public Block getElseBlock() {
-    return elseBlock;}
+    return elseBlock;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.IF_STATEMENT;}

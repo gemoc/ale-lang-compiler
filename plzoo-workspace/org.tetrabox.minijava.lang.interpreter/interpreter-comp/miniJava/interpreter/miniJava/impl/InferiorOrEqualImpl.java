@@ -46,7 +46,8 @@ public class InferiorOrEqualImpl extends ExpressionImpl implements InferiorOrEqu
   }
 
   public Expression getLeft() {
-    return left;}
+    return left;
+  }
 
   public void setRight(Expression newRight) {
     if (newRight != right) {
@@ -73,7 +74,8 @@ public class InferiorOrEqualImpl extends ExpressionImpl implements InferiorOrEqu
   }
 
   public Expression getRight() {
-    return right;}
+    return right;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.INFERIOR_OR_EQUAL;}

@@ -43,7 +43,8 @@ public class FieldImpl extends MemberImpl implements Field {
   }
 
   public Expression getDefaultValue() {
-    return defaultValue;}
+    return defaultValue;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FIELD;}

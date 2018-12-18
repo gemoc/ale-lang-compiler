@@ -51,7 +51,8 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
   }
 
   public Expression getReceiver() {
-    return receiver;}
+    return receiver;
+  }
 
   public void setMethod(Method newMethod) {
     Method oldMethod = method;
@@ -61,7 +62,17 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
   }
 
   public Method getMethod() {
-    return method;}
+    if (method != null && method.eIsProxy()) {
+    	InternalEObject oldmethod = (InternalEObject) method;
+    	method = (Method) eResolveProxy(oldmethod);
+    	if (method != oldmethod) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.METHOD_CALL__METHOD,
+    					oldmethod, method));
+    	}
+    }
+    return method;
+  }
 
   public EList<Expression> getArgs() {
     if(args == null) {

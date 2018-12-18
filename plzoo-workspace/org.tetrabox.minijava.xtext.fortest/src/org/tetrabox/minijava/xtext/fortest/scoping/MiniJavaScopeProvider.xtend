@@ -35,9 +35,9 @@ class MiniJavaScopeProvider extends AbstractMiniJavaScopeProvider {
 
 	override getScope(EObject context, EReference reference) {
 		println('''«reference» ////// «epackage.symbolRef_Symbol»''')
-		if (reference == epackage.symbol_ref_Symbol) {
+		if (reference == epackage.symbolRef_Symbol) {
 			return scopeForSymbolRef(context)
-		} else if (reference == epackage.method_call_Method) {
+		} else if (reference == epackage.methodCall_Method) {
 			val res = scopeForMethodCall(context as MethodCall)
 			return res
 		} else if (context instanceof MethodCall) {

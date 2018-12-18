@@ -44,7 +44,8 @@ public class MinusImpl extends ExpressionImpl implements Minus {
   }
 
   public Expression getLeft() {
-    return left;}
+    return left;
+  }
 
   public void setRight(Expression newRight) {
     if (newRight != right) {
@@ -71,7 +72,8 @@ public class MinusImpl extends ExpressionImpl implements Minus {
   }
 
   public Expression getRight() {
-    return right;}
+    return right;
+  }
 
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.MINUS;}
