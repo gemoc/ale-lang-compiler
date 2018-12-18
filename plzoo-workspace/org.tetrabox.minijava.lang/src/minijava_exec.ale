@@ -448,6 +448,15 @@ open class Plus {
 	}
 }
 
+open class Neg {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::IntegerValue left := self.expression.evaluateExpression(state);
+		miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
+		tmp.value := -left.value;
+		result := tmp;
+	}
+}
+
 open class InferiorOrEqual {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 		miniJava::Value left := self.left.evaluateExpression(state);
