@@ -4,17 +4,17 @@
 package org.tetrabox.minijava.semantics.tests
 
 import com.google.inject.Inject
+import java.util.HashMap
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil
+import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ArrayTemplate
+import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ObjectTemplate
 import org.tetrabox.minijava.xtext.tests.MiniJavaInjectorProvider
 
 import static org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil.*
-import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ObjectTemplate
-import java.util.HashMap
-import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ArrayTemplate
 
 @RunWith(XtextRunner)
 @InjectWith(MiniJavaInjectorProvider)
@@ -372,7 +372,7 @@ class MiniJavaSemanticsExpressionsTests {
 
 	@Test
 	def void null_() {
-		genericExpressionTest("X", ''' null ''', factory.createNullValue)
+		genericExpressionTest("X", ''' null ''', null)
 	}
 
 	@Test
@@ -403,7 +403,7 @@ class MiniJavaSemanticsExpressionsTests {
 	@Test
 	def void newArray_objects() {
 		genericExpressionTest("X[]", ''' new X[3] ''',
-			new ArrayTemplate(3, "X", #[factory.createNullValue, factory.createNullValue, factory.createNullValue]))
+			new ArrayTemplate(3, "X", #[]))
 	}
 
 	@Test

@@ -20,9 +20,9 @@ public class BoaBenchmarkTruffle {
 
 		final int SIZE = itt;
 		final long[] times = new long[SIZE];
-		Context context = Context.create();
+		final Context context = Context.create();
 		for (int i = 0; i < SIZE; i++) {
-			Value eval = context.eval("boa", String.valueOf(0));
+			final Value eval = context.eval("boa", String.valueOf(i));
 			times[i] = eval.asLong();
 		}
 		context.close();

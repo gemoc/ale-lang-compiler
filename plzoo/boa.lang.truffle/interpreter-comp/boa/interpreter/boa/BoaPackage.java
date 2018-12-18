@@ -292,7 +292,7 @@ public interface BoaPackage extends EPackage {
 
   EReference getProject_Exp();
 
-  EReference getBobject_Fields();
+  EReference getBObject_Fields();
 
   EReference getField_Value();
 
@@ -302,15 +302,15 @@ public interface BoaPackage extends EPackage {
 
   EReference getWith_Rhs();
 
-  EReference getArith_op_Lhs();
+  EReference getArithOp_Lhs();
 
-  EReference getArith_op_Rhs();
+  EReference getArithOp_Rhs();
 
   EReference getNot_Value();
 
-  EReference getCmp_op_Lhs();
+  EReference getCmpOp_Lhs();
 
-  EReference getCmp_op_Rhs();
+  EReference getCmpOp_Rhs();
 
   EReference getIf_Cond();
 
@@ -328,13 +328,13 @@ public interface BoaPackage extends EPackage {
 
   EReference getAssign_Rhs();
 
-  EReference getBool_op_and_Lhs();
+  EReference getBoolOpAnd_Lhs();
 
-  EReference getBool_op_and_Rhs();
+  EReference getBoolOpAnd_Rhs();
 
-  EReference getBool_op_or_Lhs();
+  EReference getBoolOpOr_Lhs();
 
-  EReference getBool_op_or_Rhs();
+  EReference getBoolOpOr_Rhs();
 
   EReference getSeq_Lhs();
 
@@ -344,15 +344,15 @@ public interface BoaPackage extends EPackage {
 
   EReference getCtx_Th();
 
-  EReference getString_to_eval_res_map_Value();
+  EReference getStringToEvalResMap_Value();
 
-  EReference getEval_map_res_Values();
+  EReference getEvalMapRes_Values();
 
-  EReference getEval_fun_res_Exp();
+  EReference getEvalFunRes_Exp();
 
-  EReference getEval_fun_res_Ctx();
+  EReference getEvalFunRes_Ctx();
 
-  EReference getEval_bound_fun_res_Th();
+  EReference getEvalBoundFunRes_Th();
 
   EAttribute getDef_Name();
 
@@ -372,13 +372,13 @@ public interface BoaPackage extends EPackage {
 
   EAttribute getAssign_Name();
 
-  EAttribute getString_to_eval_res_map_Key();
+  EAttribute getStringToEvalResMap_Key();
 
-  EAttribute getEval_fun_res_Name();
+  EAttribute getEvalFunRes_Name();
 
-  EAttribute getEval_int_res_Value();
+  EAttribute getEvalIntRes_Value();
 
-  EAttribute getEval_bool_res_Value();
+  EAttribute getEvalBoolRes_Value();
 
   BoaFactory getBoaFactory();
 
@@ -477,7 +477,7 @@ public interface BoaPackage extends EPackage {
 
     EReference PROJECT__EXP = eINSTANCE.getProject_Exp();
 
-    EReference BOBJECT__FIELDS = eINSTANCE.getBobject_Fields();
+    EReference BOBJECT__FIELDS = eINSTANCE.getBObject_Fields();
 
     EReference FIELD__VALUE = eINSTANCE.getField_Value();
 
@@ -487,15 +487,15 @@ public interface BoaPackage extends EPackage {
 
     EReference WITH__RHS = eINSTANCE.getWith_Rhs();
 
-    EReference ARITH_OP__LHS = eINSTANCE.getArith_op_Lhs();
+    EReference ARITH_OP__LHS = eINSTANCE.getArithOp_Lhs();
 
-    EReference ARITH_OP__RHS = eINSTANCE.getArith_op_Rhs();
+    EReference ARITH_OP__RHS = eINSTANCE.getArithOp_Rhs();
 
     EReference NOT__VALUE = eINSTANCE.getNot_Value();
 
-    EReference CMP_OP__LHS = eINSTANCE.getCmp_op_Lhs();
+    EReference CMP_OP__LHS = eINSTANCE.getCmpOp_Lhs();
 
-    EReference CMP_OP__RHS = eINSTANCE.getCmp_op_Rhs();
+    EReference CMP_OP__RHS = eINSTANCE.getCmpOp_Rhs();
 
     EReference IF__COND = eINSTANCE.getIf_Cond();
 
@@ -513,13 +513,13 @@ public interface BoaPackage extends EPackage {
 
     EReference ASSIGN__RHS = eINSTANCE.getAssign_Rhs();
 
-    EReference BOOL_OP_AND__LHS = eINSTANCE.getBool_op_and_Lhs();
+    EReference BOOL_OP_AND__LHS = eINSTANCE.getBoolOpAnd_Lhs();
 
-    EReference BOOL_OP_AND__RHS = eINSTANCE.getBool_op_and_Rhs();
+    EReference BOOL_OP_AND__RHS = eINSTANCE.getBoolOpAnd_Rhs();
 
-    EReference BOOL_OP_OR__LHS = eINSTANCE.getBool_op_or_Lhs();
+    EReference BOOL_OP_OR__LHS = eINSTANCE.getBoolOpOr_Lhs();
 
-    EReference BOOL_OP_OR__RHS = eINSTANCE.getBool_op_or_Rhs();
+    EReference BOOL_OP_OR__RHS = eINSTANCE.getBoolOpOr_Rhs();
 
     EReference SEQ__LHS = eINSTANCE.getSeq_Lhs();
 
@@ -529,15 +529,15 @@ public interface BoaPackage extends EPackage {
 
     EReference CTX__TH = eINSTANCE.getCtx_Th();
 
-    EReference STRING_TO_EVAL_RES_MAP__VALUE = eINSTANCE.getString_to_eval_res_map_Value();
+    EReference STRING_TO_EVAL_RES_MAP__VALUE = eINSTANCE.getStringToEvalResMap_Value();
 
-    EReference EVAL_MAP_RES__VALUES = eINSTANCE.getEval_map_res_Values();
+    EReference EVAL_MAP_RES__VALUES = eINSTANCE.getEvalMapRes_Values();
 
-    EReference EVAL_FUN_RES__EXP = eINSTANCE.getEval_fun_res_Exp();
+    EReference EVAL_FUN_RES__EXP = eINSTANCE.getEvalFunRes_Exp();
 
-    EReference EVAL_FUN_RES__CTX = eINSTANCE.getEval_fun_res_Ctx();
+    EReference EVAL_FUN_RES__CTX = eINSTANCE.getEvalFunRes_Ctx();
 
-    EReference EVAL_BOUND_FUN_RES__TH = eINSTANCE.getEval_bound_fun_res_Th();
+    EReference EVAL_BOUND_FUN_RES__TH = eINSTANCE.getEvalBoundFunRes_Th();
 
     EAttribute DEF__NAME = eINSTANCE.getDef_Name();
 
@@ -557,12 +557,12 @@ public interface BoaPackage extends EPackage {
 
     EAttribute ASSIGN__NAME = eINSTANCE.getAssign_Name();
 
-    EAttribute STRING_TO_EVAL_RES_MAP__KEY = eINSTANCE.getString_to_eval_res_map_Key();
+    EAttribute STRING_TO_EVAL_RES_MAP__KEY = eINSTANCE.getStringToEvalResMap_Key();
 
-    EAttribute EVAL_FUN_RES__NAME = eINSTANCE.getEval_fun_res_Name();
+    EAttribute EVAL_FUN_RES__NAME = eINSTANCE.getEvalFunRes_Name();
 
-    EAttribute EVAL_INT_RES__VALUE = eINSTANCE.getEval_int_res_Value();
+    EAttribute EVAL_INT_RES__VALUE = eINSTANCE.getEvalIntRes_Value();
 
-    EAttribute EVAL_BOOL_RES__VALUE = eINSTANCE.getEval_bool_res_Value();
+    EAttribute EVAL_BOOL_RES__VALUE = eINSTANCE.getEvalBoolRes_Value();
   }
 }

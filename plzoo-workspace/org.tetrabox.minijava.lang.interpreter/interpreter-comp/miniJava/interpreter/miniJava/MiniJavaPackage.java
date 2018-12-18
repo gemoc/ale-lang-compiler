@@ -169,9 +169,7 @@ public interface MiniJavaPackage extends EPackage {
 
   int ARRAY_REF_VALUE = 75;
 
-  int SYMBOL_TO_SYMBOL_BINDING_MAP = 76;
-
-  int ACCESS_LEVEL = 77;
+  int ACCESS_LEVEL = 76;
 
   int PROGRAM__NAME = 0;
 
@@ -555,51 +553,51 @@ public interface MiniJavaPackage extends EPackage {
 
   EReference getProgram_State();
 
-  EReference getType_declaration_Implementz();
+  EReference getTypeDeclaration_Implementz();
 
-  EReference getType_declaration_Members();
+  EReference getTypeDeclaration_Members();
 
-  EReference getClazz_Super_class();
+  EReference getClazz_SuperClass();
 
   EReference getMethod_Params();
 
   EReference getMethod_Body();
 
-  EReference getField_Default_value();
+  EReference getField_DefaultValue();
 
   EReference getBlock_Statements();
 
-  EReference getPrint_statement_Expression();
+  EReference getPrintStatement_Expression();
 
   EReference getReturn_Expression();
 
-  EReference getIf_statement_Expression();
+  EReference getIfStatement_Expression();
 
-  EReference getIf_statement_Then_block();
+  EReference getIfStatement_ThenBlock();
 
-  EReference getIf_statement_Else_block();
+  EReference getIfStatement_ElseBlock();
 
-  EReference getWhile_statement_Condition();
+  EReference getWhileStatement_Condition();
 
-  EReference getWhile_statement_Block();
+  EReference getWhileStatement_Block();
 
-  EReference getFor_statement_Declaration();
+  EReference getForStatement_Declaration();
 
-  EReference getFor_statement_Condition();
+  EReference getForStatement_Condition();
 
-  EReference getFor_statement_Progression();
+  EReference getForStatement_Progression();
 
-  EReference getFor_statement_Block();
+  EReference getForStatement_Block();
 
-  EReference getClass_ref_Referenced_class();
+  EReference getClassRef_ReferencedClass();
 
-  EReference getTyped_declaration_Type_ref();
+  EReference getTypedDeclaration_TypeRef();
 
   EReference getAssignment_Assignee();
 
   EReference getAssignment_Value();
 
-  EReference getArray_type_ref_Type_ref();
+  EReference getArrayTypeRef_TypeRef();
 
   EReference getOr_Left();
 
@@ -617,13 +615,13 @@ public interface MiniJavaPackage extends EPackage {
 
   EReference getInequality_Right();
 
-  EReference getSuperior_or_equal_Left();
+  EReference getSuperiorOrEqual_Left();
 
-  EReference getSuperior_or_equal_Right();
+  EReference getSuperiorOrEqual_Right();
 
-  EReference getInferior_or_equal_Left();
+  EReference getInferiorOrEqual_Left();
 
-  EReference getInferior_or_equal_Right();
+  EReference getInferiorOrEqual_Right();
 
   EReference getSuperior_Left();
 
@@ -649,99 +647,99 @@ public interface MiniJavaPackage extends EPackage {
 
   EReference getDivision_Right();
 
-  EReference getArray_access_Object();
+  EReference getArrayAccess_Object();
 
-  EReference getArray_access_Index();
+  EReference getArrayAccess_Index();
 
-  EReference getArray_length_Array();
+  EReference getArrayLength_Array();
 
   EReference getNot_Expression();
 
   EReference getNeg_Expression();
 
-  EReference getField_access_Receiver();
+  EReference getFieldAccess_Receiver();
 
-  EReference getField_access_Field();
+  EReference getFieldAccess_Field();
 
-  EReference getMethod_call_Receiver();
+  EReference getMethodCall_Receiver();
 
-  EReference getMethod_call_Method();
+  EReference getMethodCall_Method();
 
-  EReference getMethod_call_Args();
+  EReference getMethodCall_Args();
 
-  EReference getNew_object_Type();
+  EReference getNewObject_Type();
 
-  EReference getNew_object_Args();
+  EReference getNewObject_Args();
 
-  EReference getNew_array_Type();
+  EReference getNewArray_Type();
 
-  EReference getNew_array_Size();
+  EReference getNewArray_Size();
 
-  EReference getSymbol_ref_Symbol();
+  EReference getSymbolRef_Symbol();
 
   EReference getContext_Bindings();
 
-  EReference getContext_Parent_context();
+  EReference getContext_ParentContext();
 
-  EReference getContext_Child_context();
+  EReference getContext_ChildContext();
 
   EReference getContext_Cache();
 
-  EReference getSymbol_binding_Value();
+  EReference getSymbolBinding_Value();
 
-  EReference getSymbol_binding_Symbol();
+  EReference getSymbolBinding_Symbol();
 
-  EReference getField_binding_Field();
+  EReference getFieldBinding_Field();
 
-  EReference getField_binding_Value();
+  EReference getFieldBinding_Value();
 
-  EReference getState_Root_frame();
+  EReference getState_RootFrame();
 
-  EReference getState_Objects_heap();
+  EReference getState_ObjectsHeap();
 
-  EReference getState_Output_stream();
+  EReference getState_OutputStream();
 
-  EReference getState_Arrays_heap();
+  EReference getState_ArraysHeap();
 
-  EReference getState_Context_cache();
+  EReference getState_ContextCache();
 
-  EReference getState_Frame_cache();
+  EReference getState_FrameCache();
 
   EReference getFrame_Call();
 
   EReference getFrame_Instance();
 
-  EReference getFrame_Child_frame();
+  EReference getFrame_ChildFrame();
 
-  EReference getFrame_Parent_frame();
+  EReference getFrame_ParentFrame();
 
-  EReference getFrame_Root_context();
+  EReference getFrame_RootContext();
 
-  EReference getFrame_Return_value();
+  EReference getFrame_ReturnValue();
 
-  EReference getNew_call_Newz();
+  EReference getNewCall_Newz();
 
-  EReference getMethod_call2_Methodcall();
+  EReference getMethodCall2_Methodcall();
 
-  EReference getObject_instance_Fieldbindings();
+  EReference getObjectInstance_Fieldbindings();
 
-  EReference getObject_instance_Type();
+  EReference getObjectInstance_Type();
 
-  EReference getArray_instance_Value();
+  EReference getArrayInstance_Value();
 
-  EReference getObject_ref_value_Instance();
+  EReference getObjectRefValue_Instance();
 
-  EReference getArray_ref_value_Instance();
+  EReference getArrayRefValue_Instance();
 
-  EReference getSymbol_to_symbol_binding_map_Key();
+  EReference getSymbolToSymbolBindingMap_Key();
 
-  EReference getSymbol_to_symbol_binding_map_Value();
+  EReference getSymbolToSymbolBindingMap_Value();
 
   EAttribute getProgram_Name();
 
-  EAttribute getImport_Imported_namespace();
+  EAttribute getImport_ImportedNamespace();
 
-  EAttribute getType_declaration_Access_level();
+  EAttribute getTypeDeclaration_AccessLevel();
 
   EAttribute getClazz_Isabstract();
 
@@ -751,23 +749,23 @@ public interface MiniJavaPackage extends EPackage {
 
   EAttribute getMethod_Isstatic();
 
-  EAttribute getNamed_element_Name();
+  EAttribute getNamedElement_Name();
 
-  EAttribute getString_constant_Value();
+  EAttribute getStringConstant_Value();
 
-  EAttribute getInt_constant_Value();
+  EAttribute getIntConstant_Value();
 
-  EAttribute getBool_constant_Value();
+  EAttribute getBoolConstant_Value();
 
-  EAttribute getInteger_value_Value();
+  EAttribute getIntegerValue_Value();
 
-  EAttribute getString_value_Value();
+  EAttribute getStringValue_Value();
 
-  EAttribute getBoolean_value_Value();
+  EAttribute getBooleanValue_Value();
 
-  EAttribute getOutput_stream_Stream();
+  EAttribute getOutputStream_Stream();
 
-  EAttribute getArray_instance_Size();
+  EAttribute getArrayInstance_Size();
 
   MiniJavaFactory getMiniJavaFactory();
 
@@ -932,51 +930,51 @@ public interface MiniJavaPackage extends EPackage {
 
     EReference PROGRAM__STATE = eINSTANCE.getProgram_State();
 
-    EReference TYPE_DECLARATION__IMPLEMENTZ = eINSTANCE.getType_declaration_Implementz();
+    EReference TYPE_DECLARATION__IMPLEMENTZ = eINSTANCE.getTypeDeclaration_Implementz();
 
-    EReference TYPE_DECLARATION__MEMBERS = eINSTANCE.getType_declaration_Members();
+    EReference TYPE_DECLARATION__MEMBERS = eINSTANCE.getTypeDeclaration_Members();
 
-    EReference CLAZZ__SUPER_CLASS = eINSTANCE.getClazz_Super_class();
+    EReference CLAZZ__SUPER_CLASS = eINSTANCE.getClazz_SuperClass();
 
     EReference METHOD__PARAMS = eINSTANCE.getMethod_Params();
 
     EReference METHOD__BODY = eINSTANCE.getMethod_Body();
 
-    EReference FIELD__DEFAULT_VALUE = eINSTANCE.getField_Default_value();
+    EReference FIELD__DEFAULT_VALUE = eINSTANCE.getField_DefaultValue();
 
     EReference BLOCK__STATEMENTS = eINSTANCE.getBlock_Statements();
 
-    EReference PRINT_STATEMENT__EXPRESSION = eINSTANCE.getPrint_statement_Expression();
+    EReference PRINT_STATEMENT__EXPRESSION = eINSTANCE.getPrintStatement_Expression();
 
     EReference RETURN__EXPRESSION = eINSTANCE.getReturn_Expression();
 
-    EReference IF_STATEMENT__EXPRESSION = eINSTANCE.getIf_statement_Expression();
+    EReference IF_STATEMENT__EXPRESSION = eINSTANCE.getIfStatement_Expression();
 
-    EReference IF_STATEMENT__THEN_BLOCK = eINSTANCE.getIf_statement_Then_block();
+    EReference IF_STATEMENT__THEN_BLOCK = eINSTANCE.getIfStatement_ThenBlock();
 
-    EReference IF_STATEMENT__ELSE_BLOCK = eINSTANCE.getIf_statement_Else_block();
+    EReference IF_STATEMENT__ELSE_BLOCK = eINSTANCE.getIfStatement_ElseBlock();
 
-    EReference WHILE_STATEMENT__CONDITION = eINSTANCE.getWhile_statement_Condition();
+    EReference WHILE_STATEMENT__CONDITION = eINSTANCE.getWhileStatement_Condition();
 
-    EReference WHILE_STATEMENT__BLOCK = eINSTANCE.getWhile_statement_Block();
+    EReference WHILE_STATEMENT__BLOCK = eINSTANCE.getWhileStatement_Block();
 
-    EReference FOR_STATEMENT__DECLARATION = eINSTANCE.getFor_statement_Declaration();
+    EReference FOR_STATEMENT__DECLARATION = eINSTANCE.getForStatement_Declaration();
 
-    EReference FOR_STATEMENT__CONDITION = eINSTANCE.getFor_statement_Condition();
+    EReference FOR_STATEMENT__CONDITION = eINSTANCE.getForStatement_Condition();
 
-    EReference FOR_STATEMENT__PROGRESSION = eINSTANCE.getFor_statement_Progression();
+    EReference FOR_STATEMENT__PROGRESSION = eINSTANCE.getForStatement_Progression();
 
-    EReference FOR_STATEMENT__BLOCK = eINSTANCE.getFor_statement_Block();
+    EReference FOR_STATEMENT__BLOCK = eINSTANCE.getForStatement_Block();
 
-    EReference CLASS_REF__REFERENCED_CLASS = eINSTANCE.getClass_ref_Referenced_class();
+    EReference CLASS_REF__REFERENCED_CLASS = eINSTANCE.getClassRef_ReferencedClass();
 
-    EReference TYPED_DECLARATION__TYPE_REF = eINSTANCE.getTyped_declaration_Type_ref();
+    EReference TYPED_DECLARATION__TYPE_REF = eINSTANCE.getTypedDeclaration_TypeRef();
 
     EReference ASSIGNMENT__ASSIGNEE = eINSTANCE.getAssignment_Assignee();
 
     EReference ASSIGNMENT__VALUE = eINSTANCE.getAssignment_Value();
 
-    EReference ARRAY_TYPE_REF__TYPE_REF = eINSTANCE.getArray_type_ref_Type_ref();
+    EReference ARRAY_TYPE_REF__TYPE_REF = eINSTANCE.getArrayTypeRef_TypeRef();
 
     EReference OR__LEFT = eINSTANCE.getOr_Left();
 
@@ -994,13 +992,13 @@ public interface MiniJavaPackage extends EPackage {
 
     EReference INEQUALITY__RIGHT = eINSTANCE.getInequality_Right();
 
-    EReference SUPERIOR_OR_EQUAL__LEFT = eINSTANCE.getSuperior_or_equal_Left();
+    EReference SUPERIOR_OR_EQUAL__LEFT = eINSTANCE.getSuperiorOrEqual_Left();
 
-    EReference SUPERIOR_OR_EQUAL__RIGHT = eINSTANCE.getSuperior_or_equal_Right();
+    EReference SUPERIOR_OR_EQUAL__RIGHT = eINSTANCE.getSuperiorOrEqual_Right();
 
-    EReference INFERIOR_OR_EQUAL__LEFT = eINSTANCE.getInferior_or_equal_Left();
+    EReference INFERIOR_OR_EQUAL__LEFT = eINSTANCE.getInferiorOrEqual_Left();
 
-    EReference INFERIOR_OR_EQUAL__RIGHT = eINSTANCE.getInferior_or_equal_Right();
+    EReference INFERIOR_OR_EQUAL__RIGHT = eINSTANCE.getInferiorOrEqual_Right();
 
     EReference SUPERIOR__LEFT = eINSTANCE.getSuperior_Left();
 
@@ -1026,99 +1024,99 @@ public interface MiniJavaPackage extends EPackage {
 
     EReference DIVISION__RIGHT = eINSTANCE.getDivision_Right();
 
-    EReference ARRAY_ACCESS__OBJECT = eINSTANCE.getArray_access_Object();
+    EReference ARRAY_ACCESS__OBJECT = eINSTANCE.getArrayAccess_Object();
 
-    EReference ARRAY_ACCESS__INDEX = eINSTANCE.getArray_access_Index();
+    EReference ARRAY_ACCESS__INDEX = eINSTANCE.getArrayAccess_Index();
 
-    EReference ARRAY_LENGTH__ARRAY = eINSTANCE.getArray_length_Array();
+    EReference ARRAY_LENGTH__ARRAY = eINSTANCE.getArrayLength_Array();
 
     EReference NOT__EXPRESSION = eINSTANCE.getNot_Expression();
 
     EReference NEG__EXPRESSION = eINSTANCE.getNeg_Expression();
 
-    EReference FIELD_ACCESS__RECEIVER = eINSTANCE.getField_access_Receiver();
+    EReference FIELD_ACCESS__RECEIVER = eINSTANCE.getFieldAccess_Receiver();
 
-    EReference FIELD_ACCESS__FIELD = eINSTANCE.getField_access_Field();
+    EReference FIELD_ACCESS__FIELD = eINSTANCE.getFieldAccess_Field();
 
-    EReference METHOD_CALL__RECEIVER = eINSTANCE.getMethod_call_Receiver();
+    EReference METHOD_CALL__RECEIVER = eINSTANCE.getMethodCall_Receiver();
 
-    EReference METHOD_CALL__METHOD = eINSTANCE.getMethod_call_Method();
+    EReference METHOD_CALL__METHOD = eINSTANCE.getMethodCall_Method();
 
-    EReference METHOD_CALL__ARGS = eINSTANCE.getMethod_call_Args();
+    EReference METHOD_CALL__ARGS = eINSTANCE.getMethodCall_Args();
 
-    EReference NEW_OBJECT__TYPE = eINSTANCE.getNew_object_Type();
+    EReference NEW_OBJECT__TYPE = eINSTANCE.getNewObject_Type();
 
-    EReference NEW_OBJECT__ARGS = eINSTANCE.getNew_object_Args();
+    EReference NEW_OBJECT__ARGS = eINSTANCE.getNewObject_Args();
 
-    EReference NEW_ARRAY__TYPE = eINSTANCE.getNew_array_Type();
+    EReference NEW_ARRAY__TYPE = eINSTANCE.getNewArray_Type();
 
-    EReference NEW_ARRAY__SIZE = eINSTANCE.getNew_array_Size();
+    EReference NEW_ARRAY__SIZE = eINSTANCE.getNewArray_Size();
 
-    EReference SYMBOL_REF__SYMBOL = eINSTANCE.getSymbol_ref_Symbol();
+    EReference SYMBOL_REF__SYMBOL = eINSTANCE.getSymbolRef_Symbol();
 
     EReference CONTEXT__BINDINGS = eINSTANCE.getContext_Bindings();
 
-    EReference CONTEXT__PARENT_CONTEXT = eINSTANCE.getContext_Parent_context();
+    EReference CONTEXT__PARENT_CONTEXT = eINSTANCE.getContext_ParentContext();
 
-    EReference CONTEXT__CHILD_CONTEXT = eINSTANCE.getContext_Child_context();
+    EReference CONTEXT__CHILD_CONTEXT = eINSTANCE.getContext_ChildContext();
 
     EReference CONTEXT__CACHE = eINSTANCE.getContext_Cache();
 
-    EReference SYMBOL_BINDING__VALUE = eINSTANCE.getSymbol_binding_Value();
+    EReference SYMBOL_BINDING__VALUE = eINSTANCE.getSymbolBinding_Value();
 
-    EReference SYMBOL_BINDING__SYMBOL = eINSTANCE.getSymbol_binding_Symbol();
+    EReference SYMBOL_BINDING__SYMBOL = eINSTANCE.getSymbolBinding_Symbol();
 
-    EReference FIELD_BINDING__FIELD = eINSTANCE.getField_binding_Field();
+    EReference FIELD_BINDING__FIELD = eINSTANCE.getFieldBinding_Field();
 
-    EReference FIELD_BINDING__VALUE = eINSTANCE.getField_binding_Value();
+    EReference FIELD_BINDING__VALUE = eINSTANCE.getFieldBinding_Value();
 
-    EReference STATE__ROOT_FRAME = eINSTANCE.getState_Root_frame();
+    EReference STATE__ROOT_FRAME = eINSTANCE.getState_RootFrame();
 
-    EReference STATE__OBJECTS_HEAP = eINSTANCE.getState_Objects_heap();
+    EReference STATE__OBJECTS_HEAP = eINSTANCE.getState_ObjectsHeap();
 
-    EReference STATE__OUTPUT_STREAM = eINSTANCE.getState_Output_stream();
+    EReference STATE__OUTPUT_STREAM = eINSTANCE.getState_OutputStream();
 
-    EReference STATE__ARRAYS_HEAP = eINSTANCE.getState_Arrays_heap();
+    EReference STATE__ARRAYS_HEAP = eINSTANCE.getState_ArraysHeap();
 
-    EReference STATE__CONTEXT_CACHE = eINSTANCE.getState_Context_cache();
+    EReference STATE__CONTEXT_CACHE = eINSTANCE.getState_ContextCache();
 
-    EReference STATE__FRAME_CACHE = eINSTANCE.getState_Frame_cache();
+    EReference STATE__FRAME_CACHE = eINSTANCE.getState_FrameCache();
 
     EReference FRAME__CALL = eINSTANCE.getFrame_Call();
 
     EReference FRAME__INSTANCE = eINSTANCE.getFrame_Instance();
 
-    EReference FRAME__CHILD_FRAME = eINSTANCE.getFrame_Child_frame();
+    EReference FRAME__CHILD_FRAME = eINSTANCE.getFrame_ChildFrame();
 
-    EReference FRAME__PARENT_FRAME = eINSTANCE.getFrame_Parent_frame();
+    EReference FRAME__PARENT_FRAME = eINSTANCE.getFrame_ParentFrame();
 
-    EReference FRAME__ROOT_CONTEXT = eINSTANCE.getFrame_Root_context();
+    EReference FRAME__ROOT_CONTEXT = eINSTANCE.getFrame_RootContext();
 
-    EReference FRAME__RETURN_VALUE = eINSTANCE.getFrame_Return_value();
+    EReference FRAME__RETURN_VALUE = eINSTANCE.getFrame_ReturnValue();
 
-    EReference NEW_CALL__NEWZ = eINSTANCE.getNew_call_Newz();
+    EReference NEW_CALL__NEWZ = eINSTANCE.getNewCall_Newz();
 
-    EReference METHOD_CALL2__METHODCALL = eINSTANCE.getMethod_call2_Methodcall();
+    EReference METHOD_CALL2__METHODCALL = eINSTANCE.getMethodCall2_Methodcall();
 
-    EReference OBJECT_INSTANCE__FIELDBINDINGS = eINSTANCE.getObject_instance_Fieldbindings();
+    EReference OBJECT_INSTANCE__FIELDBINDINGS = eINSTANCE.getObjectInstance_Fieldbindings();
 
-    EReference OBJECT_INSTANCE__TYPE = eINSTANCE.getObject_instance_Type();
+    EReference OBJECT_INSTANCE__TYPE = eINSTANCE.getObjectInstance_Type();
 
-    EReference ARRAY_INSTANCE__VALUE = eINSTANCE.getArray_instance_Value();
+    EReference ARRAY_INSTANCE__VALUE = eINSTANCE.getArrayInstance_Value();
 
-    EReference OBJECT_REF_VALUE__INSTANCE = eINSTANCE.getObject_ref_value_Instance();
+    EReference OBJECT_REF_VALUE__INSTANCE = eINSTANCE.getObjectRefValue_Instance();
 
-    EReference ARRAY_REF_VALUE__INSTANCE = eINSTANCE.getArray_ref_value_Instance();
+    EReference ARRAY_REF_VALUE__INSTANCE = eINSTANCE.getArrayRefValue_Instance();
 
-    EReference SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = eINSTANCE.getSymbol_to_symbol_binding_map_Key();
+    EReference SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = eINSTANCE.getSymbolToSymbolBindingMap_Key();
 
-    EReference SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = eINSTANCE.getSymbol_to_symbol_binding_map_Value();
+    EReference SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = eINSTANCE.getSymbolToSymbolBindingMap_Value();
 
     EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 
-    EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_Imported_namespace();
+    EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
 
-    EAttribute TYPE_DECLARATION__ACCESS_LEVEL = eINSTANCE.getType_declaration_Access_level();
+    EAttribute TYPE_DECLARATION__ACCESS_LEVEL = eINSTANCE.getTypeDeclaration_AccessLevel();
 
     EAttribute CLAZZ__ISABSTRACT = eINSTANCE.getClazz_Isabstract();
 
@@ -1128,22 +1126,22 @@ public interface MiniJavaPackage extends EPackage {
 
     EAttribute METHOD__ISSTATIC = eINSTANCE.getMethod_Isstatic();
 
-    EAttribute NAMED_ELEMENT__NAME = eINSTANCE.getNamed_element_Name();
+    EAttribute NAMED_ELEMENT__NAME = eINSTANCE.getNamedElement_Name();
 
-    EAttribute STRING_CONSTANT__VALUE = eINSTANCE.getString_constant_Value();
+    EAttribute STRING_CONSTANT__VALUE = eINSTANCE.getStringConstant_Value();
 
-    EAttribute INT_CONSTANT__VALUE = eINSTANCE.getInt_constant_Value();
+    EAttribute INT_CONSTANT__VALUE = eINSTANCE.getIntConstant_Value();
 
-    EAttribute BOOL_CONSTANT__VALUE = eINSTANCE.getBool_constant_Value();
+    EAttribute BOOL_CONSTANT__VALUE = eINSTANCE.getBoolConstant_Value();
 
-    EAttribute INTEGER_VALUE__VALUE = eINSTANCE.getInteger_value_Value();
+    EAttribute INTEGER_VALUE__VALUE = eINSTANCE.getIntegerValue_Value();
 
-    EAttribute STRING_VALUE__VALUE = eINSTANCE.getString_value_Value();
+    EAttribute STRING_VALUE__VALUE = eINSTANCE.getStringValue_Value();
 
-    EAttribute BOOLEAN_VALUE__VALUE = eINSTANCE.getBoolean_value_Value();
+    EAttribute BOOLEAN_VALUE__VALUE = eINSTANCE.getBooleanValue_Value();
 
-    EAttribute OUTPUT_STREAM__STREAM = eINSTANCE.getOutput_stream_Stream();
+    EAttribute OUTPUT_STREAM__STREAM = eINSTANCE.getOutputStream_Stream();
 
-    EAttribute ARRAY_INSTANCE__SIZE = eINSTANCE.getArray_instance_Size();
+    EAttribute ARRAY_INSTANCE__SIZE = eINSTANCE.getArrayInstance_Size();
   }
 }

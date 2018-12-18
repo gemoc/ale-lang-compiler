@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Boaprograms
+Bundle-SymbolicName: boaprograms
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: boaprograms
+Bundle-RequiredExecutionEnvironment: JavaSE-10

@@ -17,7 +17,8 @@ final class MainRootNodeExtension extends RootNode {
 
 	@Override
 	public Object execute(final VirtualFrame frame) {
+		long start = System.currentTimeMillis();
 		result.eval();
-		return 42;
+		return System.currentTimeMillis() - start;
 	}
 }

@@ -43,7 +43,7 @@ class EClassInterfaceCompiler {
 			.enumBuilder(selfClassName)
 			.addSuperinterface(ClassName.get('org.eclipse.emf.common.util', 'Enumerator'))
 			.addEnumConstants(eEnum.ELiterals.map [
-				it.name -> TypeSpec.anonymousClassBuilder('''$L, $S, $S''', it.value, it.name, it.name).build
+				it.name -> TypeSpec.anonymousClassBuilder('''$L, $S, $S''', it.value, it.name, it.literal).build
 			])
 			.addFields(eEnum.ELiterals.map[
 				FieldSpec.builder(int, '''«it.name.toUpperCase»_VALUE''', PUBLIC, STATIC, FINAL).initializer('''«it.value»''').build

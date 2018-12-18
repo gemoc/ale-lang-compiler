@@ -46,10 +46,12 @@ class PackageInterfaceCompiler {
 
 		var cptr = 0;
 		for (EClass clazz : allClasses) {
+//			if(clazz.instanceClassName != 'java.util.Map$Entry') {
 			classFields +=
-				FieldSpec.builder(int, clazz.name.normalizeUpperField).initializer('''«cptr»''').addModifiers(
-					STATIC, PUBLIC, FINAL).build
+				FieldSpec.builder(int, clazz.name.normalizeUpperField).initializer('''«cptr»''').addModifiers(STATIC,
+					PUBLIC, FINAL).build
 			cptr = cptr + 1
+//			}
 		}
 		
 		for(EEnum eEnum : allEnums) {
@@ -65,10 +67,10 @@ class PackageInterfaceCompiler {
 		]
 
 		val Iterable<FieldSpec> eReferenceFieldsLiterals = allClasses.map[clazz|clazz.EReferences.map[field|
-			FieldSpec.builder(EReference, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«field.name.normalizeUpperMethod(clazz.name)»()''').addModifiers(PUBLIC, STATIC, FINAL).build
+			FieldSpec.builder(EReference, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build
 		]].flatten
 		val Iterable<FieldSpec> eAttributeFieldsLiterals = allClasses.map[clazz|clazz.EAttributes.map[field|
-			FieldSpec.builder(EAttribute, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«field.name.normalizeUpperMethod(clazz.name)»()''').addModifiers(PUBLIC, STATIC, FINAL).build
+			FieldSpec.builder(EAttribute, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build
 		]].flatten
 		val literalType = TypeSpec.interfaceBuilder('Literals').addFields(classFieldsLiterals +
 			eReferenceFieldsLiterals + eAttributeFieldsLiterals).addModifiers(PUBLIC, STATIC).build
@@ -82,11 +84,11 @@ class PackageInterfaceCompiler {
 		]
 		
 		val Iterable<MethodSpec> getterReferencesFields = allClasses.map[clazz|clazz.EReferences.map[field|
-			MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').returns(EReference).addModifiers(ABSTRACT, PUBLIC).build
+			MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').returns(EReference).addModifiers(ABSTRACT, PUBLIC).build
 		]].flatten
 
 		val Iterable<MethodSpec> getterAttributesFields = allClasses.map[clazz|clazz.EAttributes.map[field|
-			MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').returns(EAttribute).addModifiers(ABSTRACT, PUBLIC).build
+			MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').returns(EAttribute).addModifiers(ABSTRACT, PUBLIC).build
 		]].flatten
 		
 		val fieldsAttributesFields = newArrayList

@@ -4,6 +4,7 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Var;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -20,8 +21,12 @@ public class VarImpl extends ExprImpl implements Var {
 
   protected String name = NAME_EDEFAULT;
 
+  @CompilationFinal
+  private VarDispatchWrapperEval cachedEval;
+
   protected VarImpl() {
     super();
+    this.cachedEval = new boa.interpreter.boa.impl.VarDispatchWrapperEval(this);
   }
 
   public String getName() {
@@ -90,5 +95,9 @@ public class VarImpl extends ExprImpl implements Var {
         }
         ;
     return result;
+  }
+
+  public VarDispatchWrapperEval getCachedEval() {
+    return this.cachedEval;
   }
 }

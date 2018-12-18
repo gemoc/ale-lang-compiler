@@ -7,11 +7,11 @@ import java.util.List;
 import org.eclipse.emf.common.util.Enumerator;
 
 public enum AccessLevel implements Enumerator {
-  PRIVATE(0, "PRIVATE", "PRIVATE"),
+  PRIVATE(0, "PRIVATE", "private"),
 
-  PROTECTED(1, "PROTECTED", "PROTECTED"),
+  PROTECTED(1, "PROTECTED", "protected"),
 
-  PUBLIC(2, "PUBLIC", "PUBLIC");
+  PUBLIC(2, "PUBLIC", "public");
 
   public static final int PRIVATE_VALUE = 0;
 

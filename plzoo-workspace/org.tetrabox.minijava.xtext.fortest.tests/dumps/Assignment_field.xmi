@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="ASCII"?>
-<miniJava:Program xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:miniJava="http://www.example.org/minijava/MiniJava">
+<miniJava:Program xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:miniJava="http://miniJava.miniJava.miniJava/" xsi:schemaLocation="http://miniJava.miniJava.miniJava/ /org.tetrabox.minijava.xtext/model/MiniJava.ecore">
   <classes xsi:type="miniJava:Interface" name="I">
-    <members xsi:type="miniJava:Method" name="hello" access="PUBLIC">
+    <members xsi:type="miniJava:Method" name="hello" access="public">
       <typeRef xsi:type="miniJava:VoidTypeRef"/>
     </members>
   </classes>
   <classes xsi:type="miniJava:Clazz" name="X" implementz="//@classes.0">
-    <members xsi:type="miniJava:Field" name="i" access="PUBLIC">
+    <members xsi:type="miniJava:Field" name="i" access="public">
       <typeRef xsi:type="miniJava:IntegerTypeRef"/>
     </members>
-    <members xsi:type="miniJava:Field" name="b" access="PUBLIC">
+    <members xsi:type="miniJava:Field" name="b" access="public">
       <typeRef xsi:type="miniJava:BooleanTypeRef"/>
     </members>
-    <members xsi:type="miniJava:Field" name="s" access="PUBLIC">
+    <members xsi:type="miniJava:Field" name="s" access="public">
       <typeRef xsi:type="miniJava:StringTypeRef"/>
     </members>
-    <members xsi:type="miniJava:Method" access="PUBLIC">
+    <members xsi:type="miniJava:Method" access="public">
       <typeRef xsi:type="miniJava:ClassRef" referencedClass="//@classes.1"/>
       <params name="j">
         <typeRef xsi:type="miniJava:IntegerTypeRef"/>
@@ -29,7 +29,7 @@
         </statements>
       </body>
     </members>
-    <members xsi:type="miniJava:Method" name="identity" access="PUBLIC">
+    <members xsi:type="miniJava:Method" name="identity" access="public">
       <typeRef xsi:type="miniJava:IntegerTypeRef"/>
       <params name="j">
         <typeRef xsi:type="miniJava:IntegerTypeRef"/>
@@ -40,7 +40,7 @@
         </statements>
       </body>
     </members>
-    <members xsi:type="miniJava:Method" name="hello" access="PUBLIC">
+    <members xsi:type="miniJava:Method" name="hello" access="public">
       <typeRef xsi:type="miniJava:VoidTypeRef"/>
       <body>
         <statements xsi:type="miniJava:PrintStatement">
@@ -48,7 +48,7 @@
         </statements>
       </body>
     </members>
-    <members xsi:type="miniJava:Method" name="increment" access="PUBLIC">
+    <members xsi:type="miniJava:Method" name="increment" access="public">
       <typeRef xsi:type="miniJava:VoidTypeRef"/>
       <params name="inc">
         <typeRef xsi:type="miniJava:IntegerTypeRef"/>
@@ -67,7 +67,7 @@
         </statements>
       </body>
     </members>
-    <members xsi:type="miniJava:Method" name="testString" access="PUBLIC">
+    <members xsi:type="miniJava:Method" name="testString" access="public">
       <typeRef xsi:type="miniJava:BooleanTypeRef"/>
       <params name="tested">
         <typeRef xsi:type="miniJava:StringTypeRef"/>
@@ -83,7 +83,7 @@
         </statements>
       </body>
     </members>
-    <members xsi:type="miniJava:Method" name="getI" access="PUBLIC">
+    <members xsi:type="miniJava:Method" name="getI" access="public">
       <typeRef xsi:type="miniJava:IntegerTypeRef"/>
       <body>
         <statements xsi:type="miniJava:Return">
@@ -95,10 +95,10 @@
     </members>
   </classes>
   <classes xsi:type="miniJava:Clazz" name="Y" isabstract="true" superClass="//@classes.1">
-    <members xsi:type="miniJava:Method" name="ymethod" access="PUBLIC" isabstract="true">
+    <members xsi:type="miniJava:Method" name="ymethod" access="public" isabstract="true">
       <typeRef xsi:type="miniJava:VoidTypeRef"/>
     </members>
-    <members xsi:type="miniJava:Method" name="identity" access="PUBLIC">
+    <members xsi:type="miniJava:Method" name="identity" access="public">
       <typeRef xsi:type="miniJava:IntegerTypeRef"/>
       <params name="j">
         <typeRef xsi:type="miniJava:IntegerTypeRef"/>
@@ -114,7 +114,7 @@
     </members>
   </classes>
   <classes xsi:type="miniJava:Clazz" name="Z" superClass="//@classes.2">
-    <members xsi:type="miniJava:Method" name="ymethod" access="PUBLIC">
+    <members xsi:type="miniJava:Method" name="ymethod" access="public">
       <typeRef xsi:type="miniJava:VoidTypeRef"/>
       <body>
         <statements xsi:type="miniJava:PrintStatement">
@@ -124,7 +124,7 @@
     </members>
   </classes>
   <classes xsi:type="miniJava:Clazz" name="Main">
-    <members xsi:type="miniJava:Method" name="main" access="PUBLIC" isstatic="true">
+    <members xsi:type="miniJava:Method" name="main" access="public" isstatic="true">
       <typeRef xsi:type="miniJava:VoidTypeRef"/>
       <params name="args">
         <typeRef xsi:type="miniJava:ArrayTypeRef">

@@ -12,6 +12,7 @@ import org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ArrayTemplate
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ObjectTemplate
 import org.tetrabox.minijava.xtext.fortest.tests.MiniJavaInjectorProvider
+import java.net.URI
 
 @RunWith(XtextRunner)
 @InjectWith(MiniJavaInjectorProvider)
@@ -101,7 +102,11 @@ class MiniJavaSemanticsStatementsTests {
 
 	@Test
 	def void Assignment_field() {
-		genericStatementBindingsTest("X y = new X(); y.i = 76;", #{"y" -> new ObjectTemplate("X", #{"i" -> 76})})
+
+		genericStatementBindingsTest(
+			org.eclipse.emf.common.util.URI.createURI(
+				"/home/manuel/dev/java/ale-lang/plzoo-workspace/org.tetrabox.minijava.xtext.fortest.tests/dumps/Assignment_field.xmi"),
+			#{"y" -> new ObjectTemplate("X", #{"i" -> 76})})
 	}
 
 	@Test
@@ -118,7 +123,8 @@ class MiniJavaSemanticsStatementsTests {
 
 	@Test
 	def void Assignment_array() {
-		genericStatementBindingsTest("int[] array = new int[3]; ", #{"array" -> new ArrayTemplate(3, "int", #[0,0,0])})
+		genericStatementBindingsTest("int[] array = new int[3]; ",
+			#{"array" -> new ArrayTemplate(3, "int", #[0, 0, 0])})
 	}
 
 	def void Assignment_array_entry() {

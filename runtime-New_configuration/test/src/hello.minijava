@@ -1,0 +1,14 @@
+class A {
+	
+	public String WORLD = 'world'; 
+	
+	public void hello() {
+		System.out.println('hello world');
+	}
+	
+	public static void main(String[] args) {
+		A a = new A();
+		a.hello();
+	} 
+	
+}

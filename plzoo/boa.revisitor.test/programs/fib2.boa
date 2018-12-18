@@ -14,22 +14,22 @@ File {
 								els ArithOpPlus {
 									lhs App {
 										lhs Project app {
-										exp This
-									}
-									rhs ArithOpMinus {
-										lhs Var "n"
-										rhs Int {value 1}
-									}
+											exp This
+										}
+										rhs ArithOpMinus {
+											lhs Var "n"
+											rhs Int {value 1}
+										}
 
 									}
 									rhs App {
 										lhs Project app {
-										exp This
-									}
-									rhs ArithOpMinus {
-										lhs Var "n"
-										rhs Int {value 2}
-									}
+											exp This
+										}
+										rhs ArithOpMinus {
+											lhs Var "n"
+											rhs Int {value 2}
+										}
 
 									}
 								}

@@ -150,6 +150,11 @@ public abstract class AbstractBoaTest {
 						+ "x = 1000\n" + "x = 2000\n" + "x = 3000\n");
 	}
 
+	@Test
+	public void insertSort() throws IOException {
+		eval("insert_sort", "");
+	}
+
 //	@Test
 //	@Ignore
 //	public void testCopil() {

@@ -5,5 +5,5 @@ Bundle-SymbolicName: org.tetrabox.minijava.lang
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: org.tetrabox.minijava.lang
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.tetrabox.minijava.xtext;bundle-version="1.0.0",
+Require-Bundle: org.tetrabox.minijava.xtext;bundle-version="1.0.0";resolution:=optional,
  org.tetrabox.minijava.lang.services;bundle-version="1.0.0"

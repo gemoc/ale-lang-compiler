@@ -1002,7 +1002,9 @@ class EClassImplementationCompiler {
 			val x = ctx.eClass.EAllReferences.filter[it.name == array].head.EType.resolveType
 			b.addStatement('''if(this.«array»Arr == null) {
 				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-				this.«array»Arr = this.«array».toArray(new «x»[0]);
+				if(this.«array» != null) this.«array»Arr = this.«array».toArray(new «x»[0]);
+				else this.«array»Arr = new «x»[] {};
+				
 			}''')
 		]).addStatement(cbb.build.toString)
 		

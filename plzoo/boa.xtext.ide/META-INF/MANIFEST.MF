@@ -11,7 +11,6 @@ Require-Bundle: boa.xtext,
  org.eclipse.xtext.ide,
  org.eclipse.xtext.xbase.ide,
  org.antlr.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: boa.xtext.ide.contentassist.antlr.internal,
  boa.xtext.ide.contentassist.antlr
 

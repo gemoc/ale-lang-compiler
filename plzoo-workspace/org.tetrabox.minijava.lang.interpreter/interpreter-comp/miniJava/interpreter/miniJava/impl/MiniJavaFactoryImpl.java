@@ -257,8 +257,6 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
     	return createObjectRefValue();
     case MiniJavaPackage.ARRAY_REF_VALUE:
     	return createArrayRefValue();
-    case MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP:
-    	return (org.eclipse.emf.ecore.EObject) createSymbolToSymbolBindingMap();
     default:
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

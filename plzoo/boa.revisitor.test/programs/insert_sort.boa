@@ -1,0 +1,466 @@
+/*
+let list = {
+  isEmpty = fun _ -> this.empty,
+  getHead = fun _ -> this.head,
+  getTail = fun _ -> this.tail,
+  
+  # constructors
+  nil =  fun _ -> this with { empty = true },
+  cons = fun x -> fun xs -> this with { empty = false, head = x, tail = xs },
+
+  iterator = (fun _ ->
+    { elements = this,
+      hasNext = (fun _ -> not this.elements.empty),
+      next = (fun _ -> let x = this.elements.head in this.elements := this.elements.tail; x)
+    }),
+
+   get = fun n -> if n = 0 then this.head else this.tail.get (n-1),
+
+   map = fun f ->
+     if this.empty then
+       this.nil {}
+     else
+       this.cons (f this.head) (this.tail.map f)
+} ;;
+
+# Examples of lists
+
+let a = list.cons 1 (list.cons 2 (list.cons 3 (list.nil {}))) ;;
+
+let x = a.get 2 ;;
+
+let b = a.map (fun x -> 100 + x) ;;
+
+ */
+File {
+	commands {
+		Def list {
+			expr BObject {
+				fields {
+					Field isEmpty {
+						value Fun _ {
+							body Project empty {
+								exp This
+							}
+						}
+					},
+					Field getHead {
+						value Fun _ {
+							body Project head {
+								exp This
+							}
+						}
+					},
+					Field getTail {
+						value Fun _ {
+							body Project tail {
+								exp This
+							}
+						}
+					}, // constructors
+					Field nil { // fun _ -> this with { empty = true }
+						value Fun _ {
+							body With {
+								lhs This
+								rhs BObject { fields { Field empty { value value Bool } } }
+							}
+							
+						}
+					},
+					Field cons { // fun x -> fun xs -> this with { empty = false, head = x, tail = xs }
+						value Fun x {
+							body Fun xs {
+								body With {
+									lhs This
+									rhs BObject {
+										fields {
+											Field empty { value Bool }, Field head { value Var "x" }, Field tail { value Var "xs" }
+										}
+									}
+								}
+								
+							}
+						}
+					},
+					Field concat {
+						value Fun l1 {
+							body Fun l2 {
+								body If {
+									cond App {
+										lhs Project isEmpty {
+											exp Var "l1"
+										}
+										rhs BObject {} 
+									}
+									then Var "l2"
+									els App {
+										lhs App {
+											lhs Project cons {
+												exp This
+											}
+											rhs App {
+												lhs Project getHead { exp Var "l1" }
+												rhs BObject {}
+											}
+										}
+										rhs App {
+											lhs App {
+												lhs Project concat { exp This }
+												rhs App {
+												lhs Project getTail { exp Var "l1" }
+												rhs BObject {}
+											}
+											}
+											rhs Var "l2"
+										} 
+									}
+								}
+							}
+						}
+					},
+					/*
+					 * fun _ -> { elements = this,
+      								hasNext = (fun _ -> not this.elements.empty),
+      								next = (fun _ -> let x = this.elements.head in this.elements := this.elements.tail; x)
+    							}
+					 */
+					Field iterator {
+						value Fun _ {
+							body BObject {
+								fields {
+									Field elements { value This },
+									Field hasNext { value Fun _ { body Not { value Project empty { exp Project elements { exp This } } } } } ,
+									Field next {
+										value Fun _ { body Seq {
+											lhs Let x { 
+											lhs Project head { exp Project elements { exp This }}
+											rhs Assign elements {
+												lhs This 
+												rhs Project tail { exp Project elements { exp This } } } }
+												rhs Var "x" 
+											}
+										}
+									}
+								}
+							}
+						}
+					}, // fun n -> if n = 0 then this.head else this.tail.get (n-1)
+					Field get {
+						value Fun n {
+							body If { 
+								cond CmpOpEqual { lhs Int { value 0 } rhs Var "n" } 
+								then Project head { exp This } 
+								els App {
+									lhs Project get { exp Project tail { exp This } } 
+									rhs ArithOpMinus {
+										lhs Var "n"
+										rhs Int { value 1 }
+									}
+								}
+							} 
+						}
+					},
+					/*
+					 * map = fun f ->
+					     if this.empty then
+					       this.nil {}
+					     else
+					       this.cons (f this.head) (this.tail.map f)
+					 */
+					 Field map {
+					 	value Fun f {
+					 		body If {
+					 			cond Project empty { exp This } 
+					 			then BObject { }
+					 			 els App {
+					 			 	lhs Project cons { exp This } 
+					 			 	rhs App {
+					 			 		lhs App {
+					 			 			lhs Var "f"
+					 			 			rhs Project head { exp This } 
+					 			 			} 
+					 			 		rhs App {
+					 			 			lhs Project map { exp Project tail { exp This } } 
+					 			 			rhs Var "f"	
+					 			 		}
+					 			 	}
+					 			 }
+					 		}
+					 	}
+					 },
+					 Field decreasingList {
+					 	value Fun cptr {
+					 		body If { 
+					 			cond CmpOpEqual { lhs Var cptr rhs Int { value 0 } }
+						 		then App {
+									lhs Project nil { exp Var "list" } 
+									rhs BObject {}
+								}
+						 		els App {
+									lhs App { 
+										lhs Project cons { exp Var "list" } 
+										rhs Var "cptr"
+									}
+									rhs App {
+										lhs Project decreasingList { exp This }
+										rhs ArithOpMinus { lhs Var "cptr" rhs Int { value 1 } } 
+									}
+								}
+					 		}
+						} 
+					}
+				}
+			}
+		},
+		Def l700 {
+			expr App {
+				lhs Project decreasingList {
+					exp
+					 App {
+					lhs Project nil { exp Var "list" }
+					rhs BObject {}
+					}
+				} 
+				rhs Int { value 700 }
+			}
+		},
+		Def dbl {
+			expr App{ lhs App {
+				lhs Project concat  { exp Var"l700" }
+				rhs Var "l700"
+			} rhs Var "l700"}
+		},
+		Def emptyList {
+			expr App {
+				lhs Project nil { exp Var "list" }
+				rhs BObject {}
+			}
+		},
+		Def sort {
+			expr BObject {
+				fields {
+					Field insertSort {
+						value Fun l {
+							body App {
+								lhs App {
+									lhs Project insertSort2 {   exp This }
+									rhs Var "l"
+								} rhs App {
+									lhs Project nil { exp Var "list" }
+									rhs BObject {}
+								}
+							}
+						}
+					},
+					Field insertSort2 {
+						value Fun l {
+							body Fun acc {
+								body If {
+									cond App {
+										lhs Project isEmpty {
+											exp Var "l"
+										}
+										rhs BObject {} 
+									}
+									then Var "acc"
+									els App {
+										lhs App {
+											lhs Project insertSort2 {
+												exp This
+											}
+											rhs App {
+												lhs Project getTail { exp Var "l" }
+												rhs BObject {}
+											}
+										}
+										rhs App {
+											lhs App {
+												lhs App {
+													lhs Project insertSort3 {
+														exp This
+													}
+													rhs App {
+														lhs Project getHead { exp Var "l" }
+														rhs BObject {}
+													}
+												}
+												rhs Var "acc"
+											}
+											
+											rhs Var "emptyList"
+										}  
+										
+										// (insertSort'' x acc [])
+									}
+								}
+							}
+						}
+					},
+					Field insertSort3 {
+						value Fun l {
+							body Fun acc {
+								body Fun acc2 {
+									body If {
+										cond App {
+											lhs Project isEmpty {
+												exp Var "acc"
+											}
+											rhs BObject {} 
+										}
+										then App {
+											lhs App {
+												lhs Project concat { exp Var "emptyList" }
+												rhs Var "acc2" 
+											}
+											rhs App {
+												lhs App { 
+													lhs Project cons { exp Var "emptyList" }
+													rhs Var "l"
+												}
+												rhs Var "emptyList"
+											}
+										}
+										els If {
+											cond CmpOpLess {
+												lhs App {
+														lhs Project getHead { exp Var "acc" }
+														rhs BObject {}
+													}
+												rhs Var "l"
+											}
+											then App {
+												lhs App {
+													lhs App {
+														lhs Project  insertSort3 { exp This }
+														rhs Var "l"
+													}
+													rhs App {
+														lhs Project getTail { exp Var "acc" }
+														rhs BObject {}
+													}
+												} 
+												rhs App {
+													lhs App {
+														lhs Project concat { exp Var "emptyList" }
+														rhs Var "acc2" 
+													}
+													rhs App {
+														lhs Project getHead { exp Var "acc" }
+														rhs BObject {}
+													}
+												}
+											} // insertSort'' x ys (acc ++ [y])
+											els  
+											App { lhs App {
+												lhs Project concat { exp Var "emptyList" }
+												rhs 
+													App {
+														lhs App {
+															lhs Project concat { exp Var "emptyList" }
+															rhs Var "acc2" 
+														}
+														rhs App {
+															lhs App { 
+																lhs Project cons { exp Var "emptyList" }
+																rhs App {
+																	lhs Project getHead { exp Var "acc" }
+																	rhs BObject {}
+																}
+															}
+															rhs Var "emptyList"
+														}
+													} // acc ++[x] ++ (y:ys)
+												}
+												rhs Var "acc"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					,Field version {
+						value Int { value 1 } 
+					}
+				}
+				
+			}
+		},
+//		Int { value 700 },
+//		App {
+//			lhs Project insertSort { exp Var "sort" }
+//			rhs Var "l700"
+//		},
+//		Int { value 7002 },
+		App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}},
+				App {
+			lhs Project isEmpty {
+				exp App {
+			lhs Project insertSort { exp Var "sort" }
+			rhs Var "dbl"
+		}}
+		rhs BObject {}}
+	}
+}

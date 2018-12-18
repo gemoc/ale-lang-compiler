@@ -6,7 +6,7 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: boa.xtext; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: boa.model;visibility:=reexport,
+Require-Bundle: boa.model,
  org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
@@ -14,7 +14,6 @@ Require-Bundle: boa.model;visibility:=reexport,
  org.antlr.runtime,
  org.eclipse.xtext.util,
  org.eclipse.xtend.lib;bundle-version="2.14.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: boa.xtext.scoping,
  boa.xtext.formatting2,
  boa.xtext.services,

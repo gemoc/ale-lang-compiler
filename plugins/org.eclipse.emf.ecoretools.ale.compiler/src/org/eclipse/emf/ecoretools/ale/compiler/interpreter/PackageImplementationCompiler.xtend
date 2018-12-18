@@ -83,14 +83,18 @@ class PackageImplementationCompiler {
 				isCreated = true;
 				
 				«FOR eClass : allClasses»
+«««				«IF eClass.instanceTypeName != 'java.util.Map$Entry'»
 					«eClass.name.toFirstLower»EClass = createEClass(«eClass.name.normalizeUpperField»);
 					«FOR eAttr: eClass.EStructuralFeatures»
 						«IF eAttr instanceof EReference»
+«««							«IF eAttr.EType.instanceTypeName != 'java.util.Map$Entry'»
 							createEReference(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);
+«««							«ENDIF»
 						«ELSE»
 							createEAttribute(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);
 						«ENDIF»
 					«ENDFOR»
+«««					«ENDIF»
 				«ENDFOR»
 				«FOR eEnum : allEnums»
 					«eEnum.name.toFirstLower»EEnum = createEEnum(«eEnum.name.normalizeUpperField»);
@@ -121,23 +125,27 @@ class PackageImplementationCompiler {
 				
 				// Initialize classes, features, and operations; add parameters
 				«FOR eClass : allClasses»
+«««					«IF eClass.instanceTypeName != 'java.util.Map$Entry'»
 					initEClass(«eClass.name.toFirstLower»EClass, «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, "«eClass.name»", «IF eClass.isAbstract»«ELSE»!«ENDIF»IS_ABSTRACT, «IF eClass.isInterface»«ELSE»!«ENDIF»IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 					«FOR eAttr: eClass.EStructuralFeatures»
 						«IF eAttr instanceof EReference»
+«««							«IF eAttr.EType.instanceTypeName != 'java.util.Map$Entry'»
 							«IF eAttr.EType.EPackage != abstractSyntax»
-								initEReference(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), 
+								initEReference(get«eClass.name»_«eAttr.name.toFirstUpper»(), 
 								((«eAttr.EType.EPackage.packageInterfacePackageName(packageRoot)».«eAttr.EType.EPackage.packageInterfaceClassName»)org.eclipse.emf.ecore.EPackage.Registry.INSTANCE.getEPackage(«eAttr.EType.EPackage.packageInterfacePackageName(packageRoot)».«eAttr.EType.EPackage.packageInterfaceClassName».eNS_URI)).get«eAttr.EType.name»(), 
 									«IF eAttr.EOpposite !== null»this.get«eAttr.EOpposite.name.normalizeUpperMethod((eAttr.EOpposite.eContainer as EClass).name)»()«ELSE»null«ENDIF», "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.isVolatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.isChangeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.isContainment»«ELSE»!«ENDIF»IS_COMPOSITE, «IF eAttr.isResolveProxiesFlag»«ELSE»!«ENDIF»IS_RESOLVE_PROXIES, «IF eAttr.isUnsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 							«ELSE»
-								initEReference(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), this.get«eAttr.EType.name»(),  
+								initEReference(get«eClass.name»_«eAttr.name.toFirstUpper»(), this.get«eAttr.EType.name»(),  
 									«IF eAttr.EOpposite !== null»this.get«eAttr.EOpposite.name.normalizeUpperMethod((eAttr.EOpposite.eContainer as EClass).name)»()«ELSE»null«ENDIF», "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.isVolatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.isChangeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.isContainment»«ELSE»!«ENDIF»IS_COMPOSITE, «IF eAttr.isResolveProxiesFlag»«ELSE»!«ENDIF»IS_RESOLVE_PROXIES, «IF eAttr.isUnsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 							«ENDIF»				
+«««							«ENDIF»
 						«ELSEIF eAttr.EType instanceof EEnum»
 							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), this.get«eAttr.EType.name.toFirstUpper»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT,«IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 						«ELSE»
 							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), ecorePackage.get«IF !eAttr.EType.name.startsWith('E')»E«ENDIF»«eAttr.EType.name»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound»,  «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT,«IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);				
 						«ENDIF»
 					«ENDFOR»
+«««					«ENDIF»
 				«ENDFOR»
 				«FOR eEnum: allEnums»
 				initEEnum(«eEnum.name.toFirstLower»EEnum, «eEnum.classInterfacePackageName(packageRoot)».«eEnum.name».class, "«eEnum.name»");
@@ -184,7 +192,7 @@ class PackageImplementationCompiler {
 			for (field : clazz.EStructuralFeatures) {
 				if (field instanceof EReference) {
 					accessorsMethods +=
-						MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').
+						MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').
 							returns(EReference).addCode('''
 								return ($T) «clazz.name.toFirstLower»EClass.getEStructuralFeatures().get(«cptrI»);
 							''', EReference).addModifiers(PUBLIC).build

@@ -24,7 +24,7 @@ import boa.xtext.BoaStandaloneSetup;
 public class BoaToXmi {
 	public static void main(final String[] args) throws IOException {
 
-		final java.io.File program = new java.io.File("/home/manuel/runtime-ale-lang/boa.revisitor.test/programs");
+		final java.io.File program = new java.io.File("/home/manuel/dev/java/ale-lang/plzoo/boa.revisitor.test/programs");
 
 		BoaPackage.eINSTANCE.eClass();
 
@@ -45,7 +45,7 @@ public class BoaToXmi {
 				final File result = (File) resource.getContents().get(0);
 
 				final Resource out = resourceSet.createResource(URI
-						.createFileURI("/home/manuel/runtime-ale-lang/boa.revisitor.test/xmi/" + p.getName() + ".xmi"));
+						.createFileURI("/home/manuel/dev/java/ale-lang/plzoo/boa.revisitor.test/xmi/" + p.getName() + ".xmi"));
 
 				out.getContents().add(result);
 				out.save(null);

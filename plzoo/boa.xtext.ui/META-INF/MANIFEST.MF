@@ -20,7 +20,6 @@ Require-Bundle: boa.xtext,
  org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
  org.eclipse.xtend.lib;resolution:=optional
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-10
 Export-Package: boa.xtext.ui.quickfix,
  boa.xtext.ui.contentassist,
  boa.xtext.ui.internal

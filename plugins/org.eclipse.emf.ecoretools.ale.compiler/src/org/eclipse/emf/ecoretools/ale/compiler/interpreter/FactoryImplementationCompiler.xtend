@@ -59,7 +59,8 @@ class FactoryImplementationCompiler {
 			.addParameter(ParameterSpec.builder(EClass, 'eClass').build)
 			.addCode('''
 			switch (eClass.getClassifierID()) {
-			«FOR eClass : allClasses.filter[!it.abstract]»
+«««				filtering criteria on hashmap not yet fully defined, possible condition: && it.instanceTypeName != 'java.util.Map$Entry'
+			«FOR eClass : allClasses.filter[!it.abstract]» 
 				case $1T.«eClass.name.normalizeUpperField»:
 					«IF eClass.instanceClass !== null && eClass.instanceClass == Map.Entry»
 						return (org.eclipse.emf.ecore.EObject) create«eClass.name»();

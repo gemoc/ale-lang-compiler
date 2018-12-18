@@ -524,6 +524,106 @@ open class NewArray {
 	}
 }
 
+open class NewObject {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+	// Creating instance with default bindings
+//		val res = MinijavadynamicdataFactory::eINSTANCE.createObjectInstance => [type = _self.type]
+		miniJava::ObjectInstance res := miniJava::ObjectInstance.create();
+		res.type := self.type;
+//		state.objectsHeap.add(res)
+		state.objectsHeap += res;
+//		for (f : res.type.members.filter(Field)) {
+		int i := 0;
+		int z := res.type.members.size();
+		while(i<z) {
+			miniJava::Member m := res.type.members->at(i);
+			if(m.oclIsKindOf(miniJava::Field)) {
+				miniJava::Field f := m;
+				if(f.defaultValue != null) {
+					miniJava::Value v := f.defaultValue.evaluateExpression(state);
+					miniJava::FieldBinding fb := miniJava::FieldBinding.create();
+					fb.field := f;
+					fb.value := v;
+					res.fieldbindings += fb;
+				}
+			}
+			i := i+1;
+		}			
+//			if (f.defaultValue !== null) {
+//				val v = f.defaultValue.evaluateExpression(state)
+//				res.fieldbindings.add(MinijavadynamicdataFactory::eINSTANCE.createFieldBinding => [
+//					field = f;
+//					value = v
+//				])
+//			}
+//		}
+//
+//		// Find constructor
+//		val Method constructor = _self.type.members.filter(Method).findFirst [
+//			it.name === null && it.params.size === _self.args.size
+//		]
+		i:=0;
+		miniJava::Method constructor := null;
+		while(i<z and constructor == null) {
+			miniJava::Member m := res.type.members->at(i);
+			if(m.oclIsKindOf(miniJava::Method)) {
+				miniJava::Method mtd := m;
+				if(mtd.name == null and mtd.params.size() == self.args.size()) {
+					constructor := mtd;
+				}
+			}
+		}
+		
+		if(constructor != null) {
+			
+//
+//		// If any, call it
+//		if (constructor !== null) {
+//
+//			// Create a context with constructor parameters bindings
+//			val newContext = MinijavadynamicdataFactory::eINSTANCE.createContext
+			miniJava::Context newContext := miniJava::Context.create();
+			i:=0;
+			z:=self.args.size();
+			while(i<z) {
+				miniJava::Expression arg := self.args->at(i);
+				miniJava::Parameter param := constructor.params->at(i);
+				miniJava::SymbolBinding binding := miniJava::SymbolBinding.create();
+				binding.symbol := param;
+				binding.value := arg.evaluateExpression(state); 
+				i:=i+1;
+				newContext.bindings += binding;
+			} 
+//			for (arg : _self.args) {
+//				val Parameter param = constructor.params.get(_self.args.indexOf(arg))
+//				val binding = MinijavadynamicdataFactory::eINSTANCE.createSymbolBinding => [
+//					symbol = param;
+//					value = (arg as Expression).evaluateExpression(state)
+//				]
+//				newContext.bindings.add(binding)
+//			}
+//
+//			// Make the constructor call in new frame
+//			val call = MinijavadynamicdataFactory::eINSTANCE.createNewCall => [^new = _self]
+			miniJava::NewCall call := miniJava::NewCall.create();
+			call.newz := self;
+			state.pushNewFrame(res, call, newContext);
+//			state.pushNewFrame(res, call, newContext)
+//			constructor.body.evaluateStatement(state)
+			constructor.body.evaluateStatement(state);
+//			state.popCurrentFrame
+			state.popCurrentFrame();
+//
+//		}
+		}
+//
+//		// Return constructed instance
+		miniJava::ObjectRefValue tmp := miniJava::ObjectRefValue.create();
+		tmp.instance := res;
+		result :=  tmp;
+	}
+}
+
 /// DYNAMIC VALUES
 
 open class State {

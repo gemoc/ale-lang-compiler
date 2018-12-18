@@ -5,6 +5,7 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Seq;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -25,8 +26,12 @@ public class SeqImpl extends ExprImpl implements Seq {
   @Child
   protected Expr rhs;
 
+  @CompilationFinal
+  private SeqDispatchWrapperEval cachedEval;
+
   protected SeqImpl() {
     super();
+    this.cachedEval = new boa.interpreter.boa.impl.SeqDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -160,5 +165,9 @@ public class SeqImpl extends ExprImpl implements Seq {
         result = vrhs;
         ;
     return result;
+  }
+
+  public SeqDispatchWrapperEval getCachedEval() {
+    return this.cachedEval;
   }
 }

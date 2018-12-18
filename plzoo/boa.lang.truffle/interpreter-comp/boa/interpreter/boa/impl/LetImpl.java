@@ -5,6 +5,7 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Let;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -30,8 +31,12 @@ public class LetImpl extends ExprImpl implements Let {
   @Child
   protected Expr rhs;
 
+  @CompilationFinal
+  private LetDispatchWrapperEval cachedEval;
+
   protected LetImpl() {
     super();
+    this.cachedEval = new boa.interpreter.boa.impl.LetDispatchWrapperEval(this);
   }
 
   public String getName() {
@@ -184,5 +189,9 @@ public class LetImpl extends ExprImpl implements Let {
         result = this.rhs.eval(nctx);
         ;
     return result;
+  }
+
+  public LetDispatchWrapperEval getCachedEval() {
+    return this.cachedEval;
   }
 }

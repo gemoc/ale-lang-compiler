@@ -3,11 +3,6 @@
  */
 package org.tetrabox.minijava.xtext.fortest.tests;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.testing.GlobalRegistries;
 import org.eclipse.xtext.testing.GlobalRegistries.GlobalStateMemento;
@@ -15,6 +10,11 @@ import org.eclipse.xtext.testing.IInjectorProvider;
 import org.eclipse.xtext.testing.IRegistryConfigurator;
 import org.tetrabox.minijava.xtext.fortest.MiniJavaRuntimeModule;
 import org.tetrabox.minijava.xtext.fortest.MiniJavaStandaloneSetup;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import miniJava.interpreter.miniJava.MiniJavaPackage;
 
 public class MiniJavaInjectorProvider implements IInjectorProvider, IRegistryConfigurator {
 

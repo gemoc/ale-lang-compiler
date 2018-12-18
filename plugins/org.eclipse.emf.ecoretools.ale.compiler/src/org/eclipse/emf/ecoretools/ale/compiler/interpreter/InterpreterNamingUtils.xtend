@@ -91,7 +91,8 @@ class InterpreterNamingUtils {
 	}
 
 	def String normalizeUpperMethod(String input, String className) {
-		'''«CodeGenUtil.format(className, '_', '', false, false).toLowerCase.toFirstUpper»_«CodeGenUtil.format(input, '_', '', false, false).toLowerCase.toFirstUpper»'''
+		//'''«CodeGenUtil.format(className, '_', '', false, false).toLowerCase.toFirstUpper»_«CodeGenUtil.format(input, '_', '', false, false).toLowerCase.toFirstUpper»'''
+		'''«className»_«input.toFirstUpper»'''
 	}
 	
 	def String normalizeExtendedClassName(ExtendedClass ec) {

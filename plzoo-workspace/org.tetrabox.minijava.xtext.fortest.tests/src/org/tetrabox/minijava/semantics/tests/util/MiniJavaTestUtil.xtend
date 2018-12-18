@@ -6,17 +6,21 @@ import java.util.Map
 import java.util.Set
 import java.util.function.Consumer
 import miniJava.interpreter.miniJava.Context
+import miniJava.interpreter.miniJava.MiniJavaFactory
+import miniJava.interpreter.miniJava.MiniJavaPackage
 import miniJava.interpreter.miniJava.Program
 import miniJava.interpreter.miniJava.State
 import miniJava.interpreter.miniJava.SymbolBinding
 import miniJava.interpreter.miniJava.Value
+import org.eclipse.emf.common.util.BasicEList
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.junit.Assert
 import org.tetrabox.minijava.xtext.fortest.tests.MiniJavaInjectorProvider
-import miniJava.interpreter.miniJava.MiniJavaFactory
-import org.eclipse.emf.common.util.BasicEList
 
 @InjectWith(MiniJavaInjectorProvider)
 class MiniJavaTestUtil {
@@ -131,11 +135,27 @@ class MiniJavaTestUtil {
 		oracle.accept(state)
 	}
 
+	public def void genericTest(URI uri, List<String> args, Consumer<State> oracle) {
+//		val helper = new ValidationTestHelper();
+//		val Program result = parseHelper.parse(program)
+		val rs = new ResourceSetImpl
+
+		EPackage.Registry.INSTANCE.put("http://www.example.org/minijava/MiniJava", MiniJavaPackage.eINSTANCE);
+		val result = rs.getResource(uri, true).contents.head as Program
+
+		Assert.assertNotNull(result)
+//		helper.assertNoErrors(result)
+		result.initialize(new BasicEList(args))
+		val state = result.execute()
+		oracle.accept(state)
+	}
+
 	public def void genericPrintTest(String program, String... expected) {
 		genericTest(program, #[], [State s|Assert::assertEquals(expected.toList, s.outputStream.stream)])
 	}
 
-	public def void genericExpressionTest(List<String> args, String preStatements,  String type, String expression, Object expectedValue) {
+	public def void genericExpressionTest(List<String> args, String preStatements, String type, String expression,
+		Object expectedValue) {
 		val program = prepareTestProgram('''  «preStatements» «type» x = «expression»; ''')
 		genericTest(program, args, [ s |
 			val result = s.findCurrentContext.get("x")
@@ -145,15 +165,15 @@ class MiniJavaTestUtil {
 			))
 		])
 	}
-	
-	public def void genericExpressionTest(String preStatements,  String type, String expression, Object expectedValue) {
-		genericExpressionTest(#[],preStatements,type,expression,expectedValue)
+
+	public def void genericExpressionTest(String preStatements, String type, String expression, Object expectedValue) {
+		genericExpressionTest(#[], preStatements, type, expression, expectedValue)
 	}
 
 	public def void genericExpressionTest(String type, String expression, Object expectedValue) {
 		genericExpressionTest("", type, expression, expectedValue)
 	}
-	
+
 	public def void genericExpressionTest(List<String> args, String type, String expression, Object expectedValue) {
 		genericExpressionTest(args, "", type, expression, expectedValue)
 	}
@@ -163,8 +183,24 @@ class MiniJavaTestUtil {
 		genericTest(program, #[], oracle)
 	}
 
+	public def void genericStatementTest(URI uri, Consumer<State> oracle) {
+		genericTest(uri, #[], oracle)
+	}
+
 	public def void genericStatementPrintTest(String statement, String... expected) {
 		genericStatementTest(statement, [State s|Assert::assertEquals(expected.toList, s.outputStream.stream)])
+	}
+
+	public def void genericStatementBindingsTest(URI uri, Map<String, Object> expectedBindings) {
+		genericStatementTest(uri, [ State s |
+			Assert::assertEquals(expectedBindings.size,
+				s.findCurrentFrame.rootContext.childContext.allSymbolBindings.size)
+			for (symbol : expectedBindings.keySet) {
+				val expectedValue = expectedBindings.get(symbol)
+				val value = s.findCurrentContext.get(symbol)
+				Assert::assertTrue(MiniJavaValueEquals::equals(value, expectedValue))
+			}
+		])
 	}
 
 	public def void genericStatementBindingsTest(String statement, Map<String, Object> expectedBindings) {

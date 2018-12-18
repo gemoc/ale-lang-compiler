@@ -19,7 +19,7 @@ import com.google.inject.Injector;
 import boa.BoaPackage;
 import boa.File;
 import boa.xtext.BoaStandaloneSetup;
-import boa_exec.impl.Boa_execImplementation;
+import boa_exec_revisitor.impl.Boa_exec_revisitorImplementation;
 
 public class NotTruffleTest extends AbstractBoaTest {
 
@@ -51,7 +51,7 @@ public class NotTruffleTest extends AbstractBoaTest {
 
 		try {
 			timer.before();
-			new Boa_execImplementation() {
+			new Boa_exec_revisitorImplementation() {
 			}.$(result).eval();
 			timer.after(pathname);
 		} catch (RuntimeException e) {
