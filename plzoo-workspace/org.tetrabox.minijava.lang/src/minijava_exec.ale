@@ -533,7 +533,14 @@ open class Plus {
 				result := null;
 			}
 		} else {
-			result := null;
+			if(left.oclIsKindOf(miniJava::StringValue) or left.oclIsKindOf(miniJava::StringValue)) {
+				miniJava::StringValue tmp := miniJava::StringValue.create();
+				tmp.value := left.customToString() + right.customToString();
+				result := tmp;
+				
+			} else {
+				result := null;
+			}
 		}
 	}
 }

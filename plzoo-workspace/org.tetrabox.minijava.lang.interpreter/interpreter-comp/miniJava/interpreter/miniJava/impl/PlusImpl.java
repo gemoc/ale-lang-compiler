@@ -152,7 +152,14 @@ public class PlusImpl extends ExpressionImpl implements Plus {
           }
         }
         else {
-          result = null;
+          if(((left instanceof miniJava.interpreter.miniJava.StringValue) || (left instanceof miniJava.interpreter.miniJava.StringValue))) {
+            miniJava.interpreter.miniJava.StringValue tmp = ((miniJava.interpreter.miniJava.StringValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createStringValue());
+            tmp.setValue((left.customToString()) + (right.customToString()));
+            result = tmp;
+          }
+          else {
+            result = null;
+          }
         }
         ;
     return result;
