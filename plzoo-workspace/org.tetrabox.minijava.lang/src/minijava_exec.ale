@@ -32,7 +32,9 @@ open class Program {
 			for(member in clazz.members) {
 				if(member.oclIsKindOf(miniJava::Method)) {
 					miniJava::Method method := member;
-					result := method;
+					if(method.name == 'main') {
+						result := method;
+					}
 				}
 			}
 		}
@@ -176,7 +178,7 @@ open class Method {
 	}
 	
 	def miniJava::Method findOverride(Clazz c) {
-		if(not self.cache.containsKey(c)) {
+		if(not self.getCache().containsKey(c)) {
 			miniJava::Method that := self;
 			if(c.members->exists(x | x == that)) {
 				result := self;
@@ -216,7 +218,7 @@ open class Method {
 				}
 			}
 		} else {
-			result := self.cache.get(c);
+			result := self.getCache().get(c);
 		}
 	}
 	
@@ -315,7 +317,7 @@ open class ArrayAccess {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 		miniJava::ArrayRefValue arrayVal := self.object.evaluateExpression(state);
 		miniJava::IntegerValue indexVal := self.index.evaluateExpression(state);
-		result := arrayVal.instance.value.get(indexVal.value).copy();
+		result := arrayVal.instance.value.get(indexVal.value).copyj();
 	}
 }
 
@@ -570,10 +572,17 @@ open class Plus {
 				tmp.value := bleft.value + bright.value;
 				result := tmp;
 			} else { 
-				result := null;
+				if(right.oclIsKindOf(miniJava::StringValue)) {
+					miniJava::StringValue tmp := miniJava::StringValue.create();
+					tmp.value := left.customToString() + right.customToString();
+					result := tmp;
+					
+				} else {
+					result := null;
+				}
 			}
 		} else {
-			if(left.oclIsKindOf(miniJava::StringValue) or left.oclIsKindOf(miniJava::StringValue)) {
+			if(left.oclIsKindOf(miniJava::StringValue) or right.oclIsKindOf(miniJava::StringValue)) {
 				miniJava::StringValue tmp := miniJava::StringValue.create();
 				tmp.value := left.customToString() + right.customToString();
 				result := tmp;
@@ -639,8 +648,8 @@ open class MethodCall {
 		int argsLength := self.args.size();
 		int i := 0;
 		while(i < argsLength) {
-			miniJava::Expression arg := self.args.get(i);
-			miniJava::Parameter param := realMethod.params.get(i);
+			miniJava::Expression arg := self.args->at(i);
+			miniJava::Parameter param := realMethod.params->at(i);
 			miniJava::SymbolBinding binding := miniJava::SymbolBinding.create();
 			binding.symbol := param;
 			binding.value := arg.evaluateExpression(state);
@@ -659,7 +668,7 @@ open class MethodCall {
 
 open class SymbolRef {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
-		result := state.findCurrentContext().findBinding(self.getSymbol()).value.copy();
+		result := state.findCurrentContext().findBinding(self.getSymbol()).value.copyj();
 	}
 }
 
@@ -696,7 +705,7 @@ open class NewArray {
 		int i := 0;
 		int sz := res.size;
 		while(i < sz) {
-			res.value += defaultValue.copy();
+			res.value += defaultValue.copyj();
 			i:=i+1;
 		}
 		
@@ -889,21 +898,24 @@ open class Frame {
 }
 
 open class Context {
+	
+	mutable bindings
+	
 	def miniJava::SymbolBinding findBinding(miniJava::Symbol symbol) {
-		if (not self.cache.containsKey(symbol)) {
+		if (not self.getCache().containsKey(symbol)) {
 			miniJava::SymbolBinding binding := self.bindings->select(x | x.symbol == symbol)->first();
 			if (binding != null) {
-				self.cache.put(symbol, binding);
+				self.getCache().put(symbol, binding);
 			} else {
 				if (self.getParentContext() != null) {
 					miniJava::SymbolBinding binding2 := self.getParentContext().findBinding(symbol);
-					self.cache.put(symbol, binding2);
+					self.getCache().put(symbol, binding2);
 				} else {
 					('No binding for symbol ' + symbol).log();
 				}
 			}
 		}
-		result := self.cache.get(symbol);
+		result := self.getCache().get(symbol);
 	}
 	
 	def miniJava::Context findCurrentContext() {
@@ -921,8 +933,8 @@ open class Value {
 		result := 'ERROR customToString not overloaded';
 	}
 	
-	def miniJava::Value copy() {
-		'ERROR copy not implemented'.log();
+	def miniJava::Value copyj() {
+		'ERROR copyj not implemented'.log();
 		result := null;
 	}
 }
@@ -933,7 +945,7 @@ open class ObjectRefValue {
 		result := self.instance.toString();
 	}
 	
-	def miniJava::Value copy() {
+	def miniJava::Value copyj() {
 		miniJava::ObjectRefValue tmp := miniJava::ObjectRefValue.create();
 		tmp.instance := self.instance;
 		result := tmp; 
@@ -941,7 +953,7 @@ open class ObjectRefValue {
 }
 
 open class ArrayRefValue {
-	def miniJava::Value copy() {
+	def miniJava::Value copyj() {
 		miniJava::ArrayRefValue tmp := miniJava::ArrayRefValue.create();
 		tmp.instance := self.instance;
 		result := tmp; 
@@ -953,7 +965,7 @@ open class IntegerValue {
 		result := self.value + '';
 	}
 	
-	def miniJava::Value copy() {
+	def miniJava::Value copyj() {
 		miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
 		tmp.value := self.value;
 		result := tmp; 
@@ -965,7 +977,7 @@ open class BooleanValue {
 		result := self.value + '';
 	}
 	
-	def miniJava::Value copy() {
+	def miniJava::Value copyj() {
 		miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
 		tmp.value := self.value;
 		result := tmp; 
@@ -977,7 +989,7 @@ open class StringValue {
 		result := self.value.toString();
 	}
 	
-	def miniJava::Value copy() {
+	def miniJava::Value copyj() {
 		miniJava::StringValue tmp := miniJava::StringValue.create();
 		tmp.value := self.value;
 		result := tmp; 
@@ -985,7 +997,7 @@ open class StringValue {
 }
 
 open class NullValue {
-	def miniJava::Value copy() {
+	def miniJava::Value copyj() {
 		miniJava::NullValue tmp := miniJava::NullValue.create();
 		result := tmp; 
 	}

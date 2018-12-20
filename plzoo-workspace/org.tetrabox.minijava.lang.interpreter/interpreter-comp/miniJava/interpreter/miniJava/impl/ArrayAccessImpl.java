@@ -1,5 +1,8 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.ArrayAccess;
 import miniJava.interpreter.miniJava.Expression;
@@ -12,15 +15,21 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+@NodeInfo(
+    description = "ArrayAccess"
+)
 public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
+  @Child
   protected Expression object;
 
+  @Child
   protected Expression index;
 
   protected ArrayAccessImpl() {
     super();
   }
 
+  @TruffleBoundary
   public void setObject(Expression newObject) {
     if (newObject != object) {
     	NotificationChain msgs = null;
@@ -35,6 +44,7 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.ARRAY_ACCESS__OBJECT, newObject, newObject));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetObject(Expression newObject, NotificationChain msgs) {
     Expression oldObject = object;
     object = newObject;
@@ -45,10 +55,12 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expression getObject() {
     return object;
   }
 
+  @TruffleBoundary
   public void setIndex(Expression newIndex) {
     if (newIndex != index) {
     	NotificationChain msgs = null;
@@ -63,6 +75,7 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.ARRAY_ACCESS__INDEX, newIndex, newIndex));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetIndex(Expression newIndex, NotificationChain msgs) {
     Expression oldIndex = index;
     index = newIndex;
@@ -73,13 +86,16 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expression getIndex() {
     return index;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_ACCESS;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_ACCESS__OBJECT:
@@ -92,6 +108,7 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_ACCESS__OBJECT:
@@ -104,6 +121,7 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_ACCESS__OBJECT:
@@ -114,6 +132,7 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_ACCESS__OBJECT:
@@ -124,6 +143,7 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -139,7 +159,7 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
     Value result;
     miniJava.interpreter.miniJava.ArrayRefValue arrayVal = ((miniJava.interpreter.miniJava.ArrayRefValue)this.object.evaluateExpression(state));
         miniJava.interpreter.miniJava.IntegerValue indexVal = ((miniJava.interpreter.miniJava.IntegerValue)this.index.evaluateExpression(state));
-        result = arrayVal.getInstance().getValue().get(indexVal.getValue()).copy();
+        result = arrayVal.getInstance().getValue().get(indexVal.getValue()).copyj();
         ;
     return result;
   }

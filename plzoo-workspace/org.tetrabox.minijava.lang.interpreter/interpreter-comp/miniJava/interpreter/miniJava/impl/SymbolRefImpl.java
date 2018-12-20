@@ -1,5 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.State;
@@ -12,6 +14,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+@NodeInfo(
+    description = "SymbolRef"
+)
 public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
   protected Symbol symbol;
 
@@ -19,6 +24,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
     super();
   }
 
+  @TruffleBoundary
   public void setSymbol(Symbol newSymbol) {
     Symbol oldSymbol = symbol;
     symbol = newSymbol;
@@ -26,6 +32,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.SYMBOL_REF__SYMBOL, oldSymbol, symbol));
   }
 
+  @TruffleBoundary
   public Symbol getSymbol() {
     if (symbol != null && symbol.eIsProxy()) {
     	InternalEObject oldsymbol = (InternalEObject) symbol;
@@ -39,9 +46,11 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
     return symbol;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.SYMBOL_REF;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.SYMBOL_REF__SYMBOL:
@@ -51,6 +60,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.SYMBOL_REF__SYMBOL:
@@ -60,6 +70,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.SYMBOL_REF__SYMBOL:
@@ -68,6 +79,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.SYMBOL_REF__SYMBOL:
@@ -76,6 +88,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -85,7 +98,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
 
   public Value evaluateExpression(State state) {
     Value result;
-    result = state.findCurrentContext().findBinding(this.getSymbol()).getValue().copy();
+    result = state.findCurrentContext().findBinding(this.getSymbol()).getValue().copyj();
         ;
     return result;
   }

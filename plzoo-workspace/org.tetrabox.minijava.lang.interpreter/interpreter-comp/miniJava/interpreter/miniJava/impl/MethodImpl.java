@@ -1,5 +1,9 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.nodes.Node.Children;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Block;
 import miniJava.interpreter.miniJava.Clazz;
@@ -17,6 +21,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 
+@NodeInfo(
+    description = "Method"
+)
 public class MethodImpl extends MemberImpl implements Method {
   protected static final boolean ISABSTRACT_EDEFAULT = false;
 
@@ -28,9 +35,13 @@ public class MethodImpl extends MemberImpl implements Method {
 
   protected EList<Parameter> params;
 
+  @Child
   protected Block body;
 
   protected EMap<Clazz, Method> cache;
+
+  @Children
+  private Parameter[] paramsArr;
 
   protected MethodImpl() {
     super();
@@ -48,6 +59,7 @@ public class MethodImpl extends MemberImpl implements Method {
   public void setIsstatic(boolean isstatic) {
     this.isstatic = isstatic;}
 
+  @TruffleBoundary
   public EList<Parameter> getParams() {
     if(params == null) {
     	params = new EObjectContainmentEList<Parameter>(miniJava.interpreter.miniJava.Parameter.class, this, MiniJavaPackage.METHOD__PARAMS);
@@ -55,6 +67,7 @@ public class MethodImpl extends MemberImpl implements Method {
     return params;
   }
 
+  @TruffleBoundary
   public void setBody(Block newBody) {
     if (newBody != body) {
     	NotificationChain msgs = null;
@@ -69,6 +82,7 @@ public class MethodImpl extends MemberImpl implements Method {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.METHOD__BODY, newBody, newBody));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetBody(Block newBody, NotificationChain msgs) {
     Block oldBody = body;
     body = newBody;
@@ -79,10 +93,12 @@ public class MethodImpl extends MemberImpl implements Method {
     return msgs;
   }
 
+  @TruffleBoundary
   public Block getBody() {
     return body;
   }
 
+  @TruffleBoundary
   public EMap<Clazz, Method> getCache() {
     if (cache == null) {
     	cache = new EcoreEMap<Clazz, Method>(MiniJavaPackage.Literals.CLAZZ_TO_METHOD_MAP, ClazzToMethodMapImpl.class, this, MiniJavaPackage.METHOD__CACHE);
@@ -90,9 +106,11 @@ public class MethodImpl extends MemberImpl implements Method {
     return cache;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.METHOD;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.METHOD__ISABSTRACT:
@@ -115,6 +133,7 @@ public class MethodImpl extends MemberImpl implements Method {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.METHOD__ISABSTRACT:
@@ -136,6 +155,7 @@ public class MethodImpl extends MemberImpl implements Method {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.METHOD__ISABSTRACT:
@@ -155,6 +175,7 @@ public class MethodImpl extends MemberImpl implements Method {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.METHOD__ISABSTRACT:
@@ -171,6 +192,7 @@ public class MethodImpl extends MemberImpl implements Method {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -189,6 +211,12 @@ public class MethodImpl extends MemberImpl implements Method {
 
   public Method findOverride(Clazz c) {
     Method result;
+    if(this.paramsArr == null) {
+        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
+        				if(this.params != null) this.paramsArr = this.params.toArray(new miniJava.interpreter.miniJava.Parameter[0]);
+        				else this.paramsArr = new miniJava.interpreter.miniJava.Parameter[] {};
+        				
+        			};
     if(!(minijava.MapService.containsKey(this.getCache(), c))) {
           miniJava.interpreter.miniJava.Method that = ((miniJava.interpreter.miniJava.Method)this);
           if(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(c.getMembers(), (x) -> java.util.Objects.equals((x), (that)))) {
@@ -201,14 +229,14 @@ public class MethodImpl extends MemberImpl implements Method {
               miniJava.interpreter.miniJava.Member tmpm = ((miniJava.interpreter.miniJava.Member)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(c.getMembers(), i));
               if(tmpm instanceof miniJava.interpreter.miniJava.Method) {
                 miniJava.interpreter.miniJava.Method m = ((miniJava.interpreter.miniJava.Method)tmpm);
-                if(((java.util.Objects.equals((m.getName()), (this.name))) && (java.util.Objects.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getParams())))))) {
+                if(((java.util.Objects.equals((m.getName()), (this.name))) && (java.util.Objects.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.paramsArr)))))) {
                   boolean compared = ((boolean)m.getTypeRef().compare(this.typeRef));
                   int j = ((int)0);
                   int paramlgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams()));
                   boolean alltrue = ((boolean)compared);
                   while ((((j) < (paramlgt)) && (alltrue))) {
                     miniJava.interpreter.miniJava.Parameter p1 = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(m.getParams(), j));
-                    miniJava.interpreter.miniJava.Parameter tmpp = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.getParams(), (p2) -> p1.compare(p2))));
+                    miniJava.interpreter.miniJava.Parameter tmpp = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.paramsArr, (p2) -> p1.compare(p2))));
                     alltrue = (tmpp) != (null);
                     j = (j) + (1);
                   }
@@ -240,6 +268,12 @@ public class MethodImpl extends MemberImpl implements Method {
   }
 
   public void call(State state) {
+    if(this.paramsArr == null) {
+        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
+        				if(this.params != null) this.paramsArr = this.params.toArray(new miniJava.interpreter.miniJava.Parameter[0]);
+        				else this.paramsArr = new miniJava.interpreter.miniJava.Parameter[] {};
+        				
+        			};
     this.body.evaluateStatement(state);
         ;
   }

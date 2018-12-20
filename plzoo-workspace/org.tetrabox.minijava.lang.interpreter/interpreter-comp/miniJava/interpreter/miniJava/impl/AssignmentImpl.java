@@ -1,5 +1,8 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Assignee;
 import miniJava.interpreter.miniJava.Assignment;
@@ -12,15 +15,21 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+@NodeInfo(
+    description = "Assignment"
+)
 public class AssignmentImpl extends StatementImpl implements Assignment {
+  @Child
   protected Assignee assignee;
 
+  @Child
   protected Expression value;
 
   protected AssignmentImpl() {
     super();
   }
 
+  @TruffleBoundary
   public void setAssignee(Assignee newAssignee) {
     if (newAssignee != assignee) {
     	NotificationChain msgs = null;
@@ -35,6 +44,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.ASSIGNMENT__ASSIGNEE, newAssignee, newAssignee));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetAssignee(Assignee newAssignee, NotificationChain msgs) {
     Assignee oldAssignee = assignee;
     assignee = newAssignee;
@@ -45,10 +55,12 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     return msgs;
   }
 
+  @TruffleBoundary
   public Assignee getAssignee() {
     return assignee;
   }
 
+  @TruffleBoundary
   public void setValue(Expression newValue) {
     if (newValue != value) {
     	NotificationChain msgs = null;
@@ -63,6 +75,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.ASSIGNMENT__VALUE, newValue, newValue));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetValue(Expression newValue, NotificationChain msgs) {
     Expression oldValue = value;
     value = newValue;
@@ -73,13 +86,16 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expression getValue() {
     return value;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ASSIGNMENT;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.ASSIGNMENT__ASSIGNEE:
@@ -92,6 +108,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ASSIGNMENT__ASSIGNEE:
@@ -104,6 +121,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.ASSIGNMENT__ASSIGNEE:
@@ -114,6 +132,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ASSIGNMENT__ASSIGNEE:
@@ -124,6 +143,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

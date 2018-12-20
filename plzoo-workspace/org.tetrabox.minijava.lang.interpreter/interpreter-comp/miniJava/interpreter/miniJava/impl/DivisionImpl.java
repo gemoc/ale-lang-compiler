@@ -1,5 +1,8 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Division;
 import miniJava.interpreter.miniJava.Expression;
@@ -12,15 +15,21 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+@NodeInfo(
+    description = "Division"
+)
 public class DivisionImpl extends ExpressionImpl implements Division {
+  @Child
   protected Expression left;
 
+  @Child
   protected Expression right;
 
   protected DivisionImpl() {
     super();
   }
 
+  @TruffleBoundary
   public void setLeft(Expression newLeft) {
     if (newLeft != left) {
     	NotificationChain msgs = null;
@@ -35,6 +44,7 @@ public class DivisionImpl extends ExpressionImpl implements Division {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.DIVISION__LEFT, newLeft, newLeft));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetLeft(Expression newLeft, NotificationChain msgs) {
     Expression oldLeft = left;
     left = newLeft;
@@ -45,10 +55,12 @@ public class DivisionImpl extends ExpressionImpl implements Division {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expression getLeft() {
     return left;
   }
 
+  @TruffleBoundary
   public void setRight(Expression newRight) {
     if (newRight != right) {
     	NotificationChain msgs = null;
@@ -63,6 +75,7 @@ public class DivisionImpl extends ExpressionImpl implements Division {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.DIVISION__RIGHT, newRight, newRight));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetRight(Expression newRight, NotificationChain msgs) {
     Expression oldRight = right;
     right = newRight;
@@ -73,13 +86,16 @@ public class DivisionImpl extends ExpressionImpl implements Division {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expression getRight() {
     return right;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.DIVISION;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.DIVISION__LEFT:
@@ -92,6 +108,7 @@ public class DivisionImpl extends ExpressionImpl implements Division {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.DIVISION__LEFT:
@@ -104,6 +121,7 @@ public class DivisionImpl extends ExpressionImpl implements Division {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.DIVISION__LEFT:
@@ -114,6 +132,7 @@ public class DivisionImpl extends ExpressionImpl implements Division {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.DIVISION__LEFT:
@@ -124,6 +143,7 @@ public class DivisionImpl extends ExpressionImpl implements Division {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

@@ -1,5 +1,8 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Children;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.Import;
@@ -14,10 +17,13 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-public class ProgramImpl extends MinimalEObjectImpl.Container implements Program {
+@NodeInfo(
+    description = "Program"
+)
+public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Program {
   protected static final String NAME_EDEFAULT = null;
 
   protected String name = NAME_EDEFAULT;
@@ -27,6 +33,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected EList<TypeDeclaration> classes;
 
   protected State state;
+
+  @Children
+  private TypeDeclaration[] classesArr;
 
   protected ProgramImpl() {
     super();
@@ -38,6 +47,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   public void setName(String name) {
     this.name = name;}
 
+  @TruffleBoundary
   public EList<Import> getImports() {
     if(imports == null) {
     	imports = new EObjectContainmentEList<Import>(miniJava.interpreter.miniJava.Import.class, this, MiniJavaPackage.PROGRAM__IMPORTS);
@@ -45,6 +55,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     return imports;
   }
 
+  @TruffleBoundary
   public EList<TypeDeclaration> getClasses() {
     if(classes == null) {
     	classes = new EObjectContainmentEList<TypeDeclaration>(miniJava.interpreter.miniJava.TypeDeclaration.class, this, MiniJavaPackage.PROGRAM__CLASSES);
@@ -52,6 +63,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     return classes;
   }
 
+  @TruffleBoundary
   public void setState(State newState) {
     State oldState = state;
     state = newState;
@@ -59,6 +71,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.PROGRAM__STATE, oldState, state));
   }
 
+  @TruffleBoundary
   public State getState() {
     if (state != null && state.eIsProxy()) {
     	InternalEObject oldstate = (InternalEObject) state;
@@ -72,9 +85,11 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     return state;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.PROGRAM;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.PROGRAM__NAME:
@@ -95,6 +110,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.PROGRAM__NAME:
@@ -113,6 +129,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.PROGRAM__NAME:
@@ -127,6 +144,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.PROGRAM__NAME:
@@ -141,6 +159,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -179,12 +198,20 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
 
   public Method findMain() {
     Method result;
+    if(this.classesArr == null) {
+        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
+        				if(this.classes != null) this.classesArr = this.classes.toArray(new miniJava.interpreter.miniJava.TypeDeclaration[0]);
+        				else this.classesArr = new miniJava.interpreter.miniJava.TypeDeclaration[] {};
+        				
+        			};
     result = null;
-        for(miniJava.interpreter.miniJava.TypeDeclaration clazz: this.getClasses()) {
+        for(miniJava.interpreter.miniJava.TypeDeclaration clazz: this.classesArr) {
           for(miniJava.interpreter.miniJava.Member member: clazz.getMembers()) {
             if(member instanceof miniJava.interpreter.miniJava.Method) {
               miniJava.interpreter.miniJava.Method method = ((miniJava.interpreter.miniJava.Method)member);
-              result = method;
+              if(java.util.Objects.equals((method.getName()), ("main"))) {
+                result = method;
+              }
             }
           }
         }

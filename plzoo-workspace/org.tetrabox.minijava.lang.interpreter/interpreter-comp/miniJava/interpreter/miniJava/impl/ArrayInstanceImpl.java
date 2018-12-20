@@ -1,5 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.ArrayInstance;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -8,10 +10,13 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements ArrayInstance {
+@NodeInfo(
+    description = "ArrayInstance"
+)
+public class ArrayInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements ArrayInstance {
   protected static final int SIZE_EDEFAULT = 0;
 
   protected int size = SIZE_EDEFAULT;
@@ -28,6 +33,7 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements A
   public void setSize(int size) {
     this.size = size;}
 
+  @TruffleBoundary
   public EList<Value> getValue() {
     if(value == null) {
     	value = new EObjectContainmentEList<Value>(miniJava.interpreter.miniJava.Value.class, this, MiniJavaPackage.ARRAY_INSTANCE__VALUE);
@@ -35,9 +41,11 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements A
     return value;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_INSTANCE;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
@@ -51,6 +59,7 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements A
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
@@ -63,6 +72,7 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements A
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
@@ -73,6 +83,7 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements A
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
@@ -83,6 +94,7 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements A
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

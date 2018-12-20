@@ -1,5 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -12,6 +14,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+@NodeInfo(
+    description = "ObjectRefValue"
+)
 public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
   protected ObjectInstance instance;
 
@@ -19,6 +24,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     super();
   }
 
+  @TruffleBoundary
   public void setInstance(ObjectInstance newInstance) {
     ObjectInstance oldInstance = instance;
     instance = newInstance;
@@ -26,6 +32,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE, oldInstance, instance));
   }
 
+  @TruffleBoundary
   public ObjectInstance getInstance() {
     if (instance != null && instance.eIsProxy()) {
     	InternalEObject oldinstance = (InternalEObject) instance;
@@ -39,9 +46,11 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     return instance;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.OBJECT_REF_VALUE;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE:
@@ -51,6 +60,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE:
@@ -60,6 +70,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE:
@@ -68,6 +79,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE:
@@ -76,6 +88,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -90,7 +103,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     return result;
   }
 
-  public Value copy() {
+  public Value copyj() {
     Value result;
     miniJava.interpreter.miniJava.ObjectRefValue tmp = ((miniJava.interpreter.miniJava.ObjectRefValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createObjectRefValue());
         tmp.setInstance(this.instance);

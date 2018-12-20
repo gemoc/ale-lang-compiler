@@ -1,8 +1,9 @@
 package miniJava.interpreter.miniJava;
 
+import com.oracle.truffle.api.nodes.NodeInterface;
 import org.eclipse.emf.ecore.EObject;
 
-public interface FieldAccess extends EObject, Expression {
+public interface FieldAccess extends EObject, NodeInterface, Expression {
   Expression getReceiver();
 
   void setReceiver(Expression value);

@@ -188,15 +188,16 @@ class AleExpressionsCompiler {
 						// it t is in the hierarchy of the current context eClass (as itself or one of his parents), we can skip the accessor and directly point to the field
 						val lhs = call.arguments.head.compileExpression(ctx)
 						if (lhs.toString == 'this') {
-							if (t instanceof SequenceType &&
-								(t as SequenceType).collectionType.type instanceof EClass) {
-								if (isTruffle) {
+							if (t instanceof SequenceType 
+								&& (t as SequenceType).collectionType.type instanceof EClass 
+								&& ((t as SequenceType).collectionType.type as EClass).instanceClassName != "java.util.Map$Entry"  
+								) {
 									val rhs = (call.arguments.get(1) as StringLiteral).value
+								if (isTruffle && !(ctx.aleClass.mutable.contains(rhs))) {
 									registeredArray.add(rhs)
 									CodeBlock.of('''«lhs».«rhs»Arr''')
-
 								} else {
-									CodeBlock.of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+									CodeBlock.of('''«lhs».get«rhs.toFirstUpper»()''')
 								}
 							} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 								CodeBlock.of('''«lhs».«(call.arguments.get(1) as StringLiteral).value»''')

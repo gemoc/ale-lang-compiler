@@ -1,5 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.BooleanValue;
@@ -9,6 +11,9 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+@NodeInfo(
+    description = "BooleanValue"
+)
 public class BooleanValueImpl extends ValueImpl implements BooleanValue {
   protected static final boolean VALUE_EDEFAULT = false;
 
@@ -24,9 +29,11 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
   public void setValue(boolean value) {
     this.value = value;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.BOOLEAN_VALUE;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.BOOLEAN_VALUE__VALUE:
@@ -36,6 +43,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.BOOLEAN_VALUE__VALUE:
@@ -45,6 +53,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.BOOLEAN_VALUE__VALUE:
@@ -53,6 +62,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.BOOLEAN_VALUE__VALUE:
@@ -61,6 +71,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -75,7 +86,7 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
     return result;
   }
 
-  public Value copy() {
+  public Value copyj() {
     Value result;
     miniJava.interpreter.miniJava.BooleanValue tmp = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
         tmp.setValue(this.value);

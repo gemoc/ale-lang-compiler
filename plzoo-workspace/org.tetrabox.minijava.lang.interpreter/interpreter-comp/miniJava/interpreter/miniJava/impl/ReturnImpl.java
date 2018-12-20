@@ -1,5 +1,8 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -11,13 +14,18 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+@NodeInfo(
+    description = "Return"
+)
 public class ReturnImpl extends StatementImpl implements Return {
+  @Child
   protected Expression expression;
 
   protected ReturnImpl() {
     super();
   }
 
+  @TruffleBoundary
   public void setExpression(Expression newExpression) {
     if (newExpression != expression) {
     	NotificationChain msgs = null;
@@ -32,6 +40,7 @@ public class ReturnImpl extends StatementImpl implements Return {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.RETURN__EXPRESSION, newExpression, newExpression));
   }
 
+  @TruffleBoundary
   public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
     Expression oldExpression = expression;
     expression = newExpression;
@@ -42,13 +51,16 @@ public class ReturnImpl extends StatementImpl implements Return {
     return msgs;
   }
 
+  @TruffleBoundary
   public Expression getExpression() {
     return expression;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.RETURN;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.RETURN__EXPRESSION:
@@ -58,6 +70,7 @@ public class ReturnImpl extends StatementImpl implements Return {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.RETURN__EXPRESSION:
@@ -67,6 +80,7 @@ public class ReturnImpl extends StatementImpl implements Return {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.RETURN__EXPRESSION:
@@ -75,6 +89,7 @@ public class ReturnImpl extends StatementImpl implements Return {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.RETURN__EXPRESSION:
@@ -83,6 +98,7 @@ public class ReturnImpl extends StatementImpl implements Return {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

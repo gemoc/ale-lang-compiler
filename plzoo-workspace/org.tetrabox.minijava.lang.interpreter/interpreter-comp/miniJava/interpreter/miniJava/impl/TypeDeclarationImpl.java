@@ -1,5 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.AccessLevel;
 import miniJava.interpreter.miniJava.Interface;
@@ -12,6 +14,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
+@NodeInfo(
+    description = "TypeDeclaration"
+)
 public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclaration {
   protected static final AccessLevel ACCESSLEVEL_EDEFAULT = miniJava.interpreter.miniJava.AccessLevel.valueOf("PRIVATE");
 
@@ -31,6 +36,7 @@ public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclara
   public void setAccessLevel(AccessLevel accessLevel) {
     this.accessLevel = accessLevel;}
 
+  @TruffleBoundary
   public EList<Interface> getImplementz() {
     if(implementz == null) {
     	implementz = new EObjectContainmentEList<Interface>(miniJava.interpreter.miniJava.Interface.class, this, MiniJavaPackage.TYPE_DECLARATION__IMPLEMENTZ);
@@ -38,6 +44,7 @@ public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclara
     return implementz;
   }
 
+  @TruffleBoundary
   public EList<Member> getMembers() {
     if(members == null) {
     	members = new EObjectContainmentEList<Member>(miniJava.interpreter.miniJava.Member.class, this, MiniJavaPackage.TYPE_DECLARATION__MEMBERS);
@@ -45,9 +52,11 @@ public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclara
     return members;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.TYPE_DECLARATION;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.TYPE_DECLARATION__ACCESS_LEVEL:
@@ -65,6 +74,7 @@ public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclara
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.TYPE_DECLARATION__ACCESS_LEVEL:
@@ -80,6 +90,7 @@ public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclara
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.TYPE_DECLARATION__ACCESS_LEVEL:
@@ -92,6 +103,7 @@ public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclara
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.TYPE_DECLARATION__ACCESS_LEVEL:
@@ -104,6 +116,7 @@ public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclara
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

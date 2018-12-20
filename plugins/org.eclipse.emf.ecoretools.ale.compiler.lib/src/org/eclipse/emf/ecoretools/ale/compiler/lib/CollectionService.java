@@ -26,6 +26,11 @@ public class CollectionService {
 
 		return ret;
 	}
+	
+	@TruffleBoundary
+	public static <T> int size(final T[] collection) {
+		return collection.length;
+	}
 
 	@TruffleBoundary
 	public static <T> Iterable<T> select(final T[] collection, final Function<? super T, Boolean> filter) {

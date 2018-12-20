@@ -1,5 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.AccessLevel;
 import miniJava.interpreter.miniJava.Member;
@@ -8,6 +10,9 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+@NodeInfo(
+    description = "Member"
+)
 public class MemberImpl extends TypedDeclarationImpl implements Member {
   protected static final AccessLevel ACCESS_EDEFAULT = miniJava.interpreter.miniJava.AccessLevel.valueOf("PRIVATE");
 
@@ -23,9 +28,11 @@ public class MemberImpl extends TypedDeclarationImpl implements Member {
   public void setAccess(AccessLevel access) {
     this.access = access;}
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.MEMBER;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.MEMBER__ACCESS:
@@ -35,6 +42,7 @@ public class MemberImpl extends TypedDeclarationImpl implements Member {
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.MEMBER__ACCESS:
@@ -44,6 +52,7 @@ public class MemberImpl extends TypedDeclarationImpl implements Member {
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.MEMBER__ACCESS:
@@ -52,6 +61,7 @@ public class MemberImpl extends TypedDeclarationImpl implements Member {
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.MEMBER__ACCESS:
@@ -60,6 +70,7 @@ public class MemberImpl extends TypedDeclarationImpl implements Member {
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

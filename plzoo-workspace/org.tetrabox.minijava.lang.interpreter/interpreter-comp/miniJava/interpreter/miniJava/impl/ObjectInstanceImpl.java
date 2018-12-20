@@ -1,5 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Clazz;
 import miniJava.interpreter.miniJava.FieldBinding;
@@ -11,10 +13,13 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements ObjectInstance {
+@NodeInfo(
+    description = "ObjectInstance"
+)
+public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements ObjectInstance {
   protected EList<FieldBinding> fieldbindings;
 
   protected Clazz type;
@@ -23,6 +28,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
     super();
   }
 
+  @TruffleBoundary
   public EList<FieldBinding> getFieldbindings() {
     if(fieldbindings == null) {
     	fieldbindings = new EObjectContainmentEList<FieldBinding>(miniJava.interpreter.miniJava.FieldBinding.class, this, MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS);
@@ -30,6 +36,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
     return fieldbindings;
   }
 
+  @TruffleBoundary
   public void setType(Clazz newType) {
     Clazz oldType = type;
     type = newType;
@@ -37,6 +44,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.OBJECT_INSTANCE__TYPE, oldType, type));
   }
 
+  @TruffleBoundary
   public Clazz getType() {
     if (type != null && type.eIsProxy()) {
     	InternalEObject oldtype = (InternalEObject) type;
@@ -50,9 +58,11 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
     return type;
   }
 
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.OBJECT_INSTANCE;}
 
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS:
@@ -66,6 +76,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
     super.eSet(featureID, newValue);
   }
 
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS:
@@ -78,6 +89,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
     super.eUnset(featureID);
   }
 
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS:
@@ -88,6 +100,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
     return super.eGet(featureID, resolve, coreType);
   }
 
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS:
@@ -98,6 +111,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
     return super.eIsSet(featureID);
   }
 
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
