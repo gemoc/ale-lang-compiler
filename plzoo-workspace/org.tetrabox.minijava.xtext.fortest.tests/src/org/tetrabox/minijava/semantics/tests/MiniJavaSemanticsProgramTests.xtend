@@ -11,6 +11,7 @@ import org.junit.runner.RunWith
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ArrayTemplate
 import org.tetrabox.minijava.xtext.fortest.tests.MiniJavaInjectorProvider
+import org.junit.Ignore
 
 @RunWith(XtextRunner)
 @InjectWith(MiniJavaInjectorProvider)
@@ -19,12 +20,16 @@ class MiniJavaSemanticsProgramTests {
 	extension MiniJavaTestUtil testUtil
 
 	@Test
+	@Ignore
 	def void program_one_arg() {
 		genericExpressionTest(#["hello"], "String", "args[0]", "hello")
 	}
 
+	@Test
+	@Ignore
 	def void program_many_args() {
-		genericExpressionTest(#["hello","world","!"], "String", "args", new ArrayTemplate(3,"String",#["hello","world","!"]))
+		genericExpressionTest(#["hello", "world", "!"], "String", "args",
+			new ArrayTemplate(3, "String", #["hello", "world", "!"]))
 	}
 
 }
