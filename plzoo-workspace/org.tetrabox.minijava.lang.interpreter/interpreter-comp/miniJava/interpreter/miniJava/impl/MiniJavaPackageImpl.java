@@ -170,6 +170,8 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   private EClass symbolToSymbolBindingMapEClass = null;
 
+  private EClass clazzToMethodMapEClass = null;
+
   private EEnum accessLevelEEnum = null;
 
   private MiniJavaPackageImpl() {
@@ -231,6 +233,7 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     createEAttribute(methodEClass, METHOD__ISSTATIC);
     createEReference(methodEClass, METHOD__PARAMS);
     createEReference(methodEClass, METHOD__BODY);
+    createEReference(methodEClass, METHOD__CACHE);
     parameterEClass = createEClass(PARAMETER);
     fieldEClass = createEClass(FIELD);
     createEReference(fieldEClass, FIELD__DEFAULT_VALUE);
@@ -396,6 +399,9 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     symbolToSymbolBindingMapEClass = createEClass(SYMBOL_TO_SYMBOL_BINDING_MAP);
     createEReference(symbolToSymbolBindingMapEClass, SYMBOL_TO_SYMBOL_BINDING_MAP__KEY);
     createEReference(symbolToSymbolBindingMapEClass, SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE);
+    clazzToMethodMapEClass = createEClass(CLAZZ_TO_METHOD_MAP);
+    createEReference(clazzToMethodMapEClass, CLAZZ_TO_METHOD_MAP__KEY);
+    createEReference(clazzToMethodMapEClass, CLAZZ_TO_METHOD_MAP__VALUE);
     accessLevelEEnum = createEEnum(ACCESS_LEVEL);
   }
 
@@ -508,6 +514,8 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     	null, "params", null, 0, -1,  miniJava.interpreter.miniJava.Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMethod_Body(), this.getBlock(),  
     	null, "body", null, 0, 1,  miniJava.interpreter.miniJava.Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethod_Cache(), this.getClazzToMethodMap(),  
+    	null, "cache", null, 0, -1,  miniJava.interpreter.miniJava.Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(parameterEClass, miniJava.interpreter.miniJava.Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(fieldEClass, miniJava.interpreter.miniJava.Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getField_DefaultValue(), this.getExpression(),  
@@ -759,6 +767,11 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     	null, "key", null, 0, 1,  miniJava.interpreter.miniJava.SymbolToSymbolBindingMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSymbolToSymbolBindingMap_Value(), this.getSymbolBinding(),  
     	null, "value", null, 0, 1,  miniJava.interpreter.miniJava.SymbolToSymbolBindingMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(clazzToMethodMapEClass, miniJava.interpreter.miniJava.ClazzToMethodMap.class, "ClazzToMethodMap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getClazzToMethodMap_Key(), this.getClazz(),  
+    	null, "key", null, 0, 1,  miniJava.interpreter.miniJava.ClazzToMethodMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClazzToMethodMap_Value(), this.getMethod(),  
+    	null, "value", null, 0, 1,  miniJava.interpreter.miniJava.ClazzToMethodMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEEnum(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.class, "AccessLevel");
     addEEnumLiteral(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.PRIVATE);
     addEEnumLiteral(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.PROTECTED);
@@ -1079,6 +1092,10 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     return symbolToSymbolBindingMapEClass;
   }
 
+  public EClass getClazzToMethodMap() {
+    return clazzToMethodMapEClass;
+  }
+
   public EEnum getAccessLevel() {
     return accessLevelEEnum;
   }
@@ -1141,6 +1158,10 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   public EReference getMethod_Body() {
     return (EReference) methodEClass.getEStructuralFeatures().get(3);
+  }
+
+  public EReference getMethod_Cache() {
+    return (EReference) methodEClass.getEStructuralFeatures().get(4);
   }
 
   public EReference getField_DefaultValue() {
@@ -1521,5 +1542,13 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   public EReference getSymbolToSymbolBindingMap_Value() {
     return (EReference) symbolToSymbolBindingMapEClass.getEStructuralFeatures().get(1);
+  }
+
+  public EReference getClazzToMethodMap_Key() {
+    return (EReference) clazzToMethodMapEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getClazzToMethodMap_Value() {
+    return (EReference) clazzToMethodMapEClass.getEStructuralFeatures().get(1);
   }
 }

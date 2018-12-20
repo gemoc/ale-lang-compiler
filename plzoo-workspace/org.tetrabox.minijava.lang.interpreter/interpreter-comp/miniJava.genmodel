@@ -37,6 +37,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method/isstatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method/params"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method/body"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Method/cache"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Parameter"/>
     <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Field">
@@ -254,6 +255,10 @@
     <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SymbolToSymbolBindingMap">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SymbolToSymbolBindingMap/key"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//SymbolToSymbolBindingMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ClazzToMethodMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ClazzToMethodMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ClazzToMethodMap/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

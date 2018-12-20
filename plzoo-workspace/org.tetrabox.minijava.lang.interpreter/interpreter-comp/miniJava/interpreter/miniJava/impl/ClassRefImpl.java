@@ -4,6 +4,7 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.ClassRef;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.TypeDeclaration;
+import miniJava.interpreter.miniJava.TypeRef;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -79,5 +80,18 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public boolean compare(TypeRef other) {
+    boolean result;
+    if(other instanceof miniJava.interpreter.miniJava.ClassRef) {
+          miniJava.interpreter.miniJava.ClassRef ocr = ((miniJava.interpreter.miniJava.ClassRef)other);
+          result = java.util.Objects.equals((this.referencedClass), (ocr.getReferencedClass()));
+        }
+        else {
+          result = false;
+        }
+        ;
+    return result;
   }
 }

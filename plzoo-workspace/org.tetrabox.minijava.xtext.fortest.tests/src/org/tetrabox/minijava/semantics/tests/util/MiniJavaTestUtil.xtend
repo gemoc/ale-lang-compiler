@@ -23,6 +23,7 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.junit.Assert
 import org.tetrabox.minijava.xtext.fortest.tests.MiniJavaInjectorProvider
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 @InjectWith(MiniJavaInjectorProvider)
 class MiniJavaTestUtil {
@@ -133,6 +134,8 @@ class MiniJavaTestUtil {
 		val helper = new ValidationTestHelper();
 		rs.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
 		val Program result = parseHelper.parse(program, rs)
+		EcoreUtil.resolveAll(result)
+		EcoreUtil.resolveAll(rs)
 		
 		Assert.assertNotNull(result)
 //		helper.assertNoErrors(result)

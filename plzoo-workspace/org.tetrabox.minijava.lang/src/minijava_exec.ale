@@ -176,8 +176,48 @@ open class Method {
 	}
 	
 	def miniJava::Method findOverride(Clazz c) {
-		'TODO findOverride'.log();
-		result := null;
+		if(not self.cache.containsKey(c)) {
+			miniJava::Method that := self;
+			if(c.members->exists(x | x == that)) {
+				result := self;
+			} else {
+				int i := 0;
+				miniJava::Method found := null;
+				while(i < c.members.size() and found == null) {
+					miniJava::Member tmpm := c.members->at(i);
+					if(tmpm.oclIsKindOf(miniJava::Method)) {
+						miniJava::Method m := tmpm;
+						if(m.name == self.name and m.params.size() == self.params.size()) {
+							boolean compared := m.typeRef.compare(self.typeRef);
+							int j := 0;
+							int paramlgt := m.params.size();
+							boolean alltrue := compared;
+							while(j<paramlgt and alltrue) {
+								miniJava::Parameter p1 := m.params->at(j);
+								miniJava::Parameter tmpp := self.params->select(p2 | p1.compare(p2))->first();
+								alltrue := tmpp != null;
+								j:=j+1;
+							}
+							if(alltrue) {
+								found := m;
+							}
+						}
+					}
+					i:=i+1;
+				}
+				if(found != null) {
+					result := found;
+				} else {
+					if(c.superClass != null) {
+						result := self.findOverride(c.superClass);
+					} else {
+						result := null;
+					}
+				}
+			}
+		} else {
+			result := self.cache.get(c);
+		}
 	}
 	
 	def void call(State state) {
@@ -482,11 +522,11 @@ open class MethodCall {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 		miniJava::ObjectRefValue realReceiver0 := self.receiver.evaluateExpression(state);  
 		miniJava::ObjectInstance realReceiver := realReceiver0.instance;
-		miniJava::Method realMethod := self.method.findOverride(realReceiver.type);
+		miniJava::Method realMethod := self.getMethod().findOverride(realReceiver.type);
 		miniJava::Context newContext := miniJava::Context.create();
 		int argsLength := self.args.size();
 		int i := 0;
-		while(i <= argsLength) {
+		while(i < argsLength) {
 			miniJava::Expression arg := self.args.get(i);
 			miniJava::Parameter param := realMethod.params.get(i);
 			miniJava::SymbolBinding binding := miniJava::SymbolBinding.create();
@@ -557,12 +597,9 @@ open class NewArray {
 open class NewObject {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 	// Creating instance with default bindings
-//		val res = MinijavadynamicdataFactory::eINSTANCE.createObjectInstance => [type = _self.type]
 		miniJava::ObjectInstance res := miniJava::ObjectInstance.create();
-		res.type := self.type;
-//		state.objectsHeap.add(res)
+		res.type := self.getType();
 		state.objectsHeap += res;
-//		for (f : res.type.members.filter(Field)) {
 		int i := 0;
 		int z := res.type.members.size();
 		while(i<z) {
@@ -602,6 +639,7 @@ open class NewObject {
 					constructor := mtd;
 				}
 			}
+			i:=i+1;
 		}
 		
 		if(constructor != null) {
@@ -838,5 +876,31 @@ open class NullValue {
 	def miniJava::Value copy() {
 		miniJava::NullValue tmp := miniJava::NullValue.create();
 		result := tmp; 
+	}
+}
+
+//// TYPES 
+
+open class TypeRef {
+	def boolean compare(miniJava::TypeRef other) {
+		result := self.eClass() == other.eClass();
+	}
+}
+
+open class ClassRef {
+	def boolean compare(miniJava::TypeRef other) {
+		if(other.oclIsKindOf(miniJava::ClassRef)) {
+			miniJava::ClassRef ocr := other;
+			result := self.referencedClass == ocr.referencedClass;
+		} else {
+			result := false;
+		}
+	}
+}
+
+
+open class Parameter {
+	def boolean compare(miniJava::Parameter other) {
+		result := self.name == other.name and self.typeRef.compare(other.typeRef);
 	}
 }

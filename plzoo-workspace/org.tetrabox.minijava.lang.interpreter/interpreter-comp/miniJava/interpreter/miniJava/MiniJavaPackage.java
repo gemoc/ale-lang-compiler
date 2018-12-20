@@ -171,7 +171,9 @@ public interface MiniJavaPackage extends EPackage {
 
   int SYMBOL_TO_SYMBOL_BINDING_MAP = 76;
 
-  int ACCESS_LEVEL = 77;
+  int CLAZZ_TO_METHOD_MAP = 77;
+
+  int ACCESS_LEVEL = 78;
 
   int PROGRAM__NAME = 0;
 
@@ -202,6 +204,8 @@ public interface MiniJavaPackage extends EPackage {
   int METHOD__PARAMS = 5;
 
   int METHOD__BODY = 6;
+
+  int METHOD__CACHE = 7;
 
   int FIELD__DEFAULT_VALUE = 3;
 
@@ -393,6 +397,10 @@ public interface MiniJavaPackage extends EPackage {
 
   int SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = 1;
 
+  int CLAZZ_TO_METHOD_MAP__KEY = 0;
+
+  int CLAZZ_TO_METHOD_MAP__VALUE = 1;
+
   EClass getProgram();
 
   EClass getImport();
@@ -547,6 +555,8 @@ public interface MiniJavaPackage extends EPackage {
 
   EClass getSymbolToSymbolBindingMap();
 
+  EClass getClazzToMethodMap();
+
   EEnum getAccessLevel();
 
   EReference getProgram_Imports();
@@ -564,6 +574,8 @@ public interface MiniJavaPackage extends EPackage {
   EReference getMethod_Params();
 
   EReference getMethod_Body();
+
+  EReference getMethod_Cache();
 
   EReference getField_DefaultValue();
 
@@ -736,6 +748,10 @@ public interface MiniJavaPackage extends EPackage {
   EReference getSymbolToSymbolBindingMap_Key();
 
   EReference getSymbolToSymbolBindingMap_Value();
+
+  EReference getClazzToMethodMap_Key();
+
+  EReference getClazzToMethodMap_Value();
 
   EAttribute getProgram_Name();
 
@@ -926,6 +942,8 @@ public interface MiniJavaPackage extends EPackage {
 
     EClass SYMBOL_TO_SYMBOL_BINDING_MAP = eINSTANCE.getSymbolToSymbolBindingMap();
 
+    EClass CLAZZ_TO_METHOD_MAP = eINSTANCE.getClazzToMethodMap();
+
     EReference PROGRAM__IMPORTS = eINSTANCE.getProgram_Imports();
 
     EReference PROGRAM__CLASSES = eINSTANCE.getProgram_Classes();
@@ -941,6 +959,8 @@ public interface MiniJavaPackage extends EPackage {
     EReference METHOD__PARAMS = eINSTANCE.getMethod_Params();
 
     EReference METHOD__BODY = eINSTANCE.getMethod_Body();
+
+    EReference METHOD__CACHE = eINSTANCE.getMethod_Cache();
 
     EReference FIELD__DEFAULT_VALUE = eINSTANCE.getField_DefaultValue();
 
@@ -1113,6 +1133,10 @@ public interface MiniJavaPackage extends EPackage {
     EReference SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = eINSTANCE.getSymbolToSymbolBindingMap_Key();
 
     EReference SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = eINSTANCE.getSymbolToSymbolBindingMap_Value();
+
+    EReference CLAZZ_TO_METHOD_MAP__KEY = eINSTANCE.getClazzToMethodMap_Key();
+
+    EReference CLAZZ_TO_METHOD_MAP__VALUE = eINSTANCE.getClazzToMethodMap_Value();
 
     EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 

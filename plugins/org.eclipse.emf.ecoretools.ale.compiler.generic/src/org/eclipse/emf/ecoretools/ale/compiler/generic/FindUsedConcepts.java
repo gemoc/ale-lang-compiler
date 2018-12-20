@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 public class FindUsedConcepts {
-	private final static String program = "/home/manuel/dev/java/ale-lang/plzoo/benchmarks.scripts/fib30.xmi";
+	private final static String program = "/home/manuel/dev/java/ale-lang/genetics/insert_sort.boa.xmi";
 	private final static String metamodel = "/home/manuel/dev/java/ale-lang/plzoo/boa.model/model/boa.ecore";
 
 	public static void main(final String[] args) throws IOException {

@@ -46,4 +46,11 @@ public class TypeRefImpl extends MinimalEObjectImpl.Container implements TypeRef
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
+
+  public boolean compare(TypeRef other) {
+    boolean result;
+    result = java.util.Objects.equals((this.eClass()), (other.eClass()));
+        ;
+    return result;
+  }
 }

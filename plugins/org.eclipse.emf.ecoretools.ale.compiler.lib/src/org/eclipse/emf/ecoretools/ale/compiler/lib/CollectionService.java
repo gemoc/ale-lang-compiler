@@ -27,6 +27,7 @@ public class CollectionService {
 		return ret;
 	}
 
+	@TruffleBoundary
 	public static <T> Iterable<T> select(final T[] collection, final Function<? super T, Boolean> filter) {
 		final ArrayList<T> ret = new ArrayList<>();
 		for (final T e : collection) {
@@ -34,6 +35,15 @@ public class CollectionService {
 				ret.add(e);
 		}
 		return ret;
+	}
+	
+	@TruffleBoundary
+	public static <T> boolean exists(final T[] collection, final Function<? super T, Boolean> filter) {
+		for (final T e : collection) {
+			if (apply(filter, e))
+				return true;
+		}
+		return false;
 	}
 
 	@TruffleBoundary
@@ -50,6 +60,15 @@ public class CollectionService {
 		}
 		return ret;
 	}
+	
+	@TruffleBoundary
+	public static <T> boolean exists(final Iterable<T> collection, final Function<? super T, Boolean> filter) {
+		for (final T e : collection) {
+			if (filter.apply(e))
+				return true;
+		}
+		return false;
+	}
 
 	@TruffleBoundary
 	public static <T> T head(final Iterable<T> collection) {
@@ -60,6 +79,7 @@ public class CollectionService {
 			return null;
 	}
 
+	@TruffleBoundary
 	public static <T> T head(final T[] collection) {
 		if (collection.length > 0)
 			return collection[0];
@@ -81,6 +101,7 @@ public class CollectionService {
 		return ret;
 	}
 
+	@TruffleBoundary
 	public static <T> T get(final T[] collection, int idx) {
 		if (collection.length > idx)
 			return collection[idx];
@@ -98,6 +119,7 @@ public class CollectionService {
 			return true;
 	}
 
+	@TruffleBoundary
 	public static <T> boolean isEmpty(final T[] collection) {
 		return collection.length > 0;
 	}

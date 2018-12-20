@@ -259,6 +259,8 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
     	return createArrayRefValue();
     case MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP:
     	return (org.eclipse.emf.ecore.EObject) createSymbolToSymbolBindingMap();
+    case MiniJavaPackage.CLAZZ_TO_METHOD_MAP:
+    	return (org.eclipse.emf.ecore.EObject) createClazzToMethodMap();
     default:
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -662,6 +664,11 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
 
   public Map.Entry<Symbol, SymbolBinding> createSymbolToSymbolBindingMap() {
     SymbolToSymbolBindingMapImpl ret = new SymbolToSymbolBindingMapImpl();
+    return ret;
+  }
+
+  public Map.Entry<Clazz, Method> createClazzToMethodMap() {
+    ClazzToMethodMapImpl ret = new ClazzToMethodMapImpl();
     return ret;
   }
 

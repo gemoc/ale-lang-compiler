@@ -10,10 +10,12 @@ import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 
 public class MethodImpl extends MemberImpl implements Method {
   protected static final boolean ISABSTRACT_EDEFAULT = false;
@@ -27,6 +29,8 @@ public class MethodImpl extends MemberImpl implements Method {
   protected EList<Parameter> params;
 
   protected Block body;
+
+  protected EMap<Clazz, Method> cache;
 
   protected MethodImpl() {
     super();
@@ -79,6 +83,13 @@ public class MethodImpl extends MemberImpl implements Method {
     return body;
   }
 
+  public EMap<Clazz, Method> getCache() {
+    if (cache == null) {
+    	cache = new EcoreEMap<Clazz, Method>(MiniJavaPackage.Literals.CLAZZ_TO_METHOD_MAP, ClazzToMethodMapImpl.class, this, MiniJavaPackage.METHOD__CACHE);
+    }
+    return cache;
+  }
+
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.METHOD;}
 
@@ -96,6 +107,9 @@ public class MethodImpl extends MemberImpl implements Method {
     return;
     case MiniJavaPackage.METHOD__BODY:
     	setBody((miniJava.interpreter.miniJava.Block) newValue);
+    return;
+    case MiniJavaPackage.METHOD__CACHE:
+    	((org.eclipse.emf.ecore.EStructuralFeature.Setting)getCache()).set(newValue);
     return;
     }
     super.eSet(featureID, newValue);
@@ -115,6 +129,9 @@ public class MethodImpl extends MemberImpl implements Method {
     case MiniJavaPackage.METHOD__BODY:
     	setBody((miniJava.interpreter.miniJava.Block) null);
     return;
+    case MiniJavaPackage.METHOD__CACHE:
+    	getCache().clear();
+    return;
     }
     super.eUnset(featureID);
   }
@@ -129,6 +146,11 @@ public class MethodImpl extends MemberImpl implements Method {
     return getParams();
     case MiniJavaPackage.METHOD__BODY:
     return getBody();
+    case MiniJavaPackage.METHOD__CACHE:
+    if (coreType)
+    	return getCache();
+    else
+    	return getCache().map();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -143,6 +165,8 @@ public class MethodImpl extends MemberImpl implements Method {
     	return params != null && !params.isEmpty();
     case MiniJavaPackage.METHOD__BODY:
     	return body != null;
+    case MiniJavaPackage.METHOD__CACHE:
+    	return cache != null && !cache.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -165,8 +189,52 @@ public class MethodImpl extends MemberImpl implements Method {
 
   public Method findOverride(Clazz c) {
     Method result;
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("TODO findOverride");
-        result = null;
+    if(!(minijava.MapService.containsKey(this.getCache(), c))) {
+          miniJava.interpreter.miniJava.Method that = ((miniJava.interpreter.miniJava.Method)this);
+          if(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(c.getMembers(), (x) -> java.util.Objects.equals((x), (that)))) {
+            result = this;
+          }
+          else {
+            int i = ((int)0);
+            miniJava.interpreter.miniJava.Method found = ((miniJava.interpreter.miniJava.Method)null);
+            while ((((i) < (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(c.getMembers()))) && (java.util.Objects.equals((found), (null))))) {
+              miniJava.interpreter.miniJava.Member tmpm = ((miniJava.interpreter.miniJava.Member)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(c.getMembers(), i));
+              if(tmpm instanceof miniJava.interpreter.miniJava.Method) {
+                miniJava.interpreter.miniJava.Method m = ((miniJava.interpreter.miniJava.Method)tmpm);
+                if(((java.util.Objects.equals((m.getName()), (this.name))) && (java.util.Objects.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getParams())))))) {
+                  boolean compared = ((boolean)m.getTypeRef().compare(this.typeRef));
+                  int j = ((int)0);
+                  int paramlgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams()));
+                  boolean alltrue = ((boolean)compared);
+                  while ((((j) < (paramlgt)) && (alltrue))) {
+                    miniJava.interpreter.miniJava.Parameter p1 = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(m.getParams(), j));
+                    miniJava.interpreter.miniJava.Parameter tmpp = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.getParams(), (p2) -> p1.compare(p2))));
+                    alltrue = (tmpp) != (null);
+                    j = (j) + (1);
+                  }
+                  if(alltrue) {
+                    found = m;
+                  }
+                }
+              }
+              i = (i) + (1);
+            }
+            if((found) != (null)) {
+              result = found;
+            }
+            else {
+              if((c.getSuperClass()) != (null)) {
+                result = this.findOverride(c.getSuperClass());
+              }
+              else {
+                result = null;
+              }
+            }
+          }
+        }
+        else {
+          result = this.getCache().get(c);
+        }
         ;
     return result;
   }

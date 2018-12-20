@@ -34,12 +34,8 @@ class MiniJavaScopeProvider extends AbstractMiniJavaScopeProvider {
 	@Inject extension MiniJavaTypeComputer
 
 	override getScope(EObject context, EReference reference) {
-		println('''«reference» ////// «epackage.symbolRef_Symbol»''')
 		if (reference == epackage.symbolRef_Symbol) {
 			return scopeForSymbolRef(context)
-		} else if (reference == epackage.methodCall_Method) {
-			val res = scopeForMethodCall(context as MethodCall)
-			return res
 		} else if (context instanceof MethodCall) {
 			return scopeForMethodCall(context)
 		} else if (context instanceof FieldAccess) {
@@ -104,16 +100,10 @@ class MiniJavaScopeProvider extends AbstractMiniJavaScopeProvider {
 		val inheritedMethods = grouped.get(true) ?: emptyList
 		val inheritedFields = grouped.get(false) ?: emptyList
 
-//		val typeScope = (type.methods + type.fields).toList
-//		new MapBasedScope(Scopes.scopeFor(inheritedMethods + inheritedFields), false)
-//		val tmp = Scopes.scopeFor(
-//			typeScope,
-//			
-//		)
-		val tmp = MapBasedScope.createScope(Scopes.scopeFor(inheritedMethods + inheritedFields), type.methods.map [
-			EObjectDescription.create(it.name, it)
-		])
-		return tmp
+		return Scopes.scopeFor(
+			type.methods + type.fields,
+			Scopes.scopeFor(inheritedMethods + inheritedFields)
+		)
 	}
 
 }

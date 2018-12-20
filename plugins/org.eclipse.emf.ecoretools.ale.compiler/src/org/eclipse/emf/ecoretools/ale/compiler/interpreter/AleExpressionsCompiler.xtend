@@ -146,6 +146,19 @@ class AleExpressionsCompiler {
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
+			case "exists":
+				if (call.type == CallType.COLLECTIONCALL) {
+//					val t = infereType(call.arguments.get(1)).head
+//					if (t instanceof EClassifierType) {
+//						CodeBlock.
+//							of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(«call.arguments.get(0).compileExpression(ctx)», it -> it instanceof «call.arguments.get(1).compileExpression(ctx)»)''')
+//					} else {
+						CodeBlock.
+							of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''')
+//					}
+				} else {
+					CodeBlock.of('''/*FIRST «call»*/''')
+				}
 			case "isEmpty":
 				if (call.type == CallType.COLLECTIONCALL) {
 					CodeBlock.

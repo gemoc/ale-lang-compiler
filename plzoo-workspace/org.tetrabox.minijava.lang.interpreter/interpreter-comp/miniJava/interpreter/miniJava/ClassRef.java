@@ -6,4 +6,6 @@ public interface ClassRef extends EObject, SingleTypeRef {
   TypeDeclaration getReferencedClass();
 
   void setReferencedClass(TypeDeclaration value);
+
+  boolean compare(TypeRef other);
 }

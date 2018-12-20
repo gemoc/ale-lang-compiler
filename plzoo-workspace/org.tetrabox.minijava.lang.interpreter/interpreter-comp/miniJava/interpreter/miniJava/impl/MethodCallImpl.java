@@ -154,11 +154,11 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     Value result;
     miniJava.interpreter.miniJava.ObjectRefValue realReceiver0 = ((miniJava.interpreter.miniJava.ObjectRefValue)this.receiver.evaluateExpression(state));
         miniJava.interpreter.miniJava.ObjectInstance realReceiver = ((miniJava.interpreter.miniJava.ObjectInstance)realReceiver0.getInstance());
-        miniJava.interpreter.miniJava.Method realMethod = ((miniJava.interpreter.miniJava.Method)this.method.findOverride(realReceiver.getType()));
+        miniJava.interpreter.miniJava.Method realMethod = ((miniJava.interpreter.miniJava.Method)this.getMethod().findOverride(realReceiver.getType()));
         miniJava.interpreter.miniJava.Context newContext = ((miniJava.interpreter.miniJava.Context)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createContext());
         int argsLength = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getArgs()));
         int i = ((int)0);
-        while ((i) <= (argsLength)) {
+        while ((i) < (argsLength)) {
           miniJava.interpreter.miniJava.Expression arg = ((miniJava.interpreter.miniJava.Expression)this.getArgs().get(i));
           miniJava.interpreter.miniJava.Parameter param = ((miniJava.interpreter.miniJava.Parameter)realMethod.getParams().get(i));
           miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createSymbolBinding());

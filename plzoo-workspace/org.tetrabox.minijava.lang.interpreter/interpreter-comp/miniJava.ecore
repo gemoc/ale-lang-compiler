@@ -34,6 +34,8 @@
         eType="#//Parameter" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Block"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cache" upperBound="-1"
+        eType="#//ClazzToMethodMap"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//Symbol"/>
   <eClassifiers xsi:type="ecore:EClass" name="Field" eSuperTypes="#//Member">
@@ -348,5 +350,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="SymbolToSymbolBindingMap" instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//Symbol"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//SymbolBinding"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClazzToMethodMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//Clazz"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Method"/>
   </eClassifiers>
 </ecore:EPackage>

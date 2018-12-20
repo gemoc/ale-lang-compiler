@@ -111,7 +111,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
   public Value evaluateExpression(State state) {
     Value result;
     miniJava.interpreter.miniJava.ObjectInstance res = ((miniJava.interpreter.miniJava.ObjectInstance)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createObjectInstance());
-        res.setType(this.type);
+        res.setType(this.getType());
         state.getObjectsHeap().add(res);
         int i = ((int)0);
         int z = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(res.getType().getMembers()));
@@ -139,6 +139,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
               constructor = mtd;
             }
           }
+          i = (i) + (1);
         }
         if((constructor) != (null)) {
           miniJava.interpreter.miniJava.Context newContext = ((miniJava.interpreter.miniJava.Context)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createContext());

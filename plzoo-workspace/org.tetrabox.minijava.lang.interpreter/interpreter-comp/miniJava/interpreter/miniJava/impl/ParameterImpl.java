@@ -45,4 +45,11 @@ public class ParameterImpl extends SymbolImpl implements Parameter {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
+
+  public boolean compare(Parameter other) {
+    boolean result;
+    result = ((java.util.Objects.equals((this.name), (other.getName()))) && (this.typeRef.compare(other.getTypeRef())));
+        ;
+    return result;
+  }
 }
