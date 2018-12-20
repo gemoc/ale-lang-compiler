@@ -565,6 +565,12 @@ open class Plus {
 	}
 }
 
+open class Null {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		result := miniJava::NullValue.create();
+	}
+}
+
 open class Neg {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 		miniJava::IntegerValue left := self.expression.evaluateExpression(state);
