@@ -574,6 +574,15 @@ open class Neg {
 	}
 }
 
+open class Not {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::BooleanValue left := self.expression.evaluateExpression(state);
+		miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
+		tmp.value := not left.isValue();
+		result := tmp;
+	}
+}
+
 open class InferiorOrEqual {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 		miniJava::Value left := self.left.evaluateExpression(state);

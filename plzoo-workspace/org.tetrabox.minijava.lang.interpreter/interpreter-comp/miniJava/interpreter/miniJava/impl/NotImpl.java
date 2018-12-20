@@ -4,6 +4,8 @@ import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Not;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -89,5 +91,15 @@ public class NotImpl extends ExpressionImpl implements Not {
     	return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.BooleanValue left = ((miniJava.interpreter.miniJava.BooleanValue)this.expression.evaluateExpression(state));
+        miniJava.interpreter.miniJava.BooleanValue tmp = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
+        tmp.setValue(!(left.isValue()));
+        result = tmp;
+        ;
+    return result;
   }
 }

@@ -6,4 +6,6 @@ public interface Not extends EObject, Expression {
   Expression getExpression();
 
   void setExpression(Expression value);
+
+  Value evaluateExpression(State state);
 }
