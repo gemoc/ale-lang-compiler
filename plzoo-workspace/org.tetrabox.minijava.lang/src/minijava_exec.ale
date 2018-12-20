@@ -238,6 +238,15 @@ open class Expression {
 	} 
 }
 
+open class This {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::ObjectInstance currentInstance := state.findCurrentFrame().instance;
+		miniJava::ObjectRefValue tmp := miniJava::ObjectRefValue.create();
+		tmp.instance := currentInstance;
+		result := tmp;
+	}
+}
+
 open class BoolConstant {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 		miniJava::BooleanValue ret := miniJava::BooleanValue.create();

@@ -2,7 +2,9 @@ package miniJava.interpreter.miniJava.impl;
 
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
 import miniJava.interpreter.miniJava.This;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -44,5 +46,15 @@ public class ThisImpl extends ExpressionImpl implements This {
     switch(featureID) {
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.ObjectInstance currentInstance = ((miniJava.interpreter.miniJava.ObjectInstance)state.findCurrentFrame().getInstance());
+        miniJava.interpreter.miniJava.ObjectRefValue tmp = ((miniJava.interpreter.miniJava.ObjectRefValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createObjectRefValue());
+        tmp.setInstance(currentInstance);
+        result = tmp;
+        ;
+    return result;
   }
 }
