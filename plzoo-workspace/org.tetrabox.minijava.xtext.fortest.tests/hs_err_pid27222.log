@@ -1,0 +1,48 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 389021696 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2749), pid=27222, tid=0x00007efe5b840700
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_192-b12) (build 1.8.0_192-b12)
+# Java VM: GraalVM 1.0.0-rc9 (25.192-b12-jvmci-0.49 mixed mode linux-amd64 compressed oops)
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007efe88083000):  VMThread [stack: 0x00007efe5b741000,0x00007efe5b841000] [id=27232]
+
+Stack: [0x00007efe5b741000,0x00007efe5b841000],  sp=0x00007efe5b83f420,  free space=1017k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0xb33131]  VMError::report_and_die()+0x151
+V  [libjvm.so+0x506847]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*)+0x67
+V  [libjvm.so+0x979f08]  os::pd_commit_memory(char*, unsigned long, unsigned long, bool)+0xd8
+V  [libjvm.so+0x97197f]  os::commit_memory(char*, unsigned long, unsigned long, bool)+0x1f
+V  [libjvm.so+0x9f2e6b]  PSVirtualSpace::expand_by(unsigned long)+0x5b
+V  [libjvm.so+0x9e249b]  PSOldGen::expand_by(unsigned long) [clone .part.30]+0x1b
+V  [libjvm.so+0x9e2670]  PSOldGen::expand(unsigned long) [clone .part.31]+0xc0
+V  [libjvm.so+0x9e30f0]  PSOldGen::resize(unsigned long)+0x220
+V  [libjvm.so+0x9e8ec1]  PSParallelCompact::invoke_no_policy(bool) [clone .part.118]+0x9d1
+V  [libjvm.so+0x9f0f4d]  PSScavenge::invoke()+0x1ad
+V  [libjvm.so+0x9a29c3]  ParallelScavengeHeap::failed_mem_allocate(unsigned long)+0x63
+V  [libjvm.so+0xb34c13]  VM_ParallelGCFailedAllocation::doit()+0x83
+V  [libjvm.so+0xb3bc77]  VM_Operation::evaluate()+0x47
+V  [libjvm.so+0xb3a291]  VMThread::evaluate_operation(VM_Operation*)+0xb1
+V

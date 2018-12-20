@@ -149,7 +149,7 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     miniJava.interpreter.miniJava.ObjectRefValue tmp0 = ((miniJava.interpreter.miniJava.ObjectRefValue)this.receiver.evaluateExpression(state));
         miniJava.interpreter.miniJava.ObjectInstance realReceiver = ((miniJava.interpreter.miniJava.ObjectInstance)tmp0.getInstance());
         miniJava.interpreter.miniJava.Field fld = ((miniJava.interpreter.miniJava.Field)this.field);
-        miniJava.interpreter.miniJava.FieldBinding fb = ((miniJava.interpreter.miniJava.FieldBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(realReceiver.getFieldbindings(), (x) -> java.util.Objects.equals((x.getField()), (fld)))));
+        miniJava.interpreter.miniJava.FieldBinding fb = ((miniJava.interpreter.miniJava.FieldBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(realReceiver.getFieldbindings(), (x) -> org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((x.getField()), (fld)))));
         result = fb.getValue();
         ;
     return result;

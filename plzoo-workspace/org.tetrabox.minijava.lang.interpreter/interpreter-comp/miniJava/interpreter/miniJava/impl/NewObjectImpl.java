@@ -155,11 +155,11 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
         }
         i = 0;
         miniJava.interpreter.miniJava.Method constructor = ((miniJava.interpreter.miniJava.Method)null);
-        while ((((i) < (z)) && (java.util.Objects.equals((constructor), (null))))) {
+        while ((((i) < (z)) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((constructor), (null))))) {
           miniJava.interpreter.miniJava.Member m = ((miniJava.interpreter.miniJava.Member)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(res.getType().getMembers(), i));
           if(m instanceof miniJava.interpreter.miniJava.Method) {
             miniJava.interpreter.miniJava.Method mtd = ((miniJava.interpreter.miniJava.Method)m);
-            if(((java.util.Objects.equals((mtd.getName()), (null))) && (java.util.Objects.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(mtd.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.argsArr)))))) {
+            if(((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((mtd.getName()), (null))) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(mtd.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.argsArr)))))) {
               constructor = mtd;
             }
           }

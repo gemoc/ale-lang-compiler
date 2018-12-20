@@ -89,7 +89,7 @@ class AleExpressionsCompiler {
 					of('''(«call.arguments.get(0).compileExpression(ctx)») / («call.arguments.get(1).compileExpression(ctx)»)''')
 			case "equals":
 				CodeBlock.
-					of('''java.util.Objects.equals((«call.arguments.get(0).compileExpression(ctx)»), («call.arguments.get(1).compileExpression(ctx)»))''')
+					of('''org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((«call.arguments.get(0).compileExpression(ctx)»), («call.arguments.get(1).compileExpression(ctx)»))''')
 			case "lessThan":
 				CodeBlock.
 					of('''(«call.arguments.get(0).compileExpression(ctx)») < («call.arguments.get(1).compileExpression(ctx)»)''')

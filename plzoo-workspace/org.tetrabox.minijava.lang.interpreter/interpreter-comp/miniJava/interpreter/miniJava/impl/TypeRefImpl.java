@@ -60,7 +60,7 @@ public class TypeRefImpl extends MinimalTruffleEObjectImpl.TruffleContainer impl
 
   public boolean compare(TypeRef other) {
     boolean result;
-    result = java.util.Objects.equals((this.eClass()), (other.eClass()));
+    result = org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.eClass()), (other.eClass()));
         ;
     return result;
   }

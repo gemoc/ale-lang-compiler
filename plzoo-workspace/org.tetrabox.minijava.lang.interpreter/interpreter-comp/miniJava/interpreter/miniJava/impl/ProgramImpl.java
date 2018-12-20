@@ -209,7 +209,7 @@ public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer impl
           for(miniJava.interpreter.miniJava.Member member: clazz.getMembers()) {
             if(member instanceof miniJava.interpreter.miniJava.Method) {
               miniJava.interpreter.miniJava.Method method = ((miniJava.interpreter.miniJava.Method)member);
-              if(java.util.Objects.equals((method.getName()), ("main"))) {
+              if(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((method.getName()), ("main"))) {
                 result = method;
               }
             }

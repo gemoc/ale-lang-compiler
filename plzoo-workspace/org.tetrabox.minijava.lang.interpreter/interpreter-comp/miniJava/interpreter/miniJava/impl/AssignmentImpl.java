@@ -178,8 +178,8 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
               miniJava.interpreter.miniJava.Field f = ((miniJava.interpreter.miniJava.Field)assigneeFieldAccess.getField());
               miniJava.interpreter.miniJava.ObjectRefValue realReceiverValue = ((miniJava.interpreter.miniJava.ObjectRefValue)assigneeFieldAccess.getReceiver().evaluateExpression(state));
               miniJava.interpreter.miniJava.ObjectInstance realReceiver = ((miniJava.interpreter.miniJava.ObjectInstance)realReceiverValue.getInstance());
-              miniJava.interpreter.miniJava.FieldBinding existingBinding = ((miniJava.interpreter.miniJava.FieldBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(realReceiver.getFieldbindings(), (x) -> java.util.Objects.equals((x.getField()), (f)))));
-              if(java.util.Objects.equals((existingBinding), (null))) {
+              miniJava.interpreter.miniJava.FieldBinding existingBinding = ((miniJava.interpreter.miniJava.FieldBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(realReceiver.getFieldbindings(), (x) -> org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((x.getField()), (f)))));
+              if(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((existingBinding), (null))) {
                 miniJava.interpreter.miniJava.FieldBinding binding = ((miniJava.interpreter.miniJava.FieldBinding)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createFieldBinding());
                 binding.setField(f);
                 binding.setValue(right);

@@ -1,40 +1,31 @@
 package miniJava.interpreter.miniJava.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
-import java.lang.IllegalArgumentException;
-import java.lang.Object;
+
 import miniJava.interpreter.miniJava.Call;
 import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.Frame;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.ObjectInstance;
 import miniJava.interpreter.miniJava.Value;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-@NodeInfo(
-    description = "Frame"
-)
-public class FrameImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Frame {
-  @Child
+public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
   protected Call call;
 
   protected ObjectInstance instance;
 
-  @Child
   protected Frame childFrame;
 
-  @Child
   protected Context rootContext;
 
-  @Child
   protected Value returnValue;
 
   protected FrameImpl() {
@@ -352,6 +343,7 @@ public class FrameImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
 
+  @TruffleBoundary
   public Context findCurrentContext() {
     Context result;
     if((this.childFrame) != (null)) {
@@ -369,6 +361,7 @@ public class FrameImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return result;
   }
 
+  @TruffleBoundary
   public Frame findCurrentFrame() {
     Frame result;
     if((this.childFrame) != (null)) {

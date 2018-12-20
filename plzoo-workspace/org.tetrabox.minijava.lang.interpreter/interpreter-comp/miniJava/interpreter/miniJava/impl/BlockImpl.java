@@ -99,7 +99,7 @@ public class BlockImpl extends StatementImpl implements Block {
         miniJava.interpreter.miniJava.Frame currentFrame = ((miniJava.interpreter.miniJava.Frame)state.findCurrentFrame());
         int lgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.statementsArr));
         int i = ((int)0);
-        while ((((i) < (lgt)) && (java.util.Objects.equals((currentFrame.getReturnValue()), (null))))) {
+        while ((((i) < (lgt)) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((currentFrame.getReturnValue()), (null))))) {
           org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.statementsArr, i).evaluateStatement(state);
           i = (i) + (1);
         }

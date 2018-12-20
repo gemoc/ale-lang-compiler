@@ -164,7 +164,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
           if(right instanceof miniJava.interpreter.miniJava.IntegerValue) {
             miniJava.interpreter.miniJava.IntegerValue ileft = ((miniJava.interpreter.miniJava.IntegerValue)left);
             miniJava.interpreter.miniJava.IntegerValue iright = ((miniJava.interpreter.miniJava.IntegerValue)right);
-            tmp = java.util.Objects.equals((ileft.getValue()), (iright.getValue()));
+            tmp = org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((ileft.getValue()), (iright.getValue()));
           }
         }
         else {
@@ -172,7 +172,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
             if(right instanceof miniJava.interpreter.miniJava.StringValue) {
               miniJava.interpreter.miniJava.StringValue ileft = ((miniJava.interpreter.miniJava.StringValue)left);
               miniJava.interpreter.miniJava.StringValue iright = ((miniJava.interpreter.miniJava.StringValue)right);
-              tmp = java.util.Objects.equals((ileft.getValue()), (iright.getValue()));
+              tmp = org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((ileft.getValue()), (iright.getValue()));
             }
           }
           else {
@@ -180,7 +180,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
               if(right instanceof miniJava.interpreter.miniJava.BooleanValue) {
                 miniJava.interpreter.miniJava.BooleanValue ileft = ((miniJava.interpreter.miniJava.BooleanValue)left);
                 miniJava.interpreter.miniJava.BooleanValue iright = ((miniJava.interpreter.miniJava.BooleanValue)right);
-                tmp = java.util.Objects.equals((ileft.isValue()), (iright.isValue()));
+                tmp = org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((ileft.isValue()), (iright.isValue()));
               }
             }
             else {
@@ -194,7 +194,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
                   if(right instanceof miniJava.interpreter.miniJava.ObjectRefValue) {
                     miniJava.interpreter.miniJava.ObjectRefValue ileft = ((miniJava.interpreter.miniJava.ObjectRefValue)left);
                     miniJava.interpreter.miniJava.ObjectRefValue iright = ((miniJava.interpreter.miniJava.ObjectRefValue)right);
-                    tmp = java.util.Objects.equals((ileft.getInstance()), (iright.getInstance()));
+                    tmp = org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((ileft.getInstance()), (iright.getInstance()));
                   }
                 }
               }

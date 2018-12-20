@@ -83,7 +83,7 @@ public class BoolConstantImpl extends ExpressionImpl implements BoolConstant {
   public Value evaluateExpression(State state) {
     Value result;
     miniJava.interpreter.miniJava.BooleanValue ret = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
-        ret.setValue(java.util.Objects.equals((this.value), ("true")));
+        ret.setValue(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.value), ("true")));
         result = ret;
         ;
     return result;

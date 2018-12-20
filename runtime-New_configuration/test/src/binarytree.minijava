@@ -65,7 +65,7 @@ public class Binarytrees {
 
 
     public static void main(String[] args) {
-        int n = 21;
+        int n = 12;
         System.out.println(n);
         new Binarytrees().runBenchmark(n);
     }

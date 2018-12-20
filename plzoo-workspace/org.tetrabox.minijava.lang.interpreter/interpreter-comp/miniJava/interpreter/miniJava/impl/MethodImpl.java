@@ -1,5 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.Node.Children;
@@ -43,8 +44,12 @@ public class MethodImpl extends MemberImpl implements Method {
   @Children
   private Parameter[] paramsArr;
 
+  @CompilationFinal
+  private MethodDispatchWrapperCall cachedCall;
+
   protected MethodImpl() {
     super();
+    this.cachedCall = new miniJava.interpreter.miniJava.impl.MethodDispatchWrapperCall(this);
   }
 
   public boolean isIsabstract() {
@@ -219,17 +224,17 @@ public class MethodImpl extends MemberImpl implements Method {
         			};
     if(!(minijava.MapService.containsKey(this.getCache(), c))) {
           miniJava.interpreter.miniJava.Method that = ((miniJava.interpreter.miniJava.Method)this);
-          if(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(c.getMembers(), (x) -> java.util.Objects.equals((x), (that)))) {
+          if(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(c.getMembers(), (x) -> org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((x), (that)))) {
             result = this;
           }
           else {
             int i = ((int)0);
             miniJava.interpreter.miniJava.Method found = ((miniJava.interpreter.miniJava.Method)null);
-            while ((((i) < (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(c.getMembers()))) && (java.util.Objects.equals((found), (null))))) {
+            while ((((i) < (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(c.getMembers()))) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((found), (null))))) {
               miniJava.interpreter.miniJava.Member tmpm = ((miniJava.interpreter.miniJava.Member)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(c.getMembers(), i));
               if(tmpm instanceof miniJava.interpreter.miniJava.Method) {
                 miniJava.interpreter.miniJava.Method m = ((miniJava.interpreter.miniJava.Method)tmpm);
-                if(((java.util.Objects.equals((m.getName()), (this.name))) && (java.util.Objects.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.paramsArr)))))) {
+                if(((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((m.getName()), (this.name))) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.paramsArr)))))) {
                   boolean compared = ((boolean)m.getTypeRef().compare(this.typeRef));
                   int j = ((int)0);
                   int paramlgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams()));
@@ -259,6 +264,7 @@ public class MethodImpl extends MemberImpl implements Method {
               }
             }
           }
+          minijava.MapService.put(this.getCache(), c, result);
         }
         else {
           result = this.getCache().get(c);
@@ -276,5 +282,9 @@ public class MethodImpl extends MemberImpl implements Method {
         			};
     this.body.evaluateStatement(state);
         ;
+  }
+
+  public MethodDispatchWrapperCall getCachedCall() {
+    return this.cachedCall;
   }
 }

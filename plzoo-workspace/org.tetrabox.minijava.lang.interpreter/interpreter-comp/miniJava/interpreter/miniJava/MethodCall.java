@@ -16,4 +16,6 @@ public interface MethodCall extends EObject, NodeInterface, Expression {
   EList<Expression> getArgs();
 
   Value evaluateExpression(State state);
+
+  void call(Method realMethod, State state);
 }

@@ -59,7 +59,7 @@ public class ParameterImpl extends SymbolImpl implements Parameter {
 
   public boolean compare(Parameter other) {
     boolean result;
-    result = ((java.util.Objects.equals((this.name), (other.getName()))) && (this.typeRef.compare(other.getTypeRef())));
+    result = ((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.name), (other.getName()))) && (this.typeRef.compare(other.getTypeRef())));
         ;
     return result;
   }

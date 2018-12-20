@@ -1,14 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
-import java.lang.IllegalArgumentException;
-import java.lang.Object;
-import miniJava.interpreter.miniJava.Context;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.Symbol;
-import miniJava.interpreter.miniJava.SymbolBinding;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -16,18 +7,26 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.nodes.NodeInfo;
+
+import miniJava.interpreter.miniJava.Context;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolBinding;
 
 @NodeInfo(
     description = "Context"
 )
-public class ContextImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Context {
+public class ContextImpl extends MinimalEObjectImpl.Container implements Context {
   protected EList<SymbolBinding> bindings;
 
-  @Child
   protected Context childContext;
 
   protected EMap<Symbol, SymbolBinding> cache;
@@ -231,7 +230,7 @@ public class ContextImpl extends MinimalTruffleEObjectImpl.TruffleContainer impl
   public SymbolBinding findBinding(Symbol symbol) {
     SymbolBinding result;
     if(!(minijava.MapService.containsKey(this.getCache(), symbol))) {
-          miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.getBindings(), (x) -> java.util.Objects.equals((x.getSymbol()), (symbol)))));
+          miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.getBindings(), (x) -> org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((x.getSymbol()), (symbol)))));
           if((binding) != (null)) {
             minijava.MapService.put(this.getCache(), symbol, binding);
           }

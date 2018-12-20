@@ -99,7 +99,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     boolean result;
     if(other instanceof miniJava.interpreter.miniJava.ClassRef) {
           miniJava.interpreter.miniJava.ClassRef ocr = ((miniJava.interpreter.miniJava.ClassRef)other);
-          result = java.util.Objects.equals((this.referencedClass), (ocr.getReferencedClass()));
+          result = org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.referencedClass), (ocr.getReferencedClass()));
         }
         else {
           result = false;

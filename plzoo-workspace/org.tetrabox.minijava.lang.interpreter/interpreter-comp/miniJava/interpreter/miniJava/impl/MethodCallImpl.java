@@ -33,8 +33,11 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
   @Children
   private Expression[] argsArr;
 
+  private MethodDispatchCall dispatchMethodCall;
+
   protected MethodCallImpl() {
     super();
+    this.dispatchMethodCall = miniJava.interpreter.miniJava.impl.MethodDispatchCallNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -199,11 +202,22 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
         miniJava.interpreter.miniJava.MethodCall2 call = ((miniJava.interpreter.miniJava.MethodCall2)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createMethodCall2());
         call.setMethodcall(this);
         state.pushNewFrame(realReceiver,call,newContext);
-        realMethod.call(state);
+        this.call(realMethod,state);
         miniJava.interpreter.miniJava.Value returnValue = ((miniJava.interpreter.miniJava.Value)state.findCurrentFrame().getReturnValue());
         state.popCurrentFrame();
         result = returnValue;
         ;
     return result;
+  }
+
+  public void call(Method realMethod, State state) {
+    if(this.argsArr == null) {
+        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
+        				if(this.args != null) this.argsArr = this.args.toArray(new miniJava.interpreter.miniJava.Expression[0]);
+        				else this.argsArr = new miniJava.interpreter.miniJava.Expression[] {};
+        				
+        			};
+    dispatchMethodCall.executeDispatch(realMethod.getCachedCall(), new Object[] {state});
+        ;
   }
 }

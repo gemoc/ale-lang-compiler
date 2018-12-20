@@ -1,106 +1,108 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
-import java.lang.Object;
-import miniJava.interpreter.miniJava.ArrayInstance;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-@NodeInfo(
-    description = "ArrayInstance"
-)
-public class ArrayInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements ArrayInstance {
-  protected static final int SIZE_EDEFAULT = 0;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
 
-  protected int size = SIZE_EDEFAULT;
+import miniJava.interpreter.miniJava.ArrayInstance;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 
-  protected EList<Value> value;
+@NodeInfo(description = "ArrayInstance")
+public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements ArrayInstance {
+	protected static final int SIZE_EDEFAULT = 0;
 
-  protected ArrayInstanceImpl() {
-    super();
-  }
+	protected int size = SIZE_EDEFAULT;
 
-  public int getSize() {
-    return size;}
+	protected EList<Value> value;
 
-  public void setSize(int size) {
-    this.size = size;}
+	protected ArrayInstanceImpl() {
+		super();
+	}
 
-  @TruffleBoundary
-  public EList<Value> getValue() {
-    if(value == null) {
-    	value = new EObjectContainmentEList<Value>(miniJava.interpreter.miniJava.Value.class, this, MiniJavaPackage.ARRAY_INSTANCE__VALUE);
-    }
-    return value;
-  }
+	public int getSize() {
+		return size;
+	}
 
-  @TruffleBoundary
-  protected EClass eStaticClass() {
-    return MiniJavaPackage.Literals.ARRAY_INSTANCE;}
+	public void setSize(int size) {
+		this.size = size;
+	}
 
-  @TruffleBoundary
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
-    	getValue().clear();
-    	getValue().addAll((java.util.Collection<? extends miniJava.interpreter.miniJava.Value>) newValue);
-    return;
-    case MiniJavaPackage.ARRAY_INSTANCE__SIZE:
-    	setSize((int) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	@TruffleBoundary
+	public EList<Value> getValue() {
+		if (value == null) {
+			value = new EObjectContainmentEList<Value>(miniJava.interpreter.miniJava.Value.class, this,
+					MiniJavaPackage.ARRAY_INSTANCE__VALUE);
+		}
+		return value;
+	}
 
-  @TruffleBoundary
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
-    	getValue().clear();
-    return;
-    case MiniJavaPackage.ARRAY_INSTANCE__SIZE:
-    	setSize(SIZE_EDEFAULT);
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	@TruffleBoundary
+	protected EClass eStaticClass() {
+		return MiniJavaPackage.Literals.ARRAY_INSTANCE;
+	}
 
-  @TruffleBoundary
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
-    return getValue();
-    case MiniJavaPackage.ARRAY_INSTANCE__SIZE:
-    return getSize();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@TruffleBoundary
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+		case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
+			getValue().clear();
+			getValue().addAll((java.util.Collection<? extends miniJava.interpreter.miniJava.Value>) newValue);
+			return;
+		case MiniJavaPackage.ARRAY_INSTANCE__SIZE:
+			setSize((int) newValue);
+			return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  @TruffleBoundary
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
-    	return value != null && !value.isEmpty();
-    case MiniJavaPackage.ARRAY_INSTANCE__SIZE:
-    	return size != SIZE_EDEFAULT;
-    }
-    return super.eIsSet(featureID);
-  }
+	@TruffleBoundary
+	public void eUnset(int featureID) {
+		switch (featureID) {
+		case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
+			getValue().clear();
+			return;
+		case MiniJavaPackage.ARRAY_INSTANCE__SIZE:
+			setSize(SIZE_EDEFAULT);
+			return;
+		}
+		super.eUnset(featureID);
+	}
 
-  @TruffleBoundary
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    case miniJava.interpreter.miniJava.MiniJavaPackage.ARRAY_INSTANCE__VALUE:
-    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getValue()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+	@TruffleBoundary
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+		case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
+			return getValue();
+		case MiniJavaPackage.ARRAY_INSTANCE__SIZE:
+			return getSize();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	@TruffleBoundary
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+		case MiniJavaPackage.ARRAY_INSTANCE__VALUE:
+			return value != null && !value.isEmpty();
+		case MiniJavaPackage.ARRAY_INSTANCE__SIZE:
+			return size != SIZE_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
+
+	@TruffleBoundary
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case miniJava.interpreter.miniJava.MiniJavaPackage.ARRAY_INSTANCE__VALUE:
+			return ((org.eclipse.emf.ecore.util.InternalEList<?>) getValue()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 }

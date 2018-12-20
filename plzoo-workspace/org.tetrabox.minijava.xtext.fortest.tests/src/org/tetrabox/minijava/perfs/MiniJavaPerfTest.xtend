@@ -15,29 +15,25 @@ import org.junit.runner.RunWith
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil
 import org.tetrabox.minijava.xtext.fortest.tests.MiniJavaInjectorProvider
 import org.junit.Ignore
+import org.graalvm.polyglot.Context
 
-@RunWith(XtextRunner)
-@InjectWith(MiniJavaInjectorProvider)
+//@RunWith(XtextRunner)
+//@InjectWith(MiniJavaInjectorProvider)
 class MiniJavaPerfTest {
-	@Inject
-	extension MiniJavaTestUtil testUtil
+//	@Inject
+//	extension MiniJavaTestUtil testUtil
+//	@Inject XtextResourceSet rs
+//	@Test
+//	@Ignore
+	def static void main(String[] args) {
 
-	@Inject XtextResourceSet rs
-
-	@Test
-	@Ignore
-	def void binaryTree() {
-		rs.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
-		val resource = rs.getResource(
-			URI.createURI("/home/manuel/dev/java/ale-lang/runtime-New_configuration/test/src/binarytree.minijava"),
-			true)
-		val result = resource.getContents().get(0) as Program
-//		EcoreUtil.resolveAll(result)
-		EcoreUtil.resolveAll(rs)
-		Assert.assertNotNull(result)
-//		helper.assertNoErrors(result)
-		result.initialize(new BasicEList())
-		val state = result.execute()
-		println(state)
+		val cptr = 50;
+		val context = Context.create();
+		val results = newArrayList
+		for (var i = 0; i < cptr; i++) {
+			val res = context.eval('miniJava', i.toString);
+			results.add(res.asLong)
+		}
+		println('''«FOR i : results BEFORE '[' SEPARATOR ', ' AFTER ']'»«i»«ENDFOR»''')
 	}
 }

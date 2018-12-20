@@ -217,12 +217,13 @@ open class Method {
 					}
 				}
 			}
+			self.getCache().put(c, result);
 		} else {
 			result := self.getCache().get(c);
 		}
 	}
 	
-	def void call(State state) {
+	def dispatch void call(State state) {
 		self.body.evaluateStatement(state);
 	}
 }
@@ -641,7 +642,7 @@ open class InferiorOrEqual {
 
 open class MethodCall {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
-		miniJava::ObjectRefValue realReceiver0 := self.receiver.evaluateExpression(state);  
+		miniJava::ObjectRefValue realReceiver0 := self.receiver.evaluateExpression(state);
 		miniJava::ObjectInstance realReceiver := realReceiver0.instance;
 		miniJava::Method realMethod := self.getMethod().findOverride(realReceiver.type);
 		miniJava::Context newContext := miniJava::Context.create();
@@ -659,10 +660,18 @@ open class MethodCall {
 		miniJava::MethodCall2 call := miniJava::MethodCall2.create();
 		call.methodcall := self;
 		state.pushNewFrame(realReceiver, call, newContext);
-		realMethod.call(state);
+//			if(realMethod.oclIsKindOf(miniJava::Method)) {
+//				miniJava::Method rm2 := ;
+		self.call(realMethod, state);
+//			}
 		miniJava::Value returnValue := state.findCurrentFrame().returnValue;
 		state.popCurrentFrame();
 		result := returnValue;
+	
+	}
+	
+	def void call(miniJava::Method realMethod, miniJava::State state) {
+		realMethod.call(state);
 	}
 }
 
@@ -876,6 +885,9 @@ open class State {
 }
 
 open class Frame {
+	
+	mutable childFrame
+	
 	def miniJava::Context findCurrentContext() {
 		if (self.childFrame != null) {
 			result := self.childFrame.findCurrentContext();

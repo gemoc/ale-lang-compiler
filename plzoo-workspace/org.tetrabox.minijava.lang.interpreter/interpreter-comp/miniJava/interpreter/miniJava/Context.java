@@ -5,7 +5,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
-public interface Context extends EObject, NodeInterface {
+public interface Context extends EObject {
   EList<SymbolBinding> getBindings();
 
   Context getParentContext();
