@@ -3,7 +3,9 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
 import miniJava.interpreter.miniJava.Superior;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -131,5 +133,28 @@ public class SuperiorImpl extends ExpressionImpl implements Superior {
     	return basicSetRight(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    miniJava.interpreter.miniJava.Value left = ((miniJava.interpreter.miniJava.Value)this.left.evaluateExpression(state));
+        miniJava.interpreter.miniJava.Value right = ((miniJava.interpreter.miniJava.Value)this.right.evaluateExpression(state));
+        if(left instanceof miniJava.interpreter.miniJava.IntegerValue) {
+          if(right instanceof miniJava.interpreter.miniJava.IntegerValue) {
+            miniJava.interpreter.miniJava.IntegerValue bleft = ((miniJava.interpreter.miniJava.IntegerValue)left);
+            miniJava.interpreter.miniJava.IntegerValue bright = ((miniJava.interpreter.miniJava.IntegerValue)right);
+            miniJava.interpreter.miniJava.BooleanValue tmp = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
+            tmp.setValue((bleft.getValue()) > (bright.getValue()));
+            result = tmp;
+          }
+          else {
+            result = null;
+          }
+        }
+        else {
+          result = null;
+        }
+        ;
+    return result;
   }
 }
