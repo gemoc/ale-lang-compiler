@@ -165,7 +165,11 @@ class EClassImplementationCompiler {
 				rt
 				
 			val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
-			FieldSpec.builder(fieldType, field.name).applyIfTrue(dsl.dslProp.getOrDefault("child", "false").equals("true") && !isMultiple && !isMutable && field.containment, [
+			FieldSpec.builder(fieldType, field.name).applyIfTrue(dsl.dslProp.getOrDefault("child", "false").equals("true") 
+				&& !isMultiple && !isMutable 
+				&& field.containment
+				&& !eClass.EAnnotations.exists[it.source == 'RuntimeData']
+				, [
 				addAnnotation(ClassName.get("com.oracle.truffle.api.nodes.Node", "Child"))
 			]).addModifiers(PROTECTED).build
 		]
@@ -691,10 +695,10 @@ class EClassImplementationCompiler {
 				val xa = ArrayTypeName.of(x)
 				FieldSpec
 					.builder(xa, '''«fieldName»Arr''', PRIVATE)
-					.applyIfTrue(isTruffle, [addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Children'))])						
+					.applyIfTrue(isTruffle && !eClass.EAnnotations.exists[it.source == 'RuntimeData'], [addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Children'))])						
 					.build
 			])])
-			.applyIfTrue(isTruffle, [
+			.applyIfTrue(isTruffle && !eClass.EAnnotations.exists[it.source == 'RuntimeData'], [
 				addAnnotation(
 					AnnotationSpec.builder(ClassName.get("com.oracle.truffle.api.nodes", "NodeInfo")).addMember(
 						"description", '$S', eClass.name).build
@@ -993,7 +997,9 @@ class EClassImplementationCompiler {
 
 		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [
 			returns(retType)
-		]).addParameters(method.operationRef.EParameters.map [
+		])
+		.applyIfTrue(aClass.EAnnotations.exists[it.source == 'RuntimeData'], [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+		.addParameters(method.operationRef.EParameters.map [
 			if (it.EType.instanceClass !== null) {
 				if (it.EType instanceof EClass && !(it.EType.EPackage == EcorePackage.eINSTANCE)) {
 					ParameterSpec.builder(

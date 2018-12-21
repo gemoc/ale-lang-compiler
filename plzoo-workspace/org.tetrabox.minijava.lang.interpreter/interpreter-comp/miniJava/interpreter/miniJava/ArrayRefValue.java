@@ -1,6 +1,6 @@
 package miniJava.interpreter.miniJava;
 
-import com.oracle.truffle.api.nodes.NodeInterface;
+import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
 public interface ArrayRefValue extends EObject, Value {
@@ -9,4 +9,6 @@ public interface ArrayRefValue extends EObject, Value {
   void setInstance(ArrayInstance value);
 
   Value copyj();
+
+  String customToString();
 }

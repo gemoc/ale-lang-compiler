@@ -39,7 +39,7 @@ import org.tetrabox.minijava.xtext.fortest.MiniJavaStandaloneSetup
 		val rs = injector.getInstance(XtextResourceSet)
 		rs.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE)
 		val resource = rs.getResource(
-			URI.createURI("/home/manuel/dev/java/ale-lang/runtime-New_configuration/test/src/binarytree.minijava"),
+			URI.createURI("/home/manuel/dev/java/ale-lang/runtime-New_configuration/test/src/fannkuchredux.minijava"),
 			true)
 		val result = resource.getContents().get(0) as Program
 		EcoreUtil.resolveAll(rs)

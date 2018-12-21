@@ -244,6 +244,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Context">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bindings" upperBound="-1"
         eType="#//SymbolBinding" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parentContext" eType="#//Context"
@@ -255,13 +256,16 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Value">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IntegerValue" eSuperTypes="#//Value">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SymbolBinding">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Value"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="symbol" lowerBound="1"
@@ -269,16 +273,19 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FieldBinding">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="field" lowerBound="1" eType="#//Field"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Value"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringValue" eSuperTypes="#//Value">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BooleanValue" eSuperTypes="#//Value">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OutputStream">
@@ -301,6 +308,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Frame">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="call" eType="#//Call" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="instance" eType="#//ObjectInstance"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="childFrame" eType="#//Frame"
@@ -314,37 +322,45 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NullValue" eSuperTypes="#//Value">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Call" abstract="true">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NewCall" eSuperTypes="#//Call">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="newz" lowerBound="1" eType="#//NewObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MethodCall2" eSuperTypes="#//Call">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="methodcall" lowerBound="1"
         eType="#//MethodCall"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ObjectInstance">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="fieldbindings" upperBound="-1"
         eType="#//FieldBinding" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//Clazz"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ArrayInstance">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" upperBound="-1"
         eType="#//Value" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ObjectRefValue" eSuperTypes="#//Value">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="instance" eType="#//ObjectInstance"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ArrayRefValue" eSuperTypes="#//Value">
     <eAnnotations source="aspect"/>
+    <eAnnotations source="RuntimeData"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="instance" eType="#//ArrayInstance"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SymbolToSymbolBindingMap" instanceClassName="java.util.Map$Entry">
@@ -354,5 +370,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="ClazzToMethodMap" instanceClassName="java.util.Map$Entry">
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="#//Clazz"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Method"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Modulo" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Expression"
+        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

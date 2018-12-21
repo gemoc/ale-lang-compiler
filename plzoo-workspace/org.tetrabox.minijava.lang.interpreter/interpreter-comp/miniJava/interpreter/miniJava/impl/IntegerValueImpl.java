@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.IntegerValue;
@@ -11,9 +10,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-@NodeInfo(
-    description = "IntegerValue"
-)
 public class IntegerValueImpl extends ValueImpl implements IntegerValue {
   protected static final int VALUE_EDEFAULT = 0;
 
@@ -79,6 +75,7 @@ public class IntegerValueImpl extends ValueImpl implements IntegerValue {
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
+  @TruffleBoundary
   public String customToString() {
     String result;
     result = (this.value) + ("");
@@ -86,6 +83,7 @@ public class IntegerValueImpl extends ValueImpl implements IntegerValue {
     return result;
   }
 
+  @TruffleBoundary
   public Value copyj() {
     Value result;
     miniJava.interpreter.miniJava.IntegerValue tmp = ((miniJava.interpreter.miniJava.IntegerValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createIntegerValue());

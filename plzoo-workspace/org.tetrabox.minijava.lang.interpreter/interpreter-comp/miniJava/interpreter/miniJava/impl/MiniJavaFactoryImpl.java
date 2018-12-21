@@ -45,6 +45,7 @@ import miniJava.interpreter.miniJava.MethodCall2;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Minus;
+import miniJava.interpreter.miniJava.Modulo;
 import miniJava.interpreter.miniJava.Multiplication;
 import miniJava.interpreter.miniJava.NamedElement;
 import miniJava.interpreter.miniJava.Neg;
@@ -263,6 +264,8 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
     	return (org.eclipse.emf.ecore.EObject) createSymbolToSymbolBindingMap();
     case MiniJavaPackage.CLAZZ_TO_METHOD_MAP:
     	return (org.eclipse.emf.ecore.EObject) createClazzToMethodMap();
+    case MiniJavaPackage.MODULO:
+    	return createModulo();
     default:
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -748,6 +751,12 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
   @TruffleBoundary
   public Map.Entry<Clazz, Method> createClazzToMethodMap() {
     ClazzToMethodMapImpl ret = new ClazzToMethodMapImpl();
+    return ret;
+  }
+
+  @TruffleBoundary
+  public Modulo createModulo() {
+    ModuloImpl ret = new ModuloImpl();
     return ret;
   }
 

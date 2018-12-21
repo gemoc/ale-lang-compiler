@@ -78,6 +78,7 @@ public class MiniJavaSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) {InferiorOrEqual.left=}
 	 *     (rule start) (ambiguity) {MethodCall.receiver=}
 	 *     (rule start) (ambiguity) {Minus.left=}
+	 *     (rule start) (ambiguity) {Modulo.left=}
 	 *     (rule start) (ambiguity) {Multiplication.left=}
 	 *     (rule start) (ambiguity) {Or.left=}
 	 *     (rule start) (ambiguity) {Plus.left=}
@@ -102,6 +103,7 @@ public class MiniJavaSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) (ambiguity) {Inferior.left=}
 	 *     (rule start) (ambiguity) {InferiorOrEqual.left=}
 	 *     (rule start) (ambiguity) {Minus.left=}
+	 *     (rule start) (ambiguity) {Modulo.left=}
 	 *     (rule start) (ambiguity) {Multiplication.left=}
 	 *     (rule start) (ambiguity) {Or.left=}
 	 *     (rule start) (ambiguity) {Plus.left=}

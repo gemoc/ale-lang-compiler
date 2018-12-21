@@ -1,0 +1,111 @@
+/* The Computer Language Benchmarks Game
+   https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+
+   contributed by Isaac Gouy
+   converted to Java by Oleg Mazurov
+*/
+
+public class Fannkuchredux {
+    public int fannkuch(int n) {
+        int[] perm = new int[n];
+        int[] perm1 = new int[n];
+        int[] count = new int[n];
+        int maxFlipsCount = 0;
+        int permCount = 0;
+        int checksum = 0;
+
+        for (int i0 = 0; i0 < n; i0 = i0 + 1) {
+            perm1[i0] = i0;
+        }
+        int r = n;
+
+
+        int ret = 0;
+        boolean stop = false;
+        while (!stop) {
+
+            while (r != 1) {
+                count[r - 1] = r;
+                r = r - 1;
+            }
+
+            for (int i1 = 0; i1 < n; i1 = i1 + 1) {
+                perm[i1] = perm1[i1];
+            }
+            int flipsCount = 0;
+            int k = perm[0];
+
+            while (!((k) == 0)) {
+                int k2 = (k + 1) / 2;
+                for (int i = 0; i < k2; i = i + 1) {
+                    int temp = perm[i];
+                    perm[i] = perm[k - i];
+                    perm[k - i] = temp;
+                }
+                flipsCount = flipsCount + 1;
+                k = perm[0];
+            }
+
+            maxFlipsCount = this.max(maxFlipsCount, flipsCount);
+            if (permCount % 2 == 0) {
+                checksum = checksum + flipsCount;
+            } else {
+                checksum = checksum + -flipsCount;
+            }
+
+            // Use incremental change to generate another permutation
+            boolean isBreak1 = false;
+            boolean isBreak2 = false;
+            while (!isBreak1 && !isBreak2) {
+                if (r == n) {
+                    System.out.println(checksum);
+                    ret = maxFlipsCount;
+                    stop = true;
+                    isBreak1 = true;
+                }
+                if (!isBreak1) {
+                    int perm0 = perm1[0];
+                    int i2 = 0;
+                    while (i2 < r) {
+                        int j = i2 + 1;
+                        perm1[i2] = perm1[j];
+                        i2 = j;
+                    }
+                    perm1[r] = perm0;
+
+                    count[r] = count[r] - 1;
+                    if (count[r] > 0) {
+                        isBreak2 = true;
+                    }
+
+                    if (!isBreak2) {
+                        r = r + 1;
+                    }
+                }
+            }
+
+            permCount = permCount + 1;
+        }
+
+        return ret;
+    }
+
+    private int max(int maxFlipsCount, int flipsCount) {
+        int ret = 0;
+        if (maxFlipsCount > flipsCount) {
+            ret = maxFlipsCount;
+        } else {
+            ret = flipsCount;
+        }
+        return ret;
+    }
+
+    public static void main(String[] args) {
+        new Fannkuchredux().exec();
+    }
+
+    public void exec() {
+        int n = 9;
+        System.out.println("Pfannkuchen(" + n + ") = " + this.fannkuch(n));
+    }
+}

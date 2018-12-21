@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.NullValue;
@@ -10,9 +9,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-@NodeInfo(
-    description = "NullValue"
-)
 public class NullValueImpl extends ValueImpl implements NullValue {
   protected NullValueImpl() {
     super();
@@ -58,6 +54,7 @@ public class NullValueImpl extends ValueImpl implements NullValue {
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
+  @TruffleBoundary
   public Value copyj() {
     Value result;
     miniJava.interpreter.miniJava.NullValue tmp = ((miniJava.interpreter.miniJava.NullValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createNullValue());

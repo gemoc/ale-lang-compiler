@@ -27,7 +27,7 @@ class MiniJavaPerfTest {
 //	@Ignore
 	def static void main(String[] args) {
 
-		val cptr = 50;
+		val cptr = 1;
 		val context = Context.create();
 		val results = newArrayList
 		for (var i = 0; i < cptr; i++) {

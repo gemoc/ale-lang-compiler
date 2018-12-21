@@ -1,20 +1,16 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import java.lang.Object;
+import java.lang.String;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
-
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.Value;
-
-@NodeInfo(
-    description = "Value"
-)
-public class ValueImpl extends MinimalEObjectImpl.Container implements Value {
+public class ValueImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Value {
   protected ValueImpl() {
     super();
   }
@@ -59,6 +55,7 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value {
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
+  @TruffleBoundary
   public String customToString() {
     String result;
     result = "ERROR customToString not overloaded";
@@ -66,6 +63,7 @@ public class ValueImpl extends MinimalEObjectImpl.Container implements Value {
     return result;
   }
 
+  @TruffleBoundary
   public Value copyj() {
     Value result;
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("ERROR copyj not implemented");

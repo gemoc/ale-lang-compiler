@@ -1,8 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Symbol;
@@ -15,11 +13,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-@NodeInfo(
-    description = "SymbolBinding"
-)
 public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements SymbolBinding {
-  @Child
   protected Value value;
 
   protected Symbol symbol;

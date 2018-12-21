@@ -2169,11 +2169,11 @@ ruleComparison returns [EObject current=null]
 }:
 	(
 		{
-			newCompositeNode(grammarAccess.getComparisonAccess().getPlusOrMinusParserRuleCall_0());
+			newCompositeNode(grammarAccess.getComparisonAccess().getModuloParserRuleCall_0());
 		}
-		this_PlusOrMinus_0=rulePlusOrMinus
+		this_Modulo_0=ruleModulo
 		{
-			$current = $this_PlusOrMinus_0.current;
+			$current = $this_Modulo_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		(
@@ -2237,9 +2237,9 @@ ruleComparison returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getComparisonAccess().getRightPlusOrMinusParserRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getComparisonAccess().getRightModuloParserRuleCall_1_1_0());
 					}
-					lv_right_9_0=rulePlusOrMinus
+					lv_right_9_0=ruleModulo
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getComparisonRule());
@@ -2248,6 +2248,67 @@ ruleComparison returns [EObject current=null]
 							$current,
 							"right",
 							lv_right_9_0,
+							"org.tetrabox.minijava.xtext.fortest.MiniJava.Modulo");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+	)
+;
+
+// Entry rule entryRuleModulo
+entryRuleModulo returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getModuloRule()); }
+	iv_ruleModulo=ruleModulo
+	{ $current=$iv_ruleModulo.current; }
+	EOF;
+
+// Rule Modulo
+ruleModulo returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			newCompositeNode(grammarAccess.getModuloAccess().getPlusOrMinusParserRuleCall_0());
+		}
+		this_PlusOrMinus_0=rulePlusOrMinus
+		{
+			$current = $this_PlusOrMinus_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		(
+			(
+				(
+					{
+						$current = forceCreateModelElementAndSet(
+							grammarAccess.getModuloAccess().getModuloLeftAction_1_0_0(),
+							$current);
+					}
+				)
+				otherlv_2='%'
+				{
+					newLeafNode(otherlv_2, grammarAccess.getModuloAccess().getPercentSignKeyword_1_0_1());
+				}
+			)
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getModuloAccess().getRightPlusOrMinusParserRuleCall_1_1_0());
+					}
+					lv_right_3_0=rulePlusOrMinus
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getModuloRule());
+						}
+						set(
+							$current,
+							"right",
+							lv_right_3_0,
 							"org.tetrabox.minijava.xtext.fortest.MiniJava.PlusOrMinus");
 						afterParserOrEnumRuleCall();
 					}

@@ -3,11 +3,8 @@
  */
 package org.tetrabox.minijava.xtext.fortest.serializer;
 
-import com.google.inject.Inject;
-
-import miniJava.interpreter.miniJava.*;
-
 import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.Action;
@@ -18,6 +15,58 @@ import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 import org.tetrabox.minijava.xtext.fortest.services.MiniJavaGrammarAccess;
+
+import com.google.inject.Inject;
+
+import miniJava.interpreter.miniJava.And;
+import miniJava.interpreter.miniJava.ArrayAccess;
+import miniJava.interpreter.miniJava.ArrayLength;
+import miniJava.interpreter.miniJava.ArrayTypeRef;
+import miniJava.interpreter.miniJava.Assignment;
+import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.BoolConstant;
+import miniJava.interpreter.miniJava.BooleanTypeRef;
+import miniJava.interpreter.miniJava.ClassRef;
+import miniJava.interpreter.miniJava.Clazz;
+import miniJava.interpreter.miniJava.Division;
+import miniJava.interpreter.miniJava.Equality;
+import miniJava.interpreter.miniJava.Field;
+import miniJava.interpreter.miniJava.FieldAccess;
+import miniJava.interpreter.miniJava.ForStatement;
+import miniJava.interpreter.miniJava.IfStatement;
+import miniJava.interpreter.miniJava.Import;
+import miniJava.interpreter.miniJava.Inequality;
+import miniJava.interpreter.miniJava.Inferior;
+import miniJava.interpreter.miniJava.InferiorOrEqual;
+import miniJava.interpreter.miniJava.IntConstant;
+import miniJava.interpreter.miniJava.IntegerTypeRef;
+import miniJava.interpreter.miniJava.Interface;
+import miniJava.interpreter.miniJava.Method;
+import miniJava.interpreter.miniJava.MethodCall;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Minus;
+import miniJava.interpreter.miniJava.Modulo;
+import miniJava.interpreter.miniJava.Multiplication;
+import miniJava.interpreter.miniJava.Neg;
+import miniJava.interpreter.miniJava.NewArray;
+import miniJava.interpreter.miniJava.NewObject;
+import miniJava.interpreter.miniJava.Not;
+import miniJava.interpreter.miniJava.Null;
+import miniJava.interpreter.miniJava.Or;
+import miniJava.interpreter.miniJava.Plus;
+import miniJava.interpreter.miniJava.PrintStatement;
+import miniJava.interpreter.miniJava.Program;
+import miniJava.interpreter.miniJava.Return;
+import miniJava.interpreter.miniJava.StringConstant;
+import miniJava.interpreter.miniJava.StringTypeRef;
+import miniJava.interpreter.miniJava.Super;
+import miniJava.interpreter.miniJava.Superior;
+import miniJava.interpreter.miniJava.SuperiorOrEqual;
+import miniJava.interpreter.miniJava.SymbolRef;
+import miniJava.interpreter.miniJava.This;
+import miniJava.interpreter.miniJava.VariableDeclaration;
+import miniJava.interpreter.miniJava.VoidTypeRef;
+import miniJava.interpreter.miniJava.WhileStatement;
 
 @SuppressWarnings("all")
 public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequencer {
@@ -111,6 +160,9 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 			case MiniJavaPackage.MINUS:
 				sequence_PlusOrMinus(context, (Minus) semanticObject); 
 				return; 
+			case MiniJavaPackage.MODULO:
+				sequence_Modulo(context, (Modulo) semanticObject); 
+				return; 
 			case MiniJavaPackage.MULTIPLICATION:
 				sequence_MulOrDiv(context, (Multiplication) semanticObject); 
 				return; 
@@ -198,6 +250,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns And
 	 *     Comparison.Superior_1_0_2_0 returns And
 	 *     Comparison.Inferior_1_0_3_0 returns And
+	 *     Modulo returns And
+	 *     Modulo.Modulo_1_0_0 returns And
 	 *     PlusOrMinus returns And
 	 *     PlusOrMinus.Plus_1_0_0_0 returns And
 	 *     PlusOrMinus.Minus_1_0_1_0 returns And
@@ -243,6 +297,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns ArrayAccess
 	 *     Comparison.Superior_1_0_2_0 returns ArrayAccess
 	 *     Comparison.Inferior_1_0_3_0 returns ArrayAccess
+	 *     Modulo returns ArrayAccess
+	 *     Modulo.Modulo_1_0_0 returns ArrayAccess
 	 *     PlusOrMinus returns ArrayAccess
 	 *     PlusOrMinus.Plus_1_0_0_0 returns ArrayAccess
 	 *     PlusOrMinus.Minus_1_0_1_0 returns ArrayAccess
@@ -288,6 +344,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns ArrayLength
 	 *     Comparison.Superior_1_0_2_0 returns ArrayLength
 	 *     Comparison.Inferior_1_0_3_0 returns ArrayLength
+	 *     Modulo returns ArrayLength
+	 *     Modulo.Modulo_1_0_0 returns ArrayLength
 	 *     PlusOrMinus returns ArrayLength
 	 *     PlusOrMinus.Plus_1_0_0_0 returns ArrayLength
 	 *     PlusOrMinus.Minus_1_0_1_0 returns ArrayLength
@@ -407,6 +465,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Inferior
 	 *     Comparison.Superior_1_0_2_0 returns Inferior
 	 *     Comparison.Inferior_1_0_3_0 returns Inferior
+	 *     Modulo returns Inferior
+	 *     Modulo.Modulo_1_0_0 returns Inferior
 	 *     PlusOrMinus returns Inferior
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Inferior
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Inferior
@@ -420,7 +480,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Primary returns Inferior
 	 *
 	 * Constraint:
-	 *     (left=Comparison_Inferior_1_0_3_0 right=PlusOrMinus)
+	 *     (left=Comparison_Inferior_1_0_3_0 right=Modulo)
 	 */
 	protected void sequence_Comparison(ISerializationContext context, Inferior semanticObject) {
 		if (errorAcceptor != null) {
@@ -431,7 +491,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getComparisonAccess().getInferiorLeftAction_1_0_3_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getComparisonAccess().getRightPlusOrMinusParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getComparisonAccess().getRightModuloParserRuleCall_1_1_0(), semanticObject.getRight());
 		feeder.finish();
 	}
 	
@@ -452,6 +512,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns InferiorOrEqual
 	 *     Comparison.Superior_1_0_2_0 returns InferiorOrEqual
 	 *     Comparison.Inferior_1_0_3_0 returns InferiorOrEqual
+	 *     Modulo returns InferiorOrEqual
+	 *     Modulo.Modulo_1_0_0 returns InferiorOrEqual
 	 *     PlusOrMinus returns InferiorOrEqual
 	 *     PlusOrMinus.Plus_1_0_0_0 returns InferiorOrEqual
 	 *     PlusOrMinus.Minus_1_0_1_0 returns InferiorOrEqual
@@ -465,7 +527,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Primary returns InferiorOrEqual
 	 *
 	 * Constraint:
-	 *     (left=Comparison_InferiorOrEqual_1_0_1_0 right=PlusOrMinus)
+	 *     (left=Comparison_InferiorOrEqual_1_0_1_0 right=Modulo)
 	 */
 	protected void sequence_Comparison(ISerializationContext context, InferiorOrEqual semanticObject) {
 		if (errorAcceptor != null) {
@@ -476,7 +538,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getComparisonAccess().getInferiorOrEqualLeftAction_1_0_1_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getComparisonAccess().getRightPlusOrMinusParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getComparisonAccess().getRightModuloParserRuleCall_1_1_0(), semanticObject.getRight());
 		feeder.finish();
 	}
 	
@@ -497,6 +559,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Superior
 	 *     Comparison.Superior_1_0_2_0 returns Superior
 	 *     Comparison.Inferior_1_0_3_0 returns Superior
+	 *     Modulo returns Superior
+	 *     Modulo.Modulo_1_0_0 returns Superior
 	 *     PlusOrMinus returns Superior
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Superior
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Superior
@@ -510,7 +574,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Primary returns Superior
 	 *
 	 * Constraint:
-	 *     (left=Comparison_Superior_1_0_2_0 right=PlusOrMinus)
+	 *     (left=Comparison_Superior_1_0_2_0 right=Modulo)
 	 */
 	protected void sequence_Comparison(ISerializationContext context, Superior semanticObject) {
 		if (errorAcceptor != null) {
@@ -521,7 +585,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getComparisonAccess().getSuperiorLeftAction_1_0_2_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getComparisonAccess().getRightPlusOrMinusParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getComparisonAccess().getRightModuloParserRuleCall_1_1_0(), semanticObject.getRight());
 		feeder.finish();
 	}
 	
@@ -542,6 +606,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns SuperiorOrEqual
 	 *     Comparison.Superior_1_0_2_0 returns SuperiorOrEqual
 	 *     Comparison.Inferior_1_0_3_0 returns SuperiorOrEqual
+	 *     Modulo returns SuperiorOrEqual
+	 *     Modulo.Modulo_1_0_0 returns SuperiorOrEqual
 	 *     PlusOrMinus returns SuperiorOrEqual
 	 *     PlusOrMinus.Plus_1_0_0_0 returns SuperiorOrEqual
 	 *     PlusOrMinus.Minus_1_0_1_0 returns SuperiorOrEqual
@@ -555,7 +621,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Primary returns SuperiorOrEqual
 	 *
 	 * Constraint:
-	 *     (left=Comparison_SuperiorOrEqual_1_0_0_0 right=PlusOrMinus)
+	 *     (left=Comparison_SuperiorOrEqual_1_0_0_0 right=Modulo)
 	 */
 	protected void sequence_Comparison(ISerializationContext context, SuperiorOrEqual semanticObject) {
 		if (errorAcceptor != null) {
@@ -566,7 +632,7 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getComparisonAccess().getSuperiorOrEqualLeftAction_1_0_0_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getComparisonAccess().getRightPlusOrMinusParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.accept(grammarAccess.getComparisonAccess().getRightModuloParserRuleCall_1_1_0(), semanticObject.getRight());
 		feeder.finish();
 	}
 	
@@ -587,6 +653,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Equality
 	 *     Comparison.Superior_1_0_2_0 returns Equality
 	 *     Comparison.Inferior_1_0_3_0 returns Equality
+	 *     Modulo returns Equality
+	 *     Modulo.Modulo_1_0_0 returns Equality
 	 *     PlusOrMinus returns Equality
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Equality
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Equality
@@ -632,6 +700,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Inequality
 	 *     Comparison.Superior_1_0_2_0 returns Inequality
 	 *     Comparison.Inferior_1_0_3_0 returns Inequality
+	 *     Modulo returns Inequality
+	 *     Modulo.Modulo_1_0_0 returns Inequality
 	 *     PlusOrMinus returns Inequality
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Inequality
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Inequality
@@ -774,6 +844,53 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	
 	/**
 	 * Contexts:
+	 *     Assignee returns Modulo
+	 *     Expression returns Modulo
+	 *     Or returns Modulo
+	 *     Or.Or_1_0 returns Modulo
+	 *     And returns Modulo
+	 *     And.And_1_0 returns Modulo
+	 *     Equality returns Modulo
+	 *     Equality.Equality_1_0_0_0 returns Modulo
+	 *     Equality.Inequality_1_0_1_0 returns Modulo
+	 *     Comparison returns Modulo
+	 *     Comparison.SuperiorOrEqual_1_0_0_0 returns Modulo
+	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Modulo
+	 *     Comparison.Superior_1_0_2_0 returns Modulo
+	 *     Comparison.Inferior_1_0_3_0 returns Modulo
+	 *     Modulo returns Modulo
+	 *     Modulo.Modulo_1_0_0 returns Modulo
+	 *     PlusOrMinus returns Modulo
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Modulo
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Modulo
+	 *     MulOrDiv returns Modulo
+	 *     MulOrDiv.Multiplication_1_0_0_0 returns Modulo
+	 *     MulOrDiv.Division_1_0_1_0 returns Modulo
+	 *     ArrayAccess returns Modulo
+	 *     ArrayAccess.ArrayAccess_1_0 returns Modulo
+	 *     ArrayLength returns Modulo
+	 *     ArrayLength.ArrayLength_1_0 returns Modulo
+	 *     Primary returns Modulo
+	 *
+	 * Constraint:
+	 *     (left=Modulo_Modulo_1_0_0 right=PlusOrMinus)
+	 */
+	protected void sequence_Modulo(ISerializationContext context, Modulo semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MiniJavaPackage.Literals.MODULO__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MiniJavaPackage.Literals.MODULO__LEFT));
+			if (transientValues.isValueTransient(semanticObject, MiniJavaPackage.Literals.MODULO__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MiniJavaPackage.Literals.MODULO__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getModuloAccess().getModuloLeftAction_1_0_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getModuloAccess().getRightPlusOrMinusParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Assignee returns Division
 	 *     Expression returns Division
 	 *     Or returns Division
@@ -788,6 +905,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Division
 	 *     Comparison.Superior_1_0_2_0 returns Division
 	 *     Comparison.Inferior_1_0_3_0 returns Division
+	 *     Modulo returns Division
+	 *     Modulo.Modulo_1_0_0 returns Division
 	 *     PlusOrMinus returns Division
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Division
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Division
@@ -833,6 +952,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Multiplication
 	 *     Comparison.Superior_1_0_2_0 returns Multiplication
 	 *     Comparison.Inferior_1_0_3_0 returns Multiplication
+	 *     Modulo returns Multiplication
+	 *     Modulo.Modulo_1_0_0 returns Multiplication
 	 *     PlusOrMinus returns Multiplication
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Multiplication
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Multiplication
@@ -878,6 +999,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Or
 	 *     Comparison.Superior_1_0_2_0 returns Or
 	 *     Comparison.Inferior_1_0_3_0 returns Or
+	 *     Modulo returns Or
+	 *     Modulo.Modulo_1_0_0 returns Or
 	 *     PlusOrMinus returns Or
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Or
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Or
@@ -947,6 +1070,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Minus
 	 *     Comparison.Superior_1_0_2_0 returns Minus
 	 *     Comparison.Inferior_1_0_3_0 returns Minus
+	 *     Modulo returns Minus
+	 *     Modulo.Modulo_1_0_0 returns Minus
 	 *     PlusOrMinus returns Minus
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Minus
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Minus
@@ -992,6 +1117,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Plus
 	 *     Comparison.Superior_1_0_2_0 returns Plus
 	 *     Comparison.Inferior_1_0_3_0 returns Plus
+	 *     Modulo returns Plus
+	 *     Modulo.Modulo_1_0_0 returns Plus
 	 *     PlusOrMinus returns Plus
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Plus
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Plus
@@ -1037,6 +1164,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Neg
 	 *     Comparison.Superior_1_0_2_0 returns Neg
 	 *     Comparison.Inferior_1_0_3_0 returns Neg
+	 *     Modulo returns Neg
+	 *     Modulo.Modulo_1_0_0 returns Neg
 	 *     PlusOrMinus returns Neg
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Neg
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Neg
@@ -1079,6 +1208,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Not
 	 *     Comparison.Superior_1_0_2_0 returns Not
 	 *     Comparison.Inferior_1_0_3_0 returns Not
+	 *     Modulo returns Not
+	 *     Modulo.Modulo_1_0_0 returns Not
 	 *     PlusOrMinus returns Not
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Not
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Not
@@ -1172,6 +1303,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns FieldAccess
 	 *     Comparison.Superior_1_0_2_0 returns FieldAccess
 	 *     Comparison.Inferior_1_0_3_0 returns FieldAccess
+	 *     Modulo returns FieldAccess
+	 *     Modulo.Modulo_1_0_0 returns FieldAccess
 	 *     PlusOrMinus returns FieldAccess
 	 *     PlusOrMinus.Plus_1_0_0_0 returns FieldAccess
 	 *     PlusOrMinus.Minus_1_0_1_0 returns FieldAccess
@@ -1221,6 +1354,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns MethodCall
 	 *     Comparison.Superior_1_0_2_0 returns MethodCall
 	 *     Comparison.Inferior_1_0_3_0 returns MethodCall
+	 *     Modulo returns MethodCall
+	 *     Modulo.Modulo_1_0_0 returns MethodCall
 	 *     PlusOrMinus returns MethodCall
 	 *     PlusOrMinus.Plus_1_0_0_0 returns MethodCall
 	 *     PlusOrMinus.Minus_1_0_1_0 returns MethodCall
@@ -1317,6 +1452,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns BoolConstant
 	 *     Comparison.Superior_1_0_2_0 returns BoolConstant
 	 *     Comparison.Inferior_1_0_3_0 returns BoolConstant
+	 *     Modulo returns BoolConstant
+	 *     Modulo.Modulo_1_0_0 returns BoolConstant
 	 *     PlusOrMinus returns BoolConstant
 	 *     PlusOrMinus.Plus_1_0_0_0 returns BoolConstant
 	 *     PlusOrMinus.Minus_1_0_1_0 returns BoolConstant
@@ -1358,6 +1495,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns IntConstant
 	 *     Comparison.Superior_1_0_2_0 returns IntConstant
 	 *     Comparison.Inferior_1_0_3_0 returns IntConstant
+	 *     Modulo returns IntConstant
+	 *     Modulo.Modulo_1_0_0 returns IntConstant
 	 *     PlusOrMinus returns IntConstant
 	 *     PlusOrMinus.Plus_1_0_0_0 returns IntConstant
 	 *     PlusOrMinus.Minus_1_0_1_0 returns IntConstant
@@ -1405,6 +1544,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns NewArray
 	 *     Comparison.Superior_1_0_2_0 returns NewArray
 	 *     Comparison.Inferior_1_0_3_0 returns NewArray
+	 *     Modulo returns NewArray
+	 *     Modulo.Modulo_1_0_0 returns NewArray
 	 *     PlusOrMinus returns NewArray
 	 *     PlusOrMinus.Plus_1_0_0_0 returns NewArray
 	 *     PlusOrMinus.Minus_1_0_1_0 returns NewArray
@@ -1455,6 +1596,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns NewObject
 	 *     Comparison.Superior_1_0_2_0 returns NewObject
 	 *     Comparison.Inferior_1_0_3_0 returns NewObject
+	 *     Modulo returns NewObject
+	 *     Modulo.Modulo_1_0_0 returns NewObject
 	 *     PlusOrMinus returns NewObject
 	 *     PlusOrMinus.Plus_1_0_0_0 returns NewObject
 	 *     PlusOrMinus.Minus_1_0_1_0 returns NewObject
@@ -1496,6 +1639,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Null
 	 *     Comparison.Superior_1_0_2_0 returns Null
 	 *     Comparison.Inferior_1_0_3_0 returns Null
+	 *     Modulo returns Null
+	 *     Modulo.Modulo_1_0_0 returns Null
 	 *     PlusOrMinus returns Null
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Null
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Null
@@ -1537,6 +1682,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns StringConstant
 	 *     Comparison.Superior_1_0_2_0 returns StringConstant
 	 *     Comparison.Inferior_1_0_3_0 returns StringConstant
+	 *     Modulo returns StringConstant
+	 *     Modulo.Modulo_1_0_0 returns StringConstant
 	 *     PlusOrMinus returns StringConstant
 	 *     PlusOrMinus.Plus_1_0_0_0 returns StringConstant
 	 *     PlusOrMinus.Minus_1_0_1_0 returns StringConstant
@@ -1584,6 +1731,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns Super
 	 *     Comparison.Superior_1_0_2_0 returns Super
 	 *     Comparison.Inferior_1_0_3_0 returns Super
+	 *     Modulo returns Super
+	 *     Modulo.Modulo_1_0_0 returns Super
 	 *     PlusOrMinus returns Super
 	 *     PlusOrMinus.Plus_1_0_0_0 returns Super
 	 *     PlusOrMinus.Minus_1_0_1_0 returns Super
@@ -1625,6 +1774,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns SymbolRef
 	 *     Comparison.Superior_1_0_2_0 returns SymbolRef
 	 *     Comparison.Inferior_1_0_3_0 returns SymbolRef
+	 *     Modulo returns SymbolRef
+	 *     Modulo.Modulo_1_0_0 returns SymbolRef
 	 *     PlusOrMinus returns SymbolRef
 	 *     PlusOrMinus.Plus_1_0_0_0 returns SymbolRef
 	 *     PlusOrMinus.Minus_1_0_1_0 returns SymbolRef
@@ -1672,6 +1823,8 @@ public class MiniJavaSemanticSequencer extends AbstractDelegatingSemanticSequenc
 	 *     Comparison.InferiorOrEqual_1_0_1_0 returns This
 	 *     Comparison.Superior_1_0_2_0 returns This
 	 *     Comparison.Inferior_1_0_3_0 returns This
+	 *     Modulo returns This
+	 *     Modulo.Modulo_1_0_0 returns This
 	 *     PlusOrMinus returns This
 	 *     PlusOrMinus.Plus_1_0_0_0 returns This
 	 *     PlusOrMinus.Minus_1_0_1_0 returns This

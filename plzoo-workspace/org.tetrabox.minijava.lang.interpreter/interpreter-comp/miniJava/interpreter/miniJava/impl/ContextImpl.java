@@ -1,5 +1,12 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import java.lang.IllegalArgumentException;
+import java.lang.Object;
+import miniJava.interpreter.miniJava.Context;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolBinding;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -7,24 +14,12 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
-
-import miniJava.interpreter.miniJava.Context;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.Symbol;
-import miniJava.interpreter.miniJava.SymbolBinding;
-
-@NodeInfo(
-    description = "Context"
-)
-public class ContextImpl extends MinimalEObjectImpl.Container implements Context {
+public class ContextImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Context {
   protected EList<SymbolBinding> bindings;
 
   protected Context childContext;
@@ -227,6 +222,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
 
+  @TruffleBoundary
   public SymbolBinding findBinding(Symbol symbol) {
     SymbolBinding result;
     if(!(minijava.MapService.containsKey(this.getCache(), symbol))) {
@@ -249,6 +245,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
     return result;
   }
 
+  @TruffleBoundary
   public Context findCurrentContext() {
     Context result;
     if((this.childContext) != (null)) {

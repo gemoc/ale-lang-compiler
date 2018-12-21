@@ -1308,7 +1308,7 @@ public class MiniJavaGrammarAccess extends AbstractGrammarElementFinder {
 	public class ComparisonElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.tetrabox.minijava.xtext.fortest.MiniJava.Comparison");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cPlusOrMinusParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cModuloParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Alternatives cAlternatives_1_0 = (Alternatives)cGroup_1.eContents().get(0);
 		private final Group cGroup_1_0_0 = (Group)cAlternatives_1_0.eContents().get(0);
@@ -1324,22 +1324,22 @@ public class MiniJavaGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cInferiorLeftAction_1_0_3_0 = (Action)cGroup_1_0_3.eContents().get(0);
 		private final Keyword cLessThanSignKeyword_1_0_3_1 = (Keyword)cGroup_1_0_3.eContents().get(1);
 		private final Assignment cRightAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cRightPlusOrMinusParserRuleCall_1_1_0 = (RuleCall)cRightAssignment_1_1.eContents().get(0);
+		private final RuleCall cRightModuloParserRuleCall_1_1_0 = (RuleCall)cRightAssignment_1_1.eContents().get(0);
 		
 		//Comparison Expression:
-		//	PlusOrMinus (({SuperiorOrEqual.left=current} ">=" | {InferiorOrEqual.left=current} "<=" | {Superior.left=current} ">"
-		//	| {Inferior.left=current} "<") right=PlusOrMinus)*;
+		//	Modulo (({SuperiorOrEqual.left=current} ">=" | {InferiorOrEqual.left=current} "<=" | {Superior.left=current} ">" |
+		//	{Inferior.left=current} "<") right=Modulo)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//PlusOrMinus (({SuperiorOrEqual.left=current} ">=" | {InferiorOrEqual.left=current} "<=" | {Superior.left=current} ">" |
-		//{Inferior.left=current} "<") right=PlusOrMinus)*
+		//Modulo (({SuperiorOrEqual.left=current} ">=" | {InferiorOrEqual.left=current} "<=" | {Superior.left=current} ">" |
+		//{Inferior.left=current} "<") right=Modulo)*
 		public Group getGroup() { return cGroup; }
 		
-		//PlusOrMinus
-		public RuleCall getPlusOrMinusParserRuleCall_0() { return cPlusOrMinusParserRuleCall_0; }
+		//Modulo
+		public RuleCall getModuloParserRuleCall_0() { return cModuloParserRuleCall_0; }
 		
 		//(({SuperiorOrEqual.left=current} ">=" | {InferiorOrEqual.left=current} "<=" | {Superior.left=current} ">" |
-		//{Inferior.left=current} "<") right=PlusOrMinus)*
+		//{Inferior.left=current} "<") right=Modulo)*
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//{SuperiorOrEqual.left=current} ">=" | {InferiorOrEqual.left=current} "<=" | {Superior.left=current} ">" |
@@ -1381,6 +1381,45 @@ public class MiniJavaGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//"<"
 		public Keyword getLessThanSignKeyword_1_0_3_1() { return cLessThanSignKeyword_1_0_3_1; }
+		
+		//right=Modulo
+		public Assignment getRightAssignment_1_1() { return cRightAssignment_1_1; }
+		
+		//Modulo
+		public RuleCall getRightModuloParserRuleCall_1_1_0() { return cRightModuloParserRuleCall_1_1_0; }
+	}
+	public class ModuloElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.tetrabox.minijava.xtext.fortest.MiniJava.Modulo");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPlusOrMinusParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cGroup_1.eContents().get(0);
+		private final Action cModuloLeftAction_1_0_0 = (Action)cGroup_1_0.eContents().get(0);
+		private final Keyword cPercentSignKeyword_1_0_1 = (Keyword)cGroup_1_0.eContents().get(1);
+		private final Assignment cRightAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cRightPlusOrMinusParserRuleCall_1_1_0 = (RuleCall)cRightAssignment_1_1.eContents().get(0);
+		
+		//Modulo Expression:
+		//	PlusOrMinus (({Modulo.left=current} '%') right=PlusOrMinus)*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//PlusOrMinus (({Modulo.left=current} '%') right=PlusOrMinus)*
+		public Group getGroup() { return cGroup; }
+		
+		//PlusOrMinus
+		public RuleCall getPlusOrMinusParserRuleCall_0() { return cPlusOrMinusParserRuleCall_0; }
+		
+		//(({Modulo.left=current} '%') right=PlusOrMinus)*
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{Modulo.left=current} '%'
+		public Group getGroup_1_0() { return cGroup_1_0; }
+		
+		//{Modulo.left=current}
+		public Action getModuloLeftAction_1_0_0() { return cModuloLeftAction_1_0_0; }
+		
+		//'%'
+		public Keyword getPercentSignKeyword_1_0_1() { return cPercentSignKeyword_1_0_1; }
 		
 		//right=PlusOrMinus
 		public Assignment getRightAssignment_1_1() { return cRightAssignment_1_1; }
@@ -2039,6 +2078,7 @@ public class MiniJavaGrammarAccess extends AbstractGrammarElementFinder {
 	private final AndElements pAnd;
 	private final EqualityElements pEquality;
 	private final ComparisonElements pComparison;
+	private final ModuloElements pModulo;
 	private final PlusOrMinusElements pPlusOrMinus;
 	private final MulOrDivElements pMulOrDiv;
 	private final ArrayAccessElements pArrayAccess;
@@ -2089,6 +2129,7 @@ public class MiniJavaGrammarAccess extends AbstractGrammarElementFinder {
 		this.pAnd = new AndElements();
 		this.pEquality = new EqualityElements();
 		this.pComparison = new ComparisonElements();
+		this.pModulo = new ModuloElements();
 		this.pPlusOrMinus = new PlusOrMinusElements();
 		this.pMulOrDiv = new MulOrDivElements();
 		this.pArrayAccess = new ArrayAccessElements();
@@ -2458,14 +2499,24 @@ public class MiniJavaGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Comparison Expression:
-	//	PlusOrMinus (({SuperiorOrEqual.left=current} ">=" | {InferiorOrEqual.left=current} "<=" | {Superior.left=current} ">"
-	//	| {Inferior.left=current} "<") right=PlusOrMinus)*;
+	//	Modulo (({SuperiorOrEqual.left=current} ">=" | {InferiorOrEqual.left=current} "<=" | {Superior.left=current} ">" |
+	//	{Inferior.left=current} "<") right=Modulo)*;
 	public ComparisonElements getComparisonAccess() {
 		return pComparison;
 	}
 	
 	public ParserRule getComparisonRule() {
 		return getComparisonAccess().getRule();
+	}
+	
+	//Modulo Expression:
+	//	PlusOrMinus (({Modulo.left=current} '%') right=PlusOrMinus)*;
+	public ModuloElements getModuloAccess() {
+		return pModulo;
+	}
+	
+	public ParserRule getModuloRule() {
+		return getModuloAccess().getRule();
 	}
 	
 	//PlusOrMinus Expression:

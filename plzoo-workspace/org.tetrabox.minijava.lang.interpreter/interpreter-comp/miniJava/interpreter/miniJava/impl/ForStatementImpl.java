@@ -2,6 +2,7 @@ package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.nodes.ExplodeLoop;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Assignment;
@@ -248,6 +249,7 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
+  @ExplodeLoop
   public void evaluateStatement(State state) {
     state.pushNewContext();
         this.declaration.evaluateStatement(state);

@@ -172,6 +172,8 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   private EClass clazzToMethodMapEClass = null;
 
+  private EClass moduloEClass = null;
+
   private EEnum accessLevelEEnum = null;
 
   private MiniJavaPackageImpl() {
@@ -402,6 +404,9 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     clazzToMethodMapEClass = createEClass(CLAZZ_TO_METHOD_MAP);
     createEReference(clazzToMethodMapEClass, CLAZZ_TO_METHOD_MAP__KEY);
     createEReference(clazzToMethodMapEClass, CLAZZ_TO_METHOD_MAP__VALUE);
+    moduloEClass = createEClass(MODULO);
+    createEReference(moduloEClass, MODULO__LEFT);
+    createEReference(moduloEClass, MODULO__RIGHT);
     accessLevelEEnum = createEEnum(ACCESS_LEVEL);
   }
 
@@ -482,6 +487,7 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     methodCall2EClass.getESuperTypes().add(this.getCall());
     objectRefValueEClass.getESuperTypes().add(this.getValue());
     arrayRefValueEClass.getESuperTypes().add(this.getValue());
+    moduloEClass.getESuperTypes().add(this.getExpression());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(programEClass, miniJava.interpreter.miniJava.Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -772,6 +778,11 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
     	null, "key", null, 0, 1,  miniJava.interpreter.miniJava.ClazzToMethodMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClazzToMethodMap_Value(), this.getMethod(),  
     	null, "value", null, 0, 1,  miniJava.interpreter.miniJava.ClazzToMethodMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(moduloEClass, miniJava.interpreter.miniJava.Modulo.class, "Modulo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getModulo_Left(), this.getExpression(),  
+    	null, "left", null, 0, 1,  miniJava.interpreter.miniJava.Modulo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModulo_Right(), this.getExpression(),  
+    	null, "right", null, 0, 1,  miniJava.interpreter.miniJava.Modulo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEEnum(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.class, "AccessLevel");
     addEEnumLiteral(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.PRIVATE);
     addEEnumLiteral(accessLevelEEnum, miniJava.interpreter.miniJava.AccessLevel.PROTECTED);
@@ -1094,6 +1105,10 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   public EClass getClazzToMethodMap() {
     return clazzToMethodMapEClass;
+  }
+
+  public EClass getModulo() {
+    return moduloEClass;
   }
 
   public EEnum getAccessLevel() {
@@ -1550,5 +1565,13 @@ public class MiniJavaPackageImpl extends EPackageImpl implements MiniJavaPackage
 
   public EReference getClazzToMethodMap_Value() {
     return (EReference) clazzToMethodMapEClass.getEStructuralFeatures().get(1);
+  }
+
+  public EReference getModulo_Left() {
+    return (EReference) moduloEClass.getEStructuralFeatures().get(0);
+  }
+
+  public EReference getModulo_Right() {
+    return (EReference) moduloEClass.getEStructuralFeatures().get(1);
   }
 }

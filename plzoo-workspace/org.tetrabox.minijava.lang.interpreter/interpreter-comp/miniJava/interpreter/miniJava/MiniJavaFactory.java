@@ -156,5 +156,7 @@ public interface MiniJavaFactory extends EFactory {
 
   ArrayRefValue createArrayRefValue();
 
+  Modulo createModulo();
+
   MiniJavaPackage getMiniJavaPackage();
 }

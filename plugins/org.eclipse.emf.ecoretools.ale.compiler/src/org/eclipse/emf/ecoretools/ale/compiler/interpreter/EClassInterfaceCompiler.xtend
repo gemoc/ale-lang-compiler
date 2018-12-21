@@ -259,7 +259,7 @@ class EClassInterfaceCompiler {
 			} else { #[]}
 
 		val factory = TypeSpec.interfaceBuilder(eClass.classInterfaceClassName).addSuperinterface(EObject).applyIfTrue(
-			dsl.dslProp.getProperty("truffle", "false") == "true", [
+			dsl.dslProp.getProperty("truffle", "false") == "true" && !eClass.EAnnotations.exists[it.source == 'RuntimeData'], [
 				addSuperinterface(ClassName.get("com.oracle.truffle.api.nodes", "NodeInterface"))
 			]).addSuperinterfaces(eClass.ESuperTypes.map [
 			ClassName.get(it.classInterfacePackageName(packageRoot), it.classInterfaceClassName)

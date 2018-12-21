@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -14,9 +13,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "ObjectRefValue"
-)
 public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
   protected ObjectInstance instance;
 
@@ -96,6 +92,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
+  @TruffleBoundary
   public String customToString() {
     String result;
     result = this.instance.toString();
@@ -103,6 +100,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
     return result;
   }
 
+  @TruffleBoundary
   public Value copyj() {
     Value result;
     miniJava.interpreter.miniJava.ObjectRefValue tmp = ((miniJava.interpreter.miniJava.ObjectRefValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createObjectRefValue());

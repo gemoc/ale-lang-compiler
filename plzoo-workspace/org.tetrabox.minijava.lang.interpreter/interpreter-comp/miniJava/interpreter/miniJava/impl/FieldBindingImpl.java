@@ -1,8 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Field;
 import miniJava.interpreter.miniJava.FieldBinding;
@@ -15,13 +13,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-@NodeInfo(
-    description = "FieldBinding"
-)
 public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements FieldBinding {
   protected Field field;
 
-  @Child
   protected Value value;
 
   protected FieldBindingImpl() {

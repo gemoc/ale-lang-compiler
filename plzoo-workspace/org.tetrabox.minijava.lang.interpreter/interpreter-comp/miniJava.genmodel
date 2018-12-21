@@ -260,5 +260,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ClazzToMethodMap/key"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//ClazzToMethodMap/value"/>
     </genClasses>
+    <genClasses ecoreClass="platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Modulo">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Modulo/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore#//Modulo/right"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

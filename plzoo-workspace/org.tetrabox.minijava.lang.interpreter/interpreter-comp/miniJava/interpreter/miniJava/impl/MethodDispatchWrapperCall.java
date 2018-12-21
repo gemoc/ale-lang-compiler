@@ -12,7 +12,7 @@ public class MethodDispatchWrapperCall {
   private final CyclicAssumption callTargetStable;
 
   protected MethodDispatchWrapperCall(Method it) {
-    this.callTargetStable = new CyclicAssumption("MethodDispatchWrapperCall_1.4670014702503957E7");
+    this.callTargetStable = new CyclicAssumption("MethodDispatchWrapperCall_7.027318044444606E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new MethodCallRootNode(it));
   }
 

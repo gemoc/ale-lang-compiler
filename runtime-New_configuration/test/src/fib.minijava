@@ -1,0 +1,14 @@
+class Fib {
+	public static void main(String[] args) {
+		int n = 30;
+		System.out.println(new Fib().fib(n));
+	}
+	
+	int fib(int n) {
+		int ret = 1;
+		if(n >2) {
+			ret = this.fib(n-1) + this.fib(n-2);
+		}
+		return ret;
+	}
+}

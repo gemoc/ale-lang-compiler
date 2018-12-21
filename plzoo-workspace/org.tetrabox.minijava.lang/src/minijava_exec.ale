@@ -1,6 +1,7 @@
 behavior minijava_exec;
 
 use minijava.MapService;
+use minijava.MathService;
 
 open class Program {
 	@main
@@ -27,7 +28,7 @@ open class Program {
 	}
 	
 	def miniJava::Method findMain() {
-		result := null; // sould typecheck ?
+		result := null;
 		for(clazz in self.classes) {
 			for(member in clazz.members) {
 				if(member.oclIsKindOf(miniJava::Method)) {
@@ -382,6 +383,26 @@ open class Multiplication {
 				miniJava::IntegerValue bright := right;
 				miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
 				tmp.value := bleft.value * bright.value;
+				result := tmp;
+			} else { 
+				result := null;
+			}
+		} else {
+			result := null;
+		}
+	}
+}
+
+open class Modulo {
+	def miniJava::Value evaluateExpression(miniJava::State state) {
+		miniJava::Value left := self.left.evaluateExpression(state);
+		miniJava::Value right := self.right.evaluateExpression(state);
+		if(left.oclIsKindOf(miniJava::IntegerValue)) {
+			if(right.oclIsKindOf(miniJava::IntegerValue)) {
+				miniJava::IntegerValue bleft := left;
+				miniJava::IntegerValue bright := right;
+				miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
+				tmp.value := self.mod(bleft.value, bright.value);
 				result := tmp;
 			} else { 
 				result := null;
@@ -969,6 +990,24 @@ open class ArrayRefValue {
 		miniJava::ArrayRefValue tmp := miniJava::ArrayRefValue.create();
 		tmp.instance := self.instance;
 		result := tmp; 
+	}
+	
+	def String customToString() {
+		
+		String res := '[';
+		int i := 0;
+		int lgt := self.getInstance().getValue().size(); 
+		while(i<lgt) {
+			miniJava::Value tmpv := self.instance.value->at(i);
+			res := res + tmpv.customToString();
+			if(i < lgt-1) {
+				res := res  + ', ';
+			}
+			i := i + 1;
+		}
+		
+		res := res + ']';
+		result := res;
 	}
 }
 

@@ -101,6 +101,9 @@ public class MiniJavaParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getComparisonAccess().getGroup_1_0_1(), "rule__Comparison__Group_1_0_1__0");
 			builder.put(grammarAccess.getComparisonAccess().getGroup_1_0_2(), "rule__Comparison__Group_1_0_2__0");
 			builder.put(grammarAccess.getComparisonAccess().getGroup_1_0_3(), "rule__Comparison__Group_1_0_3__0");
+			builder.put(grammarAccess.getModuloAccess().getGroup(), "rule__Modulo__Group__0");
+			builder.put(grammarAccess.getModuloAccess().getGroup_1(), "rule__Modulo__Group_1__0");
+			builder.put(grammarAccess.getModuloAccess().getGroup_1_0(), "rule__Modulo__Group_1_0__0");
 			builder.put(grammarAccess.getPlusOrMinusAccess().getGroup(), "rule__PlusOrMinus__Group__0");
 			builder.put(grammarAccess.getPlusOrMinusAccess().getGroup_1(), "rule__PlusOrMinus__Group_1__0");
 			builder.put(grammarAccess.getPlusOrMinusAccess().getGroup_1_0_0(), "rule__PlusOrMinus__Group_1_0_0__0");
@@ -183,6 +186,7 @@ public class MiniJavaParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAndAccess().getRightAssignment_1_2(), "rule__And__RightAssignment_1_2");
 			builder.put(grammarAccess.getEqualityAccess().getRightAssignment_1_1(), "rule__Equality__RightAssignment_1_1");
 			builder.put(grammarAccess.getComparisonAccess().getRightAssignment_1_1(), "rule__Comparison__RightAssignment_1_1");
+			builder.put(grammarAccess.getModuloAccess().getRightAssignment_1_1(), "rule__Modulo__RightAssignment_1_1");
 			builder.put(grammarAccess.getPlusOrMinusAccess().getRightAssignment_1_1(), "rule__PlusOrMinus__RightAssignment_1_1");
 			builder.put(grammarAccess.getMulOrDivAccess().getRightAssignment_1_1(), "rule__MulOrDiv__RightAssignment_1_1");
 			builder.put(grammarAccess.getArrayAccessAccess().getIndexAssignment_1_2(), "rule__ArrayAccess__IndexAssignment_1_2");

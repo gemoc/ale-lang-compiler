@@ -173,7 +173,9 @@ public interface MiniJavaPackage extends EPackage {
 
   int CLAZZ_TO_METHOD_MAP = 77;
 
-  int ACCESS_LEVEL = 78;
+  int MODULO = 78;
+
+  int ACCESS_LEVEL = 79;
 
   int PROGRAM__NAME = 0;
 
@@ -401,6 +403,10 @@ public interface MiniJavaPackage extends EPackage {
 
   int CLAZZ_TO_METHOD_MAP__VALUE = 1;
 
+  int MODULO__LEFT = 0;
+
+  int MODULO__RIGHT = 1;
+
   EClass getProgram();
 
   EClass getImport();
@@ -556,6 +562,8 @@ public interface MiniJavaPackage extends EPackage {
   EClass getSymbolToSymbolBindingMap();
 
   EClass getClazzToMethodMap();
+
+  EClass getModulo();
 
   EEnum getAccessLevel();
 
@@ -753,6 +761,10 @@ public interface MiniJavaPackage extends EPackage {
 
   EReference getClazzToMethodMap_Value();
 
+  EReference getModulo_Left();
+
+  EReference getModulo_Right();
+
   EAttribute getProgram_Name();
 
   EAttribute getImport_ImportedNamespace();
@@ -943,6 +955,8 @@ public interface MiniJavaPackage extends EPackage {
     EClass SYMBOL_TO_SYMBOL_BINDING_MAP = eINSTANCE.getSymbolToSymbolBindingMap();
 
     EClass CLAZZ_TO_METHOD_MAP = eINSTANCE.getClazzToMethodMap();
+
+    EClass MODULO = eINSTANCE.getModulo();
 
     EReference PROGRAM__IMPORTS = eINSTANCE.getProgram_Imports();
 
@@ -1137,6 +1151,10 @@ public interface MiniJavaPackage extends EPackage {
     EReference CLAZZ_TO_METHOD_MAP__KEY = eINSTANCE.getClazzToMethodMap_Key();
 
     EReference CLAZZ_TO_METHOD_MAP__VALUE = eINSTANCE.getClazzToMethodMap_Value();
+
+    EReference MODULO__LEFT = eINSTANCE.getModulo_Left();
+
+    EReference MODULO__RIGHT = eINSTANCE.getModulo_Right();
 
     EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 
