@@ -6,7 +6,6 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalFunRes;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -27,12 +26,8 @@ public class AppImpl extends ExprImpl implements App {
   @Child
   protected Expr rhs;
 
-  @CompilationFinal
-  private AppDispatchWrapperEval cachedEval;
-
   protected AppImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.AppDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -217,9 +212,5 @@ public class AppImpl extends ExprImpl implements App {
     result = fct.getExp().eval(callCtx);
         ;
     return result;
-  }
-
-  public AppDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

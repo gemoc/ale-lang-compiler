@@ -1,8 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.ArrayTypeRef;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -13,18 +10,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "ArrayTypeRef"
-)
 public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
-  @Child
   protected SingleTypeRef typeRef;
 
   protected ArrayTypeRefImpl() {
     super();
   }
 
-  @TruffleBoundary
   public void setTypeRef(SingleTypeRef newTypeRef) {
     if (newTypeRef != typeRef) {
     	NotificationChain msgs = null;
@@ -39,7 +31,6 @@ public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.ARRAY_TYPE_REF__TYPE_REF, newTypeRef, newTypeRef));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetTypeRef(SingleTypeRef newTypeRef, NotificationChain msgs) {
     SingleTypeRef oldTypeRef = typeRef;
     typeRef = newTypeRef;
@@ -50,16 +41,13 @@ public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
     return msgs;
   }
 
-  @TruffleBoundary
   public SingleTypeRef getTypeRef() {
     return typeRef;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_TYPE_REF;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_TYPE_REF__TYPE_REF:
@@ -69,7 +57,6 @@ public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_TYPE_REF__TYPE_REF:
@@ -79,7 +66,6 @@ public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_TYPE_REF__TYPE_REF:
@@ -88,7 +74,6 @@ public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_TYPE_REF__TYPE_REF:
@@ -97,7 +82,6 @@ public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

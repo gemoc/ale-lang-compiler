@@ -446,16 +446,20 @@ rulerOpenClass returns [EObject current=null]
 			newLeafNode(otherlv_8, grammarAccess.getROpenClassAccess().getLeftCurlyBracketKeyword_5());
 		}
 		(
-			otherlv_9='mutable'
+			otherlv_9='['
 			{
-				newLeafNode(otherlv_9, grammarAccess.getROpenClassAccess().getMutableKeyword_6_0());
+				newLeafNode(otherlv_9, grammarAccess.getROpenClassAccess().getLeftSquareBracketKeyword_6_0());
+			}
+			otherlv_10='mutable'
+			{
+				newLeafNode(otherlv_10, grammarAccess.getROpenClassAccess().getMutableKeyword_6_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getROpenClassAccess().getMutablesMutableRefParserRuleCall_6_1_0());
+						newCompositeNode(grammarAccess.getROpenClassAccess().getMutablesMutableRefParserRuleCall_6_2_0());
 					}
-					lv_mutables_10_0=ruleMutableRef
+					lv_mutables_11_0=ruleMutableRef
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getROpenClassRule());
@@ -463,19 +467,23 @@ rulerOpenClass returns [EObject current=null]
 						add(
 							$current,
 							"mutables",
-							lv_mutables_10_0,
+							lv_mutables_11_0,
 							"org.eclipse.emf.ecoretools.Ale.MutableRef");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
+			otherlv_12=']'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getROpenClassAccess().getRightSquareBracketKeyword_6_3());
+			}
 		)?
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getROpenClassAccess().getAttributesRAttributeParserRuleCall_7_0());
 				}
-				lv_attributes_11_0=rulerAttribute
+				lv_attributes_13_0=rulerAttribute
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getROpenClassRule());
@@ -483,7 +491,7 @@ rulerOpenClass returns [EObject current=null]
 					add(
 						$current,
 						"attributes",
-						lv_attributes_11_0,
+						lv_attributes_13_0,
 						"org.eclipse.emf.ecoretools.Ale.rAttribute");
 					afterParserOrEnumRuleCall();
 				}
@@ -494,7 +502,7 @@ rulerOpenClass returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getROpenClassAccess().getOperationsROperationParserRuleCall_8_0());
 				}
-				lv_operations_12_0=rulerOperation
+				lv_operations_14_0=rulerOperation
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getROpenClassRule());
@@ -502,15 +510,15 @@ rulerOpenClass returns [EObject current=null]
 					add(
 						$current,
 						"operations",
-						lv_operations_12_0,
+						lv_operations_14_0,
 						"org.eclipse.emf.ecoretools.Ale.rOperation");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_13='}'
+		otherlv_15='}'
 		{
-			newLeafNode(otherlv_13, grammarAccess.getROpenClassAccess().getRightCurlyBracketKeyword_9());
+			newLeafNode(otherlv_15, grammarAccess.getROpenClassAccess().getRightCurlyBracketKeyword_9());
 		}
 	)
 ;

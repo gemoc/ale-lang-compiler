@@ -34,7 +34,7 @@ rClass returns BehavioredClass :
 
 rOpenClass returns ExtendedClass:
 	'open' (abstract?='abstract')? 'class' name=rQualified ('extends' extends+=rQualified (',' extends+=rQualified)* )? '{'
-	    ('mutable' mutables+=MutableRef*)? 
+	    ('[' 'mutable' mutables+=MutableRef* ']')? 
 		attributes+=rAttribute* operations+=rOperation*
 	'}'
 ;

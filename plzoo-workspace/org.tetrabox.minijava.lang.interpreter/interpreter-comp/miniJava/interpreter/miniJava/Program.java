@@ -1,11 +1,10 @@
 package miniJava.interpreter.miniJava;
 
-import com.oracle.truffle.api.nodes.NodeInterface;
 import java.lang.String;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
-public interface Program extends EObject, NodeInterface {
+public interface Program extends EObject {
   String getName();
 
   void setName(String value);

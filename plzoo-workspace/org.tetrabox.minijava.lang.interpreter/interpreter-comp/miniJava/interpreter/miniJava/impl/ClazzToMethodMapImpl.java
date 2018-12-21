@@ -1,7 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Clazz;
 import miniJava.interpreter.miniJava.Method;
@@ -12,12 +10,9 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-@NodeInfo(
-    description = "ClazzToMethodMap"
-)
-public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements BasicEMap.Entry<Clazz, Method> {
+public class ClazzToMethodMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<Clazz, Method> {
   protected Clazz key;
 
   protected Method value;
@@ -28,7 +23,6 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     super();
   }
 
-  @TruffleBoundary
   public void setKey(Clazz newKey) {
     Clazz oldKey = key;
     key = newKey;
@@ -36,7 +30,6 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.CLAZZ_TO_METHOD_MAP__KEY, oldKey, key));
   }
 
-  @TruffleBoundary
   public Clazz getKey() {
     if (key != null && key.eIsProxy()) {
     	InternalEObject oldkey = (InternalEObject) key;
@@ -50,14 +43,12 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     return key;
   }
 
-  @TruffleBoundary
   public Method setValue(Method newValue) {
     Method oldValue = this.value;
     this.value = newValue;
     return oldValue;
   }
 
-  @TruffleBoundary
   public Method getValue() {
     if (value != null && value.eIsProxy()) {
     	InternalEObject oldvalue = (InternalEObject) value;
@@ -71,11 +62,9 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     return value;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.CLAZZ_TO_METHOD_MAP;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.CLAZZ_TO_METHOD_MAP__KEY:
@@ -88,7 +77,6 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.CLAZZ_TO_METHOD_MAP__KEY:
@@ -101,7 +89,6 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.CLAZZ_TO_METHOD_MAP__KEY:
@@ -112,7 +99,6 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.CLAZZ_TO_METHOD_MAP__KEY:
@@ -123,7 +109,6 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -131,12 +116,10 @@ public class ClazzToMethodMapImpl extends MinimalTruffleEObjectImpl.TruffleConta
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
-  @TruffleBoundary
   public void setHash(int hash) {
     this.hash = hash;
   }
 
-  @TruffleBoundary
   public int getHash() {
     if (hash == -1) {
     	Object theKey = getKey();

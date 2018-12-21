@@ -1,9 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.ExplodeLoop;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Assignment;
 import miniJava.interpreter.miniJava.Block;
@@ -17,27 +13,19 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "ForStatement"
-)
 public class ForStatementImpl extends StatementImpl implements ForStatement {
-  @Child
   protected Assignment declaration;
 
-  @Child
   protected Expression condition;
 
-  @Child
   protected Assignment progression;
 
-  @Child
   protected Block block;
 
   protected ForStatementImpl() {
     super();
   }
 
-  @TruffleBoundary
   public void setDeclaration(Assignment newDeclaration) {
     if (newDeclaration != declaration) {
     	NotificationChain msgs = null;
@@ -52,7 +40,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.FOR_STATEMENT__DECLARATION, newDeclaration, newDeclaration));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetDeclaration(Assignment newDeclaration, NotificationChain msgs) {
     Assignment oldDeclaration = declaration;
     declaration = newDeclaration;
@@ -63,12 +50,10 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     return msgs;
   }
 
-  @TruffleBoundary
   public Assignment getDeclaration() {
     return declaration;
   }
 
-  @TruffleBoundary
   public void setCondition(Expression newCondition) {
     if (newCondition != condition) {
     	NotificationChain msgs = null;
@@ -83,7 +68,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.FOR_STATEMENT__CONDITION, newCondition, newCondition));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
     Expression oldCondition = condition;
     condition = newCondition;
@@ -94,12 +78,10 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     return msgs;
   }
 
-  @TruffleBoundary
   public Expression getCondition() {
     return condition;
   }
 
-  @TruffleBoundary
   public void setProgression(Assignment newProgression) {
     if (newProgression != progression) {
     	NotificationChain msgs = null;
@@ -114,7 +96,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.FOR_STATEMENT__PROGRESSION, newProgression, newProgression));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetProgression(Assignment newProgression, NotificationChain msgs) {
     Assignment oldProgression = progression;
     progression = newProgression;
@@ -125,12 +106,10 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     return msgs;
   }
 
-  @TruffleBoundary
   public Assignment getProgression() {
     return progression;
   }
 
-  @TruffleBoundary
   public void setBlock(Block newBlock) {
     if (newBlock != block) {
     	NotificationChain msgs = null;
@@ -145,7 +124,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.FOR_STATEMENT__BLOCK, newBlock, newBlock));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
     Block oldBlock = block;
     block = newBlock;
@@ -156,16 +134,13 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     return msgs;
   }
 
-  @TruffleBoundary
   public Block getBlock() {
     return block;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FOR_STATEMENT;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.FOR_STATEMENT__DECLARATION:
@@ -184,7 +159,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FOR_STATEMENT__DECLARATION:
@@ -203,7 +177,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.FOR_STATEMENT__DECLARATION:
@@ -218,7 +191,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FOR_STATEMENT__DECLARATION:
@@ -233,7 +205,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -249,7 +220,6 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
-  @ExplodeLoop
   public void evaluateStatement(State state) {
     state.pushNewContext();
         this.declaration.evaluateStatement(state);

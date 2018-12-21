@@ -19,7 +19,7 @@ public class SummaryUtil {
 
 	public static void main(String[] args) {
 		new SummaryUtil()
-				.run("/home/manuel/dev/java/ale-lang/genetics/workspace/standaloneboainterpreter/src/boa_exec.ale");
+				.run("/home/manuel/dev/java/ale-lang/plzoo-workspace/org.tetrabox.minijava.lang/src/minijava_exec.ale");
 
 	}
 

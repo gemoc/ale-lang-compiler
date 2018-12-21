@@ -1,9 +1,8 @@
 package miniJava.interpreter.miniJava;
 
-import com.oracle.truffle.api.nodes.NodeInterface;
 import org.eclipse.emf.ecore.EObject;
 
-public interface ClassRef extends EObject, NodeInterface, SingleTypeRef {
+public interface ClassRef extends EObject, SingleTypeRef {
   TypeDeclaration getReferencedClass();
 
   void setReferencedClass(TypeDeclaration value);

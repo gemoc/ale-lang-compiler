@@ -1,0 +1,129 @@
+/* The Computer Language Benchmarks Game
+ * https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+ *
+ * contributed by Diogo Lima
+ * *reset*
+*/
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+
+ private class TreeNode {
+
+        private TreeNode left;
+        private TreeNode right;
+
+        private TreeNode(TreeNode i_left, 
+                         TreeNode i_right) {
+            this.left = i_left;
+            this.right = i_right;
+        }
+
+        public TreeNode createNode(int i_depth) {
+            // Create bottom node with empty child nodes => depth = 0
+            TreeNode bottomTree = new TreeNode(null, null);
+            TreeNode ret = null;
+            if(i_depth == 0) {
+            	ret = bottomTree;
+            } else {
+            	ret = this.createNodeRec(i_depth, bottomTree);
+            }
+            
+            return ret;
+        }
+
+        private TreeNode createNodeRec(int i_depth, 
+                                           TreeNode i_accumulator) {
+            TreeNode accumulator = i_accumulator;
+            if (i_depth > 0) {
+                int depth = i_depth - 1;
+                accumulator.left = this.createNode(depth);
+                accumulator.right = this.createNode(depth);
+            }
+            return accumulator;
+        }
+
+        public int checkNode() {
+        	int ret = 0;
+        	if(this.left == null) {
+        		ret = 1;
+        	} else {
+        		ret = this.left.checkNode() + this.right.checkNode() + 1;
+        	}
+        	return ret;
+        }
+    }
+
+public class Binarytrees {
+
+    /**
+     * Internal class for structuring nodes and childs
+     */
+   
+
+
+    public static void main(String[] args) {
+        int n = 12;
+        System.out.println(n);
+        new Binarytrees().runBenchmark(n);
+    }
+    
+    public static int pow(int x) {
+    	int base = 1;
+    	for (int i=0; i<x; i=i+1) {
+    		base = base * 2;
+    	}
+    	
+    	return base;
+    }
+    
+    
+    public static int max(int a, int b) {
+    	int ret = 0;
+    	if(a > b) {
+    		ret = a;
+    	} else {
+    		ret = b;
+    	}
+    	
+    	return ret;
+    }
+
+    // Do the real work with createNode
+    private static void runBenchmark(int n) {
+        int minimumDepth = 4;
+        int maximumDepth = this.max(minimumDepth + 2, n);
+        int stretchDepth = maximumDepth + 1;
+        
+        TreeNode inst = new TreeNode();
+
+        TreeNode node = inst.createNode(stretchDepth);
+        int checkNode = node.checkNode();
+
+        System.out.println("stretch tree of depth " 
+                                + (maximumDepth + 1) 
+                                + "\t check: " 
+                                + checkNode);
+
+        TreeNode longLivedTree = inst.createNode(maximumDepth);
+        for (int depth = minimumDepth; depth <= maximumDepth; depth = depth + 2) {
+            int iterations = this.pow(maximumDepth - depth + minimumDepth);
+            int check = 0;
+
+            for (int i = 1; i <= iterations; i=i+1) {
+                check = check +  inst.createNode(depth).checkNode();
+            }
+            System.out.println(iterations
+                                + "\t trees of depth " 
+                                + depth 
+                                + "\t check: "
+                                + check);
+        }
+        System.out.println("long lived tree of depth " 
+                           + maximumDepth 
+                           + "\t check: " 
+                           + longLivedTree.checkNode());
+    }
+}

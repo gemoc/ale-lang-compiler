@@ -52,7 +52,7 @@ rClass : rOpenClass | rNewClass
 ;
 
 rOpenClass : 'open' (abstr='abstract')? 'class' name=rQualified ('extends' rQualified (',' rQualified)* )? '{'
-	('mutable' rMutableRef*)?
+	('[ ''mutable' rMutableRef* ']')?
 	rAttribute* rOperation*
 	'}'
 ;

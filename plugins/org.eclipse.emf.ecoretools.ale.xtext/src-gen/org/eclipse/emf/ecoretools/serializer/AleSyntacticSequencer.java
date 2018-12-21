@@ -21,6 +21,7 @@ import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.GroupAlias;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
@@ -32,7 +33,7 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 	protected AleGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_a;
 	protected AbstractElementAlias match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_p;
-	protected AbstractElementAlias match_rOpenClass_MutableKeyword_6_0_q;
+	protected AbstractElementAlias match_rOpenClass___LeftSquareBracketKeyword_6_0_MutableKeyword_6_1_RightSquareBracketKeyword_6_3__q;
 	protected AbstractElementAlias match_rOperation_DefKeyword_0_2_0_or_OverrideKeyword_0_2_1;
 	
 	@Inject
@@ -40,7 +41,7 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 		grammarAccess = (AleGrammarAccess) access;
 		match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_a = new TokenAlias(true, true, grammarAccess.getNonLeftRecExpressionAccess().getLeftParenthesisKeyword_4_0());
 		match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_p = new TokenAlias(true, false, grammarAccess.getNonLeftRecExpressionAccess().getLeftParenthesisKeyword_4_0());
-		match_rOpenClass_MutableKeyword_6_0_q = new TokenAlias(false, true, grammarAccess.getROpenClassAccess().getMutableKeyword_6_0());
+		match_rOpenClass___LeftSquareBracketKeyword_6_0_MutableKeyword_6_1_RightSquareBracketKeyword_6_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getROpenClassAccess().getLeftSquareBracketKeyword_6_0()), new TokenAlias(false, false, grammarAccess.getROpenClassAccess().getMutableKeyword_6_1()), new TokenAlias(false, false, grammarAccess.getROpenClassAccess().getRightSquareBracketKeyword_6_3()));
 		match_rOperation_DefKeyword_0_2_0_or_OverrideKeyword_0_2_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getROperationAccess().getDefKeyword_0_2_0()), new TokenAlias(false, false, grammarAccess.getROperationAccess().getOverrideKeyword_0_2_1()));
 	}
 	
@@ -114,8 +115,8 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 				emit_nonLeftRecExpression_LeftParenthesisKeyword_4_0_a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_nonLeftRecExpression_LeftParenthesisKeyword_4_0_p.equals(syntax))
 				emit_nonLeftRecExpression_LeftParenthesisKeyword_4_0_p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_rOpenClass_MutableKeyword_6_0_q.equals(syntax))
-				emit_rOpenClass_MutableKeyword_6_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_rOpenClass___LeftSquareBracketKeyword_6_0_MutableKeyword_6_1_RightSquareBracketKeyword_6_3__q.equals(syntax))
+				emit_rOpenClass___LeftSquareBracketKeyword_6_0_MutableKeyword_6_1_RightSquareBracketKeyword_6_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_rOperation_DefKeyword_0_2_0_or_OverrideKeyword_0_2_1.equals(syntax))
 				emit_rOperation_DefKeyword_0_2_0_or_OverrideKeyword_0_2_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
@@ -170,7 +171,7 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
-	 *     'mutable'?
+	 *     ('[' 'mutable' ']')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     extends+=rQualified '{' (ambiguity) '}' (rule end)
@@ -180,7 +181,7 @@ public class AleSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     name=rQualified '{' (ambiguity) attributes+=rAttribute
 	 *     name=rQualified '{' (ambiguity) operations+=rOperation
 	 */
-	protected void emit_rOpenClass_MutableKeyword_6_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_rOpenClass___LeftSquareBracketKeyword_6_0_MutableKeyword_6_1_RightSquareBracketKeyword_6_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

@@ -1,9 +1,8 @@
 package miniJava.interpreter.miniJava;
 
-import com.oracle.truffle.api.nodes.NodeInterface;
 import org.eclipse.emf.ecore.EObject;
 
-public interface WhileStatement extends EObject, NodeInterface, Statement {
+public interface WhileStatement extends EObject, Statement {
   Expression getCondition();
 
   void setCondition(Expression value);

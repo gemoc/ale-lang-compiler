@@ -1,9 +1,8 @@
 package miniJava.interpreter.miniJava;
 
-import com.oracle.truffle.api.nodes.NodeInterface;
 import org.eclipse.emf.ecore.EObject;
 
-public interface SymbolRef extends EObject, NodeInterface, Expression {
+public interface SymbolRef extends EObject, Expression {
   Symbol getSymbol();
 
   void setSymbol(Symbol value);

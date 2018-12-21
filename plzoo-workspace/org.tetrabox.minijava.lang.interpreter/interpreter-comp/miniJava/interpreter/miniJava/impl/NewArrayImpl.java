@@ -1,8 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -16,21 +13,15 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "NewArray"
-)
 public class NewArrayImpl extends ExpressionImpl implements NewArray {
-  @Child
   protected TypeRef type;
 
-  @Child
   protected Expression size;
 
   protected NewArrayImpl() {
     super();
   }
 
-  @TruffleBoundary
   public void setType(TypeRef newType) {
     if (newType != type) {
     	NotificationChain msgs = null;
@@ -45,7 +36,6 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.NEW_ARRAY__TYPE, newType, newType));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetType(TypeRef newType, NotificationChain msgs) {
     TypeRef oldType = type;
     type = newType;
@@ -56,12 +46,10 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     return msgs;
   }
 
-  @TruffleBoundary
   public TypeRef getType() {
     return type;
   }
 
-  @TruffleBoundary
   public void setSize(Expression newSize) {
     if (newSize != size) {
     	NotificationChain msgs = null;
@@ -76,7 +64,6 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.NEW_ARRAY__SIZE, newSize, newSize));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetSize(Expression newSize, NotificationChain msgs) {
     Expression oldSize = size;
     size = newSize;
@@ -87,16 +74,13 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     return msgs;
   }
 
-  @TruffleBoundary
   public Expression getSize() {
     return size;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.NEW_ARRAY;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.NEW_ARRAY__TYPE:
@@ -109,7 +93,6 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.NEW_ARRAY__TYPE:
@@ -122,7 +105,6 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.NEW_ARRAY__TYPE:
@@ -133,7 +115,6 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.NEW_ARRAY__TYPE:
@@ -144,7 +125,6 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

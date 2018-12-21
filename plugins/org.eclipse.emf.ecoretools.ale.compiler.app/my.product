@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="org.eclipse.emf.ecoretools.ale.compiler.product" uid="my" id="org.eclipse.emf.ecoretools.ale.compiler.app.product" application="org.eclipse.emf.ecoretools.ale.compiler.app.application" useFeatures="false" includeLaunchers="true">
+<product name="org.eclipse.emf.ecoretools.ale.compiler.product" uid="my" id="org.eclipse.emf.ecoretools.ale.compiler.app.product" application="org.eclipse.e4.ui.workbench.swt.GenTopic" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -25,7 +25,6 @@
    </vm>
 
    <plugins>
-      <plugin id="boa.lang.services"/>
       <plugin id="com.google.gson"/>
       <plugin id="com.google.guava"/>
       <plugin id="com.google.inject"/>
@@ -242,6 +241,7 @@
       <plugin id="org.opentest4j"/>
       <plugin id="org.sat4j.core"/>
       <plugin id="org.sat4j.pb"/>
+      <plugin id="org.tetrabox.minijava.lang.services"/>
       <plugin id="org.tukaani.xz"/>
       <plugin id="org.w3c.css.sac"/>
       <plugin id="org.w3c.dom.events"/>

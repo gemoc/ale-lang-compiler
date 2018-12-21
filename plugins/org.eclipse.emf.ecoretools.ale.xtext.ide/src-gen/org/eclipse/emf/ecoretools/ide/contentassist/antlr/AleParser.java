@@ -163,7 +163,7 @@ public class AleParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getROpenClassAccess().getNameAssignment_3(), "rule__ROpenClass__NameAssignment_3");
 			builder.put(grammarAccess.getROpenClassAccess().getExtendsAssignment_4_1(), "rule__ROpenClass__ExtendsAssignment_4_1");
 			builder.put(grammarAccess.getROpenClassAccess().getExtendsAssignment_4_2_1(), "rule__ROpenClass__ExtendsAssignment_4_2_1");
-			builder.put(grammarAccess.getROpenClassAccess().getMutablesAssignment_6_1(), "rule__ROpenClass__MutablesAssignment_6_1");
+			builder.put(grammarAccess.getROpenClassAccess().getMutablesAssignment_6_2(), "rule__ROpenClass__MutablesAssignment_6_2");
 			builder.put(grammarAccess.getROpenClassAccess().getAttributesAssignment_7(), "rule__ROpenClass__AttributesAssignment_7");
 			builder.put(grammarAccess.getROpenClassAccess().getOperationsAssignment_8(), "rule__ROpenClass__OperationsAssignment_8");
 			builder.put(grammarAccess.getMutableRefAccess().getNameAssignment(), "rule__MutableRef__NameAssignment");

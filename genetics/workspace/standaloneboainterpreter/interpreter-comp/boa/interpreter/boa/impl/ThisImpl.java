@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.This;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -16,12 +15,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "This"
 )
 public class ThisImpl extends ExprImpl implements This {
-  @CompilationFinal
-  private ThisDispatchWrapperEval cachedEval;
-
   protected ThisImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.ThisDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -71,9 +66,5 @@ public class ThisImpl extends ExprImpl implements This {
         result = ret;
         ;
     return result;
-  }
-
-  public ThisDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

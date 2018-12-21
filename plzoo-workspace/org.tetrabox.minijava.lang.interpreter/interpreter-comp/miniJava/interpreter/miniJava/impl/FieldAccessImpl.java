@@ -1,8 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.Field;
@@ -16,11 +13,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "FieldAccess"
-)
 public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
-  @Child
   protected Expression receiver;
 
   protected Field field;
@@ -29,7 +22,6 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     super();
   }
 
-  @TruffleBoundary
   public void setReceiver(Expression newReceiver) {
     if (newReceiver != receiver) {
     	NotificationChain msgs = null;
@@ -44,7 +36,6 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.FIELD_ACCESS__RECEIVER, newReceiver, newReceiver));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetReceiver(Expression newReceiver, NotificationChain msgs) {
     Expression oldReceiver = receiver;
     receiver = newReceiver;
@@ -55,12 +46,10 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     return msgs;
   }
 
-  @TruffleBoundary
   public Expression getReceiver() {
     return receiver;
   }
 
-  @TruffleBoundary
   public void setField(Field newField) {
     Field oldField = field;
     field = newField;
@@ -68,7 +57,6 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FIELD_ACCESS__FIELD, oldField, field));
   }
 
-  @TruffleBoundary
   public Field getField() {
     if (field != null && field.eIsProxy()) {
     	InternalEObject oldfield = (InternalEObject) field;
@@ -82,11 +70,9 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     return field;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FIELD_ACCESS;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_ACCESS__RECEIVER:
@@ -99,7 +85,6 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_ACCESS__RECEIVER:
@@ -112,7 +97,6 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_ACCESS__RECEIVER:
@@ -123,7 +107,6 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_ACCESS__RECEIVER:
@@ -134,7 +117,6 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

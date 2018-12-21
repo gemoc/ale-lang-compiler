@@ -1,9 +1,8 @@
 package miniJava.interpreter.miniJava;
 
-import com.oracle.truffle.api.nodes.NodeInterface;
 import org.eclipse.emf.ecore.EObject;
 
-public interface Clazz extends EObject, NodeInterface, TypeDeclaration {
+public interface Clazz extends EObject, TypeDeclaration {
   boolean isIsabstract();
 
   void setIsabstract(boolean value);

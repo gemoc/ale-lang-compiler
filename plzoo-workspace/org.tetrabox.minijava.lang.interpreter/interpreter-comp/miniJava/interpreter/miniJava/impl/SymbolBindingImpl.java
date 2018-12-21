@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Symbol;
@@ -11,9 +10,9 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements SymbolBinding {
+public class SymbolBindingImpl extends MinimalEObjectImpl.Container implements SymbolBinding {
   protected Value value;
 
   protected Symbol symbol;
@@ -22,7 +21,6 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     super();
   }
 
-  @TruffleBoundary
   public void setValue(Value newValue) {
     if (newValue != value) {
     	NotificationChain msgs = null;
@@ -37,7 +35,6 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.SYMBOL_BINDING__VALUE, newValue, newValue));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetValue(Value newValue, NotificationChain msgs) {
     Value oldValue = value;
     value = newValue;
@@ -48,12 +45,10 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     return msgs;
   }
 
-  @TruffleBoundary
   public Value getValue() {
     return value;
   }
 
-  @TruffleBoundary
   public void setSymbol(Symbol newSymbol) {
     Symbol oldSymbol = symbol;
     symbol = newSymbol;
@@ -61,7 +56,6 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.SYMBOL_BINDING__SYMBOL, oldSymbol, symbol));
   }
 
-  @TruffleBoundary
   public Symbol getSymbol() {
     if (symbol != null && symbol.eIsProxy()) {
     	InternalEObject oldsymbol = (InternalEObject) symbol;
@@ -75,11 +69,9 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     return symbol;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.SYMBOL_BINDING;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.SYMBOL_BINDING__VALUE:
@@ -92,7 +84,6 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.SYMBOL_BINDING__VALUE:
@@ -105,7 +96,6 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.SYMBOL_BINDING__VALUE:
@@ -116,7 +106,6 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.SYMBOL_BINDING__VALUE:
@@ -127,7 +116,6 @@ public class SymbolBindingImpl extends MinimalTruffleEObjectImpl.TruffleContaine
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

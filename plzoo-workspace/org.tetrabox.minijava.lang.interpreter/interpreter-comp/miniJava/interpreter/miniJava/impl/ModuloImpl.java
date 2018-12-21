@@ -1,8 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -15,21 +12,15 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "Modulo"
-)
 public class ModuloImpl extends ExpressionImpl implements Modulo {
-  @Child
   protected Expression left;
 
-  @Child
   protected Expression right;
 
   protected ModuloImpl() {
     super();
   }
 
-  @TruffleBoundary
   public void setLeft(Expression newLeft) {
     if (newLeft != left) {
     	NotificationChain msgs = null;
@@ -44,7 +35,6 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.MODULO__LEFT, newLeft, newLeft));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetLeft(Expression newLeft, NotificationChain msgs) {
     Expression oldLeft = left;
     left = newLeft;
@@ -55,12 +45,10 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
     return msgs;
   }
 
-  @TruffleBoundary
   public Expression getLeft() {
     return left;
   }
 
-  @TruffleBoundary
   public void setRight(Expression newRight) {
     if (newRight != right) {
     	NotificationChain msgs = null;
@@ -75,7 +63,6 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.MODULO__RIGHT, newRight, newRight));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetRight(Expression newRight, NotificationChain msgs) {
     Expression oldRight = right;
     right = newRight;
@@ -86,16 +73,13 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
     return msgs;
   }
 
-  @TruffleBoundary
   public Expression getRight() {
     return right;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.MODULO;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.MODULO__LEFT:
@@ -108,7 +92,6 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.MODULO__LEFT:
@@ -121,7 +104,6 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.MODULO__LEFT:
@@ -132,7 +114,6 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.MODULO__LEFT:
@@ -143,7 +124,6 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

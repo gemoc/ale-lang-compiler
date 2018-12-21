@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.CmpOpUnequal;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -16,12 +15,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "CmpOpUnequal"
 )
 public class CmpOpUnequalImpl extends CmpOpImpl implements CmpOpUnequal {
-  @CompilationFinal
-  private CmpOpUnequalDispatchWrapperEval cachedEval;
-
   protected CmpOpUnequalImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.CmpOpUnequalDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -85,9 +80,5 @@ public class CmpOpUnequalImpl extends CmpOpImpl implements CmpOpUnequal {
         }
         ;
     return result;
-  }
-
-  public CmpOpUnequalDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

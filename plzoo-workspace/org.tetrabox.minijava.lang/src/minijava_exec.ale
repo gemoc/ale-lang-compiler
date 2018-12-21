@@ -906,8 +906,7 @@ open class State {
 }
 
 open class Frame {
-	
-	mutable childFrame
+	[ mutable childFrame ]
 	
 	def miniJava::Context findCurrentContext() {
 		if (self.childFrame != null) {
@@ -932,7 +931,7 @@ open class Frame {
 
 open class Context {
 	
-	mutable bindings
+	[ mutable bindings ] 
 	
 	def miniJava::SymbolBinding findBinding(miniJava::Symbol symbol) {
 		if (not self.getCache().containsKey(symbol)) {

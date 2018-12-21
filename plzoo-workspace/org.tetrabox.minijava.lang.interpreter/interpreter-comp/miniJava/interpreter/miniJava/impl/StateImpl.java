@@ -1,8 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.ArrayInstance;
@@ -19,19 +16,14 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-@NodeInfo(
-    description = "State"
-)
-public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements State {
-  @Child
+public class StateImpl extends MinimalEObjectImpl.Container implements State {
   protected Frame rootFrame;
 
   protected EList<ObjectInstance> objectsHeap;
 
-  @Child
   protected OutputStream outputStream;
 
   protected EList<ArrayInstance> arraysHeap;
@@ -44,7 +36,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     super();
   }
 
-  @TruffleBoundary
   public void setRootFrame(Frame newRootFrame) {
     if (newRootFrame != rootFrame) {
     	NotificationChain msgs = null;
@@ -59,7 +50,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.STATE__ROOT_FRAME, newRootFrame, newRootFrame));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetRootFrame(Frame newRootFrame, NotificationChain msgs) {
     Frame oldRootFrame = rootFrame;
     rootFrame = newRootFrame;
@@ -70,12 +60,10 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return msgs;
   }
 
-  @TruffleBoundary
   public Frame getRootFrame() {
     return rootFrame;
   }
 
-  @TruffleBoundary
   public EList<ObjectInstance> getObjectsHeap() {
     if(objectsHeap == null) {
     	objectsHeap = new EObjectContainmentEList<ObjectInstance>(miniJava.interpreter.miniJava.ObjectInstance.class, this, MiniJavaPackage.STATE__OBJECTS_HEAP);
@@ -83,7 +71,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return objectsHeap;
   }
 
-  @TruffleBoundary
   public void setOutputStream(OutputStream newOutputStream) {
     if (newOutputStream != outputStream) {
     	NotificationChain msgs = null;
@@ -98,7 +85,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.STATE__OUTPUT_STREAM, newOutputStream, newOutputStream));
   }
 
-  @TruffleBoundary
   public NotificationChain basicSetOutputStream(OutputStream newOutputStream,
       NotificationChain msgs) {
     OutputStream oldOutputStream = outputStream;
@@ -110,12 +96,10 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return msgs;
   }
 
-  @TruffleBoundary
   public OutputStream getOutputStream() {
     return outputStream;
   }
 
-  @TruffleBoundary
   public EList<ArrayInstance> getArraysHeap() {
     if(arraysHeap == null) {
     	arraysHeap = new EObjectContainmentEList<ArrayInstance>(miniJava.interpreter.miniJava.ArrayInstance.class, this, MiniJavaPackage.STATE__ARRAYS_HEAP);
@@ -123,7 +107,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return arraysHeap;
   }
 
-  @TruffleBoundary
   public void setContextCache(Context newContextCache) {
     Context oldContextCache = contextCache;
     contextCache = newContextCache;
@@ -131,7 +114,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.STATE__CONTEXT_CACHE, oldContextCache, contextCache));
   }
 
-  @TruffleBoundary
   public Context getContextCache() {
     if (contextCache != null && contextCache.eIsProxy()) {
     	InternalEObject oldcontextCache = (InternalEObject) contextCache;
@@ -145,7 +127,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return contextCache;
   }
 
-  @TruffleBoundary
   public void setFrameCache(Frame newFrameCache) {
     Frame oldFrameCache = frameCache;
     frameCache = newFrameCache;
@@ -153,7 +134,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.STATE__FRAME_CACHE, oldFrameCache, frameCache));
   }
 
-  @TruffleBoundary
   public Frame getFrameCache() {
     if (frameCache != null && frameCache.eIsProxy()) {
     	InternalEObject oldframeCache = (InternalEObject) frameCache;
@@ -167,11 +147,9 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return frameCache;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.STATE;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.STATE__ROOT_FRAME:
@@ -198,7 +176,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.STATE__ROOT_FRAME:
@@ -223,7 +200,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.STATE__ROOT_FRAME:
@@ -242,7 +218,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.STATE__ROOT_FRAME:
@@ -261,7 +236,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

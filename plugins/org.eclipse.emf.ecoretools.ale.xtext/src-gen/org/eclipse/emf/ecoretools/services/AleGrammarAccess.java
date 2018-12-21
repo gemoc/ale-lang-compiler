@@ -189,9 +189,11 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExtendsRQualifiedParserRuleCall_4_2_1_0 = (RuleCall)cExtendsAssignment_4_2_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cMutableKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cMutablesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cMutablesMutableRefParserRuleCall_6_1_0 = (RuleCall)cMutablesAssignment_6_1.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Keyword cMutableKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
+		private final Assignment cMutablesAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cMutablesMutableRefParserRuleCall_6_2_0 = (RuleCall)cMutablesAssignment_6_2.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_6_3 = (Keyword)cGroup_6.eContents().get(3);
 		private final Assignment cAttributesAssignment_7 = (Assignment)cGroup.eContents().get(7);
 		private final RuleCall cAttributesRAttributeParserRuleCall_7_0 = (RuleCall)cAttributesAssignment_7.eContents().get(0);
 		private final Assignment cOperationsAssignment_8 = (Assignment)cGroup.eContents().get(8);
@@ -200,13 +202,13 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//rOpenClass ExtendedClass:
 		//	'open' abstract?='abstract'? 'class' name=rQualified ('extends' extends+=rQualified (',' extends+=rQualified)*)? '{'
-		//	('mutable' mutables+=MutableRef*)?
+		//	('[' 'mutable' mutables+=MutableRef* ']')?
 		//	attributes+=rAttribute* operations+=rOperation*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'open' abstract?='abstract'? 'class' name=rQualified ('extends' extends+=rQualified (',' extends+=rQualified)*)? '{'
-		//('mutable' mutables+=MutableRef*)? attributes+=rAttribute* operations+=rOperation* '}'
+		//('[' 'mutable' mutables+=MutableRef* ']')? attributes+=rAttribute* operations+=rOperation* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//'open'
@@ -254,17 +256,23 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_5() { return cLeftCurlyBracketKeyword_5; }
 		
-		//('mutable' mutables+=MutableRef*)?
+		//('[' 'mutable' mutables+=MutableRef* ']')?
 		public Group getGroup_6() { return cGroup_6; }
 		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_6_0() { return cLeftSquareBracketKeyword_6_0; }
+		
 		//'mutable'
-		public Keyword getMutableKeyword_6_0() { return cMutableKeyword_6_0; }
+		public Keyword getMutableKeyword_6_1() { return cMutableKeyword_6_1; }
 		
 		//mutables+=MutableRef*
-		public Assignment getMutablesAssignment_6_1() { return cMutablesAssignment_6_1; }
+		public Assignment getMutablesAssignment_6_2() { return cMutablesAssignment_6_2; }
 		
 		//MutableRef
-		public RuleCall getMutablesMutableRefParserRuleCall_6_1_0() { return cMutablesMutableRefParserRuleCall_6_1_0; }
+		public RuleCall getMutablesMutableRefParserRuleCall_6_2_0() { return cMutablesMutableRefParserRuleCall_6_2_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_6_3() { return cRightSquareBracketKeyword_6_3; }
 		
 		//attributes+=rAttribute*
 		public Assignment getAttributesAssignment_7() { return cAttributesAssignment_7; }
@@ -2782,7 +2790,7 @@ public class AleGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//rOpenClass ExtendedClass:
 	//	'open' abstract?='abstract'? 'class' name=rQualified ('extends' extends+=rQualified (',' extends+=rQualified)*)? '{'
-	//	('mutable' mutables+=MutableRef*)?
+	//	('[' 'mutable' mutables+=MutableRef* ']')?
 	//	attributes+=rAttribute* operations+=rOperation*
 	//	'}';
 	public ROpenClassElements getROpenClassAccess() {

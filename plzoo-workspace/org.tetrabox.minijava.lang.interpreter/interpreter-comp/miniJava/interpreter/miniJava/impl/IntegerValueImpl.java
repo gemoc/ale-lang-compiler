@@ -25,11 +25,9 @@ public class IntegerValueImpl extends ValueImpl implements IntegerValue {
   public void setValue(int value) {
     this.value = value;}
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.INTEGER_VALUE;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.INTEGER_VALUE__VALUE:
@@ -39,7 +37,6 @@ public class IntegerValueImpl extends ValueImpl implements IntegerValue {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.INTEGER_VALUE__VALUE:
@@ -49,7 +46,6 @@ public class IntegerValueImpl extends ValueImpl implements IntegerValue {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.INTEGER_VALUE__VALUE:
@@ -58,7 +54,6 @@ public class IntegerValueImpl extends ValueImpl implements IntegerValue {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.INTEGER_VALUE__VALUE:
@@ -67,7 +62,6 @@ public class IntegerValueImpl extends ValueImpl implements IntegerValue {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

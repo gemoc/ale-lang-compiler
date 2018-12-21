@@ -5,7 +5,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -31,12 +30,8 @@ public class AssignImpl extends ExprImpl implements Assign {
   @Child
   protected Expr rhs;
 
-  @CompilationFinal
-  private AssignDispatchWrapperEval cachedEval;
-
   protected AssignImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.AssignDispatchWrapperEval(this);
   }
 
   public String getName() {
@@ -198,9 +193,5 @@ public class AssignImpl extends ExprImpl implements Assign {
         }
         ;
     return result;
-  }
-
-  public AssignDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

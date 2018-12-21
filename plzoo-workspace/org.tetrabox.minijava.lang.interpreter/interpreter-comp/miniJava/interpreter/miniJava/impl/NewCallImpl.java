@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.NewCall;
@@ -18,7 +17,6 @@ public class NewCallImpl extends CallImpl implements NewCall {
     super();
   }
 
-  @TruffleBoundary
   public void setNewz(NewObject newNewz) {
     NewObject oldNewz = newz;
     newz = newNewz;
@@ -26,7 +24,6 @@ public class NewCallImpl extends CallImpl implements NewCall {
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.NEW_CALL__NEWZ, oldNewz, newz));
   }
 
-  @TruffleBoundary
   public NewObject getNewz() {
     if (newz != null && newz.eIsProxy()) {
     	InternalEObject oldnewz = (InternalEObject) newz;
@@ -40,11 +37,9 @@ public class NewCallImpl extends CallImpl implements NewCall {
     return newz;
   }
 
-  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.NEW_CALL;}
 
-  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.NEW_CALL__NEWZ:
@@ -54,7 +49,6 @@ public class NewCallImpl extends CallImpl implements NewCall {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.NEW_CALL__NEWZ:
@@ -64,7 +58,6 @@ public class NewCallImpl extends CallImpl implements NewCall {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.NEW_CALL__NEWZ:
@@ -73,7 +66,6 @@ public class NewCallImpl extends CallImpl implements NewCall {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.NEW_CALL__NEWZ:
@@ -82,7 +74,6 @@ public class NewCallImpl extends CallImpl implements NewCall {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
