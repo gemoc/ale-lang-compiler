@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 public class FindUsedConcepts {
-	private final static String program = "/home/manuel/dev/java/ale-lang/genetics/insert_sort.boa.xmi";
-	private final static String metamodel = "/home/manuel/dev/java/ale-lang/plzoo/boa.model/model/boa.ecore";
+	private final static String program = "/home/manuel/dev/java/ale-lang/genetics-minijava/fib.minijava.xmi";
+	private final static String metamodel = "/home/manuel/dev/java/ale-lang/minijava/org.tetrabox.minijava.xtext/model/MiniJava.ecore";
 
 	public static void main(final String[] args) throws IOException {
 		final ResourceSetImpl rs = new ResourceSetImpl();
@@ -28,20 +28,34 @@ public class FindUsedConcepts {
 
 		final Resource metares = rs.getResource(URI.createURI(metamodel), true);
 
-		EPackage metapackage = (EPackage) metares.getContents().get(0);
+		final EPackage metapackage = (EPackage) metares.getContents().get(0);
 
-		EPackage.Registry.INSTANCE.put("http://www.example.org/boa", metapackage);
+		EPackage.Registry.INSTANCE.put("http://miniJava.miniJava.miniJava/", metapackage);
 
 		final Resource res = rs.getResource(URI.createURI(program), true);
 
-		Set<EClass> distinctEClasses = new HashSet<>();
+		final Set<EClass> distinctEClasses = addParents(initWithBaseClasses(res));
+
+		System.out.println(distinctEClasses.stream().map(x -> x.getName()).map(x -> "'" + x + "'")
+				.collect(Collectors.joining(", ", "[", "]")));
+
+	}
+
+	private static Set<EClass> addParents(final Set<EClass> distinctEClasses) {
+		final Set<EClass> distinctEClasses2 = new HashSet<>();
+		distinctEClasses2.addAll(distinctEClasses);
+		distinctEClasses.forEach(dec -> {
+			distinctEClasses2.addAll(dec.getEAllSuperTypes());
+		});
+		return distinctEClasses2;
+	}
+
+	private static Set<EClass> initWithBaseClasses(final Resource res) {
+		final Set<EClass> distinctEClasses = new HashSet<>();
 
 		res.getAllContents().forEachRemaining(c -> {
 			distinctEClasses.add(c.eClass());
 		});
-
-		System.out.println(distinctEClasses.stream().map(x -> x.getEPackage().getName() + "." + x.getName())
-				.map(x -> "'" + x + "'").collect(Collectors.joining(", ", "[", "]")));
-
+		return distinctEClasses;
 	}
 }
