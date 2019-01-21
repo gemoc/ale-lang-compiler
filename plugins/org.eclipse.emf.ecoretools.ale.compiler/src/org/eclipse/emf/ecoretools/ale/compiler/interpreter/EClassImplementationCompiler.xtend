@@ -731,13 +731,9 @@ class EClassImplementationCompiler {
 			.applyIfTrue(isTruffle, [addFields(registreredDispatch.toList.map[method|
 				FieldSpec
 					.builder(ClassName.get(implPackage, '''«(method.eContainer as ExtendedClass).normalizeExtendedClassName»Dispatch«method.operationRef.name.toFirstUpper»'''), '''dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper»''', PRIVATE)
+					.addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Child'))
 					.build
 			])])
-//			.addFields(whileOps.map[FieldSpec
-//				.builder(ClassName.get('com.oracle.truffle.api.nodes', 'LoopNode'), it.whileFieldName)
-//				.addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Child'))
-//				.addModifiers(PRIVATE).build
-//			])
 			.addMethod(MethodSpec.constructorBuilder.addCode('''
 				super();
 				«IF aleClass !== null»
@@ -745,7 +741,6 @@ class EClassImplementationCompiler {
 						this.cached«method.operationRef.name.toFirstUpper» = new «eClass.classImplementationPackageName(packageRoot)».«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»(this);
 					«ENDFOR»
 					«FOR w:whileOps»
-«««					this.«w.whileFieldName» = com.oracle.truffle.api.Truffle.getRuntime().createLoopNode(null);
 					«ENDFOR»
 				«ENDIF»
 				«IF isTruffle»
@@ -1068,7 +1063,7 @@ class EClassImplementationCompiler {
 						ClassName.get((parameter.EType as EClass).classInterfacePackageName(packageRoot),
 							(parameter.EType as EClass).name)
 					} else {
-						parameter.EType.instanceClass
+						ClassName.get(parameter.EType.instanceClass)
 					}
 				} else {
 					parameter.EType.resolveType

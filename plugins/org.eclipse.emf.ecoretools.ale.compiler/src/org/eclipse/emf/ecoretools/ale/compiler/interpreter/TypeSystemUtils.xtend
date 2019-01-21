@@ -37,7 +37,11 @@ class TypeSystemUtils {
 	}
 
 	def dispatch solveType(EDataType edt) {
-		edt.instanceClass
+		if(edt.instanceClass.primitive) {
+			edt.instanceClass
+		} else {
+			ClassName.get(edt.instanceClass)
+		}
 	}
 
 	def resolveType(EClassifier e) {
