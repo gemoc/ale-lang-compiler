@@ -29,7 +29,7 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     super();
   }
 
-  @TruffleBoundary
+  
   public void setCondition(Expression newCondition) {
     if (newCondition != condition) {
     	NotificationChain msgs = null;
@@ -44,7 +44,7 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__CONDITION, newCondition, newCondition));
   }
 
-  @TruffleBoundary
+  
   public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
     Expression oldCondition = condition;
     condition = newCondition;
@@ -55,12 +55,12 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     return msgs;
   }
 
-  @TruffleBoundary
+  
   public Expression getCondition() {
     return condition;
   }
 
-  @TruffleBoundary
+  
   public void setBlock(Block newBlock) {
     if (newBlock != block) {
     	NotificationChain msgs = null;
@@ -75,7 +75,7 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__BLOCK, newBlock, newBlock));
   }
 
-  @TruffleBoundary
+  
   public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
     Block oldBlock = block;
     block = newBlock;
@@ -86,16 +86,16 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     return msgs;
   }
 
-  @TruffleBoundary
+  
   public Block getBlock() {
     return block;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.WHILE_STATEMENT;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.WHILE_STATEMENT__CONDITION:
@@ -108,7 +108,7 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.WHILE_STATEMENT__CONDITION:
@@ -121,7 +121,7 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.WHILE_STATEMENT__CONDITION:
@@ -132,7 +132,7 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.WHILE_STATEMENT__CONDITION:
@@ -143,7 +143,7 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

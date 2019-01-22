@@ -24,7 +24,7 @@ public class TypedDeclarationImpl extends NamedElementImpl implements TypedDecla
     super();
   }
 
-  @TruffleBoundary
+  
   public void setTypeRef(TypeRef newTypeRef) {
     if (newTypeRef != typeRef) {
     	NotificationChain msgs = null;
@@ -39,7 +39,7 @@ public class TypedDeclarationImpl extends NamedElementImpl implements TypedDecla
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.TYPED_DECLARATION__TYPE_REF, newTypeRef, newTypeRef));
   }
 
-  @TruffleBoundary
+  
   public NotificationChain basicSetTypeRef(TypeRef newTypeRef, NotificationChain msgs) {
     TypeRef oldTypeRef = typeRef;
     typeRef = newTypeRef;
@@ -50,16 +50,16 @@ public class TypedDeclarationImpl extends NamedElementImpl implements TypedDecla
     return msgs;
   }
 
-  @TruffleBoundary
+  
   public TypeRef getTypeRef() {
     return typeRef;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.TYPED_DECLARATION;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.TYPED_DECLARATION__TYPE_REF:
@@ -69,7 +69,7 @@ public class TypedDeclarationImpl extends NamedElementImpl implements TypedDecla
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.TYPED_DECLARATION__TYPE_REF:
@@ -79,7 +79,7 @@ public class TypedDeclarationImpl extends NamedElementImpl implements TypedDecla
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.TYPED_DECLARATION__TYPE_REF:
@@ -88,7 +88,7 @@ public class TypedDeclarationImpl extends NamedElementImpl implements TypedDecla
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.TYPED_DECLARATION__TYPE_REF:
@@ -97,7 +97,7 @@ public class TypedDeclarationImpl extends NamedElementImpl implements TypedDecla
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

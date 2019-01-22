@@ -1,0 +1,108 @@
+behavior fsm_exec;
+
+use fsm.FsmService;
+
+open class System {
+	def void intialize() {
+		for(fsm in self.ownedFsms) {
+			fsm.initialize();
+		}
+		for(b in self.ownedBuffers) {
+			b.initialize();
+		}
+	}
+	
+	def void main() {
+		self.intialize();
+		boolean anFSMRan := true;
+		while(anFSMRan) {
+			anFSMRan := false;
+			for(fsm in self.ownedFsms) {
+				if(fsm.inputBuffer.bisEmpty()) {
+					fsm.run();
+					anFSMRan = true;
+				}
+			}
+		}
+	}
+}
+
+open class FSM {
+	def void initialize() {
+		self.currentState := self.initialState;
+		self.underProcessTrigger := '';
+	}
+	
+	def void run() {
+		self.underProcessTrigger = self.inputBuffer.dequeue();
+		('run SM'+self.name+' step on '+self.underProcessTrigger).log();
+		self.currentState.step(self.underProcessTrigger);
+		self.underProcessTrigger = '';
+	}
+}
+
+open class State {
+	def void step(String inputString) {
+		Sequence(String) validTransitions := self.outgoing->select(t | inputString == t.trigger);
+		
+		if(validTransitions->size() == 0) {
+			//just copy the token to the output buffer
+			self.getFsm().outputBuffer.enqueue(inputString);
+		}
+		
+		if(validTransitions->size() > 1) {
+			'Non Determinism'.log();
+		}
+		
+		// Fire transition first transition (could be random%VT.size)
+		if(validTransitions->size() == 1){
+			validTransitions->at(0).fire();
+		}
+	}
+}
+
+open class Transition {
+	def void fire() {
+		('Firing ' + self.name + ' and entering ' + self.tgt.name).log();
+		FSM fsm := self.src.fsm;
+		fsm.currentState := self.tgt;
+		fsm.outputBuffer.enqueue(self.action);
+		fsm.consummedString := fsm.consummedString + fsm.underProcessTrigger;
+	} 
+}
+
+open class Buffer {
+	def void initialize() {
+		if(self.initialValue != null) {
+			self.currentValues := self.initialValue;
+		} else {
+			self.currentValues :=  '\'empty\'';
+		}
+	}
+	
+	def boolean bisEmpty() {
+		result := self.currentValues->size() == 0 or self.currentValues == '\'empty\'';
+	}
+	
+	def void enqueue(String v) {
+		if(self.bisEmpty()) {
+			self.currentValues := v;
+		} else {
+			self.currentValues := self.currentValues + ',' + v;
+		}
+	}
+	
+	def String dequeue() {
+		String res := '';
+		int firstComma := self.currentValues.indexOf(',');
+		if(firstComma < 0) {
+			res := self.currentValues;
+			self.currentValues := '\'empty\'';
+			result := res;
+		} else {
+			res := self.currentValues.substring(0, firstComma);
+			self.currentValues := self.currentValues.substring(firstComma + 1, self.currentValues->size());
+			result := res;
+		}
+	}
+}

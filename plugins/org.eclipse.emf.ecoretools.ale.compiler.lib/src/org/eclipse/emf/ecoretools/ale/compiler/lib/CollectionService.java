@@ -26,7 +26,14 @@ public class CollectionService {
 
 		return ret;
 	}
-	
+
+	@TruffleBoundary
+	public static <T> int size(final String s) {
+		if (s == null)
+			return 0;
+		return s.length();
+	}
+
 	@TruffleBoundary
 	public static <T> int size(final T[] collection) {
 		return collection.length;
@@ -41,7 +48,7 @@ public class CollectionService {
 		}
 		return ret;
 	}
-	
+
 	@TruffleBoundary
 	public static <T> boolean exists(final T[] collection, final Function<? super T, Boolean> filter) {
 		for (final T e : collection) {
@@ -65,7 +72,7 @@ public class CollectionService {
 		}
 		return ret;
 	}
-	
+
 	@TruffleBoundary
 	public static <T> boolean exists(final Iterable<T> collection, final Function<? super T, Boolean> filter) {
 		for (final T e : collection) {
@@ -122,6 +129,11 @@ public class CollectionService {
 			return false;
 		else
 			return true;
+	}
+
+	@TruffleBoundary
+	public static <T> boolean isEmpty(final String s) {
+		return s.isEmpty();
 	}
 
 	@TruffleBoundary

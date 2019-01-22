@@ -18,7 +18,7 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
     super();
   }
 
-  @TruffleBoundary
+  
   public void setMethodcall(MethodCall newMethodcall) {
     MethodCall oldMethodcall = methodcall;
     methodcall = newMethodcall;
@@ -26,7 +26,7 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.METHOD_CALL2__METHODCALL, oldMethodcall, methodcall));
   }
 
-  @TruffleBoundary
+  
   public MethodCall getMethodcall() {
     if (methodcall != null && methodcall.eIsProxy()) {
     	InternalEObject oldmethodcall = (InternalEObject) methodcall;
@@ -40,11 +40,11 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
     return methodcall;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.METHOD_CALL2;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.METHOD_CALL2__METHODCALL:
@@ -54,7 +54,7 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.METHOD_CALL2__METHODCALL:
@@ -64,7 +64,7 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.METHOD_CALL2__METHODCALL:
@@ -73,7 +73,7 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.METHOD_CALL2__METHODCALL:
@@ -82,7 +82,7 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

@@ -167,14 +167,14 @@ open class WhileStatement {
 }
 
 open class Return {
-	def dispatch void evaluateStatement(miniJava::State state) {
+	def void evaluateStatement(miniJava::State state) { // dispatch
 		miniJava::Value value := self.expression.evaluateExpression(state);
 		state.findCurrentFrame().returnValue := value;
 	}
 }
 
 open class Method {
-	def dispatch void evaluateStatement(miniJava::State state) {
+	def  void evaluateStatement(miniJava::State state) { // dispatch
 		self.body.evaluateStatement(state);
 	}
 	
@@ -224,7 +224,7 @@ open class Method {
 		}
 	}
 	
-	def dispatch void call(State state) {
+	def  void call(State state) { // dispatch
 		self.body.evaluateStatement(state);
 	}
 }

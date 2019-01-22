@@ -24,7 +24,7 @@ public class FieldImpl extends MemberImpl implements Field {
     super();
   }
 
-  @TruffleBoundary
+  
   public void setDefaultValue(Expression newDefaultValue) {
     if (newDefaultValue != defaultValue) {
     	NotificationChain msgs = null;
@@ -39,7 +39,7 @@ public class FieldImpl extends MemberImpl implements Field {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.FIELD__DEFAULT_VALUE, newDefaultValue, newDefaultValue));
   }
 
-  @TruffleBoundary
+  
   public NotificationChain basicSetDefaultValue(Expression newDefaultValue,
       NotificationChain msgs) {
     Expression oldDefaultValue = defaultValue;
@@ -51,16 +51,16 @@ public class FieldImpl extends MemberImpl implements Field {
     return msgs;
   }
 
-  @TruffleBoundary
+  
   public Expression getDefaultValue() {
     return defaultValue;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FIELD;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.FIELD__DEFAULT_VALUE:
@@ -70,7 +70,7 @@ public class FieldImpl extends MemberImpl implements Field {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FIELD__DEFAULT_VALUE:
@@ -80,7 +80,7 @@ public class FieldImpl extends MemberImpl implements Field {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.FIELD__DEFAULT_VALUE:
@@ -89,7 +89,7 @@ public class FieldImpl extends MemberImpl implements Field {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FIELD__DEFAULT_VALUE:
@@ -98,7 +98,7 @@ public class FieldImpl extends MemberImpl implements Field {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

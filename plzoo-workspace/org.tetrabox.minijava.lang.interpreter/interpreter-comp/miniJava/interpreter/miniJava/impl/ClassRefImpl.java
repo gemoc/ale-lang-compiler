@@ -23,7 +23,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     super();
   }
 
-  @TruffleBoundary
+  
   public void setReferencedClass(TypeDeclaration newReferencedClass) {
     TypeDeclaration oldReferencedClass = referencedClass;
     referencedClass = newReferencedClass;
@@ -31,7 +31,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.CLASS_REF__REFERENCED_CLASS, oldReferencedClass, referencedClass));
   }
 
-  @TruffleBoundary
+  
   public TypeDeclaration getReferencedClass() {
     if (referencedClass != null && referencedClass.eIsProxy()) {
     	InternalEObject oldreferencedClass = (InternalEObject) referencedClass;
@@ -45,11 +45,11 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     return referencedClass;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.CLASS_REF;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.CLASS_REF__REFERENCED_CLASS:
@@ -59,7 +59,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.CLASS_REF__REFERENCED_CLASS:
@@ -69,7 +69,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.CLASS_REF__REFERENCED_CLASS:
@@ -78,7 +78,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.CLASS_REF__REFERENCED_CLASS:
@@ -87,7 +87,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

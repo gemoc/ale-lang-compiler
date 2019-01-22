@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Benchmark
+Bundle-SymbolicName: fsm.lang.interpreter.benchmark
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: fsm.lang.interpreter.benchmark
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: fsm.lang.interpreter;bundle-version="1.0.0",
+ org.eclipse.emf.common;bundle-version="2.14.0",
+ org.eclipse.emf.ecore;bundle-version="2.14.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.14.0"

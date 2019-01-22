@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Interpreter
+Bundle-SymbolicName: fsm.lang.interpreter
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: fsm.lang.interpreter
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: fsm.interpreter.fsm,
+ fsm.interpreter.fsm.impl

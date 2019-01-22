@@ -1,6 +1,7 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Block;
@@ -23,7 +24,7 @@ public class BlockImpl extends StatementImpl implements Block {
     super();
   }
 
-  @TruffleBoundary
+  
   public EList<Statement> getStatements() {
     if(statements == null) {
     	statements = new EObjectContainmentEList<Statement>(miniJava.interpreter.miniJava.Statement.class, this, MiniJavaPackage.BLOCK__STATEMENTS);
@@ -31,11 +32,11 @@ public class BlockImpl extends StatementImpl implements Block {
     return statements;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.BLOCK;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.BLOCK__STATEMENTS:
@@ -46,7 +47,7 @@ public class BlockImpl extends StatementImpl implements Block {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.BLOCK__STATEMENTS:
@@ -56,7 +57,7 @@ public class BlockImpl extends StatementImpl implements Block {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.BLOCK__STATEMENTS:
@@ -65,7 +66,7 @@ public class BlockImpl extends StatementImpl implements Block {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.BLOCK__STATEMENTS:
@@ -74,7 +75,7 @@ public class BlockImpl extends StatementImpl implements Block {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -85,12 +86,13 @@ public class BlockImpl extends StatementImpl implements Block {
   }
 
   public void evaluateStatementKeepContext(State state) {
+  
     state.pushNewContext();
         miniJava.interpreter.miniJava.Frame currentFrame = ((miniJava.interpreter.miniJava.Frame)state.findCurrentFrame());
-        int lgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.statements));
+        int lgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getStatements()));
         int i = ((int)0);
         while ((((i) < (lgt)) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((currentFrame.getReturnValue()), (null))))) {
-          org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.statements, i).evaluateStatement(state);
+          org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.getStatements(), i).evaluateStatement(state);
           i = (i) + (1);
         }
         ;

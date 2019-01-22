@@ -2,6 +2,7 @@ package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
+import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
@@ -29,15 +30,11 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
 
   protected EList<Expression> args;
 
-  
-  private MethodDispatchCall dispatchMethodCall;
-
   protected MethodCallImpl() {
     super();
-    this.dispatchMethodCall = miniJava.interpreter.miniJava.impl.MethodDispatchCallNodeGen.create(); 
   }
 
-  @TruffleBoundary
+  
   public void setReceiver(Expression newReceiver) {
     if (newReceiver != receiver) {
     	NotificationChain msgs = null;
@@ -52,7 +49,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.METHOD_CALL__RECEIVER, newReceiver, newReceiver));
   }
 
-  @TruffleBoundary
+  
   public NotificationChain basicSetReceiver(Expression newReceiver, NotificationChain msgs) {
     Expression oldReceiver = receiver;
     receiver = newReceiver;
@@ -63,12 +60,12 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     return msgs;
   }
 
-  @TruffleBoundary
+  
   public Expression getReceiver() {
     return receiver;
   }
 
-  @TruffleBoundary
+  
   public void setMethod(Method newMethod) {
     Method oldMethod = method;
     method = newMethod;
@@ -76,7 +73,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.METHOD_CALL__METHOD, oldMethod, method));
   }
 
-  @TruffleBoundary
+  
   public Method getMethod() {
     if (method != null && method.eIsProxy()) {
     	InternalEObject oldmethod = (InternalEObject) method;
@@ -90,7 +87,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     return method;
   }
 
-  @TruffleBoundary
+  
   public EList<Expression> getArgs() {
     if(args == null) {
     	args = new EObjectContainmentEList<Expression>(miniJava.interpreter.miniJava.Expression.class, this, MiniJavaPackage.METHOD_CALL__ARGS);
@@ -98,11 +95,11 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     return args;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.METHOD_CALL;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.METHOD_CALL__RECEIVER:
@@ -119,7 +116,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.METHOD_CALL__RECEIVER:
@@ -135,7 +132,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.METHOD_CALL__RECEIVER:
@@ -148,7 +145,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.METHOD_CALL__RECEIVER:
@@ -161,7 +158,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -175,6 +172,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
 
   public Value evaluateExpression(State state) {
     Value result;
+
     miniJava.interpreter.miniJava.ObjectRefValue realReceiver0 = ((miniJava.interpreter.miniJava.ObjectRefValue)this.receiver.evaluateExpression(state));
         miniJava.interpreter.miniJava.ObjectInstance realReceiver = ((miniJava.interpreter.miniJava.ObjectInstance)realReceiver0.getInstance());
         miniJava.interpreter.miniJava.Method realMethod = ((miniJava.interpreter.miniJava.Method)this.getMethod().findOverride(realReceiver.getType()));
@@ -182,7 +180,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
         int argsLength = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getArgs()));
         int i = ((int)0);
         while ((i) < (argsLength)) {
-          miniJava.interpreter.miniJava.Expression arg = ((miniJava.interpreter.miniJava.Expression)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.args, i));
+          miniJava.interpreter.miniJava.Expression arg = ((miniJava.interpreter.miniJava.Expression)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.getArgs(), i));
           miniJava.interpreter.miniJava.Parameter param = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(realMethod.getParams(), i));
           miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createSymbolBinding());
           binding.setSymbol(param);
@@ -202,7 +200,8 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
   }
 
   public void call(Method realMethod, State state) {
-    dispatchMethodCall.executeDispatch(realMethod.getCachedCall(), new Object[] {state});
+
+    realMethod.call(state);
         ;
   }
 }

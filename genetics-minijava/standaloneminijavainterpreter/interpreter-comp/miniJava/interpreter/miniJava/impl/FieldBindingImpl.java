@@ -1,20 +1,19 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import java.lang.Object;
+import miniJava.interpreter.miniJava.Field;
+import miniJava.interpreter.miniJava.FieldBinding;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-
-import miniJava.interpreter.miniJava.Field;
-import miniJava.interpreter.miniJava.FieldBinding;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.Value;
-
-public class FieldBindingImpl extends MinimalEObjectImpl.Container implements FieldBinding {
+public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements FieldBinding {
   protected Field field;
 
   protected Value value;
@@ -23,7 +22,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     super();
   }
 
-  @TruffleBoundary
+  
   public void setField(Field newField) {
     Field oldField = field;
     field = newField;
@@ -31,7 +30,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FIELD_BINDING__FIELD, oldField, field));
   }
 
-  @TruffleBoundary
+  
   public Field getField() {
     if (field != null && field.eIsProxy()) {
     	InternalEObject oldfield = (InternalEObject) field;
@@ -45,7 +44,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     return field;
   }
 
-  @TruffleBoundary
+  
   public void setValue(Value newValue) {
     if (newValue != value) {
     	NotificationChain msgs = null;
@@ -60,7 +59,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.FIELD_BINDING__VALUE, newValue, newValue));
   }
 
-  @TruffleBoundary
+  
   public NotificationChain basicSetValue(Value newValue, NotificationChain msgs) {
     Value oldValue = value;
     value = newValue;
@@ -71,16 +70,16 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     return msgs;
   }
 
-  @TruffleBoundary
+  
   public Value getValue() {
     return value;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FIELD_BINDING;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_BINDING__FIELD:
@@ -93,7 +92,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_BINDING__FIELD:
@@ -106,7 +105,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_BINDING__FIELD:
@@ -117,7 +116,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_BINDING__FIELD:
@@ -128,7 +127,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

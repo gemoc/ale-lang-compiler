@@ -257,7 +257,7 @@ class EClassImplementationCompiler {
 									if (eInternalContainer() != null)
 										msgs = eBasicRemoveFromContainer(msgs);
 									if («newName» != null)
-										msgs = (($5T)«newName»).eInverseAdd(this, $1T.«field.EOpposite.name.normalizeUpperField(eClass.name)» , $6T.class, msgs);
+										msgs = (($5T)«newName»).eInverseAdd(this, $1T.«field.EOpposite.name.normalizeUpperField(field.name)» , $6T.class, msgs);
 									msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
 									if (msgs != null) msgs.dispatch();
 								}

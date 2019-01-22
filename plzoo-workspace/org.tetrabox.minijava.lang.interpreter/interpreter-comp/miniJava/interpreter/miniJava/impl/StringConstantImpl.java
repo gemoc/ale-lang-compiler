@@ -30,11 +30,11 @@ public class StringConstantImpl extends ExpressionImpl implements StringConstant
   public void setValue(String value) {
     this.value = value;}
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.STRING_CONSTANT;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.STRING_CONSTANT__VALUE:
@@ -44,7 +44,7 @@ public class StringConstantImpl extends ExpressionImpl implements StringConstant
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.STRING_CONSTANT__VALUE:
@@ -54,7 +54,7 @@ public class StringConstantImpl extends ExpressionImpl implements StringConstant
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.STRING_CONSTANT__VALUE:
@@ -63,7 +63,7 @@ public class StringConstantImpl extends ExpressionImpl implements StringConstant
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.STRING_CONSTANT__VALUE:
@@ -72,7 +72,7 @@ public class StringConstantImpl extends ExpressionImpl implements StringConstant
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

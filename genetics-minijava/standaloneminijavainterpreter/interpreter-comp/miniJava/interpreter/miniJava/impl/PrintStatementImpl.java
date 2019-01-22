@@ -25,7 +25,7 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     super();
   }
 
-  @TruffleBoundary
+  
   public void setExpression(Expression newExpression) {
     if (newExpression != expression) {
     	NotificationChain msgs = null;
@@ -40,7 +40,7 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.PRINT_STATEMENT__EXPRESSION, newExpression, newExpression));
   }
 
-  @TruffleBoundary
+  
   public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
     Expression oldExpression = expression;
     expression = newExpression;
@@ -51,16 +51,16 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     return msgs;
   }
 
-  @TruffleBoundary
+  
   public Expression getExpression() {
     return expression;
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.PRINT_STATEMENT;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.PRINT_STATEMENT__EXPRESSION:
@@ -70,7 +70,7 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.PRINT_STATEMENT__EXPRESSION:
@@ -80,7 +80,7 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.PRINT_STATEMENT__EXPRESSION:
@@ -89,7 +89,7 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.PRINT_STATEMENT__EXPRESSION:
@@ -98,7 +98,7 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

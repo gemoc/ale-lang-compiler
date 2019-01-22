@@ -1,22 +1,22 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
+import java.lang.Object;
+import java.lang.String;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.OutputStream;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
-
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
-
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.OutputStream;
+import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
 @NodeInfo(
     description = "OutputStream"
 )
-public class OutputStreamImpl extends MinimalEObjectImpl.Container implements OutputStream {
+public class OutputStreamImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements OutputStream {
   protected EList<String> stream;
 
   protected OutputStreamImpl() {
@@ -30,11 +30,11 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
     return stream;					
   }
 
-  @TruffleBoundary
+  
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.OUTPUT_STREAM;}
 
-  @TruffleBoundary
+  
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.OUTPUT_STREAM__STREAM:
@@ -45,7 +45,7 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
     super.eSet(featureID, newValue);
   }
 
-  @TruffleBoundary
+  
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OUTPUT_STREAM__STREAM:
@@ -55,7 +55,7 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
     super.eUnset(featureID);
   }
 
-  @TruffleBoundary
+  
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.OUTPUT_STREAM__STREAM:
@@ -64,7 +64,7 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
     return super.eGet(featureID, resolve, coreType);
   }
 
-  @TruffleBoundary
+  
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OUTPUT_STREAM__STREAM:
@@ -73,7 +73,7 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
     return super.eIsSet(featureID);
   }
 
-  @TruffleBoundary
+  
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

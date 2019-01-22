@@ -104,8 +104,13 @@ class AleBodyCompiler {
 
 		val inft = body.initialValue.infereType.head
 		if (inft instanceof SequenceType) {
-			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
+			val ict = inft.collectionType.type
+			val t = if(ict instanceof EClass) {
+				ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"), ict.resolveType)
+			} else {
+			ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
+			}
 			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression(ctx)»)''', t, body.name, t)
 		} else {
 			val t = body.type.solveType
