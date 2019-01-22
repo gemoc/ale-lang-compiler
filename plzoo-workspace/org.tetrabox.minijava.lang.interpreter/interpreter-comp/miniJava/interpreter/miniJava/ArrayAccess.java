@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
-import miniJava.interpreter.miniJava.impl.ArrayAccessDispatchWrapperEvaluateExpression;
 import org.eclipse.emf.ecore.EObject;
 
 public interface ArrayAccess extends EObject, NodeInterface, Expression {
@@ -14,6 +13,4 @@ public interface ArrayAccess extends EObject, NodeInterface, Expression {
   void setIndex(Expression value);
 
   Value evaluateExpression(State state);
-
-  ArrayAccessDispatchWrapperEvaluateExpression getCachedEvaluateExpression();
 }

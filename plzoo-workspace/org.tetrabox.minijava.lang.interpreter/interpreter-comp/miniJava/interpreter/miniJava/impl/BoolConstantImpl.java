@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -21,12 +20,8 @@ public class BoolConstantImpl extends ExpressionImpl implements BoolConstant {
 
   protected String value = VALUE_EDEFAULT;
 
-  @CompilationFinal
-  private BoolConstantDispatchWrapperEvaluateExpression cachedEvaluateExpression;
-
   protected BoolConstantImpl() {
     super();
-    this.cachedEvaluateExpression = new miniJava.interpreter.miniJava.impl.BoolConstantDispatchWrapperEvaluateExpression(this);
   }
 
   public String getValue() {
@@ -92,9 +87,5 @@ public class BoolConstantImpl extends ExpressionImpl implements BoolConstant {
         result = ret;
         ;
     return result;
-  }
-
-  public BoolConstantDispatchWrapperEvaluateExpression getCachedEvaluateExpression() {
-    return this.cachedEvaluateExpression;
   }
 }

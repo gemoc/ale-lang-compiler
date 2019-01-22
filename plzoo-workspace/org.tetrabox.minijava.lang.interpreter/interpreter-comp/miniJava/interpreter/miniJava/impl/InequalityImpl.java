@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -20,18 +19,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Inequality"
 )
 public class InequalityImpl extends ExpressionImpl implements Inequality {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
-
-  @CompilationFinal
-  private InequalityDispatchWrapperEvaluateExpression cachedEvaluateExpression;
 
   protected InequalityImpl() {
     super();
-    this.cachedEvaluateExpression = new miniJava.interpreter.miniJava.impl.InequalityDispatchWrapperEvaluateExpression(this);
   }
 
   @TruffleBoundary
@@ -211,9 +206,5 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
         result = tmpo;
         ;
     return result;
-  }
-
-  public InequalityDispatchWrapperEvaluateExpression getCachedEvaluateExpression() {
-    return this.cachedEvaluateExpression;
   }
 }

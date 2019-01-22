@@ -20,10 +20,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "NewArray"
 )
 public class NewArrayImpl extends ExpressionImpl implements NewArray {
-  @Child
+  
   protected TypeRef type;
 
-  @Child
+  
   protected Expression size;
 
   protected NewArrayImpl() {

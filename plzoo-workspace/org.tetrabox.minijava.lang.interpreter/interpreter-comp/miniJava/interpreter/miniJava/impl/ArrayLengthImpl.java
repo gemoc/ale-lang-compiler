@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "ArrayLength"
 )
 public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
-  @Child
+  
   protected Expression array;
 
   protected ArrayLengthImpl() {

@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Minus"
 )
 public class MinusImpl extends ExpressionImpl implements Minus {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected MinusImpl() {

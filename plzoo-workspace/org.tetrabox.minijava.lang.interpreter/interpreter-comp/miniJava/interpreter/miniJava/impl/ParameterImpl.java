@@ -1,8 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
@@ -15,16 +13,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Parameter"
 )
 public class ParameterImpl extends SymbolImpl implements Parameter {
-  @CompilationFinal
-  private ParameterDispatchWrapperCompare cachedCompare;
-
-  @Child
-  private TypeRefDispatchCompare dispatchTypeRefCompare;
-
   protected ParameterImpl() {
     super();
-    this.cachedCompare = new miniJava.interpreter.miniJava.impl.ParameterDispatchWrapperCompare(this);
-    this.dispatchTypeRefCompare = miniJava.interpreter.miniJava.impl.TypeRefDispatchCompareNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -69,12 +59,8 @@ public class ParameterImpl extends SymbolImpl implements Parameter {
 
   public boolean compare(Parameter other) {
     boolean result;
-    result = ((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.name), (other.getName()))) && (((boolean)dispatchTypeRefCompare.executeDispatch(this.typeRef.getCachedCompare(), new Object[] {other.getTypeRef()}))));
+    result = ((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.name), (other.getName()))) && (this.typeRef.compare(other.getTypeRef())));
         ;
     return result;
-  }
-
-  public ParameterDispatchWrapperCompare getCachedCompare() {
-    return this.cachedCompare;
   }
 }

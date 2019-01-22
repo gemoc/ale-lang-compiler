@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -20,18 +19,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Equality"
 )
 public class EqualityImpl extends ExpressionImpl implements Equality {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
-
-  @CompilationFinal
-  private EqualityDispatchWrapperEvaluateExpression cachedEvaluateExpression;
 
   protected EqualityImpl() {
     super();
-    this.cachedEvaluateExpression = new miniJava.interpreter.miniJava.impl.EqualityDispatchWrapperEvaluateExpression(this);
   }
 
   @TruffleBoundary
@@ -211,9 +206,5 @@ public class EqualityImpl extends ExpressionImpl implements Equality {
         result = tmpo;
         ;
     return result;
-  }
-
-  public EqualityDispatchWrapperEvaluateExpression getCachedEvaluateExpression() {
-    return this.cachedEvaluateExpression;
   }
 }

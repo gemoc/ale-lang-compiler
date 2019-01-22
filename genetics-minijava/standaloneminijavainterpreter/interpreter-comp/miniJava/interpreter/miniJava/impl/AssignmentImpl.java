@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Assignment"
 )
 public class AssignmentImpl extends StatementImpl implements Assignment {
-  @Child
+  
   protected Assignee assignee;
 
-  @Child
+  
   protected Expression value;
 
   protected AssignmentImpl() {

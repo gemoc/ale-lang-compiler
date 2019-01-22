@@ -20,16 +20,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "ForStatement"
 )
 public class ForStatementImpl extends StatementImpl implements ForStatement {
-  @Child
+  
   protected Assignment declaration;
 
-  @Child
+  
   protected Expression condition;
 
-  @Child
+  
   protected Assignment progression;
 
-  @Child
+  
   protected Block block;
 
   protected ForStatementImpl() {

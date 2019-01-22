@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Inequality"
 )
 public class InequalityImpl extends ExpressionImpl implements Inequality {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected InequalityImpl() {

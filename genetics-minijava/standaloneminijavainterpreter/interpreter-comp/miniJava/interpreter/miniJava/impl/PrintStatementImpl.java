@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "PrintStatement"
 )
 public class PrintStatementImpl extends StatementImpl implements PrintStatement {
-  @Child
+  
   protected Expression expression;
 
   protected PrintStatementImpl() {

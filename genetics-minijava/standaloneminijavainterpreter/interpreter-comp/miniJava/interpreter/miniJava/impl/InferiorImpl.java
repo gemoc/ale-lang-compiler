@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Inferior"
 )
 public class InferiorImpl extends ExpressionImpl implements Inferior {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected InferiorImpl() {

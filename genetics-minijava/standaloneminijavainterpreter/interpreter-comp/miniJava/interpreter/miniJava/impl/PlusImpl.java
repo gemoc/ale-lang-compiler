@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Plus"
 )
 public class PlusImpl extends ExpressionImpl implements Plus {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected PlusImpl() {

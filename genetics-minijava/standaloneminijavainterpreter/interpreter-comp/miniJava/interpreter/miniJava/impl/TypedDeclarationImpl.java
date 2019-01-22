@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "TypedDeclaration"
 )
 public class TypedDeclarationImpl extends NamedElementImpl implements TypedDeclaration {
-  @Child
+  
   protected TypeRef typeRef;
 
   protected TypedDeclarationImpl() {

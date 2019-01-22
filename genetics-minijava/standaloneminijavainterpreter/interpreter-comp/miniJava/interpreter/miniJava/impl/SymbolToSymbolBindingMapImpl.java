@@ -1,23 +1,24 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
-import java.lang.Object;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.Symbol;
-import miniJava.interpreter.miniJava.SymbolBinding;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
+
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolBinding;
 
 @NodeInfo(
     description = "SymbolToSymbolBindingMap"
 )
-public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements BasicEMap.Entry<Symbol, SymbolBinding> {
+public class SymbolToSymbolBindingMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<Symbol, SymbolBinding> {
   protected Symbol key;
 
   protected SymbolBinding value;

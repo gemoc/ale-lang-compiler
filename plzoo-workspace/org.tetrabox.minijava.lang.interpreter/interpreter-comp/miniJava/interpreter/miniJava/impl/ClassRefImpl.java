@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -20,12 +19,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
   protected TypeDeclaration referencedClass;
 
-  @CompilationFinal
-  private ClassRefDispatchWrapperCompare cachedCompare;
-
   protected ClassRefImpl() {
     super();
-    this.cachedCompare = new miniJava.interpreter.miniJava.impl.ClassRefDispatchWrapperCompare(this);
   }
 
   @TruffleBoundary
@@ -111,9 +106,5 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
         }
         ;
     return result;
-  }
-
-  public ClassRefDispatchWrapperCompare getCachedCompare() {
-    return this.cachedCompare;
   }
 }

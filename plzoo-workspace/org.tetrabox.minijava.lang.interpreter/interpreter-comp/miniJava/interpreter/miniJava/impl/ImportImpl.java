@@ -1,20 +1,20 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
-import java.lang.Object;
-import java.lang.String;
-import miniJava.interpreter.miniJava.Import;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
+
+import miniJava.interpreter.miniJava.Import;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
 
 @NodeInfo(
     description = "Import"
 )
-public class ImportImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Import {
+public class ImportImpl extends MinimalEObjectImpl.Container implements Import {
   protected static final String IMPORTEDNAMESPACE_EDEFAULT = null;
 
   protected String importedNamespace = IMPORTEDNAMESPACE_EDEFAULT;

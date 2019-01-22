@@ -19,13 +19,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "IfStatement"
 )
 public class IfStatementImpl extends StatementImpl implements IfStatement {
-  @Child
+  
   protected Expression expression;
 
-  @Child
+  
   protected Block thenBlock;
 
-  @Child
+  
   protected Block elseBlock;
 
   protected IfStatementImpl() {

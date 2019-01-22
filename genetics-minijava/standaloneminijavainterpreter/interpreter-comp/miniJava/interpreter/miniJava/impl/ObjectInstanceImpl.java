@@ -1,21 +1,22 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import java.lang.Object;
-import miniJava.interpreter.miniJava.Clazz;
-import miniJava.interpreter.miniJava.FieldBinding;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.ObjectInstance;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements ObjectInstance {
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+
+import miniJava.interpreter.miniJava.Clazz;
+import miniJava.interpreter.miniJava.FieldBinding;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
+
+public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements ObjectInstance {
   protected EList<FieldBinding> fieldbindings;
 
   protected Clazz type;

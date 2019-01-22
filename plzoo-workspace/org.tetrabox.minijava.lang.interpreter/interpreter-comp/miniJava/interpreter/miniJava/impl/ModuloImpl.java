@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Modulo"
 )
 public class ModuloImpl extends ExpressionImpl implements Modulo {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected ModuloImpl() {

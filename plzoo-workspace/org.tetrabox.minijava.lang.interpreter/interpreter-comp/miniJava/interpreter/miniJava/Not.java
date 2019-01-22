@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
-import miniJava.interpreter.miniJava.impl.NotDispatchWrapperEvaluateExpression;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Not extends EObject, NodeInterface, Expression {
@@ -10,6 +9,4 @@ public interface Not extends EObject, NodeInterface, Expression {
   void setExpression(Expression value);
 
   Value evaluateExpression(State state);
-
-  NotDispatchWrapperEvaluateExpression getCachedEvaluateExpression();
 }

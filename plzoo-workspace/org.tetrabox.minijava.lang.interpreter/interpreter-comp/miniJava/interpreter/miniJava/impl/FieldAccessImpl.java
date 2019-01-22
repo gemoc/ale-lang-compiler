@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -21,17 +20,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "FieldAccess"
 )
 public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
-  @Child
+  
   protected Expression receiver;
 
   protected Field field;
 
-  @CompilationFinal
-  private FieldAccessDispatchWrapperEvaluateExpression cachedEvaluateExpression;
-
   protected FieldAccessImpl() {
     super();
-    this.cachedEvaluateExpression = new miniJava.interpreter.miniJava.impl.FieldAccessDispatchWrapperEvaluateExpression(this);
   }
 
   @TruffleBoundary
@@ -158,9 +153,5 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
         result = fb.getValue();
         ;
     return result;
-  }
-
-  public FieldAccessDispatchWrapperEvaluateExpression getCachedEvaluateExpression() {
-    return this.cachedEvaluateExpression;
   }
 }

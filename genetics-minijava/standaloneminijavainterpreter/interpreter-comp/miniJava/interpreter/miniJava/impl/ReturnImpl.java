@@ -1,5 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -18,11 +19,15 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Return"
 )
 public class ReturnImpl extends StatementImpl implements Return {
-  @Child
+  
   protected Expression expression;
+
+  @CompilationFinal
+  private ReturnDispatchWrapperEvaluateStatement cachedEvaluateStatement;
 
   protected ReturnImpl() {
     super();
+    this.cachedEvaluateStatement = new miniJava.interpreter.miniJava.impl.ReturnDispatchWrapperEvaluateStatement(this);
   }
 
   @TruffleBoundary
@@ -112,5 +117,9 @@ public class ReturnImpl extends StatementImpl implements Return {
     miniJava.interpreter.miniJava.Value value = ((miniJava.interpreter.miniJava.Value)this.expression.evaluateExpression(state));
         state.findCurrentFrame().setReturnValue(value);
         ;
+  }
+
+  public ReturnDispatchWrapperEvaluateStatement getCachedEvaluateStatement() {
+    return this.cachedEvaluateStatement;
   }
 }

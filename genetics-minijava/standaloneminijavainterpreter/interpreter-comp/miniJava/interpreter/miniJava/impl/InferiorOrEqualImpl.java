@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "InferiorOrEqual"
 )
 public class InferiorOrEqualImpl extends ExpressionImpl implements InferiorOrEqual {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected InferiorOrEqualImpl() {

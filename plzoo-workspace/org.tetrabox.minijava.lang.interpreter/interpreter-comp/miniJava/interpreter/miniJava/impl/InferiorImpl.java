@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -20,18 +19,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Inferior"
 )
 public class InferiorImpl extends ExpressionImpl implements Inferior {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
-
-  @CompilationFinal
-  private InferiorDispatchWrapperEvaluateExpression cachedEvaluateExpression;
 
   protected InferiorImpl() {
     super();
-    this.cachedEvaluateExpression = new miniJava.interpreter.miniJava.impl.InferiorDispatchWrapperEvaluateExpression(this);
   }
 
   @TruffleBoundary
@@ -181,9 +176,5 @@ public class InferiorImpl extends ExpressionImpl implements Inferior {
         }
         ;
     return result;
-  }
-
-  public InferiorDispatchWrapperEvaluateExpression getCachedEvaluateExpression() {
-    return this.cachedEvaluateExpression;
   }
 }

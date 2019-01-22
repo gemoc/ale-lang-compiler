@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.String;
@@ -16,16 +15,8 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
 
   protected boolean value = VALUE_EDEFAULT;
 
-  @CompilationFinal
-  private BooleanValueDispatchWrapperCustomToString cachedCustomToString;
-
-  @CompilationFinal
-  private BooleanValueDispatchWrapperCopyj cachedCopyj;
-
   protected BooleanValueImpl() {
     super();
-    this.cachedCustomToString = new miniJava.interpreter.miniJava.impl.BooleanValueDispatchWrapperCustomToString(this);
-    this.cachedCopyj = new miniJava.interpreter.miniJava.impl.BooleanValueDispatchWrapperCopyj(this);
   }
 
   public boolean isValue() {
@@ -100,13 +91,5 @@ public class BooleanValueImpl extends ValueImpl implements BooleanValue {
         result = tmp;
         ;
     return result;
-  }
-
-  public BooleanValueDispatchWrapperCustomToString getCachedCustomToString() {
-    return this.cachedCustomToString;
-  }
-
-  public BooleanValueDispatchWrapperCopyj getCachedCopyj() {
-    return this.cachedCopyj;
   }
 }

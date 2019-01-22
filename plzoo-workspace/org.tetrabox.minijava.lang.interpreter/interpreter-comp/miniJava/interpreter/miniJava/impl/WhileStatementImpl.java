@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -20,18 +19,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "WhileStatement"
 )
 public class WhileStatementImpl extends StatementImpl implements WhileStatement {
-  @Child
+  
   protected Expression condition;
 
-  @Child
+  
   protected Block block;
-
-  @CompilationFinal
-  private WhileStatementDispatchWrapperEvaluateStatement cachedEvaluateStatement;
 
   protected WhileStatementImpl() {
     super();
-    this.cachedEvaluateStatement = new miniJava.interpreter.miniJava.impl.WhileStatementDispatchWrapperEvaluateStatement(this);
   }
 
   @TruffleBoundary
@@ -168,9 +163,5 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
           continueWhile = continueWhile2;
         }
         ;
-  }
-
-  public WhileStatementDispatchWrapperEvaluateStatement getCachedEvaluateStatement() {
-    return this.cachedEvaluateStatement;
   }
 }

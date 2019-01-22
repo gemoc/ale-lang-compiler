@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
-import miniJava.interpreter.miniJava.impl.AssignmentDispatchWrapperEvaluateStatement;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Assignment extends EObject, NodeInterface, Statement {
@@ -14,6 +13,4 @@ public interface Assignment extends EObject, NodeInterface, Statement {
   void setValue(Expression value);
 
   void evaluateStatement(State state);
-
-  AssignmentDispatchWrapperEvaluateStatement getCachedEvaluateStatement();
 }

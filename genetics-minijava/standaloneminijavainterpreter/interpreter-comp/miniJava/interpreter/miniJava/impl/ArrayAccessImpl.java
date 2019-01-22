@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "ArrayAccess"
 )
 public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
-  @Child
+  
   protected Expression object;
 
-  @Child
+  
   protected Expression index;
 
   protected ArrayAccessImpl() {

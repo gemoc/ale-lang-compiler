@@ -1,8 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import java.lang.Object;
 import java.lang.String;
 import miniJava.interpreter.miniJava.ArrayInstance;
@@ -18,16 +16,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
   protected ArrayInstance instance;
 
-  @CompilationFinal
-  private ArrayRefValueDispatchWrapperCustomToString cachedCustomToString;
-
-  @Child
-  private ValueDispatchCustomToString dispatchValueCustomToString;
-
   protected ArrayRefValueImpl() {
     super();
-    this.cachedCustomToString = new miniJava.interpreter.miniJava.impl.ArrayRefValueDispatchWrapperCustomToString(this);
-    this.dispatchValueCustomToString = miniJava.interpreter.miniJava.impl.ValueDispatchCustomToStringNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -120,7 +110,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
         int lgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getInstance().getValue()));
         while ((i) < (lgt)) {
           miniJava.interpreter.miniJava.Value tmpv = ((miniJava.interpreter.miniJava.Value)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.instance.getValue(), i));
-          res = (res) + (((java.lang.String)dispatchValueCustomToString.executeDispatch(tmpv.getCachedCustomToString(), new Object[] {})));
+          res = (res) + (tmpv.customToString());
           if((i) < ((lgt) - (1))) {
             res = (res) + (", ");
           }
@@ -130,9 +120,5 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
         result = res;
         ;
     return result;
-  }
-
-  public ArrayRefValueDispatchWrapperCustomToString getCachedCustomToString() {
-    return this.cachedCustomToString;
   }
 }

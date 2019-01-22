@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Clazz;
@@ -25,9 +24,6 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
   protected Clazz type;
 
   protected EList<Expression> args;
-
-  @Children
-  private Expression[] argsArr;
 
   protected NewObjectImpl() {
     super();
@@ -128,12 +124,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
 
   public Value evaluateExpression(State state) {
     Value result;
-    if(this.argsArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.args != null) this.argsArr = this.args.toArray(new miniJava.interpreter.miniJava.Expression[0]);
-        				else this.argsArr = new miniJava.interpreter.miniJava.Expression[] {};
-        				
-        			};
+
     miniJava.interpreter.miniJava.ObjectInstance res = ((miniJava.interpreter.miniJava.ObjectInstance)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createObjectInstance());
         res.setType(this.getType());
         state.getObjectsHeap().add(res);
@@ -159,7 +150,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
           miniJava.interpreter.miniJava.Member m = ((miniJava.interpreter.miniJava.Member)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(res.getType().getMembers(), i));
           if(m instanceof miniJava.interpreter.miniJava.Method) {
             miniJava.interpreter.miniJava.Method mtd = ((miniJava.interpreter.miniJava.Method)m);
-            if(((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((mtd.getName()), (null))) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(mtd.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.argsArr)))))) {
+            if(((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((mtd.getName()), (null))) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(mtd.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getArgs())))))) {
               constructor = mtd;
             }
           }
@@ -168,9 +159,9 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
         if((constructor) != (null)) {
           miniJava.interpreter.miniJava.Context newContext = ((miniJava.interpreter.miniJava.Context)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createContext());
           i = 0;
-          z = org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.argsArr);
+          z = org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.args);
           while ((i) < (z)) {
-            miniJava.interpreter.miniJava.Expression arg = ((miniJava.interpreter.miniJava.Expression)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.argsArr, i));
+            miniJava.interpreter.miniJava.Expression arg = ((miniJava.interpreter.miniJava.Expression)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.args, i));
             miniJava.interpreter.miniJava.Parameter param = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(constructor.getParams(), i));
             miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createSymbolBinding());
             binding.setSymbol(param);

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Field"
 )
 public class FieldImpl extends MemberImpl implements Field {
-  @Child
+  
   protected Expression defaultValue;
 
   protected FieldImpl() {

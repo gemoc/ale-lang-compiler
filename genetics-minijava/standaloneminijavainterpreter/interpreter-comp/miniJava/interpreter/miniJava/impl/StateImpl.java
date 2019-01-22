@@ -1,10 +1,17 @@
 package miniJava.interpreter.miniJava.impl;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import java.lang.Object;
-import java.lang.String;
+
 import miniJava.interpreter.miniJava.ArrayInstance;
 import miniJava.interpreter.miniJava.Call;
 import miniJava.interpreter.miniJava.Context;
@@ -13,25 +20,17 @@ import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.ObjectInstance;
 import miniJava.interpreter.miniJava.OutputStream;
 import miniJava.interpreter.miniJava.State;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
 @NodeInfo(
     description = "State"
 )
-public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements State {
-  @Child
+public class StateImpl extends MinimalEObjectImpl.Container implements State {
+  
   protected Frame rootFrame;
 
   protected EList<ObjectInstance> objectsHeap;
 
-  @Child
+  
   protected OutputStream outputStream;
 
   protected EList<ArrayInstance> arraysHeap;

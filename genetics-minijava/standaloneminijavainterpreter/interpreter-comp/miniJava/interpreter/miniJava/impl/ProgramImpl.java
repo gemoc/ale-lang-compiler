@@ -1,29 +1,28 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
-import com.oracle.truffle.api.nodes.NodeInfo;
-import java.lang.Object;
-import java.lang.String;
-import miniJava.interpreter.miniJava.Import;
-import miniJava.interpreter.miniJava.Method;
-import miniJava.interpreter.miniJava.MiniJavaPackage;
-import miniJava.interpreter.miniJava.Program;
-import miniJava.interpreter.miniJava.State;
-import miniJava.interpreter.miniJava.TypeDeclaration;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
+
+import miniJava.interpreter.miniJava.Import;
+import miniJava.interpreter.miniJava.Method;
+import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Program;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.TypeDeclaration;
 
 @NodeInfo(
     description = "Program"
 )
-public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Program {
+public class ProgramImpl extends MinimalEObjectImpl.Container implements Program {
   protected static final String NAME_EDEFAULT = null;
 
   protected String name = NAME_EDEFAULT;
@@ -33,9 +32,6 @@ public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer impl
   protected EList<TypeDeclaration> classes;
 
   protected State state;
-
-  @Children
-  private TypeDeclaration[] classesArr;
 
   protected ProgramImpl() {
     super();
@@ -198,14 +194,8 @@ public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer impl
 
   public Method findMain() {
     Method result;
-    if(this.classesArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.classes != null) this.classesArr = this.classes.toArray(new miniJava.interpreter.miniJava.TypeDeclaration[0]);
-        				else this.classesArr = new miniJava.interpreter.miniJava.TypeDeclaration[] {};
-        				
-        			};
     result = null;
-        for(miniJava.interpreter.miniJava.TypeDeclaration clazz: this.classesArr) {
+        for(miniJava.interpreter.miniJava.TypeDeclaration clazz: this.classes) {
           for(miniJava.interpreter.miniJava.Member member: clazz.getMembers()) {
             if(member instanceof miniJava.interpreter.miniJava.Method) {
               miniJava.interpreter.miniJava.Method method = ((miniJava.interpreter.miniJava.Method)member);

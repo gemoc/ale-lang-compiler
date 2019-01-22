@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "WhileStatement"
 )
 public class WhileStatementImpl extends StatementImpl implements WhileStatement {
-  @Child
+  
   protected Expression condition;
 
-  @Child
+  
   protected Block block;
 
   protected WhileStatementImpl() {

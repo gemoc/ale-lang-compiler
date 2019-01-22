@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -20,18 +19,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "ArrayAccess"
 )
 public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
-  @Child
+  
   protected Expression object;
 
-  @Child
+  
   protected Expression index;
-
-  @CompilationFinal
-  private ArrayAccessDispatchWrapperEvaluateExpression cachedEvaluateExpression;
 
   protected ArrayAccessImpl() {
     super();
-    this.cachedEvaluateExpression = new miniJava.interpreter.miniJava.impl.ArrayAccessDispatchWrapperEvaluateExpression(this);
   }
 
   @TruffleBoundary
@@ -167,9 +162,5 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
         result = arrayVal.getInstance().getValue().get(indexVal.getValue()).copyj();
         ;
     return result;
-  }
-
-  public ArrayAccessDispatchWrapperEvaluateExpression getCachedEvaluateExpression() {
-    return this.cachedEvaluateExpression;
   }
 }

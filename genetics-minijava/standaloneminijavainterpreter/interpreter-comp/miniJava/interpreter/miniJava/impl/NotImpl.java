@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Not"
 )
 public class NotImpl extends ExpressionImpl implements Not {
-  @Child
+  
   protected Expression expression;
 
   protected NotImpl() {

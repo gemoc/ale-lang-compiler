@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Superior"
 )
 public class SuperiorImpl extends ExpressionImpl implements Superior {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected SuperiorImpl() {

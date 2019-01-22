@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -19,15 +18,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "PrintStatement"
 )
 public class PrintStatementImpl extends StatementImpl implements PrintStatement {
-  @Child
+  
   protected Expression expression;
-
-  @CompilationFinal
-  private PrintStatementDispatchWrapperEvaluateStatement cachedEvaluateStatement;
 
   protected PrintStatementImpl() {
     super();
-    this.cachedEvaluateStatement = new miniJava.interpreter.miniJava.impl.PrintStatementDispatchWrapperEvaluateStatement(this);
   }
 
   @TruffleBoundary
@@ -117,9 +112,5 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
     java.lang.String res = ((java.lang.String)this.expression.evaluateExpression(state).customToString());
         state.println(res);
         ;
-  }
-
-  public PrintStatementDispatchWrapperEvaluateStatement getCachedEvaluateStatement() {
-    return this.cachedEvaluateStatement;
   }
 }

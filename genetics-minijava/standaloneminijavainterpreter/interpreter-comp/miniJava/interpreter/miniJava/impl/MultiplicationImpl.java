@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Multiplication"
 )
 public class MultiplicationImpl extends ExpressionImpl implements Multiplication {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected MultiplicationImpl() {

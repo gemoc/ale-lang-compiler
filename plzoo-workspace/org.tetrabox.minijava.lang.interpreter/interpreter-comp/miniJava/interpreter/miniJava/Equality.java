@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
-import miniJava.interpreter.miniJava.impl.EqualityDispatchWrapperEvaluateExpression;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Equality extends EObject, NodeInterface, Expression {
@@ -14,6 +13,4 @@ public interface Equality extends EObject, NodeInterface, Expression {
   void setRight(Expression value);
 
   Value evaluateExpression(State state);
-
-  EqualityDispatchWrapperEvaluateExpression getCachedEvaluateExpression();
 }

@@ -1,8 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Block;
@@ -21,15 +19,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 public class BlockImpl extends StatementImpl implements Block {
   protected EList<Statement> statements;
 
-  @Children
-  private Statement[] statementsArr;
-
-  @Child
-  private StateDispatchPushNewContext dispatchStatePushNewContext;
-
   protected BlockImpl() {
     super();
-    this.dispatchStatePushNewContext = miniJava.interpreter.miniJava.impl.StateDispatchPushNewContextNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -94,31 +85,18 @@ public class BlockImpl extends StatementImpl implements Block {
   }
 
   public void evaluateStatementKeepContext(State state) {
-    if(this.statementsArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.statements != null) this.statementsArr = this.statements.toArray(new miniJava.interpreter.miniJava.Statement[0]);
-        				else this.statementsArr = new miniJava.interpreter.miniJava.Statement[] {};
-        				
-        			};
-    dispatchStatePushNewContext.executeDispatch(state.getCachedPushNewContext(), new Object[] {});
+    state.pushNewContext();
         miniJava.interpreter.miniJava.Frame currentFrame = ((miniJava.interpreter.miniJava.Frame)state.findCurrentFrame());
-        int lgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.statementsArr));
+        int lgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.statements));
         int i = ((int)0);
         while ((((i) < (lgt)) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((currentFrame.getReturnValue()), (null))))) {
-          Statement statement = org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.statementsArr, i);
-		statement.evaluateStatement(state);
+          org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.statements, i).evaluateStatement(state);
           i = (i) + (1);
         }
         ;
   }
 
   public void evaluateStatement(State state) {
-    if(this.statementsArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.statements != null) this.statementsArr = this.statements.toArray(new miniJava.interpreter.miniJava.Statement[0]);
-        				else this.statementsArr = new miniJava.interpreter.miniJava.Statement[] {};
-        				
-        			};
     this.evaluateStatementKeepContext(state);
         state.popCurrentContext();
         ;

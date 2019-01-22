@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -21,32 +20,20 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "ForStatement"
 )
 public class ForStatementImpl extends StatementImpl implements ForStatement {
-  @Child
+  
   protected Assignment declaration;
 
-  @Child
+  
   protected Expression condition;
 
-  @Child
+  
   protected Assignment progression;
 
-  @Child
+  
   protected Block block;
-
-  @CompilationFinal
-  private ForStatementDispatchWrapperEvaluateStatement cachedEvaluateStatement;
-
-  @Child
-  private StateDispatchPushNewContext dispatchStatePushNewContext;
-
-  @Child
-  private AssignmentDispatchEvaluateStatement dispatchAssignmentEvaluateStatement;
 
   protected ForStatementImpl() {
     super();
-    this.cachedEvaluateStatement = new miniJava.interpreter.miniJava.impl.ForStatementDispatchWrapperEvaluateStatement(this);
-    this.dispatchStatePushNewContext = miniJava.interpreter.miniJava.impl.StateDispatchPushNewContextNodeGen.create(); 
-    this.dispatchAssignmentEvaluateStatement = miniJava.interpreter.miniJava.impl.AssignmentDispatchEvaluateStatementNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -262,20 +249,16 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
   }
 
   public void evaluateStatement(State state) {
-    dispatchStatePushNewContext.executeDispatch(state.getCachedPushNewContext(), new Object[] {});
-        dispatchAssignmentEvaluateStatement.executeDispatch(this.declaration.getCachedEvaluateStatement(), new Object[] {state});
+    state.pushNewContext();
+        this.declaration.evaluateStatement(state);
         miniJava.interpreter.miniJava.BooleanValue continueFor = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
         while (continueFor.isValue()) {
           this.block.evaluateStatement(state);
-          dispatchAssignmentEvaluateStatement.executeDispatch(this.progression.getCachedEvaluateStatement(), new Object[] {state});
+          this.progression.evaluateStatement(state);
           miniJava.interpreter.miniJava.BooleanValue continueFor2 = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
           continueFor = continueFor2;
         }
         state.popCurrentContext();
         ;
-  }
-
-  public ForStatementDispatchWrapperEvaluateStatement getCachedEvaluateStatement() {
-    return this.cachedEvaluateStatement;
   }
 }

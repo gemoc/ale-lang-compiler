@@ -12,7 +12,10 @@ public class MiniJavaPerfTest {
 	public static void main(final String[] args) {
 		MiniJavaPerfTest.file = args[0];
 		final int itt = Integer.parseInt(args[1]);
-		final int cptr = 1;
+
+		System.out.println("Performing bench with program " + file + " " + itt + " times");
+
+		final int cptr = itt;
 		final Context context = Context.create();
 		final ArrayList<Long> results = new ArrayList<>();
 		for (int i = 0; (i < cptr); i++) {

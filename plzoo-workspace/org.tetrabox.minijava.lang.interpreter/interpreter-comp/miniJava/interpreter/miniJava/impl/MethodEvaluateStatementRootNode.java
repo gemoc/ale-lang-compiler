@@ -8,7 +8,7 @@ import java.lang.Override;
 import miniJava.interpreter.miniJava.Method;
 
 public class MethodEvaluateStatementRootNode extends RootNode {
-  @Child
+  
   private Method it;
 
   public MethodEvaluateStatementRootNode(Method it) {

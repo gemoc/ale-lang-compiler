@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "FieldAccess"
 )
 public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
-  @Child
+  
   protected Expression receiver;
 
   protected Field field;

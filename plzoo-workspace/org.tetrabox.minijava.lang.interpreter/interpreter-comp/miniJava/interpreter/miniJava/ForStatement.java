@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
-import miniJava.interpreter.miniJava.impl.ForStatementDispatchWrapperEvaluateStatement;
 import org.eclipse.emf.ecore.EObject;
 
 public interface ForStatement extends EObject, NodeInterface, Statement {
@@ -22,6 +21,4 @@ public interface ForStatement extends EObject, NodeInterface, Statement {
   void setBlock(Block value);
 
   void evaluateStatement(State state);
-
-  ForStatementDispatchWrapperEvaluateStatement getCachedEvaluateStatement();
 }

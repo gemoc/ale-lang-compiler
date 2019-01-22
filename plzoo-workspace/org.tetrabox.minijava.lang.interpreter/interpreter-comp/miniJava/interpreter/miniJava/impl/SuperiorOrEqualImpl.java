@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -20,18 +19,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "SuperiorOrEqual"
 )
 public class SuperiorOrEqualImpl extends ExpressionImpl implements SuperiorOrEqual {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
-
-  @CompilationFinal
-  private SuperiorOrEqualDispatchWrapperEvaluateExpression cachedEvaluateExpression;
 
   protected SuperiorOrEqualImpl() {
     super();
-    this.cachedEvaluateExpression = new miniJava.interpreter.miniJava.impl.SuperiorOrEqualDispatchWrapperEvaluateExpression(this);
   }
 
   @TruffleBoundary
@@ -181,9 +176,5 @@ public class SuperiorOrEqualImpl extends ExpressionImpl implements SuperiorOrEqu
         }
         ;
     return result;
-  }
-
-  public SuperiorOrEqualDispatchWrapperEvaluateExpression getCachedEvaluateExpression() {
-    return this.cachedEvaluateExpression;
   }
 }

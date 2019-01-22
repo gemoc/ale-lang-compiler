@@ -3,7 +3,6 @@ package miniJava.interpreter.miniJava.impl;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Block;
@@ -36,13 +35,10 @@ public class MethodImpl extends MemberImpl implements Method {
 
   protected EList<Parameter> params;
 
-  @Child
+  
   protected Block body;
 
   protected EMap<Clazz, Method> cache;
-
-  @Children
-  private Parameter[] paramsArr;
 
   @CompilationFinal
   private MethodDispatchWrapperEvaluateStatement cachedEvaluateStatement;
@@ -50,18 +46,10 @@ public class MethodImpl extends MemberImpl implements Method {
   @CompilationFinal
   private MethodDispatchWrapperCall cachedCall;
 
-  @Child
-  private TypeRefDispatchCompare dispatchTypeRefCompare;
-
-  @Child
-  private ParameterDispatchCompare dispatchParameterCompare;
-
   protected MethodImpl() {
     super();
     this.cachedEvaluateStatement = new miniJava.interpreter.miniJava.impl.MethodDispatchWrapperEvaluateStatement(this);
     this.cachedCall = new miniJava.interpreter.miniJava.impl.MethodDispatchWrapperCall(this);
-    this.dispatchTypeRefCompare = miniJava.interpreter.miniJava.impl.TypeRefDispatchCompareNodeGen.create(); 
-    this.dispatchParameterCompare = miniJava.interpreter.miniJava.impl.ParameterDispatchCompareNodeGen.create(); 
   }
 
   public boolean isIsabstract() {
@@ -228,12 +216,6 @@ public class MethodImpl extends MemberImpl implements Method {
 
   public Method findOverride(Clazz c) {
     Method result;
-    if(this.paramsArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.params != null) this.paramsArr = this.params.toArray(new miniJava.interpreter.miniJava.Parameter[0]);
-        				else this.paramsArr = new miniJava.interpreter.miniJava.Parameter[] {};
-        				
-        			};
     if(!(minijava.MapService.containsKey(this.getCache(), c))) {
           miniJava.interpreter.miniJava.Method that = ((miniJava.interpreter.miniJava.Method)this);
           if(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(c.getMembers(), (x) -> org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((x), (that)))) {
@@ -246,14 +228,14 @@ public class MethodImpl extends MemberImpl implements Method {
               miniJava.interpreter.miniJava.Member tmpm = ((miniJava.interpreter.miniJava.Member)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(c.getMembers(), i));
               if(tmpm instanceof miniJava.interpreter.miniJava.Method) {
                 miniJava.interpreter.miniJava.Method m = ((miniJava.interpreter.miniJava.Method)tmpm);
-                if(((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((m.getName()), (this.name))) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.paramsArr)))))) {
-                  boolean compared = ((boolean)((boolean)dispatchTypeRefCompare.executeDispatch(m.getTypeRef().getCachedCompare(), new Object[] {this.typeRef})));
+                if(((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((m.getName()), (this.name))) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams())), (org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.params)))))) {
+                  boolean compared = ((boolean)m.getTypeRef().compare(this.typeRef));
                   int j = ((int)0);
                   int paramlgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(m.getParams()));
                   boolean alltrue = ((boolean)compared);
                   while ((((j) < (paramlgt)) && (alltrue))) {
                     miniJava.interpreter.miniJava.Parameter p1 = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(m.getParams(), j));
-                    miniJava.interpreter.miniJava.Parameter tmpp = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.paramsArr, (p2) -> ((boolean)dispatchParameterCompare.executeDispatch(p1.getCachedCompare(), new Object[] {p2})))));
+                    miniJava.interpreter.miniJava.Parameter tmpp = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.params, (p2) -> p1.compare(p2))));
                     alltrue = (tmpp) != (null);
                     j = (j) + (1);
                   }
@@ -286,12 +268,6 @@ public class MethodImpl extends MemberImpl implements Method {
   }
 
   public void call(State state) {
-    if(this.paramsArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.params != null) this.paramsArr = this.params.toArray(new miniJava.interpreter.miniJava.Parameter[0]);
-        				else this.paramsArr = new miniJava.interpreter.miniJava.Parameter[] {};
-        				
-        			};
     this.body.evaluateStatement(state);
         ;
   }

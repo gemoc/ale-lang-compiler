@@ -2,8 +2,6 @@ package miniJava.interpreter.miniJava;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
 import java.lang.String;
-import miniJava.interpreter.miniJava.impl.StateDispatchWrapperPushNewContext;
-import miniJava.interpreter.miniJava.impl.StateDispatchWrapperPushNewFrame;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -41,8 +39,4 @@ public interface State extends EObject, NodeInterface {
   void pushNewFrame(ObjectInstance receiver, Call c, Context newContext);
 
   void popCurrentFrame();
-
-  StateDispatchWrapperPushNewContext getCachedPushNewContext();
-
-  StateDispatchWrapperPushNewFrame getCachedPushNewFrame();
 }

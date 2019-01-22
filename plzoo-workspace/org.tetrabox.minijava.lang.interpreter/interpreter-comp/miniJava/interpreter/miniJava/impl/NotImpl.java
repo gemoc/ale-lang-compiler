@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -20,15 +19,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Not"
 )
 public class NotImpl extends ExpressionImpl implements Not {
-  @Child
+  
   protected Expression expression;
-
-  @CompilationFinal
-  private NotDispatchWrapperEvaluateExpression cachedEvaluateExpression;
 
   protected NotImpl() {
     super();
-    this.cachedEvaluateExpression = new miniJava.interpreter.miniJava.impl.NotDispatchWrapperEvaluateExpression(this);
   }
 
   @TruffleBoundary
@@ -122,9 +117,5 @@ public class NotImpl extends ExpressionImpl implements Not {
         result = tmp;
         ;
     return result;
-  }
-
-  public NotDispatchWrapperEvaluateExpression getCachedEvaluateExpression() {
-    return this.cachedEvaluateExpression;
   }
 }

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "ArrayTypeRef"
 )
 public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
-  @Child
+  
   protected SingleTypeRef typeRef;
 
   protected ArrayTypeRefImpl() {

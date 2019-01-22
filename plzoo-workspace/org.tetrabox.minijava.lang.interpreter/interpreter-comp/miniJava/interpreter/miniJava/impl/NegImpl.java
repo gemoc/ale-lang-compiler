@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Neg"
 )
 public class NegImpl extends ExpressionImpl implements Neg {
-  @Child
+  
   protected Expression expression;
 
   protected NegImpl() {

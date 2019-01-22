@@ -2,7 +2,6 @@ package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import miniJava.interpreter.miniJava.Expression;
@@ -23,16 +22,14 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
     description = "MethodCall"
 )
 public class MethodCallImpl extends ExpressionImpl implements MethodCall {
-  @Child
+  
   protected Expression receiver;
 
   protected Method method;
 
   protected EList<Expression> args;
 
-  @Children
-  private Expression[] argsArr;
-
+  
   private MethodDispatchCall dispatchMethodCall;
 
   protected MethodCallImpl() {
@@ -178,20 +175,14 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
 
   public Value evaluateExpression(State state) {
     Value result;
-    if(this.argsArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.args != null) this.argsArr = this.args.toArray(new miniJava.interpreter.miniJava.Expression[0]);
-        				else this.argsArr = new miniJava.interpreter.miniJava.Expression[] {};
-        				
-        			};
     miniJava.interpreter.miniJava.ObjectRefValue realReceiver0 = ((miniJava.interpreter.miniJava.ObjectRefValue)this.receiver.evaluateExpression(state));
         miniJava.interpreter.miniJava.ObjectInstance realReceiver = ((miniJava.interpreter.miniJava.ObjectInstance)realReceiver0.getInstance());
         miniJava.interpreter.miniJava.Method realMethod = ((miniJava.interpreter.miniJava.Method)this.getMethod().findOverride(realReceiver.getType()));
         miniJava.interpreter.miniJava.Context newContext = ((miniJava.interpreter.miniJava.Context)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createContext());
-        int argsLength = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.argsArr));
+        int argsLength = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getArgs()));
         int i = ((int)0);
         while ((i) < (argsLength)) {
-          miniJava.interpreter.miniJava.Expression arg = ((miniJava.interpreter.miniJava.Expression)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.argsArr, i));
+          miniJava.interpreter.miniJava.Expression arg = ((miniJava.interpreter.miniJava.Expression)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.args, i));
           miniJava.interpreter.miniJava.Parameter param = ((miniJava.interpreter.miniJava.Parameter)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(realMethod.getParams(), i));
           miniJava.interpreter.miniJava.SymbolBinding binding = ((miniJava.interpreter.miniJava.SymbolBinding)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createSymbolBinding());
           binding.setSymbol(param);
@@ -211,12 +202,6 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
   }
 
   public void call(Method realMethod, State state) {
-    if(this.argsArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.args != null) this.argsArr = this.args.toArray(new miniJava.interpreter.miniJava.Expression[0]);
-        				else this.argsArr = new miniJava.interpreter.miniJava.Expression[] {};
-        				
-        			};
     dispatchMethodCall.executeDispatch(realMethod.getCachedCall(), new Object[] {state});
         ;
   }

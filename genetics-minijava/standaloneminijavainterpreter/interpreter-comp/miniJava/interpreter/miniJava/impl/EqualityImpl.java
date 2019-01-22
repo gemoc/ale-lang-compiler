@@ -19,10 +19,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Equality"
 )
 public class EqualityImpl extends ExpressionImpl implements Equality {
-  @Child
+  
   protected Expression left;
 
-  @Child
+  
   protected Expression right;
 
   protected EqualityImpl() {

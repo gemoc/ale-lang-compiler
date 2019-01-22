@@ -1,6 +1,5 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.String;
@@ -16,16 +15,8 @@ public class StringValueImpl extends ValueImpl implements StringValue {
 
   protected String value = VALUE_EDEFAULT;
 
-  @CompilationFinal
-  private StringValueDispatchWrapperCustomToString cachedCustomToString;
-
-  @CompilationFinal
-  private StringValueDispatchWrapperCopyj cachedCopyj;
-
   protected StringValueImpl() {
     super();
-    this.cachedCustomToString = new miniJava.interpreter.miniJava.impl.StringValueDispatchWrapperCustomToString(this);
-    this.cachedCopyj = new miniJava.interpreter.miniJava.impl.StringValueDispatchWrapperCopyj(this);
   }
 
   public String getValue() {
@@ -100,13 +91,5 @@ public class StringValueImpl extends ValueImpl implements StringValue {
         result = tmp;
         ;
     return result;
-  }
-
-  public StringValueDispatchWrapperCustomToString getCachedCustomToString() {
-    return this.cachedCustomToString;
-  }
-
-  public StringValueDispatchWrapperCopyj getCachedCopyj() {
-    return this.cachedCopyj;
   }
 }

@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Return"
 )
 public class ReturnImpl extends StatementImpl implements Return {
-  @Child
+  
   protected Expression expression;
 
   @CompilationFinal
