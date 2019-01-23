@@ -53,7 +53,8 @@ public class LeftImpl extends PrimitiveImpl implements Left {
 
   @TruffleBoundary
   public Expression getAngle() {
-    return angle;}
+    return angle;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

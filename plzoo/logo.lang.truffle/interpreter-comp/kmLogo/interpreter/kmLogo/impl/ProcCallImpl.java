@@ -1,6 +1,7 @@
 package kmLogo.interpreter.kmLogo.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -28,6 +29,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
   @Children
   private Expression[] actualArgsArr;
 
+  @Child
   private ProcDeclarationDispatchEval dispatchProcDeclarationEval;
 
   protected ProcCallImpl() {
@@ -78,7 +80,17 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 
   @TruffleBoundary
   public ProcDeclaration getDeclaration() {
-    return declaration;}
+    if (declaration != null && declaration.eIsProxy()) {
+    	InternalEObject olddeclaration = (InternalEObject) declaration;
+    	declaration = (ProcDeclaration) eResolveProxy(olddeclaration);
+    	if (declaration != olddeclaration) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PROC_CALL__DECLARATION,
+    					olddeclaration, declaration));
+    	}
+    }
+    return declaration;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {
@@ -139,6 +151,8 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     switch(featureID) {
     case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
     	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getActualArgs()).basicRemove(otherEnd, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_CALL__DECLARATION:
+    	return basicSetDeclaration(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -162,11 +176,13 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     double result;
     if(this.actualArgsArr == null) {
         				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				this.actualArgsArr = this.actualArgs.toArray(new kmLogo.interpreter.kmLogo.Expression[0]);
+        				if(this.actualArgs != null) this.actualArgsArr = this.actualArgs.toArray(new kmLogo.interpreter.kmLogo.Expression[0]);
+        				else this.actualArgsArr = new kmLogo.interpreter.kmLogo.Expression[] {};
+        				
         			};
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(("Calling ") + (this.declaration.getName()));
         kmLogo.interpreter.kmLogo.StackFrame newFrame = ((kmLogo.interpreter.kmLogo.StackFrame)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
-        int i = ((int)1);
+        int i = ((int)0);
         for(kmLogo.interpreter.kmLogo.Expression exp: this.actualArgsArr) {
           kmLogo.interpreter.kmLogo.Variable newVar = ((kmLogo.interpreter.kmLogo.Variable)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createVariable());
           newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.declaration.getArgs(), i).getName());

@@ -56,7 +56,8 @@ public class IfImpl extends ControlStructureImpl implements If {
 
   @TruffleBoundary
   public Block getThenPart() {
-    return thenPart;}
+    return thenPart;
+  }
 
   @TruffleBoundary
   public void setElsePart(Block newElsePart) {
@@ -86,7 +87,8 @@ public class IfImpl extends ControlStructureImpl implements If {
 
   @TruffleBoundary
   public Block getElsePart() {
-    return elsePart;}
+    return elsePart;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

@@ -15,6 +15,8 @@ public class CompiledInterpreterTruffleogo {
         final int itt = Integer.parseInt(args[1]);
         EPackage.Registry.INSTANCE.put("http://kmLogo", KmLogoPackage.eINSTANCE);
 
+        LogService.MUTE = true;
+        
         Context context = Context.create();
         final int SIZE = itt;
         final long[] times = new long[SIZE];

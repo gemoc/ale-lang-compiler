@@ -52,7 +52,8 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl implements Unar
 
   @TruffleBoundary
   public Expression getExpression() {
-    return expression;}
+    return expression;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

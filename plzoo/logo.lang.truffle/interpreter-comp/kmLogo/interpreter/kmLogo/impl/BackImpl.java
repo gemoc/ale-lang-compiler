@@ -53,7 +53,8 @@ public class BackImpl extends PrimitiveImpl implements Back {
 
   @TruffleBoundary
   public Expression getSteps() {
-    return steps;}
+    return steps;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

@@ -92,7 +92,9 @@ public class BlockImpl extends InstructionImpl implements Block {
     double result;
     if(this.instructionsArr == null) {
         				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				if(this.instructions != null) this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				else this.instructionsArr = new kmLogo.interpreter.kmLogo.Instruction[] {};
+        				
         			};
     for(kmLogo.interpreter.kmLogo.Instruction inst: this.instructionsArr) {
           inst.eval(turtle);

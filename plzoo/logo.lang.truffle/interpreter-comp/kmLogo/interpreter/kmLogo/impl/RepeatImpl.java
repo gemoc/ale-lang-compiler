@@ -53,7 +53,8 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
 
   @TruffleBoundary
   public Block getBlock() {
-    return block;}
+    return block;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

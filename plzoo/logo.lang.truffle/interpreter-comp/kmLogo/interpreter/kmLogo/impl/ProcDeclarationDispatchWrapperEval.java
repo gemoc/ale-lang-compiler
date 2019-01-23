@@ -12,7 +12,7 @@ public class ProcDeclarationDispatchWrapperEval {
   private final CyclicAssumption callTargetStable;
 
   protected ProcDeclarationDispatchWrapperEval(ProcDeclaration it) {
-    this.callTargetStable = new CyclicAssumption("ProcDeclarationDispatchWrapperEval_4.3890624206239305E7");
+    this.callTargetStable = new CyclicAssumption("ProcDeclarationDispatchWrapperEval_7.321632676806565E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new ProcDeclarationEvalRootNode(it));
   }
 

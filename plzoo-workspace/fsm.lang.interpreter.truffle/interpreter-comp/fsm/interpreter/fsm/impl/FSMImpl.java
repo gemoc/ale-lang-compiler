@@ -1,7 +1,7 @@
 package fsm.interpreter.fsm.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.interpreter.fsm.Buffer;
 import fsm.interpreter.fsm.FSM;
@@ -47,12 +47,12 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer implemen
 
   protected State currentState;
 
-  @CompilationFinal
-  private FSMDispatchWrapperRun cachedRun;
+  @Child
+  private BufferDispatchDequeue dispatchBufferDequeue;
 
   protected FSMImpl() {
     super();
-    this.cachedRun = new fsm.interpreter.fsm.impl.FSMDispatchWrapperRun(this);
+    this.dispatchBufferDequeue = fsm.interpreter.fsm.impl.BufferDispatchDequeueNodeGen.create(); 
   }
 
   public String getName() {
@@ -400,14 +400,10 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer implemen
   }
 
   public void run() {
-    this.setUnderProcessTrigger(this.inputBuffer.dequeue());
+    this.setUnderProcessTrigger(((java.lang.String)dispatchBufferDequeue.executeDispatch(this.inputBuffer.getCachedDequeue(), new Object[] {})));
         org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(((("run SM") + (this.name)) + (" step on ")) + (this.underProcessTrigger));
         this.currentState.step(this.underProcessTrigger);
         this.setUnderProcessTrigger("");
         ;
-  }
-
-  public FSMDispatchWrapperRun getCachedRun() {
-    return this.cachedRun;
   }
 }

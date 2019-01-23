@@ -52,7 +52,8 @@ public class ControlStructureImpl extends InstructionImpl implements ControlStru
 
   @TruffleBoundary
   public Expression getCondition() {
-    return condition;}
+    return condition;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

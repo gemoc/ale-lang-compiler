@@ -36,7 +36,7 @@ open class FSM {
 		self.consummedString := '';
 	}
 	
-	def dispatch void run() {
+	def  void run() { // dispatch
 		self.underProcessTrigger := self.inputBuffer.dequeue();
 		('run SM'+self.name+' step on '+self.underProcessTrigger).log();
 		self.currentState.step(self.underProcessTrigger);
@@ -45,7 +45,7 @@ open class FSM {
 }
 
 open class State {
-	def  void step(String inputString) { // dispatch
+	def void step(String inputString) { // 
 		Sequence(String) validTransitions := self.outgoing->select(t | inputString == t.trigger);
 		
 		if(validTransitions->size() == 0) {
@@ -95,7 +95,7 @@ open class Buffer {
 		}
 	}
 	
-	def String dequeue() {
+	def  dispatch  String dequeue() {
 		String res := '';
 		int firstComma := self.currentValues.indexOf(',');
 		if(firstComma < 0) {

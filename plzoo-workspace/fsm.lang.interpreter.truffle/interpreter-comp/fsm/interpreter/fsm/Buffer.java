@@ -1,6 +1,7 @@
 package fsm.interpreter.fsm;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
+import fsm.interpreter.fsm.impl.BufferDispatchWrapperDequeue;
 import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
@@ -32,4 +33,6 @@ public interface Buffer extends EObject, NodeInterface {
   void enqueue(String v);
 
   String dequeue();
+
+  BufferDispatchWrapperDequeue getCachedDequeue();
 }

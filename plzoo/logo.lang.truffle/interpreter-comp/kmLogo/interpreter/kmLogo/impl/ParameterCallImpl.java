@@ -33,7 +33,17 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
 
   @TruffleBoundary
   public Parameter getParameter() {
-    return parameter;}
+    if (parameter != null && parameter.eIsProxy()) {
+    	InternalEObject oldparameter = (InternalEObject) parameter;
+    	parameter = (Parameter) eResolveProxy(oldparameter);
+    	if (parameter != oldparameter) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PARAMETER_CALL__PARAMETER,
+    					oldparameter, parameter));
+    	}
+    }
+    return parameter;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {
@@ -90,7 +100,7 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
     result = 0.0;
         for(kmLogo.interpreter.kmLogo.StackFrame frame: turtle.getCallStack().getFrames()) {
           for(kmLogo.interpreter.kmLogo.Variable var: frame.getVariables()) {
-            if(java.util.Objects.equals((var.getName()), (this.parameter.getName()))) {
+            if(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((var.getName()), (this.parameter.getName()))) {
               result = var.getValue();
             }
           }

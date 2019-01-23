@@ -256,7 +256,7 @@ open class ProcCall {
 }
 
 open class ProcDeclaration {
-	def double eval(Turtle turtle) {
+	def dispatch double eval(Turtle turtle) {
 		result := 0.0;
 		for(instr in self.instructions) {
 			result := instr.eval(turtle);

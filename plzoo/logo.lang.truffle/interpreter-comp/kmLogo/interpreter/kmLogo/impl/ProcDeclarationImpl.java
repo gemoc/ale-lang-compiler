@@ -155,6 +155,8 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
     switch(featureID) {
     case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_DECLARATION__ARGS:
     	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getArgs()).basicRemove(otherEnd, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_DECLARATION__PROC_CALL:
+    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getProcCall()).basicRemove(otherEnd, msgs);
     case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS:
     	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getInstructions()).basicRemove(otherEnd, msgs);
     }
@@ -177,7 +179,9 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
     double result;
     if(this.instructionsArr == null) {
         				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				if(this.instructions != null) this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				else this.instructionsArr = new kmLogo.interpreter.kmLogo.Instruction[] {};
+        				
         			};
     result = 0.0;
         for(kmLogo.interpreter.kmLogo.Instruction instr: this.instructionsArr) {

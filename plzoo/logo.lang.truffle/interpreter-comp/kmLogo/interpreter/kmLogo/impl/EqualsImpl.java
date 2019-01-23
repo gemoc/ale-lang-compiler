@@ -60,7 +60,7 @@ public class EqualsImpl extends BinaryExpImpl implements Equals {
 
   public double eval(Turtle turtle) {
     double result;
-    if(java.util.Objects.equals((this.lhs.eval(turtle)), (this.rhs.eval(turtle)))) {
+    if(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.lhs.eval(turtle)), (this.rhs.eval(turtle)))) {
           result = 1.0;
         }
         else {

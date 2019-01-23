@@ -53,7 +53,8 @@ public class WhileImpl extends ControlStructureImpl implements While {
 
   @TruffleBoundary
   public Block getBlock() {
-    return block;}
+    return block;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

@@ -1,5 +1,6 @@
 package fsm.interpreter.fsm.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.interpreter.fsm.Buffer;
@@ -34,8 +35,12 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
 
   protected FSM incomingFSM;
 
+  @CompilationFinal
+  private BufferDispatchWrapperDequeue cachedDequeue;
+
   protected BufferImpl() {
     super();
+    this.cachedDequeue = new fsm.interpreter.fsm.impl.BufferDispatchWrapperDequeue(this);
   }
 
   public String getInitialValue() {
@@ -306,5 +311,9 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
         }
         ;
     return result;
+  }
+
+  public BufferDispatchWrapperDequeue getCachedDequeue() {
+    return this.cachedDequeue;
   }
 }

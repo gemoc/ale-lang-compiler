@@ -56,7 +56,8 @@ public class SegmentImpl extends MinimalTruffleEObjectImpl.TruffleContainer impl
 
   @TruffleBoundary
   public Point getBegin() {
-    return begin;}
+    return begin;
+  }
 
   @TruffleBoundary
   public void setEnd(Point newEnd) {
@@ -86,7 +87,8 @@ public class SegmentImpl extends MinimalTruffleEObjectImpl.TruffleContainer impl
 
   @TruffleBoundary
   public Point getEnd() {
-    return end;}
+    return end;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

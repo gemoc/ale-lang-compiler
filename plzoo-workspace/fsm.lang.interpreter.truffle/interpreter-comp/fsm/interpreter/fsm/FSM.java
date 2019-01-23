@@ -1,7 +1,6 @@
 package fsm.interpreter.fsm;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
-import fsm.interpreter.fsm.impl.FSMDispatchWrapperRun;
 import java.lang.String;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -42,6 +41,4 @@ public interface FSM extends EObject, NodeInterface {
   void initialize();
 
   void run();
-
-  FSMDispatchWrapperRun getCachedRun();
 }

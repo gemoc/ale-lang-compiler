@@ -55,7 +55,8 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
 
   @TruffleBoundary
   public Expression getLhs() {
-    return lhs;}
+    return lhs;
+  }
 
   @TruffleBoundary
   public void setRhs(Expression newRhs) {
@@ -85,7 +86,8 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
 
   @TruffleBoundary
   public Expression getRhs() {
-    return rhs;}
+    return rhs;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

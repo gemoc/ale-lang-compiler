@@ -93,7 +93,9 @@ public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer 
     Turtle result;
     if(this.instructionsArr == null) {
         				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				if(this.instructions != null) this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				else this.instructionsArr = new kmLogo.interpreter.kmLogo.Instruction[] {};
+        				
         			};
     kmLogo.interpreter.kmLogo.Turtle turtle = ((kmLogo.interpreter.kmLogo.Turtle)this.createTurtle());
         result = turtle;
@@ -109,7 +111,9 @@ public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer 
     Turtle result;
     if(this.instructionsArr == null) {
         				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				if(this.instructions != null) this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				else this.instructionsArr = new kmLogo.interpreter.kmLogo.Instruction[] {};
+        				
         			};
     kmLogo.interpreter.kmLogo.Turtle turtle = ((kmLogo.interpreter.kmLogo.Turtle)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createTurtle());
         turtle.setPosition(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());

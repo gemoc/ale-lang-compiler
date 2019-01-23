@@ -4,16 +4,16 @@ import com.oracle.truffle.api.Assumption;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.utilities.CyclicAssumption;
-import fsm.interpreter.fsm.FSM;
+import fsm.interpreter.fsm.Buffer;
 
-public class FSMDispatchWrapperRun {
+public class BufferDispatchWrapperDequeue {
   private RootCallTarget callTarget;
 
   private final CyclicAssumption callTargetStable;
 
-  protected FSMDispatchWrapperRun(FSM it) {
-    this.callTargetStable = new CyclicAssumption("FSMDispatchWrapperRun_8.209707627365947E7");
-    this.callTarget = Truffle.getRuntime().createCallTarget(new FSMRunRootNode(it));
+  protected BufferDispatchWrapperDequeue(Buffer it) {
+    this.callTargetStable = new CyclicAssumption("BufferDispatchWrapperDequeue_7.030561954188234E7");
+    this.callTarget = Truffle.getRuntime().createCallTarget(new BufferDequeueRootNode(it));
   }
 
   public RootCallTarget getCallTarget() {

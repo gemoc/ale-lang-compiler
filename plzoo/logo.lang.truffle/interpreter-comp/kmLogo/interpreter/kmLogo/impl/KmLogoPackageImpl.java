@@ -150,12 +150,12 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     unaryExpressionEClass = createEClass(UNARY_EXPRESSION);
     createEReference(unaryExpressionEClass, UNARY_EXPRESSION__EXPRESSION);
     constantEClass = createEClass(CONSTANT);
-    createEAttribute(constantEClass, CONSTANT__VALUE);						
+    createEAttribute(constantEClass, CONSTANT__VALUE);
     procCallEClass = createEClass(PROC_CALL);
     createEReference(procCallEClass, PROC_CALL__ACTUAL_ARGS);
     createEReference(procCallEClass, PROC_CALL__DECLARATION);
     procDeclarationEClass = createEClass(PROC_DECLARATION);
-    createEAttribute(procDeclarationEClass, PROC_DECLARATION__NAME);						
+    createEAttribute(procDeclarationEClass, PROC_DECLARATION__NAME);
     createEReference(procDeclarationEClass, PROC_DECLARATION__ARGS);
     createEReference(procDeclarationEClass, PROC_DECLARATION__PROC_CALL);
     createEReference(procDeclarationEClass, PROC_DECLARATION__INSTRUCTIONS);
@@ -171,7 +171,7 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     whileEClass = createEClass(WHILE);
     createEReference(whileEClass, WHILE__BLOCK);
     parameterEClass = createEClass(PARAMETER);
-    createEAttribute(parameterEClass, PARAMETER__NAME);						
+    createEAttribute(parameterEClass, PARAMETER__NAME);
     parameterCallEClass = createEClass(PARAMETER_CALL);
     createEReference(parameterCallEClass, PARAMETER_CALL__PARAMETER);
     plusEClass = createEClass(PLUS);
@@ -188,13 +188,13 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     createEReference(logoProgramEClass, LOGO_PROGRAM__INSTRUCTIONS);
     turtleEClass = createEClass(TURTLE);
     createEReference(turtleEClass, TURTLE__POSITION);
-    createEAttribute(turtleEClass, TURTLE__HEADING);						
-    createEAttribute(turtleEClass, TURTLE__PEN_UP);						
+    createEAttribute(turtleEClass, TURTLE__HEADING);
+    createEAttribute(turtleEClass, TURTLE__PEN_UP);
     createEReference(turtleEClass, TURTLE__DRAWINGS);
     createEReference(turtleEClass, TURTLE__CALL_STACK);
     pointEClass = createEClass(POINT);
-    createEAttribute(pointEClass, POINT__X);						
-    createEAttribute(pointEClass, POINT__Y);						
+    createEAttribute(pointEClass, POINT__X);
+    createEAttribute(pointEClass, POINT__Y);
     segmentEClass = createEClass(SEGMENT);
     createEReference(segmentEClass, SEGMENT__BEGIN);
     createEReference(segmentEClass, SEGMENT__END);
@@ -203,8 +203,8 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     stackFrameEClass = createEClass(STACK_FRAME);
     createEReference(stackFrameEClass, STACK_FRAME__VARIABLES);
     variableEClass = createEClass(VARIABLE);
-    createEAttribute(variableEClass, VARIABLE__NAME);						
-    createEAttribute(variableEClass, VARIABLE__VALUE);						
+    createEAttribute(variableEClass, VARIABLE__NAME);
+    createEAttribute(variableEClass, VARIABLE__VALUE);
   }
 
   public void initializePackageContents() {
@@ -273,38 +273,38 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     initEClass(clearEClass, kmLogo.interpreter.kmLogo.Clear.class, "Clear", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(expressionEClass, kmLogo.interpreter.kmLogo.Expression.class, "Expression", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(binaryExpEClass, kmLogo.interpreter.kmLogo.BinaryExp.class, "BinaryExp", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBinary_exp_Lhs(), this.getExpression(),  
+    initEReference(getBinaryExp_Lhs(), this.getExpression(),  
     	null, "lhs", null, 1, 1,  kmLogo.interpreter.kmLogo.BinaryExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBinary_exp_Rhs(), this.getExpression(),  
+    initEReference(getBinaryExp_Rhs(), this.getExpression(),  
     	null, "rhs", null, 1, 1,  kmLogo.interpreter.kmLogo.BinaryExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(unaryExpressionEClass, kmLogo.interpreter.kmLogo.UnaryExpression.class, "UnaryExpression", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUnary_expression_Expression(), this.getExpression(),  
+    initEReference(getUnaryExpression_Expression(), this.getExpression(),  
     	null, "expression", null, 1, 1,  kmLogo.interpreter.kmLogo.UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(constantEClass, kmLogo.interpreter.kmLogo.Constant.class, "Constant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConstant_Value(), ecorePackage.getEDouble(), "value", null, 0, 1,  kmLogo.interpreter.kmLogo.Constant.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
     initEClass(procCallEClass, kmLogo.interpreter.kmLogo.ProcCall.class, "ProcCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProc_call_Actual_args(), this.getExpression(),  
+    initEReference(getProcCall_ActualArgs(), this.getExpression(),  
     	null, "actualArgs", null, 0, -1,  kmLogo.interpreter.kmLogo.ProcCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProc_call_Declaration(), this.getProcDeclaration(),  
-    	this.getProc_declaration_Proc_call(), "declaration", null, 1, 1,  kmLogo.interpreter.kmLogo.ProcCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProcCall_Declaration(), this.getProcDeclaration(),  
+    	this.getProcDeclaration_ProcCall(), "declaration", null, 1, 1,  kmLogo.interpreter.kmLogo.ProcCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(procDeclarationEClass, kmLogo.interpreter.kmLogo.ProcDeclaration.class, "ProcDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getProc_declaration_Name(), ecorePackage.getEString(), "name", null, 0, 1,  kmLogo.interpreter.kmLogo.ProcDeclaration.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
-    initEReference(getProc_declaration_Args(), this.getParameter(),  
+    initEAttribute(getProcDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1,  kmLogo.interpreter.kmLogo.ProcDeclaration.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
+    initEReference(getProcDeclaration_Args(), this.getParameter(),  
     	null, "args", null, 0, -1,  kmLogo.interpreter.kmLogo.ProcDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProc_declaration_Proc_call(), this.getProcCall(),  
-    	this.getProc_call_Declaration(), "procCall", null, 0, -1,  kmLogo.interpreter.kmLogo.ProcDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProc_declaration_Instructions(), this.getInstruction(),  
+    initEReference(getProcDeclaration_ProcCall(), this.getProcCall(),  
+    	this.getProcCall_Declaration(), "procCall", null, 0, -1,  kmLogo.interpreter.kmLogo.ProcDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProcDeclaration_Instructions(), this.getInstruction(),  
     	null, "instructions", null, 0, -1,  kmLogo.interpreter.kmLogo.ProcDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(blockEClass, kmLogo.interpreter.kmLogo.Block.class, "Block", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getBlock_Instructions(), this.getInstruction(),  
     	null, "instructions", null, 0, -1,  kmLogo.interpreter.kmLogo.Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(ifEClass, kmLogo.interpreter.kmLogo.If.class, "If", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIf_Then_part(), this.getBlock(),  
+    initEReference(getIf_ThenPart(), this.getBlock(),  
     	null, "thenPart", null, 1, 1,  kmLogo.interpreter.kmLogo.If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getIf_Else_part(), this.getBlock(),  
+    initEReference(getIf_ElsePart(), this.getBlock(),  
     	null, "elsePart", null, 0, 1,  kmLogo.interpreter.kmLogo.If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(controlStructureEClass, kmLogo.interpreter.kmLogo.ControlStructure.class, "ControlStructure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getControl_structure_Condition(), this.getExpression(),  
+    initEReference(getControlStructure_Condition(), this.getExpression(),  
     	null, "condition", null, 0, 1,  kmLogo.interpreter.kmLogo.ControlStructure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(repeatEClass, kmLogo.interpreter.kmLogo.Repeat.class, "Repeat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRepeat_Block(), this.getBlock(),  
@@ -315,7 +315,7 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     initEClass(parameterEClass, kmLogo.interpreter.kmLogo.Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1,  kmLogo.interpreter.kmLogo.Parameter.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
     initEClass(parameterCallEClass, kmLogo.interpreter.kmLogo.ParameterCall.class, "ParameterCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getParameter_call_Parameter(), this.getParameter(),  
+    initEReference(getParameterCall_Parameter(), this.getParameter(),  
     	null, "parameter", null, 1, 1,  kmLogo.interpreter.kmLogo.ParameterCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(plusEClass, kmLogo.interpreter.kmLogo.Plus.class, "Plus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(minusEClass, kmLogo.interpreter.kmLogo.Minus.class, "Minus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -328,16 +328,16 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     initEClass(sinEClass, kmLogo.interpreter.kmLogo.Sin.class, "Sin", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(tanEClass, kmLogo.interpreter.kmLogo.Tan.class, "Tan", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEClass(logoProgramEClass, kmLogo.interpreter.kmLogo.LogoProgram.class, "LogoProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLogo_program_Instructions(), this.getInstruction(),  
+    initEReference(getLogoProgram_Instructions(), this.getInstruction(),  
     	null, "instructions", null, 0, -1,  kmLogo.interpreter.kmLogo.LogoProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(turtleEClass, kmLogo.interpreter.kmLogo.Turtle.class, "Turtle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTurtle_Position(), this.getPoint(),  
     	null, "position", null, 1, 1,  kmLogo.interpreter.kmLogo.Turtle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTurtle_Heading(), ecorePackage.getEDouble(), "heading", null, 0, 1,  kmLogo.interpreter.kmLogo.Turtle.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
-    initEAttribute(getTurtle_Pen_up(), ecorePackage.getEBoolean(), "penUp", null, 0, 1,  kmLogo.interpreter.kmLogo.Turtle.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
+    initEAttribute(getTurtle_PenUp(), ecorePackage.getEBoolean(), "penUp", null, 0, 1,  kmLogo.interpreter.kmLogo.Turtle.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
     initEReference(getTurtle_Drawings(), this.getSegment(),  
     	null, "drawings", null, 0, -1,  kmLogo.interpreter.kmLogo.Turtle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTurtle_Call_stack(), this.getCallStack(),  
+    initEReference(getTurtle_CallStack(), this.getCallStack(),  
     	null, "callStack", null, 1, 1,  kmLogo.interpreter.kmLogo.Turtle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(pointEClass, kmLogo.interpreter.kmLogo.Point.class, "Point", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPoint_X(), ecorePackage.getEDouble(), "x", null, 0, 1,  kmLogo.interpreter.kmLogo.Point.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
@@ -348,10 +348,10 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     initEReference(getSegment_End(), this.getPoint(),  
     	null, "end", null, 1, 1,  kmLogo.interpreter.kmLogo.Segment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(callStackEClass, kmLogo.interpreter.kmLogo.CallStack.class, "CallStack", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCall_stack_Frames(), this.getStackFrame(),  
+    initEReference(getCallStack_Frames(), this.getStackFrame(),  
     	null, "frames", null, 0, -1,  kmLogo.interpreter.kmLogo.CallStack.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(stackFrameEClass, kmLogo.interpreter.kmLogo.StackFrame.class, "StackFrame", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStack_frame_Variables(), this.getVariable(),  
+    initEReference(getStackFrame_Variables(), this.getVariable(),  
     	null, "variables", null, 0, -1,  kmLogo.interpreter.kmLogo.StackFrame.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEClass(variableEClass, kmLogo.interpreter.kmLogo.Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getVariable_Name(), ecorePackage.getEString(), "name", null, 1, 1,  kmLogo.interpreter.kmLogo.Variable.class, !IS_TRANSIENT,!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);				
@@ -536,15 +536,15 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     return (EReference) rightEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getBinary_exp_Lhs() {
+  public EReference getBinaryExp_Lhs() {
     return (EReference) binaryExpEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getBinary_exp_Rhs() {
+  public EReference getBinaryExp_Rhs() {
     return (EReference) binaryExpEClass.getEStructuralFeatures().get(1);
   }
 
-  public EReference getUnary_expression_Expression() {
+  public EReference getUnaryExpression_Expression() {
     return (EReference) unaryExpressionEClass.getEStructuralFeatures().get(0);
   }
 
@@ -552,27 +552,27 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     return (EAttribute) constantEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getProc_call_Actual_args() {
+  public EReference getProcCall_ActualArgs() {
     return (EReference) procCallEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getProc_call_Declaration() {
+  public EReference getProcCall_Declaration() {
     return (EReference) procCallEClass.getEStructuralFeatures().get(1);
   }
 
-  public EAttribute getProc_declaration_Name() {
+  public EAttribute getProcDeclaration_Name() {
     return (EAttribute) procDeclarationEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getProc_declaration_Args() {
+  public EReference getProcDeclaration_Args() {
     return (EReference) procDeclarationEClass.getEStructuralFeatures().get(1);
   }
 
-  public EReference getProc_declaration_Proc_call() {
+  public EReference getProcDeclaration_ProcCall() {
     return (EReference) procDeclarationEClass.getEStructuralFeatures().get(2);
   }
 
-  public EReference getProc_declaration_Instructions() {
+  public EReference getProcDeclaration_Instructions() {
     return (EReference) procDeclarationEClass.getEStructuralFeatures().get(3);
   }
 
@@ -580,15 +580,15 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     return (EReference) blockEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getIf_Then_part() {
+  public EReference getIf_ThenPart() {
     return (EReference) ifEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getIf_Else_part() {
+  public EReference getIf_ElsePart() {
     return (EReference) ifEClass.getEStructuralFeatures().get(1);
   }
 
-  public EReference getControl_structure_Condition() {
+  public EReference getControlStructure_Condition() {
     return (EReference) controlStructureEClass.getEStructuralFeatures().get(0);
   }
 
@@ -604,11 +604,11 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     return (EAttribute) parameterEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getParameter_call_Parameter() {
+  public EReference getParameterCall_Parameter() {
     return (EReference) parameterCallEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getLogo_program_Instructions() {
+  public EReference getLogoProgram_Instructions() {
     return (EReference) logoProgramEClass.getEStructuralFeatures().get(0);
   }
 
@@ -620,7 +620,7 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     return (EAttribute) turtleEClass.getEStructuralFeatures().get(1);
   }
 
-  public EAttribute getTurtle_Pen_up() {
+  public EAttribute getTurtle_PenUp() {
     return (EAttribute) turtleEClass.getEStructuralFeatures().get(2);
   }
 
@@ -628,7 +628,7 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     return (EReference) turtleEClass.getEStructuralFeatures().get(3);
   }
 
-  public EReference getTurtle_Call_stack() {
+  public EReference getTurtle_CallStack() {
     return (EReference) turtleEClass.getEStructuralFeatures().get(4);
   }
 
@@ -648,11 +648,11 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
     return (EReference) segmentEClass.getEStructuralFeatures().get(1);
   }
 
-  public EReference getCall_stack_Frames() {
+  public EReference getCallStack_Frames() {
     return (EReference) callStackEClass.getEStructuralFeatures().get(0);
   }
 
-  public EReference getStack_frame_Variables() {
+  public EReference getStackFrame_Variables() {
     return (EReference) stackFrameEClass.getEStructuralFeatures().get(0);
   }
 
