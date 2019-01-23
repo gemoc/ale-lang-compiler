@@ -43,7 +43,8 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
   }
 
   public Expression getSteps() {
-    return steps;}
+    return steps;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.FORWARD;}
@@ -93,9 +94,10 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
 
   public double eval(Turtle turtle) {
     double result;
-    double move = ((double)this.getSteps().eval(turtle));
-    turtle.forward(move);
-    result = 0.0;
+    double move = ((double)this.steps.eval(turtle));
+        turtle.forward(move);
+        result = 0.0;
+        ;
     return result;
   }
 }

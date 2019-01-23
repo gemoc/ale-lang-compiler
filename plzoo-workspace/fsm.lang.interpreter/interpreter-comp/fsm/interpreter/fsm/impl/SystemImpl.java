@@ -108,13 +108,15 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements System {
   public void main() {
     this.intialize();
         boolean anFSMRan = ((boolean)true);
-        while (anFSMRan) {
+        int cptr = ((int)0);
+        while (((anFSMRan) && ((cptr) < (50000000)))) {
           anFSMRan = false;
           for(fsm.interpreter.fsm.FSM fsm: this.getOwnedFsms()) {
-            if(fsm.getInputBuffer().bisEmpty()) {
+            if(!(fsm.getInputBuffer().bisEmpty())) {
               fsm.run();
-              org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((anFSMRan), (true));
+              anFSMRan = true;
             }
+            cptr = (cptr) + (1);
           }
         }
         ;

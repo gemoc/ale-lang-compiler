@@ -49,12 +49,13 @@ public class GreaterImpl extends BinaryExpImpl implements Greater {
 
   public double eval(Turtle turtle) {
     double result;
-    if((this.getLhs().eval(turtle)) > (this.getRhs().eval(turtle))) {
-      result = 1.0;
-    }
-    else {
-      result = 0.0;
-    }
+    if((this.lhs.eval(turtle)) > (this.rhs.eval(turtle))) {
+          result = 1.0;
+        }
+        else {
+          result = 0.0;
+        }
+        ;
     return result;
   }
 }

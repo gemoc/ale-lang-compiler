@@ -49,7 +49,8 @@ public class SinImpl extends UnaryExpressionImpl implements Sin {
 
   public double eval(Turtle turtle) {
     double result;
-    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.getExpression().eval(turtle));
+    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.expression.eval(turtle));
+        ;
     return result;
   }
 }

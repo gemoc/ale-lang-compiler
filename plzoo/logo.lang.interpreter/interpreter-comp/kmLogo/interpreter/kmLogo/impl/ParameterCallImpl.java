@@ -4,9 +4,7 @@ import java.lang.Object;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.Parameter;
 import kmLogo.interpreter.kmLogo.ParameterCall;
-import kmLogo.interpreter.kmLogo.StackFrame;
 import kmLogo.interpreter.kmLogo.Turtle;
-import kmLogo.interpreter.kmLogo.Variable;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -28,7 +26,17 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
   }
 
   public Parameter getParameter() {
-    return parameter;}
+    if (parameter != null && parameter.eIsProxy()) {
+    	InternalEObject oldparameter = (InternalEObject) parameter;
+    	parameter = (Parameter) eResolveProxy(oldparameter);
+    	if (parameter != oldparameter) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PARAMETER_CALL__PARAMETER,
+    					oldparameter, parameter));
+    	}
+    }
+    return parameter;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.PARAMETER_CALL;}
@@ -77,13 +85,14 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
   public double eval(Turtle turtle) {
     double result;
     result = 0.0;
-    for(StackFrame frame: turtle.getCallStack().getFrames()) {
-      for(Variable var: frame.getVariables()) {
-        if(java.util.Objects.equals((var.getName()), (this.getParameter().getName()))) {
-          result = var.getValue();
+        for(kmLogo.interpreter.kmLogo.StackFrame frame: turtle.getCallStack().getFrames()) {
+          for(kmLogo.interpreter.kmLogo.Variable var: frame.getVariables()) {
+            if(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((var.getName()), (this.parameter.getName()))) {
+              result = var.getValue();
+            }
+          }
         }
-      }
-    }
+        ;
     return result;
   }
 }

@@ -43,7 +43,8 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
   }
 
   public Block getBlock() {
-    return block;}
+    return block;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.REPEAT;}
@@ -93,12 +94,13 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
 
   public double eval(Turtle turtle) {
     double result;
-    double time = ((double)this.getCondition().eval(turtle));
-    while ((time) > (0.0)) {
-      this.getBlock().eval(turtle);
-      time = (time) - (1.0);
-    }
-    result = 0.0;
+    double time = ((double)this.condition.eval(turtle));
+        while ((time) > (0.0)) {
+          this.block.eval(turtle);
+          time = (time) - (1.0);
+        }
+        result = 0.0;
+        ;
     return result;
   }
 }

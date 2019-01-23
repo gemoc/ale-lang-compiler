@@ -42,7 +42,8 @@ public class ControlStructureImpl extends InstructionImpl implements ControlStru
   }
 
   public Expression getCondition() {
-    return condition;}
+    return condition;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.CONTROL_STRUCTURE;}

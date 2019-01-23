@@ -42,7 +42,8 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl implements Unar
   }
 
   public Expression getExpression() {
-    return expression;}
+    return expression;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.UNARY_EXPRESSION;}

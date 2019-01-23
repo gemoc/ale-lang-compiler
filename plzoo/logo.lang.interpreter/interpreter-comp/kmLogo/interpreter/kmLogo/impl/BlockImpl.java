@@ -74,10 +74,11 @@ public class BlockImpl extends InstructionImpl implements Block {
 
   public double eval(Turtle turtle) {
     double result;
-    for(Instruction inst: this.getInstructions()) {
-      inst.eval(turtle);
-    }
-    result = 0.0;
+    for(kmLogo.interpreter.kmLogo.Instruction inst: this.getInstructions()) {
+          inst.eval(turtle);
+        }
+        result = 0.0;
+        ;
     return result;
   }
 }

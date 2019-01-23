@@ -132,6 +132,8 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
     switch(featureID) {
     case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_DECLARATION__ARGS:
     	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getArgs()).basicRemove(otherEnd, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_DECLARATION__PROC_CALL:
+    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getProcCall()).basicRemove(otherEnd, msgs);
     case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS:
     	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getInstructions()).basicRemove(otherEnd, msgs);
     }
@@ -152,9 +154,10 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
   public double eval(Turtle turtle) {
     double result;
     result = 0.0;
-    for(Instruction instr: this.getInstructions()) {
-      result = instr.eval(turtle);
-    }
+        for(kmLogo.interpreter.kmLogo.Instruction instr: this.getInstructions()) {
+          result = instr.eval(turtle);
+        }
+        ;
     return result;
   }
 }

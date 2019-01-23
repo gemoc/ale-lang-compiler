@@ -15,13 +15,15 @@ open class System {
 	def void main() {
 		self.intialize();
 		boolean anFSMRan := true;
-		while(anFSMRan) {
+		int cptr := 0;
+		while(anFSMRan and cptr < 50000000) {
 			anFSMRan := false;
 			for(fsm in self.ownedFsms) {
-				if(fsm.inputBuffer.bisEmpty()) {
+				if(not fsm.inputBuffer.bisEmpty()) {
 					fsm.run();
-					anFSMRan = true;
+					anFSMRan := true;
 				}
+				cptr := cptr + 1;
 			}
 		}
 	}
@@ -31,18 +33,19 @@ open class FSM {
 	def void initialize() {
 		self.currentState := self.initialState;
 		self.underProcessTrigger := '';
+		self.consummedString := '';
 	}
 	
-	def void run() {
-		self.underProcessTrigger = self.inputBuffer.dequeue();
+	def dispatch void run() {
+		self.underProcessTrigger := self.inputBuffer.dequeue();
 		('run SM'+self.name+' step on '+self.underProcessTrigger).log();
 		self.currentState.step(self.underProcessTrigger);
-		self.underProcessTrigger = '';
+		self.underProcessTrigger := '';
 	}
 }
 
 open class State {
-	def void step(String inputString) {
+	def dispatch void step(String inputString) {
 		Sequence(String) validTransitions := self.outgoing->select(t | inputString == t.trigger);
 		
 		if(validTransitions->size() == 0) {
@@ -62,7 +65,7 @@ open class State {
 }
 
 open class Transition {
-	def void fire() {
+	def dispatch void fire() {
 		('Firing ' + self.name + ' and entering ' + self.tgt.name).log();
 		FSM fsm := self.src.fsm;
 		fsm.currentState := self.tgt;

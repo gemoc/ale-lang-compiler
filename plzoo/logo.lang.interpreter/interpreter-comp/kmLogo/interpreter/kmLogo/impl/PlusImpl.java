@@ -49,7 +49,8 @@ public class PlusImpl extends BinaryExpImpl implements Plus {
 
   public double eval(Turtle turtle) {
     double result;
-    result = (this.getLhs().eval(turtle)) + (this.getRhs().eval(turtle));
+    result = (this.lhs.eval(turtle)) + (this.rhs.eval(turtle));
+        ;
     return result;
   }
 }

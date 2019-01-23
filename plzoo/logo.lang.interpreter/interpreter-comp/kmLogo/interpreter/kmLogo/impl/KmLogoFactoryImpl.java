@@ -1,6 +1,8 @@
 package kmLogo.interpreter.kmLogo.impl;
 
 import java.lang.IllegalArgumentException;
+import java.lang.Object;
+import java.lang.String;
 import kmLogo.interpreter.kmLogo.Back;
 import kmLogo.interpreter.kmLogo.Block;
 import kmLogo.interpreter.kmLogo.CallStack;
@@ -38,6 +40,7 @@ import kmLogo.interpreter.kmLogo.Turtle;
 import kmLogo.interpreter.kmLogo.Variable;
 import kmLogo.interpreter.kmLogo.While;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -131,6 +134,20 @@ public class KmLogoFactoryImpl extends EFactoryImpl implements KmLogoFactory {
     	return createVariable();
     default:
     	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  public Object createFromString(EDataType eDataType, String initialValue) {
+    switch (eDataType.getClassifierID()) {
+    default:
+    	throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  public String convertToString(EDataType eDataType, Object instanceValue) {
+    switch (eDataType.getClassifierID()) {
+    default:
+    	throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 

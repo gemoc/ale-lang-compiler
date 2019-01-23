@@ -234,7 +234,7 @@ open class ProcCall {
 		('Calling '+self.declaration.name).log();
 	
 		StackFrame newFrame := kmLogo::StackFrame.create();
-		int i := 1;
+		int i := 0;
 		for (exp in self.actualArgs) {
 			Variable newVar := kmLogo::Variable.create();
 			newVar.name := self.declaration.args->at(i).name;

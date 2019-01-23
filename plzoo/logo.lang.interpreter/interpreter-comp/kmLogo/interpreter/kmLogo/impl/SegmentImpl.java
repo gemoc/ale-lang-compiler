@@ -45,7 +45,8 @@ public class SegmentImpl extends MinimalEObjectImpl.Container implements Segment
   }
 
   public Point getBegin() {
-    return begin;}
+    return begin;
+  }
 
   public void setEnd(Point newEnd) {
     if (newEnd != end) {
@@ -72,7 +73,8 @@ public class SegmentImpl extends MinimalEObjectImpl.Container implements Segment
   }
 
   public Point getEnd() {
-    return end;}
+    return end;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.SEGMENT;}

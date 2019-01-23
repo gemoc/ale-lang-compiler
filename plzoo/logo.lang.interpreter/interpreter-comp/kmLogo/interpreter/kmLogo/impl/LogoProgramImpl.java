@@ -75,25 +75,26 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
 
   public Turtle eval() {
     Turtle result;
-    Turtle turtle = ((Turtle)this.createTurtle());
-    result = turtle;
-    for(Instruction it: this.getInstructions()) {
-      it.eval(turtle);
-    }
-    result = turtle;
-    //logo.example.service.Display.show(turtle);
+    kmLogo.interpreter.kmLogo.Turtle turtle = ((kmLogo.interpreter.kmLogo.Turtle)this.createTurtle());
+        result = turtle;
+        for(kmLogo.interpreter.kmLogo.Instruction it: this.getInstructions()) {
+          it.eval(turtle);
+        }
+        result = turtle;
+        ;
     return result;
   }
 
   public Turtle createTurtle() {
     Turtle result;
-    Turtle turtle = ((Turtle)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createTurtle());
-    turtle.setPosition(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
-    turtle.getPosition().setX(0.0);
-    turtle.getPosition().setY(0.0);
-    turtle.setCallStack(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createCallStack());
-    turtle.getCallStack().getFrames().add(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
-    result = turtle;
+    kmLogo.interpreter.kmLogo.Turtle turtle = ((kmLogo.interpreter.kmLogo.Turtle)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createTurtle());
+        turtle.setPosition(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+        turtle.getPosition().setX(0.0);
+        turtle.getPosition().setY(0.0);
+        turtle.setCallStack(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createCallStack());
+        turtle.getCallStack().getFrames().add(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
+        result = turtle;
+        ;
     return result;
   }
 }

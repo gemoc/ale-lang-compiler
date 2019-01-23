@@ -45,7 +45,8 @@ public class IfImpl extends ControlStructureImpl implements If {
   }
 
   public Block getThenPart() {
-    return thenPart;}
+    return thenPart;
+  }
 
   public void setElsePart(Block newElsePart) {
     if (newElsePart != elsePart) {
@@ -72,7 +73,8 @@ public class IfImpl extends ControlStructureImpl implements If {
   }
 
   public Block getElsePart() {
-    return elsePart;}
+    return elsePart;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.IF;}
@@ -134,17 +136,18 @@ public class IfImpl extends ControlStructureImpl implements If {
 
   public double eval(Turtle turtle) {
     double result;
-    if((this.getCondition().eval(turtle)) != (0.0)) {
-      result = this.getThenPart().eval(turtle);
-    }
-    else {
-      if((this.getElsePart()) != (null)) {
-        result = this.getElsePart().eval(turtle);
-      }
-      else {
-        result = 0.0;
-      }
-    }
+    if((this.condition.eval(turtle)) != (0.0)) {
+          result = this.thenPart.eval(turtle);
+        }
+        else {
+          if((this.elsePart) != (null)) {
+            result = this.elsePart.eval(turtle);
+          }
+          else {
+            result = 0.0;
+          }
+        }
+        ;
     return result;
   }
 }

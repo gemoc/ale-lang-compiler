@@ -44,7 +44,8 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
   }
 
   public Expression getLhs() {
-    return lhs;}
+    return lhs;
+  }
 
   public void setRhs(Expression newRhs) {
     if (newRhs != rhs) {
@@ -71,7 +72,8 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
   }
 
   public Expression getRhs() {
-    return rhs;}
+    return rhs;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.BINARY_EXP;}

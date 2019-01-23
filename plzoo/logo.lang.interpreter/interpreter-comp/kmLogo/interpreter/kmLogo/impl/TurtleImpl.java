@@ -71,7 +71,8 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
   }
 
   public Point getPosition() {
-    return position;}
+    return position;
+  }
 
   public EList<Segment> getDrawings() {
     if(drawings == null) {
@@ -105,7 +106,8 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
   }
 
   public CallStack getCallStack() {
-    return callStack;}
+    return callStack;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.TURTLE;}
@@ -199,41 +201,44 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
   }
 
   public void move(double dx, double dy) {
-    Point newPos = ((Point)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
-    newPos.setX((this.getPosition().getX()) + (dx));
-    newPos.setY((this.getPosition().getY()) + (dy));
-    if(this.isPenUp()) {
-    }
-    else {
-      Segment newSegment = ((Segment)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createSegment());
-      newSegment.setBegin(this.getPosition());
-      newSegment.setEnd(newPos);
-      this.getDrawings().add(newSegment);
-    }
-    Point newPosCopy = ((Point)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
-    newPosCopy.setX(newPos.getX());
-    newPosCopy.setY(newPos.getY());
-    this.setPosition(newPosCopy);
+    kmLogo.interpreter.kmLogo.Point newPos = ((kmLogo.interpreter.kmLogo.Point)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+        newPos.setX((this.position.getX()) + (dx));
+        newPos.setY((this.position.getY()) + (dy));
+        if(this.penUp) {
+        }
+        else {
+          kmLogo.interpreter.kmLogo.Segment newSegment = ((kmLogo.interpreter.kmLogo.Segment)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createSegment());
+          newSegment.setBegin(this.position);
+          newSegment.setEnd(newPos);
+          this.getDrawings().add(newSegment);
+        }
+        kmLogo.interpreter.kmLogo.Point newPosCopy = ((kmLogo.interpreter.kmLogo.Point)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+        newPosCopy.setX(newPos.getX());
+        newPosCopy.setY(newPos.getY());
+        this.setPosition(newPosCopy);
+        ;
   }
 
   public void forward(double steps) {
-    this.move((steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(this.getHeading())),(steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.getHeading())));
+    this.move((steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(this.heading)),(steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.heading)));
+        ;
   }
 
   public void rotate(double angle) {
-    double newAngle = ((double)(this.getHeading()) + (angle));
-    if((newAngle) > (360.0)) {
-      newAngle = (newAngle) - (360.0);
-      this.setHeading(newAngle);
-    }
-    else {
-      if((newAngle) < (0.0)) {
-        newAngle = (360.0) + (newAngle);
-        this.setHeading(newAngle);
-      }
-      else {
-        this.setHeading(newAngle);
-      }
-    }
+    double newAngle = ((double)(this.heading) + (angle));
+        if((newAngle) > (360.0)) {
+          newAngle = (newAngle) - (360.0);
+          this.setHeading(newAngle);
+        }
+        else {
+          if((newAngle) < (0.0)) {
+            newAngle = (360.0) + (newAngle);
+            this.setHeading(newAngle);
+          }
+          else {
+            this.setHeading(newAngle);
+          }
+        }
+        ;
   }
 }

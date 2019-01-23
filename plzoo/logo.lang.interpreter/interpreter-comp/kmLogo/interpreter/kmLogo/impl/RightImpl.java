@@ -43,7 +43,8 @@ public class RightImpl extends PrimitiveImpl implements Right {
   }
 
   public Expression getAngle() {
-    return angle;}
+    return angle;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.RIGHT;}
@@ -93,9 +94,10 @@ public class RightImpl extends PrimitiveImpl implements Right {
 
   public double eval(Turtle turtle) {
     double result;
-    double angle = ((double)this.getAngle().eval(turtle));
-    turtle.rotate(-(angle));
-    result = 0.0;
+    double angle = ((double)this.angle.eval(turtle));
+        turtle.rotate(-(angle));
+        result = 0.0;
+        ;
     return result;
   }
 }

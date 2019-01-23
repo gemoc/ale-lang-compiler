@@ -366,14 +366,15 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
   public void initialize() {
     this.setCurrentState(this.initialState);
         this.setUnderProcessTrigger("");
+        this.setConsummedString("");
         ;
   }
 
   public void run() {
-    org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.underProcessTrigger), (this.inputBuffer.dequeue()));
+    this.setUnderProcessTrigger(this.inputBuffer.dequeue());
         org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(((("run SM") + (this.name)) + (" step on ")) + (this.underProcessTrigger));
         this.currentState.step(this.underProcessTrigger);
-        org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.underProcessTrigger), (""));
+        this.setUnderProcessTrigger("");
         ;
   }
 }

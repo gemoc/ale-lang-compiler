@@ -5,9 +5,7 @@ import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.ProcCall;
 import kmLogo.interpreter.kmLogo.ProcDeclaration;
-import kmLogo.interpreter.kmLogo.StackFrame;
 import kmLogo.interpreter.kmLogo.Turtle;
-import kmLogo.interpreter.kmLogo.Variable;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -64,7 +62,17 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
   }
 
   public ProcDeclaration getDeclaration() {
-    return declaration;}
+    if (declaration != null && declaration.eIsProxy()) {
+    	InternalEObject olddeclaration = (InternalEObject) declaration;
+    	declaration = (ProcDeclaration) eResolveProxy(olddeclaration);
+    	if (declaration != olddeclaration) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PROC_CALL__DECLARATION,
+    					olddeclaration, declaration));
+    	}
+    }
+    return declaration;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.PROC_CALL;}
@@ -119,6 +127,8 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
     switch(featureID) {
     case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
     	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getActualArgs()).basicRemove(otherEnd, msgs);
+    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_CALL__DECLARATION:
+    	return basicSetDeclaration(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -139,20 +149,24 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 
   public double eval(Turtle turtle) {
     double result;
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(("Calling ") + (this.getDeclaration().getName()));
-    StackFrame newFrame = ((StackFrame)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
-    int i = ((int)1);
-    for(Expression exp: this.getActualArgs()) {
-      Variable newVar = ((Variable)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createVariable());
-      newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.getDeclaration().getArgs(), i).getName());
-      newVar.setValue(exp.eval(turtle));
-      newFrame.getVariables().add(newVar);
-      i = (i) + (1);
-    }
-    turtle.getCallStack().getFrames().add(newFrame);
-    result = 0.0;
-    this.getDeclaration().eval(turtle);
-    turtle.getCallStack().getFrames().remove(newFrame);
+    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(("Calling ") + (this.declaration.getName()));
+        kmLogo.interpreter.kmLogo.StackFrame newFrame = ((kmLogo.interpreter.kmLogo.StackFrame)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
+        int i = ((int)0);
+        for(kmLogo.interpreter.kmLogo.Expression exp: this.getActualArgs()) {
+          kmLogo.interpreter.kmLogo.Variable newVar = ((kmLogo.interpreter.kmLogo.Variable)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createVariable());
+          newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.declaration.getArgs(), i).getName());
+          newVar.setValue(exp.eval(turtle));
+          newFrame.getVariables().add(newVar);
+          i = (i) + (1);
+        }
+        turtle.getCallStack().getFrames().add(newFrame);
+        result = 0.0;
+        if(this.declaration instanceof kmLogo.interpreter.kmLogo.ProcDeclaration) {
+          kmLogo.interpreter.kmLogo.ProcDeclaration decl = ((kmLogo.interpreter.kmLogo.ProcDeclaration)this.declaration);
+          decl.eval(turtle);
+        }
+        turtle.getCallStack().getFrames().remove(newFrame);
+        ;
     return result;
   }
 }

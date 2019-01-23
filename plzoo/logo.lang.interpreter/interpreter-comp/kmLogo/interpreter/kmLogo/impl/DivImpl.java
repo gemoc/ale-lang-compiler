@@ -49,12 +49,13 @@ public class DivImpl extends BinaryExpImpl implements Div {
 
   public double eval(Turtle turtle) {
     double result;
-    if((this.getRhs().eval(turtle)) != (0.0)) {
-      result = (this.getLhs().eval(turtle)) / (this.getRhs().eval(turtle));
-    }
-    else {
-      result = 0.0;
-    }
+    if((this.rhs.eval(turtle)) != (0.0)) {
+          result = (this.lhs.eval(turtle)) / (this.rhs.eval(turtle));
+        }
+        else {
+          result = 0.0;
+        }
+        ;
     return result;
   }
 }

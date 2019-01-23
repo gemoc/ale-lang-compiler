@@ -8,26 +8,29 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import fsm.interpreter.fsm.FsmPackage;
 
 public class FsmInterpreterBenchmark {
 
 	public static void main(String[] args) {
-//		final String file = args[0];
-		final String file = "/home/manuel/dev/java/ale-lang/plzoo-workspace/fsm.model/model/System.xmi";
-//		final int itt = Integer.parseInt(args[1]);
-		final int itt = 1;
+		final String file = args[0];
+//		final String file = "/home/manuel/dev/java/ale-lang/plzoo-workspace/fsm.model/model/System.xmi";
+		final int itt = Integer.parseInt(args[1]);
+//		final int itt = 1;
 
-		FsmPackage.eINSTANCE.eClass();
+//		FsmPackage.eINSTANCE.eClass();
 
 		EPackage.Registry.INSTANCE.put("http://www.example.org/fsm", FsmPackage.eINSTANCE);
+		EPackage.Registry.INSTANCE.put("http://www.gemoc.org/fsm", FsmPackage.eINSTANCE);
+		
 
-//		LogService.MUTE = true;
+		LogService.MUTE = true;
 
 		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		final Map<String, Object> m = reg.getExtensionToFactoryMap();
 		m.put("xmi", new XMIResourceFactoryImpl());
+		m.put("fsm", new XMIResourceFactoryImpl());
 
 		final long[] times = new long[itt];
 

@@ -43,7 +43,8 @@ public class WhileImpl extends ControlStructureImpl implements While {
   }
 
   public Block getBlock() {
-    return block;}
+    return block;
+  }
 
   protected EClass eStaticClass() {
     return KmLogoPackage.Literals.WHILE;}
@@ -93,10 +94,11 @@ public class WhileImpl extends ControlStructureImpl implements While {
 
   public double eval(Turtle turtle) {
     double result;
-    while ((this.getCondition().eval(turtle)) > (0.0)) {
-      this.getBlock().eval(turtle);
-    }
-    result = 0.0;
+    while ((this.condition.eval(turtle)) > (0.0)) {
+          this.block.eval(turtle);
+        }
+        result = 0.0;
+        ;
     return result;
   }
 }

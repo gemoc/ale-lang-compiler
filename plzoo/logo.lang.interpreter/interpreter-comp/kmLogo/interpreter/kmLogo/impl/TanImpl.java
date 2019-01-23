@@ -49,7 +49,8 @@ public class TanImpl extends UnaryExpressionImpl implements Tan {
 
   public double eval(Turtle turtle) {
     double result;
-    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.tan(this.getExpression().eval(turtle));
+    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.tan(this.expression.eval(turtle));
+        ;
     return result;
   }
 }
