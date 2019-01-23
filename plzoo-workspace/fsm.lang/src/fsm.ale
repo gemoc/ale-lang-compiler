@@ -45,7 +45,7 @@ open class FSM {
 }
 
 open class State {
-	def dispatch void step(String inputString) {
+	def  void step(String inputString) { // dispatch
 		Sequence(String) validTransitions := self.outgoing->select(t | inputString == t.trigger);
 		
 		if(validTransitions->size() == 0) {
@@ -65,7 +65,7 @@ open class State {
 }
 
 open class Transition {
-	def dispatch void fire() {
+	def  void fire() { // dispatch 
 		('Firing ' + self.name + ' and entering ' + self.tgt.name).log();
 		FSM fsm := self.src.fsm;
 		fsm.currentState := self.tgt;

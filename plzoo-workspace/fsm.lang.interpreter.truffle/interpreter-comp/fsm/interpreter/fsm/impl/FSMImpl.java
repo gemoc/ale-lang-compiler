@@ -1,5 +1,6 @@
 package fsm.interpreter.fsm.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.interpreter.fsm.Buffer;
@@ -46,8 +47,12 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer implemen
 
   protected State currentState;
 
+  @CompilationFinal
+  private FSMDispatchWrapperRun cachedRun;
+
   protected FSMImpl() {
     super();
+    this.cachedRun = new fsm.interpreter.fsm.impl.FSMDispatchWrapperRun(this);
   }
 
   public String getName() {
@@ -400,5 +405,9 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer implemen
         this.currentState.step(this.underProcessTrigger);
         this.setUnderProcessTrigger("");
         ;
+  }
+
+  public FSMDispatchWrapperRun getCachedRun() {
+    return this.cachedRun;
   }
 }
