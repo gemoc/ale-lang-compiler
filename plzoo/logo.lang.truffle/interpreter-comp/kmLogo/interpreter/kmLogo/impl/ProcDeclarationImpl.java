@@ -37,11 +37,11 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
   private Instruction[] instructionsArr;
 
   @CompilationFinal
-  private ProcDeclarationDispatchWrapperEval cachedEval;
+  private ProcDeclarationDispatchWrapperDeval cachedDeval;
 
   protected ProcDeclarationImpl() {
     super();
-    this.cachedEval = new kmLogo.interpreter.kmLogo.impl.ProcDeclarationDispatchWrapperEval(this);
+    this.cachedDeval = new kmLogo.interpreter.kmLogo.impl.ProcDeclarationDispatchWrapperDeval(this);
   }
 
   public String getName() {
@@ -191,7 +191,20 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
     return result;
   }
 
-  public ProcDeclarationDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
+  public double deval(Turtle turtle) {
+    double result;
+    if(this.instructionsArr == null) {
+        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
+        				if(this.instructions != null) this.instructionsArr = this.instructions.toArray(new kmLogo.interpreter.kmLogo.Instruction[0]);
+        				else this.instructionsArr = new kmLogo.interpreter.kmLogo.Instruction[] {};
+        				
+        			};
+    result = this.eval(turtle);
+        ;
+    return result;
+  }
+
+  public ProcDeclarationDispatchWrapperDeval getCachedDeval() {
+    return this.cachedDeval;
   }
 }

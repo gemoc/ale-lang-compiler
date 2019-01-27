@@ -30,11 +30,11 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
   private Expression[] actualArgsArr;
 
   @Child
-  private ProcDeclarationDispatchEval dispatchProcDeclarationEval;
+  private ProcDeclarationDispatchDeval dispatchProcDeclarationDeval;
 
   protected ProcCallImpl() {
     super();
-    this.dispatchProcDeclarationEval = kmLogo.interpreter.kmLogo.impl.ProcDeclarationDispatchEvalNodeGen.create(); 
+    this.dispatchProcDeclarationDeval = kmLogo.interpreter.kmLogo.impl.ProcDeclarationDispatchDevalNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -194,7 +194,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
         result = 0.0;
         if(this.declaration instanceof kmLogo.interpreter.kmLogo.ProcDeclaration) {
           kmLogo.interpreter.kmLogo.ProcDeclaration decl = ((kmLogo.interpreter.kmLogo.ProcDeclaration)this.declaration);
-          dispatchProcDeclarationEval.executeDispatch(decl.getCachedEval(), new Object[] {turtle});
+          dispatchProcDeclarationDeval.executeDispatch(decl.getCachedDeval(), new Object[] {turtle});
         }
         turtle.getCallStack().getFrames().remove(newFrame);
         ;

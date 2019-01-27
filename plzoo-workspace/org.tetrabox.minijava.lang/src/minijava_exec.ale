@@ -46,7 +46,7 @@ open class Program {
 /////// STATEMENTS
 
 open class Statement {
-	def void evaluateStatement(miniJava::State state) {
+	def dispatch void evaluateStatement(miniJava::State state) {
 		// EMPTY
 	} 
 }
@@ -224,7 +224,7 @@ open class Method {
 		}
 	}
 	
-	def  void call(State state) { // dispatch
+	def void call(State state) { 
 		self.body.evaluateStatement(state);
 	}
 }
@@ -297,21 +297,11 @@ open class And {
 
 open class Or {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
-		miniJava::Value left := self.left.evaluateExpression(state);
-		miniJava::Value right := self.right.evaluateExpression(state);
-		if(left.oclIsKindOf(miniJava::BooleanValue)) {
-			if(right.oclIsKindOf(miniJava::BooleanValue)) {
-				miniJava::BooleanValue bleft := left;
-				miniJava::BooleanValue bright := right;
-				miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
-				tmp.value := bleft.isValue() or bright.isValue();
-				result := tmp;
-			} else {
-				result := null;
-			}
-		} else {
-			result := null;
-		}
+		miniJava::BooleanValue left := self.left.evaluateExpression(state);
+		miniJava::BooleanValue right := self.right.evaluateExpression(state);
+		miniJava::BooleanValue res := miniJava::BooleanValue.create();
+		res.value := left.isValue() or right.isValue();
+		result := res;
 	}
 }
 

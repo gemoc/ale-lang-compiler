@@ -20,7 +20,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     super();
   }
 
-  
+  @TruffleBoundary
   public void setInstance(ArrayInstance newInstance) {
     ArrayInstance oldInstance = instance;
     instance = newInstance;
@@ -28,7 +28,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE, oldInstance, instance));
   }
 
-  
+  @TruffleBoundary
   public ArrayInstance getInstance() {
     if (instance != null && instance.eIsProxy()) {
     	InternalEObject oldinstance = (InternalEObject) instance;
@@ -42,11 +42,11 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     return instance;
   }
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_REF_VALUE;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE:
@@ -56,7 +56,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE:
@@ -66,7 +66,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE:
@@ -75,7 +75,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE:
@@ -84,7 +84,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -92,7 +92,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
-  
+  @TruffleBoundary
   public Value copyj() {
     Value result;
     miniJava.interpreter.miniJava.ArrayRefValue tmp = ((miniJava.interpreter.miniJava.ArrayRefValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createArrayRefValue());
@@ -102,7 +102,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
     return result;
   }
 
-  
+  @TruffleBoundary
   public String customToString() {
     String result;
     java.lang.String res = ((java.lang.String)"[");

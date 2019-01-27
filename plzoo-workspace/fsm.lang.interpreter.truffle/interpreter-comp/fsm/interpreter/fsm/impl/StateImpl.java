@@ -1,7 +1,16 @@
 package fsm.interpreter.fsm.impl;
 
-import java.util.List;
-
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Children;
+import com.oracle.truffle.api.nodes.NodeInfo;
+import fsm.interpreter.fsm.FSM;
+import fsm.interpreter.fsm.FsmPackage;
+import fsm.interpreter.fsm.State;
+import fsm.interpreter.fsm.Transition;
+import java.lang.IllegalArgumentException;
+import java.lang.Object;
+import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -11,14 +20,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
-
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
-
-import fsm.interpreter.fsm.FSM;
-import fsm.interpreter.fsm.FsmPackage;
-import fsm.interpreter.fsm.State;
-import fsm.interpreter.fsm.Transition;
 
 @NodeInfo(
     description = "State"
@@ -35,8 +36,12 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
   @Children
   private Transition[] outgoingArr;
 
+  @CompilationFinal
+  private StateDispatchWrapperStep cachedStep;
+
   protected StateImpl() {
     super();
+    this.cachedStep = new fsm.interpreter.fsm.impl.StateDispatchWrapperStep(this);
   }
 
   public String getName() {
@@ -205,16 +210,17 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
         				else this.outgoingArr = new fsm.interpreter.fsm.Transition[] {};
         				
         			};
-    List<fsm.interpreter.fsm.Transition> validTransitions = ((List<fsm.interpreter.fsm.Transition>)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.outgoingArr, (t) -> org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((inputString), (t.getTrigger()))));
-        if(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(validTransitions)), (0))) {
+    fsm.interpreter.fsm.Transition validTransition = ((fsm.interpreter.fsm.Transition)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(this.outgoingArr, (t) -> org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((inputString), (t.getTrigger())))));
+        if(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((validTransition), (null))) {
           this.getFsm().getOutputBuffer().enqueue(inputString);
         }
-        if((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(validTransitions)) > (1)) {
-          org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("Non Determinism");
-        }
-        if(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(validTransitions)), (1))) {
-          org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(validTransitions, 0).fire();
+        else {
+          validTransition.fire();
         }
         ;
+  }
+
+  public StateDispatchWrapperStep getCachedStep() {
+    return this.cachedStep;
   }
 }

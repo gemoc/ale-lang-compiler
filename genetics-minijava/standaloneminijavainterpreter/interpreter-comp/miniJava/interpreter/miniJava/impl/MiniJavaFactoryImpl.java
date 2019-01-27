@@ -107,7 +107,7 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
     return new MiniJavaFactoryImpl();
   }
 
-  
+  @TruffleBoundary
   public EObject create(EClass eClass) {
     switch (eClass.getClassifierID()) {
     case MiniJavaPackage.PROGRAM:
@@ -292,469 +292,469 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
   public MiniJavaPackage getMiniJavaPackage() {
     return (MiniJavaPackage)getEPackage();}
 
-  
+  @TruffleBoundary
   public Program createProgram() {
     ProgramImpl ret = new ProgramImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Import createImport() {
     ImportImpl ret = new ImportImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public TypeDeclaration createTypeDeclaration() {
     TypeDeclarationImpl ret = new TypeDeclarationImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Clazz createClazz() {
     ClazzImpl ret = new ClazzImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Interface createInterface() {
     InterfaceImpl ret = new InterfaceImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Member createMember() {
     MemberImpl ret = new MemberImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Method createMethod() {
     MethodImpl ret = new MethodImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Parameter createParameter() {
     ParameterImpl ret = new ParameterImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Field createField() {
     FieldImpl ret = new FieldImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Block createBlock() {
     BlockImpl ret = new BlockImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Statement createStatement() {
     StatementImpl ret = new StatementImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public PrintStatement createPrintStatement() {
     PrintStatementImpl ret = new PrintStatementImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Return createReturn() {
     ReturnImpl ret = new ReturnImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public IfStatement createIfStatement() {
     IfStatementImpl ret = new IfStatementImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public WhileStatement createWhileStatement() {
     WhileStatementImpl ret = new WhileStatementImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ForStatement createForStatement() {
     ForStatementImpl ret = new ForStatementImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public TypeRef createTypeRef() {
     TypeRefImpl ret = new TypeRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public SingleTypeRef createSingleTypeRef() {
     SingleTypeRefImpl ret = new SingleTypeRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ClassRef createClassRef() {
     ClassRefImpl ret = new ClassRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public NamedElement createNamedElement() {
     NamedElementImpl ret = new NamedElementImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public TypedDeclaration createTypedDeclaration() {
     TypedDeclarationImpl ret = new TypedDeclarationImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Symbol createSymbol() {
     SymbolImpl ret = new SymbolImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public VariableDeclaration createVariableDeclaration() {
     VariableDeclarationImpl ret = new VariableDeclarationImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Assignment createAssignment() {
     AssignmentImpl ret = new AssignmentImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Assignee createAssignee() {
     AssigneeImpl ret = new AssigneeImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Expression createExpression() {
     ExpressionImpl ret = new ExpressionImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ArrayTypeRef createArrayTypeRef() {
     ArrayTypeRefImpl ret = new ArrayTypeRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public IntegerTypeRef createIntegerTypeRef() {
     IntegerTypeRefImpl ret = new IntegerTypeRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public BooleanTypeRef createBooleanTypeRef() {
     BooleanTypeRefImpl ret = new BooleanTypeRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public StringTypeRef createStringTypeRef() {
     StringTypeRefImpl ret = new StringTypeRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public VoidTypeRef createVoidTypeRef() {
     VoidTypeRefImpl ret = new VoidTypeRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Or createOr() {
     OrImpl ret = new OrImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public And createAnd() {
     AndImpl ret = new AndImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Equality createEquality() {
     EqualityImpl ret = new EqualityImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Inequality createInequality() {
     InequalityImpl ret = new InequalityImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public SuperiorOrEqual createSuperiorOrEqual() {
     SuperiorOrEqualImpl ret = new SuperiorOrEqualImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public InferiorOrEqual createInferiorOrEqual() {
     InferiorOrEqualImpl ret = new InferiorOrEqualImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Superior createSuperior() {
     SuperiorImpl ret = new SuperiorImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Inferior createInferior() {
     InferiorImpl ret = new InferiorImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Plus createPlus() {
     PlusImpl ret = new PlusImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Minus createMinus() {
     MinusImpl ret = new MinusImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Multiplication createMultiplication() {
     MultiplicationImpl ret = new MultiplicationImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Division createDivision() {
     DivisionImpl ret = new DivisionImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ArrayAccess createArrayAccess() {
     ArrayAccessImpl ret = new ArrayAccessImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ArrayLength createArrayLength() {
     ArrayLengthImpl ret = new ArrayLengthImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Not createNot() {
     NotImpl ret = new NotImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Neg createNeg() {
     NegImpl ret = new NegImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public FieldAccess createFieldAccess() {
     FieldAccessImpl ret = new FieldAccessImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public MethodCall createMethodCall() {
     MethodCallImpl ret = new MethodCallImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public StringConstant createStringConstant() {
     StringConstantImpl ret = new StringConstantImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public IntConstant createIntConstant() {
     IntConstantImpl ret = new IntConstantImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public BoolConstant createBoolConstant() {
     BoolConstantImpl ret = new BoolConstantImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public This createThis() {
     ThisImpl ret = new ThisImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Super createSuper() {
     SuperImpl ret = new SuperImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Null createNull() {
     NullImpl ret = new NullImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public NewObject createNewObject() {
     NewObjectImpl ret = new NewObjectImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public NewArray createNewArray() {
     NewArrayImpl ret = new NewArrayImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public SymbolRef createSymbolRef() {
     SymbolRefImpl ret = new SymbolRefImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Context createContext() {
     ContextImpl ret = new ContextImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Value createValue() {
     ValueImpl ret = new ValueImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public IntegerValue createIntegerValue() {
     IntegerValueImpl ret = new IntegerValueImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public SymbolBinding createSymbolBinding() {
     SymbolBindingImpl ret = new SymbolBindingImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public FieldBinding createFieldBinding() {
     FieldBindingImpl ret = new FieldBindingImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public StringValue createStringValue() {
     StringValueImpl ret = new StringValueImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public BooleanValue createBooleanValue() {
     BooleanValueImpl ret = new BooleanValueImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public OutputStream createOutputStream() {
     OutputStreamImpl ret = new OutputStreamImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public State createState() {
     StateImpl ret = new StateImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Frame createFrame() {
     FrameImpl ret = new FrameImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public NullValue createNullValue() {
     NullValueImpl ret = new NullValueImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public NewCall createNewCall() {
     NewCallImpl ret = new NewCallImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public MethodCall2 createMethodCall2() {
     MethodCall2Impl ret = new MethodCall2Impl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ObjectInstance createObjectInstance() {
     ObjectInstanceImpl ret = new ObjectInstanceImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ArrayInstance createArrayInstance() {
     ArrayInstanceImpl ret = new ArrayInstanceImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ObjectRefValue createObjectRefValue() {
     ObjectRefValueImpl ret = new ObjectRefValueImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public ArrayRefValue createArrayRefValue() {
     ArrayRefValueImpl ret = new ArrayRefValueImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Map.Entry<Symbol, SymbolBinding> createSymbolToSymbolBindingMap() {
     SymbolToSymbolBindingMapImpl ret = new SymbolToSymbolBindingMapImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Map.Entry<Clazz, Method> createClazzToMethodMap() {
     ClazzToMethodMapImpl ret = new ClazzToMethodMapImpl();
     return ret;
   }
 
-  
+  @TruffleBoundary
   public Modulo createModulo() {
     ModuloImpl ret = new ModuloImpl();
     return ret;

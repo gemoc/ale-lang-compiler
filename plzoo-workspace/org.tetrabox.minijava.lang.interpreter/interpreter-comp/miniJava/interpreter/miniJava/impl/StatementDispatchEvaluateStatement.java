@@ -1,4 +1,4 @@
-package fsm.interpreter.fsm.impl;
+package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.Assumption;
 import com.oracle.truffle.api.RootCallTarget;
@@ -9,18 +9,19 @@ import com.oracle.truffle.api.nodes.IndirectCallNode;
 import com.oracle.truffle.api.nodes.Node;
 import java.lang.Object;
 
-public abstract class BufferDispatchDequeue extends Node {
+public abstract class StatementDispatchEvaluateStatement extends Node {
   public static final int INLINE_CACHE_SIZE = 3;
 
   public abstract Object executeDispatch(Object function, Object[] arguments);
 
   @Specialization(
       limit = "INLINE_CACHE_SIZE",
-      guards = "function.getCallTarget() == cachedTarget",
-      assumptions = "callTargetStable"
+      guards = "function.getCallTarget() == cachedTarget"
+//      assumptions = "callTargetStable"
   )
-  protected static Object doDirect(BufferDispatchWrapperDequeue function, Object[] arguments,
-      @Cached("function.getCallTargetStable()") Assumption callTargetStable,
+  protected static Object doDirect(StatementDispatchWrapperEvaluateStatement function,
+      Object[] arguments, 
+//      @Cached("function.getCallTargetStable()") Assumption callTargetStable,
       @Cached("function.getCallTarget()") RootCallTarget cachedTarget,
       @Cached("create(cachedTarget)") DirectCallNode callNode) {
     return callNode.call(arguments);}
@@ -28,7 +29,7 @@ public abstract class BufferDispatchDequeue extends Node {
   @Specialization(
       replaces = "doDirect"
   )
-  protected static Object doIndirect(BufferDispatchWrapperDequeue function, Object[] arguments,
-      @Cached("create()") IndirectCallNode callNode) {
+  protected static Object doIndirect(StatementDispatchWrapperEvaluateStatement function,
+      Object[] arguments, @Cached("create()") IndirectCallNode callNode) {
     return callNode.call(function.getCallTarget(), arguments);}
 }

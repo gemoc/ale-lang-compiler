@@ -14,39 +14,39 @@ public class NullValueImpl extends ValueImpl implements NullValue {
     super();
   }
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.NULL_VALUE;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     }
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     }
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     }
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -54,7 +54,7 @@ public class NullValueImpl extends ValueImpl implements NullValue {
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
-  
+  @TruffleBoundary
   public Value copyj() {
     Value result;
     miniJava.interpreter.miniJava.NullValue tmp = ((miniJava.interpreter.miniJava.NullValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createNullValue());

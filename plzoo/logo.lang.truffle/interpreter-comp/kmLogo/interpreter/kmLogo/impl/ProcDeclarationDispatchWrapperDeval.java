@@ -6,14 +6,14 @@ import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.utilities.CyclicAssumption;
 import kmLogo.interpreter.kmLogo.ProcDeclaration;
 
-public class ProcDeclarationDispatchWrapperEval {
+public class ProcDeclarationDispatchWrapperDeval {
   private RootCallTarget callTarget;
 
   private final CyclicAssumption callTargetStable;
 
-  protected ProcDeclarationDispatchWrapperEval(ProcDeclaration it) {
-    this.callTargetStable = new CyclicAssumption("ProcDeclarationDispatchWrapperEval_7.321632676806565E7");
-    this.callTarget = Truffle.getRuntime().createCallTarget(new ProcDeclarationEvalRootNode(it));
+  protected ProcDeclarationDispatchWrapperDeval(ProcDeclaration it) {
+    this.callTargetStable = new CyclicAssumption("ProcDeclarationDispatchWrapperDeval_9.503853590999648E7");
+    this.callTarget = Truffle.getRuntime().createCallTarget(new ProcDeclarationDevalRootNode(it));
   }
 
   public RootCallTarget getCallTarget() {

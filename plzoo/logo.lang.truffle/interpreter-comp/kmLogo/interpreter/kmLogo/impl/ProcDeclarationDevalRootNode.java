@@ -7,11 +7,11 @@ import java.lang.Object;
 import java.lang.Override;
 import kmLogo.interpreter.kmLogo.ProcDeclaration;
 
-public class ProcDeclarationEvalRootNode extends RootNode {
+public class ProcDeclarationDevalRootNode extends RootNode {
   @Child
   private ProcDeclaration it;
 
-  public ProcDeclarationEvalRootNode(ProcDeclaration it) {
+  public ProcDeclarationDevalRootNode(ProcDeclaration it) {
     super(null);
     this.it = it;
   }
@@ -19,6 +19,6 @@ public class ProcDeclarationEvalRootNode extends RootNode {
   @Override
   public Object execute(VirtualFrame frame) {
     kmLogo.interpreter.kmLogo.Turtle turtle = (kmLogo.interpreter.kmLogo.Turtle) frame.getArguments()[0];
-    return it.eval(turtle);
+    return it.deval(turtle);
   }
 }

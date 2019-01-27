@@ -19,14 +19,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "ArrayLength"
 )
 public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
-  
+  @Child
   protected Expression array;
 
   protected ArrayLengthImpl() {
     super();
   }
 
-  
+  @TruffleBoundary
   public void setArray(Expression newArray) {
     if (newArray != array) {
     	NotificationChain msgs = null;
@@ -41,7 +41,7 @@ public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.ARRAY_LENGTH__ARRAY, newArray, newArray));
   }
 
-  
+  @TruffleBoundary
   public NotificationChain basicSetArray(Expression newArray, NotificationChain msgs) {
     Expression oldArray = array;
     array = newArray;
@@ -52,16 +52,16 @@ public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
     return msgs;
   }
 
-  
+  @TruffleBoundary
   public Expression getArray() {
     return array;
   }
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.ARRAY_LENGTH;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_LENGTH__ARRAY:
@@ -71,7 +71,7 @@ public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_LENGTH__ARRAY:
@@ -81,7 +81,7 @@ public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_LENGTH__ARRAY:
@@ -90,7 +90,7 @@ public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.ARRAY_LENGTH__ARRAY:
@@ -99,7 +99,7 @@ public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

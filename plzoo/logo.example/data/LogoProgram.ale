@@ -22,7 +22,7 @@ open class LogoProgram {
 		
 	}
 	
-	def Turtle createTurtle() {
+	def /*dispatch*/ Turtle createTurtle() {
 		Turtle turtle := kmLogo::Turtle.create();
 		turtle.position := kmLogo::Point.create();
 		turtle.position.x := 0.0;
@@ -34,7 +34,7 @@ open class LogoProgram {
 }
 
 open class Instruction {
-	def double eval(Turtle turtle) {
+	def  double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }
@@ -150,7 +150,7 @@ open class Plus {
 
 
 open class Expression {
-	def double eval(Turtle turtle) {
+	def /*dispatch*/ double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }
@@ -247,20 +247,25 @@ open class ProcCall {
 		result := 0.0;
 		if(self.declaration.oclIsKindOf(kmLogo::ProcDeclaration)) {
 			kmLogo::ProcDeclaration decl := self.declaration;
-			decl.eval(turtle);
+			decl.deval(turtle);
 		}
 		
 		
 		turtle.callStack.frames -= newFrame;
 	}
+	
 }
 
 open class ProcDeclaration {
-	def dispatch double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := 0.0;
 		for(instr in self.instructions) {
 			result := instr.eval(turtle);
 		}
+	}
+	
+	def dispatch double deval(Turtle turtle) {
+		result := self.eval(turtle);
 	}
 }
 

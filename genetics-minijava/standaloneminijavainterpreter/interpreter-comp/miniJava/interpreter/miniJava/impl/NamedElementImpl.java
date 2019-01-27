@@ -29,11 +29,11 @@ public class NamedElementImpl extends MinimalTruffleEObjectImpl.TruffleContainer
   public void setName(String name) {
     this.name = name;}
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.NAMED_ELEMENT;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.NAMED_ELEMENT__NAME:
@@ -43,7 +43,7 @@ public class NamedElementImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.NAMED_ELEMENT__NAME:
@@ -53,7 +53,7 @@ public class NamedElementImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.NAMED_ELEMENT__NAME:
@@ -62,7 +62,7 @@ public class NamedElementImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.NAMED_ELEMENT__NAME:
@@ -71,7 +71,7 @@ public class NamedElementImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

@@ -24,7 +24,7 @@ public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContain
     super();
   }
 
-  
+  @TruffleBoundary
   public EList<FieldBinding> getFieldbindings() {
     if(fieldbindings == null) {
     	fieldbindings = new EObjectContainmentEList<FieldBinding>(miniJava.interpreter.miniJava.FieldBinding.class, this, MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS);
@@ -32,7 +32,7 @@ public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContain
     return fieldbindings;
   }
 
-  
+  @TruffleBoundary
   public void setType(Clazz newType) {
     Clazz oldType = type;
     type = newType;
@@ -40,7 +40,7 @@ public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContain
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.OBJECT_INSTANCE__TYPE, oldType, type));
   }
 
-  
+  @TruffleBoundary
   public Clazz getType() {
     if (type != null && type.eIsProxy()) {
     	InternalEObject oldtype = (InternalEObject) type;
@@ -54,11 +54,11 @@ public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContain
     return type;
   }
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.OBJECT_INSTANCE;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS:
@@ -72,7 +72,7 @@ public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContain
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS:
@@ -85,7 +85,7 @@ public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContain
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS:
@@ -96,7 +96,7 @@ public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContain
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS:
@@ -107,7 +107,7 @@ public class ObjectInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContain
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

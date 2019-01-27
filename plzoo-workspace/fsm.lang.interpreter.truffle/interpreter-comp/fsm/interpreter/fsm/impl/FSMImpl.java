@@ -48,11 +48,11 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer implemen
   protected State currentState;
 
   @Child
-  private BufferDispatchDequeue dispatchBufferDequeue;
+  private StateDispatchStep dispatchStateStep;
 
   protected FSMImpl() {
     super();
-    this.dispatchBufferDequeue = fsm.interpreter.fsm.impl.BufferDispatchDequeueNodeGen.create(); 
+    this.dispatchStateStep = fsm.interpreter.fsm.impl.StateDispatchStepNodeGen.create(); 
   }
 
   public String getName() {
@@ -400,9 +400,9 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer implemen
   }
 
   public void run() {
-    this.setUnderProcessTrigger(((java.lang.String)dispatchBufferDequeue.executeDispatch(this.inputBuffer.getCachedDequeue(), new Object[] {})));
+    this.setUnderProcessTrigger(this.inputBuffer.dequeue());
         org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(((("run SM") + (this.name)) + (" step on ")) + (this.underProcessTrigger));
-        this.currentState.step(this.underProcessTrigger);
+        dispatchStateStep.executeDispatch(this.currentState.getCachedStep(), new Object[] {this.underProcessTrigger});
         this.setUnderProcessTrigger("");
         ;
   }

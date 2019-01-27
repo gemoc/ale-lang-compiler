@@ -18,7 +18,7 @@ public class FsmBenchmark {
         final int SIZE = itt;
         final long[] times = new long[SIZE];
         for (int i = 0; i < SIZE; i++) {
-            Value eval = context.eval("fsm", String.valueOf(i));
+            Value eval = context.eval("fsm", "");
             times[i] = eval.asLong();
         }
         context.close();

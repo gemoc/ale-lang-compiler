@@ -21,7 +21,7 @@ public class CompiledInterpreterTruffleogo {
         final int SIZE = itt;
         final long[] times = new long[SIZE];
         for (int i = 0; i < SIZE; i++) {
-            Value eval = context.eval("logo", String.valueOf(i));
+            Value eval = context.eval("logo", "");
             times[i] = eval.asLong();
         }
         context.close();

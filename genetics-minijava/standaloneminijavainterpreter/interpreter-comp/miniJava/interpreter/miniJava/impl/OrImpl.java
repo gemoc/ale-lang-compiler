@@ -19,17 +19,17 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Or"
 )
 public class OrImpl extends ExpressionImpl implements Or {
-  
+  @Child
   protected Expression left;
 
-  
+  @Child
   protected Expression right;
 
   protected OrImpl() {
     super();
   }
 
-  
+  @TruffleBoundary
   public void setLeft(Expression newLeft) {
     if (newLeft != left) {
     	NotificationChain msgs = null;
@@ -44,7 +44,7 @@ public class OrImpl extends ExpressionImpl implements Or {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.OR__LEFT, newLeft, newLeft));
   }
 
-  
+  @TruffleBoundary
   public NotificationChain basicSetLeft(Expression newLeft, NotificationChain msgs) {
     Expression oldLeft = left;
     left = newLeft;
@@ -55,12 +55,12 @@ public class OrImpl extends ExpressionImpl implements Or {
     return msgs;
   }
 
-  
+  @TruffleBoundary
   public Expression getLeft() {
     return left;
   }
 
-  
+  @TruffleBoundary
   public void setRight(Expression newRight) {
     if (newRight != right) {
     	NotificationChain msgs = null;
@@ -75,7 +75,7 @@ public class OrImpl extends ExpressionImpl implements Or {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.OR__RIGHT, newRight, newRight));
   }
 
-  
+  @TruffleBoundary
   public NotificationChain basicSetRight(Expression newRight, NotificationChain msgs) {
     Expression oldRight = right;
     right = newRight;
@@ -86,16 +86,16 @@ public class OrImpl extends ExpressionImpl implements Or {
     return msgs;
   }
 
-  
+  @TruffleBoundary
   public Expression getRight() {
     return right;
   }
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.OR;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.OR__LEFT:
@@ -108,7 +108,7 @@ public class OrImpl extends ExpressionImpl implements Or {
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OR__LEFT:
@@ -121,7 +121,7 @@ public class OrImpl extends ExpressionImpl implements Or {
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.OR__LEFT:
@@ -132,7 +132,7 @@ public class OrImpl extends ExpressionImpl implements Or {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.OR__LEFT:
@@ -143,7 +143,7 @@ public class OrImpl extends ExpressionImpl implements Or {
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -157,23 +157,11 @@ public class OrImpl extends ExpressionImpl implements Or {
 
   public Value evaluateExpression(State state) {
     Value result;
-    miniJava.interpreter.miniJava.Value left = ((miniJava.interpreter.miniJava.Value)this.left.evaluateExpression(state));
-        miniJava.interpreter.miniJava.Value right = ((miniJava.interpreter.miniJava.Value)this.right.evaluateExpression(state));
-        if(left instanceof miniJava.interpreter.miniJava.BooleanValue) {
-          if(right instanceof miniJava.interpreter.miniJava.BooleanValue) {
-            miniJava.interpreter.miniJava.BooleanValue bleft = ((miniJava.interpreter.miniJava.BooleanValue)left);
-            miniJava.interpreter.miniJava.BooleanValue bright = ((miniJava.interpreter.miniJava.BooleanValue)right);
-            miniJava.interpreter.miniJava.BooleanValue tmp = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
-            tmp.setValue(((bleft.isValue()) || (bright.isValue())));
-            result = tmp;
-          }
-          else {
-            result = null;
-          }
-        }
-        else {
-          result = null;
-        }
+    miniJava.interpreter.miniJava.BooleanValue left = ((miniJava.interpreter.miniJava.BooleanValue)this.left.evaluateExpression(state));
+        miniJava.interpreter.miniJava.BooleanValue right = ((miniJava.interpreter.miniJava.BooleanValue)this.right.evaluateExpression(state));
+        miniJava.interpreter.miniJava.BooleanValue res = ((miniJava.interpreter.miniJava.BooleanValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
+        res.setValue(((left.isValue()) || (right.isValue())));
+        result = res;
         ;
     return result;
   }

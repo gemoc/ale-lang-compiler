@@ -15,39 +15,39 @@ public class ValueImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     super();
   }
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.VALUE;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     }
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     }
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     }
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {
@@ -55,7 +55,7 @@ public class ValueImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
-  
+  @TruffleBoundary
   public String customToString() {
     String result;
     result = "ERROR customToString not overloaded";
@@ -63,7 +63,7 @@ public class ValueImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     return result;
   }
 
-  
+  @TruffleBoundary
   public Value copyj() {
     Value result;
     org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("ERROR copyj not implemented");

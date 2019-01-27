@@ -29,11 +29,11 @@ public class ImportImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
   public void setImportedNamespace(String importedNamespace) {
     this.importedNamespace = importedNamespace;}
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.IMPORT;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.IMPORT__IMPORTED_NAMESPACE:
@@ -43,7 +43,7 @@ public class ImportImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.IMPORT__IMPORTED_NAMESPACE:
@@ -53,7 +53,7 @@ public class ImportImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.IMPORT__IMPORTED_NAMESPACE:
@@ -62,7 +62,7 @@ public class ImportImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.IMPORT__IMPORTED_NAMESPACE:
@@ -71,7 +71,7 @@ public class ImportImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

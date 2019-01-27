@@ -19,17 +19,17 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
     description = "Inequality"
 )
 public class InequalityImpl extends ExpressionImpl implements Inequality {
-  
+  @Child
   protected Expression left;
 
-  
+  @Child
   protected Expression right;
 
   protected InequalityImpl() {
     super();
   }
 
-  
+  @TruffleBoundary
   public void setLeft(Expression newLeft) {
     if (newLeft != left) {
     	NotificationChain msgs = null;
@@ -44,7 +44,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.INEQUALITY__LEFT, newLeft, newLeft));
   }
 
-  
+  @TruffleBoundary
   public NotificationChain basicSetLeft(Expression newLeft, NotificationChain msgs) {
     Expression oldLeft = left;
     left = newLeft;
@@ -55,12 +55,12 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
     return msgs;
   }
 
-  
+  @TruffleBoundary
   public Expression getLeft() {
     return left;
   }
 
-  
+  @TruffleBoundary
   public void setRight(Expression newRight) {
     if (newRight != right) {
     	NotificationChain msgs = null;
@@ -75,7 +75,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.INEQUALITY__RIGHT, newRight, newRight));
   }
 
-  
+  @TruffleBoundary
   public NotificationChain basicSetRight(Expression newRight, NotificationChain msgs) {
     Expression oldRight = right;
     right = newRight;
@@ -86,16 +86,16 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
     return msgs;
   }
 
-  
+  @TruffleBoundary
   public Expression getRight() {
     return right;
   }
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.INEQUALITY;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.INEQUALITY__LEFT:
@@ -108,7 +108,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.INEQUALITY__LEFT:
@@ -121,7 +121,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.INEQUALITY__LEFT:
@@ -132,7 +132,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.INEQUALITY__LEFT:
@@ -143,7 +143,7 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

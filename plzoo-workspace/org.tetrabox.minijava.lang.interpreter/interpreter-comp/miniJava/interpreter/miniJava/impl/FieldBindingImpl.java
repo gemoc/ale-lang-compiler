@@ -22,7 +22,7 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     super();
   }
 
-  
+  @TruffleBoundary
   public void setField(Field newField) {
     Field oldField = field;
     field = newField;
@@ -30,7 +30,7 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FIELD_BINDING__FIELD, oldField, field));
   }
 
-  
+  @TruffleBoundary
   public Field getField() {
     if (field != null && field.eIsProxy()) {
     	InternalEObject oldfield = (InternalEObject) field;
@@ -44,7 +44,7 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     return field;
   }
 
-  
+  @TruffleBoundary
   public void setValue(Value newValue) {
     if (newValue != value) {
     	NotificationChain msgs = null;
@@ -59,7 +59,7 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.FIELD_BINDING__VALUE, newValue, newValue));
   }
 
-  
+  @TruffleBoundary
   public NotificationChain basicSetValue(Value newValue, NotificationChain msgs) {
     Value oldValue = value;
     value = newValue;
@@ -70,16 +70,16 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     return msgs;
   }
 
-  
+  @TruffleBoundary
   public Value getValue() {
     return value;
   }
 
-  
+  @TruffleBoundary
   protected EClass eStaticClass() {
     return MiniJavaPackage.Literals.FIELD_BINDING;}
 
-  
+  @TruffleBoundary
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_BINDING__FIELD:
@@ -92,7 +92,7 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     super.eSet(featureID, newValue);
   }
 
-  
+  @TruffleBoundary
   public void eUnset(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_BINDING__FIELD:
@@ -105,7 +105,7 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     super.eUnset(featureID);
   }
 
-  
+  @TruffleBoundary
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_BINDING__FIELD:
@@ -116,7 +116,7 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     return super.eGet(featureID, resolve, coreType);
   }
 
-  
+  @TruffleBoundary
   public boolean eIsSet(int featureID) {
     switch (featureID) {
     case MiniJavaPackage.FIELD_BINDING__FIELD:
@@ -127,7 +127,7 @@ public class FieldBindingImpl extends MinimalTruffleEObjectImpl.TruffleContainer
     return super.eIsSet(featureID);
   }
 
-  
+  @TruffleBoundary
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
       NotificationChain msgs) {
     switch(featureID) {

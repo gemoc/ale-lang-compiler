@@ -1,6 +1,7 @@
 package fsm.interpreter.fsm;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
+import fsm.interpreter.fsm.impl.StateDispatchWrapperStep;
 import java.lang.String;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -19,4 +20,6 @@ public interface State extends EObject, NodeInterface {
   void setFsm(FSM value);
 
   void step(String inputString);
+
+  StateDispatchWrapperStep getCachedStep();
 }

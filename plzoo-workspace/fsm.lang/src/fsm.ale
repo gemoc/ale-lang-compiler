@@ -3,7 +3,7 @@ behavior fsm_exec;
 use fsm.FsmService;
 
 open class System {
-	def void intialize() {
+	def  /*dispatch*/  void intialize() {
 		for(fsm in self.ownedFsms) {
 			fsm.initialize();
 		}
@@ -30,13 +30,13 @@ open class System {
 }
 
 open class FSM {
-	def void initialize() {
+	def  /*dispatch*/  void initialize() {
 		self.currentState := self.initialState;
 		self.underProcessTrigger := '';
 		self.consummedString := '';
 	}
 	
-	def  void run() { // dispatch
+	def void run() { // 
 		self.underProcessTrigger := self.inputBuffer.dequeue();
 		('run SM'+self.name+' step on '+self.underProcessTrigger).log();
 		self.currentState.step(self.underProcessTrigger);
@@ -45,27 +45,20 @@ open class FSM {
 }
 
 open class State {
-	def void step(String inputString) { // 
-		Sequence(String) validTransitions := self.outgoing->select(t | inputString == t.trigger);
+	def dispatch void step(String inputString) { // 
+		Transition validTransition := self.outgoing->select(t | inputString == t.trigger)->first();
 		
-		if(validTransitions->size() == 0) {
+		if(validTransition == null) {
 			//just copy the token to the output buffer
 			self.getFsm().outputBuffer.enqueue(inputString);
-		}
-		
-		if(validTransitions->size() > 1) {
-			'Non Determinism'.log();
-		}
-		
-		// Fire transition first transition (could be random%VT.size)
-		if(validTransitions->size() == 1){
-			validTransitions->at(0).fire();
+		} else {
+			validTransition.fire();
 		}
 	}
 }
 
 open class Transition {
-	def  void fire() { // dispatch 
+	def void fire() { // /*dispatch*/ 
 		('Firing ' + self.name + ' and entering ' + self.tgt.name).log();
 		FSM fsm := self.src.fsm;
 		fsm.currentState := self.tgt;
@@ -75,7 +68,7 @@ open class Transition {
 }
 
 open class Buffer {
-	def void initialize() {
+	def  /*dispatch*/ void initialize() {
 		if(self.initialValue != null) {
 			self.currentValues := self.initialValue;
 		} else {
@@ -83,11 +76,11 @@ open class Buffer {
 		}
 	}
 	
-	def boolean bisEmpty() {
+	def /*dispatch*/ boolean bisEmpty() {
 		result := self.currentValues->size() == 0 or self.currentValues == '\'empty\'';
 	}
 	
-	def void enqueue(String v) {
+	def /*dispatch*/ void enqueue(String v) {
 		if(self.bisEmpty()) {
 			self.currentValues := v;
 		} else {
@@ -95,7 +88,7 @@ open class Buffer {
 		}
 	}
 	
-	def  dispatch  String dequeue() {
+	def String dequeue() { // /*dispatch*/ <- avoid at all cost
 		String res := '';
 		int firstComma := self.currentValues.indexOf(',');
 		if(firstComma < 0) {
