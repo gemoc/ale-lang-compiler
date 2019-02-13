@@ -131,7 +131,7 @@ public class FrameImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
     	if (eInternalContainer() != null)
     		msgs = eBasicRemoveFromContainer(msgs);
     	if (newParentFrame != null)
-    		msgs = ((InternalEObject)newParentFrame).eInverseAdd(this, MiniJavaPackage.FRAME__PARENT_FRAME , Frame.class, msgs);
+    		msgs = ((InternalEObject)newParentFrame).eInverseAdd(this, MiniJavaPackage.FRAME__CHILD_FRAME , Frame.class, msgs);
     	msgs = basicSetParentFrame(newParentFrame, msgs);
     	if (msgs != null) msgs.dispatch();
     }

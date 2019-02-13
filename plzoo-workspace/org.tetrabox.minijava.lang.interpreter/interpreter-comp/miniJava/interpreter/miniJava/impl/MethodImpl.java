@@ -43,8 +43,12 @@ public class MethodImpl extends MemberImpl implements Method {
   @Children
   private Parameter[] paramsArr;
 
+  @Child
+  private StatementDispatchEvaluateStatement dispatchStatementEvaluateStatement;
+
   protected MethodImpl() {
     super();
+    this.dispatchStatementEvaluateStatement = miniJava.interpreter.miniJava.impl.StatementDispatchEvaluateStatementNodeGen.create(); 
   }
 
   public boolean isIsabstract() {
@@ -205,7 +209,7 @@ public class MethodImpl extends MemberImpl implements Method {
   }
 
   public void evaluateStatement(State state) {
-    this.body.evaluateStatement(state);
+    dispatchStatementEvaluateStatement.executeDispatch(this.body.getCachedEvaluateStatement(), new Object[] {state});
         ;
   }
 
@@ -275,7 +279,7 @@ public class MethodImpl extends MemberImpl implements Method {
         				else this.paramsArr = new miniJava.interpreter.miniJava.Parameter[] {};
         				
         			};
-    this.body.evaluateStatement(state);
+    dispatchStatementEvaluateStatement.executeDispatch(this.body.getCachedEvaluateStatement(), new Object[] {state});
         ;
   }
 }

@@ -1,0 +1,28 @@
+behavior test_exec;
+
+open class A {
+	def dispatch void eval() {
+		'A'.log();
+	}
+}
+
+open class B {
+	def void eval() {
+		'B'.log();
+	}
+}
+
+open class Program {
+	def void execute() {
+		for(c in self.cs) {
+			c.run();
+		}
+	}
+}
+
+open class C {
+	def void run() {
+		self.a.eval();
+		self.b.eval();
+	}	
+}

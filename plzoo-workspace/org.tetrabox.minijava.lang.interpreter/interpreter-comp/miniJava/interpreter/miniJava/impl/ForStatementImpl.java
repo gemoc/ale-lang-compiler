@@ -32,8 +32,12 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
   @Child
   protected Block block;
 
+  @Child
+  private StatementDispatchEvaluateStatement dispatchStatementEvaluateStatement;
+
   protected ForStatementImpl() {
     super();
+    this.dispatchStatementEvaluateStatement = miniJava.interpreter.miniJava.impl.StatementDispatchEvaluateStatementNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -250,11 +254,11 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
 
   public void evaluateStatement(State state) {
     state.pushNewContext();
-        this.declaration.evaluateStatement(state);
+        dispatchStatementEvaluateStatement.executeDispatch(this.declaration.getCachedEvaluateStatement(), new Object[] {state});
         miniJava.interpreter.miniJava.BooleanValue continueFor = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
         while (continueFor.isValue()) {
-          this.block.evaluateStatement(state);
-          this.progression.evaluateStatement(state);
+          dispatchStatementEvaluateStatement.executeDispatch(this.block.getCachedEvaluateStatement(), new Object[] {state});
+          dispatchStatementEvaluateStatement.executeDispatch(this.progression.getCachedEvaluateStatement(), new Object[] {state});
           miniJava.interpreter.miniJava.BooleanValue continueFor2 = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
           continueFor = continueFor2;
         }

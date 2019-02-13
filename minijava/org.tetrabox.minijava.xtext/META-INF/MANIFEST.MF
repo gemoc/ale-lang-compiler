@@ -30,5 +30,8 @@ Export-Package: org.tetrabox.minijava.xtext,
  org.tetrabox.minijava.xtext.serializer,
  org.tetrabox.minijava.xtext.services,
  org.tetrabox.minijava.xtext.typing,
- org.tetrabox.minijava.xtext.validation
+ org.tetrabox.minijava.xtext.validation,
+ miniJava,
+ miniJava.impl,
+ miniJava.util
 Import-Package: org.apache.log4j

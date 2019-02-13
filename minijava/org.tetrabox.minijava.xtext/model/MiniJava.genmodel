@@ -38,6 +38,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MiniJava.ecore#//Method/isstatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Method/params"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Method/body"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Method/cache"/>
     </genClasses>
     <genClasses ecoreClass="MiniJava.ecore#//Parameter"/>
     <genClasses ecoreClass="MiniJava.ecore#//Field">
@@ -255,6 +256,14 @@
     <genClasses ecoreClass="MiniJava.ecore#//SymbolToSymbolBindingMap">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MiniJava.ecore#//SymbolToSymbolBindingMap/key"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MiniJava.ecore#//SymbolToSymbolBindingMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="MiniJava.ecore#//ClazzToMethodMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MiniJava.ecore#//ClazzToMethodMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MiniJava.ecore#//ClazzToMethodMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="MiniJava.ecore#//Modulo">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Modulo/left"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Modulo/right"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

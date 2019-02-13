@@ -264,7 +264,25 @@ class AleExpressionsCompiler {
 											(revc.eCls as EClass).ESuperTypes.contains(it.eCls)
 									].head
 								}
-								if (isTruffle && method.isDispatch) {
+								
+								
+								// lookup if one of the method declaration is declared with a dispatch
+								var isDispatch=false
+								rev = re
+								while(!isDispatch && rev !== null) {
+									val lc = rev.aleCls
+									method = methods.filter[it.eContainer === lc].head
+									
+									isDispatch = method !== null && method.isDispatch
+
+									val revc = rev
+									rev = resolved.filter [
+										revc.eCls instanceof EClass &&
+											(revc.eCls as EClass).ESuperTypes.contains(it.eCls)
+									].head
+								}
+								
+								if (isTruffle && isDispatch) {
 									this.registreredDispatch.add(method)
 									val effectFull = !(call.eContainer instanceof ExpressionStatement)
 									CodeBlock.

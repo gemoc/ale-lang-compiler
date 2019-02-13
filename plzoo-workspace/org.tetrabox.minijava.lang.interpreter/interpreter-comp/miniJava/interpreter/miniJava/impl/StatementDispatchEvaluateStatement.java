@@ -16,12 +16,11 @@ public abstract class StatementDispatchEvaluateStatement extends Node {
 
   @Specialization(
       limit = "INLINE_CACHE_SIZE",
-      guards = "function.getCallTarget() == cachedTarget"
-//      assumptions = "callTargetStable"
+      guards = "function.getCallTarget() == cachedTarget",
+      assumptions = "callTargetStable"
   )
   protected static Object doDirect(StatementDispatchWrapperEvaluateStatement function,
-      Object[] arguments, 
-//      @Cached("function.getCallTargetStable()") Assumption callTargetStable,
+      Object[] arguments, @Cached("function.getCallTargetStable()") Assumption callTargetStable,
       @Cached("function.getCallTarget()") RootCallTarget cachedTarget,
       @Cached("create(cachedTarget)") DirectCallNode callNode) {
     return callNode.call(arguments);}
