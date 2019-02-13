@@ -12,7 +12,7 @@ public class StatementDispatchWrapperEvaluateStatement {
   private final CyclicAssumption callTargetStable;
 
   protected StatementDispatchWrapperEvaluateStatement(Statement it) {
-    this.callTargetStable = new CyclicAssumption("StatementDispatchWrapperEvaluateStatement_2.69730240244137E7");
+    this.callTargetStable = new CyclicAssumption("StatementDispatchWrapperEvaluateStatement_6.1142311618307166E7");
     this.callTarget = Truffle.getRuntime().createCallTarget(new StatementEvaluateStatementRootNode(it));
   }
 
