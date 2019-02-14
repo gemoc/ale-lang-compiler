@@ -6,10 +6,12 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
 @NodeInfo(
@@ -43,7 +45,17 @@ public class StringToEvalResMapImpl extends MinimalTruffleEObjectImpl.TruffleCon
 
   @TruffleBoundary
   public EvalRes getValue() {
-    return value;}
+    if (value != null && value.eIsProxy()) {
+    	InternalEObject oldvalue = (InternalEObject) value;
+    	value = (EvalRes) eResolveProxy(oldvalue);
+    	if (value != oldvalue) {
+    		if (eNotificationRequired())
+    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE,
+    					oldvalue, value));
+    	}
+    }
+    return value;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

@@ -54,7 +54,8 @@ public class CopyImpl extends ExprImpl implements Copy {
 
   @TruffleBoundary
   public Expr getCopy() {
-    return copy;}
+    return copy;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

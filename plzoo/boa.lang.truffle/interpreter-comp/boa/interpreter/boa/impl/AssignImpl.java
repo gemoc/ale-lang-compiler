@@ -68,7 +68,8 @@ public class AssignImpl extends ExprImpl implements Assign {
 
   @TruffleBoundary
   public Expr getLhs() {
-    return lhs;}
+    return lhs;
+  }
 
   @TruffleBoundary
   public void setRhs(Expr newRhs) {
@@ -98,7 +99,8 @@ public class AssignImpl extends ExprImpl implements Assign {
 
   @TruffleBoundary
   public Expr getRhs() {
-    return rhs;}
+    return rhs;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

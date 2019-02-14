@@ -7,7 +7,6 @@ import boa.interpreter.boa.EvalMapRes;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.Project;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -30,12 +29,8 @@ public class ProjectImpl extends ExprImpl implements Project {
   @Child
   protected Expr exp;
 
-  @CompilationFinal
-  private ProjectDispatchWrapperEval cachedEval;
-
   protected ProjectImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.ProjectDispatchWrapperEval(this);
   }
 
   public String getName() {
@@ -72,7 +67,8 @@ public class ProjectImpl extends ExprImpl implements Project {
 
   @TruffleBoundary
   public Expr getExp() {
-    return exp;}
+    return exp;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {
@@ -172,9 +168,5 @@ public class ProjectImpl extends ExprImpl implements Project {
         result = ret;
         ;
     return result;
-  }
-
-  public ProjectDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

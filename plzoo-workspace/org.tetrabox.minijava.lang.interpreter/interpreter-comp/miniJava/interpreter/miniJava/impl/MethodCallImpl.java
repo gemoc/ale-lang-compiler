@@ -33,8 +33,12 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
   @Children
   private Expression[] argsArr;
 
+  @Child
+  private MethodDispatchCall dispatchMethodCall;
+
   protected MethodCallImpl() {
     super();
+    this.dispatchMethodCall = miniJava.interpreter.miniJava.impl.MethodDispatchCallNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -214,7 +218,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
         				else this.argsArr = new miniJava.interpreter.miniJava.Expression[] {};
         				
         			};
-    realMethod.call(state);
+    dispatchMethodCall.executeDispatch(realMethod.getCachedCall(), new Object[] {state});
         ;
   }
 }

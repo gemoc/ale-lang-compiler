@@ -3,17 +3,13 @@ package boa.interpreter.boa.impl;
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.EvalRes;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-@NodeInfo(
-    description = "EvalRes"
-)
-public abstract class EvalResImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements EvalRes {
+public abstract class EvalResImpl extends MinimalEObjectImpl.Container implements EvalRes {
   protected EvalResImpl() {
     super();
   }

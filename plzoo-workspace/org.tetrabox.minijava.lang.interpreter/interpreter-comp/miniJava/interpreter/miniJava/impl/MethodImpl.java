@@ -1,5 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.Node.Children;
@@ -43,12 +44,12 @@ public class MethodImpl extends MemberImpl implements Method {
   @Children
   private Parameter[] paramsArr;
 
-  @Child
-  private StatementDispatchEvaluateStatement dispatchStatementEvaluateStatement;
+  @CompilationFinal
+  private MethodDispatchWrapperCall cachedCall;
 
   protected MethodImpl() {
     super();
-    this.dispatchStatementEvaluateStatement = miniJava.interpreter.miniJava.impl.StatementDispatchEvaluateStatementNodeGen.create(); 
+    this.cachedCall = new miniJava.interpreter.miniJava.impl.MethodDispatchWrapperCall(this);
   }
 
   public boolean isIsabstract() {
@@ -209,7 +210,7 @@ public class MethodImpl extends MemberImpl implements Method {
   }
 
   public void evaluateStatement(State state) {
-    dispatchStatementEvaluateStatement.executeDispatch(this.body.getCachedEvaluateStatement(), new Object[] {state});
+    this.body.evaluateStatement(state);
         ;
   }
 
@@ -279,7 +280,11 @@ public class MethodImpl extends MemberImpl implements Method {
         				else this.paramsArr = new miniJava.interpreter.miniJava.Parameter[] {};
         				
         			};
-    dispatchStatementEvaluateStatement.executeDispatch(this.body.getCachedEvaluateStatement(), new Object[] {state});
+    this.body.evaluateStatement(state);
         ;
+  }
+
+  public MethodDispatchWrapperCall getCachedCall() {
+    return this.cachedCall;
   }
 }

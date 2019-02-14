@@ -5,13 +5,13 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.RootNode;
 import java.lang.Object;
 import java.lang.Override;
-import miniJava.interpreter.miniJava.Statement;
+import miniJava.interpreter.miniJava.Method;
 
-public class StatementEvaluateStatementRootNode extends RootNode {
+public class MethodCallRootNode extends RootNode {
   @Child
-  private Statement it;
+  private Method it;
 
-  public StatementEvaluateStatementRootNode(Statement it) {
+  public MethodCallRootNode(Method it) {
     super(null);
     this.it = it;
   }
@@ -19,7 +19,7 @@ public class StatementEvaluateStatementRootNode extends RootNode {
   @Override
   public Object execute(VirtualFrame frame) {
     miniJava.interpreter.miniJava.State state = (miniJava.interpreter.miniJava.State) frame.getArguments()[0];
-    it.evaluateStatement(state);
+    it.call(state);
     return null;
   }
 }

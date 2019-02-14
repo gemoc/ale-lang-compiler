@@ -54,7 +54,8 @@ public class NotImpl extends ExprImpl implements Not {
 
   @TruffleBoundary
   public Expr getValue() {
-    return value;}
+    return value;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

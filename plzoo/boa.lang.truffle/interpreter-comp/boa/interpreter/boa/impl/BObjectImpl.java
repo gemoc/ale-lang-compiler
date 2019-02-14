@@ -5,7 +5,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Field;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -25,12 +24,8 @@ public class BObjectImpl extends ExprImpl implements BObject {
   @Children
   private Field[] fieldsArr;
 
-  @CompilationFinal
-  private BObjectDispatchWrapperEval cachedEval;
-
   protected BObjectImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.BObjectDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -110,9 +105,5 @@ public class BObjectImpl extends ExprImpl implements BObject {
         result = ret;
         ;
     return result;
-  }
-
-  public BObjectDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

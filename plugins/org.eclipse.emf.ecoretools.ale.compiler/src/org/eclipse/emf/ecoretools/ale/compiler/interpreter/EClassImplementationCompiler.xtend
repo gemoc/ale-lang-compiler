@@ -83,7 +83,7 @@ class EClassImplementationCompiler {
 		
 		
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
-		val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
+//		val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
 			eClass.EPackage.packageInterfaceClassName)
 
@@ -168,7 +168,7 @@ class EClassImplementationCompiler {
 			FieldSpec.builder(fieldType, field.name).applyIfTrue(dsl.dslProp.getOrDefault("child", "false").equals("true") 
 				&& !isMultiple && !isMutable 
 				&& field.containment
-				&& !eClass.EAnnotations.exists[it.source == 'RuntimeData']
+				&& !field.EType.EAnnotations.exists[it.source == 'RuntimeData']
 				, [
 				addAnnotation(ClassName.get("com.oracle.truffle.api.nodes.Node", "Child"))
 			]).addModifiers(PROTECTED).build
@@ -257,7 +257,7 @@ class EClassImplementationCompiler {
 									if (eInternalContainer() != null)
 										msgs = eBasicRemoveFromContainer(msgs);
 									if («newName» != null)
-										msgs = (($5T)«newName»).eInverseAdd(this, $1T.«field.EOpposite.name.normalizeUpperField(field.name)» , $6T.class, msgs);
+										msgs = (($5T)«newName»).eInverseAdd(this, $1T.«field.EOpposite.name.normalizeUpperField((field.eContainer as EClass).name)» , $6T.class, msgs);
 									msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
 									if (msgs != null) msgs.dispatch();
 								}
@@ -628,7 +628,11 @@ class EClassImplementationCompiler {
 					value.EType.scopedInterfaceTypeRef(packageRoot)))
 		]).applyIfTrue(!hasSuperType, [
 			if(dsl.dslProp.getOrDefault("truffle", "false") == 'true') {
-				superclass(ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl", "TruffleContainer"))
+				if(!eClass.EAnnotations.exists[it.source == 'RuntimeData']) {
+					superclass(ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl", "TruffleContainer"))
+				} else { 
+					superclass(ClassName.get(MinimalEObjectImpl.Container))
+					}
 			} else {
 				superclass(ClassName.get(MinimalEObjectImpl.Container))
 			}
@@ -779,6 +783,7 @@ class EClassImplementationCompiler {
 				val factoryDispatch = TypeSpec
 					.classBuilder(rootNodeName)
 					.superclass(ClassName.get('com.oracle.truffle.api.nodes', 'RootNode'))
+					// TODO: add conditional, must be a child only if it type is a Node
 					.addField(FieldSpec
 							.builder(eClassInterfaceType, 'it', PRIVATE)
 							.addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Child'))
@@ -916,7 +921,7 @@ class EClassImplementationCompiler {
 						MethodSpec.methodBuilder('doDirect').addAnnotation(
 							AnnotationSpec.builder(specializationType).
 								addMember('limit', '"INLINE_CACHE_SIZE"').addMember('guards',
-									'"function.getCallTarget() == cachedTarget"') // TODO: find out how to identify the name of the operation to call on the function
+									'"function.getCallTarget() == cachedTarget"')
 								.addMember('assumptions', '"callTargetStable"').build
 						).addModifiers(PROTECTED, STATIC).returns(Object).addParameter(
 							ParameterSpec.builder(ClassName.get(eClass.classImplementationPackageName(packageRoot), '''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»'''), 'function').
@@ -925,21 +930,21 @@ class EClassImplementationCompiler {
 							ParameterSpec.builder(ClassName.get('com.oracle.truffle.api', 'Assumption'),
 								'callTargetStable').addAnnotation(
 								AnnotationSpec.builder(ClassName.get('com.oracle.truffle.api.dsl', 'Cached')).
-									addMember('value', '"function.getCallTargetStable()"') // TODO: how to add such operations on the SLFunction ? // do wo infere that we have to add them since it is used as a first parameter of a dispatch somewhere ?
+									addMember('value', '"function.getCallTargetStable()"')
 									.build
 							).build
 						).addParameter(
 							ParameterSpec.builder(ClassName.get('com.oracle.truffle.api', 'RootCallTarget'),
 								'cachedTarget').addAnnotation(
 								AnnotationSpec.builder(ClassName.get('com.oracle.truffle.api.dsl', 'Cached')).
-									addMember('value', '"function.getCallTarget()"') // TODO: how to add such operations on the SLFunction ? // do wo infere that we have to add them since it is used as a first parameter of a dispatch somewhere ?
+									addMember('value', '"function.getCallTarget()"')
 									.build
 							).build
 						).addParameter(
 							ParameterSpec.builder(ClassName.get('com.oracle.truffle.api.nodes', 'DirectCallNode'),
 								'callNode').addAnnotation(
 								AnnotationSpec.builder(cachedType).
-									addMember('value', '"create(cachedTarget)"') // TODO: how to add such operations on the SLFunction ? // do wo infere that we have to add them since it is used as a first parameter of a dispatch somewhere ?
+									addMember('value', '"create(cachedTarget)"')
 									.build
 							).build
 						)

@@ -55,7 +55,8 @@ public abstract class ArithOpImpl extends ExprImpl implements ArithOp {
 
   @TruffleBoundary
   public Expr getLhs() {
-    return lhs;}
+    return lhs;
+  }
 
   @TruffleBoundary
   public void setRhs(Expr newRhs) {
@@ -85,7 +86,8 @@ public abstract class ArithOpImpl extends ExprImpl implements ArithOp {
 
   @TruffleBoundary
   public Expr getRhs() {
-    return rhs;}
+    return rhs;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

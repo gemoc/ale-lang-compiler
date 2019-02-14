@@ -1,10 +1,9 @@
 package boa.interpreter.boa;
 
-import com.oracle.truffle.api.nodes.NodeInterface;
 import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
-public interface EvalFunRes extends EObject, NodeInterface, EvalRes {
+public interface EvalFunRes extends EObject, EvalRes {
   String getName();
 
   void setName(String value);

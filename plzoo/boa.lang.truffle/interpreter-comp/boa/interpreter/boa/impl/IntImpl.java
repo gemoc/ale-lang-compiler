@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Int;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -20,12 +19,8 @@ public class IntImpl extends ExprImpl implements Int {
 
   protected int value = VALUE_EDEFAULT;
 
-  @CompilationFinal
-  private IntDispatchWrapperEval cachedEval;
-
   protected IntImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.IntDispatchWrapperEval(this);
   }
 
   public int getValue() {
@@ -91,9 +86,5 @@ public class IntImpl extends ExprImpl implements Int {
         result = ret;
         ;
     return result;
-  }
-
-  public IntDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

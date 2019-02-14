@@ -1,19 +1,19 @@
 package boa.interpreter.boa.impl;
 
-import boa.interpreter.boa.BObject;
+import boa.interpreter.boa.App;
 import com.oracle.truffle.api.Assumption;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.utilities.CyclicAssumption;
 
-public class BObjectDispatchWrapperEval {
+public class AppDispatchWrapperCallFunc {
   private RootCallTarget callTarget;
 
   private final CyclicAssumption callTargetStable;
 
-  protected BObjectDispatchWrapperEval(BObject it) {
-    this.callTargetStable = new CyclicAssumption("BObjectDispatchWrapperEval_7.768149486933233E7");
-    this.callTarget = Truffle.getRuntime().createCallTarget(new BObjectEvalRootNode(it));
+  protected AppDispatchWrapperCallFunc(App it) {
+    this.callTargetStable = new CyclicAssumption("AppDispatchWrapperCallFunc_9.295957324268003E7");
+    this.callTarget = Truffle.getRuntime().createCallTarget(new AppCallFuncRootNode(it));
   }
 
   public RootCallTarget getCallTarget() {

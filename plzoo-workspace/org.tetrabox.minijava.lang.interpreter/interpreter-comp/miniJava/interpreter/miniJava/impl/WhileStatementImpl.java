@@ -25,12 +25,8 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
   @Child
   protected Block block;
 
-  @Child
-  private StatementDispatchEvaluateStatement dispatchStatementEvaluateStatement;
-
   protected WhileStatementImpl() {
     super();
-    this.dispatchStatementEvaluateStatement = miniJava.interpreter.miniJava.impl.StatementDispatchEvaluateStatementNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -162,7 +158,7 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
   public void evaluateStatement(State state) {
     miniJava.interpreter.miniJava.BooleanValue continueWhile = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
         while (continueWhile.isValue()) {
-          dispatchStatementEvaluateStatement.executeDispatch(this.block.getCachedEvaluateStatement(), new Object[] {state});
+          this.block.evaluateStatement(state);
           miniJava.interpreter.miniJava.BooleanValue continueWhile2 = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
           continueWhile = continueWhile2;
         }

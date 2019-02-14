@@ -57,7 +57,8 @@ public class WithImpl extends ExprImpl implements With {
 
   @TruffleBoundary
   public Expr getLhs() {
-    return lhs;}
+    return lhs;
+  }
 
   @TruffleBoundary
   public void setRhs(Expr newRhs) {
@@ -87,7 +88,8 @@ public class WithImpl extends ExprImpl implements With {
 
   @TruffleBoundary
   public Expr getRhs() {
-    return rhs;}
+    return rhs;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

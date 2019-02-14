@@ -6,6 +6,7 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalFunRes;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -26,8 +27,16 @@ public class AppImpl extends ExprImpl implements App {
   @Child
   protected Expr rhs;
 
+  @CompilationFinal
+  private AppDispatchWrapperCallFunc cachedCallFunc;
+
+  @Child
+  private AppDispatchCallFunc dispatchAppCallFunc;
+
   protected AppImpl() {
     super();
+    this.cachedCallFunc = new boa.interpreter.boa.impl.AppDispatchWrapperCallFunc(this);
+    this.dispatchAppCallFunc = boa.interpreter.boa.impl.AppDispatchCallFuncNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -58,7 +67,8 @@ public class AppImpl extends ExprImpl implements App {
 
   @TruffleBoundary
   public Expr getLhs() {
-    return lhs;}
+    return lhs;
+  }
 
   @TruffleBoundary
   public void setRhs(Expr newRhs) {
@@ -88,7 +98,8 @@ public class AppImpl extends ExprImpl implements App {
 
   @TruffleBoundary
   public Expr getRhs() {
-    return rhs;}
+    return rhs;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {
@@ -165,7 +176,7 @@ public class AppImpl extends ExprImpl implements App {
             execboa.MapService.putAll(callCtx.getEnv(), fct.getCtx().getEnv());
             execboa.MapService.put(callCtx.getEnv(), fct.getName(), vrhs);
             execboa.MapService.replaceWith(callCtx.getTh(), fct.getTh());
-            boa.interpreter.boa.EvalRes fe = ((boa.interpreter.boa.EvalRes)this.callFunc(fct,callCtx));
+            boa.interpreter.boa.EvalRes fe = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchAppCallFunc.executeDispatch(this.getCachedCallFunc(), new Object[] {fct,callCtx})));
             if(fe instanceof boa.interpreter.boa.EvalFunRes) {
               boa.interpreter.boa.EvalFunRes fun = ((boa.interpreter.boa.EvalFunRes)fe);
               boa.interpreter.boa.EvalBoundFunRes tmp = ((boa.interpreter.boa.EvalBoundFunRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
@@ -185,7 +196,7 @@ public class AppImpl extends ExprImpl implements App {
             execboa.MapService.putAll(callCtx.getEnv(), fct.getCtx().getEnv());
             execboa.MapService.put(callCtx.getEnv(), fct.getName(), vrhs);
             execboa.MapService.replaceWith(callCtx.getTh(), ctx.getTh());
-            boa.interpreter.boa.EvalRes fe = ((boa.interpreter.boa.EvalRes)this.callFunc(fct,callCtx));
+            boa.interpreter.boa.EvalRes fe = ((boa.interpreter.boa.EvalRes)((boa.interpreter.boa.EvalRes)dispatchAppCallFunc.executeDispatch(this.getCachedCallFunc(), new Object[] {fct,callCtx})));
             if(fe instanceof boa.interpreter.boa.EvalFunRes) {
               boa.interpreter.boa.EvalFunRes fun = ((boa.interpreter.boa.EvalFunRes)fe);
               boa.interpreter.boa.EvalBoundFunRes tmp = ((boa.interpreter.boa.EvalBoundFunRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoundFunRes());
@@ -212,5 +223,9 @@ public class AppImpl extends ExprImpl implements App {
     result = fct.getExp().eval(callCtx);
         ;
     return result;
+  }
+
+  public AppDispatchWrapperCallFunc getCachedCallFunc() {
+    return this.cachedCallFunc;
   }
 }

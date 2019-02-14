@@ -3,15 +3,11 @@ package boa.interpreter.boa.impl;
 import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.EvalBoolRes;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-@NodeInfo(
-    description = "EvalBoolRes"
-)
 public class EvalBoolResImpl extends EvalResImpl implements EvalBoolRes {
   protected static final boolean VALUE_EDEFAULT = false;
 

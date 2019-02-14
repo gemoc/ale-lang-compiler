@@ -65,7 +65,8 @@ public class FunImpl extends ExprImpl implements Fun {
 
   @TruffleBoundary
   public Expr getBody() {
-    return body;}
+    return body;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

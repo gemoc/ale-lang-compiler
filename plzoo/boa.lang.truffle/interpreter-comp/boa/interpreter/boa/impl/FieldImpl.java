@@ -64,7 +64,8 @@ public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
 
   @TruffleBoundary
   public Expr getValue() {
-    return value;}
+    return value;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

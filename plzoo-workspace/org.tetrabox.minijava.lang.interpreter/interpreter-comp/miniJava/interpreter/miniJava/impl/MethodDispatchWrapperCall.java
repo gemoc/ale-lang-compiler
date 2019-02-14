@@ -1,19 +1,19 @@
-package boa.interpreter.boa.impl;
+package miniJava.interpreter.miniJava.impl;
 
-import boa.interpreter.boa.Project;
 import com.oracle.truffle.api.Assumption;
 import com.oracle.truffle.api.RootCallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.utilities.CyclicAssumption;
+import miniJava.interpreter.miniJava.Method;
 
-public class ProjectDispatchWrapperEval {
+public class MethodDispatchWrapperCall {
   private RootCallTarget callTarget;
 
   private final CyclicAssumption callTargetStable;
 
-  protected ProjectDispatchWrapperEval(Project it) {
-    this.callTargetStable = new CyclicAssumption("ProjectDispatchWrapperEval_4.471872847714159E7");
-    this.callTarget = Truffle.getRuntime().createCallTarget(new ProjectEvalRootNode(it));
+  protected MethodDispatchWrapperCall(Method it) {
+    this.callTargetStable = new CyclicAssumption("MethodDispatchWrapperCall_3.3051805684956223E7");
+    this.callTarget = Truffle.getRuntime().createCallTarget(new MethodCallRootNode(it));
   }
 
   public RootCallTarget getCallTarget() {

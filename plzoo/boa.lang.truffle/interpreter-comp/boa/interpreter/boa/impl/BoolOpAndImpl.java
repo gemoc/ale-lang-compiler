@@ -57,7 +57,8 @@ public class BoolOpAndImpl extends BoolOpImpl implements BoolOpAnd {
 
   @TruffleBoundary
   public Expr getLhs() {
-    return lhs;}
+    return lhs;
+  }
 
   @TruffleBoundary
   public void setRhs(Expr newRhs) {
@@ -87,7 +88,8 @@ public class BoolOpAndImpl extends BoolOpImpl implements BoolOpAnd {
 
   @TruffleBoundary
   public Expr getRhs() {
-    return rhs;}
+    return rhs;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {

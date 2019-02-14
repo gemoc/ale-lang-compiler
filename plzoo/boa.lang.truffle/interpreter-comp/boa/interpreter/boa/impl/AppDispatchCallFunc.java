@@ -9,7 +9,7 @@ import com.oracle.truffle.api.nodes.IndirectCallNode;
 import com.oracle.truffle.api.nodes.Node;
 import java.lang.Object;
 
-public abstract class CmpOpLessDispatchEval extends Node {
+public abstract class AppDispatchCallFunc extends Node {
   public static final int INLINE_CACHE_SIZE = 3;
 
   public abstract Object executeDispatch(Object function, Object[] arguments);
@@ -19,7 +19,7 @@ public abstract class CmpOpLessDispatchEval extends Node {
       guards = "function.getCallTarget() == cachedTarget",
       assumptions = "callTargetStable"
   )
-  protected static Object doDirect(CmpOpLessDispatchWrapperEval function, Object[] arguments,
+  protected static Object doDirect(AppDispatchWrapperCallFunc function, Object[] arguments,
       @Cached("function.getCallTargetStable()") Assumption callTargetStable,
       @Cached("function.getCallTarget()") RootCallTarget cachedTarget,
       @Cached("create(cachedTarget)") DirectCallNode callNode) {
@@ -28,7 +28,7 @@ public abstract class CmpOpLessDispatchEval extends Node {
   @Specialization(
       replaces = "doDirect"
   )
-  protected static Object doIndirect(CmpOpLessDispatchWrapperEval function, Object[] arguments,
+  protected static Object doIndirect(AppDispatchWrapperCallFunc function, Object[] arguments,
       @Cached("create()") IndirectCallNode callNode) {
     return callNode.call(function.getCallTarget(), arguments);}
 }

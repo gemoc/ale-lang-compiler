@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.CmpOpLess;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -16,12 +15,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "CmpOpLess"
 )
 public class CmpOpLessImpl extends CmpOpImpl implements CmpOpLess {
-  @CompilationFinal
-  private CmpOpLessDispatchWrapperEval cachedEval;
-
   protected CmpOpLessImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.CmpOpLessDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -85,9 +80,5 @@ public class CmpOpLessImpl extends CmpOpImpl implements CmpOpLess {
         }
         ;
     return result;
-  }
-
-  public CmpOpLessDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

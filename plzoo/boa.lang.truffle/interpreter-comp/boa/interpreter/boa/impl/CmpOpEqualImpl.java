@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.CmpOpEqual;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -16,12 +15,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "CmpOpEqual"
 )
 public class CmpOpEqualImpl extends CmpOpImpl implements CmpOpEqual {
-  @CompilationFinal
-  private CmpOpEqualDispatchWrapperEval cachedEval;
-
   protected CmpOpEqualImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.CmpOpEqualDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -73,7 +68,7 @@ public class CmpOpEqualImpl extends CmpOpImpl implements CmpOpEqual {
             boa.interpreter.boa.EvalIntRes ivlhs = ((boa.interpreter.boa.EvalIntRes)vlhs);
             boa.interpreter.boa.EvalIntRes ivrhs = ((boa.interpreter.boa.EvalIntRes)vrhs);
             boa.interpreter.boa.EvalBoolRes ret = ((boa.interpreter.boa.EvalBoolRes)boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalBoolRes());
-            ret.setValue(java.util.Objects.equals((ivlhs.getValue()), (ivrhs.getValue())));
+            ret.setValue(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((ivlhs.getValue()), (ivrhs.getValue())));
             result = ret;
           }
           else {
@@ -85,9 +80,5 @@ public class CmpOpEqualImpl extends CmpOpImpl implements CmpOpEqual {
         }
         ;
     return result;
-  }
-
-  public CmpOpEqualDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

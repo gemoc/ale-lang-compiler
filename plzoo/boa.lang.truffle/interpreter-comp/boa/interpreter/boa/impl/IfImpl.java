@@ -5,7 +5,6 @@ import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
 import boa.interpreter.boa.If;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -29,12 +28,8 @@ public class IfImpl extends ExprImpl implements If {
   @Child
   protected Expr els;
 
-  @CompilationFinal
-  private IfDispatchWrapperEval cachedEval;
-
   protected IfImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.IfDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -65,7 +60,8 @@ public class IfImpl extends ExprImpl implements If {
 
   @TruffleBoundary
   public Expr getCond() {
-    return cond;}
+    return cond;
+  }
 
   @TruffleBoundary
   public void setThn(Expr newThn) {
@@ -95,7 +91,8 @@ public class IfImpl extends ExprImpl implements If {
 
   @TruffleBoundary
   public Expr getThn() {
-    return thn;}
+    return thn;
+  }
 
   @TruffleBoundary
   public void setEls(Expr newEls) {
@@ -125,7 +122,8 @@ public class IfImpl extends ExprImpl implements If {
 
   @TruffleBoundary
   public Expr getEls() {
-    return els;}
+    return els;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {
@@ -220,9 +218,5 @@ public class IfImpl extends ExprImpl implements If {
         }
         ;
     return result;
-  }
-
-  public IfDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

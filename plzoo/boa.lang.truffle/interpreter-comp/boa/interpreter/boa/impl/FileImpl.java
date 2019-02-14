@@ -4,6 +4,7 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.File;
 import boa.interpreter.boa.TopLevelCmd;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -23,6 +24,7 @@ public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer impleme
   @Children
   private TopLevelCmd[] commandsArr;
 
+  @Child
   private TopLevelCmdDispatchNextLine dispatchTopLevelCmdNextLine;
 
   protected FileImpl() {

@@ -28,12 +28,8 @@ public class IfStatementImpl extends StatementImpl implements IfStatement {
   @Child
   protected Block elseBlock;
 
-  @Child
-  private StatementDispatchEvaluateStatement dispatchStatementEvaluateStatement;
-
   protected IfStatementImpl() {
     super();
-    this.dispatchStatementEvaluateStatement = miniJava.interpreter.miniJava.impl.StatementDispatchEvaluateStatementNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -208,11 +204,11 @@ public class IfStatementImpl extends StatementImpl implements IfStatement {
   public void evaluateStatement(State state) {
     miniJava.interpreter.miniJava.BooleanValue booleanValue = ((miniJava.interpreter.miniJava.BooleanValue)this.expression.evaluateExpression(state));
         if(booleanValue.isValue()) {
-          dispatchStatementEvaluateStatement.executeDispatch(this.thenBlock.getCachedEvaluateStatement(), new Object[] {state});
+          this.thenBlock.evaluateStatement(state);
         }
         else {
           if((this.elseBlock) != (null)) {
-            dispatchStatementEvaluateStatement.executeDispatch(this.elseBlock.getCachedEvaluateStatement(), new Object[] {state});
+            this.elseBlock.evaluateStatement(state);
           }
         }
         ;

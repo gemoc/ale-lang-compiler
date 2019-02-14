@@ -5,7 +5,6 @@ import boa.interpreter.boa.BoolOpOr;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Expr;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -26,12 +25,8 @@ public class BoolOpOrImpl extends BoolOpImpl implements BoolOpOr {
   @Child
   protected Expr rhs;
 
-  @CompilationFinal
-  private BoolOpOrDispatchWrapperEval cachedEval;
-
   protected BoolOpOrImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.BoolOpOrDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -62,7 +57,8 @@ public class BoolOpOrImpl extends BoolOpImpl implements BoolOpOr {
 
   @TruffleBoundary
   public Expr getLhs() {
-    return lhs;}
+    return lhs;
+  }
 
   @TruffleBoundary
   public void setRhs(Expr newRhs) {
@@ -92,7 +88,8 @@ public class BoolOpOrImpl extends BoolOpImpl implements BoolOpOr {
 
   @TruffleBoundary
   public Expr getRhs() {
-    return rhs;}
+    return rhs;
+  }
 
   @TruffleBoundary
   protected EClass eStaticClass() {
@@ -179,9 +176,5 @@ public class BoolOpOrImpl extends BoolOpImpl implements BoolOpOr {
         }
         ;
     return result;
-  }
-
-  public BoolOpOrDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import boa.interpreter.boa.Skip;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -16,12 +15,8 @@ import org.eclipse.emf.ecore.InternalEObject;
     description = "Skip"
 )
 public class SkipImpl extends ExprImpl implements Skip {
-  @CompilationFinal
-  private SkipDispatchWrapperEval cachedEval;
-
   protected SkipImpl() {
     super();
-    this.cachedEval = new boa.interpreter.boa.impl.SkipDispatchWrapperEval(this);
   }
 
   @TruffleBoundary
@@ -69,9 +64,5 @@ public class SkipImpl extends ExprImpl implements Skip {
     result = boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalMapRes();
         ;
     return result;
-  }
-
-  public SkipDispatchWrapperEval getCachedEval() {
-    return this.cachedEval;
   }
 }

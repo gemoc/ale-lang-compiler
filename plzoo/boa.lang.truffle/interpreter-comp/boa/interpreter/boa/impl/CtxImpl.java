@@ -4,20 +4,16 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.Ctx;
 import boa.interpreter.boa.EvalRes;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-@NodeInfo(
-    description = "Ctx"
-)
-public class CtxImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Ctx {
+public class CtxImpl extends MinimalEObjectImpl.Container implements Ctx {
   protected EMap<String, EvalRes> env;
 
   protected EMap<String, EvalRes> th;

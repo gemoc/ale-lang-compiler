@@ -4,7 +4,6 @@ import boa.interpreter.boa.BoaPackage;
 import boa.interpreter.boa.EvalMapRes;
 import boa.interpreter.boa.EvalRes;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.String;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -13,9 +12,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 
-@NodeInfo(
-    description = "EvalMapRes"
-)
 public class EvalMapResImpl extends EvalResImpl implements EvalMapRes {
   protected EMap<String, EvalRes> values;
 

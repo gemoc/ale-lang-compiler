@@ -10,10 +10,9 @@ class MiniJavaPerfTest {
 		file = args.get(0);
 		val itt = Integer.parseInt(args.get(1));
 
-		val cptr = 1;
 		val context = Context.create();
 		val results = newArrayList
-		for (var i = 0; i < cptr; i++) {
+		for (var i = 0; i < itt; i++) {
 			val res = context.eval('miniJava', i.toString);
 			results.add(res.asLong)
 		}
