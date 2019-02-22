@@ -14,12 +14,12 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-public class ContextImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Context {
+public class ContextImpl extends MinimalEObjectImpl.Container implements Context {
   protected EList<SymbolBinding> bindings;
 
   protected Context childContext;
@@ -47,7 +47,7 @@ public class ContextImpl extends MinimalTruffleEObjectImpl.TruffleContainer impl
     	if (eInternalContainer() != null)
     		msgs = eBasicRemoveFromContainer(msgs);
     	if (newParentContext != null)
-    		msgs = ((InternalEObject)newParentContext).eInverseAdd(this, MiniJavaPackage.CONTEXT__PARENT_CONTEXT , Context.class, msgs);
+    		msgs = ((InternalEObject)newParentContext).eInverseAdd(this, MiniJavaPackage.CONTEXT__CHILD_CONTEXT , Context.class, msgs);
     	msgs = basicSetParentContext(newParentContext, msgs);
     	if (msgs != null) msgs.dispatch();
     }

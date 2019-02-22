@@ -1,34 +1,34 @@
 package org.tetrabox.minijava.xtext.typing
 
-import org.tetrabox.minijava.xtext.miniJava.Assignment
-import org.tetrabox.minijava.xtext.miniJava.BoolConstant
-import org.tetrabox.minijava.xtext.miniJava.BooleanTypeRef
-import org.tetrabox.minijava.xtext.miniJava.Clazz
-import org.tetrabox.minijava.xtext.miniJava.ClassRef
-import org.tetrabox.minijava.xtext.miniJava.Expression
-import org.tetrabox.minijava.xtext.miniJava.IntConstant
-import org.tetrabox.minijava.xtext.miniJava.IntegerTypeRef
-import org.tetrabox.minijava.xtext.miniJava.Method
-import org.tetrabox.minijava.xtext.miniJava.MiniJavaFactory
-import org.tetrabox.minijava.xtext.miniJava.MiniJavaPackage
-import org.tetrabox.minijava.xtext.miniJava.Null
-import org.tetrabox.minijava.xtext.miniJava.Return
-import org.tetrabox.minijava.xtext.miniJava.StringConstant
-import org.tetrabox.minijava.xtext.miniJava.StringTypeRef
-import org.tetrabox.minijava.xtext.miniJava.Super
-import org.tetrabox.minijava.xtext.miniJava.SymbolRef
-import org.tetrabox.minijava.xtext.miniJava.This
-import org.tetrabox.minijava.xtext.miniJava.TypeRef
-import org.tetrabox.minijava.xtext.miniJava.VariableDeclaration
+import miniJava.Assignment
+import miniJava.BoolConstant
+import miniJava.BooleanTypeRef
+import miniJava.Clazz
+import miniJava.ClassRef
+import miniJava.Expression
+import miniJava.IntConstant
+import miniJava.IntegerTypeRef
+import miniJava.Method
+import miniJava.MiniJavaFactory
+import miniJava.MiniJavaPackage
+import miniJava.Null
+import miniJava.Return
+import miniJava.StringConstant
+import miniJava.StringTypeRef
+import miniJava.Super
+import miniJava.SymbolRef
+import miniJava.This
+import miniJava.TypeRef
+import miniJava.VariableDeclaration
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.tetrabox.minijava.xtext.miniJava.FieldAccess
-import org.tetrabox.minijava.xtext.miniJava.MethodCall
-import org.tetrabox.minijava.xtext.miniJava.VoidTypeRef
-import org.tetrabox.minijava.xtext.miniJava.TypeDeclaration
-import org.tetrabox.minijava.xtext.miniJava.Interface
-import org.tetrabox.minijava.xtext.miniJava.TypedDeclaration
-import org.tetrabox.minijava.xtext.miniJava.NewObject
+import miniJava.FieldAccess
+import miniJava.MethodCall
+import miniJava.VoidTypeRef
+import miniJava.TypeDeclaration
+import miniJava.Interface
+import miniJava.TypedDeclaration
+import miniJava.NewObject
 
 class MiniJavaTypeComputer {
 	private static val factory = MiniJavaFactory.eINSTANCE

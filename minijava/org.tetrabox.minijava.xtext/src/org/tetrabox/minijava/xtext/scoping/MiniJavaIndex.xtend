@@ -5,8 +5,8 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IContainer
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
-import org.tetrabox.minijava.xtext.miniJava.MiniJavaPackage
-import org.tetrabox.minijava.xtext.miniJava.Clazz
+import miniJava.MiniJavaPackage
+import miniJava.Clazz
 
 class MiniJavaIndex {
 	@Inject ResourceDescriptionsProvider rdp

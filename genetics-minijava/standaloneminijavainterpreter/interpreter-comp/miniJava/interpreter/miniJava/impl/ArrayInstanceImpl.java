@@ -9,10 +9,10 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
 
-public class ArrayInstanceImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements ArrayInstance {
+public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements ArrayInstance {
   protected static final int SIZE_EDEFAULT = 0;
 
   protected int size = SIZE_EDEFAULT;

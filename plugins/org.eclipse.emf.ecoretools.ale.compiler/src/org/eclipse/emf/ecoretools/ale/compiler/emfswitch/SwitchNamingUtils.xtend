@@ -2,6 +2,7 @@ package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
 
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EClass
+import com.squareup.javapoet.ClassName
 
 class SwitchNamingUtils {
 	
@@ -17,8 +18,12 @@ class SwitchNamingUtils {
 		'''«IF packageRoot !== null»«packageRoot».«ENDIF»emfswitch.operation'''
 	}
 	
-	def String operationClassName(EClass eCls) {
+	def dispatch String operationClassName(EClass eCls) {
 		'''«eCls.name.toFirstUpper»Operation'''
+	}
+
+	def dispatch String operationClassName(ClassName eCls) {
+		'''«eCls.simpleName»Operation'''
 	}
 	
 	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {

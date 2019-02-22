@@ -8,9 +8,9 @@ import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-public class ValueImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Value {
+public class ValueImpl extends MinimalEObjectImpl.Container implements Value {
   protected ValueImpl() {
     super();
   }

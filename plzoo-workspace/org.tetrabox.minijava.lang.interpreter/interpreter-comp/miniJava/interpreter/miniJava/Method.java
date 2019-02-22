@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava;
 
 import com.oracle.truffle.api.nodes.NodeInterface;
-import miniJava.interpreter.miniJava.impl.MethodDispatchWrapperCall;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
@@ -28,6 +27,4 @@ public interface Method extends EObject, NodeInterface, Member {
   Method findOverride(Clazz c);
 
   void call(State state);
-
-  MethodDispatchWrapperCall getCachedCall();
 }

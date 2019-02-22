@@ -26,7 +26,6 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
     description = "State"
 )
 public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements State {
-  @Child
   protected Frame rootFrame;
 
   protected EList<ObjectInstance> objectsHeap;

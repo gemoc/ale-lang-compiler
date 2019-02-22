@@ -1,0 +1,28 @@
+package emfswitch.operation;
+
+import emfswitch.SwitchImplementation;
+import miniJava.IntegerValue;
+import miniJava.Neg;
+import miniJava.State;
+import miniJava.Value;
+
+public class NegOperation extends ExpressionOperation {
+  private final Neg it;
+
+  private final SwitchImplementation emfswitch;
+
+  public NegOperation(Neg it, SwitchImplementation emfswitch) {
+    super(it, emfswitch);
+    this.it = it;
+    this.emfswitch = emfswitch;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    IntegerValue left = ((IntegerValue)/*CASEA*/((emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).evaluateExpression(state));
+    IntegerValue tmp = ((IntegerValue)miniJava.MiniJavaFactory.eINSTANCE.createIntegerValue());
+    tmp.setValue(-(left.getValue()));
+    result = tmp;
+    return result;
+  }
+}

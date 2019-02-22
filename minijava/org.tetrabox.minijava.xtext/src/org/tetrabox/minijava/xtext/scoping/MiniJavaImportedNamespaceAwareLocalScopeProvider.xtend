@@ -7,7 +7,7 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.impl.ImportNormalizer
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider
-import org.tetrabox.minijava.xtext.miniJava.Program
+import miniJava.Program
 
 class MiniJavaImportedNamespaceAwareLocalScopeProvider extends ImportedNamespaceAwareLocalScopeProvider {
 	@Inject extension IQualifiedNameProvider

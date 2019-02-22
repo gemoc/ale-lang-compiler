@@ -4,9 +4,15 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.eclipse.emf.common.util.BasicEMap;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 
 public class MapService {
+
+	public static <K, V, KV> void put(EList<KV> map, K key, V value) {
+		throw new RuntimeException("NOT IMPLEMENTED ON " + map);
+	}
+
 	public static <K, V> void put(EMap<K, V> map, K key, V value) {
 		map.put(key, value);
 	}
@@ -32,11 +38,20 @@ public class MapService {
 		return ret;
 	}
 
+	public static <K, KV> boolean containsKey(EList<KV> map, K key) {
+		throw new RuntimeException("NOT IMPLEMENTED ON " + map);
+//		return false;
+	}
+
 	public static <K, V> boolean containsKey(EMap<K, V> map, K key) {
 		return map.containsKey(key);
 	}
 
 	public static <K, V> EMap<K, V> newMap(Object self) {
 		return new BasicEMap<>();
+	}
+
+	public static <K, V, KV> V get(EList<KV> map, K key) {
+		return (V) map.stream().filter(x -> ((Map.Entry<K, V>) x).getKey().equals(key)).findAny().get();
 	}
 }

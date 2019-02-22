@@ -1,7 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
@@ -24,12 +23,8 @@ public class BlockImpl extends StatementImpl implements Block {
   @Children
   private Statement[] statementsArr;
 
-  @Child
-  private StatementDispatchEvaluateStatement dispatchStatementEvaluateStatement;
-
   protected BlockImpl() {
     super();
-    this.dispatchStatementEvaluateStatement = miniJava.interpreter.miniJava.impl.StatementDispatchEvaluateStatementNodeGen.create(); 
   }
 
   @TruffleBoundary
@@ -105,7 +100,7 @@ public class BlockImpl extends StatementImpl implements Block {
         int lgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.statementsArr));
         int i = ((int)0);
         while ((((i) < (lgt)) && (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((currentFrame.getReturnValue()), (null))))) {
-          dispatchStatementEvaluateStatement.executeDispatch(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.statementsArr, i).getCachedEvaluateStatement(), new Object[] {state});
+          org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.statementsArr, i).evaluateStatement(state);
           i = (i) + (1);
         }
         ;

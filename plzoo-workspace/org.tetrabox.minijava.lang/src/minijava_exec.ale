@@ -191,7 +191,7 @@ open class Method {
 					if(tmpm.oclIsKindOf(miniJava::Method)) {
 						miniJava::Method m := tmpm;
 						if(m.name == self.name and m.params.size() == self.params.size()) {
-							boolean compared := m.typeRef.compare(self.typeRef);
+							boolean compared := m.typeRef.compare(self.typeRef);W
 							int j := 0;
 							int paramlgt := m.params.size();
 							boolean alltrue := compared;
@@ -224,7 +224,7 @@ open class Method {
 		}
 	}
 	
-	def dispatch void call(State state) { 
+	def /*dispatch*/ void call(State state) { 
 		self.body.evaluateStatement(state);
 	}
 }

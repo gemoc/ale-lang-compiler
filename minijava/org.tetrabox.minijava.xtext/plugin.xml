@@ -4,7 +4,7 @@
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package 
 			uri = "http://www.example.org/minijava/MiniJava"
-			class = "org.tetrabox.minijava.xtext.miniJava.MiniJavaPackage"
+			class = "miniJava.MiniJavaPackage"
 			genModel = "model/MiniJava.genmodel" />
 	</extension>
    <extension point="org.eclipse.emf.ecore.generated_package">

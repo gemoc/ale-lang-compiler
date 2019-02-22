@@ -9,30 +9,30 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 import org.tetrabox.minijava.xtext.MiniJavaModelUtil
-import org.tetrabox.minijava.xtext.miniJava.Block
-import org.tetrabox.minijava.xtext.miniJava.Clazz
-import org.tetrabox.minijava.xtext.miniJava.Expression
-import org.tetrabox.minijava.xtext.miniJava.FieldAccess
-import org.tetrabox.minijava.xtext.miniJava.Method
-import org.tetrabox.minijava.xtext.miniJava.MethodCall
-import org.tetrabox.minijava.xtext.miniJava.MiniJavaPackage
-import org.tetrabox.minijava.xtext.miniJava.NamedElement
-import org.tetrabox.minijava.xtext.miniJava.Program
-import org.tetrabox.minijava.xtext.miniJava.Return
-import org.tetrabox.minijava.xtext.miniJava.Super
-import org.tetrabox.minijava.xtext.miniJava.VariableDeclaration
+import miniJava.Block
+import miniJava.Clazz
+import miniJava.Expression
+import miniJava.FieldAccess
+import miniJava.Method
+import miniJava.MethodCall
+import miniJava.MiniJavaPackage
+import miniJava.NamedElement
+import miniJava.Program
+import miniJava.Return
+import miniJava.Super
+import miniJava.VariableDeclaration
 import org.tetrabox.minijava.xtext.scoping.MiniJavaIndex
 import org.tetrabox.minijava.xtext.typing.MiniJavaTypeComputer
 import org.tetrabox.minijava.xtext.typing.MiniJavaTypeConformance
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.tetrabox.minijava.xtext.miniJava.ClassRef
-import org.tetrabox.minijava.xtext.miniJava.Interface
-import org.tetrabox.minijava.xtext.miniJava.Field
-import org.tetrabox.minijava.xtext.miniJava.TypeDeclaration
+import miniJava.ClassRef
+import miniJava.Interface
+import miniJava.Field
+import miniJava.TypeDeclaration
 import java.util.HashSet
 import java.util.Set
-import org.tetrabox.minijava.xtext.miniJava.NewObject
+import miniJava.NewObject
 
 /**
  * This class contains custom validation rules. 

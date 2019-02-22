@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Visiteur
+Bundle-SymbolicName: org.tetrabox.minijava.lang.visiteur
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: org.tetrabox.minijava.lang.visiteur
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.tetrabox.minijava.xtext,
+ org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0",
+ org.tetrabox.minijava.lang.services;bundle-version="1.0.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.14.0"

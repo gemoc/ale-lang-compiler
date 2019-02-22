@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
 
-import java.lang.reflect.Modifier
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
@@ -9,6 +8,7 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
 import org.eclipse.acceleo.query.ast.And
@@ -50,6 +50,8 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
@@ -65,12 +67,10 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
-import org.eclipse.emf.ecoretools.ale.implementation.While
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
+import org.eclipse.emf.ecoretools.ale.implementation.While
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 class SwitchOperationCompiler {
 
@@ -181,7 +181,7 @@ class SwitchOperationCompiler {
 			]
 		].head
 
-		val gm = stx.value
+		val gm = stx?.value
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
@@ -336,6 +336,8 @@ class SwitchOperationCompiler {
 			case "divOp": '''(«call.arguments.get(0).compileExpression») / («call.arguments.get(1).compileExpression»)'''
 			case "equals": '''java.util.Objects.equals((«call.arguments.get(0).compileExpression»), («call.arguments.get(1).compileExpression»))'''
 			case "lessThan": '''(«call.arguments.get(0).compileExpression») < («call.arguments.get(1).compileExpression»)'''
+			case "lessThanEqual": '''(«call.arguments.get(0).compileExpression») <= («call.arguments.get(1).compileExpression»)'''
+			case "greaterThanEqual": '''(«call.arguments.get(0).compileExpression») >= («call.arguments.get(1).compileExpression»)'''
 			case "mult": '''(«call.arguments.get(0).compileExpression») * («call.arguments.get(1).compileExpression»)'''
 			case "unaryMin": '''-(«call.arguments.get(0).compileExpression»)'''
 			case "first":
@@ -345,6 +347,8 @@ class SwitchOperationCompiler {
 					'''/*FIRST «call»*/'''
 			case "size":
 				if (call.type == CallType.COLLECTIONCALL)
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression»)'''
+				else if (call.type == CallType.CALLORAPPLY)
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression»)'''
 				else
 					'''/*FIRST «call»*/'''
@@ -370,6 +374,12 @@ class SwitchOperationCompiler {
 				} else {
 					'''/*FIRST «call»*/'''
 				}
+			case "exists":
+				if (call.type == CallType.COLLECTIONCALL) {
+					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)'''
+				} else {
+					'''/*FIRST «call»*/'''
+				}
 			case "isEmpty":
 				if (call.type == CallType.COLLECTIONCALL) {
 					'''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.isEmpty(«call.arguments.get(0).compileExpression»)'''
@@ -392,17 +402,36 @@ class SwitchOperationCompiler {
 				if (call.type == CallType.CALLORAPPLY)
 					if (call.serviceName == 'aqlFeatureAccess') {
 						val t = infereType(call).head
-						if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-							'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
-						} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-							if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
-								(t.type as EDataType).instanceClass == boolean))
-								'''«call.arguments.head.compileExpression».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
-							else
-								'''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
-						} else {
-							'''«call.arguments.head.compileExpression».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»'''
 
+						// it t is in the hierarchy of the current context eClass (as itself or one of his parents), we can skip the accessor and directly point to the field
+						val lhs = call.arguments.head.compileExpression
+						if (lhs.toString == 'this') {
+							if (t instanceof SequenceType 
+								&& (t as SequenceType).collectionType.type instanceof EClass 
+								&& ((t as SequenceType).collectionType.type as EClass).instanceClassName != "java.util.Map$Entry"  
+								) {
+									val rhs = (call.arguments.get(1) as StringLiteral).value
+								
+									'''«lhs».get«rhs.toFirstUpper»()'''
+							} else if (t.type instanceof EClass || t.type instanceof EDataType) {
+								'''«lhs».«(call.arguments.get(1) as StringLiteral).value»'''
+							} else {
+								'''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»«(call.arguments.get(1) as StringLiteral).value»«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»'''
+							}
+
+						} else {
+							if (t instanceof SequenceType &&
+								(t as SequenceType).collectionType.type instanceof EClass) {
+								'''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
+							} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
+								if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
+									(t.type as EDataType).instanceClass == boolean))
+									'''«lhs».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
+								else
+									'''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
+							} else {
+								'''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»'''
+							}
 						}
 					} else if (call.serviceName == 'create') {
 						val e = call.arguments.get(0)
@@ -415,7 +444,7 @@ class SwitchOperationCompiler {
 						val ts = argumentsh.infereType
 						val t = ts.head
 						val re = resolved.filter [
-							if (t.type instanceof EClass) {
+							if (t !== null && t.type instanceof EClass) {
 								val tecls = t.type as EClass
 								it.ECls.name == tecls.name && it.ECls.EPackage.name == tecls.EPackage.name
 							} else {
@@ -428,7 +457,45 @@ class SwitchOperationCompiler {
 								it.operationRef.name == call.serviceName
 							]
 							if (methodExist) {
-								'''((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName(t.type as EClass)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+								val methods = allMethods.filter[it.operationRef.name == call.serviceName].toList
+
+								/* Look for the most specific method that matches the resolved class by walking up the hierarchy */
+								var Method method = null
+								var ResolvedClass rev = re
+								while (method === null) {
+									val lc = rev.aleCls
+									method = methods.filter[it.eContainer === lc].head
+
+									val revc = rev
+									rev = resolved.filter [
+										revc.eCls instanceof EClass &&
+											(revc.eCls as EClass).ESuperTypes.contains(it.eCls)
+									].head
+								}
+								
+								
+								// lookup if one of the method declaration is declared with a dispatch
+								var isDispatch=false
+								rev = re
+								while(!isDispatch && rev !== null) {
+									val lc = rev.aleCls
+									method = methods.filter[it.eContainer === lc].head
+									
+									isDispatch = method !== null && method.isDispatch
+
+									val revc = rev
+									rev = resolved.filter [
+										revc.eCls instanceof EClass &&
+											(revc.eCls as EClass).ESuperTypes.contains(it.eCls)
+									].head
+								}
+								
+//								'''((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName(t.type as EClass)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+								
+								
+								// CASE A
+//								'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)/*CASEA*/'''
+								'''/*CASEA*/((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName((t.type as EClassifier).solveType)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
 							} else {
 
 								val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].
@@ -439,10 +506,12 @@ class SwitchOperationCompiler {
 								].head
 
 								if (candidate !== null) {
-									'''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
+									// CASE B
+									'''/*CASEB*/«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
 								} else {
-									'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
-
+									// CASE C
+//									'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)/*CASEC*/'''
+									'''/*CASEC*/((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName((t.type as EClassifier).solveType)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
 								}
 							}
 						} else {
@@ -453,9 +522,14 @@ class SwitchOperationCompiler {
 							].head
 
 							if (candidate !== null) {
-								'''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
+								'''/*CASED*/«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
 							} else {
-								'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+								// CASE D
+//								'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)/*CASED*/'''
+									if(t !== null && t.type !== null && t.type instanceof EClassifier && (t.type as EClassifier).solveType instanceof EClass )
+										'''/*CASEE*/((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName((t.type as EClassifier).solveType as EClass)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
+									else
+										'''/*CASEF*/«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
 
 							}
 						}
