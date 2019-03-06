@@ -83,7 +83,7 @@ public class MethodOperation extends MemberOperation {
 			}
 			/* CASED */minijava.MapService.put(/* CASEC */this.it.getCache(), c, result);
 		} else {
-			result = MapService.get(this.it.getCache(), c);
+			result = this.it.getCache().get(c);
 		}
 		return result;
 	}

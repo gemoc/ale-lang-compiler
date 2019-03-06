@@ -17,12 +17,12 @@ public class IfOperation extends ControlStructureOperation {
 
   public double eval(Turtle turtle) {
     double result;
-    if((((emfswitch.emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).eval(turtle)) != (0.0)) {
-      result = ((emfswitch.emfswitch.operation.BlockOperation) emfswitch.doSwitch(this.it.getThenPart())).eval(turtle);
+    if((/*CASEA*/((emfswitch.emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).eval(turtle)) != (0.0)) {
+      result = /*CASEA*/((emfswitch.emfswitch.operation.BlockOperation) emfswitch.doSwitch(this.it.getThenPart())).eval(turtle);
     }
     else {
       if((this.it.getElsePart()) != (null)) {
-        result = ((emfswitch.emfswitch.operation.BlockOperation) emfswitch.doSwitch(this.it.getElsePart())).eval(turtle);
+        result = /*CASEA*/((emfswitch.emfswitch.operation.BlockOperation) emfswitch.doSwitch(this.it.getElsePart())).eval(turtle);
       }
       else {
         result = 0.0;

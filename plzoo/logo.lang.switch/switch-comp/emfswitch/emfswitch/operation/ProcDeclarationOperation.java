@@ -20,8 +20,14 @@ public class ProcDeclarationOperation extends InstructionOperation {
     double result;
     result = 0.0;
     for(Instruction instr: this.it.getInstructions()) {
-      result = ((emfswitch.emfswitch.operation.InstructionOperation) emfswitch.doSwitch(instr)).eval(turtle);
+      result = /*CASEA*/((emfswitch.emfswitch.operation.InstructionOperation) emfswitch.doSwitch(instr)).eval(turtle);
     }
+    return result;
+  }
+
+  public double deval(Turtle turtle) {
+    double result;
+    result = /*CASEA*/((emfswitch.emfswitch.operation.ProcDeclarationOperation) emfswitch.doSwitch(this.it)).eval(turtle);
     return result;
   }
 }

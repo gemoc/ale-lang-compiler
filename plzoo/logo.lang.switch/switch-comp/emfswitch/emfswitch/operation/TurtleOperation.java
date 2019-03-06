@@ -34,7 +34,7 @@ public class TurtleOperation {
   }
 
   public void forward(double steps) {
-    ((emfswitch.emfswitch.operation.TurtleOperation) emfswitch.doSwitch(this.it)).move((steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(this.it.getHeading())),(steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.it.getHeading())));
+    /*CASEA*/((emfswitch.emfswitch.operation.TurtleOperation) emfswitch.doSwitch(this.it)).move((steps) * (/*CASED*/org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(this.it.getHeading())),(steps) * (/*CASED*/org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.it.getHeading())));
   }
 
   public void rotate(double angle) {

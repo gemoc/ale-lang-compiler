@@ -53,7 +53,7 @@ public class NewArrayOperation extends ExpressionOperation {
 		int i = ((int) 0);
 		int sz = ((int) res.getSize());
 		while ((i) < (sz)) {
-			res.getValue().add(/* CASEF */((ValueOperation) emfswitch.caseValue(defaultValue)).copyj());
+			res.getValue().add(/* CASEF */((ValueOperation) emfswitch.doSwitch(defaultValue)).copyj());
 			i = (i) + (1);
 		}
 		ArrayRefValue ret = ((ArrayRefValue) miniJava.MiniJavaFactory.eINSTANCE.createArrayRefValue());

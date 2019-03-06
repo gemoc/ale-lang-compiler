@@ -19,8 +19,8 @@ public class AndOperation extends ExpressionOperation {
 
   public Value evaluateExpression(State state) {
     Value result;
-    Value left = ((ExpressionOperation) emfswitch.caseExpression(this.it.getLeft())).evaluateExpression(state);
-    Value right = ((ExpressionOperation) emfswitch.caseExpression(this.it.getRight())).evaluateExpression(state);;
+    Value left = ((ExpressionOperation) emfswitch.doSwitch(this.it.getLeft())).evaluateExpression(state);
+    Value right = ((ExpressionOperation) emfswitch.doSwitch(this.it.getRight())).evaluateExpression(state);;
     if(left instanceof miniJava.BooleanValue) {
       if(right instanceof miniJava.BooleanValue) {
         BooleanValue bleft = ((BooleanValue)left);

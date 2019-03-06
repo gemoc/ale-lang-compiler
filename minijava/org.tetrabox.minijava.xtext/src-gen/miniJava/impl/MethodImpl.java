@@ -5,20 +5,15 @@ package miniJava.impl;
 import java.util.Collection;
 import java.util.Map;
 
-import java.util.Map.Entry;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import miniJava.Block;
@@ -113,7 +108,7 @@ public class MethodImpl extends MemberImpl implements Method {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Map.Entry<Clazz, Method>> cache;
+	  protected EMap<Clazz, Method> cache;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -236,12 +231,12 @@ public class MethodImpl extends MemberImpl implements Method {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Map.Entry<Clazz, Method>> getCache() {
-		if (cache == null) {
-			cache = new EObjectResolvingEList<Map.Entry<Clazz, Method>>(Entry.class, this, MiniJavaPackage.METHOD__CACHE);
-		}
-		return cache;
-	}
+	public EMap<Clazz, Method> getCache() {
+	    if (cache == null) {
+	    	cache = new EcoreEMap<Clazz, Method>(MiniJavaPackage.Literals.CLAZZ_TO_METHOD_MAP, ClazzToMethodMapImpl.class, this, MiniJavaPackage.METHOD__CACHE);
+	    }
+	    return cache;
+	  }
 
 	/**
 	 * <!-- begin-user-doc -->

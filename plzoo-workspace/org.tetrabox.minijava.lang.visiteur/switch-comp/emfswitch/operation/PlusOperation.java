@@ -34,8 +34,8 @@ public class PlusOperation extends ExpressionOperation {
 			} else {
 				if (right instanceof miniJava.StringValue) {
 					StringValue tmp = ((StringValue) miniJava.MiniJavaFactory.eINSTANCE.createStringValue());
-					tmp.setValue((/* CASEF */((ValueOperation) emfswitch.caseValue(left)).customToString())
-							+ (/* CASEF */((ValueOperation) emfswitch.caseValue(right)).customToString()));
+					tmp.setValue((/* CASEF */((ValueOperation) emfswitch.doSwitch(left)).customToString())
+							+ (/* CASEF */((ValueOperation) emfswitch.doSwitch(right)).customToString()));
 					result = tmp;
 				} else {
 					result = null;
@@ -44,8 +44,8 @@ public class PlusOperation extends ExpressionOperation {
 		} else {
 			if (((left instanceof miniJava.StringValue) || (right instanceof miniJava.StringValue))) {
 				StringValue tmp = ((StringValue) miniJava.MiniJavaFactory.eINSTANCE.createStringValue());
-				tmp.setValue((/* CASEF */((ValueOperation) emfswitch.caseValue(left)).customToString())
-						+ (/* CASEF */((ValueOperation) emfswitch.caseValue(right)).customToString()));
+				tmp.setValue((/* CASEF */((ValueOperation) emfswitch.doSwitch(left)).customToString())
+						+ (/* CASEF */((ValueOperation) emfswitch.doSwitch(right)).customToString()));
 				result = tmp;
 			} else {
 				result = null;

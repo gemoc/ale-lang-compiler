@@ -42,7 +42,7 @@ public class LogoBenchmarkSwitch {
 
 			final long start = System.currentTimeMillis();
 //			((LogoProgramOperation) result.accept(visitor)).eval();
-			((LogoProgramOperation) emfswitch.caseLogoProgram(result)).eval();
+			((LogoProgramOperation) emfswitch.doSwitch(result)).eval();
 
 			times[i] = System.currentTimeMillis() - start;
 

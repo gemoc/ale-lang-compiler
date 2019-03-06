@@ -19,7 +19,7 @@ public class BlockOperation extends InstructionOperation {
   public double eval(Turtle turtle) {
     double result;
     for(Instruction inst: this.it.getInstructions()) {
-      ((emfswitch.emfswitch.operation.InstructionOperation) emfswitch.doSwitch(inst)).eval(turtle);
+      /*CASEA*/((emfswitch.emfswitch.operation.InstructionOperation) emfswitch.doSwitch(inst)).eval(turtle);
     }
     result = 0.0;
     return result;

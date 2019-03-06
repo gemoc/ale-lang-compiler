@@ -17,8 +17,8 @@ public class WhileOperation extends ControlStructureOperation {
 
   public double eval(Turtle turtle) {
     double result;
-    while ((((emfswitch.emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).eval(turtle)) > (0.0)) {
-      ((emfswitch.emfswitch.operation.BlockOperation) emfswitch.doSwitch(this.it.getBlock())).eval(turtle);
+    while ((/*CASEA*/((emfswitch.emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).eval(turtle)) > (0.0)) {
+      /*CASEA*/((emfswitch.emfswitch.operation.BlockOperation) emfswitch.doSwitch(this.it.getBlock())).eval(turtle);
     }
     result = 0.0;
     return result;

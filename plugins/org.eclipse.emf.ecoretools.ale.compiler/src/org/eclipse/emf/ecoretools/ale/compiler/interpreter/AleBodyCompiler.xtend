@@ -32,14 +32,12 @@ class AleBodyCompiler {
 
 	extension TypeSystemUtils tsu
 	extension AleExpressionsCompiler aec
-	val boolean isTruffle
 	
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray, Map<String, Class<?>> registeredServices, boolean isTruffle) {
 		tsu = new TypeSystemUtils(syntaxes, packageRoot, base, resolved)
 		aec = new AleExpressionsCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registeredArray, registeredServices, isTruffle)
-		this.isTruffle = isTruffle
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, FeatureAssignment body,

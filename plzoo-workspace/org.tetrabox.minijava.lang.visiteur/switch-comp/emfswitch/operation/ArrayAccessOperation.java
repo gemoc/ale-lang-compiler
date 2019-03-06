@@ -23,7 +23,7 @@ public class ArrayAccessOperation extends ExpressionOperation {
     ArrayRefValue arrayVal = ((ArrayRefValue)/*CASEA*/((emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getObject())).evaluateExpression(state));
     IntegerValue indexVal = ((IntegerValue)/*CASEA*/((emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getIndex())).evaluateExpression(state));
     Value value = arrayVal.getInstance().getValue().get(indexVal.getValue());
-	result =  ((ValueOperation)emfswitch.caseValue(value)).copyj(); // /*CASEF*//*CASEF*/value.copyj();
+	result =  ((ValueOperation)emfswitch.doSwitch(value)).copyj(); // /*CASEF*//*CASEF*/value.copyj();
     return result;
   }
 }

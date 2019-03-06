@@ -2,10 +2,8 @@
  */
 package miniJava;
 
-import java.util.Map;
-
 import org.eclipse.emf.common.util.EList;
-
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -114,6 +112,6 @@ public interface Context extends EObject {
 	 * @model mapType="miniJava.SymbolToSymbolBindingMap&lt;miniJava.Symbol, miniJava.SymbolBinding&gt;"
 	 * @generated
 	 */
-	EList<Map.Entry<Symbol, SymbolBinding>> getCache();
+	EMap<Symbol, SymbolBinding> getCache();
 
 } // Context

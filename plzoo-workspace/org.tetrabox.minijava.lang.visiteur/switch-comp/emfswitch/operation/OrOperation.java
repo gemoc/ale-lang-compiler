@@ -20,9 +20,9 @@ public class OrOperation extends ExpressionOperation {
 	public Value evaluateExpression(State state) {
 		Value result;
 		BooleanValue left = ((BooleanValue) /* CASEF */((ExpressionOperation) emfswitch
-				.caseExpression(this.it.getLeft())).evaluateExpression(state));
+				.doSwitch(this.it.getLeft())).evaluateExpression(state));
 		BooleanValue right = ((BooleanValue) /* CASEF */((ExpressionOperation) emfswitch
-				.caseExpression(this.it.getRight())).evaluateExpression(state));
+				.doSwitch(this.it.getRight())).evaluateExpression(state));
 		BooleanValue res = ((BooleanValue) miniJava.MiniJavaFactory.eINSTANCE.createBooleanValue());
 		res.setValue(((/* CASEF */left.isValue()) || (/* CASEF */right.isValue())));
 		result = res;

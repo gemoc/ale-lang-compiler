@@ -1,5 +1,7 @@
 package emfswitch.operation;
 
+import org.eclipse.emf.common.util.EMap;
+
 import emfswitch.SwitchImplementation;
 import miniJava.Context;
 import miniJava.Symbol;
@@ -27,14 +29,14 @@ public class ContextOperation {
 			} else {
 				if (/* CASEC */this.it.getParentContext() != (null)) {
 					SymbolBinding binding2 = ((SymbolBinding) /* CASEF *//* CASEC */ ((ContextOperation) emfswitch
-							.caseContext(this.it.getParentContext())).findBinding(symbol));
+							.doSwitch(this.it.getParentContext())).findBinding(symbol));
 					/* CASED */minijava.MapService.put(/* CASEC */this.it.getCache(), symbol, binding2);
 				} else {
 					org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(("No binding for symbol ") + (symbol));
 				}
 			}
 		}
-		result = /* CASEF *//* CASEC */MapService.get(this.it.getCache(), symbol);
+		result = this.it.getCache().get(symbol);
 		return result;
 	}
 

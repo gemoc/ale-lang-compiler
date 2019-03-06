@@ -20,7 +20,7 @@ public class PrintStatementOperation extends StatementOperation {
 	public void evaluateStatement(State state) {
 		Value evaluateExpression = ((emfswitch.operation.ExpressionOperation) emfswitch
 				.doSwitch(this.it.getExpression())).evaluateExpression(state);
-		String res = ((String) /* CASEF *//* CASEA */((ValueOperation) emfswitch.caseValue(evaluateExpression))
+		String res = ((String) /* CASEF *//* CASEA */((ValueOperation) emfswitch.doSwitch(evaluateExpression))
 				.customToString());
 		/* CASEA */((emfswitch.operation.StateOperation) emfswitch.doSwitch(state)).println(res);
 	}

@@ -56,7 +56,7 @@ public class AssignmentOperation extends StatementOperation {
 					FieldAccess assigneeFieldAccess = ((FieldAccess) assignee);
 					Field f = ((Field) assigneeFieldAccess.getField());
 					ObjectRefValue realReceiverValue = (ObjectRefValue) ((ExpressionOperation) emfswitch
-							.caseExpression(assigneeFieldAccess.getReceiver())).evaluateExpression(state);
+							.doSwitch(assigneeFieldAccess.getReceiver())).evaluateExpression(state);
 					ObjectInstance realReceiver = ((ObjectInstance) realReceiverValue.getInstance());
 					FieldBinding existingBinding = ((FieldBinding) org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService
 							.head(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(
@@ -74,10 +74,10 @@ public class AssignmentOperation extends StatementOperation {
 					if (assignee instanceof miniJava.ArrayAccess) {
 						ArrayAccess assigneeArrayAccess = ((ArrayAccess) assignee);
 						ArrayRefValue arrayRefValue = (ArrayRefValue) ((ExpressionOperation) emfswitch
-								.caseExpression(assigneeArrayAccess.getObject())).evaluateExpression(state);
+								.doSwitch(assigneeArrayAccess.getObject())).evaluateExpression(state);
 						ArrayInstance array = ((ArrayInstance) arrayRefValue.getInstance());
 						IntegerValue integerValue = (IntegerValue) ((ExpressionOperation) emfswitch
-								.caseExpression(assigneeArrayAccess.getIndex())).evaluateExpression(state);
+								.doSwitch(assigneeArrayAccess.getIndex())).evaluateExpression(state);
 						int index = ((int) integerValue.getValue());
 						/* CASEF */array.getValue().set(index, right);
 					} else {

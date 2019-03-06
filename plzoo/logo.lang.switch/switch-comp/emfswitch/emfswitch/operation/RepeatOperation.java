@@ -17,9 +17,9 @@ public class RepeatOperation extends ControlStructureOperation {
 
   public double eval(Turtle turtle) {
     double result;
-    double time = ((double)((emfswitch.emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).eval(turtle));
+    double time = ((double)/*CASEA*/((emfswitch.emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).eval(turtle));
     while ((time) > (0.0)) {
-      ((emfswitch.emfswitch.operation.BlockOperation) emfswitch.doSwitch(this.it.getBlock())).eval(turtle);
+      /*CASEA*/((emfswitch.emfswitch.operation.BlockOperation) emfswitch.doSwitch(this.it.getBlock())).eval(turtle);
       time = (time) - (1.0);
     }
     result = 0.0;

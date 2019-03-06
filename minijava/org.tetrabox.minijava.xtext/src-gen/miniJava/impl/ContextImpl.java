@@ -5,21 +5,16 @@ package miniJava.impl;
 import java.util.Collection;
 import java.util.Map;
 
-import java.util.Map.Entry;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -73,7 +68,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Map.Entry<Symbol, SymbolBinding>> cache;
+	protected EMap<Symbol, SymbolBinding> cache;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -195,12 +190,12 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Map.Entry<Symbol, SymbolBinding>> getCache() {
-		if (cache == null) {
-			cache = new EObjectResolvingEList<Map.Entry<Symbol, SymbolBinding>>(Entry.class, this, MiniJavaPackage.CONTEXT__CACHE);
-		}
-		return cache;
-	}
+	public EMap<Symbol, SymbolBinding> getCache() {
+	    if (cache == null) {
+	    	cache = new EcoreEMap<Symbol, SymbolBinding>(MiniJavaPackage.Literals.SYMBOL_TO_SYMBOL_BINDING_MAP, SymbolToSymbolBindingMapImpl.class, this, MiniJavaPackage.CONTEXT__CACHE);
+	    }
+	    return cache;
+	  }
 
 	/**
 	 * <!-- begin-user-doc -->

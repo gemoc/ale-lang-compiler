@@ -17,7 +17,7 @@ public class CosOperation extends UnaryExpressionOperation {
 
   public double eval(Turtle turtle) {
     double result;
-    result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(((emfswitch.emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).eval(turtle));
+    result = /*CASED*/org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(/*CASEA*/((emfswitch.emfswitch.operation.ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).eval(turtle));
     return result;
   }
 }

@@ -1,17 +1,20 @@
 package minijava;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.BasicEMap;
+import org.eclipse.emf.common.util.BasicEMap.Entry;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl.BasicEMapEntry;
 
 public class MapService {
 
-	public static <K, V, KV> void put(EList<KV> map, K key, V value) {
-		throw new RuntimeException("NOT IMPLEMENTED ON " + map);
-	}
+
 
 	public static <K, V> void put(EMap<K, V> map, K key, V value) {
 		map.put(key, value);
@@ -38,10 +41,9 @@ public class MapService {
 		return ret;
 	}
 
-	public static <K, KV> boolean containsKey(EList<KV> map, K key) {
-		throw new RuntimeException("NOT IMPLEMENTED ON " + map);
-//		return false;
-	}
+//	public static <K, KV> boolean containsKey(EList<KV> map, K key) {
+//		return map.stream().filter(x -> ((Map.Entry<K, ?>) x).getKey().equals(key)).findAny().isPresent();
+//	}
 
 	public static <K, V> boolean containsKey(EMap<K, V> map, K key) {
 		return map.containsKey(key);
@@ -51,7 +53,7 @@ public class MapService {
 		return new BasicEMap<>();
 	}
 
-	public static <K, V, KV> V get(EList<KV> map, K key) {
-		return (V) map.stream().filter(x -> ((Map.Entry<K, V>) x).getKey().equals(key)).findAny().get();
-	}
+//	public static <K, V, KV> V get(EList<KV> map, K key) {
+//		return (V) map.stream().filter(x -> ((Map.Entry<K, V>) x).getKey().equals(key)).findAny().get();
+//	}
 }

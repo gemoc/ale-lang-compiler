@@ -2,9 +2,8 @@
  */
 package miniJava;
 
-import java.util.Map;
-
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 
 /**
  * <!-- begin-user-doc -->
@@ -135,6 +134,6 @@ public interface Method extends Member {
 	 * @model mapType="miniJava.ClazzToMethodMap&lt;miniJava.Clazz, miniJava.Method&gt;"
 	 * @generated
 	 */
-	EList<Map.Entry<Clazz, Method>> getCache();
+	EMap<Clazz, Method> getCache();
 
 } // Method

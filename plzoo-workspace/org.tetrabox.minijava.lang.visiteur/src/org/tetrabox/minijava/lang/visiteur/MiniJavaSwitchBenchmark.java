@@ -36,7 +36,7 @@ public class MiniJavaSwitchBenchmark {
 			final Program result = (Program) resource.getContents().get(0);
 
 			final long start = System.currentTimeMillis();
-			((ProgramOperation) emfswitch.caseProgram(result)).execute();
+			((ProgramOperation) emfswitch.caseProgram(result)).main();
 
 			times[i] = System.currentTimeMillis() - start;
 

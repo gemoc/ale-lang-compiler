@@ -30,7 +30,7 @@ public class MethodCallOperation extends ExpressionOperation {
 				.doSwitch(this.it.getReceiver())).evaluateExpression(state));
 		ObjectInstance realReceiver = ((ObjectInstance) realReceiver0.getInstance());
 		Method realMethod = ((Method) /* CASEF *//* CASEC */((MethodOperation) emfswitch
-				.caseMethod(this.it.getMethod())).findOverride(realReceiver.getType()));
+				.doSwitch(this.it.getMethod())).findOverride(realReceiver.getType()));
 		Context newContext = ((Context) miniJava.MiniJavaFactory.eINSTANCE.createContext());
 		int argsLength = ((int) org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.it.getArgs()));
 		int i = ((int) 0);

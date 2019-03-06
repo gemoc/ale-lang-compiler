@@ -125,7 +125,9 @@ class ALEInterpreterImplementationCompiler {
 		}
 
 		// load all syntaxes in a cache
-		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
+		syntaxes = dsl.allSyntaxes.toMap([it], [
+			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
+		])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
 		resolved = resolve(aleClasses, syntax)
 
@@ -184,7 +186,8 @@ class ALEInterpreterImplementationCompiler {
 			val aleClass = aleClasses.filter [
 				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
 			].head
-			val GenClass gl = syntaxes.filter[k, v|v.key.allClassifiers.contains(eClass)].values.map[value].map [
+			val values = syntaxes.filter[k, v|v.key.allClassifiers.contains(eClass)].values.map[value]
+			val GenClass gl = values.map [
 				it.genPackages.map[it.genClasses].flatten
 			].flatten.filter[it.ecoreClass == eClass].head
 			new ResolvedClass(aleClass, eClass, gl)

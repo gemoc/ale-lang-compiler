@@ -17,10 +17,10 @@ public class LogoProgramOperation {
 
   public Turtle eval() {
     Turtle result;
-    Turtle turtle = ((Turtle)((emfswitch.emfswitch.operation.LogoProgramOperation) emfswitch.doSwitch(this.it)).createTurtle());
+    Turtle turtle = ((Turtle)/*CASEA*/((emfswitch.emfswitch.operation.LogoProgramOperation) emfswitch.doSwitch(this.it)).createTurtle());
     result = turtle;
     for(Instruction it: this.it.getInstructions()) {
-      ((emfswitch.emfswitch.operation.InstructionOperation) emfswitch.doSwitch(it)).eval(turtle);
+      /*CASEA*/((emfswitch.emfswitch.operation.InstructionOperation) emfswitch.doSwitch(it)).eval(turtle);
     }
     result = turtle;
     return result;

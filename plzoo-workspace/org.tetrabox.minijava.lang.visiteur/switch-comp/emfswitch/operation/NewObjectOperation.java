@@ -85,7 +85,7 @@ public class NewObjectOperation extends ExpressionOperation {
 			call.setNewz(this.it);
 			/* CASEA */((emfswitch.operation.StateOperation) emfswitch.doSwitch(state)).pushNewFrame(res, call,
 					newContext);
-			/* CASEF */((BlockOperation) emfswitch.caseBlock(constructor.getBody())).evaluateStatement(state);
+			/* CASEF */((BlockOperation) emfswitch.doSwitch(constructor.getBody())).evaluateStatement(state);
 			/* CASEA */((emfswitch.operation.StateOperation) emfswitch.doSwitch(state)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) miniJava.MiniJavaFactory.eINSTANCE.createObjectRefValue());

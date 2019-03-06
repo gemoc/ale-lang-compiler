@@ -19,7 +19,7 @@ public class ExpressionOperation extends StatementOperation {
 	}
 
 	public void evaluateStatement(State state) {
-		((ExpressionOperation) emfswitch.caseExpression(this.it)).evaluateExpression(state);
+		((ExpressionOperation) emfswitch.doSwitch(this.it)).evaluateExpression(state);
 	}
 
 	public Value evaluateExpression(State state) {
