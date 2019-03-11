@@ -17,7 +17,7 @@ import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator;
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator;
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage;
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MutabilityAnalysisTest {
 

@@ -1,0 +1,27 @@
+behavior test1_exec;
+
+open class ConceptA {
+  def void exec() {
+  	'ok'.log();
+  	
+  	for(c in self.cs) {
+  		c.call();
+  	}
+  }
+}
+
+open class ConceptB {
+	def void exec() {
+  		'okb'.log();
+  	}
+  	
+  	def int execB() {
+  		result := 1;
+  	}
+}
+
+open class ConceptC {
+	def void call() {
+		self.nbr.log();
+	}
+}

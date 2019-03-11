@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/org.eclipse.emf.ecoretools.ale.compiler.interpreter.test/src"
+    modelPluginID="org.eclipse.emf.ecoretools.ale.compiler.interpreter.test" modelName="Test1"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>test1.ecore</foreignModel>
+  <genPackages prefix="Test1" disposableProviderFactory="true" ecorePackage="test1.ecore#/">
+    <genClasses ecoreClass="test1.ecore#//ConceptA"/>
+  </genPackages>
+</genmodel:GenModel>
