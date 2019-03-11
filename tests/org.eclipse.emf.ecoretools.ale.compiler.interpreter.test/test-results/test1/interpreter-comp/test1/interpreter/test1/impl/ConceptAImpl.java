@@ -14,7 +14,8 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
   }
 
   protected EClass eStaticClass() {
-    return Test1Package.Literals.CONCEPT_A;}
+    return Test1Package.Literals.CONCEPT_A;
+  }
 
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {

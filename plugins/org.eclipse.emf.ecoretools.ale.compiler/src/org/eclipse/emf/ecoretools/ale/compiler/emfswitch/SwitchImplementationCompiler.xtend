@@ -54,7 +54,9 @@ class SwitchImplementationCompiler {
 			.addModifiers(PUBLIC)
 			.build
 
-		val javaFile = JavaFile.builder(namingUtils.switchImplementationPackageName(packageRoot), factory).build
+		val javaFile = JavaFile.builder(namingUtils.switchImplementationPackageName(packageRoot), factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

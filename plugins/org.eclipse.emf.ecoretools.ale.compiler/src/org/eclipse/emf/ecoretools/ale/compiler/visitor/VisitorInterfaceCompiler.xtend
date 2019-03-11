@@ -36,7 +36,9 @@ class VisitorInterfaceCompiler {
 				addModifiers(ABSTRACT, PUBLIC).returns(Object).build
 		]).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(namingUtils.visitorInterfacePackageName(packageRoot), factory).build
+		val javaFile = JavaFile.builder(namingUtils.visitorInterfacePackageName(packageRoot), factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

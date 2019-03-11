@@ -77,7 +77,9 @@ class OperationInterfaceCompiler {
 
 			]).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(namingUtils.operationInterfacePackageName(packageRoot, eClass), factory).build
+		val javaFile = JavaFile.builder(namingUtils.operationInterfacePackageName(packageRoot, eClass), factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

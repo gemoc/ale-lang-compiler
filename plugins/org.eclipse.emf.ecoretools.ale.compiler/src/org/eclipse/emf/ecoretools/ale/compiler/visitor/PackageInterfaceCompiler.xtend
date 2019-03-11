@@ -95,7 +95,9 @@ class PackageInterfaceCompiler {
 			).addMethods(getterFields + getterReferencesFields + getterAttributesFields + #[getFactoryMethod]).addType(literalType).addModifiers(PUBLIC).
 			build
 
-		val javaFile = JavaFile.builder(abstractSyntax.packageInterfacePackageName(packageRoot), package).build
+		val javaFile = JavaFile.builder(abstractSyntax.packageInterfacePackageName(packageRoot), package)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

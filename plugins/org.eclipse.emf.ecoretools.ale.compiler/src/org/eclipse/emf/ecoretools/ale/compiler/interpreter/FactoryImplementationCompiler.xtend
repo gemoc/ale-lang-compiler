@@ -59,17 +59,16 @@ class FactoryImplementationCompiler {
 			.addParameter(ParameterSpec.builder(EClass, 'eClass').build)
 			.addCode('''
 			switch (eClass.getClassifierID()) {
-«««				filtering criteria on hashmap not yet fully defined, possible condition: && it.instanceTypeName != 'java.util.Map$Entry'
-			«FOR eClass : allClasses.filter[!it.abstract]» 
-				case $1T.«eClass.name.normalizeUpperField»:
+				«FOR eClass : allClasses.filter[!it.abstract]» 
+				case $1T.«eClass.name.normalizeUpperField» :
 					«IF eClass.instanceClass !== null && eClass.instanceClass == Map.Entry»
-						return (org.eclipse.emf.ecore.EObject) create«eClass.name»();
+					return (org.eclipse.emf.ecore.EObject) create«eClass.name»();
 					«ELSE»
-						return create«eClass.name»();
+					return create«eClass.name»();
 					«ENDIF»
-			«ENDFOR»
-			default:
-				throw new $2T("The class '" + eClass.getName() + "' is not a valid classifier");
+				«ENDFOR»
+				default :
+					throw new $2T("The class '" + eClass.getName() + "' is not a valid classifier");
 			}
 		''', packageInterfaceType, IllegalArgumentException).addModifiers(PUBLIC).build
 		
@@ -80,12 +79,12 @@ class FactoryImplementationCompiler {
 			.addParameter(String, 'initialValue')
 			.addCode('''
 			switch (eDataType.getClassifierID()) {
-			«FOR eEnum:allEnum»
-			case «abstractSyntax.packageInterfacePackageName(packageRoot)».«abstractSyntax.packageInterfaceClassName».«eEnum.name.normalizeUpperField»:
-				return create«eEnum.name»FromString(eDataType, initialValue);
-			«ENDFOR»
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				«FOR eEnum:allEnum»
+				case «abstractSyntax.packageInterfacePackageName(packageRoot)».«abstractSyntax.packageInterfaceClassName».«eEnum.name.normalizeUpperField» :
+					return create«eEnum.name»FromString(eDataType, initialValue);
+				«ENDFOR»
+				default :
+					throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 			}
 			''')
 			.addModifiers(PUBLIC)
@@ -98,12 +97,12 @@ class FactoryImplementationCompiler {
 			.addParameter(Object, 'instanceValue')
 			.addCode('''
 			switch (eDataType.getClassifierID()) {
-			«FOR eEnum: allEnum»
-			case «abstractSyntax.packageInterfacePackageName(packageRoot)».«abstractSyntax.packageInterfaceClassName».«eEnum.name.normalizeUpperField»:
-				return convert«eEnum.name»ToString(eDataType, instanceValue);
-			«ENDFOR»
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+				«FOR eEnum: allEnum»
+				case «abstractSyntax.packageInterfacePackageName(packageRoot)».«abstractSyntax.packageInterfaceClassName».«eEnum.name.normalizeUpperField» :
+					return convert«eEnum.name»ToString(eDataType, instanceValue);
+				«ENDFOR»
+				default :
+					throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 			}
 			''')
 			.addModifiers(PUBLIC)
@@ -166,14 +165,18 @@ class FactoryImplementationCompiler {
 		]
 
 		val getPackageMethod = MethodSpec.methodBuilder('''get«abstractSyntax.name.toFirstUpper»Package''').returns(
-			packageInterfaceType).addCode('''return ($1T)getEPackage();''', packageInterfaceType).addModifiers(PUBLIC).
+			packageInterfaceType).addCode('''
+			return ($1T) getEPackage();
+			''', packageInterfaceType).addModifiers(PUBLIC).
 			build
 
 		val factory = TypeSpec.classBuilder(abstractSyntax.factoryImplementationClassName).superclass(EFactoryImpl).
 			addSuperinterface(factoryInterfaceType).addMethods(
 				#[constructor, initMethod, createMethod, createFromStringMethod, convertToStringMethod, getPackageMethod] + createMethods + methodsFromString).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName(packageRoot), factory).build
+		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName(packageRoot), factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

@@ -132,7 +132,9 @@ class SwitchOperationCompiler {
 			.addModifiers(PUBLIC)
 			.build
 
-		val javaFile = JavaFile.builder(operationsPackage, factory).build
+		val javaFile = JavaFile.builder(operationsPackage, factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}
@@ -297,10 +299,10 @@ class SwitchOperationCompiler {
 		val lt = infereType(body.collectionExpression).head as SequenceType
 
 		if (lt.collectionType.type instanceof EClass) {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
+			builderSeed.beginControlFlow('''for ($T $L: «body.collectionExpression.compileExpression»)''',
 				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
 		} else {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
+			builderSeed.beginControlFlow('''for ($T $L: «body.collectionExpression.compileExpression»)''',
 				lt.collectionType.type as Class<?>, body.variable).compileBody(body.body).endControlFlow
 		}
 	}

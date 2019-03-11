@@ -222,7 +222,9 @@ class PackageImplementationCompiler {
 			.addModifiers(PUBLIC)
 			.build
 
-		val javaFile = JavaFile.builder(abstractSyntax.packageImplementationPackageName(packageRoot), packageImpl).build
+		val javaFile = JavaFile.builder(abstractSyntax.packageImplementationPackageName(packageRoot), packageImpl)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

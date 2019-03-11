@@ -93,7 +93,9 @@ class FactoryImplementationCompiler {
 			addSuperinterface(factoryInterfaceType).addMethods(
 				#[constructor, initMethod, createMethod, getPackageMethod] + createMethods).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName(packageRoot), factory).build
+		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName(packageRoot), factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

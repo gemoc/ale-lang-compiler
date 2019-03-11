@@ -34,7 +34,9 @@ class AcceptInterfaceCompiler {
 					namingUtils.visitorInterfaceClassName), 'accept').addModifiers(ABSTRACT, PUBLIC).returns(Object).
 				build).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(namingUtils.acceptInterfacePackageName(packageRoot), factory).build
+		val javaFile = JavaFile.builder(namingUtils.acceptInterfacePackageName(packageRoot), factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

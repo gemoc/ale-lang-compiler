@@ -190,7 +190,9 @@ class PackageImplementationCompiler {
 				#[initMethod, createPackageContentsMethod, initializePackageContentsMethod, constructor,
 					getFactoryMethod] + methodGetterFields + accessorsMethods).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(abstractSyntax.packageImplementationPackageName(packageRoot), packageImpl).build
+		val javaFile = JavaFile.builder(abstractSyntax.packageImplementationPackageName(packageRoot), packageImpl)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

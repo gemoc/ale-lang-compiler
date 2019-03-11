@@ -211,7 +211,9 @@ class ALERevisitorImplementationCompiler {
 					addModifiers(Modifier.DEFAULT, Modifier.PUBLIC).build
 			]).build
 
-		val javaFile = JavaFile.builder(dsl.revisitorImplementationPackage, revisitorInterface).build
+		val javaFile = JavaFile.builder(dsl.revisitorImplementationPackage, revisitorInterface)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(compileDirectory)
 
@@ -229,8 +231,9 @@ class ALERevisitorImplementationCompiler {
 							}
 						]).build
 				] ?: newArrayList).build
-				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorImplementationPackage».operation''',
-					operationInterface).build
+				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorImplementationPackage».operation''', operationInterface)
+					.indent('\t')
+					.build
 				operationInterfaceFile.writeTo(compileDirectory)
 
 				val revField = FieldSpec.builder(fullInterfaceType, "rev", Modifier.PRIVATE).build

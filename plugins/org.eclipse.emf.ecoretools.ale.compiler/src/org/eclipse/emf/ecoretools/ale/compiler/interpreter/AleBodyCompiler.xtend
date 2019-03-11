@@ -138,10 +138,10 @@ class AleBodyCompiler {
 		val lt = infereType(body.collectionExpression).head as SequenceType
 
 		if (lt.collectionType.type instanceof EClass) {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression(ctx)»)''',
+			builderSeed.beginControlFlow('''for ($T $L : «body.collectionExpression.compileExpression(ctx)»)''',
 				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body, ctx).endControlFlow
 		} else {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression(ctx)»)''',
+			builderSeed.beginControlFlow('''for ($T $L : «body.collectionExpression.compileExpression(ctx)»)''',
 				lt.collectionType.type as Class<?>, body.variable).compileBody(body.body, ctx).endControlFlow
 		}
 	}

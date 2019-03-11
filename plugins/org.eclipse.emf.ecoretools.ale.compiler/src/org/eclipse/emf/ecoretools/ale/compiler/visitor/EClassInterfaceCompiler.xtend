@@ -77,7 +77,9 @@ class EClassInterfaceCompiler {
 				ClassName.get(it.classInterfacePackageName(packageRoot), it.classInterfaceClassName)
 			]).addMethods(attributesMethods + referencesMethods).addModifiers(Modifier.PUBLIC).build
 
-		val javaFile = JavaFile.builder(eClass.classInterfacePackageName(packageRoot), factory).build
+		val javaFile = JavaFile.builder(eClass.classInterfacePackageName(packageRoot), factory)
+			.indent('\t')		
+			.build
 
 		javaFile.writeTo(directory)
 

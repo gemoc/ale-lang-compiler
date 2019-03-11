@@ -55,7 +55,7 @@ class ALEInterpreterImplementationCompiler {
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
+		javaExtensions = JavaExtensionsManager.createManagerWithOverride()
 		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
 
 			override loaded(String arg0, Class<?> arg1) {
@@ -67,10 +67,10 @@ class ALEInterpreterImplementationCompiler {
 			}
 
 			override unloaded(String arg0, Class<?> arg1) {
-				registeredServices.remove(arg0);
+				registeredServices.remove(arg0)
 			}
 
-		});
+		})
 	}
 
 	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
@@ -100,15 +100,15 @@ class ALEInterpreterImplementationCompiler {
 
 	def registerServices(String projectName) {
 
-		javaExtensions.updateScope(newHashSet(), #{projectName});
+		javaExtensions.updateScope(newHashSet(), #{projectName})
 
 		val services = parsedSemantics.map[root].filter[it !== null].map[services].flatten + #[TrigoServices.name]
-		registerServices(services.toList);
+		registerServices(services.toList)
 	}
 
 	def registerServices(List<String> services) {
 		services.forEach[javaExtensions.addImport(it)]
-		javaExtensions.reloadIfNeeded();
+		javaExtensions.reloadIfNeeded()
 	}
 
 	def private void compile(File projectRoot, String projectName) {

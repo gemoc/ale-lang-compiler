@@ -157,8 +157,9 @@ class OperationImplementationCompiler {
 
 		]).applyIfTrue(eClass.abstract, [addModifiers(ABSTRACT)]).build
 
-		val javaFile = JavaFile.builder(namingUtils.operationImplementationPackageName(packageRoot, eClass), factory).
-			build
+		val javaFile = JavaFile.builder(namingUtils.operationImplementationPackageName(packageRoot, eClass), factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 	}

@@ -35,7 +35,9 @@ class FactoryInterfaceCompiler {
 					packageInterfaceType).addModifiers(ABSTRACT, PUBLIC).build
 			).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(abstractSyntax.factoryInterfacePackageName(packageRoot), factory).build
+		val javaFile = JavaFile.builder(abstractSyntax.factoryInterfacePackageName(packageRoot), factory)
+			.indent('\t')
+			.build
 
 		javaFile.writeTo(directory)
 

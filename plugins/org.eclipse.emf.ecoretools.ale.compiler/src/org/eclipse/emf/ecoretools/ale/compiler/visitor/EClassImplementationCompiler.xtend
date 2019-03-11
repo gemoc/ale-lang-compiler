@@ -509,7 +509,9 @@ class EClassImplementationCompiler {
 		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass).
 			addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(eClass.classImplementationPackageName(packageRoot), factory).build
+		val javaFile = JavaFile.builder(eClass.classImplementationPackageName(packageRoot), factory)
+			.indent('\t')
+			.build
 		javaFile.writeTo(directory)
 	}
 }
