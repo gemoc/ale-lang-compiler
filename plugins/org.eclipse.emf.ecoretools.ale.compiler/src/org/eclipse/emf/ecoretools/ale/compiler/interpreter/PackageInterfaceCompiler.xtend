@@ -46,12 +46,10 @@ class PackageInterfaceCompiler {
 
 		var cptr = 0;
 		for (EClass clazz : allClasses) {
-//			if(clazz.instanceClassName != 'java.util.Map$Entry') {
 			classFields +=
 				FieldSpec.builder(int, clazz.name.normalizeUpperField).initializer('''«cptr»''').addModifiers(STATIC,
 					PUBLIC, FINAL).build
 			cptr = cptr + 1
-//			}
 		}
 		
 		for(EEnum eEnum : allEnums) {

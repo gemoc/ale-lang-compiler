@@ -4,11 +4,11 @@ import org.eclipse.emf.ecore.EFactory;
 import test1.interpreter.test1.impl.Test1FactoryImpl;
 
 public interface Test1Factory extends EFactory {
-  Test1Factory eINSTANCE = Test1FactoryImpl.init();
+	Test1Factory eINSTANCE = Test1FactoryImpl.init();
 
-  ConceptA createConceptA();
+	ConceptA createConceptA();
 
-  ConceptB createConceptB();
+	ConceptB createConceptB();
 
-  Test1Package getTest1Package();
+	Test1Package getTest1Package();
 }

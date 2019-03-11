@@ -147,7 +147,7 @@ class AleBodyCompiler {
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, If body, CompilerExpressionCtx ctx) {
-		var ret = builderSeed.beginControlFlow('''if($L)''', body.blocks.head.condition.compileExpression(ctx)).
+		var ret = builderSeed.beginControlFlow('''if ($L)''', body.blocks.head.condition.compileExpression(ctx)).
 			compileBody(body.blocks.head.block, ctx).endControlFlow
 		for (ConditionalBlock x : body.blocks.tail) {
 			ret = ret.beginControlFlow('''else if ($L''', x.condition.compileExpression(ctx)).compileBody(x.block, ctx).
@@ -164,14 +164,8 @@ class AleBodyCompiler {
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, While body, CompilerExpressionCtx ctx) {
-//		if(this.isTruffle) {
-//	     	
-//			builderSeed.addStatement('''«body.whileFieldName».executeLoop(com.oracle.truffle.api.Truffle.getRuntime().createVirtualFrame(new Object[0], new com.oracle.truffle.api.frame.FrameDescriptor()))''')
-//		} else {
 			builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression(ctx)).compileBody(body.body, ctx).
 				endControlFlow
-			
-//		}
 	}
 
 	def escapeDollar(String s) {

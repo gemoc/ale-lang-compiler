@@ -1,9 +1,7 @@
 package test1.interpreter.test1.impl;
 
 import java.lang.Object;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import test1.interpreter.test1.ConceptC;
 import test1.interpreter.test1.Test1Package;
@@ -63,13 +61,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		return super.eIsSet(featureID);
 	}
 
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
 	public void call() {
-		org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(this.nbr);;
+		org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(this.nbr);
 	}
 }
