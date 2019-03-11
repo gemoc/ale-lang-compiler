@@ -37,6 +37,10 @@ class InterpreterTestAll {
 
 //		println(compilations)
 	}
+	
+	def static void cleanupProject(File tmpDir) {
+		FileUtils.deleteDirectory(tmpDir);
+	}
 
 	@TestFactory
 	def testInterpreters() {
@@ -79,16 +83,11 @@ class InterpreterTestAll {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 		val compiler = new ALEInterpreterImplementationCompiler
 
-		// TODO: this block could be executed once
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
 
 		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), newHashMap)
 		tmpDir
-	}
-
-	def static void cleanupProject(File tmpDir) {
-		FileUtils.deleteDirectory(tmpDir);
 	}
 }

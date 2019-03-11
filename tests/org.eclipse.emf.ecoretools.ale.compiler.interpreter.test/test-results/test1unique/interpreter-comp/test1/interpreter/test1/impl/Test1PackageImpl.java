@@ -75,7 +75,7 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(conceptAEClass, test1.interpreter.test1.ConceptA.class, "ConceptA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getConceptA_Bs(), ecorePackage.getEBooleanObject(), "bs", null, 0, 10, test1.interpreter.test1.ConceptA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConceptA_Bs(), ecorePackage.getEBooleanObject(), "bs", null, 0, 10, test1.interpreter.test1.ConceptA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		// Create resource
 		createResource(eNS_URI);
 	}

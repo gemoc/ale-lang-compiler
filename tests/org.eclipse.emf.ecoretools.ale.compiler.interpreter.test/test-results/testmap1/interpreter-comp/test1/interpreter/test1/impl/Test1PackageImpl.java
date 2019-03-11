@@ -3,6 +3,7 @@ package test1.interpreter.test1.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import test1.interpreter.test1.Test1Factory;
 import test1.interpreter.test1.Test1Package;
@@ -15,6 +16,8 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 	private boolean isInitialized = false;
 
 	private EClass conceptAEClass = null;
+
+	private EClass stringToIntegerMapEntryEClass = null;
 
 	private Test1PackageImpl() {
 		super(eNS_URI, Test1Factory.eINSTANCE);
@@ -54,7 +57,10 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		isCreated = true;
 
 		conceptAEClass = createEClass(CONCEPT_A);
-		createEAttribute(conceptAEClass, CONCEPT_A__BS);
+		createEReference(conceptAEClass, CONCEPT_A__CS);
+		stringToIntegerMapEntryEClass = createEClass(STRING_TO_INTEGER_MAP_ENTRY);
+		createEAttribute(stringToIntegerMapEntryEClass, STRING_TO_INTEGER_MAP_ENTRY__KEY);
+		createEAttribute(stringToIntegerMapEntryEClass, STRING_TO_INTEGER_MAP_ENTRY__VALUE);
 	}
 
 	public void initializePackageContents() {
@@ -75,7 +81,10 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(conceptAEClass, test1.interpreter.test1.ConceptA.class, "ConceptA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getConceptA_Bs(), ecorePackage.getEBooleanObject(), "bs", null, 0, 10, test1.interpreter.test1.ConceptA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConceptA_Cs(), this.getStringToIntegerMapEntry(), null, "cs", null, 0, -1, test1.interpreter.test1.ConceptA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(stringToIntegerMapEntryEClass, test1.interpreter.test1.StringToIntegerMapEntry.class, "StringToIntegerMapEntry", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToIntegerMapEntry_Key(), ecorePackage.getEString(), "key", null, 0, 1, test1.interpreter.test1.StringToIntegerMapEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToIntegerMapEntry_Value(), ecorePackage.getEIntegerObject(), "value", null, 0, 1, test1.interpreter.test1.StringToIntegerMapEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		// Create resource
 		createResource(eNS_URI);
 	}
@@ -88,7 +97,19 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		return conceptAEClass;
 	}
 
-	public EAttribute getConceptA_Bs() {
-		return (EAttribute) conceptAEClass.getEStructuralFeatures().get(0);
+	public EClass getStringToIntegerMapEntry() {
+		return stringToIntegerMapEntryEClass;
+	}
+
+	public EReference getConceptA_Cs() {
+		return (EReference) conceptAEClass.getEStructuralFeatures().get(0);
+	}
+
+	public EAttribute getStringToIntegerMapEntry_Key() {
+		return (EAttribute) stringToIntegerMapEntryEClass.getEStructuralFeatures().get(0);
+	}
+
+	public EAttribute getStringToIntegerMapEntry_Value() {
+		return (EAttribute) stringToIntegerMapEntryEClass.getEStructuralFeatures().get(1);
 	}
 }

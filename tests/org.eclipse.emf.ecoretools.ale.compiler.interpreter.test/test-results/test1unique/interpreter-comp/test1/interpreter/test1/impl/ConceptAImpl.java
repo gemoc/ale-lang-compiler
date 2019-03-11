@@ -5,7 +5,7 @@ import java.lang.Object;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import test1.interpreter.test1.ConceptA;
 import test1.interpreter.test1.Test1Package;
 
@@ -18,7 +18,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public EList<Boolean> getBs() {
 		if (bs == null) {
-			bs = new EDataTypeEList<Boolean>(Boolean.class, this, test1.interpreter.test1.Test1Package.CONCEPT_A__BS);
+			bs = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, test1.interpreter.test1.Test1Package.CONCEPT_A__BS);
 		}
 		return bs;
 	}

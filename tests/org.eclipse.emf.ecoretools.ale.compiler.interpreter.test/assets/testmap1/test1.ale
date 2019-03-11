@@ -1,0 +1,9 @@
+behavior test1_exec;
+
+open class ConceptA {
+  def void exec() {
+  	for(c in self.cs) {
+  		c.call();
+  	}
+  }
+}

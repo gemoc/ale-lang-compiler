@@ -48,6 +48,7 @@ import java.util.Comparator
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.emf.ecore.util.EDataTypeEList
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -80,10 +81,7 @@ class EClassImplementationCompiler {
 	}
 
 	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
-		
-		
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
-//		val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
 			eClass.EPackage.packageInterfaceClassName)
 
@@ -122,13 +120,17 @@ class EClassImplementationCompiler {
 
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			if(isMultiple) {
-				val typeList = ParameterizedTypeName.get(ClassName.get(EDataTypeEList), type)
+				val typeList = if (field.isUnique) {
+						ParameterizedTypeName.get(ClassName.get(EDataTypeUniqueEList), type)
+					} else {
+						ParameterizedTypeName.get(ClassName.get(EDataTypeEList), type)
+					}
 				val getter = MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').addModifiers(PUBLIC).
 					addCode('''
 					if («field.name» == null) {
-						«field.name» = new $T($T.class, this, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)»);
+						«field.name» = new $1T($2T.class, this, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)»);
 					}
-					return «field.name»;					
+					return «field.name»;
 					''', typeList, type).returns(ParameterizedTypeName.get(ClassName.get(EList), type)).build
 				#[getter]
 			} else {
@@ -398,7 +400,6 @@ class EClassImplementationCompiler {
 								return «field.name»;
 							''', ParameterizedTypeName.get(ClassName.get(EcoreEMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot)), ePackageInterfaceType,
 							ClassName.get((field.EType as EClass).classImplementationPackageName(packageRoot), (field.EType as EClass).classImplementationClassName)).build
-							// EcoreEMap<String,EvalRes>
 				}
 					else if(field.EOpposite !== null) {
 						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType)
@@ -476,7 +477,7 @@ class EClassImplementationCompiler {
 							set«esf.name.toFirstUpper»((«esf.EType.scopedTypeRef(packageRoot)») newValue);
 							«ELSE»
 							get«esf.name.toFirstUpper»().clear();
-							get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends String>) newValue);
+							get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends «esf.EType.instanceTypeName»>) newValue);
 							«ENDIF»
 						«ELSE»
 							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
