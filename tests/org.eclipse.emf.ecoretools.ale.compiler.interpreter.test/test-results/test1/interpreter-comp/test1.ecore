@@ -4,5 +4,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bs" unique="false" upperBound="10">
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="b">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>

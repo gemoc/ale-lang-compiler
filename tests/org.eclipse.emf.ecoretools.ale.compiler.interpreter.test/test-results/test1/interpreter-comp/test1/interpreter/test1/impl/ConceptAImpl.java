@@ -10,7 +10,11 @@ import test1.interpreter.test1.ConceptA;
 import test1.interpreter.test1.Test1Package;
 
 public class ConceptAImpl extends MinimalEObjectImpl.Container implements ConceptA {
+	protected static final long B_EDEFAULT = 0;
+
 	protected EList<Boolean> bs;
+
+	protected long b = B_EDEFAULT;
 
 	protected ConceptAImpl() {
 		super();
@@ -23,6 +27,18 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		return bs;
 	}
 
+	public long getB() {
+		return b;
+	}
+
+	public void setB(long newB) {
+		long oldB = b;
+		b = newB;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					Test1Package.CONCEPT_A__B, oldB, b));
+	}
+
 	protected EClass eStaticClass() {
 		return Test1Package.Literals.CONCEPT_A;
 	}
@@ -33,6 +49,9 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 				getBs().clear();
 				getBs().addAll((java.util.Collection<? extends java.lang.Boolean>) newValue);
 				return;
+			case Test1Package.CONCEPT_A__B :
+				setB((Long) newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -42,6 +61,9 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 			case Test1Package.CONCEPT_A__BS :
 				getBs().clear();
 				return;
+			case Test1Package.CONCEPT_A__B :
+				setB(B_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -50,6 +72,8 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__BS :
 				return getBs();
+			case Test1Package.CONCEPT_A__B :
+				return getB();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -58,11 +82,15 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__BS :
 				return bs != null && !bs.isEmpty();
+			case Test1Package.CONCEPT_A__B :
+				return b != B_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	public void exec() {
 		org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("ok");
+		int a = ((int) 1);
+		this.setB(42);
 	}
 }

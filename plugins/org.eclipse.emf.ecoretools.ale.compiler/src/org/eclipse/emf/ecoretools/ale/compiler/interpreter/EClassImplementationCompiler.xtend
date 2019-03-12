@@ -49,6 +49,8 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.emf.ecore.util.EDataTypeEList
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList
+import org.eclipse.emf.ecore.util.InternalEList
+import com.squareup.javapoet.WildcardTypeName
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -459,14 +461,17 @@ class EClassImplementationCompiler {
 			setter + #[getter]
 		].flatten
 
-		val eStaticClassMethod = MethodSpec.methodBuilder('eStaticClass').returns(EClass).addModifiers(PROTECTED)
+		val eStaticClassMethod = MethodSpec.methodBuilder('eStaticClass')
+			.addAnnotation(Override)
+			.returns(EClass)
+			.addModifiers(PROTECTED)
 			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addCode('''
 			return $1T.Literals.«eClass.name.normalizeUpperField»;
 			''', ePackageInterfaceType).build
 
 		val eSetMethod = if(!eClass.EStructuralFeatures.empty) {
-			val MethodSpec ret = MethodSpec.methodBuilder('eSet').addParameter(int, 'featureID')
+			val MethodSpec eSetMethod = MethodSpec.methodBuilder('eSet').addParameter(int, 'featureID')
 			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addParameter(Object, 'newValue').addModifiers(PUBLIC).addCode( '''
 			switch (featureID) {
@@ -521,7 +526,10 @@ class EClassImplementationCompiler {
 				}
 				super.eUnset(featureID);
 			''', ePackageInterfaceType).build
-		val MethodSpec  eGetMethod = MethodSpec.methodBuilder('eGet').returns(Object).addParameter(int, 'featureID')
+		val MethodSpec  eGetMethod = MethodSpec.methodBuilder('eGet')
+			.addAnnotation(Override)
+			.returns(Object)
+			.addParameter(int, 'featureID')
 			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addParameter(boolean, 'resolve').addParameter(boolean, 'coreType').addModifiers(PUBLIC).addCode('''
 				switch (featureID) {
@@ -539,7 +547,10 @@ class EClassImplementationCompiler {
 				}
 				return super.eGet(featureID, resolve, coreType);
 			''', ePackageInterfaceType).build
-		val MethodSpec  eIsSetMethod = MethodSpec.methodBuilder('eIsSet').returns(boolean).addParameter(int, 'featureID')
+		val MethodSpec  eIsSetMethod = MethodSpec.methodBuilder('eIsSet')
+			.addAnnotation(Override)
+			.returns(boolean)
+			.addParameter(int, 'featureID')
 			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addModifiers(PUBLIC).addCode( '''
 				switch (featureID) {
@@ -572,7 +583,10 @@ class EClassImplementationCompiler {
 			''', ePackageInterfaceType).build
 					
 		val  eInverseRemove = if (!eClass.EReferences.filter[it.containment || it.EOpposite !== null].empty) {
-						val reteir = MethodSpec.methodBuilder('eInverseRemove').returns(NotificationChain).
+						val reteir = MethodSpec.methodBuilder('eInverseRemove')
+							.addAnnotation(AnnotationSpec.builder(SuppressWarnings).addMember("value", '$S', "unchecked").build)
+							.addAnnotation(Override)
+							.returns(NotificationChain).
 							addModifiers(PUBLIC).applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
 								addAnnotation(
 									ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
@@ -585,28 +599,30 @@ class EClassImplementationCompiler {
 											«IF ref.upperBound == 0 || ref.upperBound == 1»
 												return basicSet«ref.name.toFirstUpper»(null, msgs);
 											«ELSE»
-												return ((org.eclipse.emf.ecore.util.InternalEList<?>) get«ref.name.toFirstUpper»()).basicRemove(otherEnd, msgs);
+												return (($1T) get«ref.name.toFirstUpper»()).basicRemove(otherEnd, msgs);
 											«ENDIF»
 									«ENDFOR»
 								}
 								return super.eInverseRemove(otherEnd, featureID, msgs);
-							''').build
+							''', ParameterizedTypeName.get(ClassName.get(InternalEList), WildcardTypeName.subtypeOf(Object))).build 
 						#[reteir]
 					} else
 						#[]
-				#[ret, eUnsetMethod, eGetMethod, eIsSetMethod] + eInverseRemove
+				eInverseRemove + #[eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod]
 			} else
 				#[]
 
 		val eInverseAdd = if (!eClass.EReferences.filter[it.EOpposite !== null].empty) {
 				#[
-					MethodSpec.methodBuilder('eInverseAdd').returns(NotificationChain)
+					MethodSpec.methodBuilder('eInverseAdd')
+						.addAnnotation(AnnotationSpec.builder(SuppressWarnings).addMember("value", '$S', "unchecked").build)
+						.addAnnotation(Override)
+						.returns(NotificationChain)
 						.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
-						.addParameter(InternalEObject, 'otherEnd').addParameter(int, 'featureID').addParameter(NotificationChain, 'msgs2').addCode('''
-						$1T msgs = msgs2;
+						.addParameter(InternalEObject, 'otherEnd').addParameter(int, 'featureID').addParameter(NotificationChain, 'msgs').addNamedCode('''
 						switch (featureID) {
 							«FOR ref : eClass.EReferences.filter[it.EOpposite !== null]»
-							case $2T.«ref.name.normalizeUpperField(eClass.name)» :
+							case $epit:T.«ref.name.normalizeUpperField(eClass.name)» :
 								«IF ref.upperBound == 0 || ref.upperBound == 1»
 									«IF ref.EOpposite !== null && ref.EOpposite.containment»
 									if (eInternalContainer() != null)
@@ -614,17 +630,21 @@ class EClassImplementationCompiler {
 										return basicSet«ref.name.toFirstUpper»((«(ref.EType as EClass).classInterfacePackageName(packageRoot)».«(ref.EType as EClass).classInterfaceClassName»)otherEnd, msgs);
 									«ELSE»
 									if («ref.name» != null)
-										msgs = ((org.eclipse.emf.ecore.InternalEObject) «ref.name»).eInverseRemove(this, $2T.«ref.EOpposite.name.normalizeUpperField((ref.EOpposite.eContainer as EClass).name)», «(ref.EOpposite.eContainer as EClass).name».class,
+										msgs = (($ieo:T) «ref.name»).eInverseRemove(this, $nc:T.«ref.EOpposite.name.normalizeUpperField((ref.EOpposite.eContainer as EClass).name)», «(ref.EOpposite.eContainer as EClass).name».class,
 												msgs);
 									return basicSet«ref.name.toFirstUpper»((«(ref.EOpposite.eContainer as EClass).classInterfacePackageName(packageRoot)».«(ref.EOpposite.eContainer as EClass).classInterfaceClassName») otherEnd, msgs);
 									«ENDIF»
 								«ELSE»
-									return ((org.eclipse.emf.ecore.util.InternalEList<org.eclipse.emf.ecore.InternalEObject>) (org.eclipse.emf.ecore.util.InternalEList<?>) get«ref.name.toFirstUpper»()).basicAdd(otherEnd, msgs);
+									return (($eil:T) ($eilg:T) get«ref.name.toFirstUpper»()).basicAdd(otherEnd, msgs);
 								«ENDIF»
 							«ENDFOR»
 						}
 						return super.eInverseAdd(otherEnd, featureID, msgs);
-					''', NotificationChain, ePackageInterfaceType).addModifiers(PUBLIC).build
+					''', newHashMap("nc" -> NotificationChain, 
+						"epit" -> ePackageInterfaceType, 
+						"eil" -> ParameterizedTypeName.get(ClassName.get(InternalEList), ClassName.get(InternalEObject)),
+						"eilg" -> ParameterizedTypeName.get(ClassName.get(InternalEList), WildcardTypeName.subtypeOf(Object)),
+						"ieo" -> TypeName.get(InternalEObject))).addModifiers(PUBLIC).build
 				]
 			} else
 				#[]
@@ -653,7 +673,7 @@ class EClassImplementationCompiler {
 				addSuperinterface(ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName))
 			])
 			.addFields(fieldsEAttributes + fieldsEReferences)
-			.addMethods(methodsEAttributes + methodsEReferences + #[eStaticClassMethod] + eSetMethod + eInverseAdd)
+			.addMethods(methodsEAttributes + #[eStaticClassMethod] + methodsEReferences + eInverseAdd + eSetMethod)
 			.applyIfTrue(isMapElement, [
 				it.addField(FieldSpec.builder(int, 'hash', PROTECTED).initializer('-1').build).addMethod(
 				MethodSpec.methodBuilder('setHash')

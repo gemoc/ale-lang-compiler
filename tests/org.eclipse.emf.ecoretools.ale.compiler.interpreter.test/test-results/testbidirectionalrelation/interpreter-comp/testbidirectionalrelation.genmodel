@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/testbidirectionalrelation/interpreter-comp" complianceLevel="8.0" copyrightFields="false">
+  <foreignModel>testbidirectionalrelation.ecore</foreignModel>
+  <genPackages prefix="Testbidirectionalrelation" basePackage="testbidirectionalrelation.interpreter" disposableProviderFactory="true">
+    <ecorePackage href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#/"/>
+    <genClasses>
+      <ecoreClass href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptA"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptA/conceptb"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptA/conceptc"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptA/conceptd"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptA/concepte"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptA/conceptf"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptA/conceptg"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptB"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptB/conceptc"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptC"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptC/conceptb"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptD"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptD/concepte"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptE"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptE/conceptd"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptF"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptF/conceptg"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptG"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testbidirectionalrelation/testbidirectionalrelation.ecore#//ConceptG/conceptf"/>
+      </genFeatures>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

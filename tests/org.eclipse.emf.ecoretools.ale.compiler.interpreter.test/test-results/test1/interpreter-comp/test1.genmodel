@@ -8,6 +8,9 @@
       <genFeatures createChild="false">
         <ecoreFeature xsi:type="ecore:EAttribute" href="assets/test1/test1.ecore#//ConceptA/bs"/>
       </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/test1/test1.ecore#//ConceptA/b"/>
+      </genFeatures>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

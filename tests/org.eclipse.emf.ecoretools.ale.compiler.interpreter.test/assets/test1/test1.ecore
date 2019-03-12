@@ -4,5 +4,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="ConceptA">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="bs" unique="false" upperBound="10"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="b" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
   </eClassifiers>
 </ecore:EPackage>

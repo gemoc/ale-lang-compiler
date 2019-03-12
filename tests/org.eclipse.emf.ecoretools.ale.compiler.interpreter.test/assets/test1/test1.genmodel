@@ -8,6 +8,7 @@
   <genPackages prefix="Test1" disposableProviderFactory="true" ecorePackage="test1.ecore#/">
     <genClasses ecoreClass="test1.ecore#//ConceptA">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test1.ecore#//ConceptA/bs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test1.ecore#//ConceptA/b"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

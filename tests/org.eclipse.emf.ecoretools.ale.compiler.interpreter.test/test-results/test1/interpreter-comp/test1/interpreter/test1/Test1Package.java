@@ -19,9 +19,13 @@ public interface Test1Package extends EPackage {
 
 	int CONCEPT_A__BS = 0;
 
+	int CONCEPT_A__B = 1;
+
 	EClass getConceptA();
 
 	EAttribute getConceptA_Bs();
+
+	EAttribute getConceptA_B();
 
 	Test1Factory getTest1Factory();
 
@@ -29,5 +33,7 @@ public interface Test1Package extends EPackage {
 		EClass CONCEPT_A = eINSTANCE.getConceptA();
 
 		EAttribute CONCEPT_A__BS = eINSTANCE.getConceptA_Bs();
+
+		EAttribute CONCEPT_A__B = eINSTANCE.getConceptA_B();
 	}
 }

@@ -14,6 +14,8 @@ import org.eclipse.emf.ecore.impl.EPackageImpl
 
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecore.EEnum
+import java.util.Map
+import java.util.List
 
 class PackageImplementationCompiler {
 
@@ -45,21 +47,21 @@ class PackageImplementationCompiler {
 		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
 			abstractSyntax.factoryInterfaceClassName)
 
-		val test = '''«abstractSyntax.packageImplementationPackageName(packageRoot)».«abstractSyntax.packageImplementationClassName»'''
+		val test = '''«abstractSyntax.packageImplementationClassName»''' // «abstractSyntax.packageImplementationPackageName(packageRoot)».
 
-		val initMethod = MethodSpec.methodBuilder('init').addModifiers(PUBLIC, STATIC).returns(packageInterfaceType).
-			addCode('''
+		val initMethod = MethodSpec.methodBuilder('init')
+			.addModifiers(PUBLIC, STATIC)
+			.returns(packageInterfaceType)
+			.addCode('''
 				if (isInited)
 					return ($1T) $2T.INSTANCE.getEPackage($1T.eNS_URI);
 				
 				// Obtain or create and register package
 				Object registered«packageInterfaceName» = EPackage.Registry.INSTANCE.get(eNS_URI);
-				«test» the«packageInterfaceName»;
-				if (registered«packageInterfaceName» instanceof «test») {
-					the«packageInterfaceName» = («test») registered«packageInterfaceName»;
-				} else {
-					the«packageInterfaceName» = new «test»();
-				}
+				«test» the«packageInterfaceName» = registered«packageInterfaceName» instanceof «test»
+						? («test») registered«packageInterfaceName»
+						: new «test»();
+
 				isInited = true;
 				
 				// Create package meta-data objects
@@ -82,19 +84,16 @@ class PackageImplementationCompiler {
 					return;
 				isCreated = true;
 				
-				«FOR eClass : allClasses»
-«««				«IF eClass.instanceTypeName != 'java.util.Map$Entry'»
+				// Create classes and their features
+				«FOR eClass : allClasses SEPARATOR '\n'»
 					«eClass.name.toFirstLower»EClass = createEClass(«eClass.name.normalizeUpperField»);
 					«FOR eAttr: eClass.EStructuralFeatures»
 						«IF eAttr instanceof EReference»
-«««							«IF eAttr.EType.instanceTypeName != 'java.util.Map$Entry'»
 							createEReference(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);
-«««							«ENDIF»
 						«ELSE»
 							createEAttribute(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);
 						«ENDIF»
 					«ENDFOR»
-«««					«ENDIF»
 				«ENDFOR»
 				«FOR eEnum : allEnums»
 					«eEnum.name.toFirstLower»EEnum = createEEnum(«eEnum.name.normalizeUpperField»);
@@ -124,7 +123,7 @@ class PackageImplementationCompiler {
 				«ENDFOR»
 				
 				// Initialize classes, features, and operations; add parameters
-				«FOR eClass : allClasses»
+				«FOR eClass : allClasses SEPARATOR '\n'»
 					initEClass(«eClass.name.toFirstLower»EClass, «eClass.classInterfacePackageName(packageRoot)».«eClass.name».class, "«eClass.name»", «IF eClass.isAbstract»«ELSE»!«ENDIF»IS_ABSTRACT, «IF eClass.isInterface»«ELSE»!«ENDIF»IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 					«FOR eAttr: eClass.EStructuralFeatures»
 						«IF eAttr instanceof EReference»
@@ -146,6 +145,7 @@ class PackageImplementationCompiler {
 				addEEnumLiteral(«eEnum.name.toFirstLower»EEnum, «eEnum.classInterfacePackageName(packageRoot)».«eEnum.name».«lit.name»);
 				«ENDFOR»
 				«ENDFOR»
+
 				// Create resource
 				createResource(eNS_URI);
 			''').build
@@ -161,7 +161,7 @@ class PackageImplementationCompiler {
 		]
 
 		val methodGetterFields = allClasses.map [ clazz |
-			MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
+			clazz -> MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
 				addCode('''
 					return «clazz.name.toFirstLower»EClass;
 				''').build
@@ -178,23 +178,25 @@ class PackageImplementationCompiler {
 			super(eNS_URI, $T.eINSTANCE);
 		''', ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot), abstractSyntax.factoryInterfaceClassName)).build
 
-		val accessorsMethods = newArrayList
+		val Map<EClass, List<MethodSpec>> accessorsMethods = newHashMap
 		for (EClass clazz : allClasses) {
 			var cptrI = 0
 
 			for (field : clazz.EStructuralFeatures) {
+				
+				if(!accessorsMethods.containsKey(clazz)) accessorsMethods.put(clazz, newArrayList())
 				if (field instanceof EReference) {
-					accessorsMethods +=
+					accessorsMethods.get(clazz).add(
 						MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').
 							returns(EReference).addCode('''
 								return ($T) «clazz.name.toFirstLower»EClass.getEStructuralFeatures().get(«cptrI»);
-							''', EReference).addModifiers(PUBLIC).build
+							''', EReference).addModifiers(PUBLIC).build)
 				} else if (field instanceof EAttribute) {
-					accessorsMethods +=
+					accessorsMethods.get(clazz).add(
 						MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').
 							returns(EAttribute).addCode('''
 								return ($T) «clazz.name.toFirstLower»EClass.getEStructuralFeatures().get(«cptrI»);
-							''', EAttribute).addModifiers(PUBLIC).build
+							''', EAttribute).addModifiers(PUBLIC).build)
 				}
 				cptrI = cptrI + 1
 
@@ -206,12 +208,25 @@ class PackageImplementationCompiler {
 			return ($T) getEFactoryInstance();
 		''', factoryInterfaceType).addModifiers(PUBLIC).build
 
-		val packageImpl = TypeSpec
+		var packageImplTmp = TypeSpec
 			.classBuilder(abstractSyntax.packageImplementationClassName)
 			.superclass(EPackageImpl)
 			.addSuperinterface(ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName))
-			.addFields(#[isInitedField, isCreatedField, isInitializedField] + classFields + enumFields)
-			.addMethods(#[initMethod, createPackageContentsMethod, initializePackageContentsMethod, constructor, getFactoryMethod] + methodGetterFields + methodEnumGetterFields + accessorsMethods)
+			.addField(isInitedField)
+			.addFields(classFields)
+			.addFields(#[isCreatedField, isInitializedField])
+			.addFields(enumFields)
+			.addMethod(constructor)
+			.addMethod(initMethod)
+			
+		for(mgf: methodGetterFields) {
+			packageImplTmp = packageImplTmp.addMethod(mgf.value)
+			if(accessorsMethods.containsKey(mgf.key))
+				packageImplTmp = packageImplTmp.addMethods(accessorsMethods.get(mgf.key))
+		}
+			
+		val packageImpl = packageImplTmp
+			.addMethods(#[getFactoryMethod, createPackageContentsMethod, initializePackageContentsMethod] + methodEnumGetterFields)
 			.addModifiers(PUBLIC)
 			.build
 
