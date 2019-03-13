@@ -10,11 +10,11 @@ import test1.interpreter.test1.Test1Package;
 public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 	private static boolean isInited = false;
 
+	private EClass conceptAEClass = null;
+
 	private boolean isCreated = false;
 
 	private boolean isInitialized = false;
-
-	private EClass conceptAEClass = null;
 
 	private Test1PackageImpl() {
 		super(eNS_URI, Test1Factory.eINSTANCE);
@@ -26,12 +26,10 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 
 		// Obtain or create and register package
 		Object registeredTest1Package = EPackage.Registry.INSTANCE.get(eNS_URI);
-		test1.interpreter.test1.impl.Test1PackageImpl theTest1Package;
-		if (registeredTest1Package instanceof test1.interpreter.test1.impl.Test1PackageImpl) {
-			theTest1Package = (test1.interpreter.test1.impl.Test1PackageImpl) registeredTest1Package;
-		} else {
-			theTest1Package = new test1.interpreter.test1.impl.Test1PackageImpl();
-		}
+		Test1PackageImpl theTest1Package = registeredTest1Package instanceof Test1PackageImpl
+				? (Test1PackageImpl) registeredTest1Package
+				: new Test1PackageImpl();
+
 		isInited = true;
 
 		// Create package meta-data objects
@@ -48,11 +46,28 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		return theTest1Package;
 	}
 
+	public EClass getConceptA() {
+		return conceptAEClass;
+	}
+
+	public EAttribute getConceptA_Bs() {
+		return (EAttribute) conceptAEClass.getEStructuralFeatures().get(0);
+	}
+
+	public EAttribute getConceptA_B() {
+		return (EAttribute) conceptAEClass.getEStructuralFeatures().get(1);
+	}
+
+	public Test1Factory getTest1Factory() {
+		return (Test1Factory) getEFactoryInstance();
+	}
+
 	public void createPackageContents() {
 		if (isCreated)
 			return;
 		isCreated = true;
 
+		// Create classes and their features
 		conceptAEClass = createEClass(CONCEPT_A);
 		createEAttribute(conceptAEClass, CONCEPT_A__BS);
 		createEAttribute(conceptAEClass, CONCEPT_A__B);
@@ -78,23 +93,8 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		initEClass(conceptAEClass, test1.interpreter.test1.ConceptA.class, "ConceptA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getConceptA_Bs(), ecorePackage.getEBooleanObject(), "bs", null, 0, 10, test1.interpreter.test1.ConceptA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getConceptA_B(), ecorePackage.getELong(), "b", null, 0, 1, test1.interpreter.test1.ConceptA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Create resource
 		createResource(eNS_URI);
-	}
-
-	public Test1Factory getTest1Factory() {
-		return (Test1Factory) getEFactoryInstance();
-	}
-
-	public EClass getConceptA() {
-		return conceptAEClass;
-	}
-
-	public EAttribute getConceptA_Bs() {
-		return (EAttribute) conceptAEClass.getEStructuralFeatures().get(0);
-	}
-
-	public EAttribute getConceptA_B() {
-		return (EAttribute) conceptAEClass.getEStructuralFeatures().get(1);
 	}
 }

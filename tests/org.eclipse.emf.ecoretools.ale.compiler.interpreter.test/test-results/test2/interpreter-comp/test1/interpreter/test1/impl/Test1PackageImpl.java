@@ -9,13 +9,13 @@ import test1.interpreter.test1.Test1Package;
 public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 	private static boolean isInited = false;
 
-	private boolean isCreated = false;
-
-	private boolean isInitialized = false;
-
 	private EClass conceptAEClass = null;
 
 	private EClass conceptBEClass = null;
+
+	private boolean isCreated = false;
+
+	private boolean isInitialized = false;
 
 	private Test1PackageImpl() {
 		super(eNS_URI, Test1Factory.eINSTANCE);
@@ -27,12 +27,10 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 
 		// Obtain or create and register package
 		Object registeredTest1Package = EPackage.Registry.INSTANCE.get(eNS_URI);
-		test1.interpreter.test1.impl.Test1PackageImpl theTest1Package;
-		if (registeredTest1Package instanceof test1.interpreter.test1.impl.Test1PackageImpl) {
-			theTest1Package = (test1.interpreter.test1.impl.Test1PackageImpl) registeredTest1Package;
-		} else {
-			theTest1Package = new test1.interpreter.test1.impl.Test1PackageImpl();
-		}
+		Test1PackageImpl theTest1Package = registeredTest1Package instanceof Test1PackageImpl
+				? (Test1PackageImpl) registeredTest1Package
+				: new Test1PackageImpl();
+
 		isInited = true;
 
 		// Create package meta-data objects
@@ -49,12 +47,26 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		return theTest1Package;
 	}
 
+	public EClass getConceptA() {
+		return conceptAEClass;
+	}
+
+	public EClass getConceptB() {
+		return conceptBEClass;
+	}
+
+	public Test1Factory getTest1Factory() {
+		return (Test1Factory) getEFactoryInstance();
+	}
+
 	public void createPackageContents() {
 		if (isCreated)
 			return;
 		isCreated = true;
 
+		// Create classes and their features
 		conceptAEClass = createEClass(CONCEPT_A);
+
 		conceptBEClass = createEClass(CONCEPT_B);
 	}
 
@@ -77,20 +89,10 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(conceptAEClass, test1.interpreter.test1.ConceptA.class, "ConceptA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		initEClass(conceptBEClass, test1.interpreter.test1.ConceptB.class, "ConceptB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		// Create resource
 		createResource(eNS_URI);
-	}
-
-	public Test1Factory getTest1Factory() {
-		return (Test1Factory) getEFactoryInstance();
-	}
-
-	public EClass getConceptA() {
-		return conceptAEClass;
-	}
-
-	public EClass getConceptB() {
-		return conceptBEClass;
 	}
 }

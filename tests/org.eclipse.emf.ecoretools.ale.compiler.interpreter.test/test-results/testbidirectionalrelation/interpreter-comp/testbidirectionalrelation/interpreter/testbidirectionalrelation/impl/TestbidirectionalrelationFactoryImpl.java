@@ -1,6 +1,23 @@
 package testbidirectionalrelation.interpreter.testbidirectionalrelation.impl;
 
+import java.lang.IllegalArgumentException;
+import java.lang.Object;
+import java.lang.String;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.impl.EFactoryImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptA;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptB;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptC;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptD;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptE;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptF;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptG;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationFactory;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -10,9 +27,10 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import testbidirectionalrelation.*;
 
-public class TestbidirectionalrelationFactoryImpl extends EFactoryImpl
-		implements
-			TestbidirectionalrelationFactory {
+public class TestbidirectionalrelationFactoryImpl extends EFactoryImpl implements TestbidirectionalrelationFactory {
+	public TestbidirectionalrelationFactoryImpl() {
+		super();
+	}
 
 	public static TestbidirectionalrelationFactory init() {
 		try {
@@ -27,9 +45,6 @@ public class TestbidirectionalrelationFactoryImpl extends EFactoryImpl
 		return new TestbidirectionalrelationFactoryImpl();
 	}
 
-	public TestbidirectionalrelationFactoryImpl() {
-		super();
-	}
 
 	@Override
 	public EObject create(EClass eClass) {

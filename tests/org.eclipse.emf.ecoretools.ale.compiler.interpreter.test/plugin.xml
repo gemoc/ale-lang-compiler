@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated test1 -->
+      <package
+            uri="http://test1"
+            class="test1.Test1Package"
+            genModel="assets/test1/test1.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated testbidirectionalrelation -->
+      <package
+            uri="http://testbidirectionalrelation"
+            class="testbidirectionalrelation.TestbidirectionalrelationPackage"
+            genModel="assets/testbidirectionalrelation/testbidirectionalrelation.genmodel"/>
+   </extension>
+
+</plugin>

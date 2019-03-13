@@ -51,6 +51,7 @@ import org.eclipse.emf.ecore.util.EDataTypeEList
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList
 import org.eclipse.emf.ecore.util.InternalEList
 import com.squareup.javapoet.WildcardTypeName
+import java.util.Collection
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -415,13 +416,14 @@ class EClassImplementationCompiler {
 					} else {
 						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType)
 						.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
-							.addModifiers(PUBLIC).addCode('''
+							.addModifiers(PUBLIC).addNamedCode('''
 								if («field.name» == null) {
-									«field.name» = new $1T(«rt».class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
+									«field.name» = new $eoce:T($rt:T.class, this, $epit:T.«field.name.normalizeUpperField(eClass.name)»);
 								}
 								return «field.name»;
-							''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentEList), rt),
-								ePackageInterfaceType).build
+							''', newHashMap("eoce" -> ParameterizedTypeName.get(ClassName.get(EObjectContainmentEList), rt),
+								"epit" -> ePackageInterfaceType,
+								"rt" -> rt)).build
 					}
 				} else {
 					if(field.EOpposite !== null && field.EOpposite.containment) {
@@ -471,38 +473,58 @@ class EClassImplementationCompiler {
 			''', ePackageInterfaceType).build
 
 		val eSetMethod = if(!eClass.EStructuralFeatures.empty) {
-			val MethodSpec eSetMethod = MethodSpec.methodBuilder('eSet').addParameter(int, 'featureID')
-			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
-			.addParameter(Object, 'newValue').addModifiers(PUBLIC).addCode( '''
-			switch (featureID) {
-				«FOR esf : eClass.EStructuralFeatures»
-					case $1T.«esf.name.normalizeUpperField(eClass.name)» :
-						«IF esf instanceof EAttribute»
-							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-							set«esf.name.toFirstUpper»((«esf.EType.scopedTypeRef(packageRoot)») newValue);
-							«ELSE»
-							get«esf.name.toFirstUpper»().clear();
-							get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends «esf.EType.instanceTypeName»>) newValue);
-							«ENDIF»
-						«ELSE»
-							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-								set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName(packageRoot)».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») newValue);
-							«ELSE»
-								«IF (esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry)»
-									((org.eclipse.emf.ecore.EStructuralFeature.Setting)get«esf.name.toFirstUpper»()).set(newValue);
+			
+			val Map<String, TypeName> namedMap = newHashMap(
+				"epit" -> ePackageInterfaceType
+				//"collection" -> ParameterizedTypeName.get(ClassName.get(Collection), WildcardTypeName.subtypeOf(Object))
+			)
+			
+			for(esf: eClass.EStructuralFeatures) {
+				if(esf instanceof EAttribute) {
+					val genericType = WildcardTypeName.subtypeOf(TypeName.get(esf.EType.instanceClass).box)
+					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), genericType))					
+				} else {
+					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), WildcardTypeName.subtypeOf(ClassName.get((esf.EType as EClass).classInterfacePackageName(packageRoot), (esf.EType as EClass).classInterfaceClassName))))	
+				}
+			}
+			
+			val MethodSpec eSetMethod = MethodSpec.methodBuilder('eSet')
+				.addAnnotation(Override)
+				.addParameter(int, 'featureID')
+				.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+				.addParameter(Object, 'newValue').addModifiers(PUBLIC).addNamedCode( '''
+				switch (featureID) {
+					«FOR esf : eClass.EStructuralFeatures»
+						case $epit:T.«esf.name.normalizeUpperField(eClass.name)» :
+							«IF esf instanceof EAttribute»
+								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
+								set«esf.name.toFirstUpper»((«esf.EType.scopedTypeRef(packageRoot)») newValue);
 								«ELSE»
 								get«esf.name.toFirstUpper»().clear();
-								get«esf.name.toFirstUpper»().addAll((java.util.Collection<? extends «(esf.EType as EClass).classInterfacePackageName(packageRoot)».«(esf.EType as EClass).classInterfaceClassName»>) newValue);
+								get«esf.name.toFirstUpper»().addAll($collection«esf.name»:T) newValue);
+								«ENDIF»
+							«ELSE»
+								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
+									set«esf.name.toFirstUpper»((«(esf.EGenericType.ERawType as EClass).classInterfacePackageName(packageRoot)».«(esf.EGenericType.ERawType as EClass).classInterfaceClassName») newValue);
+								«ELSE»
+									«IF (esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry)»
+										((org.eclipse.emf.ecore.EStructuralFeature.Setting)get«esf.name.toFirstUpper»()).set(newValue);
+									«ELSE»
+									get«esf.name.toFirstUpper»().clear();
+									get«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
+									«ENDIF»
 								«ENDIF»
 							«ENDIF»
-						«ENDIF»
-						return;
-				«ENDFOR»
-			}
-			super.eSet(featureID, newValue);
-		''', ePackageInterfaceType).build
+							return;
+					«ENDFOR»
+				}
+				super.eSet(featureID, newValue);
+			''', namedMap).build
 		
-		val MethodSpec  eUnsetMethod = MethodSpec.methodBuilder('eUnset').addParameter(int, 'featureID').addModifiers(PUBLIC)
+		val MethodSpec  eUnsetMethod = MethodSpec.methodBuilder('eUnset')
+			.addAnnotation(Override)
+			.addParameter(int, 'featureID')
+			.addModifiers(PUBLIC)
 			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addCode('''
 				switch (featureID) {
@@ -582,7 +604,11 @@ class EClassImplementationCompiler {
 				return super.eIsSet(featureID);
 			''', ePackageInterfaceType).build
 					
+					
 		val  eInverseRemove = if (!eClass.EReferences.filter[it.containment || it.EOpposite !== null].empty) {
+						val eInverseRemoveCodeMap = newHashMap("il" ->
+							ParameterizedTypeName.get(ClassName.get(InternalEList), WildcardTypeName.subtypeOf(Object)),
+							"package" -> ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot), eClass.EPackage.packageInterfaceClassName))
 						val reteir = MethodSpec.methodBuilder('eInverseRemove')
 							.addAnnotation(AnnotationSpec.builder(SuppressWarnings).addMember("value", '$S', "unchecked").build)
 							.addAnnotation(Override)
@@ -592,19 +618,19 @@ class EClassImplementationCompiler {
 									ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 							]).addParameter(ParameterSpec.builder(InternalEObject, 'otherEnd').build).addParameter(
 								ParameterSpec.builder(int, 'featureID').build).addParameter(
-								ParameterSpec.builder(NotificationChain, 'msgs').build).addCode('''
+								ParameterSpec.builder(NotificationChain, 'msgs').build).addNamedCode('''
 								switch (featureID) {
 									«FOR ref : eClass.EReferences.filter[it.containment || it.EOpposite !== null]» 
-										case «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«ref.name.normalizeUpperField(eClass.name)» :
+										case $package:T.«ref.name.normalizeUpperField(eClass.name)» :
 											«IF ref.upperBound == 0 || ref.upperBound == 1»
 												return basicSet«ref.name.toFirstUpper»(null, msgs);
 											«ELSE»
-												return (($1T) get«ref.name.toFirstUpper»()).basicRemove(otherEnd, msgs);
+												return (($il:T) get«ref.name.toFirstUpper»()).basicRemove(otherEnd, msgs);
 											«ENDIF»
 									«ENDFOR»
 								}
 								return super.eInverseRemove(otherEnd, featureID, msgs);
-							''', ParameterizedTypeName.get(ClassName.get(InternalEList), WildcardTypeName.subtypeOf(Object))).build 
+							''', eInverseRemoveCodeMap).build 
 						#[reteir]
 					} else
 						#[]

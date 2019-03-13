@@ -1,5 +1,6 @@
 package test1.interpreter.test1.impl;
 
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
 import test1.interpreter.test1.ConceptB;
 import test1.interpreter.test1.Test1Package;
@@ -9,6 +10,7 @@ public class ConceptBImpl extends ConceptAImpl implements ConceptB {
 		super();
 	}
 
+	@Override
 	protected EClass eStaticClass() {
 		return Test1Package.Literals.CONCEPT_B;
 	}

@@ -1,5 +1,6 @@
 package test1.interpreter.test1.impl;
 
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import test1.interpreter.test1.ConceptA;
@@ -10,6 +11,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		super();
 	}
 
+	@Override
 	protected EClass eStaticClass() {
 		return Test1Package.Literals.CONCEPT_A;
 	}

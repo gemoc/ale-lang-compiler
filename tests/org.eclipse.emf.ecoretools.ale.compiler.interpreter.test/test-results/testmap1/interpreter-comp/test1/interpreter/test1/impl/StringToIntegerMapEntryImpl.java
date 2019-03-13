@@ -2,6 +2,7 @@ package test1.interpreter.test1.impl;
 
 import java.lang.Integer;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.ecore.EClass;
@@ -39,10 +40,23 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 		this.value = value;
 	}
 
+	@Override
 	protected EClass eStaticClass() {
 		return Test1Package.Literals.STRING_TO_INTEGER_MAP_ENTRY;
 	}
 
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :
+				return getKey();
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE :
+				return getValue();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :
@@ -55,6 +69,7 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 		super.eSet(featureID, newValue);
 	}
 
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :
@@ -67,16 +82,7 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 		super.eUnset(featureID);
 	}
 
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :
-				return getKey();
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE :
-				return getValue();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :

@@ -14,9 +14,9 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import testbidirectionalrelation.ConceptF;
-import testbidirectionalrelation.ConceptG;
-import testbidirectionalrelation.TestbidirectionalrelationPackage;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptF;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptG;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage;
 
 public class ConceptFImpl extends MinimalEObjectImpl.Container implements ConceptF {
 
@@ -33,10 +33,7 @@ public class ConceptFImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public EList<ConceptG> getConceptg() {
 		if (conceptg == null) {
-			conceptg = new EObjectWithInverseResolvingEList.ManyInverse<ConceptG>(
-					ConceptG.class, this,
-					TestbidirectionalrelationPackage.CONCEPT_F__CONCEPTG,
-					TestbidirectionalrelationPackage.CONCEPT_G__CONCEPTF);
+			conceptg = new EObjectWithInverseResolvingEList.ManyInverse<ConceptG>(ConceptG.class, this, TestbidirectionalrelationPackage.CONCEPT_F__CONCEPTG, TestbidirectionalrelationPackage.CONCEPT_G__CONCEPTF);
 		}
 		return conceptg;
 	}
@@ -47,8 +44,7 @@ public class ConceptFImpl extends MinimalEObjectImpl.Container implements Concep
 			NotificationChain msgs) {
 		switch (featureID) {
 			case TestbidirectionalrelationPackage.CONCEPT_F__CONCEPTG :
-				return ((InternalEList<InternalEObject>) (InternalEList<?>) getConceptg())
-						.basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>) (InternalEList<?>) getConceptg()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}

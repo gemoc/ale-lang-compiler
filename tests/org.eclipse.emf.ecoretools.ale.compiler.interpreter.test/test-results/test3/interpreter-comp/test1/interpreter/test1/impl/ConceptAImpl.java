@@ -1,12 +1,16 @@
 package test1.interpreter.test1.impl;
 
 import java.lang.Object;
+import java.lang.Override;
+import java.lang.SuppressWarnings;
+import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 import test1.interpreter.test1.ConceptA;
 import test1.interpreter.test1.ConceptC;
 import test1.interpreter.test1.Test1Package;
@@ -18,27 +22,50 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		super();
 	}
 
-	public EList<ConceptC> getCs() {
-		if (cs == null) {
-			cs = new EObjectContainmentEList<ConceptC>(test1.interpreter.test1.ConceptC.class, this, Test1Package.CONCEPT_A__CS);
-		}
-		return cs;
-	}
-
+	@Override
 	protected EClass eStaticClass() {
 		return Test1Package.Literals.CONCEPT_A;
 	}
 
+	public EList<ConceptC> getCs() {
+		if (cs == null) {
+			cs = new EObjectContainmentEList<ConceptC>(ConceptC.class, this, Test1Package.CONCEPT_A__CS);
+		}
+		return cs;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
+		switch (featureID) {
+			case Test1Package.CONCEPT_A__CS :
+				return ((InternalEList<?>) getCs()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case Test1Package.CONCEPT_A__CS :
+				return getCs();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__CS :
 				getCs().clear();
-				getCs().addAll((java.util.Collection<? extends test1.interpreter.test1.ConceptC>) newValue);
+				getCs().addAll((Collection<? extends ConceptC>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__CS :
@@ -48,29 +75,13 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		super.eUnset(featureID);
 	}
 
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case Test1Package.CONCEPT_A__CS :
-				return getCs();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__CS :
 				return cs != null && !cs.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-			NotificationChain msgs) {
-		switch (featureID) {
-			case test1.interpreter.test1.Test1Package.CONCEPT_A__CS :
-				return ((org.eclipse.emf.ecore.util.InternalEList<?>) getCs()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	public void exec() {

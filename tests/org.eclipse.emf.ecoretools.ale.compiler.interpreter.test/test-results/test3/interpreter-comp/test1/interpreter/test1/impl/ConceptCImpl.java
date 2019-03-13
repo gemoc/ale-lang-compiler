@@ -1,6 +1,7 @@
 package test1.interpreter.test1.impl;
 
 import java.lang.Object;
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import test1.interpreter.test1.ConceptC;
@@ -23,10 +24,21 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		this.nbr = nbr;
 	}
 
+	@Override
 	protected EClass eStaticClass() {
 		return Test1Package.Literals.CONCEPT_C;
 	}
 
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case Test1Package.CONCEPT_C__NBR :
+				return getNbr();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
+
+	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_C__NBR :
@@ -36,6 +48,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		super.eSet(featureID, newValue);
 	}
 
+	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_C__NBR :
@@ -45,14 +58,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		super.eUnset(featureID);
 	}
 
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case Test1Package.CONCEPT_C__NBR :
-				return getNbr();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
-
+	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_C__NBR :

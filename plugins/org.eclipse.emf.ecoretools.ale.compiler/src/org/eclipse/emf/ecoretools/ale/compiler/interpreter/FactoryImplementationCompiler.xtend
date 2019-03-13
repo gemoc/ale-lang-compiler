@@ -35,7 +35,11 @@ class FactoryImplementationCompiler {
 		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
 			abstractSyntax.packageInterfaceClassName)
 
-		val constructor = MethodSpec.constructorBuilder.addModifiers(PUBLIC).build
+		val constructor = MethodSpec.constructorBuilder.addModifiers(PUBLIC)
+			.addCode('''
+			super();
+			''')
+			.build
 
 		val ctn = abstractSyntax.name
 		val ctnf = '''«ctn.toFirstUpper»Factory'''
@@ -157,8 +161,8 @@ class FactoryImplementationCompiler {
 				.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 				.returns(returnType)
 				.addCode('''
-					$1T ret = new $1T();
-					return ret;
+					$1T «eClass.name.toFirstLower» = new $1T();
+					return «eClass.name.toFirstLower»;
 				''', classImplType)
 				.addModifiers(PUBLIC)
 				.build

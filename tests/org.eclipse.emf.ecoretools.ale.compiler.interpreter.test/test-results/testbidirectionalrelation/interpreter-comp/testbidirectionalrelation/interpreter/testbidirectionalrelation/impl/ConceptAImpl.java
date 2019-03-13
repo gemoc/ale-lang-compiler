@@ -1,27 +1,23 @@
 package testbidirectionalrelation.interpreter.testbidirectionalrelation.impl;
 
-import java.util.Collection;
-
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.SuppressWarnings;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import testbidirectionalrelation.ConceptA;
-import testbidirectionalrelation.ConceptB;
-import testbidirectionalrelation.ConceptC;
-import testbidirectionalrelation.ConceptD;
-import testbidirectionalrelation.ConceptE;
-import testbidirectionalrelation.ConceptF;
-import testbidirectionalrelation.ConceptG;
-import testbidirectionalrelation.TestbidirectionalrelationPackage;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptA;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptB;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptC;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptD;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptE;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptF;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptG;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage;
 
 public class ConceptAImpl extends MinimalEObjectImpl.Container implements ConceptA {
 	protected EList<ConceptB> conceptb;
@@ -47,61 +43,62 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public EList<ConceptB> getConceptb() {
 		if (conceptb == null) {
-			conceptb = new EObjectContainmentEList<ConceptB>(testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptB.class, this, testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB);
+			conceptb = new EObjectContainmentEList<ConceptB>(ConceptB.class, this, TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB);
 		}
 		return conceptb;
 	}
 
 	public EList<ConceptC> getConceptc() {
 		if (conceptc == null) {
-			conceptc = new EObjectContainmentEList<ConceptC>(testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptC.class, this, testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC);
+			conceptc = new EObjectContainmentEList<ConceptC>(ConceptC.class, this, TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC);
 		}
 		return conceptc;
 	}
 
 	public EList<ConceptD> getConceptd() {
 		if (conceptd == null) {
-			conceptd = new EObjectContainmentEList<ConceptD>(testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptD.class, this, testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD);
+			conceptd = new EObjectContainmentEList<ConceptD>(ConceptD.class, this, TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD);
 		}
 		return conceptd;
 	}
 
 	public EList<ConceptE> getConcepte() {
 		if (concepte == null) {
-			concepte = new EObjectContainmentEList<ConceptE>(testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptE.class, this, testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE);
+			concepte = new EObjectContainmentEList<ConceptE>(ConceptE.class, this, TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE);
 		}
 		return concepte;
 	}
 
 	public EList<ConceptF> getConceptf() {
 		if (conceptf == null) {
-			conceptf = new EObjectContainmentEList<ConceptF>(testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptF.class, this, testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF);
+			conceptf = new EObjectContainmentEList<ConceptF>(ConceptF.class, this, TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF);
 		}
 		return conceptf;
 	}
 
 	public EList<ConceptG> getConceptg() {
 		if (conceptg == null) {
-			conceptg = new EObjectContainmentEList<ConceptG>(testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptG.class, this, testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG);
+			conceptg = new EObjectContainmentEList<ConceptG>(ConceptG.class, this, TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG);
 		}
 		return conceptg;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {
 		switch (featureID) {
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
 				return ((InternalEList<?>) getConceptb()).basicRemove(otherEnd, msgs);
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
 				return ((InternalEList<?>) getConceptc()).basicRemove(otherEnd, msgs);
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
 				return ((InternalEList<?>) getConceptd()).basicRemove(otherEnd, msgs);
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
 				return ((InternalEList<?>) getConcepte()).basicRemove(otherEnd, msgs);
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
 				return ((InternalEList<?>) getConceptf()).basicRemove(otherEnd, msgs);
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
 				return ((InternalEList<?>) getConceptg()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -110,17 +107,17 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
 				return getConceptb();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
 				return getConceptc();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
 				return getConceptd();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
 				return getConcepte();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
 				return getConceptf();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
 				return getConceptg();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -130,27 +127,27 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
 				getConceptb().clear();
 				getConceptb().addAll((Collection<? extends ConceptB>) newValue);
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
 				getConceptc().clear();
 				getConceptc().addAll((Collection<? extends ConceptC>) newValue);
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
 				getConceptd().clear();
 				getConceptd().addAll((Collection<? extends ConceptD>) newValue);
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
 				getConcepte().clear();
 				getConcepte().addAll((Collection<? extends ConceptE>) newValue);
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
 				getConceptf().clear();
 				getConceptf().addAll((Collection<? extends ConceptF>) newValue);
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
 				getConceptg().clear();
 				getConceptg().addAll((Collection<? extends ConceptG>) newValue);
 				return;
@@ -161,22 +158,22 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
 				getConceptb().clear();
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
 				getConceptc().clear();
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
 				getConceptd().clear();
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
 				getConcepte().clear();
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
 				getConceptf().clear();
 				return;
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
 				getConceptg().clear();
 				return;
 		}
@@ -186,17 +183,17 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTB :
 				return conceptb != null && !conceptb.isEmpty();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTC :
 				return conceptc != null && !conceptc.isEmpty();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTD :
 				return conceptd != null && !conceptd.isEmpty();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTE :
 				return concepte != null && !concepte.isEmpty();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTF :
 				return conceptf != null && !conceptf.isEmpty();
-			case testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
+			case TestbidirectionalrelationPackage.CONCEPT_A__CONCEPTG :
 				return conceptg != null && !conceptg.isEmpty();
 		}
 		return super.eIsSet(featureID);

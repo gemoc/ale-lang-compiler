@@ -1,19 +1,21 @@
 package testbidirectionalrelation.interpreter.testbidirectionalrelation;
 
+import java.lang.String;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.impl.TestbidirectionalrelationPackageImpl;
 
 public interface TestbidirectionalrelationPackage extends EPackage {
 
-	String eNAME = "testbidirectionalrelation";
+	TestbidirectionalrelationPackage eINSTANCE = testbidirectionalrelation.impl.TestbidirectionalrelationPackageImpl
+			.init();
 
 	String eNS_URI = "http://testbidirectionalrelation";
 
-	String eNS_PREFIX = "testbidirectionalrelation";
+	String eNAME = "testbidirectionalrelation";
 
-	TestbidirectionalrelationPackage eINSTANCE = testbidirectionalrelation.impl.TestbidirectionalrelationPackageImpl
-			.init();
+	String eNS_PREFIX = "testbidirectionalrelation";
 
 	int CONCEPT_A = 0;
 

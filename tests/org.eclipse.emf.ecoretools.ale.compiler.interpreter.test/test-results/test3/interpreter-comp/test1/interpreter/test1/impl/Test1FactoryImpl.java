@@ -17,6 +17,7 @@ import test1.interpreter.test1.Test1Package;
 
 public class Test1FactoryImpl extends EFactoryImpl implements Test1Factory {
 	public Test1FactoryImpl() {
+		super();
 	}
 
 	public static Test1Factory init() {
@@ -63,17 +64,17 @@ public class Test1FactoryImpl extends EFactoryImpl implements Test1Factory {
 	}
 
 	public ConceptA createConceptA() {
-		ConceptAImpl ret = new ConceptAImpl();
-		return ret;
+		ConceptAImpl conceptA = new ConceptAImpl();
+		return conceptA;
 	}
 
 	public ConceptB createConceptB() {
-		ConceptBImpl ret = new ConceptBImpl();
-		return ret;
+		ConceptBImpl conceptB = new ConceptBImpl();
+		return conceptB;
 	}
 
 	public ConceptC createConceptC() {
-		ConceptCImpl ret = new ConceptCImpl();
-		return ret;
+		ConceptCImpl conceptC = new ConceptCImpl();
+		return conceptC;
 	}
 }
