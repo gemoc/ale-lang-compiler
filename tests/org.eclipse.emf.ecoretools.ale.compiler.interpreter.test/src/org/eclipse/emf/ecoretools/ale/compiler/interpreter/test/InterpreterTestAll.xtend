@@ -34,8 +34,6 @@ class InterpreterTestAll {
 		compilations.forEach [ p1, p2 |
 			p2.cleanupProject
 		]
-
-//		println(compilations)
 	}
 	
 	def static void cleanupProject(File tmpDir) {

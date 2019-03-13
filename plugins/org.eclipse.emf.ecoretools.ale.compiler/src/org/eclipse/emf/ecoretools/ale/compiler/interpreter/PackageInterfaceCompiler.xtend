@@ -42,74 +42,117 @@ class PackageInterfaceCompiler {
 
 		val eNSPrefixField = FieldSpec.builder(String, 'eNS_PREFIX').initializer('$S', abstractSyntax.name).addModifiers(PUBLIC, STATIC, FINAL).build
 
-		val classFields = newArrayList
+		val classFields = newHashMap
 
 		var cptr = 0;
 		for (EClass clazz : allClasses) {
-			classFields +=
+			classFields.put(clazz,
 				FieldSpec.builder(int, clazz.name.normalizeUpperField).initializer('''«cptr»''').addModifiers(STATIC,
-					PUBLIC, FINAL).build
+					PUBLIC, FINAL).build)
 			cptr = cptr + 1
 		}
 		
 		for(EEnum eEnum : allEnums) {
-			classFields +=
+			classFields.put(eEnum,
 				FieldSpec.builder(int, eEnum.name.normalizeUpperField).initializer('''«cptr»''').addModifiers(
-					STATIC, PUBLIC, FINAL).build
+					STATIC, PUBLIC, FINAL).build)
 			cptr = cptr + 1
 		}
-
-		val classFieldsLiterals = allClasses.map [ clazz |
-			FieldSpec.builder(EClass, clazz.name.normalizeUpperField).
-				initializer('''eINSTANCE.get«clazz.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build
-		]
-
-		val Iterable<FieldSpec> eReferenceFieldsLiterals = allClasses.map[clazz|clazz.EReferences.map[field|
-			FieldSpec.builder(EReference, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build
-		]].flatten
-		val Iterable<FieldSpec> eAttributeFieldsLiterals = allClasses.map[clazz|clazz.EAttributes.map[field|
-			FieldSpec.builder(EAttribute, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build
-		]].flatten
-		val literalType = TypeSpec.interfaceBuilder('Literals').addFields(classFieldsLiterals +
-			eReferenceFieldsLiterals + eAttributeFieldsLiterals).addModifiers(PUBLIC, STATIC).build
+		
+		val classFieldsLiterals = newHashMap
+		val classStructuralFeaturesLiterals = newHashMap
+		for(clazz: allClasses) {
+			classFieldsLiterals.put(clazz, FieldSpec.builder(EClass, clazz.name.normalizeUpperField).
+				initializer('''eINSTANCE.get«clazz.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build)
+				
+			if(!classStructuralFeaturesLiterals.containsKey(clazz)) classStructuralFeaturesLiterals.put(clazz, newHashMap)
+			for(field: clazz.EReferences) {
+				classStructuralFeaturesLiterals.get(clazz).put(field, FieldSpec.builder(EReference, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build)
+			}
 			
-		val getterFields = allClasses.map[clazz|
-			MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(ABSTRACT, PUBLIC).build
-		]
-		
-		val getterEnumFields = allEnums.map[eEnum|
-			MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EEnum).addModifiers(ABSTRACT, PUBLIC).build
-		]
-		
-		val Iterable<MethodSpec> getterReferencesFields = allClasses.map[clazz|clazz.EReferences.map[field|
-			MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').returns(EReference).addModifiers(ABSTRACT, PUBLIC).build
-		]].flatten
+			for(field: clazz.EAllAttributes) {
+				classStructuralFeaturesLiterals.get(clazz).put(field, FieldSpec.builder(EAttribute, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build)
+			}
+		}
 
-		val Iterable<MethodSpec> getterAttributesFields = allClasses.map[clazz|clazz.EAttributes.map[field|
-			MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').returns(EAttribute).addModifiers(ABSTRACT, PUBLIC).build
-		]].flatten
+		var tmpliteralType = TypeSpec.interfaceBuilder('Literals')
 		
-		val fieldsAttributesFields = newArrayList
+		for(clazz: allClasses) {
+			tmpliteralType = tmpliteralType.addField(classFieldsLiterals.get(clazz))
+			for(esf: clazz.EStructuralFeatures) {
+				tmpliteralType = tmpliteralType.addField(classStructuralFeaturesLiterals.get(clazz).get(esf))
+			}
+		}
+		
+		val literalType = tmpliteralType.addModifiers(PUBLIC, STATIC).build
+			
+		val getterFields = newHashMap
+		val getterReferencesFields = newHashMap 
+		
+		for(clazz: allClasses){
+			getterFields.put(clazz, MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(ABSTRACT, PUBLIC).build)
+			
+			if(!getterReferencesFields.containsKey(clazz)) getterReferencesFields.put(clazz, newHashMap)
+			for(field: clazz.EReferences) {
+				getterReferencesFields.get(clazz).put(field, MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').returns(EReference).addModifiers(ABSTRACT, PUBLIC).build)
+			}
+			
+			for(field: clazz.EAttributes) {
+				getterReferencesFields.get(clazz).put(field, MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').returns(EAttribute).addModifiers(ABSTRACT, PUBLIC).build)
+			}
+		}
+		
+		for (eEnum : allEnums) {
+			getterFields.put(eEnum,
+				MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EEnum).addModifiers(ABSTRACT,
+					PUBLIC).build)
+		}
+		
+		val fieldsAttributesFields = newHashMap
 		
 		for(EClass clazz: allClasses) {
+			
+			if(!fieldsAttributesFields.containsKey(clazz))fieldsAttributesFields.put(clazz, newArrayList)
 			var cptrI = 0
 			val offset = countOffset(clazz)
 			
 			for(EStructuralFeature esf: clazz.EStructuralFeatures) {
-				fieldsAttributesFields += FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build
+				fieldsAttributesFields.get(clazz).add(FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build)
 				cptrI = cptrI + 1
 			}
 		}
 		
-		
-		
 		val getFactoryMethod = MethodSpec.methodBuilder('''get«abstractSyntax.name.toFirstUpper»Factory''').returns(factoryInterfaceType).addModifiers(PUBLIC,ABSTRACT).build
 		
-		val package = TypeSpec
+		var packageTmp = TypeSpec
 			.interfaceBuilder(abstractSyntax.packageInterfaceClassName)
 			.addSuperinterface(EPackage)
-			.addFields(#[eInstanceField, eNSURIField, eNameField, eNSPrefixField] + classFields +  fieldsAttributesFields)
-			.addMethods(getterFields + getterEnumFields + getterReferencesFields + getterAttributesFields + #[getFactoryMethod])
+			.addField(eNameField)
+			.addField(eNSURIField)
+			.addField(eNSPrefixField)
+			.addField(eInstanceField)
+			
+		for(eClassifier: abstractSyntax.EClassifiers) {
+			packageTmp = packageTmp
+				.addField(classFields.get(eClassifier))
+				.addFields(fieldsAttributesFields.get(eClassifier))
+				
+			if(eClassifier instanceof EClass) {
+				packageTmp = packageTmp.addField(FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_FEATURE_COUNT''', PUBLIC,  STATIC, FINAL).initializer('''«fieldsAttributesFields.get(eClassifier).length»''').build)
+				packageTmp = packageTmp.addField(FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_OPERATION_COUNT''', PUBLIC, STATIC, FINAL).initializer('''0''').build)
+			}			
+		}
+		
+		for(eClassifier: abstractSyntax.EClassifiers) {
+			packageTmp = packageTmp.addMethod(getterFields.get(eClassifier))
+			if(eClassifier instanceof EClass) {
+				for(esf: eClassifier.EStructuralFeatures) {
+					packageTmp = packageTmp.addMethod(getterReferencesFields.get(eClassifier).get(esf))
+				}
+			}
+		}
+		
+		val package = packageTmp.addMethod(getFactoryMethod)
 			.addType(literalType)
 			.addModifiers(PUBLIC)
 			.build

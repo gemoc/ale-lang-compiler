@@ -58,6 +58,7 @@ class FactoryImplementationCompiler {
 			''', EPackage.Registry, packageInterfaceType, EcorePlugin).build
 
 		val createMethod = MethodSpec.methodBuilder('create')
+//			.addAnnotation(Override)
 			.returns(EObject)
 			.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addParameter(ParameterSpec.builder(EClass, 'eClass').build)
@@ -76,7 +77,8 @@ class FactoryImplementationCompiler {
 			}
 		''', packageInterfaceType, IllegalArgumentException).addModifiers(PUBLIC).build
 		
-		val createFromStringMethod = MethodSpec
+		val createFromStringMethod = if(!allEnum.empty) {
+			#[MethodSpec
 			.methodBuilder('createFromString')
 			.returns(Object)
 			.addParameter(ClassName.get('org.eclipse.emf.ecore', 'EDataType'), 'eDataType')
@@ -92,9 +94,7 @@ class FactoryImplementationCompiler {
 			}
 			''')
 			.addModifiers(PUBLIC)
-			.build
-			
-		val convertToStringMethod = MethodSpec
+			.build, MethodSpec
 			.methodBuilder('convertToString')
 			.returns(String)
 			.addParameter(ClassName.get('org.eclipse.emf.ecore', 'EDataType'), 'eDataType')
@@ -110,7 +110,11 @@ class FactoryImplementationCompiler {
 			}
 			''')
 			.addModifiers(PUBLIC)
-			.build
+			.build]
+			
+			} else #[]
+			
+	
 			
 		val methodsFromString = allEnum.map[eEnum|
 			
@@ -173,10 +177,20 @@ class FactoryImplementationCompiler {
 			return ($1T) getEPackage();
 			''', packageInterfaceType).addModifiers(PUBLIC).
 			build
+			
+		val getDeprecatedPackageMethod = MethodSpec.methodBuilder('''getPackage''')
+			.addAnnotation(Deprecated)
+			.returns(packageInterfaceType)
+			.addCode('''
+				return $1T.eINSTANCE;
+			''', packageInterfaceType)
+			.addModifiers(PUBLIC, STATIC).build
 
-		val factory = TypeSpec.classBuilder(abstractSyntax.factoryImplementationClassName).superclass(EFactoryImpl).
-			addSuperinterface(factoryInterfaceType).addMethods(
-				#[constructor, initMethod, createMethod, createFromStringMethod, convertToStringMethod, getPackageMethod] + createMethods + methodsFromString).addModifiers(PUBLIC).build
+		val factory = TypeSpec.classBuilder(abstractSyntax.factoryImplementationClassName).superclass(EFactoryImpl)
+			.addSuperinterface(factoryInterfaceType)
+			.addMethods(#[initMethod, constructor, createMethod] + createFromStringMethod + createMethods + methodsFromString + #[getPackageMethod,getDeprecatedPackageMethod])
+			.addModifiers(PUBLIC)
+			.build
 
 		val javaFile = JavaFile.builder(abstractSyntax.factoryImplementationPackageName(packageRoot), factory)
 			.indent('\t')
