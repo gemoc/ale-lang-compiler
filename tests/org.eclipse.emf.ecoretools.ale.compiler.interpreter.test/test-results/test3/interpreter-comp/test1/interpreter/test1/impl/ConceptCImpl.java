@@ -1,8 +1,11 @@
 package test1.interpreter.test1.impl;
 
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import test1.interpreter.test1.ConceptC;
 import test1.interpreter.test1.Test1Package;
@@ -20,8 +23,11 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		return nbr;
 	}
 
-	public void setNbr(int nbr) {
-		this.nbr = nbr;
+	public void setNbr(int newNbr) {
+		int oldNbr = nbr;
+		nbr = newNbr;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, Test1Package.CONCEPT_C__NBR, oldNbr, nbr));
 	}
 
 	@Override
@@ -42,7 +48,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_C__NBR :
-				setNbr((int) newValue);
+				setNbr((Integer) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

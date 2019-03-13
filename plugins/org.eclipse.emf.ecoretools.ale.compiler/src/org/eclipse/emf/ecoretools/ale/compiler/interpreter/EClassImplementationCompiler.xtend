@@ -142,9 +142,17 @@ class EClassImplementationCompiler {
 					return «field.name»;
 					''').returns(type).build
 				val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
-					ParameterSpec.builder(type, field.name).build).addCode('''
-					this.«field.name» = «field.name»;
-					''').
+					ParameterSpec.builder(type, '''new«field.name.toFirstUpper»''').build).addNamedCode('''
+					$type:T old«field.name.toFirstUpper» = «field.name»;
+					«field.name» = new«field.name.toFirstUpper»;
+					if (eNotificationRequired())
+						eNotify(new $eni:T(this, $n:T.SET, $package:T.«field.name.normalizeUpperField(eClass.name)», old«field.name.toFirstUpper», «field.name»));
+					''', newHashMap(
+						"type" -> type	,
+						"eni" -> TypeName.get(ENotificationImpl),
+						"n" -> TypeName.get(Notification),
+						"package" -> ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),eClass.EPackage.packageInterfaceClassName)					
+					)).
 					addModifiers(PUBLIC).build
 	
 				#[getter, setter]
@@ -473,18 +481,17 @@ class EClassImplementationCompiler {
 			''', ePackageInterfaceType).build
 
 		val eSetMethod = if(!eClass.EStructuralFeatures.empty) {
-			
-			val Map<String, TypeName> namedMap = newHashMap(
-				"epit" -> ePackageInterfaceType
-				//"collection" -> ParameterizedTypeName.get(ClassName.get(Collection), WildcardTypeName.subtypeOf(Object))
-			)
-			
+			val Map<String, TypeName> namedMap = newHashMap("epit" -> ePackageInterfaceType)
 			for(esf: eClass.EStructuralFeatures) {
 				if(esf instanceof EAttribute) {
-					val genericType = WildcardTypeName.subtypeOf(TypeName.get(esf.EType.instanceClass).box)
+					val tn = TypeName.get(esf.EType.instanceClass).box
+					namedMap.put("fieldtype" + esf.name, tn)
+					val genericType = WildcardTypeName.subtypeOf(tn)
 					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), genericType))					
 				} else {
-					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), WildcardTypeName.subtypeOf(ClassName.get((esf.EType as EClass).classInterfacePackageName(packageRoot), (esf.EType as EClass).classInterfaceClassName))))	
+					val tn = ClassName.get((esf.EType as EClass).classInterfacePackageName(packageRoot), (esf.EType as EClass).classInterfaceClassName)
+					namedMap.put("fieldtype" + esf.name, tn)
+					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), WildcardTypeName.subtypeOf(tn)))	
 				}
 			}
 			
@@ -498,10 +505,10 @@ class EClassImplementationCompiler {
 						case $epit:T.«esf.name.normalizeUpperField(eClass.name)» :
 							«IF esf instanceof EAttribute»
 								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-								set«esf.name.toFirstUpper»((«esf.EType.scopedTypeRef(packageRoot)») newValue);
+								set«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) newValue);
 								«ELSE»
 								get«esf.name.toFirstUpper»().clear();
-								get«esf.name.toFirstUpper»().addAll($collection«esf.name»:T) newValue);
+								get«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
 								«ENDIF»
 							«ELSE»
 								«IF esf.upperBound <= 1 && esf.upperBound >= 0»

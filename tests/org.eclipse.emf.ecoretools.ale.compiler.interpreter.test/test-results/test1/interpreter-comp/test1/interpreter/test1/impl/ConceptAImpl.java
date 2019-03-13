@@ -1,10 +1,14 @@
 package test1.interpreter.test1.impl;
 
 import java.lang.Boolean;
+import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
+import java.util.Collection;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
 import test1.interpreter.test1.ConceptA;
@@ -36,8 +40,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		long oldB = b;
 		b = newB;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					Test1Package.CONCEPT_A__B, oldB, b));
+			eNotify(new ENotificationImpl(this, Notification.SET, Test1Package.CONCEPT_A__B, oldB, b));
 	}
 
 	@Override
@@ -61,7 +64,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__BS :
 				getBs().clear();
-				getBs().addAll((java.util.Collection<? extends java.lang.Boolean>) newValue);
+				getBs().addAll((Collection<? extends Boolean>) newValue);
 				return;
 			case Test1Package.CONCEPT_A__B :
 				setB((Long) newValue);

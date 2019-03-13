@@ -39,7 +39,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {
 		switch (featureID) {
-			case test1.interpreter.test1.Test1Package.CONCEPT_A__CS :
+			case Test1Package.CONCEPT_A__CS :
 				return ((InternalEList<?>) getCs()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);

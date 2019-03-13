@@ -3,6 +3,7 @@ package test1.interpreter.test1.impl;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
+import java.util.Collection;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -37,13 +38,13 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
-	
+
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__BS :
 				getBs().clear();
-				getBs().addAll((java.util.Collection<? extends java.lang.Boolean>) newValue);
+				getBs().addAll((Collection<? extends Boolean>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
