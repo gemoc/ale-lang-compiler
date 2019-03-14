@@ -5,6 +5,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import test1.interpreter.test1.ConceptA;
+import test1.interpreter.test1.ConceptB;
+import test1.interpreter.test1.ConceptC;
 import test1.interpreter.test1.Test1Factory;
 import test1.interpreter.test1.Test1Package;
 
@@ -71,6 +74,10 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		return (EAttribute) conceptCEClass.getEStructuralFeatures().get(0);
 	}
 
+	public EAttribute getConceptC_Cool() {
+		return (EAttribute) conceptCEClass.getEStructuralFeatures().get(1);
+	}
+
 	public Test1Factory getTest1Factory() {
 		return (Test1Factory) getEFactoryInstance();
 	}
@@ -88,6 +95,7 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 
 		conceptCEClass = createEClass(CONCEPT_C);
 		createEAttribute(conceptCEClass, CONCEPT_C__NBR);
+		createEAttribute(conceptCEClass, CONCEPT_C__COOL);
 	}
 
 	public void initializePackageContents() {
@@ -108,13 +116,14 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		conceptBEClass.getESuperTypes().add(this.getConceptA());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(conceptAEClass, test1.interpreter.test1.ConceptA.class, "ConceptA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getConceptA_Cs(), this.getConceptC(), null, "cs", null, 0, -1, test1.interpreter.test1.ConceptA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(conceptAEClass, ConceptA.class, "ConceptA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getConceptA_Cs(), this.getConceptC(), null, "cs", null, 0, -1, ConceptA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(conceptBEClass, test1.interpreter.test1.ConceptB.class, "ConceptB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(conceptBEClass, ConceptB.class, "ConceptB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(conceptCEClass, test1.interpreter.test1.ConceptC.class, "ConceptC", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getConceptC_Nbr(), ecorePackage.getEInt(), "nbr", null, 0, 1, test1.interpreter.test1.ConceptC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(conceptCEClass, ConceptC.class, "ConceptC", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getConceptC_Nbr(), ecorePackage.getEInt(), "nbr", null, 0, 1, ConceptC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getConceptC_Cool(), ecorePackage.getEBoolean(), "cool", null, 0, 1, ConceptC.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

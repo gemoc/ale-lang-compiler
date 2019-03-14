@@ -4,8 +4,7 @@ import org.eclipse.emf.ecore.EFactory;
 import testbidirectionalrelation.interpreter.testbidirectionalrelation.impl.TestbidirectionalrelationFactoryImpl;
 
 public interface TestbidirectionalrelationFactory extends EFactory {
-
-	TestbidirectionalrelationFactory eINSTANCE = testbidirectionalrelation.impl.TestbidirectionalrelationFactoryImpl.init();
+	TestbidirectionalrelationFactory eINSTANCE = TestbidirectionalrelationFactoryImpl.init();
 
 	ConceptA createConceptA();
 

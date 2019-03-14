@@ -1,20 +1,18 @@
 package testbidirectionalrelation.interpreter.testbidirectionalrelation.impl;
 
+import java.lang.Object;
+import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import testbidirectionalrelation.ConceptB;
-import testbidirectionalrelation.ConceptC;
-import testbidirectionalrelation.TestbidirectionalrelationPackage;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptB;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptC;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage;
 
 public class ConceptCImpl extends MinimalEObjectImpl.Container implements ConceptC {
-
 	protected ConceptB conceptb;
 
 	protected ConceptCImpl() {
@@ -32,9 +30,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 			conceptb = (ConceptB) eResolveProxy(oldConceptb);
 			if (conceptb != oldConceptb) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							TestbidirectionalrelationPackage.CONCEPT_C__CONCEPTB,
-							oldConceptb, conceptb));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestbidirectionalrelationPackage.CONCEPT_C__CONCEPTB, oldConceptb, conceptb));
 			}
 		}
 		return conceptb;
@@ -44,14 +40,11 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		return conceptb;
 	}
 
-	public NotificationChain basicSetConceptb(ConceptB newConceptb,
-			NotificationChain msgs) {
+	public NotificationChain basicSetConceptb(ConceptB newConceptb, NotificationChain msgs) {
 		ConceptB oldConceptb = conceptb;
 		conceptb = newConceptb;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-					TestbidirectionalrelationPackage.CONCEPT_C__CONCEPTB, oldConceptb,
-					newConceptb);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestbidirectionalrelationPackage.CONCEPT_C__CONCEPTB, oldConceptb, newConceptb);
 			if (msgs == null)
 				msgs = notification;
 			else
@@ -64,20 +57,14 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		if (newConceptb != conceptb) {
 			NotificationChain msgs = null;
 			if (conceptb != null)
-				msgs = ((InternalEObject) conceptb).eInverseRemove(this,
-						TestbidirectionalrelationPackage.CONCEPT_B__CONCEPTC,
-						ConceptB.class, msgs);
+				msgs = ((InternalEObject) conceptb).eInverseRemove(this, TestbidirectionalrelationPackage.CONCEPT_B__CONCEPTC, ConceptB.class, msgs);
 			if (newConceptb != null)
-				msgs = ((InternalEObject) newConceptb).eInverseAdd(this,
-						TestbidirectionalrelationPackage.CONCEPT_B__CONCEPTC,
-						ConceptB.class, msgs);
+				msgs = ((InternalEObject) newConceptb).eInverseAdd(this, TestbidirectionalrelationPackage.CONCEPT_B__CONCEPTC, ConceptB.class, msgs);
 			msgs = basicSetConceptb(newConceptb, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					TestbidirectionalrelationPackage.CONCEPT_C__CONCEPTB, newConceptb,
-					newConceptb));
+			eNotify(new ENotificationImpl(this, Notification.SET, TestbidirectionalrelationPackage.CONCEPT_C__CONCEPTB, newConceptb, newConceptb));
 	}
 
 	@Override
@@ -86,9 +73,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		switch (featureID) {
 			case TestbidirectionalrelationPackage.CONCEPT_C__CONCEPTB :
 				if (conceptb != null)
-					msgs = ((InternalEObject) conceptb).eInverseRemove(this,
-							TestbidirectionalrelationPackage.CONCEPT_B__CONCEPTC,
-							ConceptB.class, msgs);
+					msgs = ((InternalEObject) conceptb).eInverseRemove(this, TestbidirectionalrelationPackage.CONCEPT_B__CONCEPTC, ConceptB.class, msgs);
 				return basicSetConceptb((ConceptB) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -143,5 +128,4 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		}
 		return super.eIsSet(featureID);
 	}
-
 }

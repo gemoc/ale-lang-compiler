@@ -2,7 +2,7 @@ package testbidirectionalrelation.interpreter.testbidirectionalrelation.impl;
 
 import java.lang.Object;
 import java.lang.Override;
-import java.lang.SuppressWarnings;
+import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -83,7 +83,6 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		return conceptg;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {
@@ -123,7 +122,6 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {

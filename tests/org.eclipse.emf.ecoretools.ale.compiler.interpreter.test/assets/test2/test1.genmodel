@@ -7,5 +7,6 @@
   <foreignModel>test1.ecore</foreignModel>
   <genPackages prefix="Test1" disposableProviderFactory="true" ecorePackage="test1.ecore#/">
     <genClasses ecoreClass="test1.ecore#//ConceptA"/>
+    <genClasses ecoreClass="test1.ecore#//ConceptB"/>
   </genPackages>
 </genmodel:GenModel>

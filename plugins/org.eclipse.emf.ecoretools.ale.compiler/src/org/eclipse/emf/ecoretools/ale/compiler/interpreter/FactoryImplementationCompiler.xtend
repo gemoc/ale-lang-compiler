@@ -58,7 +58,7 @@ class FactoryImplementationCompiler {
 			''', EPackage.Registry, packageInterfaceType, EcorePlugin).build
 
 		val createMethod = MethodSpec.methodBuilder('create')
-//			.addAnnotation(Override)
+			.addAnnotation(Override)
 			.returns(EObject)
 			.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addParameter(ParameterSpec.builder(EClass, 'eClass').build)

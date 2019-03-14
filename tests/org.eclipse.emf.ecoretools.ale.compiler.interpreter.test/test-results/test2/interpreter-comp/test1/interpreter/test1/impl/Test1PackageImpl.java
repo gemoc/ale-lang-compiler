@@ -3,6 +3,8 @@ package test1.interpreter.test1.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import test1.interpreter.test1.ConceptA;
+import test1.interpreter.test1.ConceptB;
 import test1.interpreter.test1.Test1Factory;
 import test1.interpreter.test1.Test1Package;
 
@@ -88,9 +90,9 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		conceptBEClass.getESuperTypes().add(this.getConceptA());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(conceptAEClass, test1.interpreter.test1.ConceptA.class, "ConceptA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(conceptAEClass, ConceptA.class, "ConceptA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(conceptBEClass, test1.interpreter.test1.ConceptB.class, "ConceptB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(conceptBEClass, ConceptB.class, "ConceptB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

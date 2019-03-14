@@ -1,49 +1,39 @@
+package emfrelations.interpreter.emfrelations.impl;
 
-package fr.mleduc.xp.emfrelations.impl;
-
-import fr.mleduc.xp.emfrelations.ConceptA10;
-import fr.mleduc.xp.emfrelations.ConceptB10;
-import fr.mleduc.xp.emfrelations.EmfrelationsPackage;
-
+import emfrelations.interpreter.emfrelations.ConceptA10;
+import emfrelations.interpreter.emfrelations.ConceptB10;
+import emfrelations.interpreter.emfrelations.EmfrelationsPackage;
+import java.lang.Object;
+import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-
 public class ConceptA10Impl extends MinimalEObjectImpl.Container implements ConceptA10 {
-	
 	protected ConceptB10 conceptb10;
-
 	
 	protected ConceptA10Impl() {
 		super();
 	}
 
-	
 	@Override
 	protected EClass eStaticClass() {
 		return EmfrelationsPackage.Literals.CONCEPT_A10;
 	}
 
-	
 	public ConceptB10 getConceptb10() {
 		return conceptb10;
 	}
 
-	
 	public NotificationChain basicSetConceptb10(ConceptB10 newConceptb10,
 			NotificationChain msgs) {
 		ConceptB10 oldConceptb10 = conceptb10;
 		conceptb10 = newConceptb10;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-					EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, oldConceptb10,
-					newConceptb10);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, oldConceptb10, newConceptb10);
 			if (msgs == null)
 				msgs = notification;
 			else
@@ -52,20 +42,13 @@ public class ConceptA10Impl extends MinimalEObjectImpl.Container implements Conc
 		return msgs;
 	}
 
-	
 	public void setConceptb10(ConceptB10 newConceptb10) {
 		if (newConceptb10 != conceptb10) {
 			NotificationChain msgs = null;
 			if (conceptb10 != null)
-				msgs = ((InternalEObject) conceptb10).eInverseRemove(this,
-						EOPPOSITE_FEATURE_BASE
-								- EmfrelationsPackage.CONCEPT_A10__CONCEPTB10,
-						null, msgs);
+				msgs = ((InternalEObject) conceptb10).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, null, msgs);
 			if (newConceptb10 != null)
-				msgs = ((InternalEObject) newConceptb10).eInverseAdd(this,
-						EOPPOSITE_FEATURE_BASE
-								- EmfrelationsPackage.CONCEPT_A10__CONCEPTB10,
-						null, msgs);
+				msgs = ((InternalEObject) newConceptb10).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, null, msgs);
 			msgs = basicSetConceptb10(newConceptb10, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -75,7 +58,6 @@ public class ConceptA10Impl extends MinimalEObjectImpl.Container implements Conc
 					newConceptb10));
 	}
 
-	
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {
@@ -86,7 +68,6 @@ public class ConceptA10Impl extends MinimalEObjectImpl.Container implements Conc
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
-	
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -96,7 +77,6 @@ public class ConceptA10Impl extends MinimalEObjectImpl.Container implements Conc
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-	
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -107,7 +87,6 @@ public class ConceptA10Impl extends MinimalEObjectImpl.Container implements Conc
 		super.eSet(featureID, newValue);
 	}
 
-	
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
@@ -118,7 +97,6 @@ public class ConceptA10Impl extends MinimalEObjectImpl.Container implements Conc
 		super.eUnset(featureID);
 	}
 
-	
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
@@ -128,4 +106,4 @@ public class ConceptA10Impl extends MinimalEObjectImpl.Container implements Conc
 		return super.eIsSet(featureID);
 	}
 
-} //ConceptA10Impl
+}

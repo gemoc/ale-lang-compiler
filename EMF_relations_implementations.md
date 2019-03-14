@@ -8,8 +8,8 @@
 | 5           | *            | 1                     | true       | EObjectContainmentWithInverseEList | simple getter/setter + basic getter/setter + containment specific checks |
 | 6           | 1            | *                     | true       | static error, can't be contained several time | static error, can't be contained several time |
 | 7           | *            | *                     | true       | static error, can't be contained several time | static error, can't be contained several time |
-| 8 | 1 | none |  |  | none |
-| 9 | * | none |  |  | none |
+| 8 | 1 | none | false |  | none |
+| 9 | * | none | false |  | none |
 | 10 | 1 | none | true |  | none |
 | 11 | * | none | true |  | none |
 

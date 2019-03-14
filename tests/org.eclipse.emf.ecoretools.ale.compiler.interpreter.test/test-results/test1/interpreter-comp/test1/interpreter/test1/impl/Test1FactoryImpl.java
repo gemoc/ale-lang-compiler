@@ -1,10 +1,9 @@
 package test1.interpreter.test1.impl;
 
+import java.lang.Deprecated;
 import java.lang.IllegalArgumentException;
-import java.lang.Object;
-import java.lang.String;
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -30,6 +29,7 @@ public class Test1FactoryImpl extends EFactoryImpl implements Test1Factory {
 		return new Test1FactoryImpl();
 	}
 
+	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case Test1Package.CONCEPT_A :
@@ -39,26 +39,17 @@ public class Test1FactoryImpl extends EFactoryImpl implements Test1Factory {
 		}
 	}
 
-	public Object createFromString(EDataType eDataType, String initialValue) {
-		switch (eDataType.getClassifierID()) {
-			default :
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
-
-	public String convertToString(EDataType eDataType, Object instanceValue) {
-		switch (eDataType.getClassifierID()) {
-			default :
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
+	public ConceptA createConceptA() {
+		ConceptAImpl conceptA = new ConceptAImpl();
+		return conceptA;
 	}
 
 	public Test1Package getTest1Package() {
 		return (Test1Package) getEPackage();
 	}
 
-	public ConceptA createConceptA() {
-		ConceptAImpl conceptA = new ConceptAImpl();
-		return conceptA;
+	@Deprecated
+	public static Test1Package getPackage() {
+		return Test1Package.eINSTANCE;
 	}
 }

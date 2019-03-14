@@ -25,9 +25,14 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		super();
 	}
 
+	@Override
+	protected EClass eStaticClass() {
+		return Test1Package.Literals.CONCEPT_A;
+	}
+
 	public EList<Boolean> getBs() {
 		if (bs == null) {
-			bs = new EDataTypeEList<Boolean>(Boolean.class, this, test1.interpreter.test1.Test1Package.CONCEPT_A__BS);
+			bs = new EDataTypeEList<Boolean>(Boolean.class, this, Test1Package.CONCEPT_A__BS);
 		}
 		return bs;
 	}
@@ -41,11 +46,6 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		b = newB;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, Test1Package.CONCEPT_A__B, oldB, b));
-	}
-
-	@Override
-	protected EClass eStaticClass() {
-		return Test1Package.Literals.CONCEPT_A;
 	}
 
 	@Override

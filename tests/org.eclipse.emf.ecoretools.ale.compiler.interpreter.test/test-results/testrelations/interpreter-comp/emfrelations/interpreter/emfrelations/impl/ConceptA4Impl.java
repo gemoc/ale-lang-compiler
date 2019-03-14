@@ -5,7 +5,6 @@ import emfrelations.interpreter.emfrelations.ConceptB4;
 import emfrelations.interpreter.emfrelations.EmfrelationsPackage;
 import java.lang.Object;
 import java.lang.Override;
-import java.lang.SuppressWarnings;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -29,14 +28,11 @@ public class ConceptA4Impl extends MinimalEObjectImpl.Container implements Conce
 		return conceptb4;
 	}
 
-	public NotificationChain basicSetConceptb4(ConceptB4 newConceptb4,
-			NotificationChain msgs) {
+	public NotificationChain basicSetConceptb4(ConceptB4 newConceptb4, NotificationChain msgs) {
 		ConceptB4 oldConceptb4 = conceptb4;
 		conceptb4 = newConceptb4;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-					EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, oldConceptb4,
-					newConceptb4);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, oldConceptb4, newConceptb4);
 			if (msgs == null)
 				msgs = notification;
 			else
@@ -49,18 +45,14 @@ public class ConceptA4Impl extends MinimalEObjectImpl.Container implements Conce
 		if (newConceptb4 != conceptb4) {
 			NotificationChain msgs = null;
 			if (conceptb4 != null)
-				msgs = ((InternalEObject) conceptb4).eInverseRemove(this,
-						EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, ConceptB4.class, msgs);
+				msgs = ((InternalEObject) conceptb4).eInverseRemove(this, EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, ConceptB4.class, msgs);
 			if (newConceptb4 != null)
-				msgs = ((InternalEObject) newConceptb4).eInverseAdd(this,
-						EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, ConceptB4.class, msgs);
+				msgs = ((InternalEObject) newConceptb4).eInverseAdd(this, EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, ConceptB4.class, msgs);
 			msgs = basicSetConceptb4(newConceptb4, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, newConceptb4,
-					newConceptb4));
+			eNotify(new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, newConceptb4, newConceptb4));
 	}
 
 	@Override
@@ -69,10 +61,7 @@ public class ConceptA4Impl extends MinimalEObjectImpl.Container implements Conce
 		switch (featureID) {
 			case EmfrelationsPackage.CONCEPT_A4__CONCEPTB4 :
 				if (conceptb4 != null)
-					msgs = ((InternalEObject) conceptb4).eInverseRemove(this,
-							EOPPOSITE_FEATURE_BASE
-									- EmfrelationsPackage.CONCEPT_A4__CONCEPTB4,
-							null, msgs);
+					msgs = ((InternalEObject) conceptb4).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, null, msgs);
 				return basicSetConceptb4((ConceptB4) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);

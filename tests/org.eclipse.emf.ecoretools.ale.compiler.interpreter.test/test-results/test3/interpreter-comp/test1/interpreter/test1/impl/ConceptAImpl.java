@@ -2,7 +2,6 @@ package test1.interpreter.test1.impl;
 
 import java.lang.Object;
 import java.lang.Override;
-import java.lang.SuppressWarnings;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -34,7 +33,6 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		return cs;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {

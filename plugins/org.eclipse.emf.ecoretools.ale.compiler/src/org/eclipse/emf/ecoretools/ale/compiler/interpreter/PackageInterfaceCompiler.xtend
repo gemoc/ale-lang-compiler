@@ -1,18 +1,18 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 
 import com.squareup.javapoet.ClassName
-import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.JavaFile
+import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
-import org.eclipse.emf.ecore.EAttribute
-import org.eclipse.emf.ecore.EStructuralFeature
-import com.squareup.javapoet.MethodSpec
-import org.eclipse.emf.ecore.EEnum
+
+import static javax.lang.model.element.Modifier.*
 
 class PackageInterfaceCompiler {
 
@@ -34,7 +34,6 @@ class PackageInterfaceCompiler {
 		val eInstanceField = FieldSpec.builder(packageInterfaceType, 'eINSTANCE').initializer('''$T.init()''',
 			packageImplementationType).addModifiers(PUBLIC, STATIC, FINAL).build
 
-		// TODO: really bad naming!
 		val eNSURIField = FieldSpec.builder(String, 'eNS_URI').
 			initializer('$S', '''http://«abstractSyntax.name».«abstractSyntax.name».«abstractSyntax.name»/''').addModifiers(PUBLIC, STATIC, FINAL).build
 
@@ -116,9 +115,19 @@ class PackageInterfaceCompiler {
 			var cptrI = 0
 			val offset = countOffset(clazz)
 			
-			for(EStructuralFeature esf: clazz.EStructuralFeatures) {
-				fieldsAttributesFields.get(clazz).add(FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build)
-				cptrI = cptrI + 1
+			for(esf: clazz.EAllStructuralFeatures) {
+				if(esf.EContainingClass === clazz) {
+					fieldsAttributesFields.get(clazz).add(FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name))
+						.initializer('''«cptrI+offset»''')
+						.addModifiers(PUBLIC, STATIC, FINAL).build
+					)
+					cptrI = cptrI + 1
+				} else {
+					fieldsAttributesFields.get(clazz).add(FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name))
+						.initializer('''«esf.name.normalizeUpperField(esf.EContainingClass.name)»''')
+						.addModifiers(PUBLIC, STATIC, FINAL).build
+					)
+				}
 			}
 		}
 		
@@ -133,14 +142,21 @@ class PackageInterfaceCompiler {
 			.addField(eInstanceField)
 			
 		for(eClassifier: abstractSyntax.EClassifiers) {
-			packageTmp = packageTmp
-				.addField(classFields.get(eClassifier))
-				.addFields(fieldsAttributesFields.get(eClassifier))
-				
+			if(classFields.containsKey(eClassifier)) {
+				packageTmp = packageTmp.addField(classFields.get(eClassifier))
+			}
+			
+			if(fieldsAttributesFields.containsKey(eClassifier))
+				packageTmp = packageTmp.addFields(fieldsAttributesFields.get(eClassifier))
+					
 			if(eClassifier instanceof EClass) {
-				packageTmp = packageTmp.addField(FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_FEATURE_COUNT''', PUBLIC,  STATIC, FINAL).initializer('''«fieldsAttributesFields.get(eClassifier).length»''').build)
-				packageTmp = packageTmp.addField(FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_OPERATION_COUNT''', PUBLIC, STATIC, FINAL).initializer('''0''').build)
-			}			
+				packageTmp = packageTmp.addField(FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_FEATURE_COUNT''', PUBLIC,  STATIC, FINAL)
+					.initializer('''«FOR parentClazz: eClassifier.ESuperTypes»«parentClazz.name.normalizeUpperField»_FEATURE_COUNT + «ENDFOR»«eClassifier.EStructuralFeatures.size»''').build
+				)
+				packageTmp = packageTmp.addField(FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_OPERATION_COUNT''', PUBLIC, STATIC, FINAL)
+					.initializer('''«FOR parentClazz: eClassifier.ESuperTypes»«parentClazz.name.normalizeUpperField»_OPERATION_COUNT + «ENDFOR»0''').build
+				)
+			}
 		}
 		
 		for(eClassifier: abstractSyntax.EClassifiers) {

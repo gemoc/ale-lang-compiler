@@ -1,8 +1,10 @@
 package emfrelations.interpreter.emfrelations.impl;
 
-import fr.mleduc.xp.emfrelations.ConceptA1;
-import fr.mleduc.xp.emfrelations.ConceptB1;
-import fr.mleduc.xp.emfrelations.EmfrelationsPackage;
+import emfrelations.interpreter.emfrelations.ConceptA1;
+import emfrelations.interpreter.emfrelations.ConceptB1;
+import emfrelations.interpreter.emfrelations.EmfrelationsPackage;
+import java.lang.Object;
+import java.lang.Override;
 import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -26,21 +28,17 @@ public class ConceptA1Impl extends MinimalEObjectImpl.Container implements Conce
 
 	public EList<ConceptB1> getConceptb1() {
 		if (conceptb1 == null) {
-			conceptb1 = new EObjectWithInverseResolvingEList<ConceptB1>(ConceptB1.class,
-					this, EmfrelationsPackage.CONCEPT_A1__CONCEPTB1,
-					EmfrelationsPackage.CONCEPT_B1__CONCEPTA1);
+			conceptb1 = new EObjectWithInverseResolvingEList<ConceptB1>(ConceptB1.class, this, EmfrelationsPackage.CONCEPT_A1__CONCEPTB1, EmfrelationsPackage.CONCEPT_B1__CONCEPTA1);
 		}
 		return conceptb1;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {
 		switch (featureID) {
 			case EmfrelationsPackage.CONCEPT_A1__CONCEPTB1 :
-				return ((InternalEList<InternalEObject>) (InternalEList<?>) getConceptb1())
-						.basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>) (InternalEList<?>) getConceptb1()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -64,7 +62,6 @@ public class ConceptA1Impl extends MinimalEObjectImpl.Container implements Conce
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {

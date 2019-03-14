@@ -1,8 +1,11 @@
 package emfrelations.interpreter.emfrelations.impl;
 
-import fr.mleduc.xp.emfrelations.ConceptA5;
-import fr.mleduc.xp.emfrelations.ConceptB5;
-import fr.mleduc.xp.emfrelations.EmfrelationsPackage;
+import emfrelations.interpreter.emfrelations.ConceptA5;
+import emfrelations.interpreter.emfrelations.ConceptB5;
+import emfrelations.interpreter.emfrelations.EmfrelationsPackage;
+import java.lang.IllegalArgumentException;
+import java.lang.Object;
+import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;

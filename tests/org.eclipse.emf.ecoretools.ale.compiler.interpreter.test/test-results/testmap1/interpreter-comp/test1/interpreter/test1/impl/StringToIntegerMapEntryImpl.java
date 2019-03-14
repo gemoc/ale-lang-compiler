@@ -147,8 +147,7 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 		return oldValue;
 	}
 
-	@SuppressWarnings("unchecked")
-	public EMap<String, Integer> getEMap() {
+		public EMap<String, Integer> getEMap() {
 		EObject container = eContainer();
 		return container == null ? null : (EMap<String, Integer>)container.eGet(eContainmentFeature());
 	}

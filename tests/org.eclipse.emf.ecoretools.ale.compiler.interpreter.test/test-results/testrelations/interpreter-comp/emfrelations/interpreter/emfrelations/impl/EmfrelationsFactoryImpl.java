@@ -24,6 +24,7 @@ import emfrelations.interpreter.emfrelations.EmfrelationsFactory;
 import emfrelations.interpreter.emfrelations.EmfrelationsPackage;
 import java.lang.Deprecated;
 import java.lang.IllegalArgumentException;
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -47,6 +48,7 @@ public class EmfrelationsFactoryImpl extends EFactoryImpl implements Emfrelation
 		return new EmfrelationsFactoryImpl();
 	}
 
+	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case EmfrelationsPackage.CONCEPT_A0 :

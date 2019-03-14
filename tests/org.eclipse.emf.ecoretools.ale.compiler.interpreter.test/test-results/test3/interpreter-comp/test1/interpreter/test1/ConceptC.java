@@ -7,5 +7,9 @@ public interface ConceptC extends EObject {
 
 	void setNbr(int value);
 
+	boolean isCool();
+
+	void setCool(boolean value);
+
 	void call();
 }

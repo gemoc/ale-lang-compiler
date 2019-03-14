@@ -4,15 +4,15 @@
   <genPackages prefix="Emfrelations" basePackage="emfrelations.interpreter" disposableProviderFactory="true">
     <ecorePackage href="assets/testrelations/emfrelations.ecore#/"/>
     <genClasses>
-      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConcaptA0"/>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptA0"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConcaptA0/conceptb0"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptA0/conceptb0"/>
       </genFeatures>
     </genClasses>
     <genClasses>
       <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptB0"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptB0/concapta0"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptB0/concepta0"/>
       </genFeatures>
     </genClasses>
     <genClasses>
@@ -52,15 +52,15 @@
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConcaptA4"/>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptA4"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConcaptA4/conceptb4"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptA4/conceptb4"/>
       </genFeatures>
     </genClasses>
     <genClasses>
       <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptB4"/>
       <genFeatures property="None" notify="false" createChild="false">
-        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptB4/concapta4"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptB4/concepta4"/>
       </genFeatures>
     </genClasses>
     <genClasses>
@@ -74,6 +74,42 @@
       <genFeatures property="None" notify="false" createChild="false">
         <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptB5/concepta5"/>
       </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptA8"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptA8/conceptb8"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptB8"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptA9"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptA9/conceptb9"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptB9"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptA10"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptA10/conceptb10"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptB10"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptA11"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/testrelations/emfrelations.ecore#//ConceptA11/conceptb11"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/testrelations/emfrelations.ecore#//ConceptB11"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

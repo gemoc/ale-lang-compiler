@@ -1,8 +1,11 @@
 package emfrelations.interpreter.emfrelations.impl;
 
-import fr.mleduc.xp.emfrelations.ConceptA4;
-import fr.mleduc.xp.emfrelations.ConceptB4;
-import fr.mleduc.xp.emfrelations.EmfrelationsPackage;
+import emfrelations.interpreter.emfrelations.ConceptA4;
+import emfrelations.interpreter.emfrelations.ConceptB4;
+import emfrelations.interpreter.emfrelations.EmfrelationsPackage;
+import java.lang.IllegalArgumentException;
+import java.lang.Object;
+import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -29,31 +32,24 @@ public class ConceptB4Impl extends MinimalEObjectImpl.Container implements Conce
 
 	public NotificationChain basicSetConcepta4(ConceptA4 newConcepta4,
 			NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject) newConcepta4,
-				EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, msgs);
+		msgs = eBasicSetContainer((InternalEObject) newConcepta4, EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, msgs);
 		return msgs;
 	}
 
 	public void setConcepta4(ConceptA4 newConcepta4) {
-		if (newConcepta4 != eInternalContainer()
-				|| (eContainerFeatureID() != EmfrelationsPackage.CONCEPT_B4__CONCEPTA4
-						&& newConcepta4 != null)) {
+		if (newConcepta4 != eInternalContainer() || (eContainerFeatureID() != EmfrelationsPackage.CONCEPT_B4__CONCEPTA4 && newConcepta4 != null)) {
 			if (EcoreUtil.isAncestor(this, newConcepta4))
-				throw new IllegalArgumentException(
-						"Recursive containment not allowed for " + toString());
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newConcepta4 != null)
-				msgs = ((InternalEObject) newConcepta4).eInverseAdd(this,
-						EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, ConceptA4.class, msgs);
+				msgs = ((InternalEObject) newConcepta4).eInverseAdd(this, EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, ConceptA4.class, msgs);
 			msgs = basicSetConcepta4(newConcepta4, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, newConcepta4,
-					newConcepta4));
+			eNotify(new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, newConcepta4, newConcepta4));
 	}
 
 	@Override
@@ -82,8 +78,7 @@ public class ConceptB4Impl extends MinimalEObjectImpl.Container implements Conce
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case EmfrelationsPackage.CONCEPT_B4__CONCEPTA4 :
-				return eInternalContainer().eInverseRemove(this,
-						EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, ConceptA4.class, msgs);
+				return eInternalContainer().eInverseRemove(this, EmfrelationsPackage.CONCEPT_A4__CONCEPTB4, ConceptA4.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}

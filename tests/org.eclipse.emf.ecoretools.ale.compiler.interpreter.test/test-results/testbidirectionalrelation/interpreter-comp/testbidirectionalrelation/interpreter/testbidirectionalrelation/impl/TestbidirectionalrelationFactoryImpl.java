@@ -1,10 +1,9 @@
 package testbidirectionalrelation.interpreter.testbidirectionalrelation.impl;
 
+import java.lang.Deprecated;
 import java.lang.IllegalArgumentException;
-import java.lang.Object;
-import java.lang.String;
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -18,14 +17,6 @@ import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptF;
 import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptG;
 import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationFactory;
 import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-
-import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import testbidirectionalrelation.*;
 
 public class TestbidirectionalrelationFactoryImpl extends EFactoryImpl implements TestbidirectionalrelationFactory {
 	public TestbidirectionalrelationFactoryImpl() {
@@ -34,8 +25,7 @@ public class TestbidirectionalrelationFactoryImpl extends EFactoryImpl implement
 
 	public static TestbidirectionalrelationFactory init() {
 		try {
-			TestbidirectionalrelationFactory theTestbidirectionalrelationFactory = (TestbidirectionalrelationFactory) EPackage.Registry.INSTANCE
-					.getEFactory(TestbidirectionalrelationPackage.eNS_URI);
+			TestbidirectionalrelationFactory theTestbidirectionalrelationFactory = (TestbidirectionalrelationFactory) EPackage.Registry.INSTANCE.getEFactory(TestbidirectionalrelationPackage.eNS_URI);
 			if (theTestbidirectionalrelationFactory != null) {
 				return theTestbidirectionalrelationFactory;
 			}
@@ -44,7 +34,6 @@ public class TestbidirectionalrelationFactoryImpl extends EFactoryImpl implement
 		}
 		return new TestbidirectionalrelationFactoryImpl();
 	}
-
 
 	@Override
 	public EObject create(EClass eClass) {
@@ -64,8 +53,7 @@ public class TestbidirectionalrelationFactoryImpl extends EFactoryImpl implement
 			case TestbidirectionalrelationPackage.CONCEPT_G :
 				return createConceptG();
 			default :
-				throw new IllegalArgumentException(
-						"The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 

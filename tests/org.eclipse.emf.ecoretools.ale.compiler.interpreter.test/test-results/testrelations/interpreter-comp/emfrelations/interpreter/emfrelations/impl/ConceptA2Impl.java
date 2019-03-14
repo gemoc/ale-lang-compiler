@@ -1,8 +1,10 @@
 package emfrelations.interpreter.emfrelations.impl;
 
-import fr.mleduc.xp.emfrelations.ConceptA2;
-import fr.mleduc.xp.emfrelations.ConceptB2;
-import fr.mleduc.xp.emfrelations.EmfrelationsPackage;
+import emfrelations.interpreter.emfrelations.ConceptA2;
+import emfrelations.interpreter.emfrelations.ConceptB2;
+import emfrelations.interpreter.emfrelations.EmfrelationsPackage;
+import java.lang.Object;
+import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -28,9 +30,7 @@ public class ConceptA2Impl extends MinimalEObjectImpl.Container implements Conce
 			conceptb2 = (ConceptB2) eResolveProxy(oldConceptb2);
 			if (conceptb2 != oldConceptb2) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-							EmfrelationsPackage.CONCEPT_A2__CONCEPTB2, oldConceptb2,
-							conceptb2));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EmfrelationsPackage.CONCEPT_A2__CONCEPTB2, oldConceptb2, conceptb2));
 			}
 		}
 		return conceptb2;
@@ -40,14 +40,11 @@ public class ConceptA2Impl extends MinimalEObjectImpl.Container implements Conce
 		return conceptb2;
 	}
 
-	public NotificationChain basicSetConceptb2(ConceptB2 newConceptb2,
-			NotificationChain msgs) {
+	public NotificationChain basicSetConceptb2(ConceptB2 newConceptb2, NotificationChain msgs) {
 		ConceptB2 oldConceptb2 = conceptb2;
 		conceptb2 = newConceptb2;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-					EmfrelationsPackage.CONCEPT_A2__CONCEPTB2, oldConceptb2,
-					newConceptb2);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A2__CONCEPTB2, oldConceptb2, newConceptb2);
 			if (msgs == null)
 				msgs = notification;
 			else
@@ -60,18 +57,14 @@ public class ConceptA2Impl extends MinimalEObjectImpl.Container implements Conce
 		if (newConceptb2 != conceptb2) {
 			NotificationChain msgs = null;
 			if (conceptb2 != null)
-				msgs = ((InternalEObject) conceptb2).eInverseRemove(this,
-						EmfrelationsPackage.CONCEPT_B2__CONCEPTA2, ConceptB2.class, msgs);
+				msgs = ((InternalEObject) conceptb2).eInverseRemove(this, EmfrelationsPackage.CONCEPT_B2__CONCEPTA2, ConceptB2.class, msgs);
 			if (newConceptb2 != null)
-				msgs = ((InternalEObject) newConceptb2).eInverseAdd(this,
-						EmfrelationsPackage.CONCEPT_B2__CONCEPTA2, ConceptB2.class, msgs);
+				msgs = ((InternalEObject) newConceptb2).eInverseAdd(this, EmfrelationsPackage.CONCEPT_B2__CONCEPTA2, ConceptB2.class, msgs);
 			msgs = basicSetConceptb2(newConceptb2, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					EmfrelationsPackage.CONCEPT_A2__CONCEPTB2, newConceptb2,
-					newConceptb2));
+			eNotify(new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A2__CONCEPTB2, newConceptb2, newConceptb2));
 	}
 
 	@Override
@@ -80,9 +73,7 @@ public class ConceptA2Impl extends MinimalEObjectImpl.Container implements Conce
 		switch (featureID) {
 			case EmfrelationsPackage.CONCEPT_A2__CONCEPTB2 :
 				if (conceptb2 != null)
-					msgs = ((InternalEObject) conceptb2).eInverseRemove(this,
-							EmfrelationsPackage.CONCEPT_B2__CONCEPTA2, ConceptB2.class,
-							msgs);
+					msgs = ((InternalEObject) conceptb2).eInverseRemove(this, EmfrelationsPackage.CONCEPT_B2__CONCEPTA2, ConceptB2.class, msgs);
 				return basicSetConceptb2((ConceptB2) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);

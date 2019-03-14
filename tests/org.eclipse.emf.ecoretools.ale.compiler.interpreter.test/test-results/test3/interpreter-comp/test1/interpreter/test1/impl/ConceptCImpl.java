@@ -1,5 +1,6 @@
 package test1.interpreter.test1.impl;
 
+import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
@@ -13,10 +14,19 @@ import test1.interpreter.test1.Test1Package;
 public class ConceptCImpl extends MinimalEObjectImpl.Container implements ConceptC {
 	protected static final int NBR_EDEFAULT = 0;
 
+	protected static final boolean COOL_EDEFAULT = false;
+
 	protected int nbr = NBR_EDEFAULT;
+
+	protected boolean cool = COOL_EDEFAULT;
 
 	protected ConceptCImpl() {
 		super();
+	}
+
+	@Override
+	protected EClass eStaticClass() {
+		return Test1Package.Literals.CONCEPT_C;
 	}
 
 	public int getNbr() {
@@ -30,9 +40,15 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 			eNotify(new ENotificationImpl(this, Notification.SET, Test1Package.CONCEPT_C__NBR, oldNbr, nbr));
 	}
 
-	@Override
-	protected EClass eStaticClass() {
-		return Test1Package.Literals.CONCEPT_C;
+	public boolean isCool() {
+		return cool;
+	}
+
+	public void setCool(boolean newCool) {
+		boolean oldCool = cool;
+		cool = newCool;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, Test1Package.CONCEPT_C__COOL, oldCool, cool));
 	}
 
 	@Override
@@ -40,6 +56,8 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		switch (featureID) {
 			case Test1Package.CONCEPT_C__NBR :
 				return getNbr();
+			case Test1Package.CONCEPT_C__COOL :
+				return isCool();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -49,6 +67,9 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		switch (featureID) {
 			case Test1Package.CONCEPT_C__NBR :
 				setNbr((Integer) newValue);
+				return;
+			case Test1Package.CONCEPT_C__COOL :
+				setCool((Boolean) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -60,6 +81,9 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 			case Test1Package.CONCEPT_C__NBR :
 				setNbr(NBR_EDEFAULT);
 				return;
+			case Test1Package.CONCEPT_C__COOL :
+				setCool(COOL_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -69,6 +93,8 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		switch (featureID) {
 			case Test1Package.CONCEPT_C__NBR :
 				return nbr != NBR_EDEFAULT;
+			case Test1Package.CONCEPT_C__COOL :
+				return cool != COOL_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}

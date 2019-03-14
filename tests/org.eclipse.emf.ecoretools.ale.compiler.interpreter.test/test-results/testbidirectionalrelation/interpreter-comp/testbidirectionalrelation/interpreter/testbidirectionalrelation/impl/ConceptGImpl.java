@@ -1,25 +1,20 @@
 package testbidirectionalrelation.interpreter.testbidirectionalrelation.impl;
 
+import java.lang.Object;
+import java.lang.Override;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
-import testbidirectionalrelation.ConceptF;
-import testbidirectionalrelation.ConceptG;
-import testbidirectionalrelation.TestbidirectionalrelationPackage;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptF;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptG;
+import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage;
 
 public class ConceptGImpl extends MinimalEObjectImpl.Container implements ConceptG {
-
 	protected EList<ConceptF> conceptf;
 
 	protected ConceptGImpl() {
@@ -33,22 +28,17 @@ public class ConceptGImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public EList<ConceptF> getConceptf() {
 		if (conceptf == null) {
-			conceptf = new EObjectWithInverseResolvingEList.ManyInverse<ConceptF>(
-					ConceptF.class, this,
-					TestbidirectionalrelationPackage.CONCEPT_G__CONCEPTF,
-					TestbidirectionalrelationPackage.CONCEPT_F__CONCEPTG);
+			conceptf = new EObjectWithInverseResolvingEList.ManyInverse<ConceptF>(ConceptF.class, this, TestbidirectionalrelationPackage.CONCEPT_G__CONCEPTF, TestbidirectionalrelationPackage.CONCEPT_F__CONCEPTG);
 		}
 		return conceptf;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {
 		switch (featureID) {
 			case TestbidirectionalrelationPackage.CONCEPT_G__CONCEPTF :
-				return ((InternalEList<InternalEObject>) (InternalEList<?>) getConceptf())
-						.basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>) (InternalEList<?>) getConceptf()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -72,7 +62,6 @@ public class ConceptGImpl extends MinimalEObjectImpl.Container implements Concep
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -102,5 +91,4 @@ public class ConceptGImpl extends MinimalEObjectImpl.Container implements Concep
 		}
 		return super.eIsSet(featureID);
 	}
-
 }

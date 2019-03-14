@@ -7,15 +7,13 @@ import org.eclipse.emf.ecore.EReference;
 import testbidirectionalrelation.interpreter.testbidirectionalrelation.impl.TestbidirectionalrelationPackageImpl;
 
 public interface TestbidirectionalrelationPackage extends EPackage {
-
-	TestbidirectionalrelationPackage eINSTANCE = testbidirectionalrelation.impl.TestbidirectionalrelationPackageImpl
-			.init();
-
-	String eNS_URI = "http://testbidirectionalrelation";
-
 	String eNAME = "testbidirectionalrelation";
 
+	String eNS_URI = "http://testbidirectionalrelation.testbidirectionalrelation.testbidirectionalrelation/";
+
 	String eNS_PREFIX = "testbidirectionalrelation";
+
+	TestbidirectionalrelationPackage eINSTANCE = TestbidirectionalrelationPackageImpl.init();
 
 	int CONCEPT_A = 0;
 
@@ -124,7 +122,6 @@ public interface TestbidirectionalrelationPackage extends EPackage {
 	TestbidirectionalrelationFactory getTestbidirectionalrelationFactory();
 
 	interface Literals {
-
 		EClass CONCEPT_A = eINSTANCE.getConceptA();
 
 		EReference CONCEPT_A__CONCEPTB = eINSTANCE.getConceptA_Conceptb();
@@ -162,7 +159,5 @@ public interface TestbidirectionalrelationPackage extends EPackage {
 		EClass CONCEPT_G = eINSTANCE.getConceptG();
 
 		EReference CONCEPT_G__CONCEPTF = eINSTANCE.getConceptG_Conceptf();
-
 	}
-
 }

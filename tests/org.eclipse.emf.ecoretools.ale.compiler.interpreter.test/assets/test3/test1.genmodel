@@ -12,6 +12,7 @@
     <genClasses ecoreClass="test1.ecore#//ConceptB"/>
     <genClasses ecoreClass="test1.ecore#//ConceptC">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test1.ecore#//ConceptC/nbr"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test1.ecore#//ConceptC/cool"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

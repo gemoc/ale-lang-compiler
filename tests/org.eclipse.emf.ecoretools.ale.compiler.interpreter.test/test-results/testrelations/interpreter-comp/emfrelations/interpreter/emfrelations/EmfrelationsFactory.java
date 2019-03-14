@@ -1,9 +1,10 @@
 package emfrelations.interpreter.emfrelations;
 
+import emfrelations.interpreter.emfrelations.impl.EmfrelationsFactoryImpl;
 import org.eclipse.emf.ecore.EFactory;
 
 public interface EmfrelationsFactory extends EFactory {
-	EmfrelationsFactory eINSTANCE = fr.mleduc.xp.emfrelations.impl.EmfrelationsFactoryImpl.init();
+	EmfrelationsFactory eINSTANCE = EmfrelationsFactoryImpl.init();
 
 	ConceptA0 createConceptA0();
 
@@ -28,6 +29,22 @@ public interface EmfrelationsFactory extends EFactory {
 	ConceptA5 createConceptA5();
 
 	ConceptB5 createConceptB5();
+
+	ConceptA8 createConceptA8();
+
+	ConceptB8 createConceptB8();
+
+	ConceptA9 createConceptA9();
+
+	ConceptB9 createConceptB9();
+
+	ConceptA10 createConceptA10();
+
+	ConceptB10 createConceptB10();
+
+	ConceptA11 createConceptA11();
+
+	ConceptB11 createConceptB11();
 
 	EmfrelationsPackage getEmfrelationsPackage();
 }

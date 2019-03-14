@@ -1,25 +1,20 @@
 package testbidirectionalrelation.interpreter.testbidirectionalrelation.impl;
 
+import java.lang.Object;
+import java.lang.Override;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptF;
 import testbidirectionalrelation.interpreter.testbidirectionalrelation.ConceptG;
 import testbidirectionalrelation.interpreter.testbidirectionalrelation.TestbidirectionalrelationPackage;
 
 public class ConceptFImpl extends MinimalEObjectImpl.Container implements ConceptF {
-
 	protected EList<ConceptG> conceptg;
 
 	protected ConceptFImpl() {
@@ -38,7 +33,6 @@ public class ConceptFImpl extends MinimalEObjectImpl.Container implements Concep
 		return conceptg;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {
@@ -68,7 +62,6 @@ public class ConceptFImpl extends MinimalEObjectImpl.Container implements Concep
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -98,5 +91,4 @@ public class ConceptFImpl extends MinimalEObjectImpl.Container implements Concep
 		}
 		return super.eIsSet(featureID);
 	}
-
 }

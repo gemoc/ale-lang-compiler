@@ -17,6 +17,9 @@
       <genFeatures createChild="false">
         <ecoreFeature xsi:type="ecore:EAttribute" href="assets/test3/test1.ecore#//ConceptC/nbr"/>
       </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/test3/test1.ecore#//ConceptC/cool"/>
+      </genFeatures>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

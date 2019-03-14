@@ -4,10 +4,10 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.lang.SuppressWarnings;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -34,7 +34,6 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		return cs;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
 			NotificationChain msgs) {
@@ -61,7 +60,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__CS :
-				((org.eclipse.emf.ecore.EStructuralFeature.Setting)getCs()).set(newValue);
+				((EStructuralFeature.Setting)getCs()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
