@@ -75,6 +75,8 @@ class EClassImplementationCompiler {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 	}
+	
+	
 
 	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
@@ -93,10 +95,17 @@ class EClassImplementationCompiler {
 				#[fieldField]
 			} else {
 				val edefault = if(fet instanceof EEnum) {
-					FieldSpec
+					var tmpfs = FieldSpec
 						.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
-						.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«namingUtils.classInterfacePackageName(fet, packageRoot)».«namingUtils.classInterfaceClassName(fet)».valueOf("«field.defaultValue.toString.toUpperCase»")«ENDIF»''')
-						.addModifiers(PROTECTED, STATIC, FINAL).build
+						
+					if(field.defaultValue === null || field.defaultValue.toString == '')
+						tmpfs = tmpfs.initializer('''null''')
+					else
+						tmpfs = tmpfs.initializer('''$T.«field.defaultValue.toString.toUpperCase»''', 
+							ClassName.get(namingUtils.classInterfacePackageName(fet, packageRoot), namingUtils.classInterfaceClassName(fet))
+						)
+						
+					tmpfs.addModifiers(PROTECTED, STATIC, FINAL).build
 				} else {
 					FieldSpec
 						.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
@@ -104,7 +113,7 @@ class EClassImplementationCompiler {
 						.addModifiers(PROTECTED, STATIC, FINAL).build
 				}
 	
-				val fieldField = FieldSpec.builder(type, field.name).initializer('''«field.name.toUpperCase»_EDEFAULT''').
+				val fieldField = FieldSpec.builder(type, field.name.normalizeVarName).initializer('''«field.name.toUpperCase»_EDEFAULT''').
 					addModifiers(PROTECTED).build
 				#[edefault, fieldField]
 				
@@ -181,7 +190,7 @@ class EClassImplementationCompiler {
 			)
 			for(esf: eClass.EStructuralFeatures) {
 				if(esf instanceof EAttribute) {
-					val tn = TypeName.get(esf.EType.instanceClass).box
+					val tn = esf.EType.scopedTypeRef(packageRoot).box
 					namedMap.put("fieldtype" + esf.name, tn)
 					val genericType = WildcardTypeName.subtypeOf(tn)
 					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), genericType))					
@@ -293,9 +302,9 @@ class EClassImplementationCompiler {
 					case $1T.«esf.name.normalizeUpperField(eClass.name)» :
 						«IF esf instanceof EAttribute»
 							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-							return «esf.name» != «esf.name.toUpperCase»_EDEFAULT;
+							return «esf.name.normalizeVarName» != «esf.name.toUpperCase»_EDEFAULT;
 							«ELSE»
-							return «esf.name» != null && !«esf.name».isEmpty();
+							return «esf.name.normalizeVarName» != null && !«esf.name.normalizeVarName».isEmpty();
 							«ENDIF»
 						«ELSE»
 							«IF esf.upperBound <= 1»
@@ -303,9 +312,9 @@ class EClassImplementationCompiler {
 								return get«esf.name.toFirstUpper»() != null;
 								«ELSE»
 								«IF esf.upperBound == 0 || esf.upperBound == 1»
-								return «esf.name» != null;
+								return «esf.name.normalizeVarName» != null;
 								«ELSE»
-								return «esf.name» != null && !«esf.name».isEmpty();
+								return «esf.name.normalizeVarName» != null && !«esf.name.normalizeVarName».isEmpty();
 								«ENDIF»
 								«ENDIF»
 							«ELSE»

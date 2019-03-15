@@ -61,6 +61,21 @@ class EClassInterfaceCompiler {
 			.addMethod(MethodSpec
 				.methodBuilder('''get''')
 				.returns(selfClass)
+				.addParameter(int, 'value')
+				.addCode('''
+				switch (value) {
+					«FOR lit:eEnum.ELiterals»
+					case «lit.name»_VALUE: return «lit.name»;
+					«ENDFOR»
+				}
+				return null;
+				''', selfClass)
+				.addModifiers(PUBLIC, STATIC)
+				.build
+			)
+			.addMethod(MethodSpec
+				.methodBuilder('''get''')
+				.returns(selfClass)
 				.addParameter(String, 'literal')
 				.addCode('''
 				for (int i = 0; i < VALUES_ARRAY.length; ++i) {
@@ -84,22 +99,6 @@ class EClassInterfaceCompiler {
 					if (result.getName().equals(name)) {
 						return result;
 					}
-				}
-				return null;
-				''', selfClass)
-				.addModifiers(PUBLIC, STATIC)
-				.build
-			)
-			.addMethod(MethodSpec
-				.methodBuilder('''get''')
-				.returns(selfClass)
-				.addParameter(int, 'value')
-				.addCode('''
-				switch (value) {
-				«FOR lit:eEnum.ELiterals»
-				case «lit.name»_VALUE:
-					return «lit.name»;
-				«ENDFOR»
 				}
 				return null;
 				''', selfClass)
@@ -151,6 +150,7 @@ class EClassInterfaceCompiler {
 			)
 			.addMethod(MethodSpec
 				.methodBuilder('toString')
+				.addAnnotation(Override)
 				.returns(String)
 				.addCode('''
 				return literal;

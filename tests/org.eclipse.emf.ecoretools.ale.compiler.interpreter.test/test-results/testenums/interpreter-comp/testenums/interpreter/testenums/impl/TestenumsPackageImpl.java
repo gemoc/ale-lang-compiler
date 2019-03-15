@@ -1,41 +1,39 @@
-
-package testenums.impl;
+package testenums.interpreter.testenums.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import testenums.Enum1;
-import testenums.Root;
-import testenums.TestenumsFactory;
-import testenums.TestenumsPackage;
-
+import testenums.interpreter.testenums.Enum1;
+import testenums.interpreter.testenums.Root;
+import testenums.interpreter.testenums.TestenumsFactory;
+import testenums.interpreter.testenums.TestenumsPackage;
 
 public class TestenumsPackageImpl extends EPackageImpl implements TestenumsPackage {
-	
+	private static boolean isInited = false;
+
 	private EClass rootEClass = null;
 
-	
 	private EEnum enum1EEnum = null;
 
-	
+	private boolean isCreated = false;
+
+	private boolean isInitialized = false;
+
 	private TestenumsPackageImpl() {
 		super(eNS_URI, TestenumsFactory.eINSTANCE);
 	}
 
-	
-	private static boolean isInited = false;
-
-	
 	public static TestenumsPackage init() {
-		if (isInited) return (TestenumsPackage)EPackage.Registry.INSTANCE.getEPackage(TestenumsPackage.eNS_URI);
+		if (isInited)
+			return (TestenumsPackage) EPackage.Registry.INSTANCE.getEPackage(TestenumsPackage.eNS_URI);
 
 		// Obtain or create and register package
 		Object registeredTestenumsPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-		TestenumsPackageImpl theTestenumsPackage = registeredTestenumsPackage instanceof TestenumsPackageImpl ? (TestenumsPackageImpl)registeredTestenumsPackage : new TestenumsPackageImpl();
+		TestenumsPackageImpl theTestenumsPackage = registeredTestenumsPackage instanceof TestenumsPackageImpl
+				? (TestenumsPackageImpl) registeredTestenumsPackage
+				: new TestenumsPackageImpl();
 
 		isInited = true;
 
@@ -53,37 +51,29 @@ public class TestenumsPackageImpl extends EPackageImpl implements TestenumsPacka
 		return theTestenumsPackage;
 	}
 
-	
 	public EClass getRoot() {
 		return rootEClass;
 	}
 
-	
 	public EAttribute getRoot_Enum() {
-		return (EAttribute)rootEClass.getEStructuralFeatures().get(0);
+		return (EAttribute) rootEClass.getEStructuralFeatures().get(0);
 	}
 
-	
 	public EAttribute getRoot_Enums() {
-		return (EAttribute)rootEClass.getEStructuralFeatures().get(1);
+		return (EAttribute) rootEClass.getEStructuralFeatures().get(1);
 	}
 
-	
 	public EEnum getEnum1() {
 		return enum1EEnum;
 	}
 
-	
 	public TestenumsFactory getTestenumsFactory() {
-		return (TestenumsFactory)getEFactoryInstance();
+		return (TestenumsFactory) getEFactoryInstance();
 	}
 
-	
-	private boolean isCreated = false;
-
-	
 	public void createPackageContents() {
-		if (isCreated) return;
+		if (isCreated)
+			return;
 		isCreated = true;
 
 		// Create classes and their features
@@ -95,12 +85,9 @@ public class TestenumsPackageImpl extends EPackageImpl implements TestenumsPacka
 		enum1EEnum = createEEnum(ENUM1);
 	}
 
-	
-	private boolean isInitialized = false;
-
-	
 	public void initializePackageContents() {
-		if (isInitialized) return;
+		if (isInitialized)
+			return;
 		isInitialized = true;
 
 		// Initialize package
@@ -127,5 +114,4 @@ public class TestenumsPackageImpl extends EPackageImpl implements TestenumsPacka
 		// Create resource
 		createResource(eNS_URI);
 	}
-
-} //TestenumsPackageImpl
+}

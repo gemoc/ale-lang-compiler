@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/testenums/interpreter-comp" complianceLevel="8.0" copyrightFields="false">
+  <foreignModel>testenums.ecore</foreignModel>
+  <genPackages prefix="Testenums" basePackage="testenums.interpreter" disposableProviderFactory="true">
+    <ecorePackage href="assets/testenums/testenums.ecore#/"/>
+    <genEnums typeSafeEnumCompatible="false">
+      <ecoreEnum href="assets/testenums/testenums.ecore#//Enum1"/>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="assets/testenums/testenums.ecore#//Enum1/LITERAL0"/>
+      </genEnumLiterals>
+      <genEnumLiterals>
+        <ecoreEnumLiteral href="assets/testenums/testenums.ecore#//Enum1/LITERAL1"/>
+      </genEnumLiterals>
+    </genEnums>
+    <genClasses>
+      <ecoreClass href="assets/testenums/testenums.ecore#//Root"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/testenums/testenums.ecore#//Root/enum"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/testenums/testenums.ecore#//Root/enums"/>
+      </genFeatures>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -77,38 +77,48 @@ class FactoryImplementationCompiler {
 			}
 		''', packageInterfaceType, IllegalArgumentException).addModifiers(PUBLIC).build
 		
+		val createFromStringMethodMap = newHashMap(
+			"iae" -> ClassName.get(IllegalArgumentException)	
+		)
+		
+		for(eEnum: allEnum) {
+			createFromStringMethodMap.put('''type«eEnum.name»'''.toString, ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName))
+		}
+		
 		val createFromStringMethod = if(!allEnum.empty) {
 			#[MethodSpec
 			.methodBuilder('createFromString')
+			.addAnnotation(Override)
 			.returns(Object)
 			.addParameter(ClassName.get('org.eclipse.emf.ecore', 'EDataType'), 'eDataType')
 			.addParameter(String, 'initialValue')
-			.addCode('''
+			.addNamedCode('''
 			switch (eDataType.getClassifierID()) {
 				«FOR eEnum:allEnum»
-				case «abstractSyntax.packageInterfacePackageName(packageRoot)».«abstractSyntax.packageInterfaceClassName».«eEnum.name.normalizeUpperField» :
+				case $type«eEnum.name»:T.«eEnum.name.normalizeUpperField» :
 					return create«eEnum.name»FromString(eDataType, initialValue);
 				«ENDFOR»
 				default :
-					throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+					throw new $iae:T("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 			}
-			''')
+			''', createFromStringMethodMap)
 			.addModifiers(PUBLIC)
 			.build, MethodSpec
 			.methodBuilder('convertToString')
 			.returns(String)
+			.addAnnotation(Override)
 			.addParameter(ClassName.get('org.eclipse.emf.ecore', 'EDataType'), 'eDataType')
 			.addParameter(Object, 'instanceValue')
-			.addCode('''
+			.addNamedCode('''
 			switch (eDataType.getClassifierID()) {
 				«FOR eEnum: allEnum»
-				case «abstractSyntax.packageInterfacePackageName(packageRoot)».«abstractSyntax.packageInterfaceClassName».«eEnum.name.normalizeUpperField» :
+				case $type«eEnum.name»:T.«eEnum.name.normalizeUpperField» :
 					return convert«eEnum.name»ToString(eDataType, instanceValue);
 				«ENDFOR»
 				default :
-					throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+					throw new $iae:T("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 			}
-			''')
+			''', createFromStringMethodMap)
 			.addModifiers(PUBLIC)
 			.build]
 			

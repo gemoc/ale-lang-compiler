@@ -13,6 +13,11 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 
 import static javax.lang.model.element.Modifier.*
+import java.util.HashMap
+import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.EClassifier
+import org.eclipse.emf.ecore.ETypedElement
+import org.eclipse.emf.ecore.ENamedElement
 
 class PackageInterfaceCompiler {
 
@@ -59,7 +64,7 @@ class PackageInterfaceCompiler {
 		}
 		
 		val classFieldsLiterals = newHashMap
-		val classStructuralFeaturesLiterals = newHashMap
+		val HashMap<EClassifier, HashMap<ENamedElement, FieldSpec>> classStructuralFeaturesLiterals = newHashMap
 		for(clazz: allClasses) {
 			classFieldsLiterals.put(clazz, FieldSpec.builder(EClass, clazz.name.normalizeUpperField).
 				initializer('''eINSTANCE.get«clazz.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build)
@@ -73,13 +78,21 @@ class PackageInterfaceCompiler {
 				classStructuralFeaturesLiterals.get(clazz).put(field, FieldSpec.builder(EAttribute, field.name.normalizeUpperField(clazz.name)).initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build)
 			}
 		}
+		
+		for(EEnum eEnum : allEnums) {
+			classFieldsLiterals.put(eEnum, FieldSpec.builder(EEnum, eEnum.name.toUpperCase).initializer('''eINSTANCE.get«eEnum.name.toFirstUpper»()''').addModifiers(PUBLIC, STATIC, FINAL).build)
+		}
 
 		var tmpliteralType = TypeSpec.interfaceBuilder('Literals')
 		
-		for(clazz: allClasses) {
-			tmpliteralType = tmpliteralType.addField(classFieldsLiterals.get(clazz))
-			for(esf: clazz.EStructuralFeatures) {
-				tmpliteralType = tmpliteralType.addField(classStructuralFeaturesLiterals.get(clazz).get(esf))
+		for (clazz : abstractSyntax.EClassifiers) {
+			if (clazz instanceof EClass) {
+				tmpliteralType = tmpliteralType.addField(classFieldsLiterals.get(clazz))
+				for (esf : clazz.EStructuralFeatures) {
+					tmpliteralType = tmpliteralType.addField(classStructuralFeaturesLiterals.get(clazz).get(esf))
+				}
+			} else if (clazz instanceof EEnum) {
+				tmpliteralType = tmpliteralType.addField(classFieldsLiterals.get(clazz))
 			}
 		}
 		

@@ -78,8 +78,6 @@ class InterpreterNamingUtils {
 	def String classImplementationClassName(EClass eClass) {
 		'''«eClass.name.toFirstUpper»Impl'''
 	}
-	
-	
 
 	def String normalizeUpperField(String input) {
 		'''«CodeGenUtil.format(input, '_', '', false, false)»'''.toString.toUpperCase
@@ -98,4 +96,12 @@ class InterpreterNamingUtils {
 	def String normalizeExtendedClassName(ExtendedClass ec) {
 		ec.name.split('\\.').reverse.head.toFirstUpper
 	}
+	
+	def normalizeVarName(String name) {
+		if(name == "enum") 'enum_'
+		else name
+	}
+	
+	def String normalizeVarNewName(String name) '''new«name.toFirstUpper»''' 
+	def String normalizeVarOldName(String name) '''old«name.toFirstUpper»'''
 }

@@ -95,9 +95,13 @@ class PackageImplementationCompiler {
 						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
+				«IF !allEnums.empty»
+
+				// Create enums
 				«FOR eEnum : allEnums»
 					«eEnum.name.toFirstLower»EEnum = createEEnum(«eEnum.name.normalizeUpperField»);
 				«ENDFOR»
+				«ENDIF»
 			''').build
 			
 		val hm = newHashMap()
@@ -143,45 +147,65 @@ class PackageImplementationCompiler {
 								initEReference(get«eClass.name»_«eAttr.name.toFirstUpper»(), this.get«eAttr.EType.name»(), «IF eAttr.EOpposite !== null»this.get«eAttr.EOpposite.name.normalizeUpperMethod((eAttr.EOpposite.eContainer as EClass).name)»()«ELSE»null«ENDIF», "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound», $type«eClass.name»:T.class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.isVolatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.isChangeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.isContainment»«ELSE»!«ENDIF»IS_COMPOSITE, «IF eAttr.isResolveProxiesFlag»«ELSE»!«ENDIF»IS_RESOLVE_PROXIES, «IF eAttr.isUnsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 							«ENDIF»				
 						«ELSEIF eAttr.EType instanceof EEnum»
-							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), this.get«eAttr.EType.name.toFirstUpper»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound», $type«eClass.name»:T.class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
+							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), this.get«eAttr.EType.name.toFirstUpper»(), "«eAttr.name»", «IF eAttr.defaultValue === null»null«ELSE»"«eAttr.defaultValue»"«ENDIF», «eAttr.lowerBound», «eAttr.upperBound», $type«eClass.name»:T.class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 						«ELSE»
 							initEAttribute(get«eAttr.name.normalizeUpperMethod(eClass.name)»(), ecorePackage.get«IF !eAttr.EType.name.startsWith('E')»E«ENDIF»«eAttr.EType.name»(), "«eAttr.name»", null, «eAttr.lowerBound», «eAttr.upperBound», $type«eClass.name»:T.class, «IF eAttr.isTransient»«ELSE»!«ENDIF»IS_TRANSIENT, «IF eAttr.volatile»«ELSE»!«ENDIF»IS_VOLATILE, «IF eAttr.changeable»«ELSE»!«ENDIF»IS_CHANGEABLE, «IF eAttr.unsettable»«ELSE»!«ENDIF»IS_UNSETTABLE, «IF (eAttr as EAttribute).isID»«ELSE»!«ENDIF»IS_ID, «IF eAttr.isUnique»«ELSE»!«ENDIF»IS_UNIQUE, «IF eAttr.isDerived»«ELSE»!«ENDIF»IS_DERIVED, «IF eAttr.isOrdered»«ELSE»!«ENDIF»IS_ORDERED);
 						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
+				«IF !allEnums.empty»
+				
+				// Initialize enums and add enum literals
 				«FOR eEnum: allEnums»
 				initEEnum(«eEnum.name.toFirstLower»EEnum, $type«eEnum.name»:T.class, "«eEnum.name»");
 				«FOR lit: eEnum.ELiterals»
-				addEEnumLiteral(«eEnum.name.toFirstLower»EEnum, $type«eEnum.name»:T.class.«lit.name»);
+				addEEnumLiteral(«eEnum.name.toFirstLower»EEnum, $type«eEnum.name»:T.«lit.name»);
 				«ENDFOR»
 				«ENDFOR»
+				«ENDIF»
 
 				// Create resource
 				createResource(eNS_URI);
 			''', hm).build
 
-		val classFields = allClasses.map [ clazz |
-			FieldSpec.builder(EClass, '''«clazz.name.toFirstLower»EClass''').initializer('''null''').
+		val eClassifiers = abstractSyntax.EClassifiers.map[eClassifier |
+			if(eClassifier instanceof EClass) {
+				FieldSpec.builder(EClass, '''«eClassifier.name.toFirstLower»EClass''').initializer('''null''').
 				addModifiers(PRIVATE).build
-		]
-		
-		val enumFields = allEnums.map [ clazz |
-			FieldSpec.builder(EEnum, '''«clazz.name.toFirstLower»EEnum''').initializer('''null''').
+			} else {
+				FieldSpec.builder(EEnum, '''«eClassifier.name.toFirstLower»EEnum''').initializer('''null''').
 				addModifiers(PRIVATE).build
+			}
 		]
 
-		val methodGetterFields = allClasses.map [ clazz |
-			clazz -> MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
-				addCode('''
-					return «clazz.name.toFirstLower»EClass;
-				''').build
-		]
+//		val methodGetterFields = allClasses.map [ clazz |
+//			clazz -> MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
+//				addCode('''
+//					return «clazz.name.toFirstLower»EClass;
+//				''').build
+//		]
+//		
+//		println(methodGetterFields)
+//		
+//		val methodEnumGetterFields = allEnums.map[eEnum |
+//			MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EEnum).addModifiers(PUBLIC).
+//				addCode('''
+//					return «eEnum.name.toFirstLower»EEnum;
+//				''').build
+//		]
 		
-		val methodEnumGetterFields = allEnums.map[eEnum |
-			MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EEnum).addModifiers(PUBLIC).
+		val  eClassifierGetterMethods = abstractSyntax.EClassifiers.map[eClassifier| 
+			if(eClassifier instanceof EClass) {
+				eClassifier -> MethodSpec.methodBuilder('''get«eClassifier.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
 				addCode('''
-					return «eEnum.name.toFirstLower»EEnum;
+					return «eClassifier.name.toFirstLower»EClass;
 				''').build
+			} else {
+				eClassifier -> MethodSpec.methodBuilder('''get«eClassifier.name.toFirstUpper»''').returns(EEnum).addModifiers(PUBLIC).
+				addCode('''
+					return «eClassifier.name.toFirstLower»EEnum;
+				''').build	
+			}
 		]
 
 		val constructor = MethodSpec.constructorBuilder.addModifiers(PRIVATE).addCode('''
@@ -223,20 +247,19 @@ class PackageImplementationCompiler {
 			.superclass(EPackageImpl)
 			.addSuperinterface(ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName))
 			.addField(isInitedField)
-			.addFields(classFields)
+			.addFields(eClassifiers)
 			.addFields(#[isCreatedField, isInitializedField])
-			.addFields(enumFields)
 			.addMethod(constructor)
 			.addMethod(initMethod)
 			
-		for(mgf: methodGetterFields) {
+		for(mgf: eClassifierGetterMethods) {
 			packageImplTmp = packageImplTmp.addMethod(mgf.value)
 			if(accessorsMethods.containsKey(mgf.key))
 				packageImplTmp = packageImplTmp.addMethods(accessorsMethods.get(mgf.key))
 		}
 			
 		val packageImpl = packageImplTmp
-			.addMethods(#[getFactoryMethod, createPackageContentsMethod, initializePackageContentsMethod] + methodEnumGetterFields)
+			.addMethods(#[getFactoryMethod, createPackageContentsMethod, initializePackageContentsMethod])
 			.addModifiers(PUBLIC)
 			.build
 

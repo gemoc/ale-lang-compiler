@@ -1,14 +1,14 @@
-package test1.interpreter.test1.impl;
+package test1unique.interpreter.test1unique.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import test1.interpreter.test1.ConceptA;
-import test1.interpreter.test1.Test1Factory;
-import test1.interpreter.test1.Test1Package;
+import test1unique.interpreter.test1unique.ConceptA;
+import test1unique.interpreter.test1unique.Test1uniqueFactory;
+import test1unique.interpreter.test1unique.Test1uniquePackage;
 
-public class Test1PackageImpl extends EPackageImpl implements Test1Package {
+public class Test1uniquePackageImpl extends EPackageImpl implements Test1uniquePackage {
 	private static boolean isInited = false;
 
 	private EClass conceptAEClass = null;
@@ -17,34 +17,34 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 
 	private boolean isInitialized = false;
 
-	private Test1PackageImpl() {
-		super(eNS_URI, Test1Factory.eINSTANCE);
+	private Test1uniquePackageImpl() {
+		super(eNS_URI, Test1uniqueFactory.eINSTANCE);
 	}
 
-	public static Test1Package init() {
+	public static Test1uniquePackage init() {
 		if (isInited)
-			return (Test1Package) EPackage.Registry.INSTANCE.getEPackage(Test1Package.eNS_URI);
+			return (Test1uniquePackage) EPackage.Registry.INSTANCE.getEPackage(Test1uniquePackage.eNS_URI);
 
 		// Obtain or create and register package
-		Object registeredTest1Package = EPackage.Registry.INSTANCE.get(eNS_URI);
-		Test1PackageImpl theTest1Package = registeredTest1Package instanceof Test1PackageImpl
-				? (Test1PackageImpl) registeredTest1Package
-				: new Test1PackageImpl();
+		Object registeredTest1uniquePackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		Test1uniquePackageImpl theTest1uniquePackage = registeredTest1uniquePackage instanceof Test1uniquePackageImpl
+				? (Test1uniquePackageImpl) registeredTest1uniquePackage
+				: new Test1uniquePackageImpl();
 
 		isInited = true;
 
 		// Create package meta-data objects
-		theTest1Package.createPackageContents();
+		theTest1uniquePackage.createPackageContents();
 
 		// Initialize created meta-data
-		theTest1Package.initializePackageContents();
+		theTest1uniquePackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
-		theTest1Package.freeze();
+		theTest1uniquePackage.freeze();
 
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(Test1Package.eNS_URI, theTest1Package);
-		return theTest1Package;
+		EPackage.Registry.INSTANCE.put(Test1uniquePackage.eNS_URI, theTest1uniquePackage);
+		return theTest1uniquePackage;
 	}
 
 	public EClass getConceptA() {
@@ -55,8 +55,8 @@ public class Test1PackageImpl extends EPackageImpl implements Test1Package {
 		return (EAttribute) conceptAEClass.getEStructuralFeatures().get(0);
 	}
 
-	public Test1Factory getTest1Factory() {
-		return (Test1Factory) getEFactoryInstance();
+	public Test1uniqueFactory getTest1uniqueFactory() {
+		return (Test1uniqueFactory) getEFactoryInstance();
 	}
 
 	public void createPackageContents() {

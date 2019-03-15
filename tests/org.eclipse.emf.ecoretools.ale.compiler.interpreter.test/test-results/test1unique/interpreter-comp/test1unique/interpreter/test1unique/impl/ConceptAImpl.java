@@ -1,4 +1,4 @@
-package test1.interpreter.test1.impl;
+package test1unique.interpreter.test1unique.impl;
 
 import java.lang.Boolean;
 import java.lang.Object;
@@ -8,8 +8,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import test1.interpreter.test1.ConceptA;
-import test1.interpreter.test1.Test1Package;
+import test1unique.interpreter.test1unique.ConceptA;
+import test1unique.interpreter.test1unique.Test1uniquePackage;
 
 public class ConceptAImpl extends MinimalEObjectImpl.Container implements ConceptA {
 	protected EList<Boolean> bs;
@@ -20,20 +20,20 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public EList<Boolean> getBs() {
 		if (bs == null) {
-			bs = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, test1.interpreter.test1.Test1Package.CONCEPT_A__BS);
+			bs = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, test1unique.interpreter.test1unique.Test1uniquePackage.CONCEPT_A__BS);
 		}
 		return bs;
 	}
 
 	@Override
 	protected EClass eStaticClass() {
-		return Test1Package.Literals.CONCEPT_A;
+		return Test1uniquePackage.Literals.CONCEPT_A;
 	}
 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case Test1Package.CONCEPT_A__BS :
+			case Test1uniquePackage.CONCEPT_A__BS :
 				return getBs();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -42,7 +42,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case Test1Package.CONCEPT_A__BS :
+			case Test1uniquePackage.CONCEPT_A__BS :
 				getBs().clear();
 				getBs().addAll((Collection<? extends Boolean>) newValue);
 				return;
@@ -53,7 +53,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case Test1Package.CONCEPT_A__BS :
+			case Test1uniquePackage.CONCEPT_A__BS :
 				getBs().clear();
 				return;
 		}
@@ -63,7 +63,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case Test1Package.CONCEPT_A__BS :
+			case Test1uniquePackage.CONCEPT_A__BS :
 				return bs != null && !bs.isEmpty();
 		}
 		return super.eIsSet(featureID);
