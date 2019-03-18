@@ -4,12 +4,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEMap;
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import test1.interpreter.test1.Test1Package;
@@ -17,11 +14,13 @@ import test1.interpreter.test1.Test1Package;
 public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<String, Integer> {
 	protected static final String KEY_EDEFAULT = null;
 
-	protected String key = KEY_EDEFAULT;
-
 	protected static final Integer VALUE_EDEFAULT = null;
 
+	protected String key = KEY_EDEFAULT;
+
 	protected Integer value = VALUE_EDEFAULT;
+	
+	protected int hash = -1;
 
 	protected StringToIntegerMapEntryImpl() {
 		super();
@@ -102,21 +101,6 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 		return super.eIsSet(featureID);
 	}
 
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (key: ");
-		result.append(key);
-		result.append(", value: ");
-		result.append(value);
-		result.append(')');
-		return result.toString();
-	}
-
-	protected int hash = -1;
-
 	public int getHash() {
 		if (hash == -1) {
 			Object theKey = getKey();
@@ -147,7 +131,7 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 		return oldValue;
 	}
 
-		public EMap<String, Integer> getEMap() {
+	public EMap<String, Integer> getEMap() {
 		EObject container = eContainer();
 		return container == null ? null : (EMap<String, Integer>)container.eGet(eContainmentFeature());
 	}

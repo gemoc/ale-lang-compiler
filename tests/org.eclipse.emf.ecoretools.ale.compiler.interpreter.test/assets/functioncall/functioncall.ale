@@ -1,0 +1,28 @@
+behavior functioncall_exec;
+
+open class ConceptA {
+	def void fct1() {}
+	def ConceptA fct2() {
+		result := functioncall::ConceptA.create();
+	}
+}
+
+open class ConceptB {
+	def ConceptB fct2() {
+		result := functioncall::ConceptB.create();
+	}
+}
+
+open class ConceptC {
+
+	def void exec1() {
+		self.concepta1.fct1();
+		ConceptA tmpA := self.concepta1.fct2();
+		self.concepta2.fct1();
+		ConceptA tmpB := self.concepta2.fct2();
+		
+		self.conceptb.fct1();
+		ConceptB tmpC := self.conceptb.fct2();
+	}
+
+}

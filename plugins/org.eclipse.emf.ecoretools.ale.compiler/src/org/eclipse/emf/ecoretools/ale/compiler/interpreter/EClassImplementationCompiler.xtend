@@ -44,6 +44,8 @@ import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.EcoreUtil2
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecore.ETypedElement
+import org.eclipse.emf.ecore.xml.type.XMLTypePackage
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -276,16 +278,12 @@ class EClassImplementationCompiler {
 							return get«esf.name.toFirstUpper»();
 						else
 							return get«esf.name.toFirstUpper»().map();
-						«ELSEIF esf.upperBound > 1 || esf.upperBound < 0 || (esf instanceof EReference && (esf as EReference).isContainment)»
-						return «IF esf.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«esf.name.toFirstUpper»();
-						«ELSE»
-						«IF esf instanceof EAttribute»
-						return «IF esf.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«esf.name.toFirstUpper»();
-						«ELSE»
+						«ELSEIF esf.isResolveProxies && !esf.isListType»
 						if (resolve)
 							return «IF esf.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«esf.name.toFirstUpper»();
 						return basic«IF esf.EType.name == "EBoolean"»Is«ELSE»Get«ENDIF»«esf.name.toFirstUpper»();
-						«ENDIF»
+						«ELSE»
+						return «IF esf.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«esf.name.toFirstUpper»();
 						«ENDIF»
 					«ENDFOR»
 				}
@@ -327,12 +325,11 @@ class EClassImplementationCompiler {
 			''', ePackageInterfaceType).build
 					
 					
-		val  eInverseRemove = if (!eClass.EReferences.filter[it.containment || it.EOpposite !== null].empty) {
+			val  eInverseRemove = if (!eClass.EReferences.filter[it.containment || it.EOpposite !== null].empty) {
 						val eInverseRemoveCodeMap = newHashMap("il" ->
 							ParameterizedTypeName.get(ClassName.get(InternalEList), WildcardTypeName.subtypeOf(Object)),
 							"package" -> ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot), eClass.EPackage.packageInterfaceClassName))
 						val reteir = MethodSpec.methodBuilder('eInverseRemove')
-//							.addAnnotation(AnnotationSpec.builder(SuppressWarnings).addMember("value", '$S', "unchecked").build)
 							.addAnnotation(Override)
 							.returns(NotificationChain).
 							addModifiers(PUBLIC).applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
@@ -356,7 +353,38 @@ class EClassImplementationCompiler {
 						#[reteir]
 					} else
 						#[]
-				eInverseRemove + #[eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod]
+						val eBasicRemoveFromContainerFeatureFields = eClass.EReferences.filter[field |
+							val isMultiple = field.upperBound > 1 || field.upperBound < 0
+							val existEOpposite = field.EOpposite !== null
+							val isContainment = field.containment
+							val isOppositeContainment = existEOpposite && field.EOpposite.containment
+							existEOpposite && !isMultiple && !isContainment && isOppositeContainment
+						]
+				val eBasicRemoveFromContainerFeature = if(!eBasicRemoveFromContainerFeatureFields.empty) {
+					val hm = newHashMap("epit" -> ePackageInterfaceType)
+					
+					for(field: eBasicRemoveFromContainerFeatureFields) {
+						hm.put('''type«field.EType.name»'''.toString, ClassName.get(eClass.classInterfacePackageName(packageRoot), field.EType.name))
+					}
+					
+					#[
+					MethodSpec.methodBuilder('''eBasicRemoveFromContainerFeature''')
+					.addAnnotation(Override)
+					.addModifiers(PUBLIC)
+					.returns(NotificationChain)
+					.addParameter(NotificationChain, 'msgs')
+					.addNamedCode('''
+					switch (eContainerFeatureID()) {
+						«FOR field: eBasicRemoveFromContainerFeatureFields»
+						case $epit:T.«field.name.normalizeUpperField(eClass.name)» :
+							return eInternalContainer().eInverseRemove(this, $epit:T.«field.EOpposite.name.normalizeUpperField(field.EOpposite.EContainingClass.name)», $type«field.EType.name»:T.class, msgs);
+						«ENDFOR»
+					}
+					return super.eBasicRemoveFromContainerFeature(msgs);
+					''', hm)			
+					.build		
+				]} else #[]
+				eInverseRemove + eBasicRemoveFromContainerFeature + #[eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod]
 			} else
 				#[]
 
@@ -384,7 +412,7 @@ class EClassImplementationCompiler {
 							«IF ref.EOpposite !== null && ref.EOpposite.containment»
 							if (eInternalContainer() != null)
 								msgs = eBasicRemoveFromContainer(msgs);
-							return basicSet«ref.name.toFirstUpper»((($«ref.name»eOppositeType:T)) otherEnd, msgs);
+							return basicSet«ref.name.toFirstUpper»(($«ref.name»eOppositeType:T) otherEnd, msgs);
 							«ELSEIF ref.EOpposite !== null && ref.containment»
 							if («ref.name» != null)
 								msgs = (($ieo:T) «ref.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - $epit:T.«ref.name.normalizeUpperField(ref.EOpposite.EType.name)», null, msgs);
@@ -819,19 +847,18 @@ class EClassImplementationCompiler {
 		if(isTruffle) {
 			registreredArrays.fold(builder, [b, array|
 			val x = ctx.eClass.EAllReferences.filter[it.name == array].head.EType.resolveType
-			b.addStatement('''
+			b.addStatement(CodeBlock.builder.addNamed('''
 			if (this.«array»Arr == null) {
-				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
+				$cd:T.transferToInterpreterAndInvalidate();
 				if (this.«array» != null) this.«array»Arr = this.«array».toArray(new «x»[0]);
 				else this.«array»Arr = new «x»[] {};
 				
 			}
-			''')
-		]).addStatement(cbb.build.toString)
+			''', newHashMap("cd" -> ClassName.get("com.oracle.truffle.api","CompilerDirectives"))).build)
+		]).addStatement(cbb.build)
 		
 		} else {
-			val ts = cbb.build.toString
-			builder.addCode(ts)
+			builder.addCode(cbb.build)
 		}
 		
 	}
@@ -890,5 +917,19 @@ class EClassImplementationCompiler {
 		} else {
 			builder
 		}
+	}
+	
+	def boolean isResolveProxies(EStructuralFeature eStructuralFeature) {
+		if(eStructuralFeature instanceof EReference) {
+			val isContainer = eStructuralFeature.isContainer
+			val isContains = eStructuralFeature.isContainment
+			!isContainer && !isContains && eStructuralFeature.isResolveProxies
+		} else{
+			false
+		}
+	}
+	
+	def boolean isListType(ETypedElement eTypedElement) { 
+      eTypedElement !== null && (eTypedElement.isMany() || ((eTypedElement instanceof EClass) &&  (eTypedElement as EClass).instanceClassName == "java.util.Map$Entry")) 
 	}
 }

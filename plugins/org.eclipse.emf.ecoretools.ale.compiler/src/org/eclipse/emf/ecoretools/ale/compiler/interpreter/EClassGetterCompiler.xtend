@@ -154,6 +154,62 @@ class EClassGetterCompiler {
 					"notif" -> ClassName.get(Notification)
 				)).addModifiers(PUBLIC).build
 			#[getter, basicGetter, basicSetter, setter]
+		} else if (existEOpposite && !isMultiple && !isContainment && isOppositeContainment) {
+			val getter = MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''')
+				.returns(rt)
+				.addNamedCode('''
+				if (eContainerFeatureID() != $epit:T.«field.name.normalizeUpperField(eClass.name)»)
+					return null;
+				return ($fieldType:T) eInternalContainer();
+				''', newHashMap(
+					"fieldType" -> rt,
+					"epit" -> ePackageInterfaceType
+				))
+				.addModifiers(PUBLIC)
+				.build
+			val basicSetter = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
+				.returns(NotificationChain)
+				.addParameter(rt, field.name.normalizeVarNewName)
+				.addParameter(NotificationChain, 'msgs')
+				.addNamedCode('''
+				msgs = eBasicSetContainer(($ieo:T) «field.name.normalizeVarNewName», $epit:T.«field.name.normalizeUpperField(eClass.name)», msgs);
+				return msgs;
+				''', newHashMap(
+					"epit" -> ePackageInterfaceType,
+					"ieo" -> ClassName.get(InternalEObject)
+				))
+				.addModifiers(PUBLIC)
+				.build
+				
+			val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
+				.addParameter(rt, field.name.normalizeVarNewName)
+				.addNamedCode('''
+				if («field.name.normalizeVarNewName» != eInternalContainer() || (eContainerFeatureID() != $epit:T.«field.name.normalizeUpperField(eClass.name)» && «field.name.normalizeVarNewName» != null)) {
+					if ($eu:T.isAncestor(this, «field.name.normalizeVarNewName»))
+						throw new $iae:T("Recursive containment not allowed for " + toString());
+					$nc:T msgs = null;
+					if (eInternalContainer() != null)
+						msgs = eBasicRemoveFromContainer(msgs);
+					if («field.name.normalizeVarNewName» != null)
+						msgs = (($ieo:T) «field.name.normalizeVarNewName»).eInverseAdd(this, $epit:T.«field.EOpposite.name.normalizeUpperField(field.EOpposite.EContainingClass.name)», $fieldType:T.class, msgs);
+					msgs = basicSet«field.name.toFirstUpper»(«field.name.normalizeVarNewName», msgs);
+					if (msgs != null)
+						msgs.dispatch();
+				} else if (eNotificationRequired())
+					eNotify(new $eni:T(this, $notif:T.SET, $epit:T.«field.name.normalizeUpperField(eClass.name)», «field.name.normalizeVarNewName», «field.name.normalizeVarNewName»));
+				''', newHashMap(
+					"epit" -> ePackageInterfaceType,
+					"eu" -> ClassName.get(EcoreUtil),
+					"iae" -> ClassName.get(IllegalArgumentException),
+					"nc" -> ClassName.get(NotificationChain),
+					"ieo" -> ClassName.get(InternalEObject),
+					"fieldType" -> rt,
+					"eni" -> ClassName.get(ENotificationImpl),
+					"notif" -> ClassName.get(Notification)
+				))
+				.addModifiers(PUBLIC)
+				.build 
+			#[getter, basicSetter, setter]			// TODO: adding a eBasicRemoveFromContainerFeature operation on the class additionnaly.
 		} else if (existEOpposite && !isMultiple && isContainment && !isOppositeContainment) {
 			val getter = MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(rt).addCode('''
 				return «field.name.normalizeVarName»;

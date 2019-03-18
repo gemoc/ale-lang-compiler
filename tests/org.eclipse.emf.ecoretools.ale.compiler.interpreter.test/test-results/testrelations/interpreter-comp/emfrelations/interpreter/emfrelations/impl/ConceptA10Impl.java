@@ -14,7 +14,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 public class ConceptA10Impl extends MinimalEObjectImpl.Container implements ConceptA10 {
 	protected ConceptB10 conceptb10;
-	
+
 	protected ConceptA10Impl() {
 		super();
 	}

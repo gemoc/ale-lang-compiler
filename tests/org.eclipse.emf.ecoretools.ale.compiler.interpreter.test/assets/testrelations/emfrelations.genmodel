@@ -14,7 +14,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptA0/conceptb0"/>
     </genClasses>
     <genClasses ecoreClass="emfrelations.ecore#//ConceptB0">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptB0/concapta0"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptB0/concepta0"/>
     </genClasses>
     <genClasses ecoreClass="emfrelations.ecore#//ConceptA1">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptA1/conceptb1"/>
@@ -38,7 +38,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptA4/conceptb4"/>
     </genClasses>
     <genClasses ecoreClass="emfrelations.ecore#//ConceptB4">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptB4/concapta4"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptB4/concepta4"/>
     </genClasses>
     <genClasses ecoreClass="emfrelations.ecore#//ConceptA5">
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptA5/conceptb5"/>

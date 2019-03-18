@@ -94,7 +94,11 @@ class AleBodyCompiler {
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, VariableAssignment body,
 		CompilerExpressionCtx ctx) {
-		builderSeed.addStatement('''«body.name» = «body.value.compileExpression(ctx)»''')
+		builderSeed.addStatement(
+			CodeBlock.builder.addNamed('''$name:N = $expr:L''', newHashMap(
+				"name" -> body.name,
+				"expr" -> body.value.compileExpression(ctx)
+			)).build)
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, VariableDeclaration body,
@@ -113,7 +117,15 @@ class AleBodyCompiler {
 		} else {
 			val t = body.type.solveType
 			// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
-			builderSeed.addStatement('''$T $L = (($T) «body.initialValue.compileExpression(ctx)»)''', t, body.name, t)
+			val cbb = CodeBlock.builder.addNamed('''$t:T $name:N = (($t:T) $expr:L)''', newHashMap(
+				"t" -> t, 
+				"name" -> body.name,
+				"expr" -> body.initialValue.compileExpression(ctx)
+			))
+			val cb = cbb.build
+			builderSeed.addStatement(cb)
+			
+//			builderSeed.a
 		}
 	}
 

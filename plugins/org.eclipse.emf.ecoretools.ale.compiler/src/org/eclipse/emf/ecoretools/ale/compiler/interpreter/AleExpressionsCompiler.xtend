@@ -43,6 +43,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
 import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
+import com.squareup.javapoet.ClassName
 
 class AleExpressionsCompiler {
 
@@ -229,8 +230,9 @@ class AleExpressionsCompiler {
 						val t = infereType(e).head
 						val ecls = t.type as EClass
 						val epks = ecls.EPackage
-						CodeBlock.
-							of('''«epks.factoryInterfacePackageName(packageRoot)».«epks.factoryInterfaceClassName».eINSTANCE.create«ecls.name»()''')
+						CodeBlock.builder.addNamed('''$factory:T.eINSTANCE.create«ecls.name»()''',
+							newHashMap("factory" -> ClassName.get(epks.factoryInterfacePackageName(packageRoot),
+								epks.factoryInterfaceClassName))).build
 					} else {
 						val argumentsh = call.arguments.head
 						val ts = argumentsh.infereType

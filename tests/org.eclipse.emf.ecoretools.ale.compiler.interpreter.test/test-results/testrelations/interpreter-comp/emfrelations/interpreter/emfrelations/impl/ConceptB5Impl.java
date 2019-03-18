@@ -30,33 +30,25 @@ public class ConceptB5Impl extends MinimalEObjectImpl.Container implements Conce
 		return (ConceptA5) eInternalContainer();
 	}
 
-	public NotificationChain basicSetConcepta5(ConceptA5 newConcepta5,
-			NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject) newConcepta5,
-				EmfrelationsPackage.CONCEPT_B5__CONCEPTA5, msgs);
+	public NotificationChain basicSetConcepta5(ConceptA5 newConcepta5, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject) newConcepta5, EmfrelationsPackage.CONCEPT_B5__CONCEPTA5, msgs);
 		return msgs;
 	}
 
 	public void setConcepta5(ConceptA5 newConcepta5) {
-		if (newConcepta5 != eInternalContainer()
-				|| (eContainerFeatureID() != EmfrelationsPackage.CONCEPT_B5__CONCEPTA5
-						&& newConcepta5 != null)) {
+		if (newConcepta5 != eInternalContainer() || (eContainerFeatureID() != EmfrelationsPackage.CONCEPT_B5__CONCEPTA5 && newConcepta5 != null)) {
 			if (EcoreUtil.isAncestor(this, newConcepta5))
-				throw new IllegalArgumentException(
-						"Recursive containment not allowed for " + toString());
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newConcepta5 != null)
-				msgs = ((InternalEObject) newConcepta5).eInverseAdd(this,
-						EmfrelationsPackage.CONCEPT_A5__CONCEPTB5, ConceptA5.class, msgs);
+				msgs = ((InternalEObject) newConcepta5).eInverseAdd(this, EmfrelationsPackage.CONCEPT_A5__CONCEPTB5, ConceptA5.class, msgs);
 			msgs = basicSetConcepta5(newConcepta5, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET,
-					EmfrelationsPackage.CONCEPT_B5__CONCEPTA5, newConcepta5,
-					newConcepta5));
+			eNotify(new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_B5__CONCEPTA5, newConcepta5, newConcepta5));
 	}
 
 	@Override
@@ -85,8 +77,7 @@ public class ConceptB5Impl extends MinimalEObjectImpl.Container implements Conce
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case EmfrelationsPackage.CONCEPT_B5__CONCEPTA5 :
-				return eInternalContainer().eInverseRemove(this,
-						EmfrelationsPackage.CONCEPT_A5__CONCEPTB5, ConceptA5.class, msgs);
+				return eInternalContainer().eInverseRemove(this, EmfrelationsPackage.CONCEPT_A5__CONCEPTB5, ConceptA5.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}

@@ -62,20 +62,25 @@ class FactoryImplementationCompiler {
 			.returns(EObject)
 			.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addParameter(ParameterSpec.builder(EClass, 'eClass').build)
-			.addCode('''
+			.addNamedCode('''
 			switch (eClass.getClassifierID()) {
 				«FOR eClass : allClasses.filter[!it.abstract]» 
-				case $1T.«eClass.name.normalizeUpperField» :
+				case $pit:T.«eClass.name.normalizeUpperField» :
 					«IF eClass.instanceClass !== null && eClass.instanceClass == Map.Entry»
-					return (org.eclipse.emf.ecore.EObject) create«eClass.name»();
+					return ($eo:T) create«eClass.name»();
 					«ELSE»
 					return create«eClass.name»();
 					«ENDIF»
 				«ENDFOR»
 				default :
-					throw new $2T("The class '" + eClass.getName() + "' is not a valid classifier");
+					throw new $iae:T("The class '" + eClass.getName() + "' is not a valid classifier");
 			}
-		''', packageInterfaceType, IllegalArgumentException).addModifiers(PUBLIC).build
+		''', newHashMap(
+			"pit" -> packageInterfaceType,
+			"iae" -> IllegalArgumentException,
+			"eo" -> EObject
+			
+		)).addModifiers(PUBLIC).build
 		
 		val createFromStringMethodMap = newHashMap(
 			"iae" -> ClassName.get(IllegalArgumentException)	

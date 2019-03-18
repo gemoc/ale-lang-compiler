@@ -30,8 +30,7 @@ public class ConceptB4Impl extends MinimalEObjectImpl.Container implements Conce
 		return (ConceptA4) eInternalContainer();
 	}
 
-	public NotificationChain basicSetConcepta4(ConceptA4 newConcepta4,
-			NotificationChain msgs) {
+	public NotificationChain basicSetConcepta4(ConceptA4 newConcepta4, NotificationChain msgs) {
 		msgs = eBasicSetContainer((InternalEObject) newConcepta4, EmfrelationsPackage.CONCEPT_B4__CONCEPTA4, msgs);
 		return msgs;
 	}

@@ -1,0 +1,2 @@
+syntax=assets/functioncall/functioncall.ecore
+behavior=assets/functioncall/functioncall.ale

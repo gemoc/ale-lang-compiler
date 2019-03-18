@@ -22,20 +22,30 @@ class InterpreterTestAll {
 
 	static Map<File, File> compilations = newHashMap
 
+	private static final boolean DEBUG = false
+
 	@BeforeAll
 	def static void beforeAll() {
 		new File("assets").listFiles.filter[it.isDirectory].forEach [
-			compilations.put(it, it.compileProject)
+			try {
+				compilations.put(it, it.compileProject)
+			} catch (Exception e) {
+				println(e)
+			}
 		]
 	}
 
 	@AfterAll
 	def static void afterAll() {
-		compilations.forEach [ p1, p2 |
-			p2.cleanupProject
-		]
+		if (!DEBUG) {
+			compilations.forEach [ p1, p2 |
+				p2.cleanupProject
+			]
+		} else {
+			compilations.forEach[p1, p2|println('''«p1» -> «p2»''')]
+		}
 	}
-	
+
 	def static void cleanupProject(File tmpDir) {
 		FileUtils.deleteDirectory(tmpDir);
 	}
