@@ -187,12 +187,10 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public void exec1() {
 		this.concepta1.fct1();
-		ConceptA tmpA = this.concepta1.fct2();
+		ConceptA tmpA = ((ConceptA)this.concepta1.fct2());
 		this.concepta2.fct1();
-		ConceptA tmpB = this.concepta2.fct2();
+		ConceptA tmpB = ((ConceptA)this.concepta2.fct2());
 		this.conceptb.fct1();
-		ConceptB tmpC = this.conceptb.fct2();
-		
-		System.out.println(tmpA.toString() + tmpB.toString() + tmpC + toString());
+		ConceptB tmpC = ((ConceptB)this.conceptb.fct2());
 	}
 }

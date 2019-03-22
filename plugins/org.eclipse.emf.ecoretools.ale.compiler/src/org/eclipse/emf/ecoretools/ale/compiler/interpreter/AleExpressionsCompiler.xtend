@@ -44,6 +44,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
 import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
 import com.squareup.javapoet.ClassName
+import java.util.stream.IntStream
 
 class AleExpressionsCompiler {
 
@@ -55,6 +56,10 @@ class AleExpressionsCompiler {
 	val Map<String, Class<?>> registeredServices
 	val Set<String> registeredArray
 	val boolean isTruffle
+	
+	val collectionServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService")
+	val equalServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib","EqualService")
+	val logServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib","LogService")
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
@@ -90,7 +95,8 @@ class AleExpressionsCompiler {
 					of('''(«call.arguments.get(0).compileExpression(ctx)») / («call.arguments.get(1).compileExpression(ctx)»)''')
 			case "equals":
 				CodeBlock.
-					of('''org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((«call.arguments.get(0).compileExpression(ctx)»), («call.arguments.get(1).compileExpression(ctx)»))''')
+					of('''$T.equals((«call.arguments.get(0).compileExpression(ctx)»), («call.arguments.get(1).compileExpression(ctx)»))''',
+						equalServiceClassName)
 			case "lessThan":
 				CodeBlock.
 					of('''(«call.arguments.get(0).compileExpression(ctx)») < («call.arguments.get(1).compileExpression(ctx)»)''')
@@ -108,29 +114,31 @@ class AleExpressionsCompiler {
 				CodeBlock.of('''-(«call.arguments.get(0).compileExpression(ctx)»)''')
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.
-						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.head(«call.arguments.get(0).compileExpression(ctx)»)''')
+					CodeBlock.of('''$T.head(«call.arguments.get(0).compileExpression(ctx)»)''',
+						collectionServiceClassName)
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "size":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.
-						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression(ctx)»)''')
+					CodeBlock.of('''$T.size(«call.arguments.get(0).compileExpression(ctx)»)''',
+						collectionServiceClassName)
 				else if (call.type == CallType.CALLORAPPLY)
-					CodeBlock.
-						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(«call.arguments.get(0).compileExpression(ctx)»)''')
+					CodeBlock.of('''$T.size(«call.arguments.get(0).compileExpression(ctx)»)''',
+						collectionServiceClassName)
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "at":
 				if (call.type == CallType.COLLECTIONCALL)
 					CodeBlock.
-						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''')
+						of('''$T.get(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''',
+							collectionServiceClassName)
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "select":
 				if (call.type == CallType.COLLECTIONCALL) {
 					CodeBlock.
-						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''')
+						of('''$T.select(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''',
+							collectionServiceClassName)
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
@@ -139,31 +147,27 @@ class AleExpressionsCompiler {
 					val t = infereType(call.arguments.get(1)).head
 					if (t instanceof EClassifierType) {
 						CodeBlock.
-							of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression(ctx)», it -> it instanceof «call.arguments.get(1).compileExpression(ctx)»)''')
+							of('''$T.select(«call.arguments.get(0).compileExpression(ctx)», it -> it instanceof «call.arguments.get(1).compileExpression(ctx)»)''',
+								collectionServiceClassName)
 					} else {
 						CodeBlock.
-							of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.select(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''')
+							of('''$T.select(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''',
+								collectionServiceClassName)
 					}
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
 			case "exists":
 				if (call.type == CallType.COLLECTIONCALL) {
-//					val t = infereType(call.arguments.get(1)).head
-//					if (t instanceof EClassifierType) {
-//						CodeBlock.
-//							of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(«call.arguments.get(0).compileExpression(ctx)», it -> it instanceof «call.arguments.get(1).compileExpression(ctx)»)''')
-//					} else {
-						CodeBlock.
-							of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.exists(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''')
-//					}
+					CodeBlock.
+						of('''$T.exists(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''', collectionServiceClassName)
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
 			case "isEmpty":
 				if (call.type == CallType.COLLECTIONCALL) {
 					CodeBlock.
-						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.isEmpty(«call.arguments.get(0).compileExpression(ctx)»)''')
+						of('''$T.isEmpty(«call.arguments.get(0).compileExpression(ctx)»)''', collectionServiceClassName)
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
@@ -177,7 +181,7 @@ class AleExpressionsCompiler {
 			case "log":
 				if (call.type == CallType.CALLORAPPLY) {
 					CodeBlock.
-						of('''org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(«call.arguments.get(0).compileExpression(ctx)»)''')
+						of('''$T.log(«call.arguments.get(0).compileExpression(ctx)»)''', logServiceClassName)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
@@ -191,7 +195,7 @@ class AleExpressionsCompiler {
 						if (lhs.toString == 'this') {
 							if (t instanceof SequenceType 
 								&& (t as SequenceType).collectionType.type instanceof EClass 
-								&& ((t as SequenceType).collectionType.type as EClass).instanceClassName != "java.util.Map$Entry"  
+								&& ((t as SequenceType).collectionType.type as EClass).instanceClassName != "java.util.Map$Entry"
 								) {
 									val rhs = (call.arguments.get(1) as StringLiteral).value
 								if (isTruffle && !(ctx.aleClass.mutable.contains(rhs))) {
@@ -290,11 +294,17 @@ class AleExpressionsCompiler {
 									CodeBlock.
 										of('''«IF effectFull && method.operationRef.EType !==null»((«method.operationRef.EType.solveType»)«ENDIF»dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})«IF effectFull && method.operationRef.EType !==null»)«ENDIF»''')
 								} else {
-									CodeBlock.
-										of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)''')
+									val hm = newHashMap()
+									hm.put("typecaller", (call.arguments.head.infereType.head.type as EClass).solveType)
+									for (param : call.arguments.tail.enumerate) {
+										hm.put("typeparam" + param.value, (param.key.infereType.head.type as EClass).solveType)
+									}
+									
+									CodeBlock.builder.
+										addNamed('''(($typecaller:T)«call.arguments.head.compileExpression(ctx)»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«param.value»:T) «param.key.compileExpression(ctx)»«ENDFOR»)''',
+											hm).build
 								}
 							} else {
-
 								val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].
 									flatten.toList
 
@@ -319,18 +329,33 @@ class AleExpressionsCompiler {
 							].head
 
 							if (candidate !== null) {
-								CodeBlock.
-									of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
+								val hm = newHashMap()
+								for(param:call.arguments.enumerate) {
+									hm.put("typeparam" + param.value, (param.key.infereType.head.type as EClass).solveType)
+								}
+								CodeBlock.builder.addNamed
+									('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments.enumerate SEPARATOR ', '»($typeparam«p.value»:T)«p.key.compileExpression(ctx)»«ENDFOR»)''', hm).build
 							} else {
-								CodeBlock.
-									of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)''')
-
+								val hm = newHashMap()
+								
+								for(param:call.arguments.tail.enumerate) {
+									hm.put("typeparam" + param.value, (param.key.infereType.head.type as EClass).solveType)
+								}
+								
+								CodeBlock.builder.
+									addNamed('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«param.value»:T)«param.key.compileExpression(ctx)»«ENDFOR»)''',
+										hm).build
 							}
 						}
 					}
 				else
 					CodeBlock.of('''/*Call «call»*/''')
 		}
+	}
+	
+	def <A> enumerate(Iterable<A> itt) {
+		val ints = IntStream.range(0, itt.size).iterator
+		itt.map[it -> ints.next]
 	}
 
 	def dispatch CodeBlock compileExpression(And call, CompilerExpressionCtx ctx) {
@@ -411,7 +436,7 @@ class AleExpressionsCompiler {
 
 	def dispatch CodeBlock compileExpression(SequenceInExtensionLiteral call, CompilerExpressionCtx ctx) {
 		CodeBlock.
-			of('''org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.createEList(«FOR a : call.values SEPARATOR ', '»«a.compileExpression(ctx)»«ENDFOR»)''')
+			of('''$T.createEList(«FOR a : call.values SEPARATOR ', '»«a.compileExpression(ctx)»«ENDFOR»)''', collectionServiceClassName)
 	}
 
 	def dispatch CodeBlock compileExpression(SetInExtensionLiteral call, CompilerExpressionCtx ctx) {

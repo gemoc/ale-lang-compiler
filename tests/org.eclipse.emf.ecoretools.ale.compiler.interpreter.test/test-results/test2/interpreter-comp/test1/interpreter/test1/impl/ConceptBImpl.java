@@ -2,6 +2,7 @@ package test1.interpreter.test1.impl;
 
 import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test1.interpreter.test1.ConceptB;
 import test1.interpreter.test1.Test1Package;
 
@@ -16,7 +17,7 @@ public class ConceptBImpl extends ConceptAImpl implements ConceptB {
 	}
 
 	public void exec() {
-		org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("okb");
+		LogService.log("okb");
 	}
 
 	public int execB() {

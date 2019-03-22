@@ -1,0 +1,27 @@
+behavior autocast_exec;
+
+open class ConceptC {
+
+	def void execB(ConceptB b) {
+		b.name.log();
+	}
+
+	def void exec1() {
+		
+		for(a in self.ax) {
+			if(a.oclIsKindOf(autocast::ConceptB)) {
+				self.execB(a);
+			}
+		}
+	}
+	
+	def void exec2() {
+		for(a in self.ax) {
+			if(a.oclIsKindOf(autocast::ConceptB)) {
+				ConceptB b := a;
+				b.name.log();
+			}
+		}
+	}
+
+}

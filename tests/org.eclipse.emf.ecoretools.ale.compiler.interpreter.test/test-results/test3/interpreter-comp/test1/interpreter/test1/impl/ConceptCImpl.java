@@ -8,6 +8,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test1.interpreter.test1.ConceptC;
 import test1.interpreter.test1.Test1Package;
 
@@ -100,6 +101,6 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 	}
 
 	public void call() {
-		org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(this.nbr);
+		LogService.log(this.nbr);
 	}
 }
