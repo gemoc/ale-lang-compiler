@@ -8,10 +8,7 @@ import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
-import java.util.List
 import java.util.Map
-import org.eclipse.acceleo.query.runtime.IQueryEnvironment
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.common.notify.Notification
 import org.eclipse.emf.common.notify.NotificationChain
 import org.eclipse.emf.common.util.BasicEMap
@@ -19,7 +16,6 @@ import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.InternalEObject
@@ -29,10 +25,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
 import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 
 import static javax.lang.model.element.Modifier.*
 
@@ -59,7 +51,7 @@ class EClassImplementationCompiler {
 				initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''').
 				addModifiers(PROTECTED, STATIC, FINAL).build
 
-			val fieldField = FieldSpec.builder(type, field.name).initializer('''«field.name.toUpperCase»_EDEFAULT''').
+			val fieldField = FieldSpec.builder(type, field.name.normalizeVarName).initializer('''«field.name.toUpperCase»_EDEFAULT''').
 				addModifiers(PROTECTED).build
 			#[edefault, fieldField]
 		].flatten
@@ -68,9 +60,9 @@ class EClassImplementationCompiler {
 			val type = field.EType.scopedTypeRef(packageRoot)
 
 			val getter = MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').addModifiers(PUBLIC).
-				addCode('''return «field.name»;''').returns(type).build
+				addCode('''return «field.name.normalizeVarName»;''').returns(type).build
 			val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
-				ParameterSpec.builder(type, field.name).build).addCode('''this.«field.name» = «field.name»;''').
+				ParameterSpec.builder(type, field.name.normalizeVarName).build).addCode('''this.«field.name.normalizeVarName» = «field.name.normalizeVarName»;''').
 				addModifiers(PUBLIC).build
 
 			#[getter, setter]
@@ -98,7 +90,7 @@ class EClassImplementationCompiler {
 			} else
 				rt
 				
-			FieldSpec.builder(fieldType, field.name).addModifiers(PROTECTED).build
+			FieldSpec.builder(fieldType, field.name.normalizeVarName).addModifiers(PROTECTED).build
 		]
 
 		val methodsEReferences = eClass.EReferences.map [ field |
@@ -121,9 +113,9 @@ class EClassImplementationCompiler {
 					rt
 
 			val setter = if (!isMultiple) {
-					val newName = '''new«field.name.toFirstUpper»'''
-					val oldName = '''old«field.name.toFirstUpper»'''
-					val name = field.name
+					val newName = field.name.normalizeVarNewName
+					val oldName = field.name.normalizeVarOldName
+					val name = field.name.normalizeVarName
 
 					if (field.EOpposite !== null) {
 						if(!field.EOpposite.containment) {
@@ -153,7 +145,7 @@ class EClassImplementationCompiler {
 							val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
 							.returns(
 								NotificationChain).addParameter(
-								ParameterSpec.builder(fieldType, '''new«field.name.toFirstUpper»''').build).addParameter(
+								ParameterSpec.builder(fieldType, field.name.normalizeVarNewName).build).addParameter(
 								ParameterSpec.builder(NotificationChain, 'msgsp').build).addCode('''
 								$1T msgs = msgsp;
 								$2T «oldName» = «name»;
@@ -192,7 +184,7 @@ class EClassImplementationCompiler {
 							val basicSetMethod = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
 							.returns(
 								NotificationChain).addParameter(
-								ParameterSpec.builder(fieldType, '''new«field.name.toFirstUpper»''').build).addParameter(
+								ParameterSpec.builder(fieldType, field.name.normalizeVarNewName).build).addParameter(
 								ParameterSpec.builder(NotificationChain, 'msgs').build).addCode('''
 								msgs = eBasicSetContainer(($1T)newFsm, $2T.«field.name.normalizeUpperField(eClass.name)», msgs);
 								return msgs;
@@ -206,13 +198,13 @@ class EClassImplementationCompiler {
 						if(field.containment) {
 							val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
 							.addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
-							if («newName» != «field.name») {
+							if («newName» != «field.name.normalizeVarName») {
 								$4T msgs = null;
-								if («field.name» != null)
-									msgs = (($1T)«field.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
+								if («field.name.normalizeVarName» != null)
+									msgs = (($1T)«field.name.normalizeVarName»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
 								if («newName» != null)
 									msgs = (($1T)«newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», null, msgs);
-								msgs = basicSet«field.name.toFirstUpper»(«newName», msgs);
+								msgs = basicSet«field.name.toFirstUpper»(«newName.normalizeVarName», msgs);
 								if (msgs != null) msgs.dispatch();
 							}
 							else if (eNotificationRequired())
@@ -223,8 +215,8 @@ class EClassImplementationCompiler {
 							.addParameter(ParameterSpec.builder(fieldType, newName).build)
 							.addParameter(ParameterSpec.builder(NotificationChain, 'msgs').build)
 							.addCode('''
-							$1T «oldName» = «field.name»;
-							«field.name» = «newName»;
+							$1T «oldName» = «field.name.normalizeVarName»;
+							«field.name.normalizeVarName» = «newName»;
 							if (eNotificationRequired()) {
 								$2T notification = new $2T(this, $3T.SET, «eClass.EPackage.packageInterfacePackageName(packageRoot)».«eClass.EPackage.packageInterfaceClassName».«field.name.normalizeUpperField(eClass.name)», «oldName», «newName»);
 								if (msgs == null) msgs = notification; else msgs.add(notification);
@@ -241,8 +233,8 @@ class EClassImplementationCompiler {
 								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''')
 								.returns(
 									fieldType).addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
-									$1T «oldName» = this.«field.name»;
-									this.«field.name» = «newName»;
+									$1T «oldName» = this.«field.name.normalizeVarName»;
+									this.«field.name.normalizeVarName» = «newName»;
 									return «oldName»;
 								''', fieldType).
 									addModifiers(PUBLIC).build
@@ -251,10 +243,10 @@ class EClassImplementationCompiler {
 							} else {
 								val setter = MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(
 									ParameterSpec.builder(fieldType, newName).build).addCode('''
-									$1T «oldName» = «field.name»;
-									«field.name» = «newName»;
+									$1T «oldName» = «field.name.normalizeVarName»;
+									«field.name.normalizeVarName» = «newName»;
 									if (eNotificationRequired())
-										eNotify(new $2T(this, $3T.SET, $4T.«field.name.normalizeUpperField(eClass.name)», «oldName», «field.name»));
+										eNotify(new $2T(this, $3T.SET, $4T.«field.name.normalizeUpperField(eClass.name)», «oldName», «field.name.normalizeVarName»));
 								''', fieldType, ENotificationImpl, Notification,
 									ePackageInterfaceType).addModifiers(PUBLIC).build
 		
@@ -274,10 +266,10 @@ class EClassImplementationCompiler {
 					val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 					MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
 							addModifiers(PUBLIC).addCode('''
-								if («field.name» == null) {
-									«field.name» = new $1T($2T.Literals.«(field.EType as EClass).name.normalizeUpperField», $3T.class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
+								if («field.name.normalizeVarName» == null) {
+									«field.name.normalizeVarName» = new $1T($2T.Literals.«(field.EType as EClass).name.normalizeUpperField», $3T.class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
 								}
-								return «field.name»;
+								return «field.name.normalizeVarName»;
 							''', ParameterizedTypeName.get(ClassName.get(EcoreEMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot)), ePackageInterfaceType,
 							ClassName.get((field.EType as EClass).classImplementationPackageName(packageRoot), (field.EType as EClass).classImplementationClassName)).build
 							// EcoreEMap<String,EvalRes>
@@ -285,18 +277,18 @@ class EClassImplementationCompiler {
 					else if(field.EOpposite !== null) {
 						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
 							addModifiers(PUBLIC).addCode('''
-								if («field.name» == null) {
-									«field.name» = new $1T($2T.class, this, $3T.«field.name.normalizeUpperField(eClass.name)», $3T.«field.EOpposite.name.normalizeUpperField((field.EOpposite.eContainer as EClass).name)»);
+								if («field.name.normalizeVarName» == null) {
+									«field.name.normalizeVarName» = new $1T($2T.class, this, $3T.«field.name.normalizeUpperField(eClass.name)», $3T.«field.EOpposite.name.normalizeUpperField((field.EOpposite.eContainer as EClass).name)»);
 								}
-								return «field.name»;
+								return «field.name.normalizeVarName»;
 							''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentWithInverseEList), rt), rt, ePackageInterfaceType).build
 					} else {
 						MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
 							addModifiers(PUBLIC).addCode('''
-								if(«field.name» == null) {
-									«field.name» = new $1T(«rt».class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
+								if(«field.name.normalizeVarName» == null) {
+									«field.name.normalizeVarName» = new $1T(«rt».class, this, $2T.«field.name.normalizeUpperField(eClass.name)»);
 								}
-								return «field.name»;
+								return «field.name.normalizeVarName»;
 							''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentEList), rt),
 								ePackageInterfaceType).build
 					}
@@ -309,7 +301,7 @@ class EClassImplementationCompiler {
 						''', ePackageInterfaceType, fieldType).build
 					}  else {
 						MethodSpec.methodBuilder('''«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).
-							addModifiers(PUBLIC).addCode('''return «field.name»;''').build
+							addModifiers(PUBLIC).addCode('''return «field.name.normalizeVarName»;''').build
 					}
 				}
 

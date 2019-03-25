@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.ETypedElement
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
@@ -44,8 +45,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.EcoreUtil2
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecore.ETypedElement
-import org.eclipse.emf.ecore.xml.type.XMLTypePackage
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils

@@ -88,9 +88,9 @@ class ALERevisitorImplementationCompiler {
 
 	@Data
 	static class ResolvedClass {
-		ExtendedClass alexCls
-		public EClass eCls
-		GenClass genCls
+		ExtendedClass aleCls
+		public EClassifier eCls
+//		GenClass genCls
 	}
 
 	extension RevisitorNamingUtils = new RevisitorNamingUtils
@@ -135,7 +135,7 @@ class ALERevisitorImplementationCompiler {
 
 		// must be last !
 		compile(projectRoot)
-		
+
 		Status.OK_STATUS
 	}
 
@@ -168,7 +168,6 @@ class ALERevisitorImplementationCompiler {
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
 
-
 		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
 
@@ -179,10 +178,20 @@ class ALERevisitorImplementationCompiler {
 		}
 
 		// load all syntaxes in a cache
-		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
-
+//		syntaxes = dsl.allSyntaxes.toMap([it], [
+//			val ep = it.loadEPackage
+//			val gmn = it.replaceAll(".ecore$", ".genmodel")
+//			val gm = gmn.loadGenmodel
+//			return (ep -> gm)
+//		])
+//
+//		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
+//
+//		resolved = resolve(aleClasses, syntax)
+		syntaxes = dsl.allSyntaxes.toMap([it], [
+			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
+		])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-
 		resolved = resolve(aleClasses, syntax)
 
 		val interfaceName = dsl.revisitorImplementationClass
@@ -203,7 +212,9 @@ class ALERevisitorImplementationCompiler {
 			ClassName.get(syntax.revisitorPackageFqn, syntax.revisitorInterfaceName), typeParams)
 
 		val revisitorInterface = TypeSpec.interfaceBuilder(interfaceName).addSuperinterface(fullInterfaceType).
-			addModifiers(Modifier.PUBLIC).addMethods(syntax.allClasses.filter[it.instanceClassName != "java.util.Map$Entry" ].map [
+			addModifiers(Modifier.PUBLIC).addMethods(syntax.allClasses.filter [
+				it.instanceClassName != "java.util.Map$Entry"
+			].map [
 				MethodSpec.methodBuilder(it.denotationName).returns(
 					ClassName.get('''«dsl.revisitorImplementationPackage».operation''', it.name)).addParameter(
 					it.solveType as TypeName, "it").addStatement('''return new $T(it, this)''',
@@ -211,17 +222,15 @@ class ALERevisitorImplementationCompiler {
 					addModifiers(Modifier.DEFAULT, Modifier.PUBLIC).build
 			]).build
 
-		val javaFile = JavaFile.builder(dsl.revisitorImplementationPackage, revisitorInterface)
-			.indent('\t')
-			.build
+		val javaFile = JavaFile.builder(dsl.revisitorImplementationPackage, revisitorInterface).indent('\t').build
 
 		javaFile.writeTo(compileDirectory)
 
-		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].forEach [
+		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry" && it.eCls instanceof EClass].forEach [
 			try {
-				val operationInterface = TypeSpec.interfaceBuilder(it.eCls.name).addSuperinterfaces(eCls.ESuperTypes.map [
+				val operationInterface = TypeSpec.interfaceBuilder(it.eCls.name).addSuperinterfaces((eCls as EClass).ESuperTypes.map [
 					ClassName.get('''«dsl.revisitorImplementationPackage».operation''', it.name)
-				]).addModifiers(Modifier.PUBLIC).addMethods(it.alexCls?.methods?.map [
+				]).addModifiers(Modifier.PUBLIC).addMethods(it.aleCls?.methods?.map [
 					MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT).
 						returnType(it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
 							if (it.EType.instanceClass !== null) {
@@ -231,9 +240,8 @@ class ALERevisitorImplementationCompiler {
 							}
 						]).build
 				] ?: newArrayList).build
-				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorImplementationPackage».operation''', operationInterface)
-					.indent('\t')
-					.build
+				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorImplementationPackage».operation''',
+					operationInterface).indent('\t').build
 				operationInterfaceFile.writeTo(compileDirectory)
 
 				val revField = FieldSpec.builder(fullInterfaceType, "rev", Modifier.PRIVATE).build
@@ -243,13 +251,13 @@ class ALERevisitorImplementationCompiler {
 
 				val operationImplementation = TypeSpec.classBuilder('''«it.eCls.name»Impl''').addSuperinterfaces(
 					#[ClassName.get(operationInterfaceFile.packageName, operationInterface.name)]).superOperationImpl(
-					it.eCls.ESuperTypes.head).addField(revField).addField(objField).addModifiers(Modifier.PUBLIC).
+					(eCls as EClass).ESuperTypes.head).addField(revField).addField(objField).addModifiers(Modifier.PUBLIC).
 					addMethod(
 						MethodSpec.constructorBuilder.addParameter(objField.type, "obj").addParameter(revField.type,
-							"rev").addConditionalStatement([!it.ECls.ESuperTypes.empty], 'super(obj, rev)').
+							"rev").addConditionalStatement([!(eCls as EClass).ESuperTypes.empty], 'super(obj, rev)').
 							addStatement('''this.obj = obj''').addStatement('''this.rev = rev''').addModifiers(
 								Modifier.PUBLIC).build).addModifiers(Modifier.PUBLIC).addMethods(
-						it.alexCls?.methods?.map [
+						it.aleCls?.methods?.map [
 							MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(
 								it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
 								if (it.EType.instanceClass !== null) {
@@ -479,7 +487,7 @@ class ALERevisitorImplementationCompiler {
 							}
 						].head
 						if (re !== null) {
-							val allMethods = re.getAlexCls.allMethods
+							val allMethods = re.getAleCls.allMethods
 							val methodExist = allMethods.exists [
 								it.operationRef.name == call.serviceName
 							]
@@ -646,19 +654,20 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
-		syntax.allClasses.map [ eClass |
+		syntax.allClassifiers.map [ eClass |
 			val aleClass = aleClasses.filter [
 				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
 			].head
-			val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.contains(eClass)].values.map[value].map [
-				it.genPackages.map[it.genClasses].flatten
-			].flatten.filter[it.ecoreClass == eClass].head
-			new ResolvedClass(aleClass, eClass, gl)
+//			val values = syntaxes.filter[k, v|v.key.allClassifiers.contains(eClass)].values.map[value]
+//			val GenClass gl = values.map [
+//				it.genPackages.map[it.genClasses].flatten
+//			].flatten.filter[it.ecoreClass == eClass].head
+			new ResolvedClass(aleClass, eClass) // , gl
 		]
 	}
 
 	def infereType(Expression exp) {
-		
+
 		base.getPossibleTypes(exp)
 	}
 
@@ -673,15 +682,20 @@ class ALERevisitorImplementationCompiler {
 		val gm = stx.value
 
 		if (gm !== null) {
-			val GenClass gclass = gm.allGenPkgs.map [
-				it.genClasses.filter [
-					it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
-				]
-			].flatten.head
-			val split = gclass.qualifiedInterfaceName.split("\\.")
-			val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
-			val cn = split.last
-			ClassName.get(pkg, cn)
+			if (e instanceof EClass) {
+				ClassName.get(e.classInterfacePackageName(""), e.name)
+			} else {
+				val GenClass gclass = gm.allGenPkgs.map [
+					it.genClasses.filter [
+						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
+					]
+				].flatten.head
+				val split = gclass.qualifiedInterfaceName.split("\\.")
+				val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
+				val cn = split.last
+				ClassName.get(pkg, cn)
+
+			}
 		} else {
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
@@ -717,10 +731,10 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def allParents(ExtendedClass aleClass) {
-		val ecls = resolved.filter[it.alexCls == aleClass].head.eCls
+		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls as EClass
 
-		resolved.filter[it.eCls == ecls || it.eCls.isSuperTypeOf(ecls)].map [
-			it.alexCls
+		resolved.filter[it.eCls == ecls || (eCls as EClass).isSuperTypeOf(ecls)].map [
+			it.aleCls
 		].filter[it !== null]
 	}
 

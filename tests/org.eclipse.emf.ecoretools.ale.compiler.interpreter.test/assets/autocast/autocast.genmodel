@@ -4,7 +4,7 @@
     modelPluginID="org.eclipse.emf.ecoretools.ale.compiler.interpreter.test" modelName="Functioncall"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
-  <foreignModel>autocast.ecore</foreignModel>
+  <foreignModel>./autocast.ecore</foreignModel>
   <genPackages prefix="Autocast" disposableProviderFactory="true" ecorePackage="autocast.ecore#/">
     <genClasses ecoreClass="autocast.ecore#//ConceptA"/>
     <genClasses ecoreClass="autocast.ecore#//ConceptB">

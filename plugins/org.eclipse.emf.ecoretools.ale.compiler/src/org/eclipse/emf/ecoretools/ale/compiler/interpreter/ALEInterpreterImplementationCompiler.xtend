@@ -38,7 +38,7 @@ class ALEInterpreterImplementationCompiler {
 	static class ResolvedClass {
 		ExtendedClass aleCls
 		public EClassifier eCls
-		GenClass genCls
+//		GenClass genCls
 	}
 
 	extension EcoreUtils = new EcoreUtils
@@ -186,11 +186,16 @@ class ALEInterpreterImplementationCompiler {
 			val aleClass = aleClasses.filter [
 				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
 			].head
-			val values = syntaxes.filter[k, v|v.key.allClassifiers.contains(eClass)].values.map[value]
-			val GenClass gl = values.map [
-				it.genPackages.map[it.genClasses].flatten
-			].flatten.filter[it.ecoreClass == eClass].head
-			new ResolvedClass(aleClass, eClass, gl)
+//			val values = syntaxes.filter[k, v|v.key.allClassifiers.contains(eClass)].values.map[value]
+//			val GenClass gl = values.map [
+//				it.genPackages.map[it.genClasses].flatten
+//			].flatten.filter[
+//				val res =it.ecoreClass == eClass
+////				println('''interpreter resolve [«res»] «it.ecoreClass» == «eClass»''')
+//				res
+//			].head
+//			if(gl === null) throw new RuntimeException("gl null !")
+			new ResolvedClass(aleClass, eClass) //, gl
 		]
 	}
 }

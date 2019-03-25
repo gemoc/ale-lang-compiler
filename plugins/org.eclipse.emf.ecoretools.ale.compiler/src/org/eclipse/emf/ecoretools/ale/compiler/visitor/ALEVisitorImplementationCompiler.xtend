@@ -176,6 +176,7 @@ class ALEVisitorImplementationCompiler {
 			val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.contains(eClass)].values.map[value].map [
 				it.genPackages.map[it.genClasses].flatten
 			].flatten.filter[it.ecoreClass == eClass].head
+			if(gl === null) throw new RuntimeException('''gl is null''')
 			new ResolvedClass(aleClass, eClass, gl)
 		]
 	}

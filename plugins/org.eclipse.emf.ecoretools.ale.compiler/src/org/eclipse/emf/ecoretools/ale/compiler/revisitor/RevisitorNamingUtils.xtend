@@ -34,4 +34,12 @@ class RevisitorNamingUtils {
 		val camelCased = name.split("\\.").map[toFirstUpper].join
 		'''«camelCased»Implementation'''
 	}
+	
+	def String classInterfacePackageName(EClass eClass, String packageRoot) {
+		eClass.EPackage.factoryInterfacePackageName(packageRoot)
+	}
+	
+	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
+		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».revisitor.«ePackage.name»'''
+	}
 }

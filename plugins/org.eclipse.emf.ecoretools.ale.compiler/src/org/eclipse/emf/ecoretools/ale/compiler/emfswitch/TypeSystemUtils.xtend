@@ -84,7 +84,7 @@ class TypeSystemUtils {
 	def allParents(ExtendedClass aleClass) {
 		val ecls = resolved.filter[it.getAleCls == aleClass].head.eCls
 
-		resolved.filter[it.eCls == ecls || it.eCls.isSuperTypeOf(ecls)].map [
+		resolved.filter[it.eCls == ecls || (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
 			it.getAleCls
 		].filter[it !== null]
 	}

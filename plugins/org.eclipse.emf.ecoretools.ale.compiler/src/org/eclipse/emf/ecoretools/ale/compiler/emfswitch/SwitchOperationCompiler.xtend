@@ -112,14 +112,14 @@ class SwitchOperationCompiler {
 		val operationsPackage = namingUtils.operationPackageName(packageRoot)
 		
 		val factory = TypeSpec.classBuilder(namingUtils.operationClassName(resolved.eCls))
-			.applyIfTrue(!resolved.eCls.ESuperTypes.empty, [superclass(ClassName.get(operationsPackage, namingUtils.operationClassName(resolved.eCls.ESuperTypes.head)))])
+			.applyIfTrue(!(resolved.eCls as EClass).ESuperTypes.empty, [superclass(ClassName.get(operationsPackage, namingUtils.operationClassName((resolved.eCls as EClass).ESuperTypes.head)))])
 			.addField(eClassType, 'it', PRIVATE, FINAL)
 			.addField(switchType, 'emfswitch', PRIVATE, FINAL)
 			.addMethod(MethodSpec.constructorBuilder
 				.addParameter(eClassType, 'it')
 				.addParameter(switchType, 'emfswitch')
 				.addCode('''
-				«IF !resolved.eCls.ESuperTypes.empty»
+				«IF !(resolved.eCls as EClass).ESuperTypes.empty»
 				super(it, emfswitch);
 				«ENDIF»
 				this.it = it;
@@ -183,11 +183,11 @@ class SwitchOperationCompiler {
 			]
 		].head
 
-		val gm = stx?.value
+		val gm = stx.value
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
-				ClassName.get(getEcoreInterfacesPackage, e.name)
+				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
 			} else {
 				val GenClass gclass = gm.allGenPkgs.map [
 					it.genClasses.filter [
@@ -203,6 +203,7 @@ class SwitchOperationCompiler {
 		} else {
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
+
 	}
 	
 	def MethodSpec.Builder openMethod(MethodSpec.Builder builder, EClassifier type) {

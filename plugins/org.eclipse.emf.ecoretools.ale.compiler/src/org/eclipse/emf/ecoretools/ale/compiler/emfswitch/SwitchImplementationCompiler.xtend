@@ -39,10 +39,11 @@ class SwitchImplementationCompiler {
 
 		val factory = TypeSpec.classBuilder(namingUtils.switchImplementationClassName(packageRoot))
 			.superclass(abstractSwitchType)
-			.addMethods(resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].map[resolved | 
+			.addMethods(resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].map[resolved |
+				val pcn = ClassName.get(resolved.genCls.genPackage.interfacePackageName, resolved.genCls.interfaceName) 
 				MethodSpec
 					.methodBuilder('''case«resolved.eCls.name.toFirstUpper»''')
-					.addParameter(ClassName.get(resolved.genCls.genPackage.interfacePackageName, resolved.genCls.interfaceName), 'it')
+					.addParameter(pcn, 'it')
 					.addCode('''
 					return new $T(it, this);
 					''', ClassName.get(namingUtils.operationPackageName(packageRoot), namingUtils.operationClassName(resolved.eCls)))

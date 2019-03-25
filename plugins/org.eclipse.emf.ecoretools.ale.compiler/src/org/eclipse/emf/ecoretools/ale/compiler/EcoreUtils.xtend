@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecoretools.ale.compiler
 
-import com.google.inject.Inject
 import java.util.Collection
 import java.util.Comparator
 import java.util.List
@@ -10,21 +9,22 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.plugin.EcorePlugin
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import org.eclipse.emf.ecore.EClassifier
 
 class EcoreUtils {
-	@Inject XtextResourceSet rs
+	var ResourceSetImpl rs = null
 
 	def void resetResourceSet() {
-		rs = new XtextResourceSet
+		rs = new ResourceSetImpl
 	}
 
 	def buildExtendedFactoryNames(List<EClass> classes) {
@@ -99,8 +99,7 @@ class EcoreUtils {
 
 		return ret.toSet.toList
 	}
-	
-	
+
 	def List<EClassifier> getAllClassifiers(EPackage pkg) {
 		val ret = newArrayList
 
@@ -117,7 +116,7 @@ class EcoreUtils {
 	def List<EClass> getAllClasses(List<EPackage> pkgs) {
 		return pkgs.map[allClasses].flatten.toSet.toList
 	}
-	
+
 	def List<EClassifier> getAllClassifiers(List<EPackage> pkgs) {
 		return pkgs.map[allClassifiers].flatten.toSet.toList
 	}
@@ -253,9 +252,12 @@ class EcoreUtils {
 
 	def EPackage loadEPackage(String path) {
 		if (rs === null) {
-			rs = new XtextResourceSet
+			rs = new ResourceSetImpl
+//			ResourceSetImpl.ResourceLocator.
 		}
 		rs.resourceFactoryRegistry.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl)
+//		val um = EcorePlugin.computePlatformURIMap(false)
+//		rs.getURIConverter().getURIMap().putAll(um)
 		try {
 
 			if (rs.resources.exists[URI.toString == path]) {
@@ -263,14 +265,14 @@ class EcoreUtils {
 				return r.contents.head as EPackage
 			}
 
-			val resource =
-				if (path.startsWith("platform:/"))
+			val resource = if (path.startsWith("platform:/"))
 					rs.getResource(URI.createURI(path), true)
 				else if (path.startsWith("/"))
 					rs.getResource(URI::createPlatformResourceURI(path, true), true)
 				else
 					rs.getResource(URI::createURI(path), true)
 
+			rs.URIConverter.URIMap.put(URI.createURI(resource.URI.lastSegment), resource.URI)
 			return resource.contents.head as EPackage
 		} catch (Exception e) {
 			return null
@@ -279,9 +281,10 @@ class EcoreUtils {
 
 	def GenModel loadGenmodel(String path) {
 		if (rs === null) {
-			rs = new XtextResourceSet
+			rs = new ResourceSetImpl
 		}
 		rs.resourceFactoryRegistry.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
+//		rs.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(false));
 		try {
 
 			if (rs.resources.exists[URI.toString == path]) {
@@ -289,15 +292,14 @@ class EcoreUtils {
 				return r.contents.head as GenModel
 			}
 
-			val resource =
-				if (path.startsWith("platform:/"))
+			val resource = if (path.startsWith("platform:/"))
 					rs.getResource(URI.createURI(path), true)
 				else if (path.startsWith("/"))
 					rs.getResource(URI::createPlatformResourceURI(path, true), true)
 				else
 					rs.getResource(URI::createURI(path), true)
 
-			return resource.contents.head as GenModel
+			resource.contents.head as GenModel
 		} catch (Exception e) {
 			return null
 		}

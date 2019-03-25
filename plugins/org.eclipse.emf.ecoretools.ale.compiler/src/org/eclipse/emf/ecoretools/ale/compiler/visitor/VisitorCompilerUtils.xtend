@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EClass
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.TypeName
+import org.eclipse.emf.ecore.EEnum
 
 class VisitorCompilerUtils {
 
@@ -16,6 +17,10 @@ class VisitorCompilerUtils {
 	def dispatch scopedTypeRef(EClass clazz, String packageRoot) {
 		ClassName.get(clazz.classImplementationPackageName(packageRoot), clazz.classImplementationClassName)
 	}
+	
+	def dispatch scopedTypeRef(EEnum eEnum, String packageRoot) {
+		ClassName.get(eEnum.classInterfacePackageName(packageRoot), eEnum.classInterfaceClassName)
+	}
 
 	def dispatch scopedInterfaceTypeRef(EDataType edt, String packageRoot) {
 		TypeName.get(edt.instanceClass)
@@ -23,5 +28,9 @@ class VisitorCompilerUtils {
 
 	def dispatch scopedInterfaceTypeRef(EClass clazz, String packageRoot) {
 		ClassName.get(clazz.classInterfacePackageName(packageRoot), clazz.classInterfaceClassName)
+	}
+	
+	def dispatch scopedInterfaceTypeRef(EEnum eEnum, String packageRoot) {
+		ClassName.get(eEnum.classInterfacePackageName(packageRoot), eEnum.classInterfaceClassName)
 	}
 }

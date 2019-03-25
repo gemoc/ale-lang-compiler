@@ -9,7 +9,10 @@ import org.apache.commons.io.filefilter.TrueFileFilter
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
@@ -20,29 +23,60 @@ import org.junit.jupiter.api.TestFactory
 
 class InterpreterTestAll {
 
-	static Map<File, File> compilations = newHashMap
+	static Map<String, Map<File, File>> compilations = newHashMap
+
+	static val compilers = newHashMap(
+		"interpreter" -> [f|compileProjectInterpreter(f)],
+		"revisitor" -> [f|compileProjectRevisitor(f)],
+		"switch" -> [f|compileProjectSwitch(f)],
+		"visitor" -> [f|compileProjectVisitor(f)]
+	)
 
 	private static final boolean DEBUG = false
 
+	static val mutex = new Object
+
+	def static void log(String txt) {
+		if(DEBUG) println(txt)
+	}
+
 	@BeforeAll
 	def static void beforeAll() {
-		new File("assets").listFiles.filter[it.isDirectory].forEach [
-			try {
-				compilations.put(it, it.compileProject)
-			} catch (Exception e) {
-				println(e)
-			}
+		compilers.forEach [ p1, p2 |
+			compilations.put(p1, newHashMap)
 		]
+
+		compilers.forEach [ k, v |
+			new File("assets").listFiles.filter[it.isDirectory].forEach [
+				try {
+					compilations.get(k).put(it, v.apply(it))
+				} catch (Exception e) {
+					synchronized (mutex) {
+						println('''Compilation failed for «k» -> «it»:''')
+						e.printStackTrace
+					}
+
+				}
+			]
+		]
+
 	}
 
 	@AfterAll
 	def static void afterAll() {
 		if (!DEBUG) {
 			compilations.forEach [ p1, p2 |
-				p2.cleanupProject
+				p2.forEach [ p10, p20 |
+					p20.cleanupProject
+				]
 			]
 		} else {
-			compilations.forEach[p1, p2|println('''«p1» -> «p2»''')]
+			compilations.forEach [ p1, p2 |
+				println('''# Compiled «p1»''')
+				p2.forEach [ p10, p20 |
+					println('''«p10» -> «p20»''')
+				]
+			]
 		}
 	}
 
@@ -51,43 +85,46 @@ class InterpreterTestAll {
 	}
 
 	@TestFactory
-	def testInterpreters() {
-		compilations.entrySet.map [ e |
-			val d = e.key
-			val tmpDir = e.value
-			val expectedDir = new File('''test-results/«d.name»''')
-			val files = FileUtils.listFiles(expectedDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-			val tmpfiles = FileUtils.listFiles(tmpDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-			DynamicContainer.dynamicContainer(d.name, files.map [ f |
-				val relative = expectedDir.toPath().relativize(f.toPath());
-				val relativePath = relative.toFile().getPath();
-				DynamicTest.dynamicTest(relativePath, [
-					val bfile = new File(tmpDir, relativePath);
-					if (bfile.exists()) {
-						val charset = Charset.defaultCharset().toString;
-						val expected = FileUtils.readFileToString(f, charset);
-						val result = FileUtils.readFileToString(bfile, charset);
-						Assertions.assertEquals(expected, result);
-					} else {
-						Assertions.fail(relativePath + " expected to exist");
-					}
-				])
-			] + tmpfiles.map [ f |
-				val a = tmpDir.toPath()
-				val bbb = f.toPath()
-				val relative = a.relativize(bbb)
-				val relativePath = relative.toFile().getPath();
-				DynamicTest.dynamicTest(relativePath, [
-					val bfile = new File(expectedDir, relativePath);
-					if (!bfile.exists) {
-						Assertions.fail('''«relativePath» generated but not expected''')
-					}
+	def Iterable<DynamicContainer> testInterpreters() {
+		compilers.entrySet.map [ en |
+			val k = en.key
+			DynamicContainer.dynamicContainer(k, compilations.get(k).entrySet.map [ e |
+				val d = e.key
+				val tmpDir = e.value
+				val expectedDir = new File('''test-results/«k»/«d.name»''')
+				val files = FileUtils.listFiles(expectedDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+				val tmpfiles = FileUtils.listFiles(tmpDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+				DynamicContainer.dynamicContainer(d.name, files.map [ f |
+					val relative = expectedDir.toPath().relativize(f.toPath());
+					val relativePath = relative.toFile().getPath();
+					DynamicTest.dynamicTest(relativePath, [
+						val bfile = new File(tmpDir, relativePath);
+						if (bfile.exists()) {
+							val charset = Charset.defaultCharset().toString;
+							val expected = FileUtils.readFileToString(f, charset);
+							val result = FileUtils.readFileToString(bfile, charset);
+							Assertions.assertEquals(expected, result);
+						} else {
+							Assertions.fail(relativePath + " expected to exist");
+						}
+					])
+				] + tmpfiles.map [ f |
+					val a = tmpDir.toPath()
+					val bbb = f.toPath()
+					val relative = a.relativize(bbb)
+					val relativePath = relative.toFile().getPath();
+					DynamicTest.dynamicTest(relativePath, [
+						val bfile = new File(expectedDir, relativePath);
+						if (!bfile.exists) {
+							Assertions.fail('''«relativePath» generated but not expected''')
+						}
+					])
 				])
 			])
 		]
 	}
 
-	def static compileProject(File directory) {
+	def static compileProjectInterpreter(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 		val compiler = new ALEInterpreterImplementationCompiler
 
@@ -96,6 +133,42 @@ class InterpreterTestAll {
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
 
 		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), newHashMap)
+		tmpDir
+	}
+
+	def static compileProjectRevisitor(File directory) {
+		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
+		val compiler = new ALERevisitorImplementationCompiler
+
+		GenModelPackage.eINSTANCE.eClass
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
+
+		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''))
+		tmpDir
+	}
+
+	def static compileProjectSwitch(File directory) {
+		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
+		val compiler = new ALESwitchImplementationCompiler
+
+		GenModelPackage.eINSTANCE.eClass
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
+
+		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''))
+		tmpDir
+	}
+
+	def static compileProjectVisitor(File directory) {
+		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
+		val compiler = new ALEVisitorImplementationCompiler
+
+		GenModelPackage.eINSTANCE.eClass
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
+
+		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''))
 		tmpDir
 	}
 }

@@ -33,4 +33,9 @@ class SwitchNamingUtils {
 	def String factoryInterfaceClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»Factory'''
 	}
+	
+	
+	def String classInterfacePackageName(EClass eClass, String packageRoot) {
+		eClass.EPackage.factoryInterfacePackageName(packageRoot)
+	}
 }
