@@ -6,16 +6,16 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import java.util.List
+import java.util.Map
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.impl.EPackageImpl
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecore.EEnum
-import java.util.Map
-import java.util.List
 
 class PackageImplementationCompiler {
 
@@ -178,22 +178,6 @@ class PackageImplementationCompiler {
 			}
 		]
 
-//		val methodGetterFields = allClasses.map [ clazz |
-//			clazz -> MethodSpec.methodBuilder('''get«clazz.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
-//				addCode('''
-//					return «clazz.name.toFirstLower»EClass;
-//				''').build
-//		]
-//		
-//		println(methodGetterFields)
-//		
-//		val methodEnumGetterFields = allEnums.map[eEnum |
-//			MethodSpec.methodBuilder('''get«eEnum.name.toFirstUpper»''').returns(EEnum).addModifiers(PUBLIC).
-//				addCode('''
-//					return «eEnum.name.toFirstLower»EEnum;
-//				''').build
-//		]
-		
 		val  eClassifierGetterMethods = abstractSyntax.EClassifiers.map[eClassifier| 
 			if(eClassifier instanceof EClass) {
 				eClassifier -> MethodSpec.methodBuilder('''get«eClassifier.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).

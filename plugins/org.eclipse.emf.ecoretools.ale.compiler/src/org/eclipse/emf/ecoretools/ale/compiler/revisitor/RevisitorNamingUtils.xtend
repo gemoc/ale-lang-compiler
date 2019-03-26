@@ -40,6 +40,6 @@ class RevisitorNamingUtils {
 	}
 	
 	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».revisitor.«ePackage.name»'''
+		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».revisitor.«ePackage.name»'''
 	}
 }

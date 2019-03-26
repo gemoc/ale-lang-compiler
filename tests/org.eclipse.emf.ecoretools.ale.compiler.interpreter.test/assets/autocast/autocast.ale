@@ -7,7 +7,6 @@ open class ConceptC {
 	}
 
 	def void exec1() {
-		
 		for(a in self.ax) {
 			if(a.oclIsKindOf(autocast::ConceptB)) {
 				self.execB(a);
@@ -23,5 +22,12 @@ open class ConceptC {
 			}
 		}
 	}
-
+	
+	def void exec3() {
+		for(a in self.ax) {
+			if(a.oclIsKindOf(autocast::ConceptB)) {
+				a.callB();
+			}
+		}
+	}
 }

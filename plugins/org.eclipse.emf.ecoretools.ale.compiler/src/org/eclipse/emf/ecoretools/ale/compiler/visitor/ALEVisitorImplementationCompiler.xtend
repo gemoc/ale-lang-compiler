@@ -130,7 +130,7 @@ class ALEVisitorImplementationCompiler {
 		val pic = new PackageInterfaceCompiler
 		val pimplc = new PackageImplementationCompiler
 
-		val acceptInterfaceCompiler = new AcceptInterfaceCompiler(compileDirectory, syntaxes, packageRoot)
+		val acceptInterfaceCompiler = new AcceptInterfaceCompiler(compileDirectory, packageRoot)
 		acceptInterfaceCompiler.compile
 
 		val visitorInterfaceCompiler = new VisitorInterfaceCompiler(compileDirectory, syntaxes, packageRoot)
@@ -140,7 +140,7 @@ class ALEVisitorImplementationCompiler {
 		visitorImplementationCompiler.compile
 
 		val eic = new EClassInterfaceCompiler
-		val eimplc = new EClassImplementationCompiler(packageRoot)
+		val eimplc = new EClassImplementationCompiler(packageRoot, dsl)
 
 		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
 		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,

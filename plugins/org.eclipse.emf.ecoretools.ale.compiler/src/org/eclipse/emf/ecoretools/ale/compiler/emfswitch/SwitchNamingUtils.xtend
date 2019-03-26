@@ -25,17 +25,8 @@ class SwitchNamingUtils {
 	def dispatch String operationClassName(ClassName eCls) {
 		'''«eCls.simpleName»Operation'''
 	}
-	
-	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».visitor.«ePackage.name»'''
-	}
-	
+
 	def String factoryInterfaceClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»Factory'''
-	}
-	
-	
-	def String classInterfacePackageName(EClass eClass, String packageRoot) {
-		eClass.EPackage.factoryInterfacePackageName(packageRoot)
 	}
 }

@@ -16,21 +16,28 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.ENotificationImpl
+import org.eclipse.emf.ecore.util.EDataTypeEList
 import org.eclipse.emf.ecore.util.EObjectContainmentEList
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList
 import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecore.util.EDataTypeEList
 
 class EClassGetterCompiler {
 
 	extension JavaPoetUtils = new JavaPoetUtils
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
-	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
+	extension AbstractNamingUtils namingUtils 
+	extension InterpreterCompilerUtils icu
+	
+	new(AbstractNamingUtils namingUtils) {
+		this.namingUtils = namingUtils
+		this.icu = new InterpreterCompilerUtils(namingUtils)
+	}
 
 	def dispatch List<MethodSpec> compileGetter(EAttribute field, TypeName fieldType, String packageRoot, EClass eClass,
 		Dsl dsl, ClassName ePackageInterfaceType, boolean isMapElement) {

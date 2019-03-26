@@ -1,14 +1,19 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler
 
-import org.eclipse.emf.ecore.EDataType
-import org.eclipse.emf.ecore.EClass
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.TypeName
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
 
 class InterpreterCompilerUtils {
 
-	extension InterpreterNamingUtils = new InterpreterNamingUtils
+	extension AbstractNamingUtils anu
+	
+	new(AbstractNamingUtils anu) {
+		this.anu = anu
+	} 
+	
 
 	def dispatch scopedTypeRef(EDataType edt, String packageRoot) {
 		TypeName.get(edt.instanceClass)

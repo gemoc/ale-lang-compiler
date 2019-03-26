@@ -15,13 +15,14 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.impl.EFactoryImpl
 import org.eclipse.emf.ecore.plugin.EcorePlugin
+import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
 
 import static javax.lang.model.element.Modifier.*
 
 class FactoryImplementationCompiler {
 
-	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
+	extension InterpreterCompilerUtils = new InterpreterCompilerUtils(namingUtils)
 	extension JavaPoetUtils = new JavaPoetUtils
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot, boolean isTruffle) {

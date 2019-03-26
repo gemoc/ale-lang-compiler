@@ -11,7 +11,7 @@ import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
-import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
@@ -27,10 +27,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
-import org.eclipse.emf.ecore.EClassifier
-import org.eclipse.xtext.EcoreUtil2
-import org.eclipse.xtext.util.internal.Nullable
-import org.eclipse.emf.common.util.URI
 
 class ALESwitchImplementationCompiler {
 	extension EcoreUtils = new EcoreUtils
@@ -89,18 +85,6 @@ class ALESwitchImplementationCompiler {
 	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
-
-//		syntaxes = syntaxes = dsl.allSyntaxes.toMap([it], [
-//			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
-//		])
-//		
-//		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-//		val aleClasses = newArrayList
-//		for (ParseResult<ModelUnit> pr : parsedSemantics) {
-//			var root = pr.root
-//			aleClasses += root.classExtensions
-//		}
-//		resolved = resolve(aleClasses, syntax)
 		val aleClasses = newArrayList
 		for (ParseResult<ModelUnit> pr : parsedSemantics) {
 			var root = pr.root
@@ -108,10 +92,7 @@ class ALESwitchImplementationCompiler {
 		}
 
 		syntaxes = dsl.allSyntaxes.toMap([it], [
-			val lep = loadEPackage
-//			val rs = lep.eResource.resourceSet.createResource(URI.createURI(lep.eResource.URI.lastSegment))
-//			lep.eResource.resourceSet.map
-			return (lep -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
+			return (loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
 		resolved = resolve(aleClasses, syntax)
@@ -131,13 +112,6 @@ class ALESwitchImplementationCompiler {
 
 		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 
-//		val aleClasses = newArrayList
-//		for (ParseResult<ModelUnit> pr : parsedSemantics) {
-//			var root = pr.root
-//			aleClasses += root.classExtensions
-//		}
-//		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-//		resolved = resolve(aleClasses, syntax)
 		val sic = new SwitchImplementationCompiler(compileDirectory, syntaxes, packageRoot, resolved)
 
 		sic.compile

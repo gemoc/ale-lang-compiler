@@ -82,20 +82,18 @@ class SwitchOperationCompiler {
 	val String packageRoot
 	val File directory
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
-	val IQueryEnvironment queryEnvironment
-	val List<ParseResult<ModelUnit>> parsedSemantics
 	val List<ResolvedClass> resolved
 	val BaseValidator base
 	val Map<String, Class<?>> registeredServices
 	val Dsl dsl
 	
 
-	new(String packageRoot, File directory, Map<String, Pair<EPackage, GenModel>> syntaxes, IQueryEnvironment queryEnvironment, List<ParseResult<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices, Dsl dsl) {
+	new(String packageRoot, File directory, Map<String, Pair<EPackage, GenModel>> syntaxes, IQueryEnvironment queryEnvironment,
+		List<ParseResult<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices, Dsl dsl
+	) {
 		this.packageRoot = packageRoot
 		this.directory = directory
 		this.syntaxes = syntaxes
-		this.queryEnvironment = queryEnvironment
-		this.parsedSemantics = parsedSemantics
 		this.resolved = resolved
 		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
@@ -187,7 +185,10 @@ class SwitchOperationCompiler {
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
-				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
+				val gp = this.resolved.filter[
+					it.eCls.name == e.name && it.eCls.EPackage.name == e.EPackage.name
+				].head.genCls.genPackage
+				ClassName.get(gp.packageName, e.name)
 			} else {
 				val GenClass gclass = gm.allGenPkgs.map [
 					it.genClasses.filter [
@@ -493,11 +494,7 @@ class SwitchOperationCompiler {
 									].head
 								}
 								
-//								'''((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName(t.type as EClass)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
-								
-								
 								// CASE A
-//								'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)/*CASEA*/'''
 								'''/*CASEA*/((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName((t.type as EClassifier).solveType)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
 							} else {
 
@@ -513,7 +510,6 @@ class SwitchOperationCompiler {
 									'''/*CASEB*/«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
 								} else {
 									// CASE C
-//									'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)/*CASEC*/'''
 									'''/*CASEC*/((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName((t.type as EClassifier).solveType)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
 								}
 							}
@@ -528,7 +524,6 @@ class SwitchOperationCompiler {
 								'''/*CASED*/«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)'''
 							} else {
 								// CASE D
-//								'''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)/*CASED*/'''
 									if(t !== null && t.type !== null && t.type instanceof EClassifier && (t.type as EClassifier).solveType instanceof EClass )
 										'''/*CASEE*/((«namingUtils.operationPackageName(packageRoot)».«namingUtils.operationClassName((t.type as EClassifier).solveType as EClass)») emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)'''
 									else

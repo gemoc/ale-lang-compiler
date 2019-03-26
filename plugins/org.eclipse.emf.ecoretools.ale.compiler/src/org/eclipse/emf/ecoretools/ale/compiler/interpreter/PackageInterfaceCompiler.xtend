@@ -6,18 +6,16 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import java.util.HashMap
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecore.ENamedElement
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 
 import static javax.lang.model.element.Modifier.*
-import java.util.HashMap
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecore.EClassifier
-import org.eclipse.emf.ecore.ETypedElement
-import org.eclipse.emf.ecore.ENamedElement
 
 class PackageInterfaceCompiler {
 

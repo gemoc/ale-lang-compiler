@@ -90,7 +90,6 @@ class ALERevisitorImplementationCompiler {
 	static class ResolvedClass {
 		ExtendedClass aleCls
 		public EClassifier eCls
-//		GenClass genCls
 	}
 
 	extension RevisitorNamingUtils = new RevisitorNamingUtils
@@ -177,17 +176,6 @@ class ALERevisitorImplementationCompiler {
 			aleClasses += root.classExtensions
 		}
 
-		// load all syntaxes in a cache
-//		syntaxes = dsl.allSyntaxes.toMap([it], [
-//			val ep = it.loadEPackage
-//			val gmn = it.replaceAll(".ecore$", ".genmodel")
-//			val gm = gmn.loadGenmodel
-//			return (ep -> gm)
-//		])
-//
-//		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-//
-//		resolved = resolve(aleClasses, syntax)
 		syntaxes = dsl.allSyntaxes.toMap([it], [
 			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
@@ -658,10 +646,6 @@ class ALERevisitorImplementationCompiler {
 			val aleClass = aleClasses.filter [
 				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
 			].head
-//			val values = syntaxes.filter[k, v|v.key.allClassifiers.contains(eClass)].values.map[value]
-//			val GenClass gl = values.map [
-//				it.genPackages.map[it.genClasses].flatten
-//			].flatten.filter[it.ecoreClass == eClass].head
 			new ResolvedClass(aleClass, eClass) // , gl
 		]
 	}
@@ -683,7 +667,12 @@ class ALERevisitorImplementationCompiler {
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
-				ClassName.get(e.classInterfacePackageName(""), e.name)
+				val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.exists[it.name == e.name && it.EPackage.name == e.EPackage.name]].values.map[value].map [
+					it.genPackages.map[it.genClasses].flatten
+				].flatten.filter[
+					it.ecoreClass.name == e.name && it.ecoreClass.EPackage.name == e.EPackage.name
+				].head
+				ClassName.get(gl.genPackage.packageName, e.name)
 			} else {
 				val GenClass gclass = gm.allGenPkgs.map [
 					it.genClasses.filter [

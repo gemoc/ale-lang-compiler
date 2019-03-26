@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecore.util.InternalEList
+import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -48,11 +49,11 @@ import static javax.lang.model.element.Modifier.*
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
-	extension InterpreterCompilerUtils = new InterpreterCompilerUtils
+	extension InterpreterCompilerUtils = new InterpreterCompilerUtils(namingUtils)
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension TypeSystemUtils tsu
 	extension AleBodyCompiler abc
-	val eClassGetterCompiler = new EClassGetterCompiler
+	val eClassGetterCompiler = new EClassGetterCompiler(namingUtils)
 	
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	var Dsl dsl
@@ -77,8 +78,6 @@ class EClassImplementationCompiler {
 		this.resolved = resolved
 	}
 	
-	
-
 	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
 		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),

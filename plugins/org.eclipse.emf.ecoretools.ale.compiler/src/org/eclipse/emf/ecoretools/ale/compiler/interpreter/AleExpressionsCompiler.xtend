@@ -173,8 +173,10 @@ class AleExpressionsCompiler {
 				}
 			case "oclIsKindOf":
 				if (call.type == CallType.CALLORAPPLY) {
+					val rhs = call.arguments.get(0).compileExpression(ctx)
+					val lhs = call.arguments.get(1).compileExpression(ctx)
 					CodeBlock.
-						of('''«call.arguments.get(0).compileExpression(ctx)» instanceof «call.arguments.get(1).compileExpression(ctx)»''')
+						of('''$L instanceof $L''', rhs, lhs)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
@@ -448,7 +450,7 @@ class AleExpressionsCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(TypeLiteral call, CompilerExpressionCtx ctx) {
-		CodeBlock.of('''«(call.value as EClass).solveType»''')
+		CodeBlock.of('''$T''', (call.value as EClass).solveType)
 	}
 
 	def dispatch CodeBlock compileExpression(Switch call, CompilerExpressionCtx ctx) {
