@@ -7,4 +7,6 @@ public interface ConceptB extends EObject, ConceptA {
 	String getName();
 
 	void setName(String value);
+	
+	void callB();
 }

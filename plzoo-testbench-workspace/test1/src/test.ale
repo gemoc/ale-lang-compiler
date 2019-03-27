@@ -1,0 +1,9 @@
+behavior test1_exec;
+
+open class ConceptA {
+  def void exec() {
+  	'ok'.log();
+  	int a := 1;
+  	self.b := 42;
+  }
+}

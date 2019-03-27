@@ -151,8 +151,14 @@ class AleBodyCompiler {
 			builderSeed.beginControlFlow('''for ($T $L : «body.collectionExpression.compileExpression(ctx)»)''',
 				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body, ctx).endControlFlow
 		} else {
-			builderSeed.beginControlFlow('''for ($T $L : «body.collectionExpression.compileExpression(ctx)»)''',
-				lt.collectionType.type as Class<?>, body.variable).compileBody(body.body, ctx).endControlFlow
+			
+			val iteratorType = lt.collectionType.type.resolveType2
+			val iteratorVariable = body.variable
+			val iterable = body.collectionExpression.compileExpression(ctx)
+			builderSeed
+				.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable)
+				.compileBody(body.body, ctx)
+				.endControlFlow
 		}
 	}
 

@@ -8,13 +8,32 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 
 class RevisitorNamingUtils {
 
-	def String getRevisitorPackageFqn(GenPackage pkg) '''«pkg.basePackage».revisitor'''
+	def String getRevisitorPackageFqn(GenPackage pkg) {
+		
+		val pkgName = if(pkg.basePackage === null || pkg.basePackage == '') {
+			pkg.getEcorePackage.name
+		} else {
+			pkg.basePackage
+		}
+		
+		'''«pkgName».revisitor'''
+	}
 
-	def String getRevisitorInterfaceName(GenPackage pkg) '''«pkg.getEcorePackage.name.toFirstUpper»Revisitor'''
+	def String getRevisitorInterfaceName(GenPackage pkg) {
+		'''«pkg.getEcorePackage.name.toFirstUpper»Revisitor'''
+	}
 
 	def String getRevisitorInterfaceFqn(GenPackage pkg) '''«pkg.revisitorPackageFqn».«pkg.revisitorInterfaceName»'''
 
-	def String getRevisitorInterfacePath(GenPackage pkg) '''src/«FOR fragment: pkg.basePackage.split("\\.") SEPARATOR '/'»«fragment»«ENDFOR»/revisitor'''
+	def String getRevisitorInterfacePath(GenPackage pkg) {
+		val pn = if(pkg.basePackage !== null && pkg.basePackage != '') {
+			pkg.basePackage
+		} else {
+			pkg.getEcorePackage.name
+		}
+		'''src/«FOR fragment: pn.split("\\.") SEPARATOR '/'»«fragment»«ENDFOR»/revisitor'''
+	
+	}
 
 	def String getTypeParamName(EClass cls) '''«cls.EPackage.name.replaceAll("\\.", "").toFirstUpper»__«cls.name»T'''
 

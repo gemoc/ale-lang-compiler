@@ -8,6 +8,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test1unique.interpreter.test1unique.ConceptA;
 import test1unique.interpreter.test1unique.Test1uniquePackage;
 
@@ -70,6 +71,6 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	}
 
 	public void exec() {
-		org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log("ok");
+		LogService.log("ok");
 	}
 }

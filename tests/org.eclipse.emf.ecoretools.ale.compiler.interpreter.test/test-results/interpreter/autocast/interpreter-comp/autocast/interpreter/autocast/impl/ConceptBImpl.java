@@ -1,14 +1,13 @@
 package autocast.interpreter.autocast.impl;
 
-import autocast.visitor.autocast.AutocastPackage;
-import autocast.visitor.autocast.ConceptB;
+import autocast.interpreter.autocast.AutocastPackage;
+import autocast.interpreter.autocast.ConceptB;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import visitor.VisitorInterface;
 
 public class ConceptBImpl extends ConceptAImpl implements ConceptB {
 	protected static final String NAME_EDEFAULT = null;
@@ -71,5 +70,8 @@ public class ConceptBImpl extends ConceptAImpl implements ConceptB {
 				return name != NAME_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+	
+	public void callB() {
 	}
 }

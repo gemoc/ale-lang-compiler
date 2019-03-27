@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="testoperationbody" nsURI="http://testoperationbody_sub" nsPrefix="testoperationbody">
+  <eClassifiers xsi:type="ecore:EClass" name="Main">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listint" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listconcepta" upperBound="-1"
+        eType="#//ConceptA" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="singlebool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleconcepta" eType="#//ConceptA"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//Parent" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptA"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Parent" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ChildA" eSuperTypes="#//Parent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//EnumA"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ChildB" eSuperTypes="#//Parent"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="EnumA">
+    <eLiterals name="CASE1"/>
+    <eLiterals name="CASE2" value="1"/>
+  </eClassifiers>
+</ecore:EPackage>

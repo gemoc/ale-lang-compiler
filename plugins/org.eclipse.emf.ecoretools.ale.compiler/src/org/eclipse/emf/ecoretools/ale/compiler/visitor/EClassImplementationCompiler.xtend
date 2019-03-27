@@ -72,7 +72,7 @@ class EClassImplementationCompiler {
 			val type = fet.scopedTypeRef(packageRoot)
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			if(isMultiple) {
-				val fieldField = FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(EList), type), '''«field.name»''', PROTECTED).build
+				val fieldField = FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(EList), type.box), '''«field.name»''', PROTECTED).build
 				#[fieldField]
 			} else {
 				val edefault = if(fet instanceof EEnum) {
@@ -135,12 +135,12 @@ class EClassImplementationCompiler {
 						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 						if(key !== null && value !== null) {
-							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot))
+							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot).box, value.EType.scopedInterfaceTypeRef(packageRoot).box)
 						} else {
-							ParameterizedTypeName.get(ClassName.get(EList), rt)
+							ParameterizedTypeName.get(ClassName.get(EList), rt.box)
 						}
 					} else {
-						ParameterizedTypeName.get(ClassName.get(EList), rt)
+						ParameterizedTypeName.get(ClassName.get(EList), rt.box)
 					}
 				} else
 					rt
@@ -166,11 +166,11 @@ class EClassImplementationCompiler {
 					val tn = esf.EType.scopedTypeRef(packageRoot).box
 					namedMap.put("fieldtype" + esf.name, tn)
 					val genericType = WildcardTypeName.subtypeOf(tn)
-					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), genericType))					
+					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), genericType.box))					
 				} else {
 					val tn = ClassName.get((esf.EType as EClass).classInterfacePackageName(packageRoot), (esf.EType as EClass).classInterfaceClassName)
 					namedMap.put("fieldtype" + esf.name, tn)
-					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), WildcardTypeName.subtypeOf(tn)))	
+					namedMap.put("collection" + esf.name,  ParameterizedTypeName.get(ClassName.get(Collection), WildcardTypeName.subtypeOf(tn.box)))	
 				}
 			}
 			
@@ -404,8 +404,8 @@ class EClassImplementationCompiler {
 			superclass(ClassName.get(superType.classImplementationPackageName(packageRoot), superType.classImplementationClassName))
 		]).applyIfTrue(isMapElement, [
 			it.addSuperinterface(
-				ParameterizedTypeName.get(ClassName.get(BasicEMap.Entry), key.EType.scopedInterfaceTypeRef(packageRoot),
-					value.EType.scopedInterfaceTypeRef(packageRoot)))
+				ParameterizedTypeName.get(ClassName.get(BasicEMap.Entry), key.EType.scopedInterfaceTypeRef(packageRoot).box,
+					value.EType.scopedInterfaceTypeRef(packageRoot).box))
 		])
 		.applyIfTrue(!hasSuperType, [superclass(ClassName.get(MinimalEObjectImpl.Container))])
 		.applyIfTrue(

@@ -1,0 +1,3 @@
+syntax=assets/testoperationbody/testoperationbody.ecore
+behavior=assets/testoperationbody/test.ale
+compilationType=switch

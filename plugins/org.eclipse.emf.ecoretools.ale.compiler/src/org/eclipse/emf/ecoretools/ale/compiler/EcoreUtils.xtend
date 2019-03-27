@@ -13,7 +13,6 @@ import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecore.plugin.EcorePlugin
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
@@ -198,7 +197,6 @@ class EcoreUtils {
 
 		val allPkgs = gm.allGenPkgs
 		val fgm = allPkgs.findFirst [
-//			println('''«getEcorePackage.nsURI» == «cls.EPackage.nsURI»''')
 			getEcorePackage.nsURI == cls.EPackage.nsURI
 		]
 
@@ -257,17 +255,14 @@ class EcoreUtils {
 	def EPackage loadEPackage(String path) {
 		if (rs === null) {
 			rs = new ResourceSetImpl
-//			ResourceSetImpl.ResourceLocator.
 		}
 		rs.resourceFactoryRegistry.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl)
-//		val um = EcorePlugin.computePlatformURIMap(false)
-//		rs.getURIConverter().getURIMap().putAll(um)
 		try {
 
-			if (rs.resources.exists[URI.toString == path]) {
-				val r = rs.resources.findFirst[URI.toString == path]
-				return r.contents.head as EPackage
-			}
+//			if (rs.resources.exists[URI.toString == path]) {
+//				val r = rs.resources.findFirst[URI.toString == path]
+//				return r.contents.head as EPackage
+//			}
 
 			val resource = if (path.startsWith("platform:/"))
 					rs.getResource(URI.createURI(path), true)
@@ -288,13 +283,12 @@ class EcoreUtils {
 			rs = new ResourceSetImpl
 		}
 		rs.resourceFactoryRegistry.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
-//		rs.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(false));
 		try {
 
-			if (rs.resources.exists[URI.toString == path]) {
-				val r = rs.resources.findFirst[URI.toString == path]
-				return r.contents.head as GenModel
-			}
+//			if (rs.resources.exists[URI.toString == path]) {
+//				val r = rs.resources.findFirst[URI.toString == path]
+//				return r.contents.head as GenModel
+//			}
 
 			val resource = if (path.startsWith("platform:/"))
 					rs.getResource(URI.createURI(path), true)

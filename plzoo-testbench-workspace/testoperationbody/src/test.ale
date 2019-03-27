@@ -1,0 +1,116 @@
+behavior testoperationbody_exec;
+
+open class ConceptA {
+	def Boolean op() {
+		result := false;
+	} 
+}
+
+open class Parent {
+	def void notOverriden() {}
+	def void overriden() {}
+}
+
+open class ChildA {
+	def void overriden() {}
+	def testoperationbody::EnumA onlyA() {
+		result := self.value;
+	}
+}
+
+open class ChildB {
+	def void overriden() {}
+}
+
+open class Main {
+	
+	def void testPolymorphism() {
+		self.children += testoperationbody::ChildA.create();
+		self.children += testoperationbody::ChildB.create();
+		
+		for(child in self.children) {
+			child.overriden();
+			child.notOverriden();
+			if(child.oclIsKindOf(testoperationbody::ChildA)) {
+					
+			}
+		}
+	}
+	
+	def void main() {
+		self.listint += 1;
+		self.listint -= 1;
+		self.listconcepta += testoperationbody::ConceptA.create();
+		self.listconcepta -= testoperationbody::ConceptA.create();
+		self.singlebool := false;
+		self.singleconcepta := testoperationbody::ConceptA.create();
+		Integer a := 1;
+		testoperationbody::ConceptA b :=testoperationbody::ConceptA.create(); 
+		Sequence(String) events := Sequence{'event1','event2'};
+		Sequence(Integer) ax := Sequence{1};
+		
+		for(i1 in self.listint) {
+			self.listint->size();
+			self.listint->at(0);
+			self.listint->first();
+			self.listint->isEmpty();
+			self.listint->select(x | x > 3);
+			self.listint->exists(x | x > 3);
+		}
+		
+		for(i2 in self.listconcepta) {
+			self.listconcepta->size();
+			self.listconcepta->at(0);
+			self.listconcepta->first();
+			self.listconcepta->isEmpty();
+			self.listconcepta->select(x | x.op());
+			self.listconcepta->exists(x | x.op());
+		}
+		for(i3 in events) {
+			events->size();
+			events->at(0);
+			events->first();
+			events->isEmpty();
+			events->select(x | x != 'ok');
+			events->exists(x | x != 'ok');
+			
+		}
+		for(i4 in ax) {
+			ax->size();
+			ax->at(0);
+			ax->first();
+			ax->isEmpty();
+			ax->select(x | x < 0);
+			ax->exists(x | x < 0);
+		}
+		
+		self.ma().log();
+		
+		if(self.ma() < 12) {
+			'ok'.log();
+		} else {
+			'fail'.log();
+		}
+		
+		Integer cptr := 1;
+		while(cptr < self.ma()) {
+			cptr := cptr + 1;
+		}
+		
+		Boolean truz := not false;
+		Boolean gt := 1 > 2;
+		Boolean ne := self.ma() != 42;
+		Integer x := self.listint->at(0)-1;
+		Integer xd := 43/3;
+		Boolean eq := self.ma() == self.listint->first();
+		Boolean leq := 12 <= 11;
+		Boolean geq := 12.3 >= 11;
+		Real multpl := 12.3 * 11.4;
+		Integer neg := -xd;
+	}
+	
+	
+	def Integer ma() {
+		result := 452;
+	}
+}

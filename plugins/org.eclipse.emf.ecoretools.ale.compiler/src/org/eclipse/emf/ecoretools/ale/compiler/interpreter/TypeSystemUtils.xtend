@@ -15,6 +15,9 @@ import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import com.squareup.javapoet.TypeName
+import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
+import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
 
 class TypeSystemUtils {
 
@@ -47,7 +50,7 @@ class TypeSystemUtils {
 	def resolveType(EClassifier e) {
 		val stxs = syntaxes.values + #[(EcorePackage.eINSTANCE -> null)]
 		val stx = stxs.filter [
-			it.key.allClasses.exists [
+			it.key.allClassifiers.exists [
 				it.name == e.name && it.EPackage.name == (e.eContainer as EPackage).name
 			]
 		].head
@@ -58,15 +61,16 @@ class TypeSystemUtils {
 			if (e instanceof EClass) {
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
 			} else {
-				val GenClass gclass = gm.allGenPkgs.map [
-					it.genClasses.filter [
+				val GenClassifier gclass = gm.allGenPkgs.map [
+					it.genClassifiers.filter [
 						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
 					]
 				].flatten.head
-				val split = gclass.qualifiedInterfaceName.split("\\.")
-				val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
-				val cn = split.last
-				ClassName.get(pkg, cn)
+				if(gclass instanceof GenClass) {
+					ClassName.get(gclass.qualifiedInterfaceName, gclass.name)
+				} else if (gclass instanceof GenEnum) {
+					ClassName.get(gclass.genPackage.interfacePackageName, gclass.name)
+				}
 
 			}
 		} else {
@@ -91,5 +95,21 @@ class TypeSystemUtils {
 		resolved.filter[it.eCls == ecls || it.eCls instanceof EClass && ecls instanceof EClass && (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
 			it.aleCls
 		].filter[it !== null]
+	}
+	
+	def dispatch TypeName resolveType2(Object type) {
+		return null
+	}
+	
+	def dispatch TypeName resolveType2(Class<?> clazz) {
+		return TypeName.get(clazz)
+	}
+	
+	def dispatch TypeName resolveType2(EClassifier type) {
+		if (type.instanceClass !== null) {
+			TypeName.get(type.instanceClass)
+		} else {
+			type.resolveType
+		}	
 	}
 }

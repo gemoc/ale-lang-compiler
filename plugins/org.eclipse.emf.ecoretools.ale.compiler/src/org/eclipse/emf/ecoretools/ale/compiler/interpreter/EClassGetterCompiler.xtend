@@ -73,7 +73,7 @@ class EClassGetterCompiler {
 			#[getter, setter]
 		} else {
 			val hm = newHashMap(
-				"listtype" -> ParameterizedTypeName.get(ClassName.get(EDataTypeEList), rt),
+				"listtype" -> ParameterizedTypeName.get(ClassName.get(EDataTypeEList), rt.box),
 				"rt" -> rt,
 				"epit" -> ePackageInterfaceType
 			)

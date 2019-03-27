@@ -85,6 +85,9 @@ import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.xbase.lib.Functions.Function0
+import java.util.stream.IntStream
+import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
+import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 
 class ALERevisitorImplementationCompiler {
 
@@ -280,7 +283,7 @@ class ALERevisitorImplementationCompiler {
 
 	def MethodSpec.Builder openMethod(MethodSpec.Builder builder, EClassifier type) {
 		if (type !== null) {
-			builder.addStatement('''$T result''', type.solveType)
+			builder.addStatement('''$T result''', type.resolveType2)
 		} else {
 			builder
 		}
@@ -321,7 +324,7 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body) {
-		builderSeed.addStatement('''«body.name» = «body.value.compileExpression»''')
+		builderSeed.addStatement('''«body.name» = $L''', body.value.compileExpression)
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body) {
@@ -358,8 +361,13 @@ class ALERevisitorImplementationCompiler {
 			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
 				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
 		} else {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
-				lt.collectionType.type as Class<?>, body.variable).compileBody(body.body).endControlFlow
+			val iteratorType = lt.collectionType.type.resolveType2
+			val iteratorName = body.variable
+			val iterable = body.collectionExpression.compileExpression
+			builderSeed
+				.beginControlFlow('''for($T $L: $L)''', iteratorType, iteratorName, iterable)
+				.compileBody(body.body)
+				.endControlFlow
 		}
 	}
 
@@ -383,17 +391,33 @@ class ALERevisitorImplementationCompiler {
 		val a = builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression)
 		a.compileBody(body.body).endControlFlow
 	}
+	
+	def dispatch TypeName resolveType2(Object type) {
+		return null
+	}
+	
+	def dispatch TypeName resolveType2(Class<?> clazz) {
+		return TypeName.get(clazz)
+	}
+	
+	def dispatch TypeName resolveType2(EClassifier type) {
+		if (type.instanceClass !== null) {
+			TypeName.get(type.instanceClass)
+		} else {
+			type.resolveType
+		}	
+	}
 
 	def dispatch CodeBlock compileExpression(Call call) {
 		switch (call.serviceName) {
 			case "not": CodeBlock.of('''!($L)''', call.arguments.get(0).compileExpression)
 			case "greaterThan": CodeBlock.of('''($L) > ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "differs": CodeBlock.of('''(«call.arguments.get(0).compileExpression») != («call.arguments.get(1).compileExpression»)''')
+			case "differs": CodeBlock.of('''($L) != ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "sub": CodeBlock.of('''(«call.arguments.get(0).compileExpression») - («call.arguments.get(1).compileExpression»)''')
 			case "add": CodeBlock.of('''(«call.arguments.get(0).compileExpression») + («call.arguments.get(1).compileExpression»)''')
 			case "divOp": CodeBlock.of( '''(«call.arguments.get(0).compileExpression») / («call.arguments.get(1).compileExpression»)''')
-			case "equals": CodeBlock.of('''$T.equals((«call.arguments.get(0).compileExpression»), («call.arguments.get(1).compileExpression»))''', ClassName.get(Objects))
-			case "lessThan": CodeBlock.of('''(«call.arguments.get(0).compileExpression») < («call.arguments.get(1).compileExpression»)''')
+			case "equals": CodeBlock.of('''$T.equals(($L), ($L))''', ClassName.get(Objects), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
+			case "lessThan": CodeBlock.of('''($L) < ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "mult": CodeBlock.of('''(«call.arguments.get(0).compileExpression») * («call.arguments.get(1).compileExpression»)''')
 			case "unaryMin": CodeBlock.of('''-(«call.arguments.get(0).compileExpression»)''')
 			case "first":
@@ -413,7 +437,7 @@ class ALERevisitorImplementationCompiler {
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "select":
 				if (call.type == CallType.COLLECTIONCALL) {
-					CodeBlock.of('''$T.select(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)''', ClassName.get('org.eclipse.emf.ecoretools.ale.compiler.lib', 'CollectionService'))
+					CodeBlock.of('''$T.select($L, $L)''', ClassName.get('org.eclipse.emf.ecoretools.ale.compiler.lib', 'CollectionService'), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
@@ -442,8 +466,9 @@ class ALERevisitorImplementationCompiler {
 				}
 			case "log":
 				if (call.type == CallType.CALLORAPPLY) {
-					CodeBlock.of('''$T.log(«call.arguments.get(0).compileExpression»)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"))
+					CodeBlock.of('''$T.log($L)''',
+						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"),
+						call.arguments.get(0).compileExpression)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
@@ -466,7 +491,7 @@ class ALERevisitorImplementationCompiler {
 						val e = call.arguments.get(0)
 						val t = infereType(e).head
 						val gm = findGenModelFromExpression(e)
-						CodeBlock.of('''«gm.genPackages.head.qualifiedPackageName».«gm.EPackage.name.toFirstUpper»Factory.eINSTANCE.create«(t.type as EClass).name»()''')
+						CodeBlock.of('''$T.eINSTANCE.create«(t.type as EClass).name»()''', ClassName.get(gm.genPackages.head.qualifiedPackageName, '''«gm.EPackage.name.toFirstUpper»Factory'''))
 					} else {
 
 						// TODO: better identification of the caller in order to route to a $ operation or a service.
@@ -487,7 +512,17 @@ class ALERevisitorImplementationCompiler {
 								it.operationRef.name == call.serviceName
 							]
 							if (methodExist) {
-								CodeBlock.of('''rev.$L(«call.arguments.head.compileExpression»).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)''', "$")
+								// TODO: also add explicit cast on parameters !
+								val hm = newHashMap(
+									'dispatch' -> "$", 
+									"callerType" -> t.type.resolveType2
+								)
+								
+								call.arguments.tail.enumerate.forEach[
+									hm.put('paramType' + it.value, it.key.infereType.head.type.resolveType2)
+								]
+								
+								CodeBlock.builder.addNamed('''rev.$dispatch:L(($callerType:T)«call.arguments.head.compileExpression»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»(($paramType«param.value»:T)«param.key.compileExpression»)«ENDFOR»)''', hm).build
 							} else {
 
 								// duplicate to following else block !!!
@@ -525,6 +560,11 @@ class ALERevisitorImplementationCompiler {
 				else
 					CodeBlock.of('''/*Call «call»*/''')
 		}
+	}
+	
+	def <A> enumerate(Iterable<A> itt) {
+		val ints = IntStream.range(0, itt.size).iterator
+		itt.map[it -> ints.next]
 	}
 
 	def dispatch CodeBlock compileExpression(And call) {
@@ -588,7 +628,15 @@ class ALERevisitorImplementationCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(Lambda call) {
-		CodeBlock.of('''(«FOR p : call.parameters SEPARATOR ', '»«p.name»«ENDFOR») -> «call.expression.compileExpression»''')
+		val Map<String, Object> hm = newHashMap(
+			"expr" -> call.expression.compileExpression
+		)
+		for(param: call.parameters.enumerate) {
+			hm.put("param" + param.value, param.key.name)
+		}
+		
+		CodeBlock.builder
+			.addNamed('''(«FOR p : call.parameters.enumerate SEPARATOR ', '»$param«p.value»:L«ENDFOR») -> $expr:L''', hm).build
 	}
 
 	def dispatch CodeBlock compileExpression(NullLiteral call) {
@@ -628,12 +676,12 @@ class ALERevisitorImplementationCompiler {
 		CodeBlock.of(if(call.variableName == 'self') 'this.obj' else call.variableName)
 	}
 
-	def dispatch solveType(EClass type) {
+	def dispatch TypeName solveType(EClass type) {
 		resolveType(type)
 	}
 
-	def dispatch solveType(EDataType edt) {
-		edt.instanceClass
+	def dispatch TypeName solveType(EDataType edt) {
+		TypeName.get(edt.instanceClass)
 	}
 
 	def returnType(MethodSpec.Builder builder, EClassifier type) {
@@ -665,7 +713,7 @@ class ALERevisitorImplementationCompiler {
 	def resolveType(EClassifier e) {
 		val stxs = syntaxes.values + #[(EcorePackage.eINSTANCE -> null)]
 		val stx = stxs.filter [
-			it.key.allClasses.exists [
+			it.key.allClassifiers.exists [
 				it.name == e.name && it.EPackage.name == (e.eContainer as EPackage).name
 			]
 		].head
@@ -674,22 +722,31 @@ class ALERevisitorImplementationCompiler {
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
-				val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.exists[it.name == e.name && it.EPackage.name == e.EPackage.name]].values.map[value].map [
-					it.genPackages.map[it.genClasses].flatten
-				].flatten.filter[
-					it.ecoreClass.name == e.name && it.ecoreClass.EPackage.name == e.EPackage.name
-				].head
-				ClassName.get(gl.genPackage.packageName, e.name)
+				if(e.instanceClassName == "java.util.Map$Entry") {
+					val keyType = e.EStructuralFeatures.filter[it.name == 'key'].head.EType.solveType
+					val valueType = e.EStructuralFeatures.filter[it.name == 'value'].head.EType.solveType
+					ParameterizedTypeName.get(ClassName.get(Map.Entry), keyType, valueType)
+				} else{
+					val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.exists[it.name == e.name && it.EPackage.name == e.EPackage.name]].values.map[value].map [
+						it.genPackages.map[it.genClasses].flatten
+					].flatten.filter[
+						it.ecoreClass.name == e.name && it.ecoreClass.EPackage.name == e.EPackage.name
+					].head
+					ClassName.get(gl.genPackage.interfacePackageName, e.name)
+				
+				}
 			} else {
-				val GenClass gclass = gm.allGenPkgs.map [
-					it.genClasses.filter [
+				val GenClassifier gclass = gm.allGenPkgs.map [
+					it.genClassifiers.filter [
 						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
 					]
 				].flatten.head
-				val split = gclass.qualifiedInterfaceName.split("\\.")
-				val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
-				val cn = split.last
-				ClassName.get(pkg, cn)
+				
+				if(gclass instanceof GenClass) {
+					ClassName.get(gclass.qualifiedInterfaceName, gclass.name)
+				} else if (gclass instanceof GenEnum ) {
+					ClassName.get(gclass.genPackage.interfacePackageName, gclass.name)
+				}
 
 			}
 		} else {

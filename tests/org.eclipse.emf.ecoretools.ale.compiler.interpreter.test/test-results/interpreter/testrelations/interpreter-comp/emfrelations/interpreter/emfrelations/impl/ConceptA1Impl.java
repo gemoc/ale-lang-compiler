@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
 public class ConceptA1Impl extends MinimalEObjectImpl.Container implements ConceptA1 {
 	protected EList<ConceptB1> conceptb1;
@@ -90,5 +91,11 @@ public class ConceptA1Impl extends MinimalEObjectImpl.Container implements Conce
 				return conceptb1 != null && !conceptb1.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+	
+	public void logBS() {
+		for (ConceptB1 b1 : this.getConceptb1()) {
+			LogService.log(b1);
+		}
 	}
 }

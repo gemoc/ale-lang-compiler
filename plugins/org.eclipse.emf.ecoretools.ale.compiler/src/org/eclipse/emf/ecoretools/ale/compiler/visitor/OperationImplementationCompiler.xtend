@@ -39,7 +39,6 @@ import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.acceleo.query.validation.type.EClassifierType
 import org.eclipse.acceleo.query.validation.type.SequenceType
-import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
@@ -47,7 +46,6 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -74,12 +72,11 @@ import java.util.stream.IntStream
 
 class OperationImplementationCompiler {
 
-	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
 	extension JavaPoetUtils = new JavaPoetUtils
+	extension VisitorTypeSystemUtil tsu
 	val File directory
 	val String packageRoot
-	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	val IQueryEnvironment queryEnvironment
 	val List<ParseResult<ModelUnit>> parsedSemantics
 	val List<ResolvedClass> resolved
@@ -91,11 +88,11 @@ class OperationImplementationCompiler {
 		Map<String, Class<?>> registeredServices) {
 		this.directory = directory
 		this.packageRoot = packageRoot
-		this.syntaxes = syntaxes
 		this.queryEnvironment = queryEnvironment
 		this.parsedSemantics = parsedSemantics
 		this.resolved = resolved
 		this.registeredServices = registeredServices
+		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot)
 	}
 
 	def compile(EClass eClass, ExtendedClass aleClass) {
@@ -127,17 +124,7 @@ class OperationImplementationCompiler {
 			''').addModifiers(PUBLIC).build).applyIfTrue(aleClass !== null, [
 			addMethods(aleClass.methods.map [ method |
 
-				val retType = if (method.operationRef.EType !== null) {
-						if (method.operationRef.EType instanceof EClass &&
-							!(method.operationRef.EType.EPackage == EcorePackage.eINSTANCE)) {
-							ClassName.get((method.operationRef.EType as EClass).classInterfacePackageName(packageRoot),
-								(method.operationRef.EType as EClass).name)
-						} else {
-							TypeName.get(method.operationRef.EType.instanceClass)
-
-						}
-					} else
-						null
+				val retType = method.operationRef.EType.resolveType2 
 
 				MethodSpec.methodBuilder(method.operationRef.name).applyIfTrue(retType !== null, [returns(retType)]).
 					addParameters(method.operationRef.EParameters.map [ param |
@@ -166,40 +153,11 @@ class OperationImplementationCompiler {
 		javaFile.writeTo(directory)
 	}
 
-	def resolveType(EClassifier e) {
-		val stxs = syntaxes.values + #[(EcorePackage.eINSTANCE -> null)]
-		val stx = stxs.filter [
-			it.key.allClasses.exists [
-				it.name == e.name && it.EPackage.name == (e.eContainer as EPackage).name
-			]
-		].head
-
-		val gm = stx.value
-
-		if (gm !== null) {
-			if (e instanceof EClass) {
-				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
-			} else {
-				val GenClass gclass = gm.allGenPkgs.map [
-					it.genClasses.filter [
-						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
-					]
-				].flatten.head
-				val split = gclass.qualifiedInterfaceName.split("\\.")
-				val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
-				val cn = split.last
-				ClassName.get(pkg, cn)
-
-			}
-		} else {
-			ClassName.get("org.eclipse.emf.ecore", e.name)
-		}
-
-	}
+	
 
 	def MethodSpec.Builder openMethod(MethodSpec.Builder builder, EClassifier type) {
 		if (type !== null) {
-			builder.addStatement('''$T result''', type.solveType)
+			builder.addStatement('''$T result''', type.resolveType2)
 		} else {
 			builder
 		}
@@ -224,8 +182,7 @@ class OperationImplementationCompiler {
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body) {
 		val t = infereType(body.target).head
 		if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-			builderSeed.
-				addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''')
+			builderSeed.addStatement('''$L.get$L().add($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
 		} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 			builderSeed.
 				addStatement('''«body.target.compileExpression».set«body.targetFeature.toFirstUpper»(«body.value.compileExpression»)''')
@@ -248,7 +205,7 @@ class OperationImplementationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body) {
-		builderSeed.addStatement('''«body.name» = «body.value.compileExpression»''')
+		builderSeed.addStatement('''$L = $L''', body.name, body.value.compileExpression)
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body) {
@@ -257,12 +214,10 @@ class OperationImplementationCompiler {
 		if (inft instanceof SequenceType) {
 			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
-			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression»)''', t,
-				body.name, t)
+			builderSeed.addStatement('''$T $L = (($T)$L)''', t, body.name, t, body.initialValue.compileExpression)
 		} else {
 			val t = body.type.solveType
-			builderSeed.addStatement('''$T $L = (($T)«body.initialValue.compileExpression»)''', t,
-				body.name, t)
+			builderSeed.addStatement('''$T $L = (($T)$L)''', t, body.name, t, body.initialValue.compileExpression)
 		}
 	}
 
@@ -287,8 +242,13 @@ class OperationImplementationCompiler {
 			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
 				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
 		} else {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
-				lt.collectionType.type as Class<?>, body.variable).compileBody(body.body).endControlFlow
+			val iteratorType = lt.collectionType.type.resolveType2
+			val iteratorVariable = body.variable
+			val iterable = body.collectionExpression.compileExpression
+			builderSeed
+				.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable)
+				.compileBody(body.body)
+				.endControlFlow
 		}
 	}
 
@@ -400,7 +360,7 @@ class OperationImplementationCompiler {
 								(t.type as EDataType).instanceClass == boolean))
 								CodeBlock.of('''«call.arguments.head.compileExpression».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
 							else
-								CodeBlock.of('''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+								CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 						} else {
 							CodeBlock.of('''«call.arguments.head.compileExpression».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»''')
 
@@ -410,7 +370,7 @@ class OperationImplementationCompiler {
 						val t = infereType(e).head
 						val ecls = t.type as EClass
 						val epks = ecls.EPackage
-						CodeBlock.of('''«epks.factoryInterfacePackageName(packageRoot)».«epks.factoryInterfaceClassName».eINSTANCE.create«ecls.name»()''')
+						CodeBlock.of('''$T.eINSTANCE.create«ecls.name»()''', ClassName.get(epks.factoryInterfacePackageName(packageRoot), epks.factoryInterfaceClassName))
 					} else {
 						val argumentsh = call.arguments.head
 						val ts = argumentsh.infereType
@@ -434,9 +394,14 @@ class OperationImplementationCompiler {
 								hm.put("typeoperation", ClassName.get(namingUtils.operationInterfacePackageName(packageRoot, t.type as EClass), namingUtils.operationInterfaceClassName(t.type as EClass)))
 								for (param : call.arguments.tail.enumerate) {
 									hm.put("typeparam" + param.value, (param.key.infereType.head.type as EClass).solveType)
+									hm.put("expression" + param.value, param.key.compileExpression)
 								}
 								
-								CodeBlock.builder.addNamed('''(($typeoperation:T)«call.arguments.head.compileExpression».accept(vis)).«call.serviceName»(«FOR p : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«p.value»:T)«p.key.compileExpression»«ENDFOR»)''', hm).build
+								val a0 = call.arguments.head
+								hm.put("caller",  a0.compileExpression)
+								hm.put("serviceName", call.serviceName)
+								
+								CodeBlock.builder.addNamed('''(($typeoperation:T)$caller:L.accept(vis)).$serviceName:L(«FOR p : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«p.value»:T)$expression«p.value»:L«ENDFOR»)''', hm).build
 							} else {
 
 								val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].
@@ -593,4 +558,6 @@ class OperationImplementationCompiler {
 			it.aleCls
 		].filter[it !== null]
 	}
+	
+	
 }

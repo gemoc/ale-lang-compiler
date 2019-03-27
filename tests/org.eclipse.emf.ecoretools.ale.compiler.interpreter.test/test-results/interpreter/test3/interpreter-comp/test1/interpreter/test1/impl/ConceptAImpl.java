@@ -86,7 +86,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	public void exec() {
 		LogService.log("ok");
 		for (ConceptC c : this.getCs()) {
-		  ((ConceptC)c).call();
+			((ConceptC)c).call();
 		}
 	}
 }

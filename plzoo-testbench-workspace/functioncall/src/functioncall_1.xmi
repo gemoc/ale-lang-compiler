@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functioncall:ConceptC
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:functioncall="http://functioncall"
+    xsi:schemaLocation="http://functioncall functioncall.ecore">
+  <concepta2
+      xsi:type="functioncall:ConceptB"/>
+  <concepta1/>
+  <conceptb/>
+</functioncall:ConceptC>

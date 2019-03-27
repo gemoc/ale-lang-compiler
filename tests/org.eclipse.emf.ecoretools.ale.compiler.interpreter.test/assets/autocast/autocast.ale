@@ -1,7 +1,10 @@
 behavior autocast_exec;
 
-open class ConceptC {
+open class ConceptB {
+	def void callB() {}
+}
 
+open class ConceptC {
 	def void execB(ConceptB b) {
 		b.name.log();
 	}

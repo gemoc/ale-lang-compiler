@@ -183,7 +183,7 @@ class EClassInterfaceCompiler {
 			val fieldType = field.EType.scopedInterfaceTypeRef(packageRoot)
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			if(isMultiple) {
-				val elistType = ParameterizedTypeName.get(ClassName.get(EList), fieldType)
+				val elistType = ParameterizedTypeName.get(ClassName.get(EList), fieldType.box)
 				val getter = MethodSpec.
 					methodBuilder('''get«field.name.toFirstUpper»''').
 					returns(elistType).addModifiers(ABSTRACT, PUBLIC).build

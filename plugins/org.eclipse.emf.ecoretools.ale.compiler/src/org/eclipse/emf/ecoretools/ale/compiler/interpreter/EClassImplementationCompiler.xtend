@@ -91,7 +91,7 @@ class EClassImplementationCompiler {
 			val type = fet.scopedTypeRef(packageRoot)
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			if(isMultiple) {
-				val fieldField = FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(EList), type), '''«field.name»''', PROTECTED).build
+				val fieldField = FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(EList), type.box), '''«field.name»''', PROTECTED).build
 				#[fieldField]
 			} else {
 				val edefault = if(fet instanceof EEnum) {
@@ -163,10 +163,10 @@ class EClassImplementationCompiler {
 						if(key !== null && value !== null) {
 							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot))
 						} else {
-							ParameterizedTypeName.get(ClassName.get(EList), rt)
+							ParameterizedTypeName.get(ClassName.get(EList), rt.box)
 						}
 					} else {
-						ParameterizedTypeName.get(ClassName.get(EList), rt)
+						ParameterizedTypeName.get(ClassName.get(EList), rt.box)
 					}
 				} else
 					rt
@@ -802,17 +802,7 @@ class EClassImplementationCompiler {
 	}
 
 	def MethodSpec compile(Method method, ExtendedClass aleClass, EClass aClass, boolean isTruffle) {
-		val retType = if (method.operationRef.EType !== null) {
-				if (method.operationRef.EType instanceof EClass &&
-					!(method.operationRef.EType.EPackage == EcorePackage.eINSTANCE)) {
-					ClassName.get((method.operationRef.EType as EClass).classInterfacePackageName(packageRoot),
-						(method.operationRef.EType as EClass).name)
-				} else {
-					TypeName.get(method.operationRef.EType.instanceClass)
-
-				}
-			} else
-				null
+		val retType =  method.operationRef.EType?.resolveType2
 
 		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [
 			returns(retType)
@@ -872,7 +862,7 @@ class EClassImplementationCompiler {
 
 	def MethodSpec.Builder openMethod(MethodSpec.Builder builder, EClassifier type) {
 		if (type !== null) {
-			builder.addStatement('''$T result''', type.solveType)
+			builder.addStatement('''$T result''', type.resolveType2)
 		} else {
 			builder
 		}

@@ -21,7 +21,7 @@ public class ConceptAOpImpl implements ConceptAOp {
   public void exec() {
     LogService.log("ok");
     for(ConceptC c: this.obj.getCs()) {
-      rev.$(c).call();
+      rev.$((ConceptC)c).call();
     }
   }
 }

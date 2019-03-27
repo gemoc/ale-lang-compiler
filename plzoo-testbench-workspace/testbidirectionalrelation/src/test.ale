@@ -1,0 +1,25 @@
+behavior testbidirectionalrelation_exec;
+
+open class ConceptA {
+
+}
+
+open class ConceptB {
+
+}
+
+open class ConceptC {
+
+}
+
+open class ConceptD {
+
+}
+
+open class ConceptE {
+
+}
+
+open class ConceptF {
+
+}

@@ -4,7 +4,6 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
-import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.Map
@@ -23,18 +22,18 @@ class OperationInterfaceCompiler {
 
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
-	extension VisitorCompilerUtils = new VisitorCompilerUtils
 	extension JavaPoetUtils = new JavaPoetUtils
+	extension VisitorTypeSystemUtil tsu
 	val File directory
 	val String packageRoot
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
-		val Map<String, Class<?>> registeredServices = newHashMap
 	
 
 	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes) {
 		this.directory = directory
 		this.packageRoot = packageRoot
 		this.syntaxes = syntaxes
+		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot)
 	}
 
 	def compile(EClass eClass, ExtendedClass aleClass) {
@@ -45,18 +44,7 @@ class OperationInterfaceCompiler {
 			]).applyIfTrue(aleClass !== null, [
 				addMethods(aleClass.methods.map [ method |
 
-					val retType = if (method.operationRef.EType !== null) {
-							if (method.operationRef.EType instanceof EClass &&
-								!(method.operationRef.EType.EPackage == EcorePackage.eINSTANCE)) {
-								ClassName.get(
-									(method.operationRef.EType as EClass).classInterfacePackageName(packageRoot),
-									(method.operationRef.EType as EClass).name)
-							} else {
-								TypeName.get(method.operationRef.EType.instanceClass)
-
-							}
-						} else
-							null
+					val retType = method.operationRef.resolveType2
 
 					MethodSpec.methodBuilder(method.operationRef.name).applyIfTrue(retType !==
 						null, [returns(retType)]).addParameters(method.operationRef.EParameters.map [ param |

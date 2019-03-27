@@ -186,11 +186,11 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 	}
 
 	public void exec1() {
-		this.concepta1.fct1();
-		ConceptA tmpA = ((ConceptA)this.concepta1.fct2());
-		this.concepta2.fct1();
-		ConceptA tmpB = ((ConceptA)this.concepta2.fct2());
-		this.conceptb.fct1();
-		ConceptB tmpC = ((ConceptB)this.conceptb.fct2());
+		((ConceptA)this.concepta1).fct1();
+		ConceptA tmpA = ((ConceptA) ((ConceptA)this.concepta1).fct2());
+		((ConceptA)this.concepta2).fct1();
+		ConceptA tmpB = ((ConceptA) ((ConceptA)this.concepta2).fct2());
+		((ConceptB)this.conceptb).fct1();
+		ConceptB tmpC = ((ConceptB) ((ConceptB)this.conceptb).fct2());
 	}
 }
