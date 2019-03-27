@@ -3,6 +3,7 @@ package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import com.squareup.javapoet.ClassName
 
 class RevisitorNamingUtils {
 
@@ -27,6 +28,30 @@ class RevisitorNamingUtils {
 
 	def String getRevisitorImplementationPackage(Dsl dsl) {
 		'''«dsl.sourceFileName».impl'''
+	}
+	
+	def String getRevisitorOperationInterfacePackage(Dsl dsl) {
+		'''«dsl.revisitorImplementationPackage».operation'''
+	}
+	
+	def String getRevisitorOperationImplementationPackage(Dsl dsl) {
+		'''«dsl.revisitorOperationInterfacePackage».impl'''
+	}
+	
+	def String getRevisitorOperationInterfaceClassName(EClass ecls) {
+		'''«ecls.name»Op'''
+	}
+	
+	def String getRevisitorOperationImplementationClassName(EClass ecls) {
+		'''«ecls.name»OpImpl'''
+	}
+	
+	def ClassName getRevisitorOperationInterfaceClassName(Dsl dsl, EClass ecls) {
+		ClassName.get(dsl.revisitorOperationInterfacePackage, ecls.revisitorOperationInterfaceClassName)
+	}
+	
+	def ClassName getRevisitorOperationImplementationClassName(Dsl dsl, EClass ecls) {
+		ClassName.get(dsl.revisitorOperationImplementationPackage, ecls.revisitorOperationImplementationClassName)
 	}
 
 	def String getRevisitorImplementationClass(Dsl dsl) {

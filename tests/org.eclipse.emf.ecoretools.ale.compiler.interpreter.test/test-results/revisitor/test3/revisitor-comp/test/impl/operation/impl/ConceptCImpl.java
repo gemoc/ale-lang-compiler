@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.ConceptA;
 import test.impl.operation.ConceptB;
 import test.impl.operation.ConceptC;
@@ -16,6 +17,6 @@ public class ConceptCImpl implements ConceptC {
   }
 
   public void call() {
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(this.obj.getNbr());
+    LogService.log(this.obj.getNbr());
   }
 }
