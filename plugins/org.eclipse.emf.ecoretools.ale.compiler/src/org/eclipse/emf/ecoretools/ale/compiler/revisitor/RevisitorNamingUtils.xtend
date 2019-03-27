@@ -4,16 +4,17 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import com.squareup.javapoet.ClassName
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 
 class RevisitorNamingUtils {
 
-	def String getRevisitorPackageFqn(EPackage pkg) '''«pkg?.name».revisitor'''
+	def String getRevisitorPackageFqn(GenPackage pkg) '''«pkg.basePackage».revisitor'''
 
-	def String getRevisitorInterfaceName(EPackage pkg) '''«pkg.name.toFirstUpper»Revisitor'''
+	def String getRevisitorInterfaceName(GenPackage pkg) '''«pkg.getEcorePackage.name.toFirstUpper»Revisitor'''
 
-	def String getRevisitorInterfaceFqn(EPackage pkg) '''«pkg.revisitorPackageFqn».«pkg.revisitorInterfaceName»'''
+	def String getRevisitorInterfaceFqn(GenPackage pkg) '''«pkg.revisitorPackageFqn».«pkg.revisitorInterfaceName»'''
 
-	def String getRevisitorInterfacePath(EPackage pkg) '''src/«pkg.name»/revisitor'''
+	def String getRevisitorInterfacePath(GenPackage pkg) '''src/«FOR fragment: pkg.basePackage.split("\\.") SEPARATOR '/'»«fragment»«ENDFOR»/revisitor'''
 
 	def String getTypeParamName(EClass cls) '''«cls.EPackage.name.replaceAll("\\.", "").toFirstUpper»__«cls.name»T'''
 

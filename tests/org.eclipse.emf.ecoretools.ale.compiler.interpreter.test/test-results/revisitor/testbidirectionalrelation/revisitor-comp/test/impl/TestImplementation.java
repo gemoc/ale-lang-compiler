@@ -1,47 +1,54 @@
 package test.impl;
 
-import test.impl.operation.ConceptA;
-import test.impl.operation.ConceptB;
-import test.impl.operation.ConceptC;
-import test.impl.operation.ConceptD;
-import test.impl.operation.ConceptE;
-import test.impl.operation.ConceptF;
-import test.impl.operation.ConceptG;
-import test.impl.operation.impl.ConceptAImpl;
-import test.impl.operation.impl.ConceptBImpl;
-import test.impl.operation.impl.ConceptCImpl;
-import test.impl.operation.impl.ConceptDImpl;
-import test.impl.operation.impl.ConceptEImpl;
-import test.impl.operation.impl.ConceptFImpl;
-import test.impl.operation.impl.ConceptGImpl;
+import test.impl.operation.ConceptAOp;
+import test.impl.operation.ConceptBOp;
+import test.impl.operation.ConceptCOp;
+import test.impl.operation.ConceptDOp;
+import test.impl.operation.ConceptEOp;
+import test.impl.operation.ConceptFOp;
+import test.impl.operation.ConceptGOp;
+import test.impl.operation.impl.ConceptAOpImpl;
+import test.impl.operation.impl.ConceptBOpImpl;
+import test.impl.operation.impl.ConceptCOpImpl;
+import test.impl.operation.impl.ConceptDOpImpl;
+import test.impl.operation.impl.ConceptEOpImpl;
+import test.impl.operation.impl.ConceptFOpImpl;
+import test.impl.operation.impl.ConceptGOpImpl;
+import testbidirectionalrelation.ConceptA;
+import testbidirectionalrelation.ConceptB;
+import testbidirectionalrelation.ConceptC;
+import testbidirectionalrelation.ConceptD;
+import testbidirectionalrelation.ConceptE;
+import testbidirectionalrelation.ConceptF;
+import testbidirectionalrelation.ConceptG;
 import testbidirectionalrelation.revisitor.TestbidirectionalrelationRevisitor;
 
-public interface TestImplementation extends TestbidirectionalrelationRevisitor<ConceptA, ConceptB, ConceptC, ConceptD, ConceptE, ConceptF, ConceptG> {
-	default ConceptA testbidirectionalrelation__ConceptA(testbidirectionalrelation.ConceptA it) {
-		return new ConceptAImpl(it, this);
+public interface TestImplementation extends TestbidirectionalrelationRevisitor<ConceptAOp, ConceptBOp, ConceptCOp, ConceptDOp, ConceptEOp, ConceptFOp, ConceptGOp> {
+	default ConceptAOp testbidirectionalrelation__ConceptA(ConceptA it) {
+		return new ConceptAOpImpl(it, this);
 	}
 
-	default ConceptB testbidirectionalrelation__ConceptB(testbidirectionalrelation.ConceptB it) {
-		return new ConceptBImpl(it, this);
+	default ConceptBOp testbidirectionalrelation__ConceptB(ConceptB it) {
+		return new ConceptBOpImpl(it, this);
 	}
 
-	default ConceptC testbidirectionalrelation__ConceptC(testbidirectionalrelation.ConceptC it) {
-		return new ConceptCImpl(it, this);
+	default ConceptCOp testbidirectionalrelation__ConceptC(ConceptC it) {
+		return new ConceptCOpImpl(it, this);
 	}
 
-	default ConceptD testbidirectionalrelation__ConceptD(testbidirectionalrelation.ConceptD it) {
-		return new ConceptDImpl(it, this);
+	default ConceptDOp testbidirectionalrelation__ConceptD(ConceptD it) {
+		return new ConceptDOpImpl(it, this);
 	}
 
-	default ConceptE testbidirectionalrelation__ConceptE(testbidirectionalrelation.ConceptE it) {
-		return new ConceptEImpl(it, this);
+	default ConceptEOp testbidirectionalrelation__ConceptE(ConceptE it) {
+		return new ConceptEOpImpl(it, this);
 	}
 
-	default ConceptF testbidirectionalrelation__ConceptF(testbidirectionalrelation.ConceptF it) {
-		return new ConceptFImpl(it, this);
+	default ConceptFOp testbidirectionalrelation__ConceptF(ConceptF it) {
+		return new ConceptFOpImpl(it, this);
 	}
 
-	default ConceptG testbidirectionalrelation__ConceptG(testbidirectionalrelation.ConceptG it) {
-		return new ConceptGImpl(it, this);
+	default ConceptGOp testbidirectionalrelation__ConceptG(ConceptG it) {
+		return new ConceptGOpImpl(it, this);
 	}
 }

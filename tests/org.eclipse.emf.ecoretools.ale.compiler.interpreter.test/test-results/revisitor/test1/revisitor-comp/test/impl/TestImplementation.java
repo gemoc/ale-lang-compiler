@@ -1,11 +1,12 @@
 package test.impl;
 
-import test.impl.operation.ConceptA;
-import test.impl.operation.impl.ConceptAImpl;
+import test.impl.operation.ConceptAOp;
+import test.impl.operation.impl.ConceptAOpImpl;
+import test1.ConceptA;
 import test1.revisitor.Test1Revisitor;
 
-public interface TestImplementation extends Test1Revisitor<ConceptA> {
-	default ConceptA test1__ConceptA(test1.ConceptA it) {
-		return new ConceptAImpl(it, this);
+public interface TestImplementation extends Test1Revisitor<ConceptAOp> {
+	default ConceptAOp test1__ConceptA(ConceptA it) {
+		return new ConceptAOpImpl(it, this);
 	}
 }

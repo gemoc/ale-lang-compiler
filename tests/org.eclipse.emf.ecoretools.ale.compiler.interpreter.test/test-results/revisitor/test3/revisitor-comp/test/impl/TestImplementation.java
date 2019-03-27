@@ -1,23 +1,26 @@
 package test.impl;
 
-import test.impl.operation.ConceptA;
-import test.impl.operation.ConceptB;
-import test.impl.operation.ConceptC;
-import test.impl.operation.impl.ConceptAImpl;
-import test.impl.operation.impl.ConceptBImpl;
-import test.impl.operation.impl.ConceptCImpl;
+import test.impl.operation.ConceptAOp;
+import test.impl.operation.ConceptBOp;
+import test.impl.operation.ConceptCOp;
+import test.impl.operation.impl.ConceptAOpImpl;
+import test.impl.operation.impl.ConceptBOpImpl;
+import test.impl.operation.impl.ConceptCOpImpl;
+import test1.ConceptA;
+import test1.ConceptB;
+import test1.ConceptC;
 import test1.revisitor.Test1Revisitor;
 
-public interface TestImplementation extends Test1Revisitor<ConceptA, ConceptB, ConceptC> {
-	default ConceptA test1__ConceptA(test1.ConceptA it) {
-		return new ConceptAImpl(it, this);
+public interface TestImplementation extends Test1Revisitor<ConceptAOp, ConceptBOp, ConceptCOp> {
+	default ConceptAOp test1__ConceptA(ConceptA it) {
+		return new ConceptAOpImpl(it, this);
 	}
 
-	default ConceptB test1__ConceptB(test1.ConceptB it) {
-		return new ConceptBImpl(it, this);
+	default ConceptBOp test1__ConceptB(ConceptB it) {
+		return new ConceptBOpImpl(it, this);
 	}
 
-	default ConceptC test1__ConceptC(test1.ConceptC it) {
-		return new ConceptCImpl(it, this);
+	default ConceptCOp test1__ConceptC(ConceptC it) {
+		return new ConceptCOpImpl(it, this);
 	}
 }

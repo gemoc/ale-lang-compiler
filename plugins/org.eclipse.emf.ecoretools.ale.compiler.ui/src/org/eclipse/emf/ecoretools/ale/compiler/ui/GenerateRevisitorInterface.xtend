@@ -37,6 +37,7 @@ class GenerateRevisitorInterface implements IObjectActionDelegate {
 		val gmPath = selectedIFile.fullPath.toString
 		val gm = loadGenmodel(gmPath)
 		val pkg = gm?.getEPackage
+		val gpkg = gm?.genPackage
 
 		if (gm === null) {
 			MessageDialog.openError(shell, "Error", "Cannot find GenModel for " + gmPath);
@@ -49,12 +50,12 @@ class GenerateRevisitorInterface implements IObjectActionDelegate {
 		}
 
 		val project = selectedIFile.project
-		val path = project.location.append(new Path(pkg.revisitorInterfacePath))
+		val path = project.location.append(new Path(gpkg.revisitorInterfacePath))
 		path.toFile().mkdirs()
-		val file = path.append(new Path(pkg.revisitorInterfaceName)).addFileExtension("java")
+		val file = path.append(new Path(gpkg.revisitorInterfaceName)).addFileExtension("java")
 
 		try {
-			val content = generator.generateInterface(pkg, gm)
+			val content = generator.generateInterface(pkg, gm, gpkg)
 			val fileWriter = new FileWriter(file.toFile())
 			fileWriter.write(content)
 			fileWriter.close()

@@ -181,7 +181,10 @@ class ALERevisitorImplementationCompiler {
 		syntaxes = dsl.allSyntaxes.toMap([it], [
 			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
-		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
+		val tmp = syntaxes.get(dsl.allSyntaxes.head)
+		val syntax = tmp.key
+		// FIXME: make the invalid assumption that the metamodel contains a single package
+		val genSyntax = tmp.value.genPackages.head
 		resolved = resolve(aleClasses, syntax)
 
 		val interfaceName = dsl.revisitorImplementationClass
@@ -200,7 +203,7 @@ class ALERevisitorImplementationCompiler {
 			.sortWith(comparator)
 			.map [dsl.getRevisitorOperationInterfaceClassName(it.eCls as EClass)]
 		val fullInterfaceType = ParameterizedTypeName.get(
-			ClassName.get(syntax.revisitorPackageFqn, syntax.revisitorInterfaceName), typeParams)
+			ClassName.get(genSyntax.revisitorPackageFqn, genSyntax.revisitorInterfaceName), typeParams)
 
 		val revisitorInterface = TypeSpec.interfaceBuilder(interfaceName).addSuperinterface(fullInterfaceType).
 			addModifiers(Modifier.PUBLIC).addMethods(syntax.allClasses.filter [

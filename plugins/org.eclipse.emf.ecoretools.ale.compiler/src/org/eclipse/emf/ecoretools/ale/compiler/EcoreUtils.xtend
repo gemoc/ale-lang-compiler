@@ -249,6 +249,10 @@ class EcoreUtils {
 	def EPackage getEPackage(GenModel gm) {
 		return gm.genPackages.head.getEcorePackage
 	}
+	
+	def GenPackage getGenPackage(GenModel gm) {
+		return gm.genPackages.head
+	}
 
 	def EPackage loadEPackage(String path) {
 		if (rs === null) {

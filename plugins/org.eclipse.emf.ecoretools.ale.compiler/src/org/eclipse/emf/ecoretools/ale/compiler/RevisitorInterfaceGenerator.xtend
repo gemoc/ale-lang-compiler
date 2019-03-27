@@ -7,7 +7,12 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.RevisitorNamingUtils
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 
+
+/**
+ * TODO: Migrate to Javapoet!
+ */
 class RevisitorInterfaceGenerator {
 	extension RevisitorNamingUtils = new RevisitorNamingUtils()
 	extension EcoreUtils = new EcoreUtils()
@@ -18,7 +23,7 @@ class RevisitorInterfaceGenerator {
 		]).toMap(['''«it.EPackage.name».«it.name»'''], [it]).values.sortByName
 	}
 
-	def String generateInterface(EPackage pkg, GenModel gm) {
+	def String generateInterface(EPackage pkg, GenModel gm, GenPackage gp) {
 		resetResourceSet
 
 		val Iterable<EClassifier> complementaryClassifiers = pkg.getComplementaryFromEPackage [ Map.Entry<String, String> z |
@@ -29,11 +34,11 @@ class RevisitorInterfaceGenerator {
 		val localClasses = eclasses.sortBy[name].filter[it.instanceClassName != "java.util.Map$Entry"].toList.buildExtendedFactoryNames
 		val allClasses = pkg.allClassesCompl.filter[it.instanceClassName != "java.util.Map$Entry"].toList.buildExtendedFactoryNames
 		return '''
-			package «pkg.revisitorPackageFqn»;
+			package «gp.revisitorPackageFqn»;
 			
-			public interface «pkg.revisitorInterfaceName»«allClasses.getTypeParams(true)»«
+			public interface «gp.revisitorInterfaceName»«allClasses.getTypeParams(true)»«
 		»«FOR ref : pkg.directReferencedPkgs BEFORE '\n\textends ' SEPARATOR ',\n\t\t'»«
-			»«ref.revisitorInterfaceFqn»«ref.allClassesCompl.buildExtendedFactoryNames.getTypeParams(false)»«
+			»«gp.revisitorInterfaceFqn»«ref.allClassesCompl.buildExtendedFactoryNames.getTypeParams(false)»«
 		»«ENDFOR» {
 				«FOR cls : localClasses.filter[!it.key.abstract]»
 					«cls.getTypeParam(false)» «cls.denotationName»(final «cls.key.getGenClass(gm)?.qualifiedInterfaceName» «cls.key.varName»);
