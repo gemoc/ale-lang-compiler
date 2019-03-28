@@ -1,5 +1,4 @@
-/**
- */
+
 package testoperationbody.impl;
 
 import java.util.Collection;
@@ -24,108 +23,40 @@ import testoperationbody.Main;
 import testoperationbody.Parent;
 import testoperationbody.TestoperationbodyPackage;
 
-/**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Main</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- *   <li>{@link testoperationbody.impl.MainImpl#getListint <em>Listint</em>}</li>
- *   <li>{@link testoperationbody.impl.MainImpl#getListconcepta <em>Listconcepta</em>}</li>
- *   <li>{@link testoperationbody.impl.MainImpl#isSinglebool <em>Singlebool</em>}</li>
- *   <li>{@link testoperationbody.impl.MainImpl#getSingleconcepta <em>Singleconcepta</em>}</li>
- *   <li>{@link testoperationbody.impl.MainImpl#getChildren <em>Children</em>}</li>
- * </ul>
- *
- * @generated
- */
+
 public class MainImpl extends MinimalEObjectImpl.Container implements Main {
-	/**
-	 * The cached value of the '{@link #getListint() <em>Listint</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getListint()
-	 * @generated
-	 * @ordered
-	 */
+	protected static final boolean SINGLEBOOL_EDEFAULT = false;
+	
 	protected EList<Integer> listint;
 
-	/**
-	 * The cached value of the '{@link #getListconcepta() <em>Listconcepta</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getListconcepta()
-	 * @generated
-	 * @ordered
-	 */
+	protected boolean singlebool = SINGLEBOOL_EDEFAULT;
+	
 	protected EList<ConceptA> listconcepta;
 
-	/**
-	 * The default value of the '{@link #isSinglebool() <em>Singlebool</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSinglebool()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean SINGLEBOOL_EDEFAULT = false;
+	
+	
 
-	/**
-	 * The cached value of the '{@link #isSinglebool() <em>Singlebool</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isSinglebool()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean singlebool = SINGLEBOOL_EDEFAULT;
+	
+	
 
-	/**
-	 * The cached value of the '{@link #getSingleconcepta() <em>Singleconcepta</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSingleconcepta()
-	 * @generated
-	 * @ordered
-	 */
+	
 	protected ConceptA singleconcepta;
 
-	/**
-	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getChildren()
-	 * @generated
-	 * @ordered
-	 */
+	
 	protected EList<Parent> children;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	protected MainImpl() {
 		super();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	protected EClass eStaticClass() {
 		return TestoperationbodyPackage.Literals.MAIN;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public EList<Integer> getListint() {
 		if (listint == null) {
 			listint = new EDataTypeUniqueEList<Integer>(Integer.class, this, TestoperationbodyPackage.MAIN__LISTINT);
@@ -133,11 +64,7 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		return listint;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public EList<ConceptA> getListconcepta() {
 		if (listconcepta == null) {
 			listconcepta = new EObjectContainmentEList<ConceptA>(ConceptA.class, this, TestoperationbodyPackage.MAIN__LISTCONCEPTA);
@@ -145,58 +72,19 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		return listconcepta;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public boolean isSinglebool() {
 		return singlebool;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public void setSinglebool(boolean newSinglebool) {
 		boolean oldSinglebool = singlebool;
 		singlebool = newSinglebool;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.MAIN__SINGLEBOOL, oldSinglebool, singlebool));
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ConceptA getSingleconcepta() {
-		if (singleconcepta != null && singleconcepta.eIsProxy()) {
-			InternalEObject oldSingleconcepta = (InternalEObject)singleconcepta;
-			singleconcepta = (ConceptA)eResolveProxy(oldSingleconcepta);
-			if (singleconcepta != oldSingleconcepta) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestoperationbodyPackage.MAIN__SINGLECONCEPTA, oldSingleconcepta, singleconcepta));
-			}
-		}
-		return singleconcepta;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ConceptA basicGetSingleconcepta() {
-		return singleconcepta;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public void setSingleconcepta(ConceptA newSingleconcepta) {
 		ConceptA oldSingleconcepta = singleconcepta;
 		singleconcepta = newSingleconcepta;
@@ -204,11 +92,29 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.MAIN__SINGLECONCEPTA, oldSingleconcepta, singleconcepta));
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
+	public ConceptA getSingleconcepta() {
+		if (singleconcepta != null && singleconcepta.eIsProxy()) {
+			InternalEObject oldSingleconcepta = (InternalEObject)singleconcepta;
+			singleconcepta = (ConceptA)eResolveProxy(oldSingleconcepta);
+			if (singleconcepta != oldSingleconcepta) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestoperationbodyPackage.MAIN__SINGLECONCEPTA,
+							oldSingleconcepta, singleconcepta));
+			}
+		}
+		return singleconcepta;
+	}
+
+	
+	public ConceptA basicGetSingleconcepta() {
+		return singleconcepta;
+	}
+
+	
+	
+
+	
 	public EList<Parent> getChildren() {
 		if (children == null) {
 			children = new EObjectContainmentEList<Parent>(Parent.class, this, TestoperationbodyPackage.MAIN__CHILDREN);
@@ -216,13 +122,10 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		return children;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestoperationbodyPackage.MAIN__LISTCONCEPTA:
 				return ((InternalEList<?>)getListconcepta()).basicRemove(otherEnd, msgs);
@@ -232,11 +135,7 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -247,7 +146,8 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			case TestoperationbodyPackage.MAIN__SINGLEBOOL:
 				return isSinglebool();
 			case TestoperationbodyPackage.MAIN__SINGLECONCEPTA:
-				if (resolve) return getSingleconcepta();
+				if (resolve)
+					return getSingleconcepta();
 				return basicGetSingleconcepta();
 			case TestoperationbodyPackage.MAIN__CHILDREN:
 				return getChildren();
@@ -255,11 +155,7 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
@@ -286,11 +182,7 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		super.eSet(featureID, newValue);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
@@ -313,11 +205,7 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		super.eUnset(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
@@ -335,11 +223,7 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();

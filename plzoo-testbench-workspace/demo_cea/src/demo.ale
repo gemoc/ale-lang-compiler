@@ -1,0 +1,17 @@
+behavior demo_cea_exec;
+
+open class ConceptA {
+	def void op0() {}
+}
+
+open class ConceptB {
+	def void op0() {
+		self.cs->first().op1();
+	}
+}
+
+open class ConceptC {
+	def void op1() {
+		self.value.log();
+	}
+}

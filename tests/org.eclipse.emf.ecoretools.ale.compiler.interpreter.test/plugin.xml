@@ -7,6 +7,22 @@
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated testbidirectionalrelation -->
+      <package
+            uri="http://testbidirectionalrelation"
+            class="testbidirectionalrelation.TestbidirectionalrelationPackage"
+            genModel="assets/testbidirectionalrelation/testbidirectionalrelation.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated testenums -->
+      <package
+            uri="http://testenums"
+            class="testenums.TestenumsPackage"
+            genModel="assets/testenums/testenums.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated test1 -->
       <package
             uri="http://test1"
@@ -15,11 +31,11 @@
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated testbidirectionalrelation -->
+      <!-- @generated autocast -->
       <package
-            uri="http://testbidirectionalrelation"
-            class="testbidirectionalrelation.TestbidirectionalrelationPackage"
-            genModel="assets/testbidirectionalrelation/testbidirectionalrelation.genmodel"/>
+            uri="http://autocast"
+            class="autocast.AutocastPackage"
+            genModel="assets/autocast/autocast.genmodel"/>
    </extension>
 
 </plugin>

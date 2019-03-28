@@ -77,68 +77,64 @@ class AleExpressionsCompiler {
 
 		switch (call.serviceName) {
 			case "not":
-				CodeBlock.of('''!(«call.arguments.get(0).compileExpression(ctx)»)''')
+				CodeBlock.of('''!($L)''', call.arguments.get(0).compileExpression(ctx))
 			case "greaterThan":
 				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») > («call.arguments.get(1).compileExpression(ctx)»)''')
+					of('''($L) > ($L)''', call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 			case "differs":
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») != («call.arguments.get(1).compileExpression(ctx)»)''')
+				CodeBlock.of('''!$T.equals(($L), ($L))''', equalServiceClassName,
+					call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 			case "sub":
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») - («call.arguments.get(1).compileExpression(ctx)»)''')
+				CodeBlock.of('''($L) - ($L)''', call.arguments.get(0).compileExpression(ctx),
+					call.arguments.get(1).compileExpression(ctx))
 			case call.serviceName == "add" && call.type == CallType.CALLSERVICE:
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») + («call.arguments.get(1).compileExpression(ctx)»)''')
+				CodeBlock.of('''($L) + ($L)''', call.arguments.get(0).compileExpression(ctx),
+					call.arguments.get(1).compileExpression(ctx))
 			case "divOp":
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») / («call.arguments.get(1).compileExpression(ctx)»)''')
+				CodeBlock.of('''($L) / ($L)''', call.arguments.get(0).compileExpression(ctx),
+					call.arguments.get(1).compileExpression(ctx))
 			case "equals":
-				CodeBlock.
-					of('''$T.equals((«call.arguments.get(0).compileExpression(ctx)»), («call.arguments.get(1).compileExpression(ctx)»))''',
-						equalServiceClassName)
+				CodeBlock.of('''$T.equals(($L), ($L))''', equalServiceClassName,
+					call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 			case "lessThan":
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») < («call.arguments.get(1).compileExpression(ctx)»)''')
+				CodeBlock.of('''($L) < ($L)''', call.arguments.get(0).compileExpression(ctx),
+					call.arguments.get(1).compileExpression(ctx))
 			case "lessThanEqual":
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») <= («call.arguments.get(1).compileExpression(ctx)»)''')
+				CodeBlock.of('''($L) <= ($L)''', call.arguments.get(0).compileExpression(ctx),
+					call.arguments.get(1).compileExpression(ctx))
 			case "greaterThanEqual":
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») >= («call.arguments.get(1).compileExpression(ctx)»)''')		
-					
+				CodeBlock.of('''($L) >= ($L)''', call.arguments.get(0).compileExpression(ctx),
+					call.arguments.get(1).compileExpression(ctx))		
 			case "mult":
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression(ctx)») * («call.arguments.get(1).compileExpression(ctx)»)''')
+				CodeBlock.of('''($L) * ($L)''', call.arguments.get(0).compileExpression(ctx),
+					call.arguments.get(1).compileExpression(ctx))
 			case "unaryMin":
-				CodeBlock.of('''-(«call.arguments.get(0).compileExpression(ctx)»)''')
+				CodeBlock.of('''-($L)''', call.arguments.get(0).compileExpression(ctx))
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.of('''$T.head(«call.arguments.get(0).compileExpression(ctx)»)''',
-						collectionServiceClassName)
+					CodeBlock.of('''$T.head($L)''', collectionServiceClassName,
+						call.arguments.get(0).compileExpression(ctx))
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "size":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.of('''$T.size(«call.arguments.get(0).compileExpression(ctx)»)''',
-						collectionServiceClassName)
+					CodeBlock.of('''$T.size($L)''', collectionServiceClassName,
+						call.arguments.get(0).compileExpression(ctx))
 				else if (call.type == CallType.CALLORAPPLY)
-					CodeBlock.of('''$T.size(«call.arguments.get(0).compileExpression(ctx)»)''',
-						collectionServiceClassName)
+					CodeBlock.of('''$T.size($L)''', collectionServiceClassName,
+						call.arguments.get(0).compileExpression(ctx))
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "at":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.
-						of('''$T.get(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''',
-							collectionServiceClassName)
+					CodeBlock.of('''$T.get($L, $L)''', collectionServiceClassName,
+						call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "select":
 				if (call.type == CallType.COLLECTIONCALL) {
-					CodeBlock.
-						of('''$T.select(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''',
-							collectionServiceClassName)
+					CodeBlock.of('''$T.select($L, $L)''', collectionServiceClassName,
+						call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
@@ -146,13 +142,11 @@ class AleExpressionsCompiler {
 				if (call.type == CallType.COLLECTIONCALL) {
 					val t = infereType(call.arguments.get(1)).head
 					if (t instanceof EClassifierType) {
-						CodeBlock.
-							of('''$T.select(«call.arguments.get(0).compileExpression(ctx)», it -> it instanceof «call.arguments.get(1).compileExpression(ctx)»)''',
-								collectionServiceClassName)
+						CodeBlock.of('''$T.select($L, it -> it instanceof $L)''', collectionServiceClassName,
+							call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 					} else {
-						CodeBlock.
-							of('''$T.select(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''',
-								collectionServiceClassName)
+						CodeBlock.of('''$T.select($L, $L)''', collectionServiceClassName,
+							call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 					}
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
@@ -160,14 +154,14 @@ class AleExpressionsCompiler {
 			case "exists":
 				if (call.type == CallType.COLLECTIONCALL) {
 					CodeBlock.
-						of('''$T.exists(«call.arguments.get(0).compileExpression(ctx)», «call.arguments.get(1).compileExpression(ctx)»)''', collectionServiceClassName)
+						of('''$T.exists($L, $L)''', collectionServiceClassName, call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
 			case "isEmpty":
 				if (call.type == CallType.COLLECTIONCALL) {
 					CodeBlock.
-						of('''$T.isEmpty(«call.arguments.get(0).compileExpression(ctx)»)''', collectionServiceClassName)
+						of('''$T.isEmpty($L)''', collectionServiceClassName, call.arguments.get(0).compileExpression(ctx))
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}

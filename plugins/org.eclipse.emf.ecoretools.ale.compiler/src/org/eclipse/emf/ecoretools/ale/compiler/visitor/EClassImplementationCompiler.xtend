@@ -27,11 +27,11 @@ import org.eclipse.emf.ecore.ETypedElement
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecore.util.InternalEList
-import org.eclipse.emf.ecoretools.ale.compiler.interpreter.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 
 class EClassImplementationCompiler {
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils

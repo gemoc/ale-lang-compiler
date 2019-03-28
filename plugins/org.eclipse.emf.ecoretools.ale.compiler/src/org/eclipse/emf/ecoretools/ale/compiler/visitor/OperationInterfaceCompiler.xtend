@@ -44,7 +44,7 @@ class OperationInterfaceCompiler {
 			]).applyIfTrue(aleClass !== null, [
 				addMethods(aleClass.methods.map [ method |
 
-					val retType = method.operationRef.resolveType2
+					val retType = method.operationRef.EType?.resolveType2
 
 					MethodSpec.methodBuilder(method.operationRef.name).applyIfTrue(retType !==
 						null, [returns(retType)]).addParameters(method.operationRef.EParameters.map [ param |

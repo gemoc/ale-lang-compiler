@@ -1,5 +1,4 @@
-/**
- */
+
 package testoperationbody.impl;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -12,73 +11,31 @@ import testoperationbody.ChildA;
 import testoperationbody.EnumA;
 import testoperationbody.TestoperationbodyPackage;
 
-/**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Child A</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- *   <li>{@link testoperationbody.impl.ChildAImpl#getValue <em>Value</em>}</li>
- * </ul>
- *
- * @generated
- */
+
 public class ChildAImpl extends ParentImpl implements ChildA {
-	/**
-	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
+	
 	protected static final EnumA VALUE_EDEFAULT = EnumA.CASE1;
 
-	/**
-	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getValue()
-	 * @generated
-	 * @ordered
-	 */
+	
 	protected EnumA value = VALUE_EDEFAULT;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	protected ChildAImpl() {
 		super();
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	protected EClass eStaticClass() {
 		return TestoperationbodyPackage.Literals.CHILD_A;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public EnumA getValue() {
 		return value;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	public void setValue(EnumA newValue) {
 		EnumA oldValue = value;
 		value = newValue == null ? VALUE_EDEFAULT : newValue;
@@ -86,11 +43,7 @@ public class ChildAImpl extends ParentImpl implements ChildA {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.CHILD_A__VALUE, oldValue, value));
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -100,11 +53,7 @@ public class ChildAImpl extends ParentImpl implements ChildA {
 		return super.eGet(featureID, resolve, coreType);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -115,11 +64,7 @@ public class ChildAImpl extends ParentImpl implements ChildA {
 		super.eSet(featureID, newValue);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
@@ -130,11 +75,7 @@ public class ChildAImpl extends ParentImpl implements ChildA {
 		super.eUnset(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
@@ -144,11 +85,7 @@ public class ChildAImpl extends ParentImpl implements ChildA {
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	
 	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();

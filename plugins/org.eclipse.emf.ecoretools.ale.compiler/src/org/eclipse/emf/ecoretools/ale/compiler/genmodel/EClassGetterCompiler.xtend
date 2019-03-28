@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
+import org.eclipse.emf.ecoretools.ale.compiler.interpreter.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*

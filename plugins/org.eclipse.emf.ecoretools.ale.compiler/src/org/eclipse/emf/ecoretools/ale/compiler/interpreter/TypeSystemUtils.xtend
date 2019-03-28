@@ -18,6 +18,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import com.squareup.javapoet.TypeName
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
+import org.eclipse.emf.ecore.EEnum
 
 class TypeSystemUtils {
 
@@ -60,7 +61,9 @@ class TypeSystemUtils {
 		if (gm !== null) {
 			if (e instanceof EClass) {
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
-			} else {
+			} else if(e instanceof EEnum) {
+				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
+			}else {
 				val GenClassifier gclass = gm.allGenPkgs.map [
 					it.genClassifiers.filter [
 						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name

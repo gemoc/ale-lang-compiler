@@ -57,8 +57,8 @@ class ALESwitchImplementationCompiler {
 			override unloaded(String arg0, Class<?> arg1) {
 				registeredServices.remove(arg0);
 			}
-
 		});
+		println("YOLO")
 	}
 
 	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {

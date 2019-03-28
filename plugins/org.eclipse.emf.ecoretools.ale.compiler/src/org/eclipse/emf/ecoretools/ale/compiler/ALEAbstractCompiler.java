@@ -1,5 +1,5 @@
 package org.eclipse.emf.ecoretools.ale.compiler;
 
-public abstract class ALEAbstractCompiler {
+public abstract interface ALEAbstractCompiler {
 
 }

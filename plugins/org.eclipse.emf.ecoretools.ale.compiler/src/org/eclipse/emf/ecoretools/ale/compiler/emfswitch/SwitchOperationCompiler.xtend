@@ -5,7 +5,6 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
-import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.lang.reflect.Modifier
@@ -39,7 +38,6 @@ import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.acceleo.query.validation.type.EClassifierType
 import org.eclipse.acceleo.query.validation.type.SequenceType
-import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
@@ -47,7 +45,6 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
@@ -73,12 +70,12 @@ import org.eclipse.emf.ecoretools.ale.implementation.While
 import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.CodeBlock
 import java.util.stream.IntStream
+import java.util.Objects
 
 class SwitchOperationCompiler {
 
 	extension SwitchNamingUtils namingUtils = new SwitchNamingUtils
 	extension JavaPoetUtils = new JavaPoetUtils
-	extension EcoreUtils = new EcoreUtils
 	extension TypeSystemUtils tsu
 
 	val String packageRoot
@@ -88,7 +85,6 @@ class SwitchOperationCompiler {
 	val BaseValidator base
 	val Map<String, Class<?>> registeredServices
 	val Dsl dsl
-	
 
 	new(String packageRoot, File directory, Map<String, Pair<EPackage, GenModel>> syntaxes, IQueryEnvironment queryEnvironment,
 		List<ParseResult<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices, Dsl dsl
@@ -105,10 +101,8 @@ class SwitchOperationCompiler {
 	}
 
 	def compile(ResolvedClass resolved) {
-		
 		val eClassType = ClassName.get(resolved.genCls.genPackage.interfacePackageName, resolved.genCls.interfaceName)
 		val switchType = ClassName.get(namingUtils.switchImplementationPackageName(packageRoot), namingUtils.switchImplementationClassName(packageRoot))
-		
 		val operationsPackage = namingUtils.operationPackageName(packageRoot)
 		
 		val factory = TypeSpec.classBuilder(namingUtils.operationClassName(resolved.eCls))
@@ -241,7 +235,7 @@ class SwitchOperationCompiler {
 		if (inft instanceof SequenceType) {
 			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
-			builderSeed.addStatement('''$T $L = (($T)$L)''', t, body.name, t, body.initialValue.compileExpression)
+			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression)
 		} else {
 			val t = body.type.solveType
 			// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
@@ -304,18 +298,20 @@ class SwitchOperationCompiler {
 	
 	def dispatch CodeBlock compileExpression(Call call) {
 		switch (call.serviceName) {
-			case "not": CodeBlock.of('''!(«call.arguments.get(0).compileExpression»)''')
-			case "greaterThan": CodeBlock.of('''(«call.arguments.get(0).compileExpression») > («call.arguments.get(1).compileExpression»)''')
+			case "not": CodeBlock.of('''!($L)''', call.arguments.get(0).compileExpression)
+			case "greaterThan": CodeBlock.of('''($L) > ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "differs": CodeBlock.of('''($L) != ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "sub": CodeBlock.of('''($L) - ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "add": CodeBlock.of('''($L) + ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "divOp": CodeBlock.of('''($L) / ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "equals": CodeBlock.of('''$T.equals(($L), ($L))''', ClassName.get(java.util.Objects), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
+			case "divOp": CodeBlock.of( '''($L) / ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
+			case "equals": CodeBlock.of('''$T.equals(($L), ($L))''', ClassName.get(Objects), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "lessThan": CodeBlock.of('''($L) < ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "lessThanEqual": CodeBlock.of('''($L) <= ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "greaterThanEqual": CodeBlock.of('''($L) >= ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "mult": CodeBlock.of('''($L) * ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "unaryMin": CodeBlock.of('''-($L)''', call.arguments.get(0).compileExpression)
+			case "greaterThanEqual":
+				CodeBlock.of('''($L) >= ($L)''', call.arguments.get(0).compileExpression,
+					call.arguments.get(1).compileExpression)
+			case "mult": CodeBlock.of('''(«call.arguments.get(0).compileExpression») * («call.arguments.get(1).compileExpression»)''')
+			case "unaryMin": CodeBlock.of('''-(«call.arguments.get(0).compileExpression»)''')
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
 					CodeBlock.of('''$T.head($L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression)
@@ -364,14 +360,14 @@ class SwitchOperationCompiler {
 				}
 			case "oclIsKindOf":
 				if (call.type == CallType.CALLORAPPLY) {
-					val iot =  call.arguments.get(1).compileExpression
-					CodeBlock.of('''$L instanceof $L''', call.arguments.get(0).compileExpression, iot)
+					CodeBlock.of('''$L instanceof $L''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
 			case "log":
 				if (call.type == CallType.CALLORAPPLY) {
-					CodeBlock.of('''$T.log($L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"), call.arguments.get(0).compileExpression)
+					CodeBlock.of('''$T.log($L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"),
+						call.arguments.get(0).compileExpression)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}

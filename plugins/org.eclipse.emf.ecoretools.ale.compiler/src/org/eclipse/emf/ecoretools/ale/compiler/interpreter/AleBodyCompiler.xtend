@@ -113,11 +113,11 @@ class AleBodyCompiler {
 			ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
 			}
-			builderSeed.addStatement('''$T $L = (($T) «body.initialValue.compileExpression(ctx)»)''', t, body.name, t)
+			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression(ctx))
 		} else {
 			val t = body.type.solveType
 			// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
-			val cbb = CodeBlock.builder.addNamed('''$t:T $name:N = (($t:T) $expr:L)''', newHashMap(
+			val cbb = CodeBlock.builder.addNamed('''$t:T $name:N = (($t:T) ($expr:L))''', newHashMap(
 				"t" -> t, 
 				"name" -> body.name,
 				"expr" -> body.initialValue.compileExpression(ctx)

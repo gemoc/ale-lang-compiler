@@ -46,6 +46,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.EcoreUtil2
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -802,7 +803,7 @@ class EClassImplementationCompiler {
 	}
 
 	def MethodSpec compile(Method method, ExtendedClass aleClass, EClass aClass, boolean isTruffle) {
-		val retType =  method.operationRef.EType?.resolveType2
+		val retType =  method.operationRef.EType?.resolveType2 // TODO: DEBUG & correct !!!
 
 		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [
 			returns(retType)

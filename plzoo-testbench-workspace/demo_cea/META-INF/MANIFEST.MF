@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Demo_cea
+Bundle-SymbolicName: demo_cea
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: demo_cea

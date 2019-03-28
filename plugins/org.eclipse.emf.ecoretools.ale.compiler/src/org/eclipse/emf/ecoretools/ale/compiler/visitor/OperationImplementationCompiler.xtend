@@ -124,7 +124,7 @@ class OperationImplementationCompiler {
 			''').addModifiers(PUBLIC).build).applyIfTrue(aleClass !== null, [
 			addMethods(aleClass.methods.map [ method |
 
-				val retType = method.operationRef.EType.resolveType2 
+				val retType = method.operationRef.EType?.resolveType2 
 
 				MethodSpec.methodBuilder(method.operationRef.name).applyIfTrue(retType !== null, [returns(retType)]).
 					addParameters(method.operationRef.EParameters.map [ param |
@@ -214,10 +214,10 @@ class OperationImplementationCompiler {
 		if (inft instanceof SequenceType) {
 			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
-			builderSeed.addStatement('''$T $L = (($T)$L)''', t, body.name, t, body.initialValue.compileExpression)
+			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression)
 		} else {
 			val t = body.type.solveType
-			builderSeed.addStatement('''$T $L = (($T)$L)''', t, body.name, t, body.initialValue.compileExpression)
+			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression)
 		}
 	}
 
@@ -283,32 +283,38 @@ class OperationImplementationCompiler {
 			case "divOp": CodeBlock.of('''(«call.arguments.get(0).compileExpression») / («call.arguments.get(1).compileExpression»)''')
 			case "equals": CodeBlock.of('''$T.equals((«call.arguments.get(0).compileExpression»), («call.arguments.get(1).compileExpression»))''', ClassName.get(java.util.Objects))
 			case "lessThan": CodeBlock.of('''(«call.arguments.get(0).compileExpression») < («call.arguments.get(1).compileExpression»)''')
-			case "mult": CodeBlock.of('''(«call.arguments.get(0).compileExpression») * («call.arguments.get(1).compileExpression»)''')
-			case "unaryMin": CodeBlock.of('''-(«call.arguments.get(0).compileExpression»)''')
+			case "lessThanEqual": CodeBlock.of('''($L) <= ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
+			case "greaterThanEqual":
+				CodeBlock.of('''($L) >= ($L)''', call.arguments.get(0).compileExpression,
+					call.arguments.get(1).compileExpression)
+			case "mult": CodeBlock.of('''($L) * ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
+			case "unaryMin": CodeBlock.of('''-($L)''', call.arguments.get(0).compileExpression)
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.of('''$T.head(«call.arguments.get(0).compileExpression»)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"))
+					CodeBlock.of('''$T.head($L)''',
+						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
+						call.arguments.get(0).compileExpression)
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "size":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.of('''$T.size(«call.arguments.get(0).compileExpression»)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"))
+					CodeBlock.of('''$T.size($L)''',
+						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
+						call.arguments.get(0).compileExpression)
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "at":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.
-						of('''$T.get(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)''',
-							ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"))
+					CodeBlock.of('''$T.get($L, $L)''',
+						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
+						call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 				else
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "select":
 				if (call.type == CallType.COLLECTIONCALL) {
-					CodeBlock.
-						of('''$T.select(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)''',
-							ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"))
+					CodeBlock.of('''$T.select($L, $L)''',
+						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
+						call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
@@ -316,21 +322,22 @@ class OperationImplementationCompiler {
 				if (call.type == CallType.COLLECTIONCALL) {
 					val t = infereType(call.arguments.get(1)).head
 					if (t instanceof EClassifierType) {
-						CodeBlock.
-							of('''$T.select(«call.arguments.get(0).compileExpression», it -> it instanceof «call.arguments.get(1).compileExpression»)''',
-								ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"))
+						CodeBlock.of('''$T.select($L, it -> it instanceof $L)''',
+							ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
+							call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 					} else {
-						CodeBlock.
-							of('''$T.select(«call.arguments.get(0).compileExpression», «call.arguments.get(1).compileExpression»)''',
-								ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"))
+						CodeBlock.of('''$T.select($L, $L)''',
+							ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
+							call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 					}
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
 			case "isEmpty":
 				if (call.type == CallType.COLLECTIONCALL) {
-					CodeBlock.of('''$T.isEmpty(«call.arguments.get(0).compileExpression»)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"))
+					CodeBlock.of('''$T.isEmpty($L)''',
+						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
+						call.arguments.get(0).compileExpression)
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
@@ -344,8 +351,8 @@ class OperationImplementationCompiler {
 				}
 			case "log":
 				if (call.type == CallType.CALLORAPPLY) {
-					CodeBlock.of('''$T.log(«call.arguments.get(0).compileExpression»)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"))
+					CodeBlock.of('''$T.log($L)''',
+						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"), call.arguments.get(0).compileExpression)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
@@ -354,15 +361,16 @@ class OperationImplementationCompiler {
 					if (call.serviceName == 'aqlFeatureAccess') {
 						val t = infereType(call).head
 						if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-							CodeBlock.of('''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+							CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 						} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 							if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 								(t.type as EDataType).instanceClass == boolean))
-								CodeBlock.of('''«call.arguments.head.compileExpression».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+								CodeBlock.of('''$L.is$L()''', call.arguments.head.compileExpression, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 							else
 								CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 						} else {
-							CodeBlock.of('''«call.arguments.head.compileExpression».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»''')
+							// TODO: add named block
+							CodeBlock.of('''$L.«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»''', call.arguments.head.compileExpression)
 
 						}
 					} else if (call.serviceName == 'create') {
