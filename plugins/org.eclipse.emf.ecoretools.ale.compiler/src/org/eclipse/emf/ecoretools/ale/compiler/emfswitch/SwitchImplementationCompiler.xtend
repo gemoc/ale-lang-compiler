@@ -9,10 +9,10 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler.ResolvedClass
 
 import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.MethodSpec
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class SwitchImplementationCompiler {
 

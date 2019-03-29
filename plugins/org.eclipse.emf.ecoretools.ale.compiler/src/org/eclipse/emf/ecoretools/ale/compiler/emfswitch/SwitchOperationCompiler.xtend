@@ -45,7 +45,6 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
@@ -71,6 +70,7 @@ import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.CodeBlock
 import java.util.stream.IntStream
 import java.util.Objects
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class SwitchOperationCompiler {
 

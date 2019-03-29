@@ -1,5 +1,6 @@
-package org.eclipse.emf.ecoretools.ale.compiler.visitor
+package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 
+import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.JavaFile
@@ -17,10 +18,14 @@ import org.eclipse.emf.ecore.impl.EPackageImpl
 
 import static javax.lang.model.element.Modifier.*
 
+
 class PackageImplementationCompiler {
+	protected extension AbstractNamingUtils namingUtils
 
-	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
-
+	new(AbstractNamingUtils namingUtils) {
+		this.namingUtils = namingUtils
+	}
+	
 	def boolean isResolveProxiesFlag(EReference ref) {
 		val eStructuralFeature = ref
 		val isContainer = ref.EOpposite !== null && ref.EOpposite.containment
@@ -47,7 +52,7 @@ class PackageImplementationCompiler {
 		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
 			abstractSyntax.factoryInterfaceClassName)
 
-		val test = '''«abstractSyntax.packageImplementationClassName»''' // «abstractSyntax.packageImplementationPackageName(packageRoot)».
+		val test = '''«abstractSyntax.packageImplementationClassName»'''
 
 		val initMethod = MethodSpec.methodBuilder('init')
 			.addModifiers(PUBLIC, STATIC)

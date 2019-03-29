@@ -9,13 +9,16 @@ import org.eclipse.acceleo.query.ast.AstPackage
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClassifier
+import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
@@ -28,18 +31,8 @@ import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
-import org.eclipse.xtend.lib.annotations.Data
-import org.eclipse.emf.ecore.EDataType
-import org.eclipse.emf.ecore.EEnum
 
 class ALEInterpreterImplementationCompiler {
-
-	@Data
-	static class ResolvedClass {
-		ExtendedClass aleCls
-		public EClassifier eCls
-//		GenClass genCls
-	}
 
 	extension EcoreUtils = new EcoreUtils
 
@@ -139,7 +132,7 @@ class ALEInterpreterImplementationCompiler {
 		val fimplc = new FactoryImplementationCompiler
 
 		val pic = new PackageInterfaceCompiler
-		val pimplc = new PackageImplementationCompiler
+		val pimplc = new PackageImplementationCompiler(new InterpreterNamingUtils)
 
 		val eic = new EClassInterfaceCompiler
 		val eimplc = new EClassImplementationCompiler(packageRoot, resolved)

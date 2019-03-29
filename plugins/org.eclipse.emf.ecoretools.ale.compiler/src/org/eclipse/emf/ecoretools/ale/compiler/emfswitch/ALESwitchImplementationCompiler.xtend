@@ -11,7 +11,6 @@ import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
-import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
@@ -26,7 +25,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class ALESwitchImplementationCompiler {
 	extension EcoreUtils = new EcoreUtils
@@ -138,10 +137,4 @@ class ALESwitchImplementationCompiler {
 		]
 	}
 
-	@Data
-	static class ResolvedClass {
-		ExtendedClass aleCls
-		public EClassifier eCls
-		GenClass genCls
-	}
 }

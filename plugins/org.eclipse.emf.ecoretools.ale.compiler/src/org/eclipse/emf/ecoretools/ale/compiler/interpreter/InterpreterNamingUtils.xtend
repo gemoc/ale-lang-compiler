@@ -24,11 +24,11 @@ class InterpreterNamingUtils implements AbstractNamingUtils {
 		'''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»'''
 	}
 	
-	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
+	override String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
 		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».interpreter.«ePackage.name»'''
 	}
 
-	def String factoryInterfaceClassName(EPackage ePackage) {
+	override String factoryInterfaceClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»Factory'''
 	}
 
@@ -40,11 +40,11 @@ class InterpreterNamingUtils implements AbstractNamingUtils {
 		'''«ePackage.name.toFirstUpper»Package'''
 	}
 
-	def String packageImplementationPackageName(EPackage ePackage, String packageRoot) {
+	override String packageImplementationPackageName(EPackage ePackage, String packageRoot) {
 		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».interpreter.«ePackage.name».impl'''
 	}
 
-	def String packageImplementationClassName(EPackage ePackage) {
+	override String packageImplementationClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»PackageImpl'''
 	}
 
@@ -89,7 +89,7 @@ class InterpreterNamingUtils implements AbstractNamingUtils {
 			toString.toUpperCase
 	}
 
-	def String normalizeUpperMethod(String input, String className) {
+	override String normalizeUpperMethod(String input, String className) {
 		'''«className»_«input.toFirstUpper»'''
 	}
 	

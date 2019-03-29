@@ -16,6 +16,11 @@ interface AbstractNamingUtils {
 	def String classInterfacePackageName(EEnum eEnum, String packageRoot)
 	def String classInterfaceClassName(EClass eClass)
 	def String classInterfaceClassName(EEnum eEnum)
+	def String packageImplementationClassName(EPackage ePackage)
+	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot)
+	def String factoryInterfaceClassName(EPackage ePackage)
+	def String normalizeUpperMethod(String input, String className)
+	def String packageImplementationPackageName(EPackage ePackage, String packageRoot)
 	
 	def normalizeVarName(String name) {
 		if(name == "enum") 'enum_'

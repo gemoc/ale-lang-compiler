@@ -5,7 +5,6 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
-import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.lang.reflect.Modifier
@@ -46,7 +45,6 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
@@ -69,6 +67,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.While
 import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.CodeBlock
 import java.util.stream.IntStream
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class OperationImplementationCompiler {
 
@@ -562,7 +561,7 @@ class OperationImplementationCompiler {
 	def allParents(ExtendedClass aleClass) {
 		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls
 
-		resolved.filter[it.eCls == ecls || it.eCls.isSuperTypeOf(ecls)].map [
+		resolved.filter[it.eCls == ecls || (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
 			it.aleCls
 		].filter[it !== null]
 	}

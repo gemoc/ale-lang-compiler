@@ -83,19 +83,13 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
-import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.xbase.lib.Functions.Function0
 import java.util.stream.IntStream
 import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class ALERevisitorImplementationCompiler {
-
-	@Data
-	static class ResolvedClass {
-		ExtendedClass aleCls
-		public EClassifier eCls
-	}
 
 	extension RevisitorNamingUtils = new RevisitorNamingUtils
 	extension EcoreUtils = new EcoreUtils

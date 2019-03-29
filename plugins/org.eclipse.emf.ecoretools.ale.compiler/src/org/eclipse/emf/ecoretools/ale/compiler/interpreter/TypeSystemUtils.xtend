@@ -12,13 +12,13 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import com.squareup.javapoet.TypeName
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class TypeSystemUtils {
 

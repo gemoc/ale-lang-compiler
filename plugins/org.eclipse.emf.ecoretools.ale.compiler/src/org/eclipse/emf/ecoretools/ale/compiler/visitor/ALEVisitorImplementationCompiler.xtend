@@ -24,18 +24,12 @@ import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
-import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
 
 class ALEVisitorImplementationCompiler {
-
-	@Data
-	static class ResolvedClass {
-		ExtendedClass aleCls
-		public EClass eCls
-		GenClass genCls
-	}
 
 	extension EcoreUtils = new EcoreUtils
 
@@ -128,7 +122,7 @@ class ALEVisitorImplementationCompiler {
 		val fimplc = new FactoryImplementationCompiler
 
 		val pic = new PackageInterfaceCompiler
-		val pimplc = new PackageImplementationCompiler
+		val pimplc = new PackageImplementationCompiler(new VisitorNamingUtils)
 
 		val acceptInterfaceCompiler = new AcceptInterfaceCompiler(compileDirectory, packageRoot)
 		acceptInterfaceCompiler.compile
