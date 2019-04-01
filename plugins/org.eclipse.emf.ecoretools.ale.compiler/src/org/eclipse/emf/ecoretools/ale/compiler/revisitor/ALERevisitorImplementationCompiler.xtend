@@ -59,7 +59,6 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
@@ -81,23 +80,22 @@ import org.eclipse.emf.ecoretools.ale.implementation.Switch
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
-import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
-import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.xtext.xbase.lib.Functions.Function0
 import java.util.stream.IntStream
 import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
-class ALERevisitorImplementationCompiler {
+class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
 	extension RevisitorNamingUtils = new RevisitorNamingUtils
 	extension EcoreUtils = new EcoreUtils
+	extension JavaPoetUtils = new JavaPoetUtils
 
 	var List<ParseResult<ModelUnit>> parsedSemantics
 	val IQueryEnvironment queryEnvironment
-	val Map<String, Class<?>> registeredServices = newHashMap
-	val JavaExtensionsManager javaExtensions
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	var Dsl dsl
 	var List<ResolvedClass> resolved
@@ -107,29 +105,13 @@ class ALERevisitorImplementationCompiler {
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
-		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
-
-			override loaded(String arg0, Class<?> arg1) {
-				registeredServices.put(arg0, arg1)
-			}
-
-			override notFound(String arg0) {
-				throw new RuntimeException('''«arg0» not found during services registration''')
-			}
-
-			override unloaded(String arg0, Class<?> arg1) {
-				registeredServices.remove(arg0);
-			}
-
-		});
 	}
 
 	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
-		registerServices(projectName)
+		registerServices(projectName, parsedSemantics)
 
 		// must be last !
 		compile(projectRoot)
@@ -137,18 +119,6 @@ class ALERevisitorImplementationCompiler {
 		Status.OK_STATUS
 	}
 
-	def registerServices(String projectName) {
-
-		javaExtensions.updateScope(newHashSet(), #{projectName});
-
-		val services = parsedSemantics.map[root].filter[it !== null].map[services].flatten + #[TrigoServices.name]
-		registerServices(services.toList);
-	}
-
-	def registerServices(List<String> services) {
-		services.forEach[javaExtensions.addImport(it)]
-		javaExtensions.reloadIfNeeded();
-	}
 
 	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
 		val IQueryEnvironment newEnv = new ExtensionEnvironment()
@@ -254,15 +224,23 @@ class ALERevisitorImplementationCompiler {
 							addStatement('''this.obj = obj''').addStatement('''this.rev = rev''').addModifiers(
 								Modifier.PUBLIC).build).addModifiers(Modifier.PUBLIC).addMethods(
 						it.aleCls?.methods?.map [
-							MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(
-								it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
+							val type = it.operationRef.EType
+							val typeResolved = type?.resolveType2
+							val parameters = it.operationRef.EParameters.map [
 								if (it.EType.instanceClass !== null) {
 									ParameterSpec.builder(it.EType.instanceClass, it.name).build
 								} else {
 									ParameterSpec.builder(it.EType.resolveType, it.name).build
 								}
-							]).openMethod(it.operationRef.EType).compileBody(it.body).closeMethod(
-								it.operationRef.EType).build
+							]
+							MethodSpec.methodBuilder(it.operationRef.name)
+								.addModifiers(Modifier.PUBLIC)
+								.returnType(type)
+								.addParameters(parameters)
+								.openMethod(typeResolved)
+								.compileBody(it.body)
+								.closeMethod(type)
+								.build
 						] ?: newArrayList).build
 				val operationImplementationFile = JavaFile.
 					builder('''«dsl.revisitorOperationImplementationPackage»''', operationImplementation).build
@@ -275,22 +253,6 @@ class ALERevisitorImplementationCompiler {
 		]
 	}
 
-	def MethodSpec.Builder openMethod(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			builder.addStatement('''$T result''', type.resolveType2)
-		} else {
-			builder
-		}
-	}
-
-	def MethodSpec.Builder closeMethod(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			builder.addStatement("return result")
-		} else {
-			builder
-		}
-	}
-
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body) {
 		val t = infereType(body.target).head
 		if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
@@ -298,10 +260,10 @@ class ALERevisitorImplementationCompiler {
 				addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''')
 		} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 			builderSeed.
-				addStatement('''«body.target.compileExpression».set«body.targetFeature.toFirstUpper»(«body.value.compileExpression»)''')
+				addStatement('''$L.set$L($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
 		} else {
 			builderSeed.
-				addStatement('''«body.target.compileExpression».«body.targetFeature» = «body.value.compileExpression»''')
+				addStatement('''$L.$L = $L''', body.target.compileExpression, body.targetFeature, body.value.compileExpression)
 
 		}
 
@@ -416,8 +378,8 @@ class ALERevisitorImplementationCompiler {
 			case "greaterThanEqual":
 				CodeBlock.of('''($L) >= ($L)''', call.arguments.get(0).compileExpression,
 					call.arguments.get(1).compileExpression)
-			case "mult": CodeBlock.of('''(«call.arguments.get(0).compileExpression») * («call.arguments.get(1).compileExpression»)''')
-			case "unaryMin": CodeBlock.of('''-(«call.arguments.get(0).compileExpression»)''')
+			case "mult": CodeBlock.of('''($L) * ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
+			case "unaryMin": CodeBlock.of('''-($L)''', call.arguments.get(0).compileExpression)
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
 					CodeBlock.of('''$T.head($L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression)
@@ -541,7 +503,16 @@ class ALERevisitorImplementationCompiler {
 								if (candidate !== null) {
 									CodeBlock.of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)''')
 								} else {
-									CodeBlock.of('''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)''')
+									val hm = newHashMap(
+										"caller" -> call.arguments.head.compileExpression,
+										"serviceName" -> call.serviceName
+									)
+
+									for (param : call.arguments.tail.enumerate) {
+										hm.put("param" + param.value, param.key.compileExpression)
+									}
+
+									CodeBlock.builder.addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»$param«param.value»:L«ENDFOR»)''', hm).build
 
 								}
 							}
@@ -556,7 +527,16 @@ class ALERevisitorImplementationCompiler {
 							if (candidate !== null) {
 								CodeBlock.of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)''')
 							} else {
-								CodeBlock.of('''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)''')
+								val hm = newHashMap(
+									"caller" -> call.arguments.head.compileExpression,
+									"serviceName" -> call.serviceName
+								)
+								
+								for(param: call.arguments.tail.enumerate) {
+									hm.put("param" + param.value, param.key.compileExpression)
+								}
+								
+								CodeBlock.builder.addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»$param«param.value»:L«ENDFOR»)''', hm).build
 
 							}
 						}
@@ -688,15 +668,15 @@ class ALERevisitorImplementationCompiler {
 		TypeName.get(edt.instanceClass)
 	}
 
-	def returnType(MethodSpec.Builder builder, EClassifier type) {
+	def MethodSpec.Builder returnType(MethodSpec.Builder builder, EClassifier type) {
 		if (type !== null) {
 			if (type.instanceClass !== null) {
-				builder.returns(type.instanceClass)
+				return builder.returns(type.instanceClass)
 			} else {
-				builder.returns(type.resolveType)
+				return builder.returns(type.resolveType)
 			}
 		} else {
-			builder
+			return builder
 		}
 	}
 
@@ -785,7 +765,7 @@ class ALERevisitorImplementationCompiler {
 	def allParents(ExtendedClass aleClass) {
 		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls as EClass
 
-		resolved.filter[it.eCls == ecls || (eCls as EClass).isSuperTypeOf(ecls)].map [
+		resolved.filter[it.eCls == ecls || ((eCls instanceof EClass) && (eCls as EClass).isSuperTypeOf(ecls))].map [
 			it.aleCls
 		].filter[it !== null]
 	}

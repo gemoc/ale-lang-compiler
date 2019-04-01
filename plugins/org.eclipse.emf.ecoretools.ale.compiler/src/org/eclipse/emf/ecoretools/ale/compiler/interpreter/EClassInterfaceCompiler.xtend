@@ -25,6 +25,7 @@ import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class EClassInterfaceCompiler {
 

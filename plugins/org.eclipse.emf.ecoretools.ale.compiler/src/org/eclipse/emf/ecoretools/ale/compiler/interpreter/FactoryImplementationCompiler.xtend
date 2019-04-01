@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin
 import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class FactoryImplementationCompiler {
 
@@ -181,8 +182,8 @@ class FactoryImplementationCompiler {
 				.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 				.returns(returnType)
 				.addCode('''
-					$1T «eClass.name.toFirstLower» = new $1T();
-					return «eClass.name.toFirstLower»;
+					$1T «eClass.name.normalizeVarName» = new $1T();
+					return «eClass.name.normalizeVarName»;
 				''', classImplType)
 				.addModifiers(PUBLIC)
 				.build

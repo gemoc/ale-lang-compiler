@@ -11,12 +11,11 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class VisitorInterfaceCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
-	extension VisitorCompilerUtils = new VisitorCompilerUtils
-	extension JavaPoetUtils = new JavaPoetUtils
 	val File directory
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	val String packageRoot

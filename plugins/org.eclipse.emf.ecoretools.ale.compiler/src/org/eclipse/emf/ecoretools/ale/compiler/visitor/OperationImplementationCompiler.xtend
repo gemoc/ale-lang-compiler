@@ -68,6 +68,7 @@ import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.CodeBlock
 import java.util.stream.IntStream
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class OperationImplementationCompiler {
 
@@ -139,8 +140,12 @@ class OperationImplementationCompiler {
 						} else {
 							ParameterSpec.builder(param.EType.resolveType, param.name).build
 						}
-					]).addModifiers(PUBLIC).openMethod(method.operationRef.EType).compileBody(method.body).closeMethod(
-						method.operationRef.EType).build
+					])
+					.addModifiers(PUBLIC)
+					.openMethod(method.operationRef.EType?.resolveType2)
+					.compileBody(method.body)
+					.closeMethod(method.operationRef.EType)
+					.build
 			])
 
 		]).applyIfTrue(eClass.abstract, [addModifiers(ABSTRACT)]).build
@@ -150,24 +155,6 @@ class OperationImplementationCompiler {
 			.build
 
 		javaFile.writeTo(directory)
-	}
-
-	
-
-	def MethodSpec.Builder openMethod(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			builder.addStatement('''$T result''', type.resolveType2)
-		} else {
-			builder
-		}
-	}
-
-	def MethodSpec.Builder closeMethod(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			builder.addStatement("return result")
-		} else {
-			builder
-		}
 	}
 
 	def dispatch solveType(EClass type) {
@@ -400,7 +387,7 @@ class OperationImplementationCompiler {
 								hm.put("typecaller", (call.arguments.head.infereType.head.type as EClass).solveType)
 								hm.put("typeoperation", ClassName.get(namingUtils.operationInterfacePackageName(packageRoot, t.type as EClass), namingUtils.operationInterfaceClassName(t.type as EClass)))
 								for (param : call.arguments.tail.enumerate) {
-									hm.put("typeparam" + param.value, (param.key.infereType.head.type as EClass).solveType)
+									hm.put("typeparam" + param.value, param.key.infereType.head.type.resolveType2)
 									hm.put("expression" + param.value, param.key.compileExpression)
 								}
 								

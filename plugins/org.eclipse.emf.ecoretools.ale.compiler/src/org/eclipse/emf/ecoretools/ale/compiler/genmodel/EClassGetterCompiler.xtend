@@ -24,16 +24,16 @@ import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
-import org.eclipse.emf.ecoretools.ale.compiler.interpreter.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class EClassGetterCompiler {
 
-	extension JavaPoetUtils = new JavaPoetUtils
 	extension AbstractNamingUtils namingUtils 
 	extension InterpreterCompilerUtils icu
+	extension JavaPoetUtils = new JavaPoetUtils
 	
 	new(AbstractNamingUtils namingUtils) {
 		this.namingUtils = namingUtils

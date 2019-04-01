@@ -22,8 +22,13 @@ interface AbstractNamingUtils {
 	def String normalizeUpperMethod(String input, String className)
 	def String packageImplementationPackageName(EPackage ePackage, String packageRoot)
 	
-	def normalizeVarName(String name) {
+	def normalizeVarName(String _name) {
+		val name = _name.toFirstLower
 		if(name == "enum") 'enum_'
+		else if(name == "while") 'while_'
+		else if(name == "if") 'if_'
+		else if(name == "this") 'this_'
+		else if(name == "int") 'int_'
 		else name
 	}
 	

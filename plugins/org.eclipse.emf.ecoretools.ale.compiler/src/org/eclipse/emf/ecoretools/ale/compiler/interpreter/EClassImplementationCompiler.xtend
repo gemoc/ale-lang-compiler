@@ -47,6 +47,7 @@ import org.eclipse.xtext.EcoreUtil2
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
@@ -823,7 +824,7 @@ class EClassImplementationCompiler {
 				ParameterSpec.builder(it.EType.resolveType, it.name).build
 			}
 		])
-		.openMethod(method.operationRef.EType)
+		.openMethod(method.operationRef.EType?.resolveType2)
 		.compileBodyAndPrefix(method.body, new CompilerExpressionCtx('this', aleClass, aClass), isTruffle)
 		.closeMethod(method.operationRef.EType).build
 		
@@ -850,23 +851,6 @@ class EClassImplementationCompiler {
 			builder.addCode(cbb.build)
 		}
 		
-	}
-
-	def MethodSpec.Builder closeMethod(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			builder.addStatement("return result")
-		} else {
-			builder
-		}
-	}
-	
-
-	def MethodSpec.Builder openMethod(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			builder.addStatement('''$T result''', type.resolveType2)
-		} else {
-			builder
-		}
 	}
 
 	def MethodSpec.Builder mapParameters(MethodSpec.Builder builderSeed, Method method) {

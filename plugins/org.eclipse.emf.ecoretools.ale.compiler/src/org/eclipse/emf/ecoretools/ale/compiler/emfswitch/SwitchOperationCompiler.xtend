@@ -45,7 +45,6 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.interpreter.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -71,12 +70,13 @@ import com.squareup.javapoet.CodeBlock
 import java.util.stream.IntStream
 import java.util.Objects
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class SwitchOperationCompiler {
 
 	extension SwitchNamingUtils namingUtils = new SwitchNamingUtils
-	extension JavaPoetUtils = new JavaPoetUtils
 	extension TypeSystemUtils tsu
+	extension JavaPoetUtils = new JavaPoetUtils
 
 	val String packageRoot
 	val File directory
@@ -163,27 +163,13 @@ class SwitchOperationCompiler {
 				}
 			])
 			.addModifiers(PUBLIC)
-			.openMethod(method.operationRef.EType)
+			.openMethod(method.operationRef.EType?.resolveType2)
 			.compileBody(method.body)
 			.closeMethod(method.operationRef.EType)
 			.build
 	}
 	
-	def MethodSpec.Builder openMethod(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			builder.addStatement('''$T result''', type.resolveType2)
-		} else {
-			builder
-		}
-	}
 	
-	def MethodSpec.Builder closeMethod(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			builder.addStatement("return result")
-		} else {
-			builder
-		}
-	}
 	
 	def dispatch solveType(EClass type) {
 		resolveType(type)
@@ -470,7 +456,7 @@ class SwitchOperationCompiler {
 								)		
 								
 								for(param: call.arguments.tail.enumerate) {
-									hm.put("paramType" + param.value, (param.key.infereType.head.type as EClass).solveType)
+									hm.put("paramType" + param.value, param.key.infereType.head.type.resolveType2)
 									hm.put("paramExpr" + param.value, param.key.compileExpression)
 								}
 														

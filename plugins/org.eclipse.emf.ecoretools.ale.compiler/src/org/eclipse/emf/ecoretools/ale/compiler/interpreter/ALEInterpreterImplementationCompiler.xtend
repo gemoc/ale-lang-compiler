@@ -17,10 +17,10 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
@@ -29,17 +29,14 @@ import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
-import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 
-class ALEInterpreterImplementationCompiler {
+class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 	extension EcoreUtils = new EcoreUtils
 
 	var List<ParseResult<ModelUnit>> parsedSemantics
 	val IQueryEnvironment queryEnvironment
-	val Map<String, Class<?>> registeredServices = newHashMap
-	val JavaExtensionsManager javaExtensions
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	var Dsl dsl
 	var List<ResolvedClass> resolved
@@ -48,22 +45,6 @@ class ALEInterpreterImplementationCompiler {
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		javaExtensions = JavaExtensionsManager.createManagerWithOverride()
-		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
-
-			override loaded(String arg0, Class<?> arg1) {
-				registeredServices.put(arg0, arg1)
-			}
-
-			override notFound(String arg0) {
-				throw new RuntimeException('''«arg0» not found during services registration''')
-			}
-
-			override unloaded(String arg0, Class<?> arg1) {
-				registeredServices.remove(arg0)
-			}
-
-		})
 	}
 
 	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
@@ -79,10 +60,9 @@ class ALEInterpreterImplementationCompiler {
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
 		if (services !== null && !services.empty) {
-			registeredServices.putAll(services)
+			this.registeredServices.putAll(services)
 		} else {
-			registerServices(projectName)
-
+			registerServices(projectName, parsedSemantics)
 		}
 
 		// must be last !
@@ -91,18 +71,6 @@ class ALEInterpreterImplementationCompiler {
 		Status.OK_STATUS
 	}
 
-	def registerServices(String projectName) {
-
-		javaExtensions.updateScope(newHashSet(), #{projectName})
-
-		val services = parsedSemantics.map[root].filter[it !== null].map[services].flatten + #[TrigoServices.name]
-		registerServices(services.toList)
-	}
-
-	def registerServices(List<String> services) {
-		services.forEach[javaExtensions.addImport(it)]
-		javaExtensions.reloadIfNeeded()
-	}
 
 	def private void compile(File projectRoot, String projectName) {
 		val compileDirectory = new File(projectRoot, "interpreter-comp")
@@ -131,8 +99,9 @@ class ALEInterpreterImplementationCompiler {
 		val fic = new FactoryInterfaceCompiler
 		val fimplc = new FactoryImplementationCompiler
 
-		val pic = new PackageInterfaceCompiler
-		val pimplc = new PackageImplementationCompiler(new InterpreterNamingUtils)
+		val inu = new InterpreterNamingUtils
+		val pic = new PackageInterfaceCompiler(inu)
+		val pimplc = new PackageImplementationCompiler(inu)
 
 		val eic = new EClassInterfaceCompiler
 		val eimplc = new EClassImplementationCompiler(packageRoot, resolved)

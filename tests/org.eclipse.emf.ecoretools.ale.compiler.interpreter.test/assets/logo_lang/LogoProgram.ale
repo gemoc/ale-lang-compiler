@@ -1,0 +1,329 @@
+behavior logo;
+
+use logo.example.service.Display;
+//use logo.example.service.TimeService;
+
+open class LogoProgram {
+
+	@main
+	def Turtle eval() {
+		//ELong start := self.time();
+		Turtle turtle :=  self.createTurtle();
+		result := turtle;
+		
+		for(it in self.instructions) {
+			it.eval(turtle);
+		}
+		result := turtle;
+	//	ELong stop := self.time();
+//		ELong time := stop - start;
+		//time.log();
+	//	turtle.show();
+		
+	}
+	
+	def /*dispatch*/ Turtle createTurtle() {
+		Turtle turtle := kmLogo::Turtle.create();
+		turtle.position := kmLogo::Point.create();
+		turtle.position.x := 0.0;
+		turtle.position.y := 0.0;
+		turtle.callStack := kmLogo::CallStack.create();
+		turtle.callStack.frames += kmLogo::StackFrame.create();
+		result := turtle;
+	}
+}
+
+open class Instruction {
+	def  double eval(Turtle turtle) {
+		result := 0.0;
+	}
+}
+
+open class PenDown {
+	def double eval(Turtle turtle) {
+		turtle.penUp := false;
+		result := 0.0;
+	}
+}
+
+open class PenUp {
+	def double eval(Turtle turtle) {
+		turtle.penUp := true;
+		result := 0.0;
+	}
+}
+
+
+open class Repeat {
+	def double eval(Turtle turtle) {
+		double time := self.condition.eval(turtle);
+		while( time > 0.0 ) {
+			self.block.eval(turtle);
+			time := time - 1.0;
+		}
+		result := 0.0;
+	}
+}
+
+open class While {
+	def double eval(Turtle turtle) {
+		while(self.condition.eval(turtle) > 0.0) {
+			self.block.eval(turtle);
+		}
+		result := 0.0;
+	}
+}
+
+open class If {
+	def double eval(Turtle turtle) {
+		if (self.condition.eval(turtle) != 0.0) {
+			result := self.thenPart.eval(turtle);
+		}
+		else {
+			if(self.elsePart != null) {
+				result := self.elsePart.eval(turtle);
+			} else {
+				result := 0.0;
+			}
+		}
+	}
+}
+
+open class Constant {
+	def double eval(Turtle turtle) {
+		result := self.value;
+	}
+}
+
+open class Block {
+	def double eval(Turtle turtle) {
+		for(inst in self.instructions) {
+			inst.eval(turtle);
+		}
+		result := 0.0;
+	}
+}
+
+open class Clear {
+	def double eval(Turtle turtle) {
+		result := 0.0;
+	}
+}
+
+open class Forward {
+	def double eval(Turtle turtle) {
+		double move := self.steps.eval(turtle);
+		turtle.forward(move);
+		result := 0.0;
+	}
+}
+
+open class Back {
+	def double eval(Turtle turtle) {
+		double move := self.steps.eval(turtle);
+		turtle.forward(-move);
+		result := 0.0;
+	}
+}
+
+open class Left {
+	def double eval(Turtle turtle) {
+		double angle := self.angle.eval(turtle);
+		turtle.rotate(angle);
+		result := 0.0;
+	}
+}
+
+open class Right {
+	def double eval(Turtle turtle) {
+		double angle := self.angle.eval(turtle);
+		turtle.rotate(-angle);
+		result := 0.0;
+	}
+}
+
+open class Plus {
+	def double eval(Turtle turtle) {
+		result := self.lhs.eval(turtle) + self.rhs.eval(turtle);
+	}
+}
+
+
+open class Expression {
+	def /*dispatch*/ double eval(Turtle turtle) {
+		result := 0.0;
+	}
+}
+
+open class Minus {
+	def double eval(Turtle turtle) {
+		result := self.lhs.eval(turtle) - self.rhs.eval(turtle);
+	}
+}
+
+open class Mult {
+	def double eval(Turtle turtle) {
+		result := self.lhs.eval(turtle) * self.rhs.eval(turtle);
+	}
+}
+
+open class Div {
+	def double eval(Turtle turtle) {
+		if(self.rhs.eval(turtle) != 0.0) {
+			result := self.lhs.eval(turtle) / self.rhs.eval(turtle);
+		}
+		else{
+			result := 0.0;
+		}
+	}
+}
+
+open class Equals {
+	def double eval(Turtle turtle) {
+		if(self.lhs.eval(turtle) = self.rhs.eval(turtle)) {
+			result := 1.0;
+		}
+		else{
+			result := 0.0;
+		}
+	}
+}
+
+open class Lower {
+	def double eval(Turtle turtle) {
+		if(self.lhs.eval(turtle) < self.rhs.eval(turtle)) {
+			result := 1.0;
+		}
+		else{
+			result := 0.0;
+		}
+	}
+}
+
+open class Greater {
+	def double eval(Turtle turtle) {
+		if(self.lhs.eval(turtle) > self.rhs.eval(turtle)) {
+			result := 1.0;
+		}
+		else{
+			result := 0.0;
+		}
+	}
+}
+
+open class Cos {
+	def double eval(Turtle turtle) {
+		result := self.expression.eval(turtle).cosinus();
+	}
+}
+
+open class Sin {
+	def double eval(Turtle turtle) {
+		result := self.expression.eval(turtle).sinus();
+	}
+}
+
+open class Tan {
+	def double eval(Turtle turtle) {
+		result := self.expression.eval(turtle).tan();
+	}
+}
+
+open class ProcCall {
+	def double eval(Turtle turtle) {
+		('Calling '+self.declaration.name).log();
+	
+		StackFrame newFrame := kmLogo::StackFrame.create();
+		int i := 0;
+		for (exp in self.actualArgs) {
+			Variable newVar := kmLogo::Variable.create();
+			newVar.name := self.declaration.args->at(i).name;
+			newVar.value := exp.eval(turtle);
+			newFrame.variables += newVar;
+			i := i+1;
+		}
+		turtle.callStack.frames += newFrame;
+		
+		result := 0.0;
+		if(self.declaration.oclIsKindOf(kmLogo::ProcDeclaration)) {
+			kmLogo::ProcDeclaration decl := self.declaration;
+			decl.deval(turtle);
+		}
+		
+		
+		turtle.callStack.frames -= newFrame;
+	}
+	
+}
+
+open class ProcDeclaration {
+	def double eval(Turtle turtle) {
+		result := 0.0;
+		for(instr in self.instructions) {
+			result := instr.eval(turtle);
+		}
+	}
+	
+	def dispatch double deval(Turtle turtle) {
+		result := self.eval(turtle);
+	}
+}
+
+open class ParameterCall {
+	def double eval(Turtle turtle) {
+		result := 0.0;
+		for(frame in turtle.callStack.frames) {
+			for(var in frame.variables) {
+				if(var.name = self.parameter.name) {
+					result := var.value;
+				}
+			}
+		}
+	}
+}
+//--------------Context----------------------
+
+open class Turtle {
+
+	double originalSize := 0.0;
+	double anotherAttrib := 0.0;
+	
+	def void move(double dx, double dy) {
+		Point newPos := kmLogo::Point.create();
+		newPos.x := self.position.x + dx;
+		newPos.y := self.position.y  + dy;
+		if(self.penUp) {
+		}
+		else {
+			Segment newSegment := kmLogo::Segment.create();
+			newSegment.begin := self.position;
+			newSegment.end := newPos;
+			self.drawings += newSegment;
+		}
+		Point newPosCopy := kmLogo::Point.create();
+		newPosCopy.x := newPos.x;
+		newPosCopy.y := newPos.y;
+		self.position := newPosCopy;
+	}
+	
+	def void forward(double steps) {
+		self.move(steps*(self.heading.cosinus()), steps*(self.heading.sinus()));
+	}
+	
+	def void rotate(double angle) {
+		double newAngle := self.heading + angle;
+		if(newAngle > 360.0) {
+				newAngle := newAngle - 360.0;
+				self.heading := newAngle;
+		}
+		else{
+			if(newAngle < 0.0) {
+				newAngle := 360.0 + newAngle;
+				self.heading := newAngle;
+			}
+			else{
+				self.heading := newAngle;
+			}
+		}
+	}
+}

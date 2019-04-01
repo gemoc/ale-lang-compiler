@@ -288,16 +288,16 @@ class AleExpressionsCompiler {
 									this.registreredDispatch.add(method)
 									val effectFull = !(call.eContainer instanceof ExpressionStatement)
 									CodeBlock.
-										of('''«IF effectFull && method.operationRef.EType !==null»((«method.operationRef.EType.solveType»)«ENDIF»dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})«IF effectFull && method.operationRef.EType !==null»)«ENDIF»''')
+										of('''«IF effectFull && method.operationRef.EType !==null»((«method.operationRef.EType.resolveType2»)«ENDIF»dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})«IF effectFull && method.operationRef.EType !==null»)«ENDIF»''')
 								} else {
 									val hm = newHashMap()
-									hm.put("typecaller", (call.arguments.head.infereType.head.type as EClass).solveType)
+									hm.put("typecaller", call.arguments.head.infereType.head.type.resolveType2)
 									for (param : call.arguments.tail.enumerate) {
-										hm.put("typeparam" + param.value, (param.key.infereType.head.type as EClass).solveType)
+										hm.put("typeparam" + param.value, param.key.infereType.head.type.resolveType2)
 									}
 									
 									CodeBlock.builder.
-										addNamed('''(($typecaller:T)«call.arguments.head.compileExpression(ctx)»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«param.value»:T) «param.key.compileExpression(ctx)»«ENDFOR»)''',
+										addNamed('''(($typecaller:T) «call.arguments.head.compileExpression(ctx)»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«param.value»:T) («param.key.compileExpression(ctx)»)«ENDFOR»)''',
 											hm).build
 								}
 							} else {
@@ -327,7 +327,7 @@ class AleExpressionsCompiler {
 							if (candidate !== null) {
 								val hm = newHashMap()
 								for(param:call.arguments.enumerate) {
-									hm.put("typeparam" + param.value, (param.key.infereType.head.type as EClass).solveType)
+									hm.put("typeparam" + param.value, param.key.infereType.head.type.resolveType2)
 								}
 								CodeBlock.builder.addNamed
 									('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments.enumerate SEPARATOR ', '»($typeparam«p.value»:T)«p.key.compileExpression(ctx)»«ENDFOR»)''', hm).build
@@ -335,7 +335,7 @@ class AleExpressionsCompiler {
 								val hm = newHashMap()
 								
 								for(param:call.arguments.tail.enumerate) {
-									hm.put("typeparam" + param.value, (param.key.infereType.head.type as EClass).solveType)
+									hm.put("typeparam" + param.value, param.key.infereType.head.type.resolveType2)
 								}
 								
 								CodeBlock.builder.
