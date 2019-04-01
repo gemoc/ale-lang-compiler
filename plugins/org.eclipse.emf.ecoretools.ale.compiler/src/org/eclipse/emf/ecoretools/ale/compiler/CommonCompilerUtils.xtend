@@ -12,7 +12,6 @@ class CommonCompilerUtils {
 	new(AbstractNamingUtils anu) {
 		this.anu = anu
 	} 
-	
 
 	def dispatch scopedTypeRef(EDataType edt, String packageRoot) {
 		TypeName.get(edt.instanceClass)

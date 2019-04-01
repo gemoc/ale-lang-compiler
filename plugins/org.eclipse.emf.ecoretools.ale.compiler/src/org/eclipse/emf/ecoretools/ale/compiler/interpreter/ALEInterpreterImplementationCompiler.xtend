@@ -107,14 +107,13 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		val pic = new PackageInterfaceCompiler(inu)
 		val pimplc = new PackageImplementationCompiler(inu)
 
-		val eic = new EClassInterfaceCompiler
-		val eimplc = new EClassImplementationCompiler(packageRoot, resolved)
+		val eic = new InterpreterEClassInterfaceCompiler(inu)
+		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
 		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
-		// TODO: generate ecore + genmodel !
 		val isTruffle = dsl.dslProp.getProperty('truffle', "false") == "true"
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			try {
@@ -144,7 +143,6 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 			}
 
 		]
-	// resolved.filter[it.aleCls !== null].map[it.aleCls.]
 	}
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
@@ -152,15 +150,6 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 			val aleClass = aleClasses.filter [
 				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
 			].head
-//			val values = syntaxes.filter[k, v|v.key.allClassifiers.contains(eClass)].values.map[value]
-//			val GenClass gl = values.map [
-//				it.genPackages.map[it.genClasses].flatten
-//			].flatten.filter[
-//				val res =it.ecoreClass == eClass
-////				println('''interpreter resolve [«res»] «it.ecoreClass» == «eClass»''')
-//				res
-//			].head
-//			if(gl === null) throw new RuntimeException("gl null !")
 			new ResolvedClass(aleClass, eClass) //, gl
 		]
 	}

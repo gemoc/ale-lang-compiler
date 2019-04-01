@@ -107,8 +107,8 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		val visitorImplementationCompiler = new VisitorImplementationCompiler(compileDirectory, syntaxes, packageRoot)
 		visitorImplementationCompiler.compile
 
-		val eic = new EClassInterfaceCompiler
-		val eimplc = new EClassImplementationCompiler(packageRoot, dsl)
+		val eic = new VisitorEClassInterfaceCompiler(vnu)
+		val eimplc = new VisitorEClassImplementationCompiler(packageRoot, dsl)
 
 		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
 		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,
@@ -127,7 +127,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
 				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
 					head
-				eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
+				eic.compileEClassInterface(eclazz, compileDirectory, packageRoot)
 				eimplc.compileEClassImplementation(eclazz, compileDirectory)
 				operationInterfaceCompiler.compile(eclazz, rc?.aleCls)
 				operationImplementationCompiler.compile(eclazz, rc?.aleCls)

@@ -26,7 +26,6 @@ import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
-import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
@@ -35,6 +34,11 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecore.util.InternalEList
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
@@ -42,20 +46,16 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Statement
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
-import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
-class EClassImplementationCompiler {
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
-	extension CommonCompilerUtils = new CommonCompilerUtils(namingUtils)
+class InterpreterEClassImplementationCompiler {
+	extension InterpreterNamingUtils namingUtils 
+	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension TypeSystemUtils tsu
 	extension AleBodyCompiler abc
-	val eClassGetterCompiler = new EClassGetterCompiler(namingUtils)
 	
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	var Dsl dsl
@@ -63,6 +63,7 @@ class EClassImplementationCompiler {
 	var Set<Method> registreredDispatch = newHashSet
 	var Set<String> registreredArrays = newHashSet
 	val List<ResolvedClass> resolved
+	EClassImplementationCompiler ecic
 	
 	static class CompilerExpressionCtx {
 		public val String thisCtxName
@@ -78,6 +79,9 @@ class EClassImplementationCompiler {
 	new(String packageRoot, List<ResolvedClass> resolved) {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
+		this.namingUtils = new InterpreterNamingUtils
+		this.ccu = new CommonCompilerUtils(namingUtils)
+		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils))
 	}
 	
 	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
@@ -88,93 +92,22 @@ class EClassImplementationCompiler {
 		val hasSuperType = !eClass.ESuperTypes.empty
 		val superType = eClass.ESuperTypes.head
 
-		val fieldsEAttributes = eClass.EAttributes.map [ field |
-			val fet = field.EType
-			val type = fet.scopedTypeRef(packageRoot)
-			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			if(isMultiple) {
-				val fieldField = FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(EList), type.box), '''«field.name»''', PROTECTED).build
-				#[fieldField]
-			} else {
-				val edefault = if(fet instanceof EEnum) {
-					var tmpfs = FieldSpec
-						.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
-						
-					if(field.defaultValue === null || field.defaultValue.toString == '')
-						tmpfs = tmpfs.initializer('''null''')
-					else
-						tmpfs = tmpfs.initializer('''$T.«field.defaultValue.toString.toUpperCase»''', 
-							ClassName.get(namingUtils.classInterfacePackageName(fet, packageRoot), namingUtils.classInterfaceClassName(fet))
-						)
-						
-					tmpfs.addModifiers(PROTECTED, STATIC, FINAL).build
-				} else {
-					FieldSpec
-						.builder(type, '''«field.name.toUpperCase»_EDEFAULT''')
-						.initializer('''«IF field.defaultValue === null || field.defaultValue.toString == ''»null«ELSE»«field.defaultValue»«ENDIF»''')
-						.addModifiers(PROTECTED, STATIC, FINAL).build
-				}
-	
-				val fieldField = FieldSpec.builder(type, field.name.normalizeVarName).initializer('''«field.name.toUpperCase»_EDEFAULT''').
-					addModifiers(PROTECTED).build
-				#[edefault, fieldField]
-				
-			}
-		].flatten
-
-		/*
-		 * Do not generate physical fields for opposite relations to  containment fields
-		 */
-		val fieldsEReferences = eClass.EReferences.filter[field | if(field.EOpposite !== null) !field.EOpposite.containment else true].map [ field |
-			val ert = field.EGenericType.ERawType
-			val rt = ert.scopedInterfaceTypeRef(packageRoot)
-			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val fieldType = if (isMultiple) {
-				if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
-					val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-					val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-					if(key !== null && value !== null) {
-						ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot))
-					} else {
-						ParameterizedTypeName.get(ClassName.get(EList), rt)
-					}
-				} else {
-					ParameterizedTypeName.get(ClassName.get(EList), rt)
-				}
-			} else
-				rt
-				
-			val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
-			FieldSpec.builder(fieldType, field.name).applyIfTrue(dsl.dslProp.getOrDefault("child", "false").equals("true") 
+		val fieldsEAttributes = ecic.getFieldsEAttributes(eClass, packageRoot)
+		
+		val Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2 = [builderTmp, field |
+				val isMultiple = field.upperBound > 1 || field.upperBound < 0
+				val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
+				builderTmp.applyIfTrue(dsl.dslProp.getOrDefault("child", "false").equals("true") 
 				&& !isMultiple && !isMutable 
 				&& field.containment
 				&& !field.EType.EAnnotations.exists[it.source == 'RuntimeData']
 				, [
 				addAnnotation(ClassName.get("com.oracle.truffle.api.nodes.Node", "Child"))
-			]).addModifiers(PROTECTED).build
+			])		
 		]
 
-		val methodsEReferences = eClass.EStructuralFeatures.map [ field |
-			val ert = field.EGenericType.ERawType
-			val rt = ert.scopedInterfaceTypeRef(packageRoot)
-			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val fieldType = if (isMultiple) {
-					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
-						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-						if(key !== null && value !== null) {
-							ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot), value.EType.scopedInterfaceTypeRef(packageRoot))
-						} else {
-							ParameterizedTypeName.get(ClassName.get(EList), rt.box)
-						}
-					} else {
-						ParameterizedTypeName.get(ClassName.get(EList), rt.box)
-					}
-				} else
-					rt
-
-			eClassGetterCompiler.compileGetter(field, fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, isMapElement)
-		].flatten
+		val fieldsEReferences = ecic.getFieldsEReferences(eClass, packageRoot, f2)
+		val methodsEReferences = ecic.getMethodsEReferences(eClass, packageRoot, dsl, ePackageInterfaceType, isMapElement)
 
 		val eStaticClassMethod = MethodSpec.methodBuilder('eStaticClass')
 			.addAnnotation(Override)
