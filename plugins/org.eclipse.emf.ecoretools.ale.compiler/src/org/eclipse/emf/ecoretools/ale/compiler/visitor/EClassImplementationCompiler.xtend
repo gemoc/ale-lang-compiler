@@ -33,10 +33,11 @@ import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class EClassImplementationCompiler {
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
-	extension VisitorCompilerUtils = new VisitorCompilerUtils
+	extension CommonCompilerUtils = new CommonCompilerUtils(namingUtils)
 	extension JavaPoetUtils = new JavaPoetUtils
 	val eClassGetterCompiler = new EClassGetterCompiler(namingUtils)
 	

@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.visitor
+package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
@@ -17,14 +17,26 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl
 import org.eclipse.emf.ecore.plugin.EcorePlugin
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class FactoryImplementationCompiler {
 
-	extension VisitorCompilerUtils = new VisitorCompilerUtils
-	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
+	extension AbstractNamingUtils namingUtils
+	extension CommonCompilerUtils ccu
+	extension JavaPoetUtils = new JavaPoetUtils
+	
+	new(AbstractNamingUtils namingUtils) {
+		this.namingUtils = namingUtils
+		this.ccu = new CommonCompilerUtils(namingUtils)
+	}
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
+		this.compileFactoryImplementation(abstractSyntax, directory, packageRoot, false)
+	}
 
+	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot, boolean isTruffle) {
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
 		val allEnum = abstractSyntax.EClassifiers.filter(EEnum)
 
@@ -59,6 +71,7 @@ class FactoryImplementationCompiler {
 		val createMethod = MethodSpec.methodBuilder('create')
 			.addAnnotation(Override)
 			.returns(EObject)
+			.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 			.addParameter(ParameterSpec.builder(EClass, 'eClass').build)
 			.addNamedCode('''
 			switch (eClass.getClassifierID()) {
@@ -175,10 +188,11 @@ class FactoryImplementationCompiler {
 				eClass.classImplementationClassName)
 
 			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''')
+				.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 				.returns(returnType)
 				.addCode('''
-					$1T «eClass.name.toFirstLower» = new $1T();
-					return «eClass.name.toFirstLower»;
+					$1T «eClass.name.normalizeVarName» = new $1T();
+					return «eClass.name.normalizeVarName»;
 				''', classImplType)
 				.addModifiers(PUBLIC)
 				.build

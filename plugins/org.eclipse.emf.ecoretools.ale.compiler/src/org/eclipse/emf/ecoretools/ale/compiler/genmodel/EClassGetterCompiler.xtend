@@ -23,21 +23,21 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList
 import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
-import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class EClassGetterCompiler {
 
 	extension AbstractNamingUtils namingUtils 
-	extension InterpreterCompilerUtils icu
+	extension CommonCompilerUtils icu
 	extension JavaPoetUtils = new JavaPoetUtils
 	
 	new(AbstractNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
-		this.icu = new InterpreterCompilerUtils(namingUtils)
+		this.icu = new CommonCompilerUtils(namingUtils)
 	}
 
 	def dispatch List<MethodSpec> compileGetter(EAttribute field, TypeName fieldType, String packageRoot, EClass eClass,

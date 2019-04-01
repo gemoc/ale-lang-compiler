@@ -19,7 +19,9 @@ import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
@@ -29,7 +31,6 @@ import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 
 class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
@@ -96,10 +97,10 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 		val egc = new EcoreGenmodelCompiler
 
-		val fic = new FactoryInterfaceCompiler
-		val fimplc = new FactoryImplementationCompiler
-
 		val inu = new InterpreterNamingUtils
+		val fic = new FactoryInterfaceCompiler
+		val fimplc = new FactoryImplementationCompiler(inu)
+
 		val pic = new PackageInterfaceCompiler(inu)
 		val pimplc = new PackageImplementationCompiler(inu)
 

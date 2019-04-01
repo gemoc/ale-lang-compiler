@@ -73,11 +73,11 @@ class VisitorNamingUtils implements AbstractNamingUtils {
 		'''«ePackage.name.toFirstUpper»PackageImpl'''
 	}
 
-	def String factoryImplementationPackageName(EPackage ePackage, String packageRoot) {
+	override String factoryImplementationPackageName(EPackage ePackage, String packageRoot) {
 		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».visitor.«ePackage.name».impl'''
 	}
 
-	def String factoryImplementationClassName(EPackage ePackage) {
+	override String factoryImplementationClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»FactoryImpl'''
 	}
 

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
@@ -87,10 +88,10 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val egc = new EcoreGenmodelCompiler
 
-		val fic = new FactoryInterfaceCompiler
-		val fimplc = new FactoryImplementationCompiler
-
 		val vnu = new VisitorNamingUtils
+		val fic = new FactoryInterfaceCompiler
+		val fimplc = new FactoryImplementationCompiler(vnu)
+
 		val pic = new PackageInterfaceCompiler(vnu)
 		val pimplc = new PackageImplementationCompiler(vnu)
 

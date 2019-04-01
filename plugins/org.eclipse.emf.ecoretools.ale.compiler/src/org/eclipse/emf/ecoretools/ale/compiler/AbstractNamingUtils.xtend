@@ -21,6 +21,8 @@ interface AbstractNamingUtils {
 	def String factoryInterfaceClassName(EPackage ePackage)
 	def String normalizeUpperMethod(String input, String className)
 	def String packageImplementationPackageName(EPackage ePackage, String packageRoot)
+	def String factoryImplementationClassName(EPackage ePackage)
+	def String factoryImplementationPackageName(EPackage ePackage, String packageRoot)
 	
 	def normalizeVarName(String _name) {
 		val name = _name.toFirstLower

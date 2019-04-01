@@ -20,17 +20,17 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class EClassInterfaceCompiler {
 
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
-	extension InterpreterCompilerUtils = new InterpreterCompilerUtils(namingUtils)
+	extension CommonCompilerUtils = new CommonCompilerUtils(namingUtils)
 	extension JavaPoetUtils = new JavaPoetUtils
 	
 	def dispatch compileEClassInterface(EEnum eEnum, ExtendedClass aleClass, File directory, Dsl dsl, String packageRoot) {

@@ -35,7 +35,6 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecore.util.InternalEList
-import org.eclipse.emf.ecoretools.ale.compiler.InterpreterCompilerUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
@@ -48,10 +47,11 @@ import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class EClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
-	extension InterpreterCompilerUtils = new InterpreterCompilerUtils(namingUtils)
+	extension CommonCompilerUtils = new CommonCompilerUtils(namingUtils)
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension TypeSystemUtils tsu
 	extension AleBodyCompiler abc

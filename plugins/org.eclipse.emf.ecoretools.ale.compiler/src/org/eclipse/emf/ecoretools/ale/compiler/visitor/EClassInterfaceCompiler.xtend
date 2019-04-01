@@ -15,11 +15,12 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class EClassInterfaceCompiler {
 
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
-	extension VisitorCompilerUtils = new VisitorCompilerUtils
+	extension CommonCompilerUtils = new CommonCompilerUtils(namingUtils)
 
 	def compileEClassInterface(EClass eClass, ExtendedClass aleClass, File directory, Dsl dsl, String packageRoot) {
 
