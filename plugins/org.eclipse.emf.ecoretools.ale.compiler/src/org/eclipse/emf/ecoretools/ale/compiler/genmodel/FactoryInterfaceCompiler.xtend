@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 
 import com.squareup.javapoet.TypeSpec
 import org.eclipse.emf.ecore.EPackage
@@ -10,9 +10,14 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.JavaFile
 import org.eclipse.emf.ecore.EClass
 import java.util.Map
+import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
 
 class FactoryInterfaceCompiler {
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
+	extension AbstractNamingUtils namingUtils
+	
+	new(AbstractNamingUtils namingUtils) {
+		this.namingUtils = namingUtils
+	}
 
 	def compileFactoryInterface(EPackage abstractSyntax, java.io.File directory, String packageRoot) {
 		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),

@@ -18,7 +18,9 @@ import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenmodelCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
@@ -67,7 +69,8 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 
 	def private void compile(File projectRoot, String projectName) {
-		val compileDirectory = new File(projectRoot, "visitor-comp")
+		val compilationDirectory = "visitor-comp"
+		val compileDirectory = new File(projectRoot, compilationDirectory)
 
 		// clean previous compilation
 		if (compileDirectory.exists)
@@ -86,10 +89,10 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 
-		val egc = new EcoreGenmodelCompiler
+		val egc = new EcoreGenmodelCompiler(compilationDirectory, "interpreter")
 
 		val vnu = new VisitorNamingUtils
-		val fic = new FactoryInterfaceCompiler
+		val fic = new FactoryInterfaceCompiler(vnu)
 		val fimplc = new FactoryImplementationCompiler(vnu)
 
 		val pic = new PackageInterfaceCompiler(vnu)

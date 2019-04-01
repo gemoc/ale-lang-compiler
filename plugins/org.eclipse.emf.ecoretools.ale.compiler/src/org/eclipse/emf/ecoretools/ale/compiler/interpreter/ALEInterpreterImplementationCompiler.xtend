@@ -31,6 +31,8 @@ import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryInterfaceCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenmodelCompiler
 
 class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
@@ -74,7 +76,8 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 
 	def private void compile(File projectRoot, String projectName) {
-		val compileDirectory = new File(projectRoot, "interpreter-comp")
+		val compilationDirectory = "interpreter-comp"
+		val compileDirectory = new File(projectRoot, compilationDirectory)
 
 		// clean previous compilation
 		if (compileDirectory.exists)
@@ -95,10 +98,10 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 
-		val egc = new EcoreGenmodelCompiler
+		val egc = new EcoreGenmodelCompiler(compilationDirectory, "interpreter")
 
 		val inu = new InterpreterNamingUtils
-		val fic = new FactoryInterfaceCompiler
+		val fic = new FactoryInterfaceCompiler(inu)
 		val fimplc = new FactoryImplementationCompiler(inu)
 
 		val pic = new PackageInterfaceCompiler(inu)
