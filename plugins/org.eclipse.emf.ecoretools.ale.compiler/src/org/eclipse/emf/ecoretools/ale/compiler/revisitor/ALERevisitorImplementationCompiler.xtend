@@ -1,7 +1,6 @@
 package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 
 import com.squareup.javapoet.ClassName
-import com.squareup.javapoet.CodeBlock
 import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
@@ -14,50 +13,25 @@ import java.nio.file.Files
 import java.util.Comparator
 import java.util.List
 import java.util.Map
-import java.util.Objects
 import java.util.function.Function
 import javax.lang.model.element.Modifier
-import org.eclipse.acceleo.query.ast.And
 import org.eclipse.acceleo.query.ast.AstPackage
-import org.eclipse.acceleo.query.ast.BooleanLiteral
-import org.eclipse.acceleo.query.ast.Call
-import org.eclipse.acceleo.query.ast.CallType
-import org.eclipse.acceleo.query.ast.EnumLiteral
-import org.eclipse.acceleo.query.ast.ErrorBinding
-import org.eclipse.acceleo.query.ast.ErrorCall
-import org.eclipse.acceleo.query.ast.ErrorConditional
-import org.eclipse.acceleo.query.ast.ErrorExpression
-import org.eclipse.acceleo.query.ast.ErrorStringLiteral
-import org.eclipse.acceleo.query.ast.ErrorTypeLiteral
-import org.eclipse.acceleo.query.ast.ErrorVariableDeclaration
-import org.eclipse.acceleo.query.ast.Expression
-import org.eclipse.acceleo.query.ast.Implies
-import org.eclipse.acceleo.query.ast.IntegerLiteral
-import org.eclipse.acceleo.query.ast.Lambda
-import org.eclipse.acceleo.query.ast.Let
-import org.eclipse.acceleo.query.ast.NullLiteral
-import org.eclipse.acceleo.query.ast.Or
-import org.eclipse.acceleo.query.ast.RealLiteral
-import org.eclipse.acceleo.query.ast.SequenceInExtensionLiteral
-import org.eclipse.acceleo.query.ast.SetInExtensionLiteral
-import org.eclipse.acceleo.query.ast.StringLiteral
-import org.eclipse.acceleo.query.ast.TypeLiteral
-import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
-import org.eclipse.acceleo.query.validation.type.EClassifierType
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
-import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
@@ -76,23 +50,19 @@ import org.eclipse.emf.ecoretools.ale.implementation.ForEach
 import org.eclipse.emf.ecoretools.ale.implementation.If
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.emf.ecoretools.ale.implementation.Switch
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.xbase.lib.Functions.Function0
-import java.util.stream.IntStream
-import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
-import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
-	extension RevisitorNamingUtils = new RevisitorNamingUtils
-	extension EcoreUtils = new EcoreUtils
+	extension RevisitorNamingUtils rnu
+	extension EcoreUtils eu = new EcoreUtils
 	extension JavaPoetUtils = new JavaPoetUtils
+	extension CommonCompilerUtils ccu
+	extension RevisitorExpressionCompiler rec
+	extension TypeSystemUtils tsu
 
 	var List<ParseResult<ModelUnit>> parsedSemantics
 	val IQueryEnvironment queryEnvironment
@@ -105,6 +75,8 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
+		this.rnu = new RevisitorNamingUtils
+		this.ccu = new CommonCompilerUtils(rnu)
 	}
 
 	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
@@ -138,6 +110,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
 		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
+		
 
 		val aleClasses = newArrayList
 		for (ParseResult<ModelUnit> pr : parsedSemantics) {
@@ -148,11 +121,14 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		syntaxes = dsl.allSyntaxes.toMap([it], [
 			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
+		
+		this.tsu = new TypeSystemUtils(base, syntaxes, eu)
 		val tmp = syntaxes.get(dsl.allSyntaxes.head)
 		val syntax = tmp.key
 		// FIXME: make the invalid assumption that the metamodel contains a single package
 		val genSyntax = tmp.value.genPackages.head
 		resolved = resolve(aleClasses, syntax)
+		this.rec = new RevisitorExpressionCompiler(tsu, syntaxes, resolved, eu, ccu, dsl, registeredServices)
 
 		val interfaceName = dsl.revisitorImplementationClass
 
@@ -348,325 +324,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		a.compileBody(body.body).endControlFlow
 	}
 	
-	def dispatch TypeName resolveType2(Object type) {
-		return null
-	}
 	
-	def dispatch TypeName resolveType2(Class<?> clazz) {
-		return TypeName.get(clazz)
-	}
-	
-	def dispatch TypeName resolveType2(EClassifier type) {
-		if (type.instanceClass !== null) {
-			TypeName.get(type.instanceClass)
-		} else {
-			type.resolveType
-		}	
-	}
-
-	def dispatch CodeBlock compileExpression(Call call) {
-		switch (call.serviceName) {
-			case "not": CodeBlock.of('''!($L)''', call.arguments.get(0).compileExpression)
-			case "greaterThan": CodeBlock.of('''($L) > ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "differs": CodeBlock.of('''($L) != ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "sub": CodeBlock.of('''($L) - ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "add": CodeBlock.of('''($L) + ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "divOp": CodeBlock.of( '''($L) / ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "equals": CodeBlock.of('''$T.equals(($L), ($L))''', ClassName.get(Objects), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "lessThan": CodeBlock.of('''($L) < ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "lessThanEqual": CodeBlock.of('''($L) <= ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "greaterThanEqual":
-				CodeBlock.of('''($L) >= ($L)''', call.arguments.get(0).compileExpression,
-					call.arguments.get(1).compileExpression)
-			case "mult": CodeBlock.of('''($L) * ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "unaryMin": CodeBlock.of('''-($L)''', call.arguments.get(0).compileExpression)
-			case "first":
-				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.of('''$T.head($L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression)
-				else
-					CodeBlock.of('''/*FIRST «call»*/''')
-			case "size":
-				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.of('''$T.size($L)''', ClassName.get('org.eclipse.emf.ecoretools.ale.compiler.lib', 'CollectionService'), call.arguments.get(0).compileExpression)
-				else
-					CodeBlock.of('''/*FIRST «call»*/''')
-			case "at":
-				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.of('''$T.get($L, $L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-				else
-					CodeBlock.of('''/*FIRST «call»*/''')
-			case "select":
-				if (call.type == CallType.COLLECTIONCALL) {
-					CodeBlock.of('''$T.select($L, $L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-				} else {
-					CodeBlock.of('''/*FIRST «call»*/''')
-				}
-			case "filter":
-				if (call.type == CallType.COLLECTIONCALL) {
-					val t = infereType(call.arguments.get(1)).head
-					if (t instanceof EClassifierType) {
-						CodeBlock.of('''$T.select($L, it -> it instanceof $L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-					} else {
-						CodeBlock.of('''$T.select($L, $L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-					}
-				} else {
-					CodeBlock.of('''/*FIRST «call»*/''')
-				}
-			case "exists":
-				if (call.type == CallType.COLLECTIONCALL) {
-					CodeBlock.of('''$T.exists($L, $L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-				} else {
-					CodeBlock.of('''/*FIRST «call»*/''')
-				}
-			case "isEmpty":
-				if (call.type == CallType.COLLECTIONCALL) {
-					CodeBlock.of('''$T.isEmpty($L)''', ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"), call.arguments.get(0).compileExpression)
-				} else {
-					CodeBlock.of('''/*FIRST «call»*/''')
-				}
-			case "oclIsKindOf":
-				if (call.type == CallType.CALLORAPPLY) {
-					CodeBlock.of('''$L instanceof $L''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-				} else {
-					CodeBlock.of('''/*OCLISKINDOF*/''')
-				}
-			case "log":
-				if (call.type == CallType.CALLORAPPLY) {
-					CodeBlock.of('''$T.log($L)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"),
-						call.arguments.get(0).compileExpression)
-				} else {
-					CodeBlock.of('''/*OCLISKINDOF*/''')
-				}
-			default:
-				if (call.type == CallType.CALLORAPPLY)
-					if (call.serviceName == 'aqlFeatureAccess') {
-						val t = infereType(call).head
-						if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-							CodeBlock.of('''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
-						} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-							if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
-								(t.type as EDataType).instanceClass == boolean))
-								CodeBlock.of('''«call.arguments.head.compileExpression».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
-							else
-								CodeBlock.of('''«call.arguments.head.compileExpression».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
-						} else {
-							CodeBlock.of('''«call.arguments.head.compileExpression».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»''')
-						}
-					} else if (call.serviceName == 'create') {
-						val e = call.arguments.get(0)
-						val t = infereType(e).head
-						val gm = findGenModelFromExpression(e)
-						CodeBlock.of('''$T.eINSTANCE.create«(t.type as EClass).name»()''', ClassName.get(gm.genPackages.head.qualifiedPackageName, '''«gm.EPackage.name.toFirstUpper»Factory'''))
-					} else {
-
-						// TODO: better identification of the caller in order to route to a $ operation or a service.
-						val argumentsh = call.arguments.head
-						val ts = argumentsh.infereType
-						val t = ts.head
-						val re = resolved.filter [
-							if (t.type instanceof EClass) {
-								val tecls = t.type as EClass
-								it.ECls.name == tecls.name && it.ECls.EPackage.name == tecls.EPackage.name
-							} else {
-								false
-							}
-						].head
-						if (re !== null) {
-							val allMethods = re.getAleCls.allMethods
-							val methodExist = allMethods.exists [
-								it.operationRef.name == call.serviceName
-							]
-							if (methodExist) {
-								// TODO: also add explicit cast on parameters !
-								val hm = newHashMap(
-									'dispatch' -> "$", 
-									"callerType" -> t.type.resolveType2
-								)
-								
-								call.arguments.tail.enumerate.forEach[
-									hm.put('paramType' + it.value, it.key.infereType.head.type.resolveType2)
-								]
-								
-								CodeBlock.builder.addNamed('''rev.$dispatch:L(($callerType:T)«call.arguments.head.compileExpression»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»(($paramType«param.value»:T)«param.key.compileExpression»)«ENDFOR»)''', hm).build
-							} else {
-
-								// duplicate to following else block !!!
-								val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].
-									flatten.toList
-
-								val candidate = methods.filter[java.lang.reflect.Modifier.isStatic(it.value.modifiers)].
-									filter [
-										it.value.name == call.serviceName
-									].head
-
-								if (candidate !== null) {
-									CodeBlock.of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)''')
-								} else {
-									val hm = newHashMap(
-										"caller" -> call.arguments.head.compileExpression,
-										"serviceName" -> call.serviceName
-									)
-
-									for (param : call.arguments.tail.enumerate) {
-										hm.put("param" + param.value, param.key.compileExpression)
-									}
-
-									CodeBlock.builder.addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»$param«param.value»:L«ENDFOR»)''', hm).build
-
-								}
-							}
-						} else {
-							val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten
-
-							val candidate = methods.filter[java.lang.reflect.Modifier.isStatic(it.value.modifiers)].
-								filter [
-									it.value.name == call.serviceName
-								].head
-
-							if (candidate !== null) {
-								CodeBlock.of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)''')
-							} else {
-								val hm = newHashMap(
-									"caller" -> call.arguments.head.compileExpression,
-									"serviceName" -> call.serviceName
-								)
-								
-								for(param: call.arguments.tail.enumerate) {
-									hm.put("param" + param.value, param.key.compileExpression)
-								}
-								
-								CodeBlock.builder.addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»$param«param.value»:L«ENDFOR»)''', hm).build
-
-							}
-						}
-					}
-				else
-					CodeBlock.of('''/*Call «call»*/''')
-		}
-	}
-	
-	def <A> enumerate(Iterable<A> itt) {
-		val ints = IntStream.range(0, itt.size).iterator
-		itt.map[it -> ints.next]
-	}
-
-	def dispatch CodeBlock compileExpression(And call) {
-		CodeBlock.of('''((«call.arguments.get(0).compileExpression») && («call.arguments.get(1).compileExpression»))''')
-	}
-
-	def dispatch CodeBlock compileExpression(ErrorCall call) {
-		CodeBlock.of('''/*ERRORCALL*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(Implies call) {
-		CodeBlock.of('''/*IMPLIES*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(Or call) {
-		CodeBlock.of('''((«call.arguments.get(0).compileExpression») || («call.arguments.get(1).compileExpression»))''')
-	}
-
-	def dispatch CodeBlock compileExpression(ErrorConditional call) {
-		CodeBlock.of('''/*ERRORCONDITIONAL*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(ErrorBinding call) {
-		CodeBlock.of('''/*ERRORBINDING*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(EEnumLiteral call) {
-		CodeBlock.of('''/*EENUMLITERAL*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(ErrorExpression call) {
-		CodeBlock.of('''/*ERROREXPRESSION*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(ErrorStringLiteral call) {
-		CodeBlock.of('''/*ERRORSTRINGLITERAL*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(ErrorTypeLiteral call) {
-		CodeBlock.of('''/*ERRORTYPELITERAL*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(ErrorVariableDeclaration call) {
-		CodeBlock.of('''/*ERRORVARIABLEDECLARATION*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(Let call) {
-		CodeBlock.of('''/*let*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(BooleanLiteral call) {
-		CodeBlock.of(if(call.value) 'true' else 'false')
-	}
-
-	def dispatch CodeBlock compileExpression(EnumLiteral call) {
-		CodeBlock.of('''/*ENUMLITERAL*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(IntegerLiteral call) {
-		CodeBlock.of(call.value.toString)
-	}
-
-	def dispatch CodeBlock compileExpression(Lambda call) {
-		val Map<String, Object> hm = newHashMap(
-			"expr" -> call.expression.compileExpression
-		)
-		for(param: call.parameters.enumerate) {
-			hm.put("param" + param.value, param.key.name)
-		}
-		
-		CodeBlock.builder
-			.addNamed('''(«FOR p : call.parameters.enumerate SEPARATOR ', '»$param«p.value»:L«ENDFOR») -> $expr:L''', hm).build
-	}
-
-	def dispatch CodeBlock compileExpression(NullLiteral call) {
-		CodeBlock.of('null')
-	}
-
-	def dispatch CodeBlock compileExpression(RealLiteral call) {
-		CodeBlock.of(call.value.toString)
-	}
-
-	def dispatch CodeBlock compileExpression(SequenceInExtensionLiteral call) {
-		CodeBlock.of('''$T.createEList(«FOR a : call.values SEPARATOR ', '»«a.compileExpression»«ENDFOR»)''', ClassName.get('org.eclipse.emf.ecoretools.ale.compiler.lib', 'CollectionService'))
-	}
-
-	def dispatch CodeBlock compileExpression(SetInExtensionLiteral call) {
-		CodeBlock.of('''/*SETINEXTENSIONLITERAL*/''')
-	}
-
-	def dispatch CodeBlock compileExpression(StringLiteral call) {
-		CodeBlock.of('''"«call.value»"''')
-	}
-
-	def dispatch CodeBlock compileExpression(TypeLiteral call) {
-		CodeBlock.of('''$T''', (call.value as EClass).solveType)
-	}
-
-	def dispatch CodeBlock compileExpression(Switch call) {
-		CodeBlock.of('''/*SWITCH*/''')
-	}
-
-	def getEcoreInterfacesPackage() {
-		val gm = syntaxes.get(dsl.allSyntaxes.head).value
-		gm.genPackages.head.qualifiedPackageName
-	}
-
-	def dispatch CodeBlock compileExpression(VarRef call) {
-		CodeBlock.of(if(call.variableName == 'self') 'this.obj' else call.variableName)
-	}
-
-	def dispatch TypeName solveType(EClass type) {
-		resolveType(type)
-	}
-
-	def dispatch TypeName solveType(EDataType edt) {
-		TypeName.get(edt.instanceClass)
-	}
 
 	def MethodSpec.Builder returnType(MethodSpec.Builder builder, EClassifier type) {
 		if (type !== null) {
@@ -689,85 +347,12 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		]
 	}
 
-	def infereType(Expression exp) {
-
-		base.getPossibleTypes(exp)
-	}
-
-	def resolveType(EClassifier e) {
-		val stxs = syntaxes.values + #[(EcorePackage.eINSTANCE -> null)]
-		val stx = stxs.filter [
-			it.key.allClassifiers.exists [
-				it.name == e.name && it.EPackage.name == (e.eContainer as EPackage).name
-			]
-		].head
-
-		val gm = stx.value
-
-		if (gm !== null) {
-			if (e instanceof EClass) {
-				if(e.instanceClassName == "java.util.Map$Entry") {
-					val keyType = e.EStructuralFeatures.filter[it.name == 'key'].head.EType.solveType
-					val valueType = e.EStructuralFeatures.filter[it.name == 'value'].head.EType.solveType
-					ParameterizedTypeName.get(ClassName.get(Map.Entry), keyType, valueType)
-				} else{
-					val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.exists[it.name == e.name && it.EPackage.name == e.EPackage.name]].values.map[value].map [
-						it.genPackages.map[it.genClasses].flatten
-					].flatten.filter[
-						it.ecoreClass.name == e.name && it.ecoreClass.EPackage.name == e.EPackage.name
-					].head
-					ClassName.get(gl.genPackage.interfacePackageName, e.name)
-				
-				}
-			} else {
-				val GenClassifier gclass = gm.allGenPkgs.map [
-					it.genClassifiers.filter [
-						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
-					]
-				].flatten.head
-				
-				if(gclass instanceof GenClass) {
-					ClassName.get(gclass.qualifiedInterfaceName, gclass.name)
-				} else if (gclass instanceof GenEnum ) {
-					ClassName.get(gclass.genPackage.interfacePackageName, gclass.name)
-				}
-
-			}
-		} else {
-			ClassName.get("org.eclipse.emf.ecore", e.name)
-		}
-
-	}
-
-	def findGenModelFromExpression(Expression e) {
-		val t = infereType(e).head
-		syntaxes.values.filter [
-			it.key.allClasses.exists [
-				it.name == (t.type as EClassifier).name && it.EPackage.name == (t.type as EClassifier).EPackage.name
-			]
-		].head.value
-	}
-
 	def TypeSpec.Builder superOperationImpl(TypeSpec.Builder builder, EClass clazz) {
 		if (clazz !== null) {
 			builder.superclass(dsl.getRevisitorOperationImplementationClassName(clazz))
 		} else {
 			builder
 		}
-	}
-
-	def allMethods(ExtendedClass aleClass) {
-		aleClass.allParents.map [
-			it.methods
-		].flatten
-	}
-
-	def allParents(ExtendedClass aleClass) {
-		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls as EClass
-
-		resolved.filter[it.eCls == ecls || ((eCls instanceof EClass) && (eCls as EClass).isSuperTypeOf(ecls))].map [
-			it.aleCls
-		].filter[it !== null]
 	}
 
 	def <F> MethodSpec.Builder addConditionalStatement(MethodSpec.Builder builder, Function0<Boolean> f, String s) {

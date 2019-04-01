@@ -1,37 +1,55 @@
-package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
+package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 
 import com.squareup.javapoet.ClassName
-import java.util.List
+import com.squareup.javapoet.ParameterizedTypeName
+import com.squareup.javapoet.TypeName
 import java.util.Map
 import org.eclipse.acceleo.query.ast.Expression
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
+import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
+import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import com.squareup.javapoet.ParameterizedTypeName
-import com.squareup.javapoet.TypeName
-import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
-import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 
 class TypeSystemUtils {
+	BaseValidator base
+	val  Map<String, Pair<EPackage, GenModel>> syntaxes
+	extension EcoreUtils 	eu
 
-	val Map<String, Pair<EPackage, GenModel>> syntaxes
-	extension EcoreUtils ecoreUtils = new EcoreUtils
-	val BaseValidator base
-	var List<ResolvedClass> resolved
-
-	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base, List<ResolvedClass> resolved) {
-		this.syntaxes = syntaxes
+	new(BaseValidator base, Map<String, Pair<EPackage, GenModel>> syntaxes, EcoreUtils 	eu) {
 		this.base = base
-		this.resolved = resolved
+		this.syntaxes = syntaxes
+		this.eu = eu
 	}
+
+	def infereType(Expression exp) {
+
+		base.getPossibleTypes(exp)
+	}
+	
+	def dispatch TypeName resolveType2(Object type) {
+		return null
+	}
+	
+	def dispatch TypeName resolveType2(Class<?> clazz) {
+		return TypeName.get(clazz)
+	}
+	
+	def dispatch TypeName resolveType2(EClassifier type) {
+		if (type.instanceClass !== null) {
+			TypeName.get(type.instanceClass)
+		} else {
+			type.resolveType
+		}	
+	}
+
+	
 
 	def dispatch TypeName solveType(EClass type) {
 		resolveType(type)
@@ -40,7 +58,7 @@ class TypeSystemUtils {
 	def dispatch TypeName solveType(EDataType edt) {
 		TypeName.get(edt.instanceClass)
 	}
-
+	
 	def resolveType(EClassifier e) {
 		val stxs = syntaxes.values + #[(EcorePackage.eINSTANCE -> null)]
 		val stx = stxs.filter [
@@ -72,6 +90,7 @@ class TypeSystemUtils {
 						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
 					]
 				].flatten.head
+				
 				if(gclass instanceof GenClass) {
 					ClassName.get(gclass.qualifiedInterfaceName, gclass.name)
 				} else if (gclass instanceof GenEnum ) {
@@ -83,39 +102,5 @@ class TypeSystemUtils {
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
 
-	}
-	
-	def infereType(Expression exp) {
-		base.getPossibleTypes(exp)
-	}
-	
-	def allMethods(ExtendedClass aleClass) {
-		aleClass.allParents.map [
-			it.methods
-		].flatten
-	}
-	
-	def allParents(ExtendedClass aleClass) {
-		val ecls = resolved.filter[it.getAleCls == aleClass].head.eCls
-
-		resolved.filter[it.eCls == ecls || (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
-			it.getAleCls
-		].filter[it !== null]
-	}
-	
-	def dispatch TypeName resolveType2(Object type) {
-		return null
-	}
-	
-	def dispatch TypeName resolveType2(Class<?> clazz) {
-		return TypeName.get(clazz)
-	}
-	
-	def dispatch TypeName resolveType2(EClassifier type) {
-		if (type.instanceClass !== null) {
-			TypeName.get(type.instanceClass)
-		} else {
-			type.resolveType
-		}	
 	}
 }

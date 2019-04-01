@@ -30,6 +30,7 @@ import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
@@ -112,7 +113,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
 		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,
-			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices)
+			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices, new CommonCompilerUtils(vnu))
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 

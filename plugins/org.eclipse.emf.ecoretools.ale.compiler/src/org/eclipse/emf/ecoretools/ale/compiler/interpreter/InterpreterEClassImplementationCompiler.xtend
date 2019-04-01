@@ -21,8 +21,6 @@ import java.util.Set
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.common.notify.NotificationChain
 import org.eclipse.emf.common.util.BasicEMap
-import org.eclipse.emf.common.util.EList
-import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier

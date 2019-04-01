@@ -22,20 +22,19 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList
 import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
-import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class EClassGetterCompiler {
 
-	extension AbstractNamingUtils namingUtils 
+	extension GenmodelNamingUtils namingUtils 
 	extension CommonCompilerUtils icu
 	extension JavaPoetUtils = new JavaPoetUtils
 	
-	new(AbstractNamingUtils namingUtils) {
+	new(GenmodelNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 		this.icu = new CommonCompilerUtils(namingUtils)
 	}

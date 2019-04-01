@@ -1,6 +1,7 @@
 package org.eclipse.emf.ecoretools.ale.compiler.visitor
 
 import com.squareup.javapoet.ClassName
+import com.squareup.javapoet.CodeBlock
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
@@ -10,6 +11,7 @@ import java.io.File
 import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
+import java.util.Objects
 import org.eclipse.acceleo.query.ast.And
 import org.eclipse.acceleo.query.ast.BooleanLiteral
 import org.eclipse.acceleo.query.ast.Call
@@ -40,11 +42,13 @@ import org.eclipse.acceleo.query.validation.type.EClassifierType
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
@@ -65,10 +69,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 
 import static javax.lang.model.element.Modifier.*
-import com.squareup.javapoet.CodeBlock
-import java.util.stream.IntStream
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class OperationImplementationCompiler {
 
@@ -82,10 +82,11 @@ class OperationImplementationCompiler {
 	val List<ResolvedClass> resolved
 	val Map<String, Class<?>> registeredServices
 	var BaseValidator base
+	extension CommonCompilerUtils ccu
 
 	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes,
 		IQueryEnvironment queryEnvironment, List<ParseResult<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices) {
+		Map<String, Class<?>> registeredServices, CommonCompilerUtils ccu) {
 		this.directory = directory
 		this.packageRoot = packageRoot
 		this.queryEnvironment = queryEnvironment
@@ -93,6 +94,7 @@ class OperationImplementationCompiler {
 		this.resolved = resolved
 		this.registeredServices = registeredServices
 		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot)
+		this.ccu = ccu
 	}
 
 	def compile(EClass eClass, ExtendedClass aleClass) {
@@ -267,7 +269,7 @@ class OperationImplementationCompiler {
 			case "sub": CodeBlock.of('''(«call.arguments.get(0).compileExpression») - («call.arguments.get(1).compileExpression»)''')
 			case "add": CodeBlock.of('''(«call.arguments.get(0).compileExpression») + («call.arguments.get(1).compileExpression»)''')
 			case "divOp": CodeBlock.of('''(«call.arguments.get(0).compileExpression») / («call.arguments.get(1).compileExpression»)''')
-			case "equals": CodeBlock.of('''$T.equals((«call.arguments.get(0).compileExpression»), («call.arguments.get(1).compileExpression»))''', ClassName.get(java.util.Objects))
+			case "equals": CodeBlock.of('''$T.equals((«call.arguments.get(0).compileExpression»), («call.arguments.get(1).compileExpression»))''', ClassName.get(Objects))
 			case "lessThan": CodeBlock.of('''(«call.arguments.get(0).compileExpression») < («call.arguments.get(1).compileExpression»)''')
 			case "lessThanEqual": CodeBlock.of('''($L) <= ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "greaterThanEqual":
@@ -430,11 +432,6 @@ class OperationImplementationCompiler {
 				else
 					CodeBlock.of('''/*Call «call»*/''')
 		}
-	}
-	
-	def <A> enumerate(Iterable<A> itt) {
-		val ints = IntStream.range(0, itt.size).iterator
-		itt.map[it -> ints.next]
 	}
 
 	def dispatch CodeBlock compileExpression(And call) {

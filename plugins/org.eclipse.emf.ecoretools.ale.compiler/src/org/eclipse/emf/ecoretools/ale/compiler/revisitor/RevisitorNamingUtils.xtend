@@ -5,8 +5,10 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import com.squareup.javapoet.ClassName
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
+import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
+import org.eclipse.emf.ecore.EEnum
 
-class RevisitorNamingUtils {
+class RevisitorNamingUtils extends AbstractNamingUtils {
 
 	def String getRevisitorPackageFqn(GenPackage pkg) {
 		
@@ -80,11 +82,33 @@ class RevisitorNamingUtils {
 		'''«camelCased»Implementation'''
 	}
 	
-	def String classInterfacePackageName(EClass eClass, String packageRoot) {
+	override String classInterfacePackageName(EClass eClass, String packageRoot) {
 		eClass.EPackage.factoryInterfacePackageName(packageRoot)
 	}
 	
-	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
+	override classInterfacePackageName(EEnum eEnum, String packageRoot) {
+		eEnum.EPackage.factoryInterfacePackageName(packageRoot)
+	}
+	
+	override String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
 		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».revisitor.«ePackage.name»'''
 	}
+	
+	override classImplementationPackageName(EClass eClass, String packageRoot) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override classImplementationClassName(EClass eClass) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override classInterfaceClassName(EClass eClass) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override classInterfaceClassName(EEnum eEnum) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	
 }

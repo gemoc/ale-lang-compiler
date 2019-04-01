@@ -11,16 +11,16 @@ import java.io.File
 import java.util.Arrays
 import java.util.Collections
 import java.util.List
+import java.util.Map
 import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
-import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 import static javax.lang.model.element.Modifier.*
-import java.util.Map
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.common.util.EMap
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class EClassInterfaceCompiler {
 

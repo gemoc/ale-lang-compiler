@@ -23,11 +23,11 @@ import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class FactoryImplementationCompiler {
 
-	extension AbstractNamingUtils namingUtils
+	extension GenmodelNamingUtils namingUtils
 	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils = new JavaPoetUtils
 	
-	new(AbstractNamingUtils namingUtils) {
+	new(GenmodelNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 		this.ccu = new CommonCompilerUtils(namingUtils)
 	}

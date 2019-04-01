@@ -2,11 +2,11 @@ package org.eclipse.emf.ecoretools.ale.compiler.visitor
 
 import org.eclipse.emf.codegen.util.CodeGenUtil
 import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EEnum
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
 
-class VisitorNamingUtils implements AbstractNamingUtils {
+class VisitorNamingUtils extends GenmodelNamingUtils {
 	
 	def String operationInterfacePackageName(String packageRoot, EClass eClass) {
 		'''«IF packageRoot !== null»«packageRoot».«ENDIF»visitor.operation.«eClass.EPackage.name»'''

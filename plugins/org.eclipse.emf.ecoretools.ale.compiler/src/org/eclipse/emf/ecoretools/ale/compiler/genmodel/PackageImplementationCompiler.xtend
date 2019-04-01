@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.JavaFile
@@ -18,11 +17,10 @@ import org.eclipse.emf.ecore.impl.EPackageImpl
 
 import static javax.lang.model.element.Modifier.*
 
-
 class PackageImplementationCompiler {
-	protected extension AbstractNamingUtils namingUtils
+	protected extension GenmodelNamingUtils namingUtils
 
-	new(AbstractNamingUtils namingUtils) {
+	new(GenmodelNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 	}
 	

@@ -2,29 +2,28 @@ package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.FieldSpec
+import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterizedTypeName
+import java.util.Map
 import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
-import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
-import java.util.Map
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.common.util.EMap
-import org.eclipse.xtext.xbase.lib.Functions.Function2
-import org.eclipse.emf.ecore.EReference
-import com.squareup.javapoet.MethodSpec
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class EClassImplementationCompiler {
 
 	extension CommonCompilerUtils ccu
-	extension AbstractNamingUtils anu
+	extension GenmodelNamingUtils anu
 	val EClassGetterCompiler eClassGetterCompiler
 
-	new(CommonCompilerUtils ccu, AbstractNamingUtils anu, EClassGetterCompiler eClassGetterCompiler) {
+	new(CommonCompilerUtils ccu, GenmodelNamingUtils anu, EClassGetterCompiler eClassGetterCompiler) {
 		this.ccu = ccu
 		this.anu = anu
 		this.eClassGetterCompiler = eClassGetterCompiler

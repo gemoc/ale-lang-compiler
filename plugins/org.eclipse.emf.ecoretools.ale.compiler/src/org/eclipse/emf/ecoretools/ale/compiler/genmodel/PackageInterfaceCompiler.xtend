@@ -16,13 +16,12 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
 
 class PackageInterfaceCompiler {
 
-	extension AbstractNamingUtils namingUtils
+	extension GenmodelNamingUtils namingUtils
 
-	new(AbstractNamingUtils namingUtils) {
+	new(GenmodelNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 	}
 

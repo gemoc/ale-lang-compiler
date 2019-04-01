@@ -7,12 +7,12 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.While
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
 
-class InterpreterNamingUtils implements AbstractNamingUtils {
+class InterpreterNamingUtils extends GenmodelNamingUtils {
 	
 	def String whileFieldName(While w) {
 		val MessageDigest md = MessageDigest.getInstance("MD5");

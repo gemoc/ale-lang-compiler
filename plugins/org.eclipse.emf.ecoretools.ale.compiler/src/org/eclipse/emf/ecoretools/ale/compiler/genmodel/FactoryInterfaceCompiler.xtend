@@ -1,25 +1,26 @@
 package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 
-import com.squareup.javapoet.TypeSpec
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecore.EFactory
 import com.squareup.javapoet.ClassName
-import static javax.lang.model.element.Modifier.*
 import com.squareup.javapoet.FieldSpec
-import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.JavaFile
-import org.eclipse.emf.ecore.EClass
+import com.squareup.javapoet.MethodSpec
+import com.squareup.javapoet.TypeSpec
+import java.io.File
 import java.util.Map
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EFactory
+import org.eclipse.emf.ecore.EPackage
+
+import static javax.lang.model.element.Modifier.*
 
 class FactoryInterfaceCompiler {
-	extension AbstractNamingUtils namingUtils
-	
-	new(AbstractNamingUtils namingUtils) {
+	extension GenmodelNamingUtils namingUtils
+
+	new(GenmodelNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 	}
 
-	def compileFactoryInterface(EPackage abstractSyntax, java.io.File directory, String packageRoot) {
+	def compileFactoryInterface(EPackage abstractSyntax, File directory, String packageRoot) {
 		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
 			abstractSyntax.factoryInterfaceClassName)
 		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
@@ -40,9 +41,8 @@ class FactoryInterfaceCompiler {
 					packageInterfaceType).addModifiers(ABSTRACT, PUBLIC).build
 			).addModifiers(PUBLIC).build
 
-		val javaFile = JavaFile.builder(abstractSyntax.factoryInterfacePackageName(packageRoot), factory)
-			.indent('\t')
-			.build
+		val javaFile = JavaFile.builder(abstractSyntax.factoryInterfacePackageName(packageRoot), factory).indent('\t').
+			build
 
 		javaFile.writeTo(directory)
 
