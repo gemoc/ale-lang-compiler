@@ -1,17 +1,16 @@
-package test1.interpreter.test1.impl;
+package test1unique.interpreter.test1unique.impl;
 
+import java.lang.Deprecated;
 import java.lang.IllegalArgumentException;
-import java.lang.Object;
-import java.lang.String;
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import test1.interpreter.test1.ConceptA;
-import test1.interpreter.test1.Test1uniqueFactory;
-import test1.interpreter.test1.Test1uniquePackage;
+import test1unique.interpreter.test1unique.ConceptA;
+import test1unique.interpreter.test1unique.Test1uniqueFactory;
+import test1unique.interpreter.test1unique.Test1uniquePackage;
 
 public class Test1uniqueFactoryImpl extends EFactoryImpl implements Test1uniqueFactory {
 	public Test1uniqueFactoryImpl() {
@@ -30,6 +29,7 @@ public class Test1uniqueFactoryImpl extends EFactoryImpl implements Test1uniqueF
 		return new Test1uniqueFactoryImpl();
 	}
 
+	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case Test1uniquePackage.CONCEPT_A :
@@ -39,12 +39,17 @@ public class Test1uniqueFactoryImpl extends EFactoryImpl implements Test1uniqueF
 		}
 	}
 
+	public ConceptA createConceptA() {
+		ConceptAImpl conceptA = new ConceptAImpl();
+		return conceptA;
+	}
+
 	public Test1uniquePackage getTest1uniquePackage() {
 		return (Test1uniquePackage) getEPackage();
 	}
 
-	public ConceptA createConceptA() {
-		ConceptAImpl conceptA = new ConceptAImpl();
-		return conceptA;
+	@Deprecated
+	public static Test1uniquePackage getPackage() {
+		return Test1uniquePackage.eINSTANCE;
 	}
 }

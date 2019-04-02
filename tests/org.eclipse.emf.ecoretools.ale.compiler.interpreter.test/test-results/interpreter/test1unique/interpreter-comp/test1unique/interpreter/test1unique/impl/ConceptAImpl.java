@@ -21,7 +21,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public EList<Boolean> getBs() {
 		if (bs == null) {
-			bs = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, test1unique.interpreter.test1unique.Test1uniquePackage.CONCEPT_A__BS);
+			bs = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, Test1uniquePackage.CONCEPT_A__BS);
 		}
 		return bs;
 	}

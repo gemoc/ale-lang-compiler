@@ -85,11 +85,11 @@ class VisitorTypeSystemUtil implements AbstractTypeSystem {
 		base.getPossibleTypes(exp)
 	}
 
-	def dispatch ClassName solveType(EClass type) {
+	def dispatch TypeName solveType(EClass type) {
 		resolveType(type)
 	}
 
-	def dispatch ClassName solveType(EDataType edt) {
-		ClassName.get(edt.instanceClass)
+	def dispatch TypeName solveType(EDataType edt) {
+		TypeName.get(edt.instanceClass)
 	}
 }

@@ -32,7 +32,7 @@ open class Main {
 			child.overriden();
 			child.notOverriden();
 			if(child.oclIsKindOf(testoperationbody::ChildA)) {
-					
+				child.onlyA();
 			}
 		}
 	}

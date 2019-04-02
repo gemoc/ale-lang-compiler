@@ -242,7 +242,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 	}
 
 	public void forward(double steps) {
-		((Turtle) this).move((Double) ((steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus((double)this.heading))),(Double) ((steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus((double)this.heading))));
+		((Turtle) this).move((Double) ((steps) * (TrigoServices.cosinus((double)this.heading))),(Double) ((steps) * (TrigoServices.sinus((double)this.heading))));
 	}
 
 	public void rotate(double angle) {

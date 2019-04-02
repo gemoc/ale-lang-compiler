@@ -20,6 +20,11 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DynamicContainer
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
+import execboa.MapService
+import execboa.MathService
+import execboa.SerializeService
+import static spoon.testing.Assert.assertThat;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 
 class InterpreterTestAll {
 
@@ -100,10 +105,15 @@ class InterpreterTestAll {
 					DynamicTest.dynamicTest(relativePath, [
 						val bfile = new File(tmpDir, relativePath);
 						if (bfile.exists()) {
-							val charset = Charset.defaultCharset().toString;
-							val expected = FileUtils.readFileToString(f, charset);
-							val result = FileUtils.readFileToString(bfile, charset);
-							Assertions.assertEquals(expected, result);
+
+							try {
+								assertThat(f).isEqualTo(bfile)
+							} catch (AssertionError ae) {
+								val charset = Charset.defaultCharset().toString;
+								val expected = FileUtils.readFileToString(f, charset);
+								val result = FileUtils.readFileToString(bfile, charset);
+								Assertions.assertEquals(expected, result);
+							}
 						} else {
 							Assertions.fail(relativePath + " expected to exist");
 						}
@@ -123,10 +133,27 @@ class InterpreterTestAll {
 			])
 		]
 	}
+	
+	def static Map<String, Class<?>> getServices(String pts) {
+		switch (pts) {
+			case "assets/boa_lang":
+				newHashMap(
+					"execboa.MapService" -> MapService,
+					"execboa.MathService" -> MathService,
+					"execboa.SerializeService" -> SerializeService
+				)
+			case "assets/logo_lang":
+				newHashMap(
+					"org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices" -> TrigoServices
+				)
+			default:
+				newHashMap
+		}
+	}
 
 	def static compileProjectInterpreter(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALEInterpreterImplementationCompiler
+		val compiler = new ALEInterpreterImplementationCompiler(directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
@@ -138,7 +165,8 @@ class InterpreterTestAll {
 
 	def static compileProjectRevisitor(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALERevisitorImplementationCompiler
+
+		val compiler = new ALERevisitorImplementationCompiler(directory.path.services) 
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
@@ -150,7 +178,7 @@ class InterpreterTestAll {
 
 	def static compileProjectSwitch(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALESwitchImplementationCompiler
+		val compiler = new ALESwitchImplementationCompiler(directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
@@ -162,7 +190,7 @@ class InterpreterTestAll {
 
 	def static compileProjectVisitor(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALEVisitorImplementationCompiler
+		val compiler = new ALEVisitorImplementationCompiler(directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)

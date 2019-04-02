@@ -169,7 +169,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 		for (Expression exp : this.getActualArgs()) {
 			Variable newVar = ((Variable) (KmLogoFactory.eINSTANCE.createVariable()));
 			newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.declaration.getArgs(), i).getName());
-			newVar.setValue(((kmLogo.interpreter.kmLogo.Expression) exp).eval((kmLogo.interpreter.kmLogo.Turtle) (turtle)));
+			newVar.setValue(((Expression) exp).eval((Turtle) (turtle)));
 			newFrame.getVariables().add(newVar);
 			i = (i) + (1);
 		}

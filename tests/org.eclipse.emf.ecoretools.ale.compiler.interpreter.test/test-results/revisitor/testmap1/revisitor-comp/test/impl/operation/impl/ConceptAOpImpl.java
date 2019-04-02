@@ -1,9 +1,9 @@
 package test.impl.operation.impl;
 
-import java.util.Map.Entry;
-
+import java.lang.Integer;
+import java.lang.String;
+import java.util.Map;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
-
 import test.impl.operation.ConceptAOp;
 import test1.ConceptA;
 import test1.revisitor.Test1Revisitor;
@@ -19,7 +19,7 @@ public class ConceptAOpImpl implements ConceptAOp {
   }
 
   public void exec() {
-    for(Entry<String, Integer> c: this.obj.getCs().entrySet()) {
+    for(Map.Entry<String, Integer> c: this.obj.getCs()) {
       LogService.log(c.getKey());
       LogService.log(c.getValue());
     }

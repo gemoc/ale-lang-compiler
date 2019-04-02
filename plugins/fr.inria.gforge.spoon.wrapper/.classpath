@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="mvn/com.fasterxml.jackson.core.jackson-annotations-2.9.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/com.fasterxml.jackson.core.jackson-core-2.9.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/com.fasterxml.jackson.core.jackson-databind-2.9.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/com.martiansoftware.jsap-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/commons-io.commons-io-2.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/fr.inria.gforge.spoon.spoon-core-7.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/log4j.log4j-1.2.17.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.apache.commons.commons-compress-1.18.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.apache.commons.commons-lang3-3.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.apache.maven.maven-model-3.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.apache.maven.shared.maven-invoker-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.apache.maven.shared.maven-shared-utils-3.2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.codehaus.plexus.plexus-component-annotations-1.7.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.codehaus.plexus.plexus-utils-3.0.24.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.jdt.org.eclipse.jdt.core-3.15.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.core.commands-3.9.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.core.contenttype-3.7.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.core.expressions-3.6.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.core.filesystem-1.7.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.core.jobs-3.10.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.core.resources-3.13.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.core.runtime-3.15.200.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.equinox.app-1.4.100.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.equinox.common-3.10.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.equinox.preferences-3.7.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.equinox.registry-3.8.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.osgi-3.13.300.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.eclipse.platform.org.eclipse.text-3.8.100.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/org.tukaani.xz-1.8.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

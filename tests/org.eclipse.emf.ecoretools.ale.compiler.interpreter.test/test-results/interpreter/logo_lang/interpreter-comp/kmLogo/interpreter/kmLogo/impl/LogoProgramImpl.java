@@ -98,11 +98,11 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
 	public Turtle createTurtle() {
 		Turtle result;
 		Turtle turtle = ((Turtle) (KmLogoFactory.eINSTANCE.createTurtle()));
-		turtle.setPosition(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+		turtle.setPosition(KmLogoFactory.eINSTANCE.createPoint());
 		turtle.getPosition().setX(0.0);
 		turtle.getPosition().setY(0.0);
-		turtle.setCallStack(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createCallStack());
-		turtle.getCallStack().getFrames().add(kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
+		turtle.setCallStack(KmLogoFactory.eINSTANCE.createCallStack());
+		turtle.getCallStack().getFrames().add(KmLogoFactory.eINSTANCE.createStackFrame());
 		result = turtle;
 		return result;
 	}

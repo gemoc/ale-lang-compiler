@@ -54,8 +54,8 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 		this.es = es
 	}
 
-	override compileThis(VarRef call) {
-		CodeBlock.of(if(call.variableName == 'self') 'this.it' else call.variableName)
+	override compileThis(VarRef call, CompilerExpressionCtx ctx) {
+		CodeBlock.of(if(call.variableName == 'self') ctx.thisCtxName else call.variableName)
 	}
 
 	override defaultCall(Call call, CompilerExpressionCtx ctx) {
@@ -157,7 +157,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 							this.registreredDispatch.add(method)
 							val effectFull = !(call.eContainer instanceof ExpressionStatement)
 							CodeBlock.
-								of('''«IF effectFull && method.operationRef.EType !==null»((«method.operationRef.EType.resolveType2»)«ENDIF»dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»})«IF effectFull && method.operationRef.EType !==null»)«ENDIF»''')
+								of('''«IF effectFull && method.operationRef.EType !==null»((«method.operationRef.EType.resolveType2»)«ENDIF»dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»})«IF effectFull && method.operationRef.EType !==null»)«ENDIF»''')
 						} else {
 							val hm = newHashMap()
 							hm.put("typecaller", call.arguments.head.infereType.head.type.resolveType2)
@@ -166,7 +166,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 							}
 
 							CodeBlock.builder.
-								addNamed('''(($typecaller:T) «call.arguments.head.compileExpression(ctx)»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«param.value»:T) («param.key.compileExpression(ctx)»)«ENDFOR»)''',
+								addNamed('''(($typecaller:T) «call.arguments.head.compileExpression(ctx)»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«param.value»:T) («param.key.compileExpression(ctx)»)«ENDFOR»)''',
 									hm).build
 						}
 					} else {
@@ -181,7 +181,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 								of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
 						} else {
 							CodeBlock.
-								of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)''')
+								of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''')
 
 						}
 					}
@@ -208,7 +208,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 						}
 
 						CodeBlock.builder.
-							addNamed('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«param.value»:T)«param.key.compileExpression(ctx)»«ENDFOR»)''',
+							addNamed('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«param.value»:T)«param.key.compileExpression(ctx)»«ENDFOR»)''',
 								hm).build
 					}
 				}

@@ -2,9 +2,9 @@ package test.impl.operation.impl;
 
 import java.lang.Integer;
 import java.lang.String;
-import java.util.Objects;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.ChildAOp;
 import test.impl.operation.ChildBOp;
@@ -30,8 +30,8 @@ public class MainOpImpl implements MainOp {
   }
 
   public void testPolymorphism() {
-    this.obj.getChildren().add(testoperationbody.TestoperationbodyFactory.eINSTANCE.createChildA());
-    this.obj.getChildren().add(testoperationbody.TestoperationbodyFactory.eINSTANCE.createChildB());
+    this.obj.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildA());
+    this.obj.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildB());
     for(Parent child: this.obj.getChildren()) {
       rev.$((Parent)child).overriden();
       rev.$((Parent)child).notOverriden();
@@ -44,10 +44,10 @@ public class MainOpImpl implements MainOp {
   public void main() {
     this.obj.getListint().add(1);
     this.obj.getListint().remove(1);
-    this.obj.getListconcepta().add(testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
-    this.obj.getListconcepta().remove(testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
+    this.obj.getListconcepta().add(TestoperationbodyFactory.eINSTANCE.createConceptA());
+    this.obj.getListconcepta().remove(TestoperationbodyFactory.eINSTANCE.createConceptA());
     this.obj.setSinglebool(false);
-    this.obj.setSingleconcepta(testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
+    this.obj.setSingleconcepta(TestoperationbodyFactory.eINSTANCE.createConceptA());
     int a = ((int) (1));
     ConceptA b = ((ConceptA) (TestoperationbodyFactory.eINSTANCE.createConceptA()));
     EList<String> events = ((EList<String>) (CollectionService.createEList("event1", "event2")));
@@ -73,8 +73,8 @@ public class MainOpImpl implements MainOp {
       CollectionService.get(events, 0);
       CollectionService.head(events);
       CollectionService.isEmpty(events);
-      CollectionService.select(events, (x) -> (x) != ("ok"));
-      CollectionService.exists(events, (x) -> (x) != ("ok"));
+      CollectionService.select(events, (x) -> !EqualService.equals((x), ("ok")));
+      CollectionService.exists(events, (x) -> !EqualService.equals((x), ("ok")));
     }
     for(Integer i4: ax) {
       CollectionService.size(ax);
@@ -97,10 +97,10 @@ public class MainOpImpl implements MainOp {
     }
     boolean truz = ((boolean) (!(false)));
     boolean gt = ((boolean) ((1) > (2)));
-    boolean ne = ((boolean) ((rev.$((Main)this.obj).ma()) != (42)));
+    boolean ne = ((boolean) (!EqualService.equals((rev.$((Main)this.obj).ma()), (42))));
     int x = ((int) ((CollectionService.get(this.obj.getListint(), 0)) - (1)));
     int xd = ((int) ((43) / (3)));
-    boolean eq = ((boolean) (Objects.equals((rev.$((Main)this.obj).ma()), (CollectionService.head(this.obj.getListint())))));
+    boolean eq = ((boolean) (EqualService.equals((rev.$((Main)this.obj).ma()), (CollectionService.head(this.obj.getListint())))));
     boolean leq = ((boolean) ((12) <= (11)));
     boolean geq = ((boolean) ((12.3) >= (11)));
     double multpl = ((double) ((12.3) * (11.4)));

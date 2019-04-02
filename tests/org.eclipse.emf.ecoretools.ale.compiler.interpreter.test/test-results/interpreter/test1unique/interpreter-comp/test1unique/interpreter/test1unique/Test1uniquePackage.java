@@ -9,11 +9,11 @@ import test1unique.interpreter.test1unique.impl.Test1uniquePackageImpl;
 public interface Test1uniquePackage extends EPackage {
 	String eNAME = "test1unique";
 
-	Test1uniquePackage eINSTANCE = Test1uniquePackageImpl.init();
+	String eNS_URI = "http://test1unique.test1unique.test1unique/";
 
 	String eNS_PREFIX = "test1unique";
 
-	String eNS_URI = "http://test1unique.test1unique.test1unique/";
+	Test1uniquePackage eINSTANCE = Test1uniquePackageImpl.init();
 
 	int CONCEPT_A = 0;
 

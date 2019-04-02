@@ -50,7 +50,7 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 	}
 
 	
-	override compileThis(VarRef call) {
+	override compileThis(VarRef call, CompilerExpressionCtx ctx) {
 		CodeBlock.of(if(call.variableName == 'self') 'this.obj' else call.variableName)
 	}
 	
@@ -131,15 +131,18 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 						// TODO: also add explicit cast on parameters !
 						val hm = newHashMap(
 							'dispatch' -> "$",
-							"callerType" -> t.type.resolveType2
+							"callerType" -> t.type.resolveType2,
+							"callerExpr" -> call.arguments.head.compileExpression(ctx),
+							"callerServiceName" -> call.serviceName
 						)
 
 						call.arguments.tail.enumerate.forEach [
 							hm.put('paramType' + it.value, it.key.infereType.head.type.resolveType2)
-						]
+							hm.put('paramExpr' + it.value, it.key.compileExpression(ctx))
+						] 
 
 						CodeBlock.builder.
-							addNamed('''rev.$dispatch:L(($callerType:T)«call.arguments.head.compileExpression(ctx)»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»(($paramType«param.value»:T)«param.key.compileExpression(ctx)»)«ENDFOR»)''',
+							addNamed('''rev.$dispatch:L(($callerType:T)$callerExpr:L).$callerServiceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»(($paramType«param.value»:T) ($paramExpr«param.value»:L))«ENDFOR»)''',
 								hm).build
 					} else {
 
@@ -151,8 +154,16 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 						].head
 
 						if (candidate !== null) {
-							CodeBlock.
-								of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
+							
+							val Map<String,Object> hm = newHashMap(
+								"callerLhs" -> candidate.key,
+								"callerRhs" -> candidate.value.name
+							)
+							
+							for(p: call.arguments.enumerate) {
+								hm.put("param" + p.value, p.key.compileExpression(ctx))
+							}
+							CodeBlock.builder.addNamed('''$callerLhs:L.$callerRhs:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$param«p.value»:L«ENDFOR»)''', hm).build
 						} else {
 							val hm = newHashMap(
 								"caller" -> call.arguments.head.compileExpression(ctx),
@@ -164,7 +175,7 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 							}
 
 							CodeBlock.builder.
-								addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»$param«param.value»:L«ENDFOR»)''',
+								addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»$param«param.value»:L«ENDFOR»)''',
 									hm).build
 
 						}
@@ -177,8 +188,16 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 					].head
 
 					if (candidate !== null) {
-						CodeBlock.
-							of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
+						val Map<String, Object> hm = newHashMap(
+							"callerLhs" -> candidate.key,
+							"callerRhs" -> candidate.value.name
+						)
+						
+						for(p: call.arguments.enumerate) {
+							hm.put("param" + p.value, p.key.compileExpression(ctx))
+						}
+						
+						CodeBlock.builder.addNamed('''$callerLhs:L.$callerRhs:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$param«p.value»:L«ENDFOR»)''', hm).build
 					} else {
 						val hm = newHashMap(
 							"caller" -> call.arguments.head.compileExpression(ctx),
@@ -190,7 +209,7 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 						}
 
 						CodeBlock.builder.
-							addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»$param«param.value»:L«ENDFOR»)''',
+							addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»$param«param.value»:L«ENDFOR»)''',
 								hm).build
 
 					}

@@ -43,6 +43,11 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 	var List<ResolvedClass> resolved
 
 	new() {
+		this(newHashMap)
+	}
+
+	new(Map<String, Class<?>> services) {
+		super(services)
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
@@ -64,10 +69,9 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		// must be last !
 		compile(projectRoot, projectName)
-		
+
 		Status.OK_STATUS
 	}
-
 
 	def private void compile(File projectRoot, String projectName) {
 		val compilationDirectory = "visitor-comp"

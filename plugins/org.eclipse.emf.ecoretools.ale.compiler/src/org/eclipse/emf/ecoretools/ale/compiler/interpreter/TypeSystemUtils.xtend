@@ -38,11 +38,11 @@ class TypeSystemUtils implements AbstractTypeSystem {
 	}
 
 	def dispatch solveType(EDataType edt) {
-		if(edt.instanceClass.primitive) {
-			ClassName.get(edt.instanceClass)
-		} else {
-			ClassName.get(edt.instanceClass)
-		}
+		TypeName.get(edt.instanceClass)
+//		if(edt.instanceClass.primitive) {
+//		} else {
+//			TypeName.get(edt.instanceClass)
+//		}
 	}
 
 	def resolveType(EClassifier e) {

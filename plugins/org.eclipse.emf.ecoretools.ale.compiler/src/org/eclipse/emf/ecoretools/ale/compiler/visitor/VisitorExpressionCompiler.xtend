@@ -41,7 +41,7 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 
 
 	
-	override compileThis(VarRef call) {
+	override compileThis(VarRef call, CompilerExpressionCtx ctx) {
 		CodeBlock.of(if(call.variableName == 'self') 'this.it' else call.variableName)
 	}
 
@@ -122,7 +122,7 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 						hm.put("serviceName", call.serviceName)
 
 						CodeBlock.builder.
-							addNamed('''(($typeoperation:T)$caller:L.accept(vis)).$serviceName:L(«FOR p : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«p.value»:T)$expression«p.value»:L«ENDFOR»)''',
+							addNamed('''(($typeoperation:T)$caller:L.accept(vis)).$serviceName:L(«FOR p : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«p.value»:T)$expression«p.value»:L«ENDFOR»)''',
 								hm).build
 					} else {
 
@@ -137,7 +137,7 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 								of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
 						} else {
 							CodeBlock.
-								of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)''')
+								of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''')
 
 						}
 					}
@@ -153,7 +153,7 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 							of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
 					} else {
 						CodeBlock.
-							of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression(ctx)»«ENDFOR»)''')
+							of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''')
 
 					}
 				}

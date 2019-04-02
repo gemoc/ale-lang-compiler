@@ -197,8 +197,8 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 	}
 
 	public void testPolymorphism() {
-		this.getChildren().add(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createChildA());
-		this.getChildren().add(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createChildB());
+		this.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildA());
+		this.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildB());
 		for (Parent child : this.getChildren()) {
 			((Parent)child).overriden();
 			((Parent)child).notOverriden();
@@ -211,10 +211,10 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 	public void main() {
 		this.getListint().add(1);
 		this.getListint().remove(1);
-		this.getListconcepta().add(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
-		this.getListconcepta().remove(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.getListconcepta().add(TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.getListconcepta().remove(TestoperationbodyFactory.eINSTANCE.createConceptA());
 		this.setSinglebool(false);
-		this.setSingleconcepta(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.setSingleconcepta(TestoperationbodyFactory.eINSTANCE.createConceptA());
 		int a = ((int) (1));
 		ConceptA b = ((ConceptA) (TestoperationbodyFactory.eINSTANCE.createConceptA()));
 		EList<String> events = ((EList<String>) (CollectionService.createEList("event1", "event2")));

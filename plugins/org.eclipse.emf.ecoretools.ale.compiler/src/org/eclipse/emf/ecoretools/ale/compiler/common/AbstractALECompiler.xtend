@@ -30,6 +30,11 @@ abstract class AbstractALECompiler {
 
 		});
 	}
+	
+	new(Map<String, Class<?>> services) {
+		this();
+		registeredServices.putAll(services)
+	}
 
 	def registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
 

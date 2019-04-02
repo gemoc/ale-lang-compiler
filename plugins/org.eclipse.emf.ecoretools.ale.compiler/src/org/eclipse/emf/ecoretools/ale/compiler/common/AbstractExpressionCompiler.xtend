@@ -268,10 +268,10 @@ abstract class AbstractExpressionCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(VarRef call, CompilerExpressionCtx ctx) {
-		call.compileThis
+		call.compileThis(ctx)
 	}
 
 	def CodeBlock defaultCall(Call call, CompilerExpressionCtx ctx)
 
-	def CodeBlock compileThis(VarRef call)
+	def CodeBlock compileThis(VarRef call, CompilerExpressionCtx ctx)
 }

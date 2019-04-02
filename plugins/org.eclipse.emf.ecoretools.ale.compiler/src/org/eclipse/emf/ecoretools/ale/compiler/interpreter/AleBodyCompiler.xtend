@@ -52,22 +52,22 @@ class AleBodyCompiler {
 		val lhs = body.target.compileExpression(ctx)
 		if (lhs == 'this') {
 			if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-				builderSeed.addStatement('''«lhs».«body.targetFeature».add(«body.value.compileExpression(ctx)»)''')
+				builderSeed.addStatement('''$L.$L.add($L)''', lhs, body.targetFeature, body.value.compileExpression(ctx))
 			} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 				builderSeed.
-					addStatement('''«lhs».set«body.targetFeature.toFirstUpper»(«body.value.compileExpression(ctx)»)''')
+					addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 			} else {
-				builderSeed.addStatement('''«lhs».«body.targetFeature» = «body.value.compileExpression(ctx)»''')
+				builderSeed.addStatement('''$L.$L = $L''', lhs, body.targetFeature, body.value.compileExpression(ctx))
 			}
 		} else {
 			if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
 				builderSeed.
-					addStatement('''«lhs».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression(ctx)»)''')
+					addStatement('''$L.get$L().add($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 			} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 				builderSeed.
-					addStatement('''«lhs».set«body.targetFeature.toFirstUpper»(«body.value.compileExpression(ctx)»)''')
+					addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 			} else {
-				builderSeed.addStatement('''«lhs».«body.targetFeature» = «body.value.compileExpression(ctx)»''')
+				builderSeed.addStatement('''$L.$L = $L''', lhs, body.targetFeature, body.value.compileExpression(ctx))
 			}
 
 		}
@@ -78,11 +78,10 @@ class AleBodyCompiler {
 		CompilerExpressionCtx ctx) {
 		val lhs = body.target.compileExpression(ctx)
 		if (lhs == 'this') {
-			builderSeed.addStatement('''«lhs».«body.targetFeature».add(«body.value.compileExpression(ctx)»)''')
+			builderSeed.addStatement('''$L.$L.add($L)''', lhs, body.targetFeature, body.value.compileExpression(ctx))
 		} else {
-			builderSeed.
-				addStatement('''«lhs».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression(ctx)»)''')
-
+			builderSeed.addStatement('''$L.get$L().add($L)''', lhs, body.targetFeature.toFirstUpper,
+				body.value.compileExpression(ctx))
 		}
 	}
 
@@ -90,10 +89,10 @@ class AleBodyCompiler {
 		CompilerExpressionCtx ctx) {
 		val lhs = body.target.compileExpression(ctx)
 		if (lhs == 'this') {
-			builderSeed.addStatement('''«lhs».«body.targetFeature».remove(«body.value.compileExpression(ctx)»)''')
+			builderSeed.addStatement('''$L.$L.remove($L)''', lhs, body.targetFeature, body.value.compileExpression(ctx))
 		} else {
 			builderSeed.
-				addStatement('''«lhs».get«body.targetFeature.toFirstUpper»().remove(«body.value.compileExpression(ctx)»)''')
+				addStatement('''$L.get$L().remove($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 
 		}
 	}

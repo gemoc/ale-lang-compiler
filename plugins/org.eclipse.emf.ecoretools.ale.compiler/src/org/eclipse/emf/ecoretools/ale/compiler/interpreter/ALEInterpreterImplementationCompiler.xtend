@@ -45,6 +45,11 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 	var List<ResolvedClass> resolved
 
 	new() {
+		this(newHashMap)
+		}
+		
+	new(Map<String, Class<?>> services) {
+		super(services)
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
