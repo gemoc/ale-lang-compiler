@@ -17,10 +17,6 @@ class CommonCompilerUtils {
 	def dispatch scopedTypeRef(EDataType edt, String packageRoot) {
 		TypeName.get(edt.instanceClass)
 	}
-
-	def dispatch scopedInterfaceTypeRef(EDataType edt, String packageRoot) {
-		TypeName.get(edt.instanceClass)
-	}
 	
 	def dispatch scopedTypeRef(EClass clazz, String packageRoot) {
 		ClassName.get(clazz.classImplementationPackageName(packageRoot), clazz.classImplementationClassName)
@@ -28,6 +24,10 @@ class CommonCompilerUtils {
 	
 	def dispatch scopedTypeRef(EEnum eEnum, String packageRoot) {
 		ClassName.get(eEnum.classInterfacePackageName(packageRoot), eEnum.classInterfaceClassName)
+	}
+
+	def dispatch scopedInterfaceTypeRef(EDataType edt, String packageRoot) {
+		TypeName.get(edt.instanceClass)
 	}
 	
 	def dispatch scopedInterfaceTypeRef(EClass clazz, String packageRoot) {

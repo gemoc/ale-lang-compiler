@@ -78,7 +78,6 @@ class AleExpressionsCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(Call call, CompilerExpressionCtx ctx) {
-
 		switch (call.serviceName) {
 			case "not":
 				CodeBlock.of('''!($L)''', call.arguments.get(0).compileExpression(ctx))
@@ -91,7 +90,7 @@ class AleExpressionsCompiler {
 			case "sub":
 				CodeBlock.of('''($L) - ($L)''', call.arguments.get(0).compileExpression(ctx),
 					call.arguments.get(1).compileExpression(ctx))
-			case call.serviceName == "add" && call.type == CallType.CALLSERVICE:
+			case "add":
 				CodeBlock.of('''($L) + ($L)''', call.arguments.get(0).compileExpression(ctx),
 					call.arguments.get(1).compileExpression(ctx))
 			case "divOp":
@@ -171,15 +170,14 @@ class AleExpressionsCompiler {
 				}
 			case "oclIsKindOf":
 				if (call.type == CallType.CALLORAPPLY) {
-					val rhs = call.arguments.get(0).compileExpression(ctx)
-					val lhs = call.arguments.get(1).compileExpression(ctx)
-					CodeBlock.of('''$L instanceof $L''', rhs, lhs)
+					CodeBlock.of('''$L instanceof $L''', call.arguments.get(0).compileExpression(ctx),
+						call.arguments.get(1).compileExpression(ctx))
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
 			case "log":
 				if (call.type == CallType.CALLORAPPLY) {
-					CodeBlock.of('''$T.log(«call.arguments.get(0).compileExpression(ctx)»)''', logServiceClassName)
+					CodeBlock.of('''$T.log($L)''', logServiceClassName, call.arguments.get(0).compileExpression(ctx))
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
@@ -402,8 +400,7 @@ class AleExpressionsCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(BooleanLiteral call, CompilerExpressionCtx ctx) {
-		val ret = if(call.value) 'true' else 'false'
-		CodeBlock.of(ret)
+		CodeBlock.of(if(call.value) 'true' else 'false')
 	}
 
 	def dispatch CodeBlock compileExpression(EnumLiteral call, CompilerExpressionCtx ctx) {
@@ -415,8 +412,17 @@ class AleExpressionsCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(Lambda call, CompilerExpressionCtx ctx) {
-		CodeBlock.
-			of('''(«FOR p : call.parameters SEPARATOR ', '»«p.name»«ENDFOR») -> «call.expression.compileExpression(ctx)»''')
+
+		val Map<String, Object> hm = newHashMap(
+			"expr" -> call.expression.compileExpression(ctx)
+		)
+		for (param : call.parameters.enumerate) {
+			hm.put("param" + param.value, param.key.name)
+		}
+
+		CodeBlock.builder.
+			addNamed('''(«FOR p : call.parameters.enumerate SEPARATOR ', '»$param«p.value»:L«ENDFOR») -> $expr:L''',
+				hm).build
 	}
 
 	def dispatch CodeBlock compileExpression(NullLiteral call, CompilerExpressionCtx ctx) {
@@ -449,7 +455,6 @@ class AleExpressionsCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(VarRef call, CompilerExpressionCtx ctx) {
-		val ret = if(call.variableName == 'self') ctx.thisCtxName else call.variableName
-		CodeBlock.of(ret)
+		CodeBlock.of(if(call.variableName == 'self') 'this.it' else call.variableName)
 	}
 }
