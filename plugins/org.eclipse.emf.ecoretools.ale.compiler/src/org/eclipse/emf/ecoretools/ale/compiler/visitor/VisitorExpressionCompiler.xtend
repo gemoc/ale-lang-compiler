@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
+package org.eclipse.emf.ecoretools.ale.compiler.visitor
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
@@ -32,79 +32,48 @@ import org.eclipse.acceleo.query.ast.TypeLiteral
 import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.validation.type.EClassifierType
 import org.eclipse.acceleo.query.validation.type.SequenceType
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
-import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.implementation.Method
+import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
-class SwitchExpressionCompiler {
-
-	extension TypeSystemUtils tsu
-	extension SwitchNamingUtils snu
+class VisitorExpressionCompiler {
+	
+	extension VisitorTypeSystemUtil vtsu
+	extension VisitorNamingUtils vnu
 	extension CommonCompilerUtils ccu
 	val List<ResolvedClass> resolved
-	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	val Map<String, Class<?>> registeredServices
 	val String packageRoot
-	val Dsl dsl
-
-	new(TypeSystemUtils tsu, List<ResolvedClass> resolved, SwitchNamingUtils snu,
-		Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, Map<String, Class<?>> registeredServices,
-		Dsl dsl) {
-		this.tsu = tsu
+	
+	new(VisitorTypeSystemUtil vtsu, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices, VisitorNamingUtils vnu, CommonCompilerUtils ccu, String packageRoot) {
+		this.vtsu = vtsu
 		this.resolved = resolved
-		this.snu = snu
-		this.syntaxes = syntaxes
-		this.packageRoot = packageRoot
-		this.ccu = new CommonCompilerUtils(snu)
 		this.registeredServices = registeredServices
-		this.dsl = dsl
-
+		this.vnu = vnu
+		this.ccu = ccu
+		this.packageRoot = packageRoot
 	}
-
+	
 	def dispatch CodeBlock compileExpression(Call call) {
 		switch (call.serviceName) {
-			case "not":
-				CodeBlock.of('''!($L)''', call.arguments.get(0).compileExpression)
-			case "greaterThan":
-				CodeBlock.of('''($L) > ($L)''', call.arguments.get(0).compileExpression,
-					call.arguments.get(1).compileExpression)
-			case "differs":
-				CodeBlock.of('''($L) != ($L)''', call.arguments.get(0).compileExpression,
-					call.arguments.get(1).compileExpression)
-			case "sub":
-				CodeBlock.of('''($L) - ($L)''', call.arguments.get(0).compileExpression,
-					call.arguments.get(1).compileExpression)
-			case "add":
-				CodeBlock.of('''($L) + ($L)''', call.arguments.get(0).compileExpression,
-					call.arguments.get(1).compileExpression)
-			case "divOp":
-				CodeBlock.of( '''($L) / ($L)''', call.arguments.get(0).compileExpression,
-					call.arguments.get(1).compileExpression)
-			case "equals":
-				CodeBlock.of('''$T.equals(($L), ($L))''', ClassName.get(Objects),
-					call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-			case "lessThan":
-				CodeBlock.of('''($L) < ($L)''', call.arguments.get(0).compileExpression,
-					call.arguments.get(1).compileExpression)
-			case "lessThanEqual":
-				CodeBlock.of('''($L) <= ($L)''', call.arguments.get(0).compileExpression,
-					call.arguments.get(1).compileExpression)
+			case "not": CodeBlock.of('''!(«call.arguments.get(0).compileExpression»)''')
+			case "greaterThan": CodeBlock.of('''(«call.arguments.get(0).compileExpression») > («call.arguments.get(1).compileExpression»)''')
+			case "differs": CodeBlock.of('''(«call.arguments.get(0).compileExpression») != («call.arguments.get(1).compileExpression»)''')
+			case "sub": CodeBlock.of('''(«call.arguments.get(0).compileExpression») - («call.arguments.get(1).compileExpression»)''')
+			case "add": CodeBlock.of('''(«call.arguments.get(0).compileExpression») + («call.arguments.get(1).compileExpression»)''')
+			case "divOp": CodeBlock.of('''(«call.arguments.get(0).compileExpression») / («call.arguments.get(1).compileExpression»)''')
+			case "equals": CodeBlock.of('''$T.equals((«call.arguments.get(0).compileExpression»), («call.arguments.get(1).compileExpression»))''', ClassName.get(Objects))
+			case "lessThan": CodeBlock.of('''(«call.arguments.get(0).compileExpression») < («call.arguments.get(1).compileExpression»)''')
+			case "lessThanEqual": CodeBlock.of('''($L) <= ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
 			case "greaterThanEqual":
 				CodeBlock.of('''($L) >= ($L)''', call.arguments.get(0).compileExpression,
 					call.arguments.get(1).compileExpression)
-			case "mult":
-				CodeBlock.
-					of('''(«call.arguments.get(0).compileExpression») * («call.arguments.get(1).compileExpression»)''')
-			case "unaryMin":
-				CodeBlock.of('''-(«call.arguments.get(0).compileExpression»)''')
+			case "mult": CodeBlock.of('''($L) * ($L)''', call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
+			case "unaryMin": CodeBlock.of('''-($L)''', call.arguments.get(0).compileExpression)
 			case "first":
 				if (call.type == CallType.COLLECTIONCALL)
 					CodeBlock.of('''$T.head($L)''',
@@ -114,10 +83,6 @@ class SwitchExpressionCompiler {
 					CodeBlock.of('''/*FIRST «call»*/''')
 			case "size":
 				if (call.type == CallType.COLLECTIONCALL)
-					CodeBlock.of('''$T.size($L)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
-						call.arguments.get(0).compileExpression)
-				else if (call.type == CallType.CALLORAPPLY)
 					CodeBlock.of('''$T.size($L)''',
 						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
 						call.arguments.get(0).compileExpression)
@@ -153,14 +118,6 @@ class SwitchExpressionCompiler {
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
-			case "exists":
-				if (call.type == CallType.COLLECTIONCALL) {
-					CodeBlock.of('''$T.exists($L, $L)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService"),
-						call.arguments.get(0).compileExpression, call.arguments.get(1).compileExpression)
-				} else {
-					CodeBlock.of('''/*FIRST «call»*/''')
-				}
 			case "isEmpty":
 				if (call.type == CallType.COLLECTIONCALL) {
 					CodeBlock.of('''$T.isEmpty($L)''',
@@ -171,16 +128,16 @@ class SwitchExpressionCompiler {
 				}
 			case "oclIsKindOf":
 				if (call.type == CallType.CALLORAPPLY) {
-					CodeBlock.of('''$L instanceof $L''', call.arguments.get(0).compileExpression,
-						call.arguments.get(1).compileExpression)
+					val lhs = call.arguments.get(0).compileExpression
+					val rhs = call.arguments.get(1).compileExpression
+					CodeBlock.of('''$L instanceof $L''', lhs, rhs)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
 			case "log":
 				if (call.type == CallType.CALLORAPPLY) {
 					CodeBlock.of('''$T.log($L)''',
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"),
-						call.arguments.get(0).compileExpression)
+						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService"), call.arguments.get(0).compileExpression)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
@@ -188,55 +145,31 @@ class SwitchExpressionCompiler {
 				if (call.type == CallType.CALLORAPPLY)
 					if (call.serviceName == 'aqlFeatureAccess') {
 						val t = infereType(call).head
-
-						// it t is in the hierarchy of the current context eClass (as itself or one of his parents), we can skip the accessor and directly point to the field
-						val lhs = call.arguments.head.compileExpression
-						if (lhs.toString == 'this') {
-							if (t instanceof SequenceType &&
-								(t as SequenceType).collectionType.type instanceof EClass &&
-								((t as SequenceType).collectionType.type as EClass).instanceClassName !=
-									"java.util.Map$Entry") {
-								val rhs = (call.arguments.get(1) as StringLiteral).value
-
-								CodeBlock.of('''«lhs».get«rhs.toFirstUpper»()''')
-							} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-								CodeBlock.of('''«lhs».«(call.arguments.get(1) as StringLiteral).value»''')
-							} else {
-								CodeBlock.
-									of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»«(call.arguments.get(1) as StringLiteral).value»«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»''')
-							}
-
+						if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
+							CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
+						} else if (t.type instanceof EClass || t.type instanceof EDataType) {
+							if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
+								(t.type as EDataType).instanceClass == boolean))
+								CodeBlock.of('''$L.is$L()''', call.arguments.head.compileExpression, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
+							else
+								CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 						} else {
-							if (t instanceof SequenceType &&
-								(t as SequenceType).collectionType.type instanceof EClass) {
-								CodeBlock.
-									of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
-							} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
-								if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
-									(t.type as EDataType).instanceClass == boolean))
-									CodeBlock.
-										of('''«lhs».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
-								else
-									CodeBlock.
-										of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
-							} else {
-								CodeBlock.
-									of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»''')
-							}
+							// TODO: add named block
+							CodeBlock.of('''$L.«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression»«ENDIF»''', call.arguments.head.compileExpression)
+
 						}
 					} else if (call.serviceName == 'create') {
 						val e = call.arguments.get(0)
 						val t = infereType(e).head
 						val ecls = t.type as EClass
 						val epks = ecls.EPackage
-						CodeBlock.of('''$T.eINSTANCE.create«ecls.name»()''',
-							ClassName.get(getEcoreInterfacesPackage, epks.factoryInterfaceClassName))
+						CodeBlock.of('''$T.eINSTANCE.create«ecls.name»()''', ClassName.get(epks.factoryInterfacePackageName(packageRoot), epks.factoryInterfaceClassName))
 					} else {
 						val argumentsh = call.arguments.head
 						val ts = argumentsh.infereType
 						val t = ts.head
 						val re = resolved.filter [
-							if (t !== null && t.type instanceof EClass) {
+							if (t.type instanceof EClass) {
 								val tecls = t.type as EClass
 								it.ECls.name == tecls.name && it.ECls.EPackage.name == tecls.EPackage.name
 							} else {
@@ -249,54 +182,19 @@ class SwitchExpressionCompiler {
 								it.operationRef.name == call.serviceName
 							]
 							if (methodExist) {
-								val methods = allMethods.filter[it.operationRef.name == call.serviceName].toList
-
-								/* Look for the most specific method that matches the resolved class by walking up the hierarchy */
-								var Method method = null
-								var ResolvedClass rev = re
-								while (method === null) {
-									val lc = rev.aleCls
-									method = methods.filter[it.eContainer === lc].head
-
-									val revc = rev
-									rev = resolved.filter [
-										revc.eCls instanceof EClass &&
-											(revc.eCls as EClass).ESuperTypes.contains(it.eCls)
-									].head
-								}
-
-								// lookup if one of the method declaration is declared with a dispatch
-								var isDispatch = false
-								rev = re
-								while (!isDispatch && rev !== null) {
-									val lc = rev.aleCls
-									method = methods.filter[it.eContainer === lc].head
-
-									isDispatch = method !== null && method.isDispatch
-
-									val revc = rev
-									rev = resolved.filter [
-										revc.eCls instanceof EClass &&
-											(revc.eCls as EClass).ESuperTypes.contains(it.eCls)
-									].head
-								}
-
-								val hm = newHashMap(
-									"operationType" ->
-										ClassName.get(packageRoot.operationPackageName,
-											(t.type as EClassifier).solveType.operationClassName),
-									"switched" -> call.arguments.head.compileExpression,
-									"callService" -> call.serviceName
-								)
-
+								val hm = newHashMap()
+								hm.put("typecaller", (call.arguments.head.infereType.head.type as EClass).solveType)
+								hm.put("typeoperation", ClassName.get(packageRoot.operationInterfacePackageName(t.type as EClass), (t.type as EClass).operationInterfaceClassName))
 								for (param : call.arguments.tail.enumerate) {
-									hm.put("paramType" + param.value, param.key.infereType.head.type.resolveType2)
-									hm.put("paramExpr" + param.value, param.key.compileExpression)
+									hm.put("typeparam" + param.value, param.key.infereType.head.type.resolveType2)
+									hm.put("expression" + param.value, param.key.compileExpression)
 								}
-
-								CodeBlock.builder.
-									addNamed('''(($operationType:T) emfswitch.doSwitch($switched:L)).$callService:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ','»($paramType«param.value»:T) $paramExpr«param.value»:L«ENDFOR»)''',
-										hm).build
+								
+								val a0 = call.arguments.head
+								hm.put("caller",  a0.compileExpression)
+								hm.put("serviceName", call.serviceName)
+								
+								CodeBlock.builder.addNamed('''(($typeoperation:T)$caller:L.accept(vis)).$serviceName:L(«FOR p : call.arguments.tail.enumerate SEPARATOR ','»($typeparam«p.value»:T)$expression«p.value»:L«ENDFOR»)''', hm).build
 							} else {
 
 								val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].
@@ -307,15 +205,10 @@ class SwitchExpressionCompiler {
 								].head
 
 								if (candidate !== null) {
-									CodeBlock.
-										of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)''')
+									CodeBlock.of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)''')
 								} else {
+									CodeBlock.of('''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)''')
 
-									// TODO add parameters cast 
-									CodeBlock.
-										of('''(($T) emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)''',
-											ClassName.get(packageRoot.operationPackageName,
-												((t.type as EClassifier).solveType).operationClassName))
 								}
 							}
 						} else {
@@ -326,19 +219,9 @@ class SwitchExpressionCompiler {
 							].head
 
 							if (candidate !== null) {
-								CodeBlock.
-									of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)''')
+								CodeBlock.of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression»«ENDFOR»)''')
 							} else {
-								if (t !== null && t.type !== null && t.type instanceof EClassifier &&
-									(t.type as EClassifier).solveType instanceof EClass)
-									// TODO add parameters cast 
-									CodeBlock.
-										of('''(($T) emfswitch.doSwitch(«call.arguments.head.compileExpression»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)''',
-											ClassName.get(packageRoot.operationPackageName,
-												((t.type as EClassifier).solveType as EClass).operationClassName))
-								else
-									CodeBlock.
-										of('''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)''')
+								CodeBlock.of('''«call.arguments.head.compileExpression».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ','»«param.compileExpression»«ENDFOR»)''')
 
 							}
 						}
@@ -409,17 +292,7 @@ class SwitchExpressionCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(Lambda call) {
-
-		val Map<String, Object> hm = newHashMap(
-			"expr" -> call.expression.compileExpression
-		)
-		for (param : call.parameters.enumerate) {
-			hm.put("param" + param.value, param.key.name)
-		}
-
-		CodeBlock.builder.
-			addNamed('''(«FOR p : call.parameters.enumerate SEPARATOR ', '»$param«p.value»:L«ENDFOR») -> $expr:L''',
-				hm).build
+		CodeBlock.of('''(«FOR p : call.parameters SEPARATOR ', '»«p.name»«ENDFOR») -> «call.expression.compileExpression»''')
 	}
 
 	def dispatch CodeBlock compileExpression(NullLiteral call) {
@@ -452,11 +325,20 @@ class SwitchExpressionCompiler {
 	}
 
 	def dispatch CodeBlock compileExpression(VarRef call) {
-		CodeBlock.of(if(call.variableName == 'self') 'this.it' else call.variableName)
+		if(call.variableName == 'self') CodeBlock.of('this.it') else CodeBlock.of(call.variableName)
 	}
 
-	def getEcoreInterfacesPackage() {
-		val gm = syntaxes.get(dsl.allSyntaxes.head).value
-		gm.genPackages.head.qualifiedPackageName
+	def allMethods(ExtendedClass aleClass) {
+		aleClass.allParents.map [
+			it.methods
+		].flatten
+	}
+
+	def allParents(ExtendedClass aleClass) {
+		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls
+
+		resolved.filter[it.eCls == ecls || (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
+			it.aleCls
+		].filter[it !== null]
 	}
 }

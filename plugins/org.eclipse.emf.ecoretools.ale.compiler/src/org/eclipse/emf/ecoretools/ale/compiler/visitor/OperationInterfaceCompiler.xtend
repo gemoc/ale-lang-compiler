@@ -34,7 +34,7 @@ class OperationInterfaceCompiler {
 		this.directory = directory
 		this.packageRoot = packageRoot
 		this.syntaxes = syntaxes
-		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot)
+		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot, null)
 	}
 
 	def compile(EClass eClass, ExtendedClass aleClass) {

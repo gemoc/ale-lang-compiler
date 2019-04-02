@@ -12,6 +12,9 @@ import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
+import org.eclipse.acceleo.query.ast.Expression
+import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
+import org.eclipse.emf.ecore.EDataType
 
 class VisitorTypeSystemUtil {
 	
@@ -19,10 +22,12 @@ class VisitorTypeSystemUtil {
 	extension VisitorNamingUtils vnu
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	val String packageRoot
-	new(Map<String, Pair<EPackage, GenModel>> syntaxes, VisitorNamingUtils vnu, String packageRoot) {
+	val BaseValidator base
+	new(Map<String, Pair<EPackage, GenModel>> syntaxes, VisitorNamingUtils vnu, String packageRoot, BaseValidator base) {
 		this.syntaxes = syntaxes
 		this.vnu = vnu
 		this.packageRoot = packageRoot
+		this.base = base
 	}
 	def dispatch TypeName resolveType2(Object type) {
 		return null
@@ -69,6 +74,18 @@ class VisitorTypeSystemUtil {
 		} else {
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
+	}
+	
+	def infereType(Expression exp) {
+		
+		base.getPossibleTypes(exp)
+	}
+	
+	def dispatch solveType(EClass type) {
+		resolveType(type)
+	}
 
+	def dispatch solveType(EDataType edt) {
+		edt.instanceClass
 	}
 }

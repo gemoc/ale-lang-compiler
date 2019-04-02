@@ -39,12 +39,12 @@ import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.compiler.interpreter.InterpreterEClassImplementationCompiler.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
+import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 
 class AleExpressionsCompiler {
 

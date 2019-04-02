@@ -47,6 +47,7 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 
 class InterpreterEClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils 
@@ -62,17 +63,6 @@ class InterpreterEClassImplementationCompiler {
 	var Set<String> registreredArrays = newHashSet
 	val List<ResolvedClass> resolved
 	EClassImplementationCompiler ecic
-	
-	static class CompilerExpressionCtx {
-		public val String thisCtxName
-		public val ExtendedClass aleClass
-		public val EClass eClass 
-		new(String thisCtxName, ExtendedClass aleClass, EClass eClass) {
-			this.thisCtxName = thisCtxName
-			this.aleClass = aleClass
-			this.eClass = eClass
-		}
-	}
 	
 	new(String packageRoot, List<ResolvedClass> resolved) {
 		this.packageRoot = packageRoot
