@@ -16,9 +16,10 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
@@ -45,7 +46,6 @@ class OperationImplementationCompiler {
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension VisitorTypeSystemUtil tsu
 	extension VisitorExpressionCompiler vec
-	extension CommonCompilerUtils ccu
 	
 	val File directory
 	val String packageRoot
@@ -55,27 +55,31 @@ class OperationImplementationCompiler {
 	val Map<String, Class<?>> registeredServices
 	var BaseValidator base
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
+	var CommonTypeInferer cti
+	val EnumeratorService es
 
 	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes,
 		IQueryEnvironment queryEnvironment, List<ParseResult<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, CommonCompilerUtils ccu) {
+		Map<String, Class<?>> registeredServices, EnumeratorService es) {
 		this.directory = directory
 		this.packageRoot = packageRoot
 		this.queryEnvironment = queryEnvironment
 		this.parsedSemantics = parsedSemantics
 		this.resolved = resolved
 		this.registeredServices = registeredServices
-		this.ccu = ccu
 		this.syntaxes = syntaxes
+		this.es = es
 	}
 
 	def compile(EClass eClass, ExtendedClass aleClass) {
 		
 		this.base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
+		
+		this.cti = new CommonTypeInferer(base)
 		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot, base)
 		
-		this.vec = new VisitorExpressionCompiler(tsu, resolved, registeredServices, namingUtils, ccu, packageRoot)
+		this.vec = new VisitorExpressionCompiler(tsu, resolved, registeredServices, namingUtils, packageRoot, cti, es)
 		
 		val classInterfaceType = ClassName.get(namingUtils.classInterfacePackageName(eClass, packageRoot),
 			namingUtils.classInterfaceClassName(eClass))

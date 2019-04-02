@@ -27,11 +27,12 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
-import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
@@ -60,9 +61,9 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	extension RevisitorNamingUtils rnu
 	extension EcoreUtils eu = new EcoreUtils
 	extension JavaPoetUtils = new JavaPoetUtils
-	extension CommonCompilerUtils ccu
 	extension RevisitorExpressionCompiler rec
 	extension TypeSystemUtils tsu
+	extension CommonTypeInferer cti
 
 	var List<ParseResult<ModelUnit>> parsedSemantics
 	val IQueryEnvironment queryEnvironment
@@ -76,7 +77,6 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
 		this.rnu = new RevisitorNamingUtils
-		this.ccu = new CommonCompilerUtils(rnu)
 	}
 
 	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
@@ -122,13 +122,15 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
 		
-		this.tsu = new TypeSystemUtils(base, syntaxes, eu)
+		this.tsu = new TypeSystemUtils(syntaxes, eu)
+		this.cti = new CommonTypeInferer(base)
 		val tmp = syntaxes.get(dsl.allSyntaxes.head)
 		val syntax = tmp.key
 		// FIXME: make the invalid assumption that the metamodel contains a single package
 		val genSyntax = tmp.value.genPackages.head
 		resolved = resolve(aleClasses, syntax)
-		this.rec = new RevisitorExpressionCompiler(tsu, syntaxes, resolved, eu, ccu, dsl, registeredServices)
+		this.rec = new RevisitorExpressionCompiler(tsu, syntaxes, resolved, eu, dsl, registeredServices,
+			new CommonTypeInferer(base), new EnumeratorService)
 
 		val interfaceName = dsl.revisitorImplementationClass
 

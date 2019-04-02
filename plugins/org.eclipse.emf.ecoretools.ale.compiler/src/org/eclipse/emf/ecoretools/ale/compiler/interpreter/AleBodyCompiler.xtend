@@ -27,17 +27,23 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 
 class AleBodyCompiler {
 
 	extension TypeSystemUtils tsu
 	extension AleExpressionsCompiler aec
+	extension CommonTypeInferer cti
 	
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
-		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray, Map<String, Class<?>> registeredServices, boolean isTruffle) {
-		tsu = new TypeSystemUtils(syntaxes, packageRoot, base, resolved)
-		aec = new AleExpressionsCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registeredArray, registeredServices, isTruffle)
+		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
+		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es) {
+		tsu = new TypeSystemUtils(syntaxes, packageRoot, resolved)
+		aec = new AleExpressionsCompiler(syntaxes, packageRoot, resolved, registreredDispatch, registeredArray,
+			registeredServices, isTruffle, cti, es, tsu)
+		this.cti = cti
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, FeatureAssignment body,

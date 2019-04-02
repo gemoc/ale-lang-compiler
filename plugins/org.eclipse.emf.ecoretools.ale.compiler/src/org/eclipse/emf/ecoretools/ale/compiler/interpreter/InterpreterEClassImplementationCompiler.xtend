@@ -48,6 +48,8 @@ import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 
 class InterpreterEClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils 
@@ -411,8 +413,9 @@ class InterpreterEClassImplementationCompiler {
 		this.syntaxes = syntaxes
 		this.dsl = dsl
 		val isTruffle = dsl.dslProp.getOrDefault("truffle", "false") == "true"
-		tsu = new TypeSystemUtils(syntaxes, packageRoot, base, resolved)
-		abc = new AleBodyCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registreredArrays, registeredServices, isTruffle)
+		tsu = new TypeSystemUtils(syntaxes, packageRoot, resolved)
+		abc = new AleBodyCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registreredArrays,
+			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService)
 		
 		val implPackage = eClass.classImplementationPackageName(packageRoot)
 		

@@ -9,7 +9,6 @@ import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.List
 import java.util.Map
-import org.eclipse.acceleo.query.ast.Expression
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
@@ -17,8 +16,10 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -42,10 +43,11 @@ import static javax.lang.model.element.Modifier.*
 
 class SwitchOperationCompiler {
 
-	extension SwitchNamingUtils namingUtils 
+	extension SwitchNamingUtils namingUtils
 	extension TypeSystemUtils tsu
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension SwitchExpressionCompiler swe
+	extension CommonTypeInferer cti
 
 	val String packageRoot
 	val File directory
@@ -65,45 +67,41 @@ class SwitchOperationCompiler {
 		this.directory = directory
 		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
-		this.tsu = new TypeSystemUtils(syntaxes, packageRoot, base, resolved)
+		this.tsu = new TypeSystemUtils(syntaxes, packageRoot, resolved)
+		this.cti = new CommonTypeInferer(base)
 		this.namingUtils = new SwitchNamingUtils
 		this.swe = new SwitchExpressionCompiler(tsu, resolved, namingUtils, syntaxes, packageRoot, registeredServices,
-			dsl)
+			dsl, cti, new EnumeratorService)
 	}
 
 	def compile(ResolvedClass resolved) {
 		val eClassType = ClassName.get(resolved.genCls.genPackage.interfacePackageName, resolved.genCls.interfaceName)
-		val switchType = ClassName.get(namingUtils.switchImplementationPackageName(packageRoot), namingUtils.switchImplementationClassName(packageRoot))
+		val switchType = ClassName.get(namingUtils.switchImplementationPackageName(packageRoot),
+			namingUtils.switchImplementationClassName(packageRoot))
 		val operationsPackage = namingUtils.operationPackageName(packageRoot)
-		
-		val factory = TypeSpec.classBuilder(namingUtils.operationClassName(resolved.eCls))
-			.applyIfTrue(!(resolved.eCls as EClass).ESuperTypes.empty, [superclass(ClassName.get(operationsPackage, namingUtils.operationClassName((resolved.eCls as EClass).ESuperTypes.head)))])
-			.addField(eClassType, 'it', PRIVATE, FINAL)
-			.addField(switchType, 'emfswitch', PRIVATE, FINAL)
-			.addMethod(MethodSpec.constructorBuilder
-				.addParameter(eClassType, 'it')
-				.addParameter(switchType, 'emfswitch')
-				.addCode('''
-				«IF !(resolved.eCls as EClass).ESuperTypes.empty»
-				super(it, emfswitch);
-				«ENDIF»
-				this.it = it;
-				this.emfswitch = emfswitch;
-				''')
-				.addModifiers(PUBLIC)
-				.build
-			)
-			.applyIfTrue(resolved.getAleCls !== null, [addMethods(resolved.getAleCls.methods.map[compileMethodB])])
-			.addModifiers(PUBLIC)
-			.build
 
-		val javaFile = JavaFile.builder(operationsPackage, factory)
-			.indent('\t')
-			.build
+		val factory = TypeSpec.classBuilder(namingUtils.operationClassName(resolved.eCls)).applyIfTrue(
+			!(resolved.eCls as EClass).ESuperTypes.empty, [
+				superclass(
+					ClassName.get(operationsPackage,
+						namingUtils.operationClassName((resolved.eCls as EClass).ESuperTypes.head)))
+			]).addField(eClassType, 'it', PRIVATE, FINAL).addField(switchType, 'emfswitch', PRIVATE, FINAL).addMethod(
+			MethodSpec.constructorBuilder.addParameter(eClassType, 'it').addParameter(switchType, 'emfswitch').
+				addCode('''
+					«IF !(resolved.eCls as EClass).ESuperTypes.empty»
+						super(it, emfswitch);
+					«ENDIF»
+					this.it = it;
+					this.emfswitch = emfswitch;
+				''').addModifiers(PUBLIC).build
+		).applyIfTrue(resolved.getAleCls !== null, [addMethods(resolved.getAleCls.methods.map[compileMethodB])]).
+			addModifiers(PUBLIC).build
+
+		val javaFile = JavaFile.builder(operationsPackage, factory).indent('\t').build
 
 		javaFile.writeTo(directory)
 	}
-	
+
 	def MethodSpec compileMethodB(Method method) {
 		val retType = if (method.operationRef.EType !== null) {
 				if (method.operationRef.EType instanceof EClass &&
@@ -116,15 +114,12 @@ class SwitchOperationCompiler {
 			} else
 				null
 
-		MethodSpec
-			.methodBuilder(method.operationRef.name)
-			.applyIfTrue(retType !== null, [returns(retType)])
-			.addParameters(method.operationRef.EParameters.map [ param |
+		MethodSpec.methodBuilder(method.operationRef.name).applyIfTrue(retType !== null, [returns(retType)]).
+			addParameters(method.operationRef.EParameters.map [ param |
 				if (param.EType.instanceClass !== null) {
 					if (param.EType instanceof EClass && !(param.EType.EPackage == EcorePackage.eINSTANCE)) {
-						ParameterSpec.builder(
-							ClassName.get(getEcoreInterfacesPackage, (param.EType as EClass).name), param.name).
-							build
+						ParameterSpec.builder(ClassName.get(getEcoreInterfacesPackage, (param.EType as EClass).name),
+							param.name).build
 					} else {
 						ParameterSpec.builder(param.EType.instanceClass, param.name).build
 
@@ -132,16 +127,10 @@ class SwitchOperationCompiler {
 				} else {
 					ParameterSpec.builder(param.EType.resolveType, param.name).build
 				}
-			])
-			.addModifiers(PUBLIC)
-			.openMethod(method.operationRef.EType?.resolveType2)
-			.compileBody(method.body)
-			.closeMethod(method.operationRef.EType)
-			.build
+			]).addModifiers(PUBLIC).openMethod(method.operationRef.EType?.resolveType2).compileBody(method.body).
+			closeMethod(method.operationRef.EType).build
 	}
-	
-	
-	
+
 	def dispatch solveType(EClass type) {
 		resolveType(type)
 	}
@@ -149,23 +138,18 @@ class SwitchOperationCompiler {
 	def dispatch solveType(EDataType edt) {
 		edt.instanceClass
 	}
-	
-	def infereType(Expression exp) {
-		
-		base.getPossibleTypes(exp)
-	}
-	
+
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body) {
 		val t = infereType(body.target).head
 		if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
 			builderSeed.
 				addStatement('''«body.target.compileExpression».get«body.targetFeature.toFirstUpper»().add(«body.value.compileExpression»)''')
 		} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-			builderSeed.
-				addStatement('''$L.set$L($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+			builderSeed.addStatement('''$L.set$L($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper,
+				body.value.compileExpression)
 		} else {
-			builderSeed.
-				addStatement('''$L.$L = $L''', body.target.compileExpression, body.targetFeature, body.value.compileExpression)
+			builderSeed.addStatement('''$L.$L = $L''', body.target.compileExpression, body.targetFeature,
+				body.value.compileExpression)
 
 		}
 
@@ -177,9 +161,8 @@ class SwitchOperationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureRemove body) {
-		builderSeed.
-			addStatement('''$L.get$L().remove($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper,
-			body.value.compileExpression)
+		builderSeed.addStatement('''$L.get$L().remove($L)''', body.target.compileExpression,
+			body.targetFeature.toFirstUpper, body.value.compileExpression)
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body) {
@@ -221,14 +204,12 @@ class SwitchOperationCompiler {
 			builderSeed.beginControlFlow('''for ($T $L: «body.collectionExpression.compileExpression»)''',
 				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
 		} else {
-			
+
 			val iteratorType = lt.collectionType.type.resolveType2
 			val iteratorVariable = body.variable
 			val iterable = body.collectionExpression.compileExpression
-			builderSeed
-				.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable)
-				.compileBody(body.body)
-				.endControlFlow
+			builderSeed.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable).
+				compileBody(body.body).endControlFlow
 		}
 	}
 
@@ -252,12 +233,9 @@ class SwitchOperationCompiler {
 		val a = builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression)
 		a.compileBody(body.body).endControlFlow
 	}
-	
-	
-	
+
 //	def getEcoreInterfacesPackage() {
 //		val gm = syntaxes.get(dsl.allSyntaxes.head).value
 //		gm.genPackages.head.qualifiedPackageName
 //	}
-	
 }

@@ -1,38 +1,35 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 
 import com.squareup.javapoet.ClassName
+import com.squareup.javapoet.TypeName
 import java.util.List
 import java.util.Map
-import org.eclipse.acceleo.query.ast.Expression
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
+import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
+import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import com.squareup.javapoet.TypeName
-import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
-import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
-import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 
-class TypeSystemUtils {
+class TypeSystemUtils implements AbstractTypeSystem {
 
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
 	val String packageRoot
-	val BaseValidator base
 	var List<ResolvedClass> resolved
 
-	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base, List<ResolvedClass> resolved) {
+	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved) {
 		this.syntaxes = syntaxes
 		this.packageRoot = packageRoot
-		this.base = base
 		this.resolved = resolved
 	}
 
@@ -42,7 +39,7 @@ class TypeSystemUtils {
 
 	def dispatch solveType(EDataType edt) {
 		if(edt.instanceClass.primitive) {
-			edt.instanceClass
+			ClassName.get(edt.instanceClass)
 		} else {
 			ClassName.get(edt.instanceClass)
 		}
@@ -80,10 +77,6 @@ class TypeSystemUtils {
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
 
-	}
-	
-	def infereType(Expression exp) {
-		base.getPossibleTypes(exp)
 	}
 	
 	def allMethods(ExtendedClass aleClass) {

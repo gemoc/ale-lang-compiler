@@ -4,7 +4,6 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import java.util.Map
-import org.eclipse.acceleo.query.ast.Expression
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
@@ -14,23 +13,16 @@ import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 
-class TypeSystemUtils {
-	BaseValidator base
+class TypeSystemUtils implements AbstractTypeSystem { 
 	val  Map<String, Pair<EPackage, GenModel>> syntaxes
 	extension EcoreUtils 	eu
 
-	new(BaseValidator base, Map<String, Pair<EPackage, GenModel>> syntaxes, EcoreUtils 	eu) {
-		this.base = base
+	new(Map<String, Pair<EPackage, GenModel>> syntaxes, EcoreUtils 	eu) {
 		this.syntaxes = syntaxes
 		this.eu = eu
-	}
-
-	def infereType(Expression exp) {
-
-		base.getPossibleTypes(exp)
 	}
 	
 	def dispatch TypeName resolveType2(Object type) {

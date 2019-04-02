@@ -23,6 +23,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryImplementationCom
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
@@ -30,7 +31,6 @@ import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.emf.ecoretools.ale.compiler.CommonCompilerUtils
 
 class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
@@ -113,7 +113,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
 		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,
-			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices, new CommonCompilerUtils(vnu))
+			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices, new EnumeratorService)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
