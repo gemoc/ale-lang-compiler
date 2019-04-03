@@ -4,10 +4,13 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.TypeName
 import java.util.List
 import java.util.Map
+import org.eclipse.acceleo.query.validation.type.IType
+import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
+import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
@@ -18,10 +21,6 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import org.eclipse.acceleo.query.validation.type.IType
-import org.eclipse.acceleo.query.validation.type.SequenceType
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.common.util.EMap
 
 class TypeSystemUtils implements AbstractTypeSystem {
 

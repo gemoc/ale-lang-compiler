@@ -193,7 +193,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 
 					if (candidate !== null) {
 						val Map<String, Object> hm = newHashMap(
-							"cdt" -> ClassName.get((candidate.value as java.lang.reflect.Method).declaringClass)
+							"cdt" -> ClassName.get(candidate.value.declaringClass)
 						)
 						for (param : call.arguments.enumerate) {
 							val infTps = param.key.infereType

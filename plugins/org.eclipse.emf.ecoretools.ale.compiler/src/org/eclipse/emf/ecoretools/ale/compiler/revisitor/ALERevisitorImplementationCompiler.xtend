@@ -6,7 +6,6 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
-import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.nio.file.Files
@@ -161,7 +160,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 			].map [
 				MethodSpec.methodBuilder(it.denotationName)
 					.returns(dsl.getRevisitorOperationInterfaceClassName(it))
-					.addParameter(it.solveType as TypeName, "it")
+					.addParameter(it.solveType, "it")
 					.addCode('''
 					return new $T(it, this);
 					''', 

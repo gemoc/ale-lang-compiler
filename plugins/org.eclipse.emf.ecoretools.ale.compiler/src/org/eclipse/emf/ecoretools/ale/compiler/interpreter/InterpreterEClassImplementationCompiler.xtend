@@ -8,7 +8,6 @@ import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
-import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.Comparator
@@ -16,7 +15,6 @@ import java.util.List
 import java.util.Map
 import java.util.Set
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
-import org.eclipse.emf.common.util.BasicEMap
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
@@ -24,7 +22,6 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.ETypedElement
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
@@ -57,7 +54,7 @@ class InterpreterEClassImplementationCompiler {
 	var Set<Method> registreredDispatch = newHashSet
 	var Set<String> registreredArrays = newHashSet
 	val List<ResolvedClass> resolved
-	EClassImplementationCompiler ecic
+	extension EClassImplementationCompiler ecic
 
 	new(String packageRoot, List<ResolvedClass> resolved) {
 		this.packageRoot = packageRoot
@@ -67,93 +64,7 @@ class InterpreterEClassImplementationCompiler {
 		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils), jpu)
 	}
 
-	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass) {
-		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
-		val ePackageInterfaceType = eClass.packageIntClassName(packageRoot) 
-		
-		val hasSuperType = !eClass.ESuperTypes.empty
-		val superType = eClass.ESuperTypes.head
-
-		val fieldsEAttributes = ecic.getFieldsEAttributes(eClass, packageRoot)
-
-		val Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2 = [ builderTmp, field |
-			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
-			builderTmp.applyIfTrue(
-				dsl.dslProp.getOrDefault("child", "false").equals("true") && !isMultiple && !isMutable &&
-					field.containment && !field.EType.EAnnotations.exists[it.source == 'RuntimeData'], [
-					addAnnotation(ClassName.get("com.oracle.truffle.api.nodes.Node", "Child"))
-				])
-		]
-
-		val fieldsEReferences = ecic.getFieldsEReferences(eClass, packageRoot, f2)
-		val methodsEReferences = ecic.getMethodsEReferences(eClass, packageRoot, dsl, ePackageInterfaceType,
-			isMapElement)
-
-		val eStaticClassMethod = ecic.getEStaticClass(eClass, dsl, packageRoot)
-
-		val  eSetMethod = ecic.getESet(eClass, dsl, packageRoot)
-		val eUnsetMethod = ecic.getEUnset(eClass, dsl, packageRoot)
-		val eGetMethod = ecic.getEGet(eClass, dsl, packageRoot)
-		val eIsSetMethod = ecic.getEIsSet(eClass, dsl, packageRoot)
-
-		val eInverseRemove = ecic.getEInverseRemove(eClass, dsl, packageRoot)
-		val eBasicRemoveFromContainerFeature = ecic.getEBasicRemoveFromContainerFeature(eClass, dsl, packageRoot)
-
-		val eInverseAdd = ecic.getEInverseAdd(eClass, dsl, packageRoot)
-		
-		val eMethods = #[eInverseAdd, eInverseRemove, eBasicRemoveFromContainerFeature, eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod].map[it.map[#[it]].orElse(#[])].flatten
-
-		val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-		val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-
-		builder.applyIfTrue(eClass.isAbstract, [addModifiers(ABSTRACT)]).applyIfTrue(hasSuperType, [
-			superclass(
-				ClassName.get(superType.classImplementationPackageName(packageRoot),
-					superType.classImplementationClassName))
-		]).applyIfTrue(isMapElement, [
-			it.addSuperinterface(
-				ParameterizedTypeName.get(ClassName.get(BasicEMap.Entry), key.EType.scopedInterfaceTypeRef(packageRoot),
-					value.EType.scopedInterfaceTypeRef(packageRoot)))
-		]).applyIfTrue(!hasSuperType, [
-			if (dsl.dslProp.getOrDefault("truffle", "false") == 'true') {
-				if (!eClass.EAnnotations.exists[it.source == 'RuntimeData']) {
-					superclass(
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl",
-							"TruffleContainer"))
-				} else {
-					superclass(ClassName.get(MinimalEObjectImpl.Container))
-				}
-			} else {
-				superclass(ClassName.get(MinimalEObjectImpl.Container))
-			}
-		]).applyIfTrue(!isMapElement, [
-			addSuperinterface(
-				ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName))
-		])
-		.addFields(fieldsEAttributes)
-		.addFields(fieldsEReferences)
-		.addMethod(eStaticClassMethod)
-		.addMethods(methodsEReferences)
-	 	.addMethods(eMethods)
-		.applyIfTrue(isMapElement, [
-			it.addField(FieldSpec.builder(int, 'hash', PROTECTED).initializer('-1').build).addMethod(
-				MethodSpec.methodBuilder('setHash').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
-					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-				]).addParameter(int, 'hash').addCode('''
-					this.hash = hash;
-				''').addModifiers(PUBLIC).build).addMethod(
-				MethodSpec.methodBuilder('getHash').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
-					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-				]).returns(int).addCode('''
-					if (hash == -1) {
-						Object theKey = getKey();
-						hash = (theKey == null ? 0 : theKey.hashCode());
-					}
-					return hash;
-				''').addModifiers(PUBLIC).build)
-		])
-	}
+	
 
 	def dispatch compileEClassImplementation(EClassifier eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
@@ -185,9 +96,21 @@ class InterpreterEClassImplementationCompiler {
 				EcoreUtil2.getAllContentsOfType(aleClass, While)
 			} else
 				#[]
+				
+		val Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2 = [ builderTmp, field |
+			val isMultiple = field.upperBound > 1 || field.upperBound < 0
+			val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
+			builderTmp.applyIfTrue(
+				dsl.dslProp.getOrDefault("child", "false").equals("true") && !isMultiple && !isMutable &&
+					field.containment && !field.EType.EAnnotations.exists[it.source == 'RuntimeData'], [
+					addAnnotation(ClassName.get("com.oracle.truffle.api.nodes.Node", "Child"))
+				])
+		]
 
-		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName).compileEcoreRelated(eClass, aleClass).
-			applyIfTrue(aleClass !== null, [addMethods(aleMethods)]).applyIfTrue(isTruffle, [
+		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName)
+			.compileEcoreRelated(eClass, aleClass, packageRoot, dsl, f2)
+			.applyIfTrue(aleClass !== null, [addMethods(aleMethods)])
+			.applyIfTrue(isTruffle, [
 				addFields(registreredArrays.map [ fieldName |
 					val x = eClass.EAllReferences.filter[it.name == fieldName].head.EType.resolveType
 					val xa = ArrayTypeName.of(x)

@@ -100,12 +100,11 @@ class AleBodyCompiler {
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, VariableAssignment body,
 		CompilerExpressionCtx ctx) {
 			
-		val tmp = body.value.infereType
-		
 		// TODO ADD CAST !!!
 		
+		/*TODO ADD CAAAAST */
 		builderSeed.addStatement(
-			CodeBlock.builder.addNamed('''$name:N = $expr:L/*TODO*/''', newHashMap(
+			CodeBlock.builder.addNamed('''$name:N = $expr:L''', newHashMap(
 				"name" -> body.name,
 				"expr" -> body.value.compileExpression(ctx)
 			)).build)
