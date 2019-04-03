@@ -155,7 +155,7 @@ class EClassGetterCompiler {
 				$rt:T $oldName:L = $name:L;
 				$name:L = $newName:L;
 				if (eNotificationRequired())
-					eNotify(new $eni:T(this, $notif:T.SET, $package:T.$fieldName:L, $oldName;L, $name:L));
+					eNotify(new $eni:T(this, $notif:T.SET, $package:T.$fieldName:L, $oldName:L, $name:L));
 				''', newHashMap(
 					"rt" -> rt,
 					"oldName" -> field.name.normalizeVarOldName,

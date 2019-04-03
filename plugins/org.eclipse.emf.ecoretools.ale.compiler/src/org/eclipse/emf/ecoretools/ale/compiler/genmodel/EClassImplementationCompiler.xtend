@@ -31,7 +31,6 @@ import com.squareup.javapoet.TypeSpec
 import org.eclipse.emf.common.util.BasicEMap
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import org.eclipse.acceleo.model.mtl.impl.spec.ModuleSpec
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.codegen.util.CodeGenUtil
 
@@ -459,7 +458,7 @@ class EClassImplementationCompiler {
 						case $1T.«esf.name.normalizeUpperField(eClass.name)» :
 							«IF esf instanceof EAttribute»
 								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-									«IF !esf.isPrimitive && !esf.isEnum  && esf.defaultValue !== null && esf.hasDefault»
+									«IF !esf.isPrimitive && !esf.isEnum  && esf.defaultValue !== null»
 									return «esf.name.toUpperCase»_EDEFAULT == null ? «esf.name.normalizeVarName» != null : !«esf.name.toUpperCase»_EDEFAULT.equals(«esf.name.normalizeVarName»);
 									«ELSE»
 									return «esf.name.normalizeVarName» != «esf.name.toUpperCase»_EDEFAULT;
@@ -510,8 +509,8 @@ class EClassImplementationCompiler {
 									return get«esf.name.toFirstUpper»().map();
 							«ELSEIF esf.isResolveProxies && !esf.isListType»
 								if (resolve)
-									return «IF esf.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«esf.name.toFirstUpper»();
-								return basic«IF esf.EType.name == "EBoolean"»Is«ELSE»Get«ENDIF»«esf.name.toFirstUpper»();
+									return «IF esf.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»();
+								return basic«IF esf.EType.name == "EBoolean"»Is«ELSE»Get«ENDIF»«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»();
 							«ELSE»
 								return «IF esf.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»();
 							«ENDIF»

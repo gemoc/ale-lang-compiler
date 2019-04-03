@@ -154,7 +154,7 @@ class PackageInterfaceCompiler {
 				if (esf.EContainingClass === clazz) {
 					fieldsAttributesFields.get(clazz).add(
 						FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).
-							initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build
+							initializer('''«FOR parentClazz: esf.EContainingClass.ESuperTypes»«parentClazz.name.normalizeUpperField»_FEATURE_COUNT + «ENDFOR»«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build
 					)
 					cptrI = cptrI + 1
 				} else {
