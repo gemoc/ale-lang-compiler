@@ -29,88 +29,97 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		return FunctioncallPackage.Literals.CONCEPT_C;
 	}
 
-	public void setConcepta2(ConceptA newConcepta2) {
-		if (newConcepta2 != concepta2) {
-			NotificationChain msgs = null;
-			if (concepta2 != null)
-				msgs = ((InternalEObject) concepta2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTA2, null, msgs);
-			if (newConcepta2 != null)
-				msgs = ((InternalEObject)newConcepta2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTA2, null, msgs);
-			msgs = basicSetConcepta2(newConcepta2, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTA2, newConcepta2, newConcepta2));
+	public ConceptA getConcepta2() {
+		return concepta2;
 	}
 
 	public NotificationChain basicSetConcepta2(ConceptA newConcepta2, NotificationChain msgs) {
 		ConceptA oldConcepta2 = concepta2;
 		concepta2 = newConcepta2;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTA2, oldConcepta2, newConcepta2);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FunctioncallPackage.CONCEPT_C__CONCEPTA2, oldConcepta2, newConcepta2);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public ConceptA getConcepta2() {
-		return concepta2;
-	}
-
-	public void setConcepta1(ConceptA newConcepta1) {
-		if (newConcepta1 != concepta1) {
+	public void setConcepta2(ConceptA newConcepta2) {
+		if (newConcepta2 != concepta2) {
 			NotificationChain msgs = null;
-			if (concepta1 != null)
-				msgs = ((InternalEObject) concepta1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTA1, null, msgs);
-			if (newConcepta1 != null)
-				msgs = ((InternalEObject)newConcepta1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTA1, null, msgs);
-			msgs = basicSetConcepta1(newConcepta1, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTA1, newConcepta1, newConcepta1));
-	}
-
-	public NotificationChain basicSetConcepta1(ConceptA newConcepta1, NotificationChain msgs) {
-		ConceptA oldConcepta1 = concepta1;
-		concepta1 = newConcepta1;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTA1, oldConcepta1, newConcepta1);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+			if (concepta2 != null)
+				msgs = ((InternalEObject) concepta2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA2, null, msgs);
+			if (newConcepta2 != null)
+				msgs = ((InternalEObject)newConcepta2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA2, null, msgs);
+			msgs = basicSetConcepta2(newConcepta2, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FunctioncallPackage.CONCEPT_C__CONCEPTA2, newConcepta2, newConcepta2));
 	}
 
 	public ConceptA getConcepta1() {
 		return concepta1;
 	}
 
-	public void setConceptb(ConceptB newConceptb) {
-		if (newConceptb != conceptb) {
+	public NotificationChain basicSetConcepta1(ConceptA newConcepta1, NotificationChain msgs) {
+		ConceptA oldConcepta1 = concepta1;
+		concepta1 = newConcepta1;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FunctioncallPackage.CONCEPT_C__CONCEPTA1, oldConcepta1, newConcepta1);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	public void setConcepta1(ConceptA newConcepta1) {
+		if (newConcepta1 != concepta1) {
 			NotificationChain msgs = null;
-			if (conceptb != null)
-				msgs = ((InternalEObject) conceptb).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTB, null, msgs);
-			if (newConceptb != null)
-				msgs = ((InternalEObject)newConceptb).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTB, null, msgs);
-			msgs = basicSetConceptb(newConceptb, msgs);
+			if (concepta1 != null)
+				msgs = ((InternalEObject) concepta1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA1, null, msgs);
+			if (newConcepta1 != null)
+				msgs = ((InternalEObject)newConcepta1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA1, null, msgs);
+			msgs = basicSetConcepta1(newConcepta1, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTB, newConceptb, newConceptb));
+			eNotify(new ENotificationImpl(this, Notification.SET, FunctioncallPackage.CONCEPT_C__CONCEPTA1, newConcepta1, newConcepta1));
+	}
+
+	public ConceptB getConceptb() {
+		return conceptb;
 	}
 
 	public NotificationChain basicSetConceptb(ConceptB newConceptb, NotificationChain msgs) {
 		ConceptB oldConceptb = conceptb;
 		conceptb = newConceptb;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, functioncall.interpreter.functioncall.FunctioncallPackage.CONCEPT_C__CONCEPTB, oldConceptb, newConceptb);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FunctioncallPackage.CONCEPT_C__CONCEPTB, oldConceptb, newConceptb);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
-
-	public ConceptB getConceptb() {
-		return conceptb;
+	
+	public void setConceptb(ConceptB newConceptb) {
+		if (newConceptb != conceptb) {
+			NotificationChain msgs = null;
+			if (conceptb != null)
+				msgs = ((InternalEObject) conceptb).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTB, null, msgs);
+			if (newConceptb != null)
+				msgs = ((InternalEObject)newConceptb).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTB, null, msgs);
+			msgs = basicSetConceptb(newConceptb, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FunctioncallPackage.CONCEPT_C__CONCEPTB, newConceptb, newConceptb));
 	}
 
 	@Override

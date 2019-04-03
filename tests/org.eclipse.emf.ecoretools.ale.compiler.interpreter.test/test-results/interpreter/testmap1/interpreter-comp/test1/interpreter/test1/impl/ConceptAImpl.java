@@ -1,5 +1,6 @@
 package test1.interpreter.test1.impl;
 
+import execboa.MapService;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
@@ -92,5 +93,6 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 			LogService.log(c.getKey());
 			LogService.log(c.getValue());
 		}
+		LogService.log(MapService.containsKey((EMap) (this.cs), (String) ("ok")));
 	}
 }

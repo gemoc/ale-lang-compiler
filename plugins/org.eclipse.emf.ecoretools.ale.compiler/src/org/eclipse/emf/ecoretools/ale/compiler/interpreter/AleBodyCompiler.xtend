@@ -57,7 +57,7 @@ class AleBodyCompiler {
 				builderSeed.
 					addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 			} else {
-				builderSeed.addStatement('''$L.$L = $L''', lhs, body.targetFeature, body.value.compileExpression(ctx))
+				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, t, body.value.compileExpression(ctx))
 			}
 		} else {
 			if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
@@ -67,7 +67,7 @@ class AleBodyCompiler {
 				builderSeed.
 					addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 			} else {
-				builderSeed.addStatement('''$L.$L = $L''', lhs, body.targetFeature, body.value.compileExpression(ctx))
+				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, t, body.value.compileExpression(ctx))
 			}
 
 		}
@@ -99,8 +99,13 @@ class AleBodyCompiler {
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, VariableAssignment body,
 		CompilerExpressionCtx ctx) {
+			
+		val tmp = body.value.infereType
+		
+		// TODO ADD CAST !!!
+		
 		builderSeed.addStatement(
-			CodeBlock.builder.addNamed('''$name:N = $expr:L''', newHashMap(
+			CodeBlock.builder.addNamed('''$name:N = $expr:L/*TODO*/''', newHashMap(
 				"name" -> body.name,
 				"expr" -> body.value.compileExpression(ctx)
 			)).build)

@@ -18,6 +18,10 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.acceleo.query.validation.type.IType
+import org.eclipse.acceleo.query.validation.type.SequenceType
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.common.util.EMap
 
 class TypeSystemUtils implements AbstractTypeSystem {
 
@@ -39,10 +43,6 @@ class TypeSystemUtils implements AbstractTypeSystem {
 
 	def dispatch solveType(EDataType edt) {
 		TypeName.get(edt.instanceClass)
-//		if(edt.instanceClass.primitive) {
-//		} else {
-//			TypeName.get(edt.instanceClass)
-//		}
 	}
 
 	def resolveType(EClassifier e) {
@@ -91,6 +91,24 @@ class TypeSystemUtils implements AbstractTypeSystem {
 		resolved.filter[it.eCls == ecls || it.eCls instanceof EClass && ecls instanceof EClass && (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
 			it.aleCls
 		].filter[it !== null]
+	}
+	
+	
+	def dispatch TypeName resolveType3(IType iType) {
+		iType.type.resolveType2
+	}
+	
+	def dispatch TypeName resolveType3(SequenceType iType) {
+		val ct = iType.getCollectionType().getType()
+		if(ct instanceof EClass) {
+			if(ct.instanceClassName == "java.util.Map$Entry") {
+				TypeName.get(EMap)
+			} else {
+				iType.type.resolveType2
+			}
+		} else {
+			iType.type.resolveType2
+		}
 	}
 	
 	def dispatch TypeName resolveType2(Object type) {

@@ -19,16 +19,16 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		super();
 	}
 
+	@Override
+	protected EClass eStaticClass() {
+		return Test1uniquePackage.Literals.CONCEPT_A;
+	}
+
 	public EList<Boolean> getBs() {
 		if (bs == null) {
 			bs = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, Test1uniquePackage.CONCEPT_A__BS);
 		}
 		return bs;
-	}
-
-	@Override
-	protected EClass eStaticClass() {
-		return Test1uniquePackage.Literals.CONCEPT_A;
 	}
 
 	@Override

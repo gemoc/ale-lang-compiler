@@ -1,6 +1,5 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 
-import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
 import java.lang.reflect.Modifier
 import java.util.List
@@ -23,6 +22,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
+import com.squareup.javapoet.ClassName
 
 class AleExpressionsCompiler extends AbstractExpressionCompiler {
 
@@ -192,12 +192,16 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 					].head
 
 					if (candidate !== null) {
-						val hm = newHashMap()
+						val Map<String, Object> hm = newHashMap(
+							"cdt" -> ClassName.get((candidate.value as java.lang.reflect.Method).declaringClass)
+						)
 						for (param : call.arguments.enumerate) {
-							hm.put("typeparam" + param.value, param.key.infereType.head.type.resolveType2)
+							val infTps = param.key.infereType
+							hm.put("typeparam" + param.value, infTps.head.resolveType3)
+							hm.put("exprparam" + param.value, param.key.compileExpression(ctx))
 						}
 						CodeBlock.builder.
-							addNamed('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments.enumerate SEPARATOR ', '»($typeparam«p.value»:T)«p.key.compileExpression(ctx)»«ENDFOR»)''',
+							addNamed('''$cdt:T.«candidate.value.name»(«FOR p : call.arguments.enumerate SEPARATOR ', '»($typeparam«p.value»:T) ($exprparam«p.value»:L)«ENDFOR»)''',
 								hm).build
 					} else {
 						val hm = newHashMap()

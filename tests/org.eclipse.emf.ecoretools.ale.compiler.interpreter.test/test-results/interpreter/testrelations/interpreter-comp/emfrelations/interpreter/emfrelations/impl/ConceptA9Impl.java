@@ -9,7 +9,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 public class ConceptA9Impl extends MinimalEObjectImpl.Container implements ConceptA9 {
 	protected EList<ConceptB9> conceptb9;

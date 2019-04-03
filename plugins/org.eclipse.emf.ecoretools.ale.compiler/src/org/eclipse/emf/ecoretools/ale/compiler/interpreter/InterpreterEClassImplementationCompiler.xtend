@@ -442,7 +442,7 @@ class InterpreterEClassImplementationCompiler {
 		val retType = method.operationRef.EType?.resolveType2 // TODO: DEBUG & correct !!!
 		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [
 			returns(retType)
-		]).applyIfTrue(aClass.EAnnotations.exists[it.source == 'RuntimeData'], [
+		]).applyIfTrue(aClass.EAnnotations.exists[it.source == 'RuntimeData'] && dsl.dslProp.getProperty('truffle', "false") == "true", [
 			addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 		]).addParameters(method.operationRef.EParameters.map [
 			if (it.EType.instanceClass !== null) {
