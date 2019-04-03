@@ -7,11 +7,6 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 
 abstract class GenmodelNamingUtils extends AbstractNamingUtils {
-	def String getIdentifier()
-
-	override String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name»'''
-	}
 
 	def String factoryInterfaceClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»Factory'''
@@ -41,27 +36,19 @@ abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 		'''«ePackage.name.toFirstUpper»FactoryImpl'''
 	}
 
-	override String classInterfacePackageName(EClass eClass, String packageRoot) {
-		eClass.EPackage.factoryInterfacePackageName(packageRoot)
-	}
-
-	override String classInterfacePackageName(EEnum eEnum, String packageRoot) {
-		eEnum.EPackage.factoryInterfacePackageName(packageRoot)
-	}
-
-	override String classInterfaceClassName(EClass eClass) {
+	def String classInterfaceClassName(EClass eClass) {
 		eClass.name.toFirstUpper
 	}
 
-	override String classInterfaceClassName(EEnum eEnum) {
+	def String classInterfaceClassName(EEnum eEnum) {
 		eEnum.name.toFirstUpper
 	}
 
-	override String classImplementationPackageName(EClass eClass, String packageRoot) {
+	def String classImplementationPackageName(EClass eClass, String packageRoot) {
 		eClass.EPackage.factoryImplementationPackageName(packageRoot)
 	}
 
-	override String classImplementationClassName(EClass eClass) {
+	def String classImplementationClassName(EClass eClass) {
 		'''«eClass.name.toFirstUpper»Impl'''
 	}
 

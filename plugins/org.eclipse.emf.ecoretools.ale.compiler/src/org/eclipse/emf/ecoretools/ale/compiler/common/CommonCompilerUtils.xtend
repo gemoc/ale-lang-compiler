@@ -5,11 +5,12 @@ import com.squareup.javapoet.TypeName
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
 
 class CommonCompilerUtils {
-	extension AbstractNamingUtils anu
+	extension GenmodelNamingUtils anu
 
-	new(AbstractNamingUtils anu) {
+	new(GenmodelNamingUtils anu) {
 		this.anu = anu
 	}
 
