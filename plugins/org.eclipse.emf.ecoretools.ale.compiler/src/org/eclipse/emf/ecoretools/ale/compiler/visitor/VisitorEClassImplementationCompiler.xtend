@@ -45,9 +45,8 @@ class VisitorEClassImplementationCompiler {
 
 	private def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass) {
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
-		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
-			eClass.EPackage.packageInterfaceClassName)
-
+		val ePackageInterfaceType = eClass.packageIntClassName(packageRoot) 
+		
 		val hasSuperType = !eClass.ESuperTypes.empty
 		val superType = eClass.ESuperTypes.head
 
@@ -58,19 +57,16 @@ class VisitorEClassImplementationCompiler {
 
 		val eStaticClassMethod = ecic.getEStaticClass(eClass, dsl, packageRoot)
 
-		val eSetMethod = if (!eClass.EStructuralFeatures.empty) {
-				val MethodSpec eSetMethod = ecic.getESet(eClass, dsl, packageRoot)
-				val MethodSpec eUnsetMethod = ecic.getEUnset(eClass, dsl, packageRoot)
-				val MethodSpec eGetMethod = ecic.getEGet(eClass, dsl, packageRoot)
-				val MethodSpec eIsSetMethod = ecic.getEIsSet(eClass, dsl, packageRoot)
-				val eInverseRemove = ecic.getEInverseRemove(eClass, dsl, packageRoot)
-				val eBasicRemoveFromContainerFeature = ecic.getEBasicRemoveFromContainerFeature(eClass, dsl, packageRoot)
-				eInverseRemove.map[#[it]].orElse(#[]) + eBasicRemoveFromContainerFeature.map[#[it]].orElse(#[]) +
-					#[eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod]
-			} else
-				#[]
+		val eSetMethod = ecic.getESet(eClass, dsl, packageRoot)
+		val eUnsetMethod = ecic.getEUnset(eClass, dsl, packageRoot)
+		val eGetMethod = ecic.getEGet(eClass, dsl, packageRoot)
+		val eIsSetMethod = ecic.getEIsSet(eClass, dsl, packageRoot)
+		val eInverseRemove = ecic.getEInverseRemove(eClass, dsl, packageRoot)
+		val eBasicRemoveFromContainerFeature = ecic.getEBasicRemoveFromContainerFeature(eClass, dsl, packageRoot)
 
 		val eInverseAdd = ecic.getEInverseAdd(eClass, dsl, packageRoot)
+		
+		val eMethods = #[eInverseAdd, eInverseRemove, eBasicRemoveFromContainerFeature, eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod].map[it.map[#[it]].orElse(#[])].flatten
 
 		val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 		val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
@@ -88,8 +84,12 @@ class VisitorEClassImplementationCompiler {
 			!isMapElement, [
 				addSuperinterface(
 					ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName))
-			]).addFields(fieldsEAttributes + fieldsEReferences).addMethods(
-			#[eStaticClassMethod] + methodsEReferences + eInverseAdd.map[#[it]].orElse(#[]) + eSetMethod) // methodsEAttributes
+			])
+			.addFields(fieldsEAttributes)
+			.addFields(fieldsEReferences)
+			.addMethod(eStaticClassMethod)
+			.addMethods(methodsEReferences)
+		 	.addMethods(eMethods)
 		.applyIfTrue(isMapElement, [
 			it.addField(FieldSpec.builder(int, 'hash', PROTECTED).initializer('-1').build).addMethod(
 				MethodSpec.methodBuilder('setHash').addParameter(int, 'hash').addCode('''

@@ -102,9 +102,8 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 				val t = infereType(e).head
 				val ecls = t.type as EClass
 				val epks = ecls.EPackage
-				CodeBlock.builder.addNamed('''$factory:T.eINSTANCE.create«ecls.name»()''',
-					newHashMap("factory" -> ClassName.get(epks.factoryInterfacePackageName(packageRoot),
-						epks.factoryInterfaceClassName))).build
+				val hm = newHashMap("factory" -> epks.factoryIntClassName(packageRoot))
+				CodeBlock.builder.addNamed('''$factory:T.eINSTANCE.create«ecls.name»()''', hm).build
 			} else {
 				val argumentsh = call.arguments.head
 				val ts = argumentsh.infereType

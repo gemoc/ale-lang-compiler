@@ -30,14 +30,13 @@ class PackageInterfaceCompiler {
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
 		val allEnums = abstractSyntax.EClassifiers.filter(EEnum)
 
-		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
-			abstractSyntax.packageInterfaceClassName)
+		val packageInterfaceType = abstractSyntax.packageIntClassName(packageRoot) 
+		
 		val packageImplementationType = ClassName.get(abstractSyntax.packageImplementationPackageName(packageRoot),
 			abstractSyntax.packageImplementationClassName)
 
-		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
-			abstractSyntax.factoryInterfaceClassName)
-
+		val factoryInterfaceType = abstractSyntax.factoryIntClassName(packageRoot) 
+		
 		val eInstanceField = FieldSpec.builder(packageInterfaceType, 'eINSTANCE').initializer('''$T.init()''',
 			packageImplementationType).addModifiers(PUBLIC, STATIC, FINAL).build
 

@@ -5,11 +5,20 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
+import com.squareup.javapoet.ClassName
 
 abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 
 	def String factoryInterfaceClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»Factory'''
+	}
+	
+	def factoryIntClassName(EClass eClass, String packageRoot) {
+		eClass.EPackage.factoryIntClassName(packageRoot)
+	}
+	
+	def factoryIntClassName(EPackage ePackage, String packageRoot) {
+		ClassName.get(ePackage.factoryInterfacePackageName(packageRoot), ePackage.factoryInterfaceClassName)
 	}
 
 	def String packageInterfacePackageName(EPackage ePackage, String packageRoot) {
@@ -18,6 +27,14 @@ abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 
 	def String packageInterfaceClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»Package'''
+	}
+
+	def packageIntClassName(EClass eClass, String packageRoot) {
+		eClass.EPackage.packageIntClassName(packageRoot)
+	}
+
+	def packageIntClassName(EPackage ePackage, String packageRoot) {
+		ClassName.get(ePackage.packageInterfacePackageName(packageRoot), ePackage.packageInterfaceClassName)
 	}
 
 	def String packageImplementationPackageName(EPackage ePackage, String packageRoot) {

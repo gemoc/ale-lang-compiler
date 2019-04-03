@@ -39,12 +39,9 @@ class FactoryImplementationCompiler {
 		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
 		val allEnum = abstractSyntax.EClassifiers.filter(EEnum)
 
-		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
-			abstractSyntax.factoryInterfaceClassName)
-
-		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
-			abstractSyntax.packageInterfaceClassName)
-
+		val factoryInterfaceType = abstractSyntax.factoryIntClassName(packageRoot) 		
+		val packageInterfaceType = abstractSyntax.packageIntClassName(packageRoot) 
+		
 		val constructor = MethodSpec.constructorBuilder.addModifiers(PUBLIC)
 			.addCode('''
 			super();
@@ -97,7 +94,8 @@ class FactoryImplementationCompiler {
 		)
 		
 		for(eEnum: allEnum) {
-			createFromStringMethodMap.put('''type«eEnum.name»'''.toString, ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot), abstractSyntax.packageInterfaceClassName))
+			val packageClassName =  abstractSyntax.packageIntClassName(packageRoot)
+			createFromStringMethodMap.put('''type«eEnum.name»'''.toString, packageClassName)
 		}
 		
 		val createFromStringMethod = if(!allEnum.empty) {

@@ -21,10 +21,9 @@ class FactoryInterfaceCompiler {
 	}
 
 	def compileFactoryInterface(EPackage abstractSyntax, File directory, String packageRoot) {
-		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
-			abstractSyntax.factoryInterfaceClassName)
-		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
-			abstractSyntax.packageInterfaceClassName)
+		val factoryInterfaceType = abstractSyntax.factoryIntClassName(packageRoot) 
+		val packageInterfaceType = abstractSyntax.packageIntClassName(packageRoot) 
+		
 		val factoryImplType = ClassName.get(abstractSyntax.factoryImplementationPackageName(packageRoot),
 			abstractSyntax.factoryImplementationClassName)
 		val einstance = FieldSpec.builder(factoryInterfaceType, "eINSTANCE", PUBLIC, FINAL, STATIC).

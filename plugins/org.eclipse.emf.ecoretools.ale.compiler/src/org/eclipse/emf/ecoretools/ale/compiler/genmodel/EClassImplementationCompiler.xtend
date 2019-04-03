@@ -61,8 +61,7 @@ class EClassImplementationCompiler {
 	}
 	
 	private def produceFeatureSwitchMap(EClass eClass, String packageRoot) {
-		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
-			eClass.EPackage.packageInterfaceClassName)
+		val ePackageInterfaceType = eClass.packageIntClassName(packageRoot)
 		
 		val Map<String, TypeName> namedMap = newHashMap(
 					"epit" -> ePackageInterfaceType,
@@ -89,7 +88,8 @@ class EClassImplementationCompiler {
 	def getEInverseAdd(EClass eClass, Dsl dsl, String packageRoot) {
 		if (!eClass.EReferences.filter[it.EOpposite !== null].empty) {
 
-			val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot), eClass.EPackage.packageInterfaceClassName)
+			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot)
+
 			val hm = newHashMap("nc" -> NotificationChain, "epit" -> ePackageInterfaceType,
 				"eil" -> ParameterizedTypeName.get(ClassName.get(InternalEList), ClassName.get(InternalEObject)),
 				"eilg" ->
@@ -145,8 +145,7 @@ class EClassImplementationCompiler {
 			existEOpposite && !isMultiple && !isContainment && isOppositeContainment
 		]
 		if (!eBasicRemoveFromContainerFeatureFields.empty) {
-			val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot), eClass.EPackage.packageInterfaceClassName)
-			val hm = newHashMap("epit" -> ePackageInterfaceType)
+			val hm = newHashMap("epit" -> eClass.packageIntClassName(packageRoot))
 
 			for (field : eBasicRemoveFromContainerFeatureFields) {
 				hm.put('''type«field.EType.name»'''.toString,
@@ -174,9 +173,7 @@ class EClassImplementationCompiler {
 		if (!eClass.EReferences.filter[it.containment || it.EOpposite !== null].empty) {
 						val eInverseRemoveCodeMap = newHashMap("il" ->
 							ParameterizedTypeName.get(ClassName.get(InternalEList), WildcardTypeName.subtypeOf(Object)),
-							"package" ->
-								ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
-									eClass.EPackage.packageInterfaceClassName))
+							"package" -> eClass.packageIntClassName(packageRoot))
 						val reteir = MethodSpec.methodBuilder('eInverseRemove').addAnnotation(Override).returns(
 							NotificationChain).addModifiers(PUBLIC).applyIfTrue(
 							dsl.dslProp.getProperty('truffle', "false") == "true", [
@@ -203,91 +200,95 @@ class EClassImplementationCompiler {
 	}
 	
 	def getESet(EClass eClass, Dsl dsl, String packageRoot) {
-		val namedMap = produceFeatureSwitchMap(eClass, packageRoot)
-		MethodSpec.methodBuilder('eSet').addAnnotation(Override)// TODO: add conditional SuppressWarning annotation here
-				.addParameter(int, 'featureID')
-				.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
-					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-				])
-				.addParameter(Object, 'newValue')
-				.addModifiers(PUBLIC)
-				.addNamedCode('''
-					switch (featureID) {
-						«FOR esf : eClass.EStructuralFeatures»
-							case $epit:T.«esf.name.normalizeUpperField(eClass.name)» :
-								«IF esf instanceof EAttribute»
-									«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-										set«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) newValue);
+		if (!eClass.EStructuralFeatures.empty) {
+			val namedMap = produceFeatureSwitchMap(eClass, packageRoot)
+			val ret = MethodSpec.methodBuilder('eSet').addAnnotation(Override) // TODO: add conditional SuppressWarning annotation here
+			.addParameter(int, 'featureID').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
+				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+			]).addParameter(Object, 'newValue').addModifiers(PUBLIC).addNamedCode('''
+				switch (featureID) {
+					«FOR esf : eClass.EStructuralFeatures»
+						case $epit:T.«esf.name.normalizeUpperField(eClass.name)» :
+							«IF esf instanceof EAttribute»
+								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
+									set«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) newValue);
+								«ELSE»
+									get«esf.name.toFirstUpper»().clear();
+									get«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
+								«ENDIF»
+							«ELSE»
+								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
+									set«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) newValue);
+								«ELSE»
+									«IF (esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry)»
+										(($esf:T)get«esf.name.toFirstUpper»()).set(newValue);
 									«ELSE»
 										get«esf.name.toFirstUpper»().clear();
 										get«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
 									«ENDIF»
-								«ELSE»
-									«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-										set«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) newValue);
-									«ELSE»
-										«IF (esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry)»
-											(($esf:T)get«esf.name.toFirstUpper»()).set(newValue);
-										«ELSE»
-											get«esf.name.toFirstUpper»().clear();
-											get«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
-										«ENDIF»
-									«ENDIF»
 								«ENDIF»
-								return;
-						«ENDFOR»
-					}
-					super.eSet(featureID, newValue);
-				''', namedMap).build
+							«ENDIF»
+							return;
+					«ENDFOR»
+				}
+				super.eSet(featureID, newValue);
+			''', namedMap).build
+			Optional.of(ret)
+		} else {
+			Optional.empty
+		}
 	}
 	
 	def getEIsSet(EClass eClass, Dsl dsl, String packageRoot) {
-		
-		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
-			eClass.EPackage.packageInterfaceClassName)
-		MethodSpec.methodBuilder('eIsSet').addAnnotation(Override).returns(
-			boolean).addParameter(int, 'featureID').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") ==
-			"true", [
-			addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-		]).addModifiers(PUBLIC).addCode( '''
-			switch (featureID) {
-				«FOR esf : eClass.EStructuralFeatures»
-					case $1T.«esf.name.normalizeUpperField(eClass.name)» :
-						«IF esf instanceof EAttribute»
-							«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-								return «esf.name.normalizeVarName» != «esf.name.toUpperCase»_EDEFAULT;
-							«ELSE»
-								return «esf.name.normalizeVarName» != null && !«esf.name.normalizeVarName».isEmpty();
-							«ENDIF»
-						«ELSE»
-							«IF esf.upperBound <= 1»
-								«IF (esf as EReference).EOpposite !== null && (esf as EReference).EOpposite.containment»
-									return get«esf.name.toFirstUpper»() != null;
+		if (!eClass.EStructuralFeatures.empty) {
+			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot)
+			
+			val ret = MethodSpec.methodBuilder('eIsSet').addAnnotation(Override).returns(boolean).addParameter(int,
+				'featureID').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
+				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+			]).addModifiers(PUBLIC).addCode( '''
+				switch (featureID) {
+					«FOR esf : eClass.EStructuralFeatures»
+						case $1T.«esf.name.normalizeUpperField(eClass.name)» :
+							«IF esf instanceof EAttribute»
+								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
+									return «esf.name.normalizeVarName» != «esf.name.toUpperCase»_EDEFAULT;
 								«ELSE»
-									«IF esf.upperBound == 0 || esf.upperBound == 1»
-										return «esf.name.normalizeVarName» != null;
-									«ELSE»
-										return «esf.name.normalizeVarName» != null && !«esf.name.normalizeVarName».isEmpty();
-									«ENDIF»
+									return «esf.name.normalizeVarName» != null && !«esf.name.normalizeVarName».isEmpty();
 								«ENDIF»
 							«ELSE»
-								throw new RuntimeException("Not Implemented");
+								«IF esf.upperBound <= 1»
+									«IF (esf as EReference).EOpposite !== null && (esf as EReference).EOpposite.containment»
+										return get«esf.name.toFirstUpper»() != null;
+									«ELSE»
+										«IF esf.upperBound == 0 || esf.upperBound == 1»
+											return «esf.name.normalizeVarName» != null;
+										«ELSE»
+											return «esf.name.normalizeVarName» != null && !«esf.name.normalizeVarName».isEmpty();
+										«ENDIF»
+									«ENDIF»
+								«ELSE»
+									throw new RuntimeException("Not Implemented");
+								«ENDIF»
 							«ENDIF»
-						«ENDIF»
-				«ENDFOR»
-			}
-			return super.eIsSet(featureID);
-		''', ePackageInterfaceType).build
+					«ENDFOR»
+				}
+				return super.eIsSet(featureID);
+			''', ePackageInterfaceType).build
+			Optional.of(ret)
+		} else {
+			Optional.empty
+		}
 	}
 	
 	def getEGet(EClass eClass, Dsl dsl, String packageRoot) {
-		val ePackageInterfaceType = ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
-			eClass.EPackage.packageInterfaceClassName)
-		MethodSpec.methodBuilder('eGet').addAnnotation(Override).returns(Object).
-			addParameter(int, 'featureID').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
+		if (!eClass.EStructuralFeatures.empty) {
+			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot) 
+			
+			val ret = MethodSpec.methodBuilder('eGet').addAnnotation(Override).returns(Object).addParameter(int,
+				'featureID').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
 				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-			]).addParameter(boolean, 'resolve').addParameter(boolean, 'coreType').addModifiers(PUBLIC).
-			addCode('''
+			]).addParameter(boolean, 'resolve').addParameter(boolean, 'coreType').addModifiers(PUBLIC).addCode('''
 				switch (featureID) {
 					«FOR esf : eClass.EStructuralFeatures»
 						case $1T.«esf.name.normalizeUpperField(eClass.name)» :
@@ -307,36 +308,44 @@ class EClassImplementationCompiler {
 				}
 				return super.eGet(featureID, resolve, coreType);
 			''', ePackageInterfaceType).build
+			Optional.of(ret)
+		} else {
+			Optional.empty
+		}
 	}
 	
 	def getEUnset(EClass eClass, Dsl dsl, String packageRoot) {
-		val namedMap = produceFeatureSwitchMap(eClass, packageRoot)
-		MethodSpec.methodBuilder('eUnset').addAnnotation(Override).
-			addParameter(int, 'featureID').addModifiers(PUBLIC).applyIfTrue(
-				dsl.dslProp.getProperty('truffle', "false") == "true", [
+		if (!eClass.EStructuralFeatures.empty) {
+			val namedMap = produceFeatureSwitchMap(eClass, packageRoot)
+			val ret = MethodSpec.methodBuilder('eUnset').addAnnotation(Override).addParameter(int, 'featureID').
+				addModifiers(PUBLIC).applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
 					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 				]).addNamedCode('''
-				switch (featureID) {
-					«FOR esf : eClass.EStructuralFeatures»
-						case $epit:T.«esf.name.normalizeUpperField(eClass.name)» :
-							«IF esf instanceof EAttribute»
-								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-									set«esf.name.toFirstUpper»(«esf.name.toUpperCase»_EDEFAULT);
+					switch (featureID) {
+						«FOR esf : eClass.EStructuralFeatures»
+							case $epit:T.«esf.name.normalizeUpperField(eClass.name)» :
+								«IF esf instanceof EAttribute»
+									«IF esf.upperBound <= 1 && esf.upperBound >= 0»
+										set«esf.name.toFirstUpper»(«esf.name.toUpperCase»_EDEFAULT);
+									«ELSE»
+										get«esf.name.toFirstUpper»().clear();
+									«ENDIF»
 								«ELSE»
-									get«esf.name.toFirstUpper»().clear();
+									«IF esf.upperBound <= 1 && esf.upperBound >= 0»
+										set«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) null);
+									«ELSE»
+										get«esf.name.toFirstUpper»().clear();
+									«ENDIF»
 								«ENDIF»
-							«ELSE»
-								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-									set«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) null);
-								«ELSE»
-									get«esf.name.toFirstUpper»().clear();
-								«ENDIF»
-							«ENDIF»
-							return;
-					«ENDFOR»
-				}
-				super.eUnset(featureID);
-			''', namedMap).build
+								return;
+						«ENDFOR»
+					}
+					super.eUnset(featureID);
+				''', namedMap).build
+			Optional.of(ret)
+		} else {
+			Optional.empty
+		}
 	}
 
 	def getEStaticClass(EClass eClass, Dsl dsl, String packageRoot) {
@@ -345,8 +354,7 @@ class EClassImplementationCompiler {
 				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 			]).addCode('''
 				return $T.Literals.$L;
-			''', ClassName.get(eClass.EPackage.packageInterfacePackageName(packageRoot),
-				eClass.EPackage.packageInterfaceClassName), eClass.name.normalizeUpperField).build
+			''', eClass.packageIntClassName(packageRoot), eClass.name.normalizeUpperField).build
 	}
 
 	def Iterable<MethodSpec> getMethodsEReferences(EClass eClass, String packageRoot, Dsl dsl,

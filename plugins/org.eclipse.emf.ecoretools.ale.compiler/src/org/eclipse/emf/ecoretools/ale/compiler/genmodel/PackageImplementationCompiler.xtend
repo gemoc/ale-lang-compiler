@@ -44,11 +44,10 @@ class PackageImplementationCompiler {
 		val isInitializedField = FieldSpec.builder(boolean, 'isInitialized').addModifiers(PRIVATE).
 			initializer('''false''').build
 
-		val packageInterfaceType = ClassName.get(abstractSyntax.packageInterfacePackageName(packageRoot),
-			abstractSyntax.packageInterfaceClassName)
+		val packageInterfaceType = abstractSyntax.packageIntClassName(packageRoot) 
+		
 		val packageInterfaceName = abstractSyntax.packageInterfaceClassName
-		val factoryInterfaceType = ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot),
-			abstractSyntax.factoryInterfaceClassName)
+		val factoryInterfaceType = abstractSyntax.factoryIntClassName(packageRoot) 
 
 		val test = '''«abstractSyntax.packageImplementationClassName»'''
 
@@ -197,7 +196,7 @@ class PackageImplementationCompiler {
 
 		val constructor = MethodSpec.constructorBuilder.addModifiers(PRIVATE).addCode('''
 			super(eNS_URI, $T.eINSTANCE);
-		''', ClassName.get(abstractSyntax.factoryInterfacePackageName(packageRoot), abstractSyntax.factoryInterfaceClassName)).build
+		''', abstractSyntax.factoryIntClassName(packageRoot)).build
 
 		val Map<EClass, List<MethodSpec>> accessorsMethods = newHashMap
 		for (EClass clazz : allClasses) {
