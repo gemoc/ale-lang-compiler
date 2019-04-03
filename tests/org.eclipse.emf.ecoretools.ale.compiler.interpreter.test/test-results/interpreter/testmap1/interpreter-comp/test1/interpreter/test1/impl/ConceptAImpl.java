@@ -12,7 +12,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test1.interpreter.test1.ConceptA;
+import test1.interpreter.test1.StringToIntegerMapEntry;
 import test1.interpreter.test1.Test1Package;
 
 public class ConceptAImpl extends MinimalEObjectImpl.Container implements ConceptA {
@@ -86,8 +88,9 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	}
 
 	public void exec() {
-		for (test1.interpreter.test1.StringToIntegerMapEntry c : this.cs) {
-		  c.call();
+		for (StringToIntegerMapEntry c : this.cs) {
+			LogService.log(c.getKey());
+			LogService.log(c.getValue());
 		}
 	}
 }

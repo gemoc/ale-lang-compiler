@@ -19,7 +19,7 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 	protected String key = KEY_EDEFAULT;
 
 	protected Integer value = VALUE_EDEFAULT;
-	
+
 	protected int hash = -1;
 
 	protected StringToIntegerMapEntryImpl() {

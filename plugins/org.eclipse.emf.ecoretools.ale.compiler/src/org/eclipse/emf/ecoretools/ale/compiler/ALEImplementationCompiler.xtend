@@ -31,7 +31,7 @@ class ALEImplementationCompiler {
 					case "interpreter":
 						new ALEInterpreterImplementationCompiler().compile(projectName, projectRoot, dsl, services)
 					case "visitor":
-						new ALEVisitorImplementationCompiler().compile(projectName, projectRoot, dsl)
+						new ALEVisitorImplementationCompiler().compile(projectName, projectRoot, dsl, services)
 					case "switch":
 						new ALESwitchImplementationCompiler().compile(projectName, projectRoot, dsl)
 					default:

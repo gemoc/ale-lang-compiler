@@ -46,8 +46,8 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 	new() {
 		this(newHashMap)
-		}
-		
+	}
+
 	new(Map<String, Class<?>> services) {
 		super(services)
 		this.queryEnvironment = createQueryEnvironment(false, null)
@@ -79,7 +79,6 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		Status.OK_STATUS
 	}
 
-
 	def private void compile(File projectRoot, String projectName) {
 		val compilationDirectory = "interpreter-comp"
 		val compileDirectory = new File(projectRoot, compilationDirectory)
@@ -95,9 +94,7 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		}
 
 		// load all syntaxes in a cache
-		syntaxes = dsl.allSyntaxes.toMap([it], [
-			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
-		])
+		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
 		resolved = resolve(aleClasses, syntax)
 

@@ -61,11 +61,15 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		newEnv
 	}
 
-	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
+	def IStatus compile(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
-		registerServices(projectName, parsedSemantics)
+		if (services !== null && !services.empty) {
+			this.registeredServices.putAll(services)
+		} else {
+			registerServices(projectName, parsedSemantics)
+		}
 
 		// must be last !
 		compile(projectRoot, projectName)
@@ -121,7 +125,6 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
-		// TODO: generate ecore + genmodel !
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
 			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
