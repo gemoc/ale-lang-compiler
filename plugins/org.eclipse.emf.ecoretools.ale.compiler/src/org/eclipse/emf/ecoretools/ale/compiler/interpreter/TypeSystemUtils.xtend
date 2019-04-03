@@ -14,10 +14,10 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
+import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 
 class TypeSystemUtils implements AbstractTypeSystem {
 

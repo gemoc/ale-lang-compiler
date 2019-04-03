@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler
+package org.eclipse.emf.ecoretools.ale.compiler.common
 
 import java.util.Collection
 import java.util.Comparator
@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import org.eclipse.emf.ecoretools.ale.compiler.AlexException
 
 class EcoreUtils {
 	var ResourceSetImpl rs = null

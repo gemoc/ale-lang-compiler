@@ -1,12 +1,12 @@
 package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 
-import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import com.squareup.javapoet.ClassName
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
+import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 class RevisitorNamingUtils extends AbstractNamingUtils {
 

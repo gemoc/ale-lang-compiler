@@ -8,7 +8,7 @@ import java.io.File
 import java.util.Map
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 
 import static javax.lang.model.element.Modifier.*
 

@@ -3,12 +3,12 @@ package org.eclipse.emf.ecoretools.ale.compiler
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.RevisitorNamingUtils
-import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
-
 
 /**
  * TODO: Migrate to Javapoet!

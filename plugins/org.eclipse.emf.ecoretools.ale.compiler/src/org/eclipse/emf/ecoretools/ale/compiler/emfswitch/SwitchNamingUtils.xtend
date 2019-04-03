@@ -3,8 +3,8 @@ package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EClass
 import com.squareup.javapoet.ClassName
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 
 class SwitchNamingUtils extends AbstractNamingUtils {
 	

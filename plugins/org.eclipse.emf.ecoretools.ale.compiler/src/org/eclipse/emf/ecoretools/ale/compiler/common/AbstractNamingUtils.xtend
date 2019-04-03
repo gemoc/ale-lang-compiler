@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler
+package org.eclipse.emf.ecoretools.ale.compiler.common
 
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum

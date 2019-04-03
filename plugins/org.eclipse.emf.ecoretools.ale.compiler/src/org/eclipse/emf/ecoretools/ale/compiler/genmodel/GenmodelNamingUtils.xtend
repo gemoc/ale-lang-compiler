@@ -1,10 +1,10 @@
 package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecoretools.ale.compiler.AbstractNamingUtils
-import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.codegen.util.CodeGenUtil
+import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 
 abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 	def String getIdentifier()
