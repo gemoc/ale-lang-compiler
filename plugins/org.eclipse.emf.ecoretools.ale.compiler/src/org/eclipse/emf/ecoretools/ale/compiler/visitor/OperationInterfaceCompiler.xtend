@@ -36,7 +36,7 @@ class OperationInterfaceCompiler {
 		this.syntaxes = syntaxes
 		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot, null)
 	}
-
+	
 	def compile(EClass eClass, ExtendedClass aleClass) {
 		val factory = TypeSpec.interfaceBuilder(namingUtils.operationInterfaceClassName(eClass)).
 			addSuperinterfaces(eClass.ESuperTypes.map [
@@ -73,34 +73,34 @@ class OperationInterfaceCompiler {
 		javaFile.writeTo(directory)
 	}
 	
-	def resolveType(EClassifier e) {
-		val stxs = syntaxes.values + #[(EcorePackage.eINSTANCE -> null)]
-		val stx = stxs.filter [
-			it.key.allClasses.exists [
-				it.name == e.name && it.EPackage.name == (e.eContainer as EPackage).name
-			]
-		].head
-
-		val gm = stx.value
-
-		if (gm !== null) {
-			if (e instanceof EClass) {
-				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
-			} else {
-				val GenClass gclass = gm.allGenPkgs.map [
-					it.genClasses.filter [
-						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
-					]
-				].flatten.head
-				val split = gclass.qualifiedInterfaceName.split("\\.")
-				val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
-				val cn = split.last
-				ClassName.get(pkg, cn)
-
-			}
-		} else {
-			ClassName.get("org.eclipse.emf.ecore", e.name)
-		}
-
-	}
+//	def resolveType(EClassifier e) {
+//		val stxs = syntaxes.values + #[(EcorePackage.eINSTANCE -> null)]
+//		val stx = stxs.filter [
+//			it.key.allClasses.exists [
+//				it.name == e.name && it.EPackage.name == (e.eContainer as EPackage).name
+//			]
+//		].head
+//
+//		val gm = stx.value
+//
+//		if (gm !== null) {
+//			if (e instanceof EClass) {
+//				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
+//			} else {
+//				val GenClass gclass = gm.allGenPkgs.map [
+//					it.genClasses.filter [
+//						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
+//					]
+//				].flatten.head
+//				val split = gclass.qualifiedInterfaceName.split("\\.")
+//				val pkg = newArrayList(split).reverse.tail.toList.reverse.join(".")
+//				val cn = split.last
+//				ClassName.get(pkg, cn)
+//
+//			}
+//		} else {
+//			ClassName.get("org.eclipse.emf.ecore", e.name)
+//		}
+//
+//	}
 }

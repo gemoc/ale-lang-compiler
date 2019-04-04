@@ -31,6 +31,9 @@ import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
+import org.eclipse.emf.ecore.EClassifier
+import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EEnum
 
 class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
@@ -100,12 +103,12 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val egc = new EcoreGenmodelCompiler(compilationDirectory, "interpreter")
 
-		val vnu = new VisitorNamingUtils
-		val fic = new FactoryInterfaceCompiler(vnu)
-		val fimplc = new FactoryImplementationCompiler(vnu)
+		val namingUtils = new VisitorNamingUtils
+		val fic = new FactoryInterfaceCompiler(namingUtils)
+		val fimplc = new FactoryImplementationCompiler(namingUtils)
 
-		val pic = new PackageInterfaceCompiler(vnu)
-		val pimplc = new PackageImplementationCompiler(vnu)
+		val pic = new PackageInterfaceCompiler(namingUtils)
+		val pimplc = new PackageImplementationCompiler(namingUtils)
 
 		val acceptInterfaceCompiler = new AcceptInterfaceCompiler(compileDirectory, packageRoot)
 		acceptInterfaceCompiler.compile
@@ -116,7 +119,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		val visitorImplementationCompiler = new VisitorImplementationCompiler(compileDirectory, syntaxes, packageRoot)
 		visitorImplementationCompiler.compile
 
-		val eic = new VisitorEClassInterfaceCompiler(vnu)
+		val eic = new VisitorEClassInterfaceCompiler(namingUtils)
 		val eimplc = new VisitorEClassImplementationCompiler(packageRoot, dsl)
 
 		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
@@ -126,21 +129,28 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
 		syntaxes.forEach [ key, pairEPackageGenModel |
-			fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
-			fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
+			try {
+				fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
-			pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
-			pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
-			for (EClass eclazz : pairEPackageGenModel.key.allClasses) {
-				val rc = resolved.filter[it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name].
-					head
-				eic.compileEClassInterface(eclazz, compileDirectory, packageRoot)
-				eimplc.compileEClassImplementation(eclazz, compileDirectory)
-				operationInterfaceCompiler.compile(eclazz, rc?.aleCls)
-				operationImplementationCompiler.compile(eclazz, rc?.aleCls)
+				val eClassifiersLst = pairEPackageGenModel.key.allClassifiers
+				for (EClassifier eclazz : eClassifiersLst.filter[!(it instanceof EDataType) || (it instanceof EEnum)]) {
+					val rc = resolved.filter [
+						it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name
+					].head
+					eic.compileEClassInterface(eclazz, compileDirectory, packageRoot)
+					eimplc.compileEClassImplementation(eclazz, compileDirectory)
+					if(eclazz instanceof EClass) {
+						operationInterfaceCompiler.compile(eclazz, rc?.aleCls)
+						operationImplementationCompiler.compile(eclazz, rc?.aleCls)
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace
 			}
-
 		]
 	}
 

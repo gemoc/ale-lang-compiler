@@ -70,7 +70,7 @@ class OperationImplementationCompiler {
 		this.syntaxes = syntaxes
 		this.es = es
 	}
-
+	
 	def compile(EClass eClass, ExtendedClass aleClass) {
 		
 		this.base = new BaseValidator(queryEnvironment, #[new TypeValidator])

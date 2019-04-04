@@ -51,8 +51,8 @@ class PackageInterfaceCompiler {
 	
 	def  getOrderedClassifiers(EPackage ePackage) {
 		val packageClasses = ePackage.EClassifiers.filter(EClass).getOrderedClasses(ePackage)
-		val packageEnums = ePackage.EClassifiers.filter(EEnum)
-		val packageEDT = ePackage.EClassifiers.filter(EDataType)
+		val packageEnums = ePackage.EClassifiers.filter(EEnum).toList
+		val packageEDT = ePackage.EClassifiers.filter(EDataType).filter[!packageEnums.contains(it)]
 		packageClasses + packageEnums + packageEDT
 	}
 

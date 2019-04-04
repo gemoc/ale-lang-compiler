@@ -296,8 +296,8 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		val lt = infereType(body.collectionExpression).head as SequenceType
 
 		if (lt.collectionType.type instanceof EClass) {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
-				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
+			builderSeed.beginControlFlow('''for($T $L: $L)''', (lt.collectionType.type as EClass).solveType,
+				body.variable, body.collectionExpression.compileExpression).compileBody(body.body).endControlFlow
 		} else {
 			val iteratorType = lt.collectionType.type.resolveType2
 			val iteratorName = body.variable

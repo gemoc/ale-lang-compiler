@@ -5,7 +5,7 @@
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
   <foreignModel>functioncall.ecore</foreignModel>
-  <genPackages prefix="Functioncall" disposableProviderFactory="true" ecorePackage="functioncall.ecore#/">
+  <genPackages prefix="Functioncall" basePackage="x.y.z" disposableProviderFactory="true" ecorePackage="functioncall.ecore#/">
     <genClasses ecoreClass="functioncall.ecore#//ConceptA"/>
     <genClasses ecoreClass="functioncall.ecore#//ConceptB"/>
     <genClasses ecoreClass="functioncall.ecore#//ConceptC">

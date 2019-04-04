@@ -11,6 +11,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
@@ -42,7 +43,11 @@ class VisitorTypeSystemUtil implements AbstractTypeSystem {
 	}
 
 	def dispatch TypeName resolveType2(EClassifier type) {
-		if (type.instanceClass !== null) {
+		if (type instanceof EEnum) {
+			type.resolveType
+		} else if (type instanceof EClass) {
+			type.resolveType
+		} else if (type.instanceClass !== null) {
 			TypeName.get(type.instanceClass)
 		} else {
 			type.resolveType
@@ -62,13 +67,15 @@ class VisitorTypeSystemUtil implements AbstractTypeSystem {
 		if (gm !== null) {
 			if (e instanceof EClass) {
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
-			} else {
+			} else if(e instanceof EEnum) {
+				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
+			}else {
 				val GenClassifier gclass = gm.allGenPkgs.map [
 					it.genClassifiers.filter [
 						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
 					]
 				].flatten.head
-				if (gclass instanceof GenClass) {
+				if(gclass instanceof GenClass) {
 					ClassName.get(gclass.qualifiedInterfaceName, gclass.name)
 				} else if (gclass instanceof GenEnum) {
 					ClassName.get(gclass.genPackage.interfacePackageName, gclass.name)
@@ -78,6 +85,7 @@ class VisitorTypeSystemUtil implements AbstractTypeSystem {
 		} else {
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
+
 	}
 
 	def infereType(Expression exp) {

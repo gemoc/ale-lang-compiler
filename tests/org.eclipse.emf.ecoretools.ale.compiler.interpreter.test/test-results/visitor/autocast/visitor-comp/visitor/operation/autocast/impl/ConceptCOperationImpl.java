@@ -33,7 +33,7 @@ public class ConceptCOperationImpl implements ConceptCOperation {
 	public void exec2() {
 		for(ConceptA a: this.it.getAx()) {
 			if(a instanceof ConceptB) {
-				ConceptB b = ((ConceptB)a);
+				ConceptB b = ((ConceptB) (a));
 				LogService.log(b.getName());
 			}
 		}

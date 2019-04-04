@@ -159,14 +159,17 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 								of('''«IF effectFull && method.operationRef.EType !==null»((«method.operationRef.EType.resolveType2»)«ENDIF»dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»})«IF effectFull && method.operationRef.EType !==null»)«ENDIF»''')
 						} else {
 							val hm = newHashMap()
-							hm.put("typecaller", call.arguments.head.infereType.head.type.resolveType2)
+							val itt = call.arguments.head.infereType
+							val lt = itt.head.type
+							hm.put("typecaller", lt.resolveType2)
+							hm.put("lhs", call.arguments.head.compileExpression(ctx))
 							for (param : call.arguments.tail.enumerate) {
 								hm.put("typeparam" + param.value, param.key.infereType.head.type.resolveType2)
+								hm.put("expr"+param.value, param.key.compileExpression(ctx))
 							}
 
 							CodeBlock.builder.
-								addNamed('''(($typecaller:T) «call.arguments.head.compileExpression(ctx)»).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«param.value»:T) («param.key.compileExpression(ctx)»)«ENDFOR»)''',
-									hm).build
+								addNamed('''(($typecaller:T) ($lhs:L)).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«param.value»:T) ($expr«param.value»:L)«ENDFOR»)''', hm).build
 						}
 					} else {
 						val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten.toList

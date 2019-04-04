@@ -119,10 +119,14 @@ class TypeSystemUtils implements AbstractTypeSystem {
 	}
 	
 	def dispatch TypeName resolveType2(EClassifier type) {
-		if (type.instanceClass !== null) {
+		if (type instanceof EEnum) {
+			type.resolveType
+		} else if (type instanceof EClass) {
+			type.resolveType
+		} else if (type.instanceClass !== null) {
 			TypeName.get(type.instanceClass)
 		} else {
 			type.resolveType
-		}	
+		}
 	}
 }

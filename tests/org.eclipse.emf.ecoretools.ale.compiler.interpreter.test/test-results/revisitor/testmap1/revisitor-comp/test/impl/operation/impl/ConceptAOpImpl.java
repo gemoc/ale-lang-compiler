@@ -23,5 +23,6 @@ public class ConceptAOpImpl implements ConceptAOp {
       LogService.log(c.getKey());
       LogService.log(c.getValue());
     }
+    LogService.log(execboa.MapService.containsKey(this.obj.getCs(), "ok"));
   }
 }

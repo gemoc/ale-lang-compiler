@@ -20,10 +20,10 @@ public class ConceptCOperationImpl implements ConceptCOperation {
 
 	public void exec1() {
 		((ConceptAOperation)this.it.getConcepta1().accept(vis)).fct1();
-		ConceptA tmpA = ((ConceptA)((ConceptAOperation)this.it.getConcepta1().accept(vis)).fct2());
+		ConceptA tmpA = ((ConceptA) (((ConceptAOperation)this.it.getConcepta1().accept(vis)).fct2()));
 		((ConceptAOperation)this.it.getConcepta2().accept(vis)).fct1();
-		ConceptA tmpB = ((ConceptA)((ConceptAOperation)this.it.getConcepta2().accept(vis)).fct2());
+		ConceptA tmpB = ((ConceptA) (((ConceptAOperation)this.it.getConcepta2().accept(vis)).fct2()));
 		((ConceptBOperation)this.it.getConceptb().accept(vis)).fct1();
-		ConceptB tmpC = ((ConceptB)((ConceptBOperation)this.it.getConceptb().accept(vis)).fct2());
+		ConceptB tmpC = ((ConceptB) (((ConceptBOperation)this.it.getConceptb().accept(vis)).fct2()));
 	}
 }

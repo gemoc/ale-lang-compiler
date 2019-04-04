@@ -3,9 +3,9 @@ package emfswitch.operation;
 import emfswitch.SwitchImplementation;
 import java.lang.Integer;
 import java.lang.String;
-import java.util.Objects;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import testoperationbody.ChildA;
 import testoperationbody.ConceptA;
@@ -44,8 +44,8 @@ public class MainOperation {
 		this.it.setSingleconcepta(TestoperationbodyFactory.eINSTANCE.createConceptA());
 		int a = ((int) (1));
 		ConceptA b = ((ConceptA) (TestoperationbodyFactory.eINSTANCE.createConceptA()));
-		EList<String> events = ((EList<String>)CollectionService.createEList("event1", "event2"));
-		EList<Integer> ax = ((EList<Integer>)CollectionService.createEList(1));
+		EList<String> events = ((EList<String>) (CollectionService.createEList("event1", "event2")));
+		EList<Integer> ax = ((EList<Integer>) (CollectionService.createEList(1)));
 		for (int i1: this.it.getListint()) {
 			CollectionService.size(this.it.getListint());
 			CollectionService.get(this.it.getListint(), 0);
@@ -67,8 +67,8 @@ public class MainOperation {
 			CollectionService.get(events, 0);
 			CollectionService.head(events);
 			CollectionService.isEmpty(events);
-			CollectionService.select(events, (x) -> !Objects.equals((x), ("ok")));
-			CollectionService.exists(events, (x) -> !Objects.equals((x), ("ok")));
+			CollectionService.select(events, (x) -> !EqualService.equals((x), ("ok")));
+			CollectionService.exists(events, (x) -> !EqualService.equals((x), ("ok")));
 		}
 		for (Integer i4: ax) {
 			CollectionService.size(ax);
@@ -91,10 +91,10 @@ public class MainOperation {
 		}
 		boolean truz = ((boolean) (!(false)));
 		boolean gt = ((boolean) ((1) > (2)));
-		boolean ne = ((boolean) ((((MainOperation) emfswitch.doSwitch(this.it)).ma()) != (42)));
+		boolean ne = ((boolean) (!EqualService.equals((((MainOperation) emfswitch.doSwitch(this.it)).ma()), (42))));
 		int x = ((int) ((CollectionService.get(this.it.getListint(), 0)) - (1)));
 		int xd = ((int) ((43) / (3)));
-		boolean eq = ((boolean) (Objects.equals((((MainOperation) emfswitch.doSwitch(this.it)).ma()), (CollectionService.head(this.it.getListint())))));
+		boolean eq = ((boolean) (EqualService.equals((((MainOperation) emfswitch.doSwitch(this.it)).ma()), (CollectionService.head(this.it.getListint())))));
 		boolean leq = ((boolean) ((12) <= (11)));
 		boolean geq = ((boolean) ((12.3) >= (11)));
 		double multpl = ((double) ((12.3) * (11.4)));

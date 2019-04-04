@@ -19,6 +19,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassImplementationComp
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecore.EEnum
 
 class VisitorEClassImplementationCompiler {
 	extension VisitorNamingUtils namingUtils
@@ -53,7 +54,11 @@ class VisitorEClassImplementationCompiler {
 		])
 	}
 
-	def compileEClassImplementation(EClass eClass, File directory) {
+	def dispatch compileEClassImplementation(EEnum eClass, File directory) {
+		// TODO
+	}
+
+	def dispatch compileEClassImplementation(EClass eClass, File directory) {
 		val factory = TypeSpec.classBuilder(eClass.classImplementationClassName)
 		.compileEcoreRelated(eClass, packageRoot, dsl)
 		.addAcceptMethod(eClass)

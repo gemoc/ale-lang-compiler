@@ -87,19 +87,24 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 			if (call.serviceName == 'aqlFeatureAccess') {
 				val t = infereType(call).head
 				if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-					CodeBlock.
-						of('''«call.arguments.head.compileExpression(ctx)».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+					CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression(ctx),
+						(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 				} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 					if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 						(t.type as EDataType).instanceClass == boolean))
-						CodeBlock.
-							of('''«call.arguments.head.compileExpression(ctx)».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+						CodeBlock.of('''$L.is()''', call.arguments.head.compileExpression(ctx),
+							(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 					else
-						CodeBlock.
-							of('''«call.arguments.head.compileExpression(ctx)».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+						CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression(ctx),
+							(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 				} else {
-					CodeBlock.
-						of('''«call.arguments.head.compileExpression(ctx)».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''')
+					CodeBlock.builder.addNamed('''$lhs:L.$rhs:L''',
+						newHashMap(
+							"lhs" -> call.arguments.head.compileExpression(ctx)	,						
+							"rhs" -> if (call.arguments.get(1) instanceof StringLiteral) '''get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
+								else call.arguments.get(1).compileExpression(ctx)
+						)
+					).build
 				}
 			} else if (call.serviceName == 'create') {
 				val e = call.arguments.get(0)

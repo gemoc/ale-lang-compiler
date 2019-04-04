@@ -458,10 +458,12 @@ class EClassImplementationCompiler {
 						case $1T.«esf.name.normalizeUpperField(eClass.name)» :
 							«IF esf instanceof EAttribute»
 								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-									«IF !esf.isPrimitive && !esf.isEnum  && esf.defaultValue !== null»
-									return «esf.name.toUpperCase»_EDEFAULT == null ? «esf.name.normalizeVarName» != null : !«esf.name.toUpperCase»_EDEFAULT.equals(«esf.name.normalizeVarName»);
-									«ELSE»
+									«IF esf.isPrimitive || esf.isEnum»
 									return «esf.name.normalizeVarName» != «esf.name.toUpperCase»_EDEFAULT;
+«««									«ELSEIF esf.defaultValue === null || esf.defaultValueLiteral == 'null'»
+«««									return «esf.name.normalizeVarName» != «esf.name.toUpperCase»_EDEFAULT;
+									«ELSE»
+									return «esf.name.toUpperCase»_EDEFAULT == null ? «esf.name.normalizeVarName» != null : !«esf.name.toUpperCase»_EDEFAULT.equals(«esf.name.normalizeVarName»);
 									«ENDIF»
 								«ELSE»
 									return «esf.name.normalizeVarName» != null && !«esf.name.normalizeVarName».isEmpty();

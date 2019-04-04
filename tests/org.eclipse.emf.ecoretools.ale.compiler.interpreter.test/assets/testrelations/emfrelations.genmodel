@@ -5,7 +5,7 @@
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="8.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
   <foreignModel>emfrelations.ecore</foreignModel>
-  <genPackages prefix="Emfrelations" disposableProviderFactory="true" ecorePackage="emfrelations.ecore#/">
+  <genPackages prefix="Emfrelations" basePackage="fr.mleduc.xp.emfrelations" disposableProviderFactory="true" ecorePackage="emfrelations.ecore#/">
     <genClasses ecoreClass="emfrelations.ecore#//ConceptA0">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emfrelations.ecore#//ConceptA0/conceptb0"/>
     </genClasses>

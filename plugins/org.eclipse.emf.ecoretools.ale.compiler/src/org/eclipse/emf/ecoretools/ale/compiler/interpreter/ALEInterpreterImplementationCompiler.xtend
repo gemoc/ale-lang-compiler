@@ -102,14 +102,14 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 		val egc = new EcoreGenmodelCompiler(compilationDirectory, "interpreter")
 
-		val inu = new InterpreterNamingUtils
-		val fic = new FactoryInterfaceCompiler(inu)
-		val fimplc = new FactoryImplementationCompiler(inu)
+		val namingUtils = new InterpreterNamingUtils
+		val fic = new FactoryInterfaceCompiler(namingUtils)
+		val fimplc = new FactoryImplementationCompiler(namingUtils)
 
-		val pic = new PackageInterfaceCompiler(inu)
-		val pimplc = new PackageImplementationCompiler(inu)
+		val pic = new PackageInterfaceCompiler(namingUtils)
+		val pimplc = new PackageImplementationCompiler(namingUtils)
 
-		val eic = new InterpreterEClassInterfaceCompiler(inu)
+		val eic = new InterpreterEClassInterfaceCompiler(namingUtils)
 		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
