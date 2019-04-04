@@ -7,9 +7,12 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.HashMap
+import java.util.List
+import java.util.Set
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
+import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.ENamedElement
 import org.eclipse.emf.ecore.EPackage
@@ -24,10 +27,38 @@ class PackageInterfaceCompiler {
 	new(GenmodelNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 	}
+	
+	def Iterable<EClass> getOrderedClasses(Iterable<EClass> classes, EPackage ePackage) {
+		val List<EClass> result = newArrayList
+		val Set<EClass> resultSet = newHashSet
+
+		val iter = classes.iterator
+		while (iter.hasNext) {
+			val List<EClass> extendChain = newLinkedList
+			val Set<EClass> visited = newHashSet
+			var genClass = iter.next
+			while (genClass !== null && visited.add(genClass)) {
+
+				if (ePackage == genClass.EPackage && resultSet.add(genClass)) {
+					extendChain.add(0, genClass)
+				}
+				genClass = genClass.ESuperTypes.head
+			}
+			result.addAll(extendChain)
+		}
+		result
+	}
+	
+	def  getOrderedClassifiers(EPackage ePackage) {
+		val packageClasses = ePackage.EClassifiers.filter(EClass).getOrderedClasses(ePackage)
+		val packageEnums = ePackage.EClassifiers.filter(EEnum)
+		val packageEDT = ePackage.EClassifiers.filter(EDataType)
+		packageClasses + packageEnums + packageEDT
+	}
 
 	def compilePackageInterface(EPackage abstractSyntax, File directory, String packageRoot) {
 
-		val allClasses = abstractSyntax.EClassifiers.filter(EClass)
+		val allClasses = abstractSyntax.EClassifiers.filter(EClass).getOrderedClasses(abstractSyntax)
 		val allEnums = abstractSyntax.EClassifiers.filter(EEnum)
 
 		val packageInterfaceType = abstractSyntax.packageIntClassName(packageRoot) 
@@ -101,7 +132,7 @@ class PackageInterfaceCompiler {
 
 		var tmpliteralType = TypeSpec.interfaceBuilder('Literals')
 
-		for (clazz : abstractSyntax.EClassifiers) {
+		for (clazz : abstractSyntax.orderedClassifiers) {
 			if (clazz instanceof EClass) {
 				tmpliteralType = tmpliteralType.addField(classFieldsLiterals.get(clazz))
 				for (esf : clazz.EStructuralFeatures) {
@@ -154,7 +185,7 @@ class PackageInterfaceCompiler {
 				if (esf.EContainingClass === clazz) {
 					fieldsAttributesFields.get(clazz).add(
 						FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).
-							initializer('''«FOR parentClazz: esf.EContainingClass.ESuperTypes»«parentClazz.name.normalizeUpperField»_FEATURE_COUNT + «ENDFOR»«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build
+							initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build // «FOR parentClazz: esf.EContainingClass.ESuperTypes»«parentClazz.name.normalizeUpperField»_FEATURE_COUNT + «ENDFOR»
 					)
 					cptrI = cptrI + 1
 				} else {
@@ -174,7 +205,7 @@ class PackageInterfaceCompiler {
 			addSuperinterface(EPackage).addField(eNameField).addField(eNSURIField).addField(eNSPrefixField).addField(
 				eInstanceField)
 
-		for (eClassifier : abstractSyntax.EClassifiers) {
+		for (eClassifier : abstractSyntax.orderedClassifiers) {
 			if (classFields.containsKey(eClassifier)) {
 				packageTmp = packageTmp.addField(classFields.get(eClassifier))
 			}
