@@ -1,0 +1,2 @@
+syntax=assets/testmaprelations/testmaprelations.ecore
+behavior=assets/testmaprelations/testmaprelations.ale
