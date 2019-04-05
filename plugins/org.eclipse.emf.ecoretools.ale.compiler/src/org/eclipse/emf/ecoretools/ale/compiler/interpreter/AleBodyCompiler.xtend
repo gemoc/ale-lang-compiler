@@ -29,6 +29,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
 
 class AleBodyCompiler {
 
@@ -100,12 +102,14 @@ class AleBodyCompiler {
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, VariableAssignment body,
 		CompilerExpressionCtx ctx) {
 			
-		// TODO ADD CAST !!!
+		val t = if(body.name == 'result') {
+			EcoreUtil2.getContainerOfType(body, MethodImpl).operationRef.EType.resolveType2
+		} else null
 		
-		/*TODO ADD CAAAAST */
 		builderSeed.addStatement(
-			CodeBlock.builder.addNamed('''$name:N = $expr:L''', newHashMap(
+			CodeBlock.builder.addNamed('''$name:N = «IF t !== null»($exprtype:T) ($expr:L) «ELSE»$expr:L«ENDIF»''', newHashMap(
 				"name" -> body.name,
+				"exprtype" -> t,
 				"expr" -> body.value.compileExpression(ctx)
 			)).build)
 	}

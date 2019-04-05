@@ -1,14 +1,17 @@
 package interpreter.boa.interpreter.boa.impl;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
+import execboa.MapService;
 import interpreter.boa.interpreter.boa.BoaPackage;
 import interpreter.boa.interpreter.boa.Ctx;
 import interpreter.boa.interpreter.boa.EvalRes;
 import interpreter.boa.interpreter.boa.Var;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class VarImpl extends ExprImpl implements Var {
 	protected static final String NAME_EDEFAULT = null;
@@ -68,18 +71,18 @@ public class VarImpl extends ExprImpl implements Var {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case BoaPackage.VAR__NAME :
-				return name != NAME_EDEFAULT;
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		if (execboa.MapService.containsKey((EMap)ctx.getEnv(), (String)this.name)) {
-			result = (EvalRes) execboa.MapService.getFromMap((EMap)ctx.getEnv(), (String)this.name);
+		if (MapService.containsKey((EMap) (ctx.getEnv()), (String) (this.name))) {
+			result = (EvalRes) (MapService.getFromMap((EMap) (ctx.getEnv()), (String) (this.name))) ;
 		}
 		else {
-			result = null;
+			result = (EvalRes) (null) ;
 		}
 		return result;
 	}

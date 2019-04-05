@@ -1,5 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
+import execboa.MapService;
 import interpreter.boa.interpreter.boa.Assign;
 import interpreter.boa.interpreter.boa.BoaPackage;
 import interpreter.boa.interpreter.boa.Ctx;
@@ -9,7 +10,6 @@ import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
@@ -35,60 +35,66 @@ public class AssignImpl extends ExprImpl implements Assign {
 		return BoaPackage.Literals.ASSIGN;
 	}
 
-	public void setLhs(Expr newLhs) {
-		if (newLhs != lhs) {
-			NotificationChain msgs = null;
-			if (lhs != null)
-				msgs = ((InternalEObject) lhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - interpreter.boa.interpreter.boa.BoaPackage.ASSIGN__LHS, null, msgs);
-			if (newLhs != null)
-				msgs = ((InternalEObject)newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - interpreter.boa.interpreter.boa.BoaPackage.ASSIGN__LHS, null, msgs);
-			msgs = basicSetLhs(newLhs, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, interpreter.boa.interpreter.boa.BoaPackage.ASSIGN__LHS, newLhs, newLhs));
+	public Expr getLhs() {
+		return lhs;
 	}
 
 	public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
 		Expr oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, interpreter.boa.interpreter.boa.BoaPackage.ASSIGN__LHS, oldLhs, newLhs);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.ASSIGN__LHS, oldLhs, newLhs);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Expr getLhs() {
-		return lhs;
+	public void setLhs(Expr newLhs) {
+		if (newLhs != lhs) {
+			NotificationChain msgs = null;
+			if (lhs != null)
+				msgs = ((InternalEObject) lhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BoaPackage.ASSIGN__LHS, null, msgs);
+			if (newLhs != null)
+				msgs = ((InternalEObject) newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BoaPackage.ASSIGN__LHS, null, msgs);
+			msgs = basicSetLhs(newLhs, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.ASSIGN__LHS, newLhs, newLhs));
 	}
 
-	public void setRhs(Expr newRhs) {
-		if (newRhs != rhs) {
-			NotificationChain msgs = null;
-			if (rhs != null)
-				msgs = ((InternalEObject) rhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - interpreter.boa.interpreter.boa.BoaPackage.ASSIGN__RHS, null, msgs);
-			if (newRhs != null)
-				msgs = ((InternalEObject)newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - interpreter.boa.interpreter.boa.BoaPackage.ASSIGN__RHS, null, msgs);
-			msgs = basicSetRhs(newRhs, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, interpreter.boa.interpreter.boa.BoaPackage.ASSIGN__RHS, newRhs, newRhs));
+	public Expr getRhs() {
+		return rhs;
 	}
 
 	public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
 		Expr oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, interpreter.boa.interpreter.boa.BoaPackage.ASSIGN__RHS, oldRhs, newRhs);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.ASSIGN__RHS, oldRhs, newRhs);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Expr getRhs() {
-		return rhs;
+	public void setRhs(Expr newRhs) {
+		if (newRhs != rhs) {
+			NotificationChain msgs = null;
+			if (rhs != null)
+				msgs = ((InternalEObject) rhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - BoaPackage.ASSIGN__RHS, null, msgs);
+			if (newRhs != null)
+				msgs = ((InternalEObject) newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BoaPackage.ASSIGN__RHS, null, msgs);
+			msgs = basicSetRhs(newRhs, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.ASSIGN__RHS, newRhs, newRhs));
 	}
 
 	public String getName() {
@@ -167,19 +173,19 @@ public class AssignImpl extends ExprImpl implements Assign {
 			case BoaPackage.ASSIGN__RHS :
 				return rhs != null;
 			case BoaPackage.ASSIGN__NAME :
-				return name != NAME_EDEFAULT;
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((Expr)this.lhs).eval((Ctx) ctx)));
-		EvalRes vrhs = ((EvalRes) (((Expr)this.rhs).eval((Ctx) ctx)));
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.lhs)).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.rhs)).eval((Ctx) (ctx))));
 		if (vlhs instanceof EvalMapRes) {
 			EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
-			if (execboa.MapService.containsKey((EMap)mvlhs.getValues(), (String)this.name)) {
-				execboa.MapService.put((EMap)mvlhs.getValues(), (String)this.name, (EvalRes)vrhs);
+			if (MapService.containsKey((EMap) (mvlhs.getValues()), (String) (this.name))) {
+				MapService.put((EMap) (mvlhs.getValues()), (String) (this.name), (EvalRes) (vrhs));
 				result = vrhs;
 			}
 			else {
