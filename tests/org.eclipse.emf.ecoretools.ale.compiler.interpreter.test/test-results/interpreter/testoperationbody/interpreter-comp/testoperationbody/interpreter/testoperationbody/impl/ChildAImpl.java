@@ -77,7 +77,7 @@ public class ChildAImpl extends ParentImpl implements ChildA {
 
 	public EnumA onlyA() {
 		EnumA result;
-		result = this.value;
+		result = (EnumA) (this.value);
 		return result;
 	}
 }

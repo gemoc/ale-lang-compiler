@@ -80,7 +80,7 @@ public class BoolImpl extends ExprImpl implements Bool {
 		EvalRes result;
 		EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 		ret.setValue(this.value);
-		result = ret;
+		result = (EvalRes) (ret) ;
 		return result;
 	}
 }

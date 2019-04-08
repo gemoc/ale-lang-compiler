@@ -1,15 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
+import execboa.MapService;
 import interpreter.boa.interpreter.boa.BObject;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
@@ -18,6 +9,17 @@ import interpreter.boa.interpreter.boa.EvalMapRes;
 import interpreter.boa.interpreter.boa.EvalRes;
 import interpreter.boa.interpreter.boa.Expr;
 import interpreter.boa.interpreter.boa.Field;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Collection;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 public class BObjectImpl extends ExprImpl implements BObject {
 	protected EList<Field> fields;
@@ -91,10 +93,10 @@ public class BObjectImpl extends ExprImpl implements BObject {
 		EvalRes result;
 		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 		for (Field x : this.getFields()) {
-			EvalRes v = ((EvalRes) (((Expr)x.getValue()).eval((Ctx) ctx)));
-			execboa.MapService.put((EMap)ret.getValues(), (String)x.getName(), (EvalRes)v);
+			EvalRes v = ((EvalRes) (((Expr) (x.getValue())).eval((Ctx) (ctx))));
+			MapService.put((EMap) (ret.getValues()), (String) (x.getName()), (EvalRes) (v));
 		}
-		result = ret;
+		result = (EvalRes) (ret) ;
 		return result;
 	}
 }

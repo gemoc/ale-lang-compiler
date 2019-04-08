@@ -20,7 +20,7 @@ public class SkipImpl extends ExprImpl implements Skip {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		result = BoaFactory.eINSTANCE.createEvalMapRes();
+		result = (EvalRes) (BoaFactory.eINSTANCE.createEvalMapRes()) ;
 		return result;
 	}
 }

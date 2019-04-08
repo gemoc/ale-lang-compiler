@@ -40,23 +40,21 @@ class EClassGetterCompiler {
 		this.namingUtils = namingUtils
 		this.icu = new CommonCompilerUtils(namingUtils)
 	}
-
-	def dispatch List<MethodSpec> compileGetter(EAttribute field, TypeName fieldType, String packageRoot, EClass eClass,
-		Dsl dsl, ClassName ePackageInterfaceType, boolean isMapElement) {
-		val isMultiple = field.upperBound > 1 || field.upperBound < 0
-		val ert = field.EGenericType.ERawType
-		val rt = ert.scopedInterfaceTypeRef(packageRoot)
-		if(isMapElement) {
-			val typedGetter = MethodSpec.methodBuilder('''getTyped«field.name.toFirstUpper»''')
-				.returns(rt)
-				.addModifiers(PUBLIC)
-				.addNamedCode('''
+	
+	def buildGetTyped(EStructuralFeature field, TypeName rt) {
+		MethodSpec.methodBuilder('''getTyped«field.name.toFirstUpper»''')
+			.returns(rt)
+			.addModifiers(PUBLIC)
+			.addNamedCode('''
 				return $name:L;
 				''', newHashMap(
-					"name" -> field.name.normalizeVarName
+				"name" -> field.name.normalizeVarName
 				))
-				.build
-			val typedSetter = MethodSpec
+			.build
+	}
+	
+	def buildSetTyped(EStructuralFeature field, TypeName rt, ClassName ePackageInterfaceType) {
+		MethodSpec
 				.methodBuilder('''setTyped«field.name.toFirstUpper»''')
 				.addParameter(rt, field.name.normalizeVarNewName)
 				.addModifiers(PUBLIC)
@@ -72,10 +70,20 @@ class EClassGetterCompiler {
 					"name" -> field.name.normalizeVarName,
 					"eni" -> ClassName.get(ENotificationImpl),
 					"package" -> ePackageInterfaceType,
-					"fieldName" -> field.name.normalizeUpperField(eClass.name),
+					"fieldName" -> field.name.normalizeUpperField(field.EContainingClass.name),
 					"notif" -> ClassName.get(Notification)
 				))
 				.build
+	}
+
+	def dispatch List<MethodSpec> compileGetter(EAttribute field, TypeName fieldType, String packageRoot, EClass eClass,
+		Dsl dsl, ClassName ePackageInterfaceType, boolean isMapElement) {
+		val isMultiple = field.upperBound > 1 || field.upperBound < 0
+		val ert = field.EGenericType.ERawType
+		val rt = ert.scopedInterfaceTypeRef(packageRoot)
+		if(isMapElement) {
+			val typedGetter = field.buildGetTyped(rt)
+			val typedSetter = field.buildSetTyped(rt, ePackageInterfaceType)
 			#[typedGetter, typedSetter]
 		} else if (!isMultiple) {
 			val getter = MethodSpec.
@@ -138,15 +146,7 @@ class EClassGetterCompiler {
 		val isOppositeContainment = existEOpposite && field.EOpposite.containment
 
 		if(isMapElement) {
-			val typedGetter = MethodSpec.methodBuilder('''getTyped«field.name.toFirstUpper»''')
-				.returns(rt)
-				.addModifiers(PUBLIC)
-				.addNamedCode('''
-				return $name:L;
-				''', newHashMap(
-					"name" -> field.name.normalizeVarName
-				))
-				.build
+			val typedGetter = buildGetTyped(field, rt)
 			val typedSetter = MethodSpec
 				.methodBuilder('''setTyped«field.name.toFirstUpper»''')
 				.addParameter(rt, field.name.normalizeVarNewName)

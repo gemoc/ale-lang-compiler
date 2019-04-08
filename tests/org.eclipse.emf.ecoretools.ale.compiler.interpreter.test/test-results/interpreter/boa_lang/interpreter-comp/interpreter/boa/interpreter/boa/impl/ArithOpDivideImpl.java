@@ -22,22 +22,22 @@ public class ArithOpDivideImpl extends ArithOpImpl implements ArithOpDivide {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((Expr)this.lhs).eval((Ctx) ctx)));
-		EvalRes vrhs = ((EvalRes) (((Expr)this.rhs).eval((Ctx) ctx)));
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.lhs)).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.rhs)).eval((Ctx) (ctx))));
 		if (vlhs instanceof EvalIntRes) {
 			if (vrhs instanceof EvalIntRes) {
 				EvalIntRes ivlhs = ((EvalIntRes) (vlhs));
 				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
 				EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
 				ret.setValue((ivlhs.getValue()) / (ivrhs.getValue()));
-				result = ret;
+				result = (EvalRes) (ret) ;
 			}
 			else {
-				result = null;
+				result = (EvalRes) (null) ;
 			}
 		}
 		else {
-			result = null;
+			result = (EvalRes) (null) ;
 		}
 		return result;
 	}

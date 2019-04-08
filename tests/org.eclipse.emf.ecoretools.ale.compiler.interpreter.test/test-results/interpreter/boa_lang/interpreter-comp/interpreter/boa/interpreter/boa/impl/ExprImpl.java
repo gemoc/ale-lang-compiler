@@ -20,11 +20,11 @@ public abstract class ExprImpl extends TopLevelCmdImpl implements Expr {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		result = null;
+		result = (EvalRes) (null) ;
 		return result;
 	}
 
 	public void nextLine(Ctx ctx) {
-		LogService.log(execboa.SerializeService.serialize(((interpreter.boa.interpreter.boa.Expr)this).eval((interpreter.boa.interpreter.boa.Ctx) ctx)));
+		LogService.log(execboa.SerializeService.serialize(((Expr) (this)).eval((Ctx) (ctx))));
 	}
 }

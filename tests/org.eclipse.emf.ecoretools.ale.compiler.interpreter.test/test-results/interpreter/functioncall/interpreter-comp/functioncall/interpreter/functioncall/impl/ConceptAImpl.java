@@ -22,7 +22,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public ConceptA fct2() {
 		ConceptA result;
-		result = FunctioncallFactory.eINSTANCE.createConceptA();
+		result = (ConceptA) (FunctioncallFactory.eINSTANCE.createConceptA()) ;
 		return result;
 	}
 }

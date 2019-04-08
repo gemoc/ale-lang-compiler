@@ -1,16 +1,15 @@
 package interpreter.boa.interpreter.boa.impl;
 
-import java.util.List;
-
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecore.EClass;
-
+import execboa.MapService;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
 import interpreter.boa.interpreter.boa.Ctx;
 import interpreter.boa.interpreter.boa.EvalMapRes;
 import interpreter.boa.interpreter.boa.EvalRes;
 import interpreter.boa.interpreter.boa.This;
+import java.lang.Override;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EClass;
 
 public class ThisImpl extends ExprImpl implements This {
 	protected ThisImpl() {
@@ -25,8 +24,8 @@ public class ThisImpl extends ExprImpl implements This {
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
 		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-		execboa.MapService.putAll((EMap)ret.getValues(), (EMap)ctx.getTh());
-		result = ret;
+		MapService.putAll((EMap) (ret.getValues()), (EMap) (ctx.getTh()));
+		result = (EvalRes) (ret) ;
 		return result;
 	}
 }

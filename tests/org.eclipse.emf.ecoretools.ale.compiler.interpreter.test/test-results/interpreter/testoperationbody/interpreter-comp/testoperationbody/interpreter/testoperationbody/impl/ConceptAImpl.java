@@ -18,7 +18,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public boolean op() {
 		boolean result;
-		result = false;
+		result = (boolean) (false);
 		return result;
 	}
 }

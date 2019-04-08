@@ -18,7 +18,7 @@ public class ConceptBImpl extends ConceptAImpl implements ConceptB {
 
 	public ConceptB fct2() {
 		ConceptB result;
-		result = FunctioncallFactory.eINSTANCE.createConceptB();
+		result = (ConceptB) (FunctioncallFactory.eINSTANCE.createConceptB()) ;
 		return result;
 	}
 }

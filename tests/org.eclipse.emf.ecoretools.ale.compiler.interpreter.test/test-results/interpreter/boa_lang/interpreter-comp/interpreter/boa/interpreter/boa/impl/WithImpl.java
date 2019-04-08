@@ -164,14 +164,14 @@ public class WithImpl extends ExprImpl implements With {
 				EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 				MapService.putAll((EMap) (ret.getValues()), (EMap) (mvlhs.getValues()));
 				MapService.putAll((EMap) (ret.getValues()), (EMap) (mvrhs.getValues()));
-				result = ret;
+				result = (EvalRes) (ret) ;
 			}
 			else {
-				result = null;
+				result = (EvalRes) (null) ;
 			}
 		}
 		else {
-			result = null;
+			result = (EvalRes) (null) ;
 		}
 		return result;
 	}

@@ -80,7 +80,7 @@ public class IntImpl extends ExprImpl implements Int {
 		EvalRes result;
 		EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
 		ret.setValue(this.value);
-		result = ret;
+		result = (EvalRes) (ret) ;
 		return result;
 	}
 }

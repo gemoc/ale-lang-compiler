@@ -186,14 +186,14 @@ public class AssignImpl extends ExprImpl implements Assign {
 			EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
 			if (MapService.containsKey((EMap) (mvlhs.getValues()), (String) (this.name))) {
 				MapService.put((EMap) (mvlhs.getValues()), (String) (this.name), (EvalRes) (vrhs));
-				result = vrhs;
+				result = (EvalRes) (vrhs) ;
 			}
 			else {
-				result = null;
+				result = (EvalRes) (null) ;
 			}
 		}
 		else {
-			result = null;
+			result = (EvalRes) (null) ;
 		}
 		return result;
 	}

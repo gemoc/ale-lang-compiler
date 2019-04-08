@@ -10,6 +10,7 @@ import interpreter.boa.interpreter.boa.EvalRes;
 import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class CmpOpEqualImpl extends CmpOpImpl implements CmpOpEqual {
 	protected CmpOpEqualImpl() {
@@ -23,22 +24,22 @@ public class CmpOpEqualImpl extends CmpOpImpl implements CmpOpEqual {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((Expr)this.lhs).eval((Ctx) ctx)));
-		EvalRes vrhs = ((EvalRes) (((Expr)this.rhs).eval((Ctx) ctx)));
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.lhs)).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.rhs)).eval((Ctx) (ctx))));
 		if (vlhs instanceof EvalIntRes) {
 			if (vrhs instanceof EvalIntRes) {
 				EvalIntRes ivlhs = ((EvalIntRes) (vlhs));
 				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
 				EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
-				ret.setValue(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((ivlhs.getValue()), (ivrhs.getValue())));
-				result = ret;
+				ret.setValue(EqualService.equals((ivlhs.getValue()), (ivrhs.getValue())));
+				result = (EvalRes) (ret) ;
 			}
 			else {
-				result = null;
+				result = (EvalRes) (null) ;
 			}
 		}
 		else {
-			result = null;
+			result = (EvalRes) (null) ;
 		}
 		return result;
 	}

@@ -22,7 +22,7 @@ public class ConceptBImpl extends ConceptAImpl implements ConceptB {
 
 	public int execB() {
 		int result;
-		result = 1;
+		result = (int) (1) ;
 		return result;
 	}
 }

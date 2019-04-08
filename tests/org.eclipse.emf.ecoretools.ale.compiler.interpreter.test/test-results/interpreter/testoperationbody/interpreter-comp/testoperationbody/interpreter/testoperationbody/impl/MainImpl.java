@@ -203,10 +203,10 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		this.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildA());
 		this.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildB());
 		for (Parent child : this.getChildren()) {
-			((Parent) child).overriden();
-			((Parent) child).notOverriden();
+			((Parent) (child)).overriden();
+			((Parent) (child)).notOverriden();
 			if (child instanceof ChildA) {
-				((ChildA) child).onlyA();
+				((ChildA) (child)).onlyA();
 			}
 		}
 	}
@@ -235,8 +235,8 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			CollectionService.get(this.getListconcepta(), 0);
 			CollectionService.head(this.getListconcepta());
 			CollectionService.isEmpty(this.getListconcepta());
-			CollectionService.select(this.getListconcepta(), (x) -> ((ConceptA) x).op());
-			CollectionService.exists(this.getListconcepta(), (x) -> ((ConceptA) x).op());
+			CollectionService.select(this.getListconcepta(), (x) -> ((ConceptA) (x)).op());
+			CollectionService.exists(this.getListconcepta(), (x) -> ((ConceptA) (x)).op());
 		}
 		for (String i3: events) {
 			CollectionService.size(events);
@@ -254,23 +254,23 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			CollectionService.select(ax, (x) -> (x) < (0));
 			CollectionService.exists(ax, (x) -> (x) < (0));
 		}
-		LogService.log(((Main) this).ma());
-		if ((((Main) this).ma()) < (12)) {
+		LogService.log(((Main) (this)).ma());
+		if ((((Main) (this)).ma()) < (12)) {
 			LogService.log("ok");
 		}
 		else {
 			LogService.log("fail");
 		}
 		int cptr = ((int) (1));
-		while ((cptr) < (((Main) this).ma())) {
+		while ((cptr) < (((Main) (this)).ma())) {
 			cptr = (cptr) + (1);
 		}
 		boolean truz = ((boolean) (!(false)));
 		boolean gt = ((boolean) ((1) > (2)));
-		boolean ne = ((boolean) (!EqualService.equals((((Main) this).ma()), (42))));
+		boolean ne = ((boolean) (!EqualService.equals((((Main) (this)).ma()), (42))));
 		int x = ((int) ((CollectionService.get(this.listint, 0)) - (1)));
 		int xd = ((int) ((43) / (3)));
-		boolean eq = ((boolean) (EqualService.equals((((Main) this).ma()), (CollectionService.head(this.listint)))));
+		boolean eq = ((boolean) (EqualService.equals((((Main) (this)).ma()), (CollectionService.head(this.listint)))));
 		boolean leq = ((boolean) ((12) <= (11)));
 		boolean geq = ((boolean) ((12.3) >= (11)));
 		double multpl = ((double) ((12.3) * (11.4)));
@@ -279,7 +279,7 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 
 	public int ma() {
 		int result;
-		result = 452;
+		result = (int) (452) ;
 		return result;
 	}
 }
