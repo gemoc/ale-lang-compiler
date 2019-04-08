@@ -11,6 +11,6 @@ public interface ConceptC extends EObject {
 	void exec1();
 
 	void exec2();
-	
+
 	void exec3();
 }

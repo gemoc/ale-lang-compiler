@@ -92,7 +92,7 @@ public class ConceptA1Impl extends MinimalEObjectImpl.Container implements Conce
 		}
 		return super.eIsSet(featureID);
 	}
-	
+
 	public void logBS() {
 		for (ConceptB1 b1 : this.getConceptb1()) {
 			LogService.log(b1);

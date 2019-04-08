@@ -71,7 +71,7 @@ public class ConceptBImpl extends ConceptAImpl implements ConceptB {
 		}
 		return super.eIsSet(featureID);
 	}
-	
+
 	public void callB() {
 	}
 }

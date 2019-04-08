@@ -67,9 +67,9 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY:
+			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY :
 				return getTypedKey();
-			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE:
+			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE :
 				if (resolve) return getTypedValue();
 				return basicGetTypedValue();
 		}
@@ -79,10 +79,10 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY:
+			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY :
 				setTypedKey((String)newValue);
 				return;
-			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE:
+			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE :
 				setTypedValue((EvalRes)newValue);
 				return;
 		}
@@ -92,10 +92,10 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY:
+			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY :
 				setTypedKey(KEY_EDEFAULT);
 				return;
-			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE:
+			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE :
 				setTypedValue((EvalRes)null);
 				return;
 		}
@@ -105,9 +105,9 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY:
+			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY :
 				return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
-			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE:
+			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE :
 				return value != null;
 		}
 		return super.eIsSet(featureID);
@@ -121,7 +121,6 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 		return hash;
 	}
 
-	
 	public void setHash(int hash) {
 		this.hash = hash;
 	}

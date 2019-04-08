@@ -37,11 +37,11 @@ public class CA0Impl extends MinimalEObjectImpl.Container implements CA0 {
 		}
 		return mapca0tocb0mapentry;
 	}
-	
+
 	public Map.Entry<CA0, CB0> basicGetMapca0tocb0mapentry() {
 		return mapca0tocb0mapentry;
 	}
-	
+
 	public NotificationChain basicSetMapca0tocb0mapentry(Map.Entry<CA0, CB0> newMapca0tocb0mapentry, NotificationChain msgs) {
 		Map.Entry<CA0, CB0> oldMapca0tocb0mapentry = mapca0tocb0mapentry;
 		mapca0tocb0mapentry = newMapca0tocb0mapentry;
@@ -51,7 +51,7 @@ public class CA0Impl extends MinimalEObjectImpl.Container implements CA0 {
 		}
 		return msgs;
 	}
-	
+
 	public void setMapca0tocb0mapentry(Map.Entry<CA0, CB0> newMapca0tocb0mapentry) {
 		if (newMapca0tocb0mapentry != mapca0tocb0mapentry) {
 			NotificationChain msgs = null;
@@ -69,57 +69,57 @@ public class CA0Impl extends MinimalEObjectImpl.Container implements CA0 {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY:
+			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY :
 				if (mapca0tocb0mapentry != null)
 					msgs = ((InternalEObject)mapca0tocb0mapentry).eInverseRemove(this, TestmaprelationsPackage.MAP_CA0_TO_CB0_MAP_ENTRY__KEY, Map.Entry.class, msgs);
 				return basicSetMapca0tocb0mapentry((Map.Entry<CA0, CB0>)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
-	
+
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY:
+			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY :
 				return basicSetMapca0tocb0mapentry(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
-	
+
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY:
+			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY :
 				if (resolve) return getMapca0tocb0mapentry();
 				return basicGetMapca0tocb0mapentry();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
-	
+
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY:
+			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY :
 				setMapca0tocb0mapentry((Map.Entry<CA0, CB0>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
 	}
-	
+
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY:
+			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY :
 				setMapca0tocb0mapentry((Map.Entry<CA0, CB0>)null);
 				return;
 		}
 		super.eUnset(featureID);
 	}
-	
+
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY:
+			case TestmaprelationsPackage.CA0__MAPCA0TOCB0MAPENTRY :
 				return mapca0tocb0mapentry != null;
 		}
 		return super.eIsSet(featureID);

@@ -55,65 +55,65 @@ public class TestmaprelationsFactoryImpl extends EFactoryImpl implements Testmap
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case TestmaprelationsPackage.MAP_CA0_TO_CB0_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA0_TO_CB0_MAP_ENTRY :
 			return (EObject) createMapCA0ToCB0MapEntry();
-		case TestmaprelationsPackage.CA0:
+		case TestmaprelationsPackage.CA0 :
 			return createCA0();
-		case TestmaprelationsPackage.CB0:
+		case TestmaprelationsPackage.CB0 :
 			return createCB0();
-		case TestmaprelationsPackage.MAP_CA1_TO_CB1_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA1_TO_CB1_MAP_ENTRY :
 			return (EObject) createMapCA1ToCB1MapEntry();
-		case TestmaprelationsPackage.CB1:
+		case TestmaprelationsPackage.CB1 :
 			return createCB1();
-		case TestmaprelationsPackage.CA1:
+		case TestmaprelationsPackage.CA1 :
 			return createCA1();
-		case TestmaprelationsPackage.CA2:
+		case TestmaprelationsPackage.CA2 :
 			return createCA2();
-		case TestmaprelationsPackage.CB2:
+		case TestmaprelationsPackage.CB2 :
 			return createCB2();
-		case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY :
 			return (EObject) createMapCA2ToCB2MapEntry();
-		case TestmaprelationsPackage.CB3:
+		case TestmaprelationsPackage.CB3 :
 			return createCB3();
-		case TestmaprelationsPackage.CA3:
+		case TestmaprelationsPackage.CA3 :
 			return createCA3();
-		case TestmaprelationsPackage.MAP_CA3_TO_CB3_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA3_TO_CB3_MAP_ENTRY :
 			return (EObject) createMapCA3ToCB3MapEntry();
-		case TestmaprelationsPackage.CA4:
+		case TestmaprelationsPackage.CA4 :
 			return createCA4();
-		case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY :
 			return (EObject) createMapCA4ToCB4MapEntry();
-		case TestmaprelationsPackage.CB4:
+		case TestmaprelationsPackage.CB4 :
 			return createCB4();
-		case TestmaprelationsPackage.CA5:
+		case TestmaprelationsPackage.CA5 :
 			return createCA5();
-		case TestmaprelationsPackage.CB5:
+		case TestmaprelationsPackage.CB5 :
 			return createCB5();
-		case TestmaprelationsPackage.MAP_CA5_TO_CB5_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA5_TO_CB5_MAP_ENTRY :
 			return (EObject) createMapCA5ToCB5MapEntry();
-		case TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY :
 			return (EObject) createMapCA6ToCB6MapEntry();
-		case TestmaprelationsPackage.CA6:
+		case TestmaprelationsPackage.CA6 :
 			return createCA6();
-		case TestmaprelationsPackage.CB6:
+		case TestmaprelationsPackage.CB6 :
 			return createCB6();
-		case TestmaprelationsPackage.CA7:
+		case TestmaprelationsPackage.CA7 :
 			return createCA7();
-		case TestmaprelationsPackage.MAP_CA7_TO_CB7_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA7_TO_CB7_MAP_ENTRY :
 			return (EObject) createMapCA7ToCB7MapEntry();
-		case TestmaprelationsPackage.CB7:
+		case TestmaprelationsPackage.CB7 :
 			return createCB7();
-		case TestmaprelationsPackage.CA8:
+		case TestmaprelationsPackage.CA8 :
 			return createCA8();
-		case TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY :
 			return (EObject) createMapCA8ToCB8MapEntry();
-		case TestmaprelationsPackage.CB8:
+		case TestmaprelationsPackage.CB8 :
 			return createCB8();
-		case TestmaprelationsPackage.MAP_CA9_TO_CB9_MAP_ENTRY:
+		case TestmaprelationsPackage.MAP_CA9_TO_CB9_MAP_ENTRY :
 			return (EObject) createMapCA9ToCB9MapEntry();
-		case TestmaprelationsPackage.CB9:
+		case TestmaprelationsPackage.CB9 :
 			return createCB9();
-		case TestmaprelationsPackage.CA9:
+		case TestmaprelationsPackage.CA9 :
 			return createCA9();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");

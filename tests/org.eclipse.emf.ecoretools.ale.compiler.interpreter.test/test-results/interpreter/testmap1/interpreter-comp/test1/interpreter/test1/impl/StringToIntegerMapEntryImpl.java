@@ -58,9 +58,9 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY:
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :
 				return getTypedKey();
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE:
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE :
 				return getTypedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -69,10 +69,10 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY:
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :
 				setTypedKey((String)newValue);
 				return;
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE:
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE :
 				setTypedValue((Integer)newValue);
 				return;
 		}
@@ -82,10 +82,10 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY:
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :
 				setTypedKey(KEY_EDEFAULT);
 				return;
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE:
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE :
 				setTypedValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -95,9 +95,9 @@ public class StringToIntegerMapEntryImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY:
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__KEY :
 				return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
-			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE:
+			case Test1Package.STRING_TO_INTEGER_MAP_ENTRY__VALUE :
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);

@@ -107,7 +107,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 		}
 		return msgs;
 	}
-	
+
 	public void setConceptb(ConceptB newConceptb) {
 		if (newConceptb != conceptb) {
 			NotificationChain msgs = null;

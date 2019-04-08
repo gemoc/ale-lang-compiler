@@ -16,24 +16,24 @@ import testmaprelations.interpreter.testmaprelations.CB4;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
 public class MapCA4ToCB4MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA4,CB4> {
-	
+
 	protected CA4 key;
-	
+
 	protected CB4 value;
-	
+
 	protected MapCA4ToCB4MapEntryImpl() {
 		super();
 	}
-	
+
 	@Override
 	protected EClass eStaticClass() {
 		return TestmaprelationsPackage.Literals.MAP_CA4_TO_CB4_MAP_ENTRY;
 	}
-	
+
 	public CA4 getTypedKey() {
 		return key;
 	}
-	
+
 	public NotificationChain basicSetTypedKey(CA4 newKey, NotificationChain msgs) {
 		CA4 oldKey = key;
 		key = newKey;
@@ -43,7 +43,7 @@ public class MapCA4ToCB4MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return msgs;
 	}
-	
+
 	public void setTypedKey(CA4 newKey) {
 		if (newKey != key) {
 			NotificationChain msgs = null;
@@ -57,11 +57,11 @@ public class MapCA4ToCB4MapEntryImpl extends MinimalEObjectImpl.Container implem
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY, newKey, newKey));
 	}
-	
+
 	public CB4 getTypedValue() {
 		return value;
 	}
-	
+
 	public NotificationChain basicSetTypedValue(CB4 newValue, NotificationChain msgs) {
 		CB4 oldValue = value;
 		value = newValue;
@@ -71,7 +71,7 @@ public class MapCA4ToCB4MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return msgs;
 	}
-	
+
 	public void setTypedValue(CB4 newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
@@ -85,83 +85,83 @@ public class MapCA4ToCB4MapEntryImpl extends MinimalEObjectImpl.Container implem
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE, newValue, newValue));
 	}
-	
+
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY :
 				if (key != null)
 					msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY, null, msgs);
 				return basicSetTypedKey((CA4)otherEnd, msgs);
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE :
 				if (value != null)
 					msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE, null, msgs);
 				return basicSetTypedValue((CB4)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
-	
+
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY :
 				return basicSetTypedKey(null, msgs);
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE :
 				return basicSetTypedValue(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
-	
+
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY :
 				return getTypedKey();
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE :
 				return getTypedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
-	
+
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY :
 				setTypedKey((CA4)newValue);
 				return;
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE :
 				setTypedValue((CB4)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
 	}
-	
+
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY :
 				setTypedKey((CA4)null);
 				return;
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE :
 				setTypedValue((CB4)null);
 				return;
 		}
 		super.eUnset(featureID);
 	}
-	
+
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__KEY :
 				return key != null;
-			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE:
+			case TestmaprelationsPackage.MAP_CA4_TO_CB4_MAP_ENTRY__VALUE :
 				return value != null;
 		}
 		return super.eIsSet(featureID);
 	}
-	
+
 	protected int hash = -1;
-	
+
 	public int getHash() {
 		if (hash == -1) {
 			Object theKey = getKey();
@@ -169,29 +169,29 @@ public class MapCA4ToCB4MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return hash;
 	}
-	
+
 	public void setHash(int hash) {
 		this.hash = hash;
 	}
-	
+
 	public CA4 getKey() {
 		return getTypedKey();
 	}
-	
+
 	public void setKey(CA4 key) {
 		setTypedKey(key);
 	}
-	
+
 	public CB4 getValue() {
 		return getTypedValue();
 	}
-	
+
 	public CB4 setValue(CB4 value) {
 		CB4 oldValue = getValue();
 		setTypedValue(value);
 		return oldValue;
 	}
-	
+
 	public EMap<CA4, CB4> getEMap() {
 		EObject container = eContainer();
 		return container == null ? null : (EMap<CA4, CB4>)container.eGet(eContainmentFeature());

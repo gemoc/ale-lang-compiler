@@ -28,22 +28,22 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 	protected EClass eStaticClass() {
 		return BoaPackage.Literals.FIELD;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.FIELD__NAME, oldName, name));
 	}
-	
+
 	public Expr getValue() {
 		return value;
 	}
-	
+
 	public NotificationChain basicSetValue(Expr newValue, NotificationChain msgs) {
 		Expr oldValue = value;
 		value = newValue;
@@ -53,7 +53,7 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 		}
 		return msgs;
 	}
-	
+
 	public void setValue(Expr newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
@@ -67,59 +67,59 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.FIELD__VALUE, newValue, newValue));
 	}
-	
+
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case BoaPackage.FIELD__VALUE:
+			case BoaPackage.FIELD__VALUE :
 				return basicSetValue(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
-	
+
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case BoaPackage.FIELD__NAME:
+			case BoaPackage.FIELD__NAME :
 				return getName();
-			case BoaPackage.FIELD__VALUE:
+			case BoaPackage.FIELD__VALUE :
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
-	
+
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case BoaPackage.FIELD__NAME:
+			case BoaPackage.FIELD__NAME :
 				setName((String)newValue);
 				return;
-			case BoaPackage.FIELD__VALUE:
+			case BoaPackage.FIELD__VALUE :
 				setValue((Expr)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
 	}
-	
+
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case BoaPackage.FIELD__NAME:
+			case BoaPackage.FIELD__NAME :
 				setName(NAME_EDEFAULT);
 				return;
-			case BoaPackage.FIELD__VALUE:
+			case BoaPackage.FIELD__VALUE :
 				setValue((Expr)null);
 				return;
 		}
 		super.eUnset(featureID);
 	}
-	
+
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case BoaPackage.FIELD__NAME:
+			case BoaPackage.FIELD__NAME :
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case BoaPackage.FIELD__VALUE:
+			case BoaPackage.FIELD__VALUE :
 				return value != null;
 		}
 		return super.eIsSet(featureID);

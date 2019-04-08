@@ -144,11 +144,11 @@ public interface KmLogoPackage extends EPackage {
 	int BLOCK_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
 	int CONTROL_STRUCTURE = 17;
-	
+
 	int CONTROL_STRUCTURE__CONDITION = INSTRUCTION_FEATURE_COUNT + 0;
 
 	int CONTROL_STRUCTURE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
-	
+
 	int CONTROL_STRUCTURE_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
 	int IF = 16;
@@ -362,11 +362,11 @@ public interface KmLogoPackage extends EPackage {
 	int VARIABLE_FEATURE_COUNT = 2;
 
 	int VARIABLE_OPERATION_COUNT = 0;
-	
+
 	int INTEGER = 39;
 
 	int BOOLEAN = 40;
-	
+
 	int STRING = 41;
 
 	EClass getInstruction();
@@ -518,11 +518,11 @@ public interface KmLogoPackage extends EPackage {
 	EAttribute getVariable_Name();
 
 	EAttribute getVariable_Value();
-	
+
 	EDataType getInteger();
 
 	EDataType getBoolean();
-	
+
 	EDataType getString();
 
 	KmLogoFactory getKmLogoFactory();
