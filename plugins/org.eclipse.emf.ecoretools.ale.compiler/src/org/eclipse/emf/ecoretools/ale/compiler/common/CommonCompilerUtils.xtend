@@ -11,7 +11,6 @@ import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
-import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
 

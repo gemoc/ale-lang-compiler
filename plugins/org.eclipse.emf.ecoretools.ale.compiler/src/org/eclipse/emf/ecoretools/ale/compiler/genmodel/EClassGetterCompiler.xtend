@@ -81,7 +81,10 @@ class EClassGetterCompiler {
 		field.buildSimpleGetter(fieldType, Optional.empty, isTyped)
 	}
 	
-	def buildSimpleMultipleGetter(EStructuralFeature field, TypeName fieldType, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped, String packageRoot) {
+	def buildSimpleMultipleGetter(EStructuralFeature field, TypeName fieldType, TypeName ePackageInterfaceType, boolean isTyped, String packageRoot) {
+		
+		val ert = field.EGenericType.ERawType
+		val rt = ert.scopedInterfaceTypeRef(packageRoot)
 		val lt = if(field.unique) {
 			ParameterizedTypeName.get(ClassName.get(EDataTypeUniqueEList), rt.box)
 		} else {
@@ -95,8 +98,10 @@ class EClassGetterCompiler {
 		)
 		
 		
-		MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').
-			returns(t).addNamedCode('''
+		MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
+			.returns(t)
+			.addComment('''CASE buildSimpleMultipleGetter''')
+			.addNamedCode('''
 				if («field.name.normalizeVarName» == null) {
 					«field.name.normalizeVarName» = new $listtype:T($rt:T.class, this, $epit:T.«field.normalizeUpperField»);
 				}
@@ -143,18 +148,22 @@ class EClassGetterCompiler {
 			)).addModifiers(PUBLIC).build
 	}
 	
-	def buildWithMultipleGetter(EStructuralFeature field, TypeName fieldType, Dsl dsl, TypeName ePackageInterfaceType, TypeName rt, boolean isTyped) {
-		MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).applyIfTrue(
-					dsl.dslProp.getProperty('truffle', "false") == "true", [
-						addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-					]).addModifiers(PUBLIC).addNamedCode('''
-					if («field.name.normalizeVarName» == null) {
-						«field.name.normalizeVarName» = new $eoce:T($rt:T.class, this, $epit:T.«field.normalizeUpperField»);
-					}
-					return «field.name.normalizeVarName»;
-				''',
-					newHashMap("eoce" -> ParameterizedTypeName.get(ClassName.get(EObjectResolvingEList), rt),
-						"epit" -> ePackageInterfaceType, "rt" -> rt)).build
+	def buildWithMultipleGetter(EStructuralFeature field, TypeName fieldType, Dsl dsl, TypeName ePackageInterfaceType, TypeName rt, boolean isTyped, String packageRoot) {
+		val simpleType = field.EType.scopedInterfaceTypeRef(packageRoot)
+		MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
+			.returns(fieldType)
+			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
+				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+			]).addModifiers(PUBLIC)
+			.addNamedCode('''
+				if («field.name.normalizeVarName» == null) {
+					«field.name.normalizeVarName» = new $eoce:T($rt:T.class, this, $epit:T.«field.normalizeUpperField»);
+				}
+				return «field.name.normalizeVarName»;
+				''',newHashMap(
+					"eoce" -> ParameterizedTypeName.get(ClassName.get(EObjectResolvingEList), simpleType),
+					"epit" -> ePackageInterfaceType, "rt" -> simpleType))
+			.build
 	}
 	
 	def buildBasicGetter(EStructuralFeature field, TypeName rt) {
@@ -254,6 +263,45 @@ class EClassGetterCompiler {
 				)).addModifiers(PUBLIC).build
 	}
 	
+	def buildWithOppositeWithMultipleGetter(EReference field, TypeName fieldType, TypeName rt, TypeName ePackageInterfaceType) {
+		val mapEntry = if( rt instanceof ParameterizedTypeName) rt.typeArguments.head else rt 
+		val entry = if(mapEntry instanceof ParameterizedTypeName) mapEntry.rawType else mapEntry
+		MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''')
+			.returns(rt)
+			.addNamedCode('''
+				if («field.name.normalizeVarName» == null) {
+					«field.name.normalizeVarName» = new $eowrel:T($ft:T.class, this, $epit:T.«field.normalizeUpperField», $epit:T.«field.EOpposite.normalizeUpperField»);
+				}
+				return «field.name.normalizeVarName»;
+			''', newHashMap(
+				"eowrel" ->
+					ParameterizedTypeName.get(ClassName.get(EObjectWithInverseResolvingEList), mapEntry),
+				"ft" -> entry,
+				"epit" -> ePackageInterfaceType
+			)).addModifiers(PUBLIC).build
+	}
+	
+	def buildWithOppositeWithMultipleWithOppositeMultiGetter(EReference field, TypeName fieldType, TypeName rt, TypeName ePackageInterfaceType) {
+		val mapEntry = if( rt instanceof ParameterizedTypeName) rt.typeArguments.head else rt 
+		val entry = if(mapEntry instanceof ParameterizedTypeName) mapEntry.rawType else mapEntry
+		MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''')
+			.returns(rt)
+			.addJavadoc('''buildWithOppositeWithMultipleWithOppositeMultiGetter''')
+			.addNamedCode('''
+				if («field.name.normalizeVarName» == null) {
+					«field.name.normalizeVarName» = new $eowrel:T($ft:T.class, this, $epit:T.«field.normalizeUpperField», $epit:T.«field.EOpposite.normalizeUpperField»);
+				}
+				return «field.name.normalizeVarName»;
+			''', newHashMap(
+				"eowrel" ->
+					ParameterizedTypeName.get(ClassName.get(EObjectWithInverseResolvingEList.ManyInverse), mapEntry),
+				"ft" -> entry,
+				"epit" -> ePackageInterfaceType
+			)).addModifiers(PUBLIC).build
+	}
+	
+	
+	
 	def buildWithOppositeWithContainementSetter(EReference field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
 		MethodSpec.methodBuilder('''set«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
 			.addParameter(rt, '''«field.name.normalizeVarNewName»''')
@@ -346,15 +394,13 @@ class EClassGetterCompiler {
 	def dispatch List<MethodSpec> compileAccessors(EAttribute field, TypeName fieldType, String packageRoot, EClass eClass,
 		Dsl dsl, ClassName ePackageInterfaceType, boolean isTyped) {
 		val isMultiple = field.upperBound > 1 || field.upperBound < 0
-		val ert = field.EGenericType.ERawType
-		val rt = ert.scopedInterfaceTypeRef(packageRoot)
 		
 		if (!isMultiple) {
 			val getter = field.buildSimpleGetter(fieldType, isTyped)
 			val setter = field.buildSimpleSetter(fieldType, ePackageInterfaceType, isTyped)
 			#[getter, setter]
 		} else {
-			val getter = field.buildSimpleMultipleGetter(fieldType, rt, ePackageInterfaceType, isTyped, packageRoot)
+			val getter = field.buildSimpleMultipleGetter(fieldType, ePackageInterfaceType, isTyped, packageRoot)
 			#[getter]
 		}
 
@@ -367,8 +413,7 @@ class EClassGetterCompiler {
 
 	def dispatch List<MethodSpec> compileAccessors(EReference field, TypeName fieldType, String packageRoot, EClass eClass,
 		Dsl dsl, ClassName ePackageInterfaceType, boolean isTyped) {
-		val ert = field.EGenericType.ERawType
-		val rt = ert.scopedInterfaceTypeRef(packageRoot)
+		val rt = field.computeFieldTypeEClass(packageRoot)
 		val isMultiple = field.upperBound > 1 || field.upperBound < 0
 		val existEOpposite = field.EOpposite !== null
 		val isOppositeMulti = existEOpposite && (field.EOpposite.upperBound > 1 || field.EOpposite.upperBound < 0)
@@ -416,31 +461,10 @@ class EClassGetterCompiler {
 			val setter = field.buildWithOppositeWithContainementSetter(rt, ePackageInterfaceType, isTyped) 
 			#[getter, basicSetter, setter]
 		} else if (existEOpposite && isMultiple && !isOppositeMulti && !isContainment && !isOppositeContainment) {
-			val getter = MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
-				addNamedCode('''
-					if («field.name.normalizeVarName» == null) {
-						«field.name.normalizeVarName» = new $eowrel:T($ft:T.class, this, $epit:T.«field.normalizeUpperField», $epit:T.«field.EOpposite.normalizeUpperField»);
-					}
-					return «field.name.normalizeVarName»;
-				''', newHashMap(
-					"eowrel" -> ParameterizedTypeName.get(ClassName.get(EObjectWithInverseResolvingEList), rt),
-					"ft" -> rt,
-					"epit" -> ePackageInterfaceType
-				)).addModifiers(PUBLIC).build
+			val getter = field.buildWithOppositeWithMultipleGetter(fieldType, rt, ePackageInterfaceType)
 			#[getter]
 		} else if (existEOpposite && isMultiple && isOppositeMulti && !isContainment && !isOppositeContainment) {
-			val getter = MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).
-				addNamedCode('''
-					if («field.name.normalizeVarName» == null) {
-						«field.name.normalizeVarName» = new $eowrel:T($ft:T.class, this, $epit:T.«field.normalizeUpperField», $epit:T.«field.EOpposite.normalizeUpperField»);
-					}
-					return «field.name.normalizeVarName»;
-				''', newHashMap(
-					"eowrel" ->
-						ParameterizedTypeName.get(ClassName.get(EObjectWithInverseResolvingEList.ManyInverse), rt),
-					"ft" -> rt,
-					"epit" -> ePackageInterfaceType
-				)).addModifiers(PUBLIC).build
+			val getter = field.buildWithOppositeWithMultipleWithOppositeMultiGetter(fieldType, rt, ePackageInterfaceType)
 			#[getter]
 		} else if (!existEOpposite && !isMultiple && !isContainment && !isOppositeContainment) {
 			val getter = MethodSpec.
@@ -491,7 +515,7 @@ class EClassGetterCompiler {
 			
 			#[getter, basicSetter, setter]
 		} else if (!existEOpposite && isMultiple && !isContainment) {
-			val getter = field.buildWithMultipleGetter(fieldType, dsl, ePackageInterfaceType, rt, isTyped)
+			val getter = field.buildWithMultipleGetter(fieldType, dsl, ePackageInterfaceType, rt, isTyped, packageRoot)
 			#[getter]
 		} else {
 			val getter = this.legacyCompileGetter(field, fieldType, packageRoot, eClass, dsl, ePackageInterfaceType)

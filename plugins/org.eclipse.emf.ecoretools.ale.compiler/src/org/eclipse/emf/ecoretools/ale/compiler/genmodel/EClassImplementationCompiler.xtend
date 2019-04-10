@@ -9,7 +9,6 @@ import com.squareup.javapoet.TypeName
 import com.squareup.javapoet.TypeSpec
 import com.squareup.javapoet.WildcardTypeName
 import java.util.Collection
-import java.util.List
 import java.util.Map
 import java.util.Optional
 import org.eclipse.emf.codegen.util.CodeGenUtil
@@ -29,7 +28,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecore.util.InternalEList
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.xtext.xbase.lib.Functions.Function2
