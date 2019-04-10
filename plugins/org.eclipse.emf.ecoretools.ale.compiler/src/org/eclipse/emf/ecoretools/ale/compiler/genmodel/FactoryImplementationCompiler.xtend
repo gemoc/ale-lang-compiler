@@ -19,6 +19,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 import static javax.lang.model.element.Modifier.*
+import java.util.Locale
+import org.eclipse.emf.codegen.util.CodeGenUtil
 
 class FactoryImplementationCompiler {
 
@@ -176,20 +178,22 @@ class FactoryImplementationCompiler {
 					// is map
 					val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 					val value = eClass.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-					ParameterizedTypeName.get(ClassName.get(Map.Entry), key.EType.scopedInterfaceTypeRef(packageRoot),
-						value.EType.scopedInterfaceTypeRef(packageRoot))
+					ParameterizedTypeName.get(ClassName.get(Map.Entry), key.resolveFieldType(packageRoot),
+						value.resolveFieldType(packageRoot))
 				} else {
 					ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 				}
 			val classImplType = ClassName.get(eClass.classImplementationPackageName(packageRoot),
 				eClass.classImplementationClassName)
 
+
+			val safeName = CodeGenUtil.uncapPrefixedName(eClass.name, false, Locale.^default).normalizeVarName
 			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''')
 				.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
 				.returns(returnType)
 				.addCode('''
-					$1T «eClass.name.normalizeVarName» = new $1T();
-					return «eClass.name.normalizeVarName»;
+					$1T «safeName» = new $1T();
+					return «safeName»;
 				''', classImplType)
 				.addModifiers(PUBLIC)
 				.build

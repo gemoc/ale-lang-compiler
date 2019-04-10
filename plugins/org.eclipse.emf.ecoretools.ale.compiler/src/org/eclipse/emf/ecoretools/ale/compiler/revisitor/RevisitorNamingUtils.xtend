@@ -20,6 +20,16 @@ class RevisitorNamingUtils extends AbstractNamingUtils {
 
 		'''«pkgName».«identifier»'''
 	}
+	
+	def String getRevisitorInterfacePath(GenPackage pkg) {
+		val pn = if(pkg.basePackage !== null && pkg.basePackage != '') {
+			pkg.basePackage
+		} else {
+			pkg.getEcorePackage.name
+		}
+		'''src/«FOR fragment: pn.split("\\.") SEPARATOR '/'»«fragment»«ENDFOR»/revisitor'''
+	
+	}
 
 	def String getRevisitorInterfaceName(GenPackage pkg) {
 		'''«pkg.getEcorePackage.name.toFirstUpper»Revisitor'''

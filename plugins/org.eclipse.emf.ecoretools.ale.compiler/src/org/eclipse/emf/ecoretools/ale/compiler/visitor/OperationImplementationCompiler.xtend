@@ -171,14 +171,18 @@ class OperationImplementationCompiler {
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body) {
 
-		val inft = body.initialValue.infereType.head
+		val inft = body.initialValue?.infereType?.head
 		if (inft instanceof SequenceType) {
 			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
 			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression)
 		} else {
 			val t = body.type.solveType
-			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression)
+			if(body.initialValue === null) {
+				builderSeed.addStatement('''$T $L = null''', t, body.name)
+			} else {
+				builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression)
+			}
 		}
 	}
 

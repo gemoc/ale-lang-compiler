@@ -13,7 +13,7 @@ import testmaprelations.interpreter.testmaprelations.CA6;
 import testmaprelations.interpreter.testmaprelations.CB6;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
-public class MapCA6ToCB6MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA6,CB6> {
+public class MapCA6ToCB6MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA6, CB6> {
 
 	protected CA6 key;
 

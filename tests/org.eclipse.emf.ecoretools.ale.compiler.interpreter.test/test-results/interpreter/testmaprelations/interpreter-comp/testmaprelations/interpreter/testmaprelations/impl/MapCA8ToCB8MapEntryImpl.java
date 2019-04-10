@@ -15,7 +15,7 @@ import testmaprelations.interpreter.testmaprelations.CA8;
 import testmaprelations.interpreter.testmaprelations.CB8;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
-public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA8,CB8> {
+public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA8, CB8> {
 
 	protected CA8 key;
 

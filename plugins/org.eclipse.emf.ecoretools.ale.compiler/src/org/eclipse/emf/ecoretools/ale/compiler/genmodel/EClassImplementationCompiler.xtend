@@ -62,24 +62,18 @@ class EClassImplementationCompiler {
 
 		val fieldsEAttributes = this.getFieldsEAttributes(eClass, packageRoot)
 		val fieldsEReferences = this.getFieldsEReferences(eClass, packageRoot, f2)
-		val methodsEReferences = this.getMethodsEReferences(eClass, packageRoot, dsl, ePackageInterfaceType,
-			isMapElement)
+		val methodsEReferences = this.getMethodsEReferences(eClass, packageRoot, dsl, ePackageInterfaceType, isMapElement)
 
 		val eStaticClassMethod = this.getEStaticClass(eClass, dsl, packageRoot)
-
 		val eSetMethod = this.getESet(eClass, dsl, packageRoot)
 		val eUnsetMethod = this.getEUnset(eClass, dsl, packageRoot)
 		val eGetMethod = this.getEGet(eClass, dsl, packageRoot)
 		val eIsSetMethod = this.getEIsSet(eClass, dsl, packageRoot)
 		val eInverseRemove = this.getEInverseRemove(eClass, dsl, packageRoot)
 		val eBasicRemoveFromContainerFeature = this.getEBasicRemoveFromContainerFeature(eClass, dsl, packageRoot)
-
 		val eInverseAdd = this.getEInverseAdd(eClass, dsl, packageRoot)
-		
-		
-		
-		val eMethods = #[eInverseAdd, eInverseRemove, eBasicRemoveFromContainerFeature, eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod].map[it.map[#[it]].orElse(#[])].flatten
-		
+		val eMethods = #[eInverseAdd, eInverseRemove, eBasicRemoveFromContainerFeature, eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod]
+			.map[it.map[#[it]].orElse(#[])].flatten
 		val eMapMethods = this.getEMapMethods(eClass, dsl, packageRoot)
 
 		val key = eClass.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
@@ -92,15 +86,13 @@ class EClassImplementationCompiler {
 		]).applyIfTrue(isMapElement, [
 			it.addSuperinterface(
 				ParameterizedTypeName.get(ClassName.get(BasicEMap.Entry),
-					key.EType.scopedInterfaceTypeRef(packageRoot).box,
-					value.EType.scopedInterfaceTypeRef(packageRoot).box))
+					key.resolveFieldType(packageRoot).box,
+					value.resolveFieldType(packageRoot).box))
 		])
 		.applyIfTrue(!hasSuperType, [
 			if (dsl.dslProp.getOrDefault("truffle", "false") == 'true') {
 				if (!eClass.EAnnotations.exists[it.source == 'RuntimeData']) {
-					superclass(
-						ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl",
-							"TruffleContainer"))
+					superclass(ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl", "TruffleContainer"))
 				} else {
 					superclass(ClassName.get(MinimalEObjectImpl.Container))
 				}
@@ -127,12 +119,16 @@ class EClassImplementationCompiler {
 		if (!isMapElement) {
 			#[]
 		} else {
-			val setHash = MethodSpec.methodBuilder('setHash').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") ==
-				"true", [
-				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-			]).addParameter(int, 'hash').addCode('''
+			val setHash = MethodSpec.methodBuilder('setHash')
+				.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
+					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+				])
+				.addParameter(int, 'hash')
+				.addCode('''
 				this.hash = hash;
-			''').addModifiers(PUBLIC).build
+				''')
+				.addModifiers(PUBLIC)
+				.build
 			val getHash = MethodSpec.methodBuilder('getHash').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") ==
 				"true", [
 				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
@@ -147,11 +143,8 @@ class EClassImplementationCompiler {
 			val keyField = eClass.EStructuralFeatures.filter[it.name == 'key'].head
 			val valueField = eClass.EStructuralFeatures.filter[it.name == 'value'].head
 			
-			val ekrt = keyField.EGenericType.ERawType
-			val krt = ekrt.scopedInterfaceTypeRef(packageRoot)
-			
-			val evrt = valueField.EGenericType.ERawType
-			val vrt = evrt.scopedInterfaceTypeRef(packageRoot)
+			val krt = keyField.resolveFieldType(packageRoot)
+			val vrt = valueField.resolveFieldType(packageRoot)
 			
 			val keyGetter = MethodSpec.methodBuilder('''getKey''')
 				.returns(krt)
@@ -159,12 +152,19 @@ class EClassImplementationCompiler {
 				return getTypedKey();
 				''')
 				.addModifiers(PUBLIC).build
+				
+			val isMultipleKey = keyField.upperBound > 1 || keyField.upperBound < 0
+			val isMultipleValue = valueField.upperBound > 1 || valueField.upperBound < 0
 
 			val keySetter = MethodSpec.methodBuilder('''setKey''')
 			.addParameter(krt, '''key''')
 			.addModifiers(PUBLIC)
 			.addCode('''
+			«IF isMultipleKey»
+			getTypedKey().addAll(key);
+			«ELSE»
 			setTypedKey(key);
+			«ENDIF»
 			''')
 			.build
 			val valueGetter = MethodSpec.methodBuilder('''getValue''')
@@ -179,7 +179,12 @@ class EClassImplementationCompiler {
 			.addModifiers(PUBLIC)
 			.addNamedCode('''
 			$rt:T oldValue = getValue();
+			«IF isMultipleValue»
+			getTypedValue().clear();
+			getTypedValue().addAll(value);
+			«ELSE»
 			setTypedValue(value);
+			«ENDIF»
 			return oldValue;
 			''', newHashMap(
 				"rt" -> vrt
@@ -300,7 +305,7 @@ class EClassImplementationCompiler {
 						NotificationChain, 'msgs').addNamedCode('''
 						switch (featureID) {
 							«FOR ref : eClass.EReferences.filter[it.EOpposite !== null]»
-								case $epit:T.«ref.name.normalizeUpperField(eClass.name)» :
+								case $epit:T.«ref.normalizeUpperField» :
 									«IF ref.upperBound == 0 || ref.upperBound == 1»
 										«IF ref.EOpposite !== null && ref.EOpposite.containment»
 											if (eInternalContainer() != null)
@@ -308,11 +313,11 @@ class EClassImplementationCompiler {
 											return basicSet«ref.name.toFirstUpper»(($«ref.name»eOppositeType:T) otherEnd, msgs);
 										«ELSEIF ref.EOpposite !== null && ref.containment»
 											if («ref.name» != null)
-												msgs = (($ieo:T) «ref.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - $epit:T.«ref.name.normalizeUpperField(ref.EOpposite.EType.name)», null, msgs);
+												msgs = (($ieo:T) «ref.name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - $epit:T.«ref.normalizeUpperField», null, msgs);
 											return basicSet«ref.name.toFirstUpper»(($«ref.name»eOppositeType:T) otherEnd, msgs);
 										«ELSE»
 											if («ref.name» != null)
-												msgs = (($ieo:T) «ref.name»).eInverseRemove(this, $epit:T.«ref.EOpposite.name.normalizeUpperField((ref.EOpposite.eContainer as EClass).name)», «(ref.EOpposite.eContainer as EClass).name».class, msgs);
+												msgs = (($ieo:T) «ref.name»).eInverseRemove(this, $epit:T.«ref.EOpposite.normalizeUpperField», «(ref.EOpposite.eContainer as EClass).name».class, msgs);
 											return basicSet«ref.name.toFirstUpper»(($«ref.name»eOppositeType:T) otherEnd, msgs);
 										«ENDIF»
 									«ELSE»
@@ -349,8 +354,8 @@ class EClassImplementationCompiler {
 					addNamedCode('''
 						switch (eContainerFeatureID()) {
 							«FOR field : eBasicRemoveFromContainerFeatureFields»
-								case $epit:T.«field.name.normalizeUpperField(eClass.name)» :
-									return eInternalContainer().eInverseRemove(this, $epit:T.«field.EOpposite.name.normalizeUpperField(field.EOpposite.EContainingClass.name)», $type«field.EType.name»:T.class, msgs);
+								case $epit:T.«field.normalizeUpperField» :
+									return eInternalContainer().eInverseRemove(this, $epit:T.«field.EOpposite.normalizeUpperField», $type«field.EType.name»:T.class, msgs);
 							«ENDFOR»
 						}
 						return super.eBasicRemoveFromContainerFeature(msgs);
@@ -375,7 +380,7 @@ class EClassImplementationCompiler {
 							ParameterSpec.builder(NotificationChain, 'msgs').build).addNamedCode('''
 							switch (featureID) {
 								«FOR ref : eClass.EReferences.filter[it.containment || it.EOpposite !== null]» 
-									case $package:T.«ref.name.normalizeUpperField(eClass.name)» :
+									case $package:T.«ref.normalizeUpperField» :
 										«IF ref.upperBound == 0 || ref.upperBound == 1»
 											return basicSet«ref.name.toFirstUpper»(null, msgs);
 										«ELSE»
@@ -400,23 +405,23 @@ class EClassImplementationCompiler {
 			]).addParameter(Object, 'newValue').addModifiers(PUBLIC).addNamedCode('''
 				switch (featureID) {
 					«FOR esf : eClass.EStructuralFeatures»
-						case $epit:T.«esf.name.normalizeUpperField(eClass.name)» :
+						case $epit:T.«esf.normalizeUpperField» :
 							«IF esf instanceof EAttribute»
 								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 									set«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) newValue);
 								«ELSE»
-									get«esf.name.toFirstUpper»().clear();
-									get«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
+									get«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»().clear();
+									get«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
 								«ENDIF»
 							«ELSE»
 								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-									set«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) newValue);
+									set«IF isMapElement»Typed«ENDIF»«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) newValue);
 								«ELSE»
 									«IF (esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry)»
-										(($esf:T)get«esf.name.toFirstUpper»()).set(newValue);
+										(($esf:T)get«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»()).set(newValue);
 									«ELSE»
-										get«esf.name.toFirstUpper»().clear();
-										get«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
+										get«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»().clear();
+										get«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
 									«ENDIF»
 								«ENDIF»
 							«ENDIF»
@@ -455,13 +460,11 @@ class EClassImplementationCompiler {
 			]).addModifiers(PUBLIC).addCode( '''
 				switch (featureID) {
 					«FOR esf : eClass.EStructuralFeatures»
-						case $1T.«esf.name.normalizeUpperField(eClass.name)» :
+						case $1T.«esf.normalizeUpperField» :
 							«IF esf instanceof EAttribute»
 								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 									«IF esf.isPrimitive || esf.isEnum»
 									return «esf.name.normalizeVarName» != «esf.name.toUpperCase»_EDEFAULT;
-«««									«ELSEIF esf.defaultValue === null || esf.defaultValueLiteral == 'null'»
-«««									return «esf.name.normalizeVarName» != «esf.name.toUpperCase»_EDEFAULT;
 									«ELSE»
 									return «esf.name.toUpperCase»_EDEFAULT == null ? «esf.name.normalizeVarName» != null : !«esf.name.toUpperCase»_EDEFAULT.equals(«esf.name.normalizeVarName»);
 									«ENDIF»
@@ -503,7 +506,7 @@ class EClassImplementationCompiler {
 			]).addParameter(boolean, 'resolve').addParameter(boolean, 'coreType').addModifiers(PUBLIC).addCode('''
 				switch (featureID) {
 					«FOR esf : eClass.EStructuralFeatures»
-						case $1T.«esf.name.normalizeUpperField(eClass.name)» :
+						case $1T.«esf.normalizeUpperField» :
 							«IF esf.EType.instanceClass !== null && esf.EType.instanceClass == Map.Entry»
 								if (coreType)
 									return get«esf.name.toFirstUpper»();
@@ -536,18 +539,18 @@ class EClassImplementationCompiler {
 				]).addNamedCode('''
 					switch (featureID) {
 						«FOR esf : eClass.EStructuralFeatures»
-							case $epit:T.«esf.name.normalizeUpperField(eClass.name)» :
+							case $epit:T.«esf.normalizeUpperField» :
 								«IF esf instanceof EAttribute»
 									«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 										set«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»(«esf.name.toUpperCase»_EDEFAULT);
 									«ELSE»
-										get«esf.name.toFirstUpper»().clear();
+										get«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»().clear();
 									«ENDIF»
 								«ELSE»
 									«IF esf.upperBound <= 1 && esf.upperBound >= 0»
-										set«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) null);
+										set«IF isMapElement»Typed«ENDIF»«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»(($fieldtype«esf.name»:T) null);
 									«ELSE»
-										get«esf.name.toFirstUpper»().clear();
+										get«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»().clear();
 									«ENDIF»
 								«ENDIF»
 								return;
@@ -573,29 +576,8 @@ class EClassImplementationCompiler {
 	def Iterable<MethodSpec> getMethodsEReferences(EClass eClass, String packageRoot, Dsl dsl,
 		ClassName ePackageInterfaceType, boolean isMapElement) {
 		eClass.EStructuralFeatures.map [ field |
-			val ert = field.EGenericType.ERawType
-			val rt = ert.scopedInterfaceTypeRef(packageRoot)
-			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val fieldType = if (isMultiple) {
-					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
-						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-						if (key !== null && value !== null) {
-							ParameterizedTypeName.get(ClassName.get(EMap),
-								key.EType.scopedInterfaceTypeRef(packageRoot).box,
-								value.EType.scopedInterfaceTypeRef(packageRoot).box)
-						} else {
-							ParameterizedTypeName.get(ClassName.get(EList), rt.box)
-						}
-					} else {
-						ParameterizedTypeName.get(ClassName.get(EList), rt.box)
-					}
-				} else
-					rt
-
-			
-			eClassGetterCompiler.compileGetter(field, fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, isMapElement)
-			
+			val fieldType = field.resolveFieldType(packageRoot)
+			eClassGetterCompiler.compileAccessors(field, fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, isMapElement)
 		].flatten
 	}
 

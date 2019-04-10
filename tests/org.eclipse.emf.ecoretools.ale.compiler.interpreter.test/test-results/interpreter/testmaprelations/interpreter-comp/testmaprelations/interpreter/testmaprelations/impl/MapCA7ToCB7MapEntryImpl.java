@@ -1,7 +1,8 @@
 package testmaprelations.interpreter.testmaprelations.impl;
 
+import java.lang.Object;
+import java.lang.Override;
 import java.util.Collection;
-
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -9,16 +10,16 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-
 import testmaprelations.interpreter.testmaprelations.CA7;
 import testmaprelations.interpreter.testmaprelations.CB7;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
-public class MapCA7ToCB7MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EList<CA7>,EList<CB7>> {
-
+public class MapCA7ToCB7MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EList<CA7>, EList<CB7>> {
 	protected EList<CA7> key;
 
 	protected EList<CB7> value;
+
+	protected int hash = -1;
 
 	protected MapCA7ToCB7MapEntryImpl() {
 		super();
@@ -59,11 +60,11 @@ public class MapCA7ToCB7MapEntryImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA7_TO_CB7_MAP_ENTRY__KEY :
 				getTypedKey().clear();
-				getTypedKey().addAll((Collection<? extends CA7>)newValue);
+				getTypedKey().addAll((Collection<? extends CA7>) newValue);
 				return;
 			case TestmaprelationsPackage.MAP_CA7_TO_CB7_MAP_ENTRY__VALUE :
 				getTypedValue().clear();
-				getTypedValue().addAll((Collection<? extends CB7>)newValue);
+				getTypedValue().addAll((Collection<? extends CB7>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -92,8 +93,6 @@ public class MapCA7ToCB7MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return super.eIsSet(featureID);
 	}
-
-	protected int hash = -1;
 
 	public int getHash() {
 		if (hash == -1) {

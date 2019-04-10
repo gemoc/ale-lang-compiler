@@ -91,9 +91,9 @@ class PackageImplementationCompiler {
 					«eClass.name.toFirstLower»EClass = createEClass(«eClass.name.normalizeUpperField»);
 					«FOR eAttr: eClass.EStructuralFeatures»
 						«IF eAttr instanceof EReference»
-							createEReference(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);
+							createEReference(«eClass.name.toFirstLower»EClass, «eAttr.normalizeUpperField»);
 						«ELSE»
-							createEAttribute(«eClass.name.toFirstLower»EClass, «eAttr.name.normalizeUpperField(eClass.name)»);
+							createEAttribute(«eClass.name.toFirstLower»EClass, «eAttr.normalizeUpperField»);
 						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»

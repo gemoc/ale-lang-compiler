@@ -15,7 +15,7 @@ import testmaprelations.interpreter.testmaprelations.CA2;
 import testmaprelations.interpreter.testmaprelations.CB2;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
-public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA2,CB2> {
+public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA2, CB2> {
 
 	protected CA2 key;
 

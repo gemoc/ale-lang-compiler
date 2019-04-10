@@ -17,7 +17,7 @@ import testmaprelations.interpreter.testmaprelations.CA9;
 import testmaprelations.interpreter.testmaprelations.CB9;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
-public class MapCA9ToCB9MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EList<CA9>,EList<CB9>> {
+public class MapCA9ToCB9MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EList<CA9>, EList<CB9>> {
 
 	protected EList<CA9> key;
 

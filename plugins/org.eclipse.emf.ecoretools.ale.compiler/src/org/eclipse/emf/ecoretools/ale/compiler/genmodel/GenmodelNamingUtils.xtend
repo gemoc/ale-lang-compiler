@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 import com.squareup.javapoet.ClassName
+import org.eclipse.emf.ecore.EStructuralFeature
 
 abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 
@@ -73,7 +74,15 @@ abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 		'''«CodeGenUtil.format(input, '_', '', false, false)»'''.toString.toUpperCase
 	}
 
-	def String normalizeUpperField(String input, String className) {
+	def String normalizeUpperField(EStructuralFeature esf) {
+		esf.name.normalizeUpperField(esf.EContainingClass.name)
+	}
+	
+	def String normalizeUpperField(EStructuralFeature esf, EClass eClass) {
+		esf.name.normalizeUpperField(eClass.name)
+	}
+
+	def private String normalizeUpperField(String input, String className) {
 		'''«CodeGenUtil.format(className, '_', '', false, false)»__«CodeGenUtil.format(input, '_', '', false, false)»'''.
 			toString.toUpperCase
 	}

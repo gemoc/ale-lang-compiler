@@ -89,7 +89,7 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 				if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
 					CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression(ctx),
 						(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
-				} else if (t.type instanceof EClass || t.type instanceof EDataType) {
+				} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
 					if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 						(t.type as EDataType).instanceClass == boolean))
 						CodeBlock.of('''$L.is()''', call.arguments.head.compileExpression(ctx),

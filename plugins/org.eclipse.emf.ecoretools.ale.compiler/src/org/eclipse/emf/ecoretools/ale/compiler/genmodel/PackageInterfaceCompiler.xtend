@@ -110,14 +110,14 @@ class PackageInterfaceCompiler {
 				newHashMap)
 			for (field : clazz.EReferences) {
 				classStructuralFeaturesLiterals.get(clazz).put(field,
-					FieldSpec.builder(EReference, field.name.normalizeUpperField(clazz.name)).
+					FieldSpec.builder(EReference, field.normalizeUpperField(clazz)).
 						initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC,
 							STATIC, FINAL).build)
 			}
 
 			for (field : clazz.EAllAttributes) {
 				classStructuralFeaturesLiterals.get(clazz).put(field,
-					FieldSpec.builder(EAttribute, field.name.normalizeUpperField(clazz.name)).
+					FieldSpec.builder(EAttribute, field.normalizeUpperField(clazz)).
 						initializer('''eINSTANCE.get«clazz.name»_«field.name.toFirstUpper»()''').addModifiers(PUBLIC,
 							STATIC, FINAL).build)
 			}
@@ -184,14 +184,14 @@ class PackageInterfaceCompiler {
 			for (esf : clazz.EAllStructuralFeatures) {
 				if (esf.EContainingClass === clazz) {
 					fieldsAttributesFields.get(clazz).add(
-						FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).
-							initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build // «FOR parentClazz: esf.EContainingClass.ESuperTypes»«parentClazz.name.normalizeUpperField»_FEATURE_COUNT + «ENDFOR»
+						FieldSpec.builder(int, esf.normalizeUpperField(clazz)).
+							initializer('''«cptrI+offset»''').addModifiers(PUBLIC, STATIC, FINAL).build
 					)
 					cptrI = cptrI + 1
 				} else {
 					fieldsAttributesFields.get(clazz).add(
-						FieldSpec.builder(int, esf.name.normalizeUpperField(clazz.name)).
-							initializer('''«esf.name.normalizeUpperField(esf.EContainingClass.name)»''').
+						FieldSpec.builder(int, esf.normalizeUpperField(clazz)).
+							initializer('''«esf.normalizeUpperField»''').
 							addModifiers(PUBLIC, STATIC, FINAL).build
 					)
 				}

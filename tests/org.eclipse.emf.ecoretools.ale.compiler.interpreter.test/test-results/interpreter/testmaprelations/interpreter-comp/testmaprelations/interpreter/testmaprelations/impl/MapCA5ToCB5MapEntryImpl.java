@@ -17,7 +17,7 @@ import testmaprelations.interpreter.testmaprelations.CA5;
 import testmaprelations.interpreter.testmaprelations.CB5;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
-public class MapCA5ToCB5MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EList<CA5>,EList<CB5>> {
+public class MapCA5ToCB5MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EList<CA5>, EList<CB5>> {
 
 	protected EList<CA5> key;
 
