@@ -30,6 +30,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecore.EObject
 
 class EClassGetterCompiler {
 
@@ -40,41 +41,6 @@ class EClassGetterCompiler {
 	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu) {
 		this.namingUtils = namingUtils
 		this.icu = ccu
-	}
-	
-	def buildGetTyped(EStructuralFeature field, TypeName rt) {
-		MethodSpec.methodBuilder('''getTyped«field.name.toFirstUpper»''')
-			.returns(rt)
-			.addModifiers(PUBLIC)
-			.addNamedCode('''
-				return $name:L;
-				''', newHashMap(
-				"name" -> field.name.normalizeVarName
-				))
-			.build
-	}
-	
-	def buildSetTyped(EStructuralFeature field, TypeName rt, ClassName ePackageInterfaceType) {
-		MethodSpec
-			.methodBuilder('''setTyped«field.name.toFirstUpper»''')
-			.addParameter(rt, field.name.normalizeVarNewName)
-			.addModifiers(PUBLIC)
-			.addNamedCode('''
-			$rt:T $oldName:L = $name:L;
-			$name:L = $newName:L;
-			if (eNotificationRequired())
-				eNotify(new $eni:T(this, $notif:T.SET, $package:T.$fieldName:L, $oldName:L, $name:L));
-			''', newHashMap(
-				"rt" -> rt,
-				"oldName" -> field.name.normalizeVarOldName,
-				"newName" -> field.name.normalizeVarNewName,
-				"name" -> field.name.normalizeVarName,
-				"eni" -> ClassName.get(ENotificationImpl),
-				"package" -> ePackageInterfaceType,
-				"fieldName" -> field.normalizeUpperField,
-				"notif" -> ClassName.get(Notification)
-			))
-			.build
 	}
 	
 	def buildSimpleGetter(EStructuralFeature field, TypeName fieldType, boolean isTyped) {
@@ -166,8 +132,8 @@ class EClassGetterCompiler {
 			.build
 	}
 	
-	def buildBasicGetter(EStructuralFeature field, TypeName rt) {
-		MethodSpec.methodBuilder('''basicGet«field.name.toFirstUpper»''').returns(rt).addCode('''
+	def buildBasicGetter(EStructuralFeature field, TypeName rt, boolean isTyped) {
+		MethodSpec.methodBuilder('''basicGet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(rt).addCode('''
 			return «field.name.normalizeVarName»;
 		''').addModifiers(PUBLIC).build
 	}
@@ -217,8 +183,8 @@ class EClassGetterCompiler {
 			.build
 	}
 	
-	def buildBasicSetter(EStructuralFeature field, TypeName rt, TypeName ePackageInterfaceType) {
-		MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''').returns(
+	def buildBasicSetter(EStructuralFeature field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
+		MethodSpec.methodBuilder('''basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(
 			NotificationChain).addParameter(rt, '''«field.name.normalizeVarNewName»''').addParameter(NotificationChain,
 			'msgs').addModifiers(PUBLIC).addNamedCode('''
 			$fieldType:T «field.name.normalizeVarOldName» = «field.name.normalizeVarName»;
@@ -239,6 +205,22 @@ class EClassGetterCompiler {
 		)).build
 	}
 	
+	def buildWithOppositeWithOppositeContainmentBasicSetter(EStructuralFeature field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
+		MethodSpec.methodBuilder('''basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
+			.returns(NotificationChain)
+			.addParameter(rt, field.name.normalizeVarNewName)
+			.addParameter(NotificationChain, 'msgs')
+			.addNamedCode('''
+			msgs = eBasicSetContainer(($ieo:T) «field.name.normalizeVarNewName», $epit:T.«field.normalizeUpperField», msgs);
+			return msgs;
+			''', newHashMap(
+				"epit" -> ePackageInterfaceType,
+				"ieo" -> ClassName.get(InternalEObject)
+			))
+			.addModifiers(PUBLIC)
+			.build
+	}
+	
 	def buildWithOppositeSetter(EReference field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
 		MethodSpec.methodBuilder('''set«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').
 			addParameter(rt, '''«field.name.normalizeVarNewName»''').addNamedCode('''
@@ -248,7 +230,7 @@ class EClassGetterCompiler {
 						msgs = (($ieo:T) «field.name.normalizeVarName»).eInverseRemove(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldType:T.class, msgs);
 					if («field.name.normalizeVarNewName» != null)
 						msgs = (($ieo:T) «field.name.normalizeVarNewName»).eInverseAdd(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldType:T.class, msgs);
-					msgs = basicSet«field.name.toFirstUpper»(«field.name.normalizeVarNewName», msgs);
+					msgs = basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»(«field.name.normalizeVarNewName», msgs);
 					if (msgs != null)
 						msgs.dispatch();
 				} else if (eNotificationRequired())
@@ -261,6 +243,28 @@ class EClassGetterCompiler {
 				"eni" -> ClassName.get(ENotificationImpl),
 				"notif" -> ClassName.get(Notification)
 				)).addModifiers(PUBLIC).build
+	}
+	
+	def buildWithContainmentSetter(EStructuralFeature field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
+		MethodSpec.methodBuilder('''basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(
+				NotificationChain).addParameter(rt, '''«field.name.normalizeVarNewName»''').addParameter(NotificationChain,
+				'msgs').addModifiers(PUBLIC).addNamedCode('''
+				$fieldType:T «field.name.normalizeVarOldName» = «field.name.normalizeVarName»;
+				«field.name.normalizeVarName» = «field.name.normalizeVarNewName»;
+				if (eNotificationRequired()) {
+					$eni:T notification = new $eni:T(this, $notif:T.SET, $epit:T.«field.normalizeUpperField», «field.name.normalizeVarOldName», «field.name.normalizeVarNewName»);
+					if (msgs == null)
+						msgs = notification;
+					else
+						msgs.add(notification);
+				}
+				return msgs;
+			''', newHashMap(
+				"fieldType" -> rt,
+				"eni" -> ClassName.get(ENotificationImpl),
+				"notif" -> ClassName.get(Notification),
+				"epit" -> ePackageInterfaceType
+			)).build
 	}
 	
 	def buildWithOppositeWithMultipleGetter(EReference field, TypeName fieldType, TypeName rt, TypeName ePackageInterfaceType) {
@@ -286,7 +290,6 @@ class EClassGetterCompiler {
 		val entry = if(mapEntry instanceof ParameterizedTypeName) mapEntry.rawType else mapEntry
 		MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''')
 			.returns(rt)
-			.addJavadoc('''buildWithOppositeWithMultipleWithOppositeMultiGetter''')
 			.addNamedCode('''
 				if («field.name.normalizeVarName» == null) {
 					«field.name.normalizeVarName» = new $eowrel:T($ft:T.class, this, $epit:T.«field.normalizeUpperField», $epit:T.«field.EOpposite.normalizeUpperField»);
@@ -335,13 +338,13 @@ class EClassGetterCompiler {
 			.addParameter(rt, field.name.normalizeVarNewName)
 			.addNamedCode('''
 			if («field.name.normalizeVarNewName» != eInternalContainer() || (eContainerFeatureID() != $epit:T.«field.normalizeUpperField» && «field.name.normalizeVarNewName» != null)) {
-				if ($eu:T.isAncestor(this, «field.name.normalizeVarNewName»))
+				if ($eu:T.isAncestor(this, ($eot:T) «field.name.normalizeVarNewName»))
 					throw new $iae:T("Recursive containment not allowed for " + toString());
 				$nc:T msgs = null;
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				if («field.name.normalizeVarNewName» != null)
-					msgs = (($ieo:T) «field.name.normalizeVarNewName»).eInverseAdd(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldType:T.class, msgs);
+					msgs = (($ieo:T) «field.name.normalizeVarNewName»).eInverseAdd(this, $epit:T.«field.EOpposite.normalizeUpperField», $rawfieldType:T.class, msgs);
 				msgs = basicSet«field.name.toFirstUpper»(«field.name.normalizeVarNewName», msgs);
 				if (msgs != null)
 					msgs.dispatch();
@@ -354,8 +357,10 @@ class EClassGetterCompiler {
 				"nc" -> ClassName.get(NotificationChain),
 				"ieo" -> ClassName.get(InternalEObject),
 				"fieldType" -> rt,
+				"rawfieldType" -> if(rt instanceof ParameterizedTypeName) rt.rawType else rt,
 				"eni" -> ClassName.get(ENotificationImpl),
-				"notif" -> ClassName.get(Notification)
+				"notif" -> ClassName.get(Notification),
+				"eot" -> ClassName.get(EObject)
 			))
 			.addModifiers(PUBLIC)
 			.build 
@@ -382,7 +387,7 @@ class EClassGetterCompiler {
 					if («newName» != null)
 						msgs = (($2T) «newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - $5T.«field.normalizeUpperField», null, msgs);
 				«ENDIF»
-				msgs = basicSet«name.toFirstUpper»(«newName», msgs);
+				msgs = basicSet«IF isTyped»Typed«ENDIF»«name.toFirstUpper»(«newName», msgs);
 				if (msgs != null)
 					msgs.dispatch();
 			} else if (eNotificationRequired())
@@ -422,8 +427,8 @@ class EClassGetterCompiler {
 
 		if (existEOpposite && !isMultiple && !isContainment && !isOppositeContainment) {
 			val getter = field.buildWithOppositeGetter(rt, ePackageInterfaceType, isTyped) 
-			val basicGetter = field.buildBasicGetter(rt)
-			val basicSetter = field.buildBasicSetter(rt, ePackageInterfaceType)
+			val basicGetter = field.buildBasicGetter(rt, isTyped)
+			val basicSetter = field.buildBasicSetter(rt, ePackageInterfaceType, isTyped)
 			val setter = field.buildWithOppositeSetter(rt, ePackageInterfaceType, isTyped)
 			#[getter, basicGetter, basicSetter, setter]
 		}  else if (existEOpposite && !isMultiple && !isContainment && isOppositeContainment) {
@@ -439,25 +444,12 @@ class EClassGetterCompiler {
 				))
 				.addModifiers(PUBLIC)
 				.build
-			val basicSetter = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''')
-				.returns(NotificationChain)
-				.addParameter(rt, field.name.normalizeVarNewName)
-				.addParameter(NotificationChain, 'msgs')
-				.addNamedCode('''
-				msgs = eBasicSetContainer(($ieo:T) «field.name.normalizeVarNewName», $epit:T.«field.normalizeUpperField», msgs);
-				return msgs;
-				''', newHashMap(
-					"epit" -> ePackageInterfaceType,
-					"ieo" -> ClassName.get(InternalEObject)
-				))
-				.addModifiers(PUBLIC)
-				.build
-				
+			val basicSetter = field.buildWithOppositeWithOppositeContainmentBasicSetter(rt, ePackageInterfaceType, isTyped)
 			val setter = field.buildWithOppositeWithOppositeContainementSetter(rt, ePackageInterfaceType, isTyped)
 			#[getter, basicSetter, setter]
 		} else if (existEOpposite && !isMultiple && isContainment && !isOppositeContainment) {
 			val getter = field.buildSimpleGetter(rt, isTyped)
-			val basicSetter = field.buildBasicSetter(rt, ePackageInterfaceType) 
+			val basicSetter = field.buildBasicSetter(rt, ePackageInterfaceType, isTyped) 
 			val setter = field.buildWithOppositeWithContainementSetter(rt, ePackageInterfaceType, isTyped) 
 			#[getter, basicSetter, setter]
 		} else if (existEOpposite && isMultiple && !isOppositeMulti && !isContainment && !isOppositeContainment) {
@@ -484,54 +476,33 @@ class EClassGetterCompiler {
 							return «field.name.normalizeVarName»;
 						''', TypeName.get(InternalEObject), TypeName.get(InternalEObject), fieldType,
 							TypeName.get(ENotificationImpl), TypeName.get(Notification), ePackageInterfaceType).build
-			val basicGetter = field.buildBasicGetter(rt)
+			val basicGetter = field.buildBasicGetter(rt, isTyped)
 			val setter = field.buildSimpleSetter(fieldType, ePackageInterfaceType, isTyped) 
 			
 			#[getter, basicGetter, setter]
 		} else if (!existEOpposite &&  !isMultiple && isContainment) {
 			val getter = field.buildSimpleGetter(rt, isTyped)
-			
-			val basicSetter = MethodSpec.methodBuilder('''basicSet«field.name.toFirstUpper»''').returns(
-				NotificationChain).addParameter(rt, '''«field.name.normalizeVarNewName»''').addParameter(NotificationChain,
-				'msgs').addModifiers(PUBLIC).addNamedCode('''
-				$fieldType:T «field.name.normalizeVarOldName» = «field.name.normalizeVarName»;
-				«field.name.normalizeVarName» = «field.name.normalizeVarNewName»;
-				if (eNotificationRequired()) {
-					$eni:T notification = new $eni:T(this, $notif:T.SET, $epit:T.«field.normalizeUpperField», «field.name.normalizeVarOldName», «field.name.normalizeVarNewName»);
-					if (msgs == null)
-						msgs = notification;
-					else
-						msgs.add(notification);
-				}
-				return msgs;
-			''', newHashMap(
-				"fieldType" -> rt,
-				"eni" -> ClassName.get(ENotificationImpl),
-				"notif" -> ClassName.get(Notification),
-				"epit" -> ePackageInterfaceType
-			)).build
-			
+			val basicSetter = field.buildWithContainmentSetter(rt, ePackageInterfaceType, isTyped)
 			val setter = field.buildWithContainmentSetter(dsl, fieldType, rt, ePackageInterfaceType, isTyped)
-			
 			#[getter, basicSetter, setter]
 		} else if (!existEOpposite && isMultiple && !isContainment) {
 			val getter = field.buildWithMultipleGetter(fieldType, dsl, ePackageInterfaceType, rt, isTyped, packageRoot)
 			#[getter]
 		} else {
-			val getter = this.legacyCompileGetter(field, fieldType, packageRoot, eClass, dsl, ePackageInterfaceType)
+			val getter = this.legacyCompileGetter(field, fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, isTyped)
 
 			#[getter]
 		}
 	}
 
 	def legacyCompileGetter(EReference field, TypeName fieldType, String packageRoot, EClass eClass, Dsl dsl,
-		ClassName ePackageInterfaceType) {
+		ClassName ePackageInterfaceType, boolean isTyped) {
 		val ert = field.EGenericType.ERawType
 		val rt = ert.scopedInterfaceTypeRef(packageRoot)
 		if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
 			val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 			val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-			MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).applyIfTrue(
+			MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).applyIfTrue(
 				dsl.dslProp.getProperty('truffle', "false") == "true", [
 					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 				]).addModifiers(PUBLIC).addCode('''
@@ -545,7 +516,7 @@ class EClassGetterCompiler {
 				ClassName.get((field.EType as EClass).classImplementationPackageName(packageRoot),
 					(field.EType as EClass).classImplementationClassName)).build
 		} else if (field.EOpposite !== null) {
-			MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).applyIfTrue(
+			MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).applyIfTrue(
 				dsl.dslProp.getProperty('truffle', "false") == "true", [
 					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 				]).addModifiers(PUBLIC).addCode('''
@@ -556,7 +527,7 @@ class EClassGetterCompiler {
 			''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentWithInverseEList), rt), rt,
 				ePackageInterfaceType).build
 		} else {
-			MethodSpec.methodBuilder('''get«field.name.toFirstUpper»''').returns(fieldType).applyIfTrue(
+			MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(fieldType).applyIfTrue(
 				dsl.dslProp.getProperty('truffle', "false") == "true", [
 					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 				]).addModifiers(PUBLIC).addNamedCode('''

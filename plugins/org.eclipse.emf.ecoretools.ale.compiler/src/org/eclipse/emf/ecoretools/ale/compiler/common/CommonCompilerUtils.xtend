@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 class CommonCompilerUtils {
 	extension GenmodelNamingUtils anu
@@ -70,6 +71,10 @@ class CommonCompilerUtils {
 	}
 	
 	def TypeName computeFieldTypeEClass(EStructuralFeature field, String packageRoot) {
+		field.computeFieldTypeEClass(packageRoot, [TypeName p| ParameterizedTypeName.get(ClassName.get(EList), p.box)])
+	}
+	
+	def TypeName computeFieldTypeEClass(EStructuralFeature field, String packageRoot, Function1<TypeName, TypeName> eListReplacement) {
 		val eClass = field.EContainingClass
 		val genCls = resolved.filter[it.ECls.name == eClass.name && it.ECls.EPackage.name == eClass.EPackage.name].head.
 			genCls
@@ -81,26 +86,29 @@ class CommonCompilerUtils {
 		if (genFeature.isMapType()) {
 			val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 			val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-			val keyType = key.EType.scopedInterfaceTypeRef(packageRoot)
-			val valueType = value.EType.scopedInterfaceTypeRef(packageRoot)
+			val tmpkeyType = key.EType.scopedInterfaceTypeRef(packageRoot)
+			val tmpvalueType = value.EType.scopedInterfaceTypeRef(packageRoot)
+			val keyType = if(key.isMany) ParameterizedTypeName.get(ClassName.get(EList), tmpkeyType.box) else tmpkeyType
+			val valueType = if(key.isMany) ParameterizedTypeName.get(ClassName.get(EList), tmpvalueType.box) else tmpvalueType
 			return ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EMap"), keyType.box,
 				valueType.box)
 		}
 		if (genFeature.isMapEntryType()) {
 			val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 			val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-			val keyType = key.EType.scopedInterfaceTypeRef(packageRoot)
-			val valueType = value.EType.scopedInterfaceTypeRef(packageRoot)
+			val tmpkeyType = key.EType.scopedInterfaceTypeRef(packageRoot)
+			val tmpvalueType = value.EType.scopedInterfaceTypeRef(packageRoot)
+			val keyType = if(key.isMany) ParameterizedTypeName.get(ClassName.get(EList), tmpkeyType.box) else tmpkeyType
+			val valueType = if(key.isMany) ParameterizedTypeName.get(ClassName.get(EList), tmpvalueType.box) else tmpvalueType
 			if (genFeature.isListType()) {
-				return ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
-					ParameterizedTypeName.get(ClassName.get("java.util", "Map.Entry"), keyType.box, valueType.box))
+				return eListReplacement.apply(ParameterizedTypeName.get(ClassName.get("java.util", "Map.Entry"), keyType.box, valueType.box))
 			} else {
 				return ParameterizedTypeName.get(ClassName.get("java.util", "Map.Entry"), keyType.box, valueType.box);
 			}
 		}
 		if (genFeature.isListType()) {
 			val listType = ert.scopedInterfaceTypeRef(packageRoot)
-			return ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"), listType.box)
+			return  eListReplacement.apply(listType)
 		}
 		if (genFeature.isListDataType()) {
 			val listType = ert.scopedInterfaceTypeRef(packageRoot)

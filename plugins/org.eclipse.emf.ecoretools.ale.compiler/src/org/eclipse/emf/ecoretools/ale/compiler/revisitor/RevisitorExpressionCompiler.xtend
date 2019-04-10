@@ -92,7 +92,7 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 				} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
 					if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 						(t.type as EDataType).instanceClass == boolean))
-						CodeBlock.of('''$L.is()''', call.arguments.head.compileExpression(ctx),
+						CodeBlock.of('''$L.is$L()''', call.arguments.head.compileExpression(ctx),
 							(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 					else
 						CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression(ctx),
