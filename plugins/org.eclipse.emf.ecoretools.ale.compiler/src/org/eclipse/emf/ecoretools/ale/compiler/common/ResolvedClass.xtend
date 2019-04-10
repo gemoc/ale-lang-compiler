@@ -16,10 +16,4 @@ class ResolvedClass {
 		this.eCls = eCls
 		this.genCls = genCls
 	}
-
-	new(ExtendedClass aleCls, EClassifier eCls) {
-		this.aleCls = aleCls
-		this.eCls = eCls
-		this.genCls = null
-	}
 }

@@ -7,13 +7,10 @@ import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.Map
-import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
@@ -21,19 +18,16 @@ import static javax.lang.model.element.Modifier.*
 
 class OperationInterfaceCompiler {
 
-	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension VisitorTypeSystemUtil tsu
 	val File directory
 	val String packageRoot
-	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	
 
 	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes) {
 		this.directory = directory
 		this.packageRoot = packageRoot
-		this.syntaxes = syntaxes
 		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot, null)
 	}
 	

@@ -30,9 +30,9 @@ import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 
 class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
@@ -96,7 +96,7 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		// load all syntaxes in a cache
 		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-		resolved = resolve(aleClasses, syntax)
+		resolved = resolve(aleClasses, syntax, syntaxes)
 
 		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 
@@ -104,13 +104,14 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 		val namingUtils = new InterpreterNamingUtils
 		val fic = new FactoryInterfaceCompiler(namingUtils)
-		val fimplc = new FactoryImplementationCompiler(namingUtils)
+		val ccu = new CommonCompilerUtils(namingUtils, resolved)
+		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu)
 
 		val pic = new PackageInterfaceCompiler(namingUtils)
 		val pimplc = new PackageImplementationCompiler(namingUtils)
 
-		val eic = new InterpreterEClassInterfaceCompiler(namingUtils)
-		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved)
+		val eic = new InterpreterEClassInterfaceCompiler(namingUtils, ccu)
+		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved, ccu)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
@@ -144,15 +145,6 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 				e.printStackTrace
 			}
 
-		]
-	}
-
-	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
-		syntax.allClassifiers.map [ eClass |
-			val aleClass = aleClasses.filter [
-				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
-			].head
-			new ResolvedClass(aleClass, eClass) //, gl
 		]
 	}
 }

@@ -7,10 +7,15 @@ import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
+import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.codegen.ecore.genmodel.GenClass
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 
 abstract class AbstractALECompiler {
 	protected val JavaExtensionsManager javaExtensions
 	protected val Map<String, Class<?>> registeredServices = newHashMap
+	protected extension EcoreUtils = new EcoreUtils
 
 	new() {
 		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
@@ -47,5 +52,18 @@ abstract class AbstractALECompiler {
 	def registerServices(List<String> services) {
 		services.forEach[javaExtensions.addImport(it)]
 		javaExtensions.reloadIfNeeded()
+	}
+	
+	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax, Map<String, Pair<EPackage, GenModel>> syntaxes) {
+		syntax.allClasses.map [ eClass |
+			val aleClass = aleClasses.filter [
+				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
+			].head
+			val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.contains(eClass)].values.map[value].map [
+				it.genPackages.map[it.genClasses].flatten
+			].flatten.filter[it.ecoreClass == eClass].head
+			if(gl === null) throw new RuntimeException('''gl is null''')
+			new ResolvedClass(aleClass, eClass, gl)
+		]
 	}
 }

@@ -15,13 +15,11 @@ import static javax.lang.model.element.Modifier.*
 class VisitorEClassInterfaceCompiler {
 
 	extension VisitorNamingUtils namingUtils
-	extension CommonCompilerUtils ccu
 	EClassInterfaceCompiler ecic
 	
 	
-	new(VisitorNamingUtils namingUtils) {
+	new(VisitorNamingUtils namingUtils, CommonCompilerUtils ccu) {
 		this.namingUtils = namingUtils
-		this.ccu = new CommonCompilerUtils(namingUtils)
 		this.ecic = new EClassInterfaceCompiler(namingUtils, ccu)
 	}
 	

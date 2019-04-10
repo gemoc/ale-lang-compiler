@@ -41,7 +41,6 @@ import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ConditionalBlock
 import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.FeatureAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.FeatureInsert
 import org.eclipse.emf.ecoretools.ale.implementation.FeaturePut
@@ -132,7 +131,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		val syntax = tmp.key
 		// FIXME: make the invalid assumption that the metamodel contains a single package
 		val genSyntax = tmp.value.genPackages.head
-		resolved = resolve(aleClasses, syntax)
+		resolved = resolve(aleClasses, syntax, syntaxes)
 		this.rec = new RevisitorExpressionCompiler(tsu, syntaxes, resolved, eu, dsl, registeredServices,
 			new CommonTypeInferer(base), new EnumeratorService)
 
@@ -342,15 +341,6 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		} else {
 			return builder
 		}
-	}
-
-	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
-		syntax.allClassifiers.map [ eClass |
-			val aleClass = aleClasses.filter [
-				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
-			].head
-			new ResolvedClass(aleClass, eClass) // , gl
-		]
 	}
 
 	def TypeSpec.Builder superOperationImpl(TypeSpec.Builder builder, EClass clazz) {

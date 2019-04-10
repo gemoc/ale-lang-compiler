@@ -9,9 +9,11 @@ import org.eclipse.acceleo.query.ast.AstPackage
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EClassifier
+import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
@@ -28,12 +30,9 @@ import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.emf.ecore.EClassifier
-import org.eclipse.emf.ecore.EDataType
-import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 
 class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
@@ -97,7 +96,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		// load all syntaxes in a cache
 		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-		resolved = resolve(aleClasses, syntax)
+		resolved = resolve(aleClasses, syntax, syntaxes)
 
 		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 
@@ -105,7 +104,8 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val namingUtils = new VisitorNamingUtils
 		val fic = new FactoryInterfaceCompiler(namingUtils)
-		val fimplc = new FactoryImplementationCompiler(namingUtils)
+		val ccu = new CommonCompilerUtils(namingUtils, resolved)
+		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu)
 
 		val pic = new PackageInterfaceCompiler(namingUtils)
 		val pimplc = new PackageImplementationCompiler(namingUtils)
@@ -119,8 +119,8 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		val visitorImplementationCompiler = new VisitorImplementationCompiler(compileDirectory, syntaxes, packageRoot)
 		visitorImplementationCompiler.compile
 
-		val eic = new VisitorEClassInterfaceCompiler(namingUtils)
-		val eimplc = new VisitorEClassImplementationCompiler(packageRoot, dsl)
+		val eic = new VisitorEClassInterfaceCompiler(namingUtils, ccu)
+		val eimplc = new VisitorEClassImplementationCompiler(packageRoot, dsl, resolved, ccu)
 
 		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
 		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,
@@ -151,19 +151,6 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 			} catch (Exception e) {
 				e.printStackTrace
 			}
-		]
-	}
-
-	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
-		syntax.allClasses.map [ eClass |
-			val aleClass = aleClasses.filter [
-				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
-			].head
-			val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.contains(eClass)].values.map[value].map [
-				it.genPackages.map[it.genClasses].flatten
-			].flatten.filter[it.ecoreClass == eClass].head
-			if(gl === null) throw new RuntimeException('''gl is null''')
-			new ResolvedClass(aleClass, eClass, gl)
 		]
 	}
 }

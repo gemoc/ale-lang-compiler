@@ -5,25 +5,26 @@ import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import java.util.List
 import java.util.Map
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.ETypedElement
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecore.EEnum
 
 class VisitorEClassImplementationCompiler {
 	extension VisitorNamingUtils namingUtils
-	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils jpu
 	extension EClassImplementationCompiler ecic
 
@@ -31,13 +32,12 @@ class VisitorEClassImplementationCompiler {
 	val Dsl dsl
 	val String packageRoot
 
-	new(String packageRoot, Dsl dsl) {
+	new(String packageRoot, Dsl dsl, List<ResolvedClass> resolved, CommonCompilerUtils ccu) {
 		this.packageRoot = packageRoot
 		this.dsl = dsl
 		this.namingUtils = new VisitorNamingUtils
-		this.ccu = new CommonCompilerUtils(namingUtils)
 		this.jpu = new JavaPoetUtils
-		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils), jpu)
+		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils, ccu), jpu)
 	}
 	
 	def TypeSpec.Builder addAcceptMethod(TypeSpec.Builder builder, EClass eClass) {

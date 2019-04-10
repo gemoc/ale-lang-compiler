@@ -3,36 +3,38 @@ package org.eclipse.emf.ecoretools.ale.compiler.genmodel
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.FieldSpec
 import com.squareup.javapoet.MethodSpec
+import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
+import com.squareup.javapoet.TypeName
+import com.squareup.javapoet.TypeSpec
+import com.squareup.javapoet.WildcardTypeName
+import java.util.Collection
+import java.util.List
 import java.util.Map
+import java.util.Optional
+import org.eclipse.emf.codegen.util.CodeGenUtil
+import org.eclipse.emf.common.notify.NotificationChain
+import org.eclipse.emf.common.util.BasicEMap
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.EMap
+import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.ETypedElement
+import org.eclipse.emf.ecore.InternalEObject
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
+import org.eclipse.emf.ecore.util.InternalEList
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
-import org.eclipse.emf.ecore.EAttribute
-import com.squareup.javapoet.TypeName
-import com.squareup.javapoet.WildcardTypeName
-import java.util.Collection
-import org.eclipse.emf.ecore.ETypedElement
-import java.util.Optional
-import org.eclipse.emf.common.notify.NotificationChain
-import org.eclipse.emf.ecore.util.InternalEList
-import com.squareup.javapoet.ParameterSpec
-import org.eclipse.emf.ecore.InternalEObject
-import com.squareup.javapoet.TypeSpec
-import org.eclipse.emf.common.util.BasicEMap
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.codegen.util.CodeGenUtil
 
 class EClassImplementationCompiler {
 
@@ -585,29 +587,15 @@ class EClassImplementationCompiler {
 		this.getFieldsEReferences(eClass, packageRoot, [b, e|b])
 	}
 
-	def Iterable<FieldSpec> getFieldsEReferences(EClass eClass, String packageRoot,
-		Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2) {
-		eClass.EReferences.filter[field|if(field.EOpposite !== null) !field.EOpposite.containment else true].map [ field |
-			val ert = field.EGenericType.ERawType
-			val rt = ert.scopedInterfaceTypeRef(packageRoot)
-			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val fieldType = if (isMultiple) {
-					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
-						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-						if (key !== null && value !== null) {
-							ParameterizedTypeName.get(ClassName.get(EMap),
-								key.EType.scopedInterfaceTypeRef(packageRoot),
-								value.EType.scopedInterfaceTypeRef(packageRoot))
-						} else {
-							ParameterizedTypeName.get(ClassName.get(EList), rt)
-						}
-					} else {
-						ParameterizedTypeName.get(ClassName.get(EList), rt)
-					}
-				} else
-					rt
+	def isBlank(String string) {
+		string === null || string.length() == 0
+	}
+	
+	
 
+	def Iterable<FieldSpec> getFieldsEReferences(EClass eClass, String packageRoot, Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2) {
+		eClass.EReferences.filter[field|if(field.EOpposite !== null) !field.EOpposite.containment else true].map [ field |
+			val fieldType = field.computeFieldTypeEClass(packageRoot)
 			val builderTmp = FieldSpec.builder(fieldType, field.name)
 			val builderTmp2 = if(f2 !== null) f2.apply(builderTmp, field) else builderTmp
 			builderTmp2.addModifiers(PROTECTED).build

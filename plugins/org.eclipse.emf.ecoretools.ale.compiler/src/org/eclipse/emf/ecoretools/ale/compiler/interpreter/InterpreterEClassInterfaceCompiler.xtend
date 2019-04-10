@@ -26,9 +26,9 @@ class InterpreterEClassInterfaceCompiler {
 	extension JavaPoetUtils jpu
 	EClassInterfaceCompiler ecic
 
-	new(GenmodelNamingUtils namingUtils) {
+	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu) {
 		this.namingUtils = namingUtils
-		this.ccu = new CommonCompilerUtils(namingUtils)
+		this.ccu = ccu
 		this.jpu = new JavaPoetUtils
 		this.ecic = new EClassInterfaceCompiler(namingUtils, ccu)
 	}

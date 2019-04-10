@@ -43,7 +43,6 @@ import static javax.lang.model.element.Modifier.*
 
 class InterpreterEClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils
-	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils jpu = new JavaPoetUtils
 	extension TypeSystemUtils tsu
 	extension AleBodyCompiler abc
@@ -56,12 +55,11 @@ class InterpreterEClassImplementationCompiler {
 	val List<ResolvedClass> resolved
 	extension EClassImplementationCompiler ecic
 
-	new(String packageRoot, List<ResolvedClass> resolved) {
+	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu) {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 		this.namingUtils = new InterpreterNamingUtils
-		this.ccu = new CommonCompilerUtils(namingUtils)
-		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils), jpu)
+		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils, ccu), jpu)
 	}
 
 	

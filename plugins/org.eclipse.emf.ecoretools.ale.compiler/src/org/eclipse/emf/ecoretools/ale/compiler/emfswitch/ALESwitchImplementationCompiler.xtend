@@ -9,7 +9,6 @@ import org.eclipse.acceleo.query.ast.AstPackage
 import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
-import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
@@ -20,15 +19,11 @@ import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 
 class ALESwitchImplementationCompiler extends AbstractALECompiler {
-	extension EcoreUtils = new EcoreUtils
-
-	var Dsl dsl
+		var Dsl dsl
 	var List<ParseResult<ModelUnit>> parsedSemantics
 	val IQueryEnvironment queryEnvironment
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
@@ -66,7 +61,7 @@ class ALESwitchImplementationCompiler extends AbstractALECompiler {
 			return (loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-		resolved = resolve(aleClasses, syntax)
+		resolved = resolve(aleClasses, syntax, syntaxes)
 
 		registerServices(projectName, parsedSemantics)
 
@@ -96,17 +91,6 @@ class ALESwitchImplementationCompiler extends AbstractALECompiler {
 
 	}
 
-	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax) {
-		syntax.allClasses.map [ eClass |
-			val aleClass = aleClasses.filter [
-				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
-			].head
-			val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.contains(eClass)].values.map[value].map [
-				it.genPackages.map[it.genClasses].flatten
-			].flatten.filter[it.ecoreClass == eClass].head
-			if(gl === null) throw new RuntimeException('''gl is null''')
-			new ResolvedClass(aleClass, eClass, gl)
-		]
-	}
+	
 
 }

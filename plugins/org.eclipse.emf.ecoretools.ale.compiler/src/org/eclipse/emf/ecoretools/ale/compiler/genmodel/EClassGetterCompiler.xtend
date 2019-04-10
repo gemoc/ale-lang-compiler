@@ -7,6 +7,7 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import java.util.List
 import java.util.Map
+import java.util.Optional
 import org.eclipse.emf.common.notify.Notification
 import org.eclipse.emf.common.notify.NotificationChain
 import org.eclipse.emf.ecore.EAttribute
@@ -17,8 +18,10 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.ENotificationImpl
 import org.eclipse.emf.ecore.util.EDataTypeEList
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList
 import org.eclipse.emf.ecore.util.EObjectContainmentEList
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList
+import org.eclipse.emf.ecore.util.EObjectResolvingEList
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList
 import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
@@ -27,9 +30,6 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList
-import org.eclipse.emf.ecore.util.EObjectResolvingEList
-import java.util.Optional
 
 class EClassGetterCompiler {
 
@@ -37,9 +37,9 @@ class EClassGetterCompiler {
 	extension CommonCompilerUtils icu
 	extension JavaPoetUtils = new JavaPoetUtils
 	
-	new(GenmodelNamingUtils namingUtils) {
+	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu) {
 		this.namingUtils = namingUtils
-		this.icu = new CommonCompilerUtils(namingUtils)
+		this.icu = ccu
 	}
 	
 	def buildGetTyped(EStructuralFeature field, TypeName rt) {
@@ -81,20 +81,22 @@ class EClassGetterCompiler {
 		field.buildSimpleGetter(fieldType, Optional.empty, isTyped)
 	}
 	
-	def buildSimpleMultipleGetter(EStructuralFeature field, TypeName fieldType, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
+	def buildSimpleMultipleGetter(EStructuralFeature field, TypeName fieldType, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped, String packageRoot) {
 		val lt = if(field.unique) {
 			ParameterizedTypeName.get(ClassName.get(EDataTypeUniqueEList), rt.box)
 		} else {
 			ParameterizedTypeName.get(ClassName.get(EDataTypeEList), rt.box)
 		}
+		val t = field.computeFieldTypeEClass(packageRoot)
 		val hm = newHashMap(
 			"listtype" -> lt,
 			"rt" -> rt.box,
 			"epit" -> ePackageInterfaceType
 		)
 		
+		
 		MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').
-			returns(fieldType).addNamedCode('''
+			returns(t).addNamedCode('''
 				if («field.name.normalizeVarName» == null) {
 					«field.name.normalizeVarName» = new $listtype:T($rt:T.class, this, $epit:T.«field.normalizeUpperField»);
 				}
@@ -352,7 +354,7 @@ class EClassGetterCompiler {
 			val setter = field.buildSimpleSetter(fieldType, ePackageInterfaceType, isTyped)
 			#[getter, setter]
 		} else {
-			val getter = field.buildSimpleMultipleGetter(fieldType, rt, ePackageInterfaceType, isTyped)
+			val getter = field.buildSimpleMultipleGetter(fieldType, rt, ePackageInterfaceType, isTyped, packageRoot)
 			#[getter]
 		}
 

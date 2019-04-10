@@ -28,9 +28,9 @@ class FactoryImplementationCompiler {
 	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils = new JavaPoetUtils
 	
-	new(GenmodelNamingUtils namingUtils) {
+	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu) {
 		this.namingUtils = namingUtils
-		this.ccu = new CommonCompilerUtils(namingUtils)
+		this.ccu = ccu
 	}
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
