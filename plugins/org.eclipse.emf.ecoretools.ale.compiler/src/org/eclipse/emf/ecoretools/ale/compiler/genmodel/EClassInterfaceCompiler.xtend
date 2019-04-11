@@ -58,22 +58,24 @@ class EClassInterfaceCompiler {
 			val ert = field.EGenericType.ERawType
 			val rt = ert.scopedInterfaceTypeRef(packageRoot)
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val fieldType = if (isMultiple) {
-					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
-						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
-						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
-						if (key !== null && value !== null) {
-							ParameterizedTypeName.get(ClassName.get(EMap),
-								key.EType.scopedInterfaceTypeRef(packageRoot),
-								value.EType.scopedInterfaceTypeRef(packageRoot))
-						} else {
-							ParameterizedTypeName.get(ClassName.get(EList), rt)
-						}
-					} else {
-						ParameterizedTypeName.get(ClassName.get(EList), rt)
-					}
-				} else
-					rt
+//			val fieldType = if (isMultiple) {
+//					if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
+//						val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+//						val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+//						if (key !== null && value !== null) {
+//							ParameterizedTypeName.get(ClassName.get(EMap),
+//								key.EType.scopedInterfaceTypeRef(packageRoot),
+//								value.EType.scopedInterfaceTypeRef(packageRoot))
+//						} else {
+//							ParameterizedTypeName.get(ClassName.get(EList), rt)
+//						}
+//					} else {
+//						ParameterizedTypeName.get(ClassName.get(EList), rt)
+//					}
+//				} else
+//					rt
+
+			val fieldType = field.computeFieldTypeEClass(packageRoot)
 			val setter = if (!isMultiple) {
 					#[
 						MethodSpec.methodBuilder('''set«field.name.toFirstUpper»''').addParameter(fieldType, 'value').

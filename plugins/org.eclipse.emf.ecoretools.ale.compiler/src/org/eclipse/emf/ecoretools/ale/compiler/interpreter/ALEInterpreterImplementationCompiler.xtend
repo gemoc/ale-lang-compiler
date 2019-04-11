@@ -132,7 +132,8 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 						val rc = resolved.filter [
 							it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name
 						].head
-						eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
+						if(eclazz.instanceClassName != "java.util.Map$Entry")
+							eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
 						eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
 							registeredServices, dsl, base)
 

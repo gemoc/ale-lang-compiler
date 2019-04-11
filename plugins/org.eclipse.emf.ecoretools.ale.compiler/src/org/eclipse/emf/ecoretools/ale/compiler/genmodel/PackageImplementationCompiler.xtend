@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.impl.EPackageImpl
 
 import static javax.lang.model.element.Modifier.*
+import java.util.Locale
+import org.eclipse.emf.codegen.util.CodeGenUtil
 
 class PackageImplementationCompiler {
 	protected extension GenmodelNamingUtils namingUtils
@@ -29,6 +31,10 @@ class PackageImplementationCompiler {
 		val isContainer = ref.EOpposite !== null && ref.EOpposite.containment
 		val isContains = ref.isContainment
 		return (!isContainer && !isContains) && eStructuralFeature instanceof EReference && ref.isResolveProxies;
+	}
+	
+	def toFieldName(String name) {
+		CodeGenUtil.uncapPrefixedName(name, false, Locale.^default)
 	}
 
 	def compilePackageImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
@@ -88,12 +94,12 @@ class PackageImplementationCompiler {
 				
 				// Create classes and their features
 				«FOR eClass : allClasses SEPARATOR '\n'»
-					«eClass.name.toFirstLower»EClass = createEClass(«eClass.name.normalizeUpperField»);
+					«eClass.name.toFieldName»EClass = createEClass(«eClass.name.normalizeUpperField»);
 					«FOR eAttr: eClass.EStructuralFeatures»
 						«IF eAttr instanceof EReference»
-							createEReference(«eClass.name.toFirstLower»EClass, «eAttr.normalizeUpperField»);
+							createEReference(«eClass.name.toFieldName»EClass, «eAttr.normalizeUpperField»);
 						«ELSE»
-							createEAttribute(«eClass.name.toFirstLower»EClass, «eAttr.normalizeUpperField»);
+							createEAttribute(«eClass.name.toFieldName»EClass, «eAttr.normalizeUpperField»);
 						«ENDIF»
 					«ENDFOR»
 				«ENDFOR»
@@ -101,7 +107,7 @@ class PackageImplementationCompiler {
 
 				// Create enums
 				«FOR eEnum : allEnums»
-					«eEnum.name.toFirstLower»EEnum = createEEnum(«eEnum.name.normalizeUpperField»);
+					«eEnum.name.toFieldName»EEnum = createEEnum(«eEnum.name.normalizeUpperField»);
 				«ENDFOR»
 				«ENDIF»
 			''').build
@@ -109,7 +115,8 @@ class PackageImplementationCompiler {
 		val hm = newHashMap()
 		
 		for(eClass: allClasses) {
-			hm.put('''type«eClass.name»'''.toString, ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.name))
+			val t =  if(eClass.instanceClassName != "java.util.Map$Entry") ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.name) else ClassName.get("java.util", "Map.Entry")
+			hm.put('''type«eClass.name»'''.toString, t)
 		}
 		
 		for(eEnum: allEnums) {
@@ -140,7 +147,7 @@ class PackageImplementationCompiler {
 				
 				// Initialize classes, features, and operations; add parameters
 				«FOR eClass : allClasses SEPARATOR '\n'»
-					initEClass(«eClass.name.toFirstLower»EClass, $type«eClass.name»:T.class, "«eClass.name»", «IF eClass.isAbstract»«ELSE»!«ENDIF»IS_ABSTRACT, «IF eClass.isInterface»«ELSE»!«ENDIF»IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+					initEClass(«eClass.name.toFieldName»EClass, $type«eClass.name»:T.class, "«eClass.name»", «IF eClass.isAbstract»«ELSE»!«ENDIF»IS_ABSTRACT, «IF eClass.isInterface»«ELSE»!«ENDIF»IS_INTERFACE, «IF eClass.instanceClassName == "java.util.Map$Entry"»!«ENDIF»IS_GENERATED_INSTANCE_CLASS);
 					«FOR eAttr: eClass.EStructuralFeatures»
 						«IF eAttr instanceof EReference»
 							«IF eAttr.EType.EPackage != abstractSyntax»
@@ -159,9 +166,9 @@ class PackageImplementationCompiler {
 				
 				// Initialize enums and add enum literals
 				«FOR eEnum: allEnums»
-				initEEnum(«eEnum.name.toFirstLower»EEnum, $type«eEnum.name»:T.class, "«eEnum.name»");
+				initEEnum(«eEnum.name.toFieldName»EEnum, $type«eEnum.name»:T.class, "«eEnum.name»");
 				«FOR lit: eEnum.ELiterals»
-				addEEnumLiteral(«eEnum.name.toFirstLower»EEnum, $type«eEnum.name»:T.«lit.name»);
+				addEEnumLiteral(«eEnum.name.toFieldName»EEnum, $type«eEnum.name»:T.«lit.name»);
 				«ENDFOR»
 				«ENDFOR»
 				«ENDIF»
@@ -172,10 +179,10 @@ class PackageImplementationCompiler {
 
 		val eClassifiers = abstractSyntax.EClassifiers.map[eClassifier |
 			if(eClassifier instanceof EClass) {
-				FieldSpec.builder(EClass, '''«eClassifier.name.toFirstLower»EClass''').initializer('''null''').
+				FieldSpec.builder(EClass, '''«eClassifier.name.toFieldName»EClass''').initializer('''null''').
 				addModifiers(PRIVATE).build
 			} else {
-				FieldSpec.builder(EEnum, '''«eClassifier.name.toFirstLower»EEnum''').initializer('''null''').
+				FieldSpec.builder(EEnum, '''«eClassifier.name.toFieldName»EEnum''').initializer('''null''').
 				addModifiers(PRIVATE).build
 			}
 		]
@@ -184,12 +191,12 @@ class PackageImplementationCompiler {
 			if(eClassifier instanceof EClass) {
 				eClassifier -> MethodSpec.methodBuilder('''get«eClassifier.name.toFirstUpper»''').returns(EClass).addModifiers(PUBLIC).
 				addCode('''
-					return «eClassifier.name.toFirstLower»EClass;
+					return «eClassifier.name.toFieldName»EClass;
 				''').build
 			} else {
 				eClassifier -> MethodSpec.methodBuilder('''get«eClassifier.name.toFirstUpper»''').returns(EEnum).addModifiers(PUBLIC).
 				addCode('''
-					return «eClassifier.name.toFirstLower»EEnum;
+					return «eClassifier.name.toFieldName»EEnum;
 				''').build	
 			}
 		]
@@ -209,13 +216,13 @@ class PackageImplementationCompiler {
 					accessorsMethods.get(clazz).add(
 						MethodSpec.methodBuilder('''get«clazz.name»_«field.name.toFirstUpper»''').
 							returns(EReference).addCode('''
-								return ($T) «clazz.name.toFirstLower»EClass.getEStructuralFeatures().get(«cptrI»);
+								return ($T) «clazz.name.toFieldName»EClass.getEStructuralFeatures().get(«cptrI»);
 							''', EReference).addModifiers(PUBLIC).build)
 				} else if (field instanceof EAttribute) {
 					accessorsMethods.get(clazz).add(
 						MethodSpec.methodBuilder('''get«field.name.normalizeUpperMethod(clazz.name).toFirstUpper»''').
 							returns(EAttribute).addCode('''
-								return ($T) «clazz.name.toFirstLower»EClass.getEStructuralFeatures().get(«cptrI»);
+								return ($T) «clazz.name.toFieldName»EClass.getEStructuralFeatures().get(«cptrI»);
 							''', EAttribute).addModifiers(PUBLIC).build)
 				}
 				cptrI = cptrI + 1

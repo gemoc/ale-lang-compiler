@@ -59,7 +59,7 @@ class InterpreterEClassImplementationCompiler {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 		this.namingUtils = new InterpreterNamingUtils
-		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils, ccu), jpu, resolved)
+		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils, ccu, resolved), jpu, resolved)
 	}
 
 	

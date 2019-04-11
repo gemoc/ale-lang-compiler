@@ -270,7 +270,8 @@ class EClassImplementationCompiler {
 		
 		val Map<String, TypeName> namedMap = newHashMap(
 			"epit" -> ePackageInterfaceType,
-			"esf" -> ClassName.get(EStructuralFeature.Setting)
+			"esf" -> ClassName.get(EStructuralFeature.Setting),
+			"essf" ->  ClassName.get("org.eclipse.emf.ecore", "EStructuralFeature.Setting")
 		)
 		for (esf : eClass.EStructuralFeatures) {
 			val tnp = esf.computeFieldTypeEClass(packageRoot, f).box
@@ -485,14 +486,14 @@ class EClassImplementationCompiler {
 		case $epit:T.«esf.normalizeUpperField» :
 			«IF genFeature.isListType()»
 				«IF genFeature.isWrappedFeatureMapType() »
-					((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal)((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal.Wrapper)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).featureMap()).set(newValue);
+					// TODO ((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal)((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal.Wrapper)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).featureMap()).set(newValue);
 				«ELSEIF genFeature.isFeatureMapType()»
-					((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).set(newValue);
+					// TODO ((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).set(newValue);
 				«ELSEIF genFeature.isMapType()»
 					«IF genFeature.isEffectiveSuppressEMFTypes()»
-						((<%=genModel.getImportedName("org.eclipse.emf.ecore.EStructuralFeature")%>.Setting)((<%=genModel.getImportedName("org.eclipse.emf.common.util.EMap")%>.InternalMapView<%=genFeature.getImportedMapTemplateArguments(genClass)%>)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).eMap()).set(newValue);
+						// TODO ($essf:T)((<%=genModel.getImportedName("org.eclipse.emf.common.util.EMap")%>.InternalMapView<%=genFeature.getImportedMapTemplateArguments(genClass)%>)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).eMap()).set(newValue);
 					«ELSE»
-						((<%=genModel.getImportedName("org.eclipse.emf.ecore.EStructuralFeature")%>.Setting)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).set(newValue);
+						(($essf:T)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).set(newValue);
 					«ENDIF»
 				«ELSE»
 					get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»().clear();
@@ -513,28 +514,28 @@ class EClassImplementationCompiler {
 		'''
 		case $1T.«esf.normalizeUpperField» :
 			«IF esf instanceof EAttribute»
-			«IF esf.EType.name == "EBoolean"»
-				return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»() ? Boolean.TRUE : Boolean.FALSE;
+			«IF esf.EType.name == "EBoolean" && !esf.many»
+				return «IF isTyped»getTyped«ELSE»is«ENDIF»«esf.name.toFirstUpper»();
 			«ELSE»
-					return new <%=genFeature.getObjectType(genClass)%>(get«esf.name.toFirstUpper»());
+					return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 			    «ENDIF»
 			«ELSEIF (genFeature.isResolveProxies() && !genFeature.isListType())»
 				if (resolve) return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 				return basicGet«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 			  	«ELSEIF (genFeature.isMapType())»
 					«IF  (genFeature.isEffectiveSuppressEMFTypes())»
-						if (coreType) return ((<%=genModel.getImportedName("org.eclipse.emf.common.util.EMap")%>.InternalMapView<%=genFeature.getImportedMapTemplateArguments(genClass)%>)get«esf.name.toFirstUpper»()).eMap();
+						if (coreType) return null; // TODO ((<%=genModel.getImportedName("org.eclipse.emf.common.util.EMap")%>.InternalMapView<%=genFeature.getImportedMapTemplateArguments(genClass)%>)get«esf.name.toFirstUpper»()).eMap();
 						else return get«esf.name.toFirstUpper»();
 			    	«ELSE»
 						if (coreType) return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 						else return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»().map();
 			    	«ENDIF»
 			  	«ELSEIF (genFeature.isWrappedFeatureMapType())»
-					if (coreType) return ((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal.Wrapper)get«esf.name.toFirstUpper»()).featureMap();
+					if (coreType) return null; // TODO((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal.Wrapper)get«esf.name.toFirstUpper»()).featureMap();
 					return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 			  	«ELSEIF (genFeature.isFeatureMapType())»
 					if (coreType) return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
-					return ((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal)get«esf.name.toFirstUpper»()).getWrapper();
+					return null; // TODO ((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal)get«esf.name.toFirstUpper»()).getWrapper();
 			  	«ELSE»
 					return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 				«ENDIF»
@@ -543,17 +544,24 @@ class EClassImplementationCompiler {
 	def getEGet(EClass eClass, Dsl dsl, String packageRoot, boolean isTyped) {
 		if (!eClass.EStructuralFeatures.empty) {
 			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot) 
-			val ret = MethodSpec.methodBuilder('eGet').addAnnotation(Override).returns(Object).addParameter(int,
-				'featureID').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
-				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-			]).addParameter(boolean, 'resolve').addParameter(boolean, 'coreType').addModifiers(PUBLIC).addCode('''
+			val ret = MethodSpec.methodBuilder('eGet')
+				.addAnnotation(Override)
+				.returns(Object)
+				.addParameter(int, 'featureID')
+				.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
+					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+				])
+				.addParameter(boolean, 'resolve').addParameter(boolean, 'coreType')
+				.addModifiers(PUBLIC)
+				.addCode('''
 				switch (featureID) {
 					«FOR esf : eClass.EStructuralFeatures»
 						«esf.generatedEGetCase(isTyped)»
 					«ENDFOR»
 				}
 				return super.eGet(featureID, resolve, coreType);
-			''', ePackageInterfaceType).build
+			''', ePackageInterfaceType)
+			.build
 			Optional.of(ret)
 		} else {
 			Optional.empty

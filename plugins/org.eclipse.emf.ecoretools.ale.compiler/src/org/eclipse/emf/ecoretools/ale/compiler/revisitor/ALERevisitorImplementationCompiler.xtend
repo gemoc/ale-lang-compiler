@@ -187,8 +187,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 							}
 						]).build
 				] ?: newArrayList).build
-				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorOperationInterfacePackage»''',
-					operationInterface).indent('\t').build
+				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorOperationInterfacePackage»''', operationInterface).indent('\t').build
 				operationInterfaceFile.writeTo(compileDirectory)
 
 				val revField = FieldSpec.builder(fullInterfaceType, "rev", Modifier.PRIVATE).build
