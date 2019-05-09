@@ -1,5 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
+import execboa.SerializeService;
 import interpreter.boa.interpreter.boa.BoaPackage;
 import interpreter.boa.interpreter.boa.Ctx;
 import interpreter.boa.interpreter.boa.EvalRes;
@@ -25,6 +26,6 @@ public abstract class ExprImpl extends TopLevelCmdImpl implements Expr {
 	}
 
 	public void nextLine(Ctx ctx) {
-		LogService.log(execboa.SerializeService.serialize(((Expr) (this)).eval((Ctx) (ctx))));
+		LogService.log(SerializeService.serialize((EvalRes) (((Expr) (this)).eval((Ctx) (ctx)))));
 	}
 }

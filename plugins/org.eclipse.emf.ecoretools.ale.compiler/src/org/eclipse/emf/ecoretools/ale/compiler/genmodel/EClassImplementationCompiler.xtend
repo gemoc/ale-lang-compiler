@@ -271,7 +271,7 @@ class EClassImplementationCompiler {
 		val Map<String, TypeName> namedMap = newHashMap(
 			"epit" -> ePackageInterfaceType,
 			"esf" -> ClassName.get(EStructuralFeature.Setting),
-			"essf" ->  ClassName.get("org.eclipse.emf.ecore", "EStructuralFeature.Setting")
+			"essf" ->  ClassName.get("org.eclipse.emf.ecore.EStructuralFeature", "Setting")
 		)
 		for (esf : eClass.EStructuralFeatures) {
 			val tnp = esf.computeFieldTypeEClass(packageRoot, f).box
@@ -294,7 +294,10 @@ class EClassImplementationCompiler {
 				"ieo" -> TypeName.get(InternalEObject))
 
 			for (ref : eClass.EReferences.filter[it.EOpposite !== null]) {
-				hm.put('''«ref.name»eOppositeType'''.toString, ref.computeFieldTypeEClass(packageRoot))
+				val ct = ref.computeFieldTypeEClass(packageRoot)
+				val ct2 = if(ct instanceof ParameterizedTypeName) ct.rawType else ct
+				hm.put('''«ref.name»eOppositeType'''.toString, ct)
+				hm.put('''«ref.name»eOppositeTypeNoGen'''.toString, ct2)
 			}
 
 			val ret = MethodSpec.methodBuilder('eInverseAdd').addAnnotation(Override).returns(NotificationChain).
@@ -316,7 +319,7 @@ class EClassImplementationCompiler {
 											return basicSet«IF isTyped»Typed«ENDIF»«ref.name.toFirstUpper»(($«ref.name»eOppositeType:T) otherEnd, msgs);
 										«ELSE»
 											if («ref.name» != null)
-												msgs = (($ieo:T) «ref.name»).eInverseRemove(this, $epit:T.«ref.EOpposite.normalizeUpperField», «(ref.EOpposite.eContainer as EClass).name».class, msgs);
+												msgs = (($ieo:T) «ref.name»).eInverseRemove(this, $epit:T.«ref.EOpposite.normalizeUpperField», $«ref.name»eOppositeTypeNoGen:T.class, msgs);
 											return basicSet«IF isTyped»Typed«ENDIF»«ref.name.toFirstUpper»(($«ref.name»eOppositeType:T) otherEnd, msgs);
 										«ENDIF»
 									«ELSE»
@@ -500,7 +503,7 @@ class EClassImplementationCompiler {
 					get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T)newValue);
 				«ENDIF»
 			«ELSE»
-				set«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»(«IF  (genFeature.getTypeGenDataType() === null || !genFeature.getTypeGenDataType().isObjectType() || !genFeature.getRawType().equals(genFeature.getType(genCls))) »($collection«esf.name»:T)«ENDIF»newValue);
+				set«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»(«IF  (genFeature.getTypeGenDataType() === null || !genFeature.getTypeGenDataType().isObjectType() || !genFeature.getRawType().equals(genFeature.getType(genCls))) »($collection«esf.name»:T) «ENDIF»newValue);
 			«ENDIF»
 			return;
 		'''
@@ -520,7 +523,8 @@ class EClassImplementationCompiler {
 					return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 			    «ENDIF»
 			«ELSEIF (genFeature.isResolveProxies() && !genFeature.isListType())»
-				if (resolve) return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
+				if (resolve)
+					return get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 				return basicGet«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»();
 			  	«ELSEIF (genFeature.isMapType())»
 					«IF  (genFeature.isEffectiveSuppressEMFTypes())»

@@ -1,5 +1,7 @@
 package testmaprelations.interpreter.testmaprelations.impl;
 
+import java.lang.Object;
+import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EMap;
@@ -8,7 +10,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import testmaprelations.interpreter.testmaprelations.CA6;
 import testmaprelations.interpreter.testmaprelations.CB6;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
@@ -18,6 +19,8 @@ public class MapCA6ToCB6MapEntryImpl extends MinimalEObjectImpl.Container implem
 	protected CA6 key;
 
 	protected CB6 value;
+	
+	protected int hash = -1;
 
 	protected MapCA6ToCB6MapEntryImpl() {
 		super();
@@ -30,11 +33,12 @@ public class MapCA6ToCB6MapEntryImpl extends MinimalEObjectImpl.Container implem
 
 	public CA6 getTypedKey() {
 		if (key != null && key.eIsProxy()) {
-			InternalEObject oldKey = (InternalEObject)key;
-			key = (CA6)eResolveProxy(oldKey);
+			InternalEObject oldKey = (InternalEObject) key;
+			key = (CA6) eResolveProxy(oldKey);
 			if (key != oldKey) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__KEY, oldKey, key));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__KEY,
+							oldKey, key));
 			}
 		}
 		return key;
@@ -48,16 +52,18 @@ public class MapCA6ToCB6MapEntryImpl extends MinimalEObjectImpl.Container implem
 		CA6 oldKey = key;
 		key = newKey;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__KEY, oldKey, key));
+			eNotify(new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__KEY,
+					oldKey, key));
 	}
 
 	public CB6 getTypedValue() {
 		if (value != null && value.eIsProxy()) {
-			InternalEObject oldValue = (InternalEObject)value;
-			value = (CB6)eResolveProxy(oldValue);
+			InternalEObject oldValue = (InternalEObject) value;
+			value = (CB6) eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__VALUE, oldValue, value));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__VALUE,
+							oldValue, value));
 			}
 		}
 		return value;
@@ -78,10 +84,12 @@ public class MapCA6ToCB6MapEntryImpl extends MinimalEObjectImpl.Container implem
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__KEY :
-				if (resolve) return getTypedKey();
+				if (resolve)
+					return getTypedKey();
 				return basicGetTypedKey();
 			case TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__VALUE :
-				if (resolve) return getTypedValue();
+				if (resolve)
+					return getTypedValue();
 				return basicGetTypedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -104,10 +112,10 @@ public class MapCA6ToCB6MapEntryImpl extends MinimalEObjectImpl.Container implem
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__KEY :
-				setTypedKey((CA6)null);
+				setTypedKey((CA6) null);
 				return;
 			case TestmaprelationsPackage.MAP_CA6_TO_CB6_MAP_ENTRY__VALUE :
-				setTypedValue((CB6)null);
+				setTypedValue((CB6) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -123,8 +131,6 @@ public class MapCA6ToCB6MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return super.eIsSet(featureID);
 	}
-
-	protected int hash = -1;
 
 	public int getHash() {
 		if (hash == -1) {

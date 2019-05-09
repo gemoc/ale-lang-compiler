@@ -33,9 +33,9 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
 			if (newLhs != null)
 				msgs = ((InternalEObject)newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, null, msgs);
 			msgs = basicSetLhs(newLhs, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, newLhs, newLhs));
 	}
 
@@ -61,9 +61,9 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
 			if (newRhs != null)
 				msgs = ((InternalEObject)newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, null, msgs);
 			msgs = basicSetRhs(newRhs, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, newRhs, newRhs));
 	}
 

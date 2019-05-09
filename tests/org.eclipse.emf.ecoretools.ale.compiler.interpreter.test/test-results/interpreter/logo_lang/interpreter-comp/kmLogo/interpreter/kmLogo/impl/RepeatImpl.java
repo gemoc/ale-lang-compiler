@@ -33,9 +33,9 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
 			if (newBlock != null)
 				msgs = ((InternalEObject)newBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.REPEAT__BLOCK, null, msgs);
 			msgs = basicSetBlock(newBlock, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.REPEAT__BLOCK, newBlock, newBlock));
 	}
 

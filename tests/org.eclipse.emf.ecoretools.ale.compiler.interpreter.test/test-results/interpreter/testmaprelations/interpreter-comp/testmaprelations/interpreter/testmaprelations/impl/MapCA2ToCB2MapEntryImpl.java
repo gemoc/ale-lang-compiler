@@ -16,10 +16,11 @@ import testmaprelations.interpreter.testmaprelations.CB2;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
 public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA2, CB2> {
-
 	protected CA2 key;
 
 	protected CB2 value;
+
+	protected int hash = -1;
 
 	protected MapCA2ToCB2MapEntryImpl() {
 		super();
@@ -32,8 +33,8 @@ public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implem
 
 	public CA2 getTypedKey() {
 		if (key != null && key.eIsProxy()) {
-			InternalEObject oldKey = (InternalEObject)key;
-			key = (CA2)eResolveProxy(oldKey);
+			InternalEObject oldKey = (InternalEObject) key;
+			key = (CA2) eResolveProxy(oldKey);
 			if (key != oldKey) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY, oldKey, key));
@@ -51,7 +52,10 @@ public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implem
 		key = newKey;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY, oldKey, newKey);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -60,20 +64,20 @@ public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implem
 		if (newKey != key) {
 			NotificationChain msgs = null;
 			if (key != null)
-				msgs = ((InternalEObject)key).eInverseRemove(this, TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY, CA2.class, msgs);
+				msgs = ((InternalEObject) key).eInverseRemove(this, TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY, CA2.class, msgs);
 			if (newKey != null)
-				msgs = ((InternalEObject)newKey).eInverseAdd(this, TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY, CA2.class, msgs);
+				msgs = ((InternalEObject) newKey).eInverseAdd(this, TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY, CA2.class, msgs);
 			msgs = basicSetTypedKey(newKey, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY, newKey, newKey));
 	}
 
 	public CB2 getTypedValue() {
 		if (value != null && value.eIsProxy()) {
-			InternalEObject oldValue = (InternalEObject)value;
-			value = (CB2)eResolveProxy(oldValue);
+			InternalEObject oldValue = (InternalEObject) value;
+			value = (CB2) eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__VALUE, oldValue, value));
@@ -91,7 +95,10 @@ public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implem
 		value = newValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__VALUE, oldValue, newValue);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -100,33 +107,35 @@ public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implem
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
-				msgs = ((InternalEObject)value).eInverseRemove(this, TestmaprelationsPackage.CB2__MAPCA0TOCB0MAPENTRY, CB2.class, msgs);
+				msgs = ((InternalEObject) value).eInverseRemove(this, TestmaprelationsPackage.CB2__MAPCA0TOCB0MAPENTRY, CB2.class, msgs);
 			if (newValue != null)
-				msgs = ((InternalEObject)newValue).eInverseAdd(this, TestmaprelationsPackage.CB2__MAPCA0TOCB0MAPENTRY, CB2.class, msgs);
+				msgs = ((InternalEObject) newValue).eInverseAdd(this, TestmaprelationsPackage.CB2__MAPCA0TOCB0MAPENTRY, CB2.class, msgs);
 			msgs = basicSetTypedValue(newValue, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__VALUE, newValue, newValue));
 	}
 
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY :
 				if (key != null)
-					msgs = ((InternalEObject)key).eInverseRemove(this, TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY, CA2.class, msgs);
-				return basicSetTypedKey((CA2)otherEnd, msgs);
+					msgs = ((InternalEObject) key).eInverseRemove(this, TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY, CA2.class, msgs);
+				return basicSetTypedKey((CA2) otherEnd, msgs);
 			case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__VALUE :
 				if (value != null)
-					msgs = ((InternalEObject)value).eInverseRemove(this, TestmaprelationsPackage.CB2__MAPCA0TOCB0MAPENTRY, CB2.class, msgs);
-				return basicSetTypedValue((CB2)otherEnd, msgs);
+					msgs = ((InternalEObject) value).eInverseRemove(this, TestmaprelationsPackage.CB2__MAPCA0TOCB0MAPENTRY, CB2.class, msgs);
+				return basicSetTypedValue((CB2) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY :
 				return basicSetTypedKey(null, msgs);
@@ -140,10 +149,12 @@ public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implem
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY :
-				if (resolve) return getTypedKey();
+				if (resolve)
+					return getTypedKey();
 				return basicGetTypedKey();
 			case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__VALUE :
-				if (resolve) return getTypedValue();
+				if (resolve)
+					return getTypedValue();
 				return basicGetTypedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -166,10 +177,10 @@ public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implem
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY :
-				setTypedKey((CA2)null);
+				setTypedKey((CA2) null);
 				return;
 			case TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__VALUE :
-				setTypedValue((CB2)null);
+				setTypedValue((CB2) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -185,8 +196,6 @@ public class MapCA2ToCB2MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return super.eIsSet(featureID);
 	}
-
-	protected int hash = -1;
 
 	public int getHash() {
 		if (hash == -1) {

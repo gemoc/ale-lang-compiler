@@ -47,9 +47,9 @@ public abstract class ArithOpImpl extends ExprImpl implements ArithOp {
 			if (newLhs != null)
 				msgs = ((InternalEObject)newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BoaPackage.ARITH_OP__LHS, null, msgs);
 			msgs = basicSetLhs(newLhs, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.ARITH_OP__LHS, newLhs, newLhs));
 	}
 
@@ -75,9 +75,9 @@ public abstract class ArithOpImpl extends ExprImpl implements ArithOp {
 			if (newRhs != null)
 				msgs = ((InternalEObject)newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BoaPackage.ARITH_OP__RHS, null, msgs);
 			msgs = basicSetRhs(newRhs, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.ARITH_OP__RHS, newRhs, newRhs));
 	}
 

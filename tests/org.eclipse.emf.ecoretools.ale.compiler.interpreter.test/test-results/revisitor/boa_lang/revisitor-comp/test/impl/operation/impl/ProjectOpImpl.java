@@ -66,14 +66,14 @@ public class ProjectOpImpl extends ExprOpImpl implements ProjectOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalRes vexp = ((EvalRes) (rev.$((Expr)this.obj.getExp()).eval(((Ctx) ctx))));
+    EvalRes vexp = ((EvalRes) (rev.$((Expr)this.obj.getExp()).eval(((Ctx) (ctx)))));
     if(vexp instanceof EvalMapRes) {
       EvalMapRes mvexp = ((EvalMapRes) (vexp));
       if(execboa.MapService.containsKey(mvexp.getValues(), this.obj.getName())) {
         EvalRes x = ((EvalRes) (mvexp.getValues().get(this.obj.getName())));
         if(x instanceof EvalFunRes) {
           EvalFunRes func = ((EvalFunRes) (x));
-          result = rev.$((Project)this.obj).project(((EvalFunRes) func),((EvalMapRes) mvexp));
+          result = rev.$((Project)this.obj).project(((EvalFunRes) (func)),((EvalMapRes) (mvexp)));
         }
         else {
           result = x;

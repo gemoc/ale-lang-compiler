@@ -32,9 +32,9 @@ public class LeftImpl extends PrimitiveImpl implements Left {
 			if (newAngle != null)
 				msgs = ((InternalEObject)newAngle).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, null, msgs);
 			msgs = basicSetAngle(newAngle, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, newAngle, newAngle));
 	}
 

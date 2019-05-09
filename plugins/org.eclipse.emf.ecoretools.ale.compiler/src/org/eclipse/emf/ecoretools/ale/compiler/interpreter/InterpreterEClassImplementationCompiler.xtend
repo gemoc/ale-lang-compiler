@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.ETypedElement
 import org.eclipse.emf.ecore.EcorePackage
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
@@ -66,18 +67,18 @@ class InterpreterEClassImplementationCompiler {
 
 	def dispatch compileEClassImplementation(EClassifier eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base) {
+		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, TypeSystemUtils tsu, AbstractNamingUtils anu) {
 	}
 
 	def dispatch compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base) {
+		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, TypeSystemUtils tsu, AbstractNamingUtils anu) {
 		this.syntaxes = syntaxes
 		this.dsl = dsl
 		val isTruffle = dsl.dslProp.getOrDefault("truffle", "false") == "true"
-		tsu = new TypeSystemUtils(syntaxes, packageRoot, resolved)
+		this.tsu = tsu // new TypeSystemUtils(syntaxes, packageRoot, resolved)
 		abc = new AleBodyCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registreredArrays,
-			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService)
+			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService, anu)
 
 		val implPackage = eClass.classImplementationPackageName(packageRoot)
 

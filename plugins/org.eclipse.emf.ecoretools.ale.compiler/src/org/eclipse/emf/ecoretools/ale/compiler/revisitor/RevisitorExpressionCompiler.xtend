@@ -23,7 +23,10 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
+import org.eclipse.xtext.EcoreUtil2
 
 class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 	extension TypeSystemUtils tsu
@@ -142,8 +145,11 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 						)
 
 						call.arguments.tail.enumerate.forEach [
-							hm.put('paramType' + it.value, it.key.infereType.head.type.resolveType2)
-							hm.put('paramExpr' + it.value, it.key.compileExpression(ctx))
+							var pt = it.key.infereType.head.type.resolveType2.solveNothing(it.key)
+							
+							hm.put('paramType' + it.value, pt)
+							val pe = it.key.compileExpression(ctx)
+							hm.put('paramExpr' + it.value, pe)
 						] 
 
 						CodeBlock.builder.

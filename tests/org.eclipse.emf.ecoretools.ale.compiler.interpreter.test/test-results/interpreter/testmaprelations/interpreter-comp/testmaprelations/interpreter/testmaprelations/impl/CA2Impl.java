@@ -1,9 +1,9 @@
 package testmaprelations.interpreter.testmaprelations.impl;
 
+import java.lang.Object;
+import java.lang.Override;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Map.Entry;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -11,13 +11,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import testmaprelations.interpreter.testmaprelations.CA2;
 import testmaprelations.interpreter.testmaprelations.CB2;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
 public class CA2Impl extends MinimalEObjectImpl.Container implements CA2 {
-	protected EList<Map.Entry<CA2, CB2>> mapca0tocb0mapentry;
+	protected EList<Entry<CA2, CB2>> mapca0tocb0mapentry;
 
 	protected CA2Impl() {
 		super();
@@ -28,27 +27,29 @@ public class CA2Impl extends MinimalEObjectImpl.Container implements CA2 {
 		return TestmaprelationsPackage.Literals.CA2;
 	}
 
-	public EList<Map.Entry<CA2, CB2>> getMapca0tocb0mapentry() {
+	public EList<Entry<CA2, CB2>> getMapca0tocb0mapentry() {
 		if (mapca0tocb0mapentry == null) {
-			mapca0tocb0mapentry = new EObjectWithInverseResolvingEList<Map.Entry<CA2, CB2>>(Entry.class, this, TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY, TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY);
+			mapca0tocb0mapentry = new EObjectWithInverseResolvingEList<Entry<CA2, CB2>>(Entry.class, this, TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY, TestmaprelationsPackage.MAP_CA2_TO_CB2_MAP_ENTRY__KEY);
 		}
 		return mapca0tocb0mapentry;
 	}
 
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY :
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getMapca0tocb0mapentry()).basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>) (InternalEList<?>) getMapca0tocb0mapentry()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY :
-				return ((InternalEList<?>)getMapca0tocb0mapentry()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>) getMapca0tocb0mapentry()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -67,7 +68,7 @@ public class CA2Impl extends MinimalEObjectImpl.Container implements CA2 {
 		switch (featureID) {
 			case TestmaprelationsPackage.CA2__MAPCA0TOCB0MAPENTRY :
 				getMapca0tocb0mapentry().clear();
-				getMapca0tocb0mapentry().addAll((Collection<? extends Map.Entry<CA2, CB2>>)newValue);
+				getMapca0tocb0mapentry().addAll((Collection<? extends Entry<CA2, CB2>>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

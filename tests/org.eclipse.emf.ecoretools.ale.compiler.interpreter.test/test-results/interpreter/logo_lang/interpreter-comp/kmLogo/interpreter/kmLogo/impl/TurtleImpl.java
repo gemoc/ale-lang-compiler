@@ -53,9 +53,9 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 			if (newPosition != null)
 				msgs = ((InternalEObject)newPosition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__POSITION, null, msgs);
 			msgs = basicSetPosition(newPosition, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__POSITION, newPosition, newPosition));
 	}
 
@@ -110,9 +110,9 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 			if (newCallStack != null)
 				msgs = ((InternalEObject)newCallStack).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__CALL_STACK, null, msgs);
 			msgs = basicSetCallStack(newCallStack, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__CALL_STACK, newCallStack, newCallStack));
 	}
 

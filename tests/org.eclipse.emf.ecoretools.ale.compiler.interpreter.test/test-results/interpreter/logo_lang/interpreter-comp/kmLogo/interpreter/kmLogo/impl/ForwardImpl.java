@@ -32,9 +32,9 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
 			if (newSteps != null)
 				msgs = ((InternalEObject)newSteps).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, null, msgs);
 			msgs = basicSetSteps(newSteps, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, newSteps, newSteps));
 	}
 

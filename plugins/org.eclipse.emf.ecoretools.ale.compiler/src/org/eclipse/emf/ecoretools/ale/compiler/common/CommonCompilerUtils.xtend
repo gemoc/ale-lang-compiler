@@ -101,9 +101,9 @@ class CommonCompilerUtils {
 			val keyType = if(key.isMany) ParameterizedTypeName.get(ClassName.get(EList), tmpkeyType.box) else tmpkeyType
 			val valueType = if(key.isMany) ParameterizedTypeName.get(ClassName.get(EList), tmpvalueType.box) else tmpvalueType
 			if (genFeature.isListType()) {
-				return eListReplacement.apply(ParameterizedTypeName.get(ClassName.get("java.util", "Map.Entry"), keyType.box, valueType.box))
+				return eListReplacement.apply(ParameterizedTypeName.get(ClassName.get("java.util.Map", "Entry"), keyType.box, valueType.box))
 			} else {
-				return ParameterizedTypeName.get(ClassName.get("java.util", "Map.Entry"), keyType.box, valueType.box);
+				return ParameterizedTypeName.get(ClassName.get("java.util.Map", "Entry"), keyType.box, valueType.box);
 			}
 		}
 		if (genFeature.isListType()) {

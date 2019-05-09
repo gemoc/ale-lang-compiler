@@ -115,7 +115,7 @@ class PackageImplementationCompiler {
 		val hm = newHashMap()
 		
 		for(eClass: allClasses) {
-			val t =  if(eClass.instanceClassName != "java.util.Map$Entry") ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.name) else ClassName.get("java.util", "Map.Entry")
+			val t =  if(eClass.instanceClassName != "java.util.Map$Entry") ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.name) else ClassName.get("java.util.Map", "Entry")
 			hm.put('''type«eClass.name»'''.toString, t)
 		}
 		

@@ -18,8 +18,9 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 
-class TypeSystemUtils implements AbstractTypeSystem{
+class TypeSystemUtils  extends CommonTypeSystemUtils implements AbstractTypeSystem{
 
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	extension EcoreUtils ecoreUtils = new EcoreUtils

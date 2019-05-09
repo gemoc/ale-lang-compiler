@@ -1,11 +1,10 @@
 package testmaprelations.interpreter.testmaprelations;
 
-import java.util.Map;
-
+import java.util.Map.Entry;
 import org.eclipse.emf.ecore.EObject;
 
 public interface CA4 extends EObject {
-	Map.Entry<CA4, CB4> getMapca0tocb0mapentry();
+	Entry<CA4, CB4> getMapca0tocb0mapentry();
 
-	void setMapca0tocb0mapentry(Map.Entry<CA4, CB4> value);
+	void setMapca0tocb0mapentry(Entry<CA4, CB4> value);
 }

@@ -21,19 +21,22 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 
-class TypeSystemUtils implements AbstractTypeSystem {
+class TypeSystemUtils extends CommonTypeSystemUtils implements AbstractTypeSystem {
 
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	extension EcoreUtils ecoreUtils = new EcoreUtils
-	extension InterpreterNamingUtils namingUtils = new InterpreterNamingUtils
+	extension AbstractNamingUtils namingUtils 
 	val String packageRoot
 	var List<ResolvedClass> resolved
 
-	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved) {
+	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved, AbstractNamingUtils nu) {
 		this.syntaxes = syntaxes
 		this.packageRoot = packageRoot
 		this.resolved = resolved
+		this.namingUtils = nu
 	}
 
 	def dispatch solveType(EClass type) {
@@ -119,7 +122,7 @@ class TypeSystemUtils implements AbstractTypeSystem {
 	}
 	
 	def dispatch TypeName resolveType2(EClassifier type) {
-		if (type instanceof EEnum) {
+		val rt = if (type instanceof EEnum) {
 			type.resolveType
 		} else if (type instanceof EClass) {
 			type.resolveType
@@ -128,5 +131,9 @@ class TypeSystemUtils implements AbstractTypeSystem {
 		} else {
 			type.resolveType
 		}
+		if(rt.toString == "org.eclipse.acceleo.query.runtime.impl.Nothing") {
+			println('NOTHING')
+		}
+		rt
 	}
 }

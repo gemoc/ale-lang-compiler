@@ -62,9 +62,9 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 			if (newValue != null)
 				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - BoaPackage.FIELD__VALUE, null, msgs);
 			msgs = basicSetValue(newValue, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.FIELD__VALUE, newValue, newValue));
 	}
 

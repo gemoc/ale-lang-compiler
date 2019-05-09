@@ -32,8 +32,6 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.codegen.ecore.genmodel.GenTypedElement
-import org.eclipse.emf.codegen.ecore.genmodel.impl.GenTypedElementImpl
 
 class EClassGetterCompiler {
 
@@ -100,7 +98,7 @@ class EClassGetterCompiler {
 		MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
 			.returns(rt)
 			.addNamedCode('''
-			if («field.name.normalizeVarName» != null && «IF field.isObjectExtensionType»(($eobj:T)«field.name.normalizeVarName»)«ELSE»«field.name.normalizeVarName»«ENDIF».eIsProxy()) {
+			if («field.name.normalizeVarName» != null && «IF field.isObjectExtensionType»(($eobj:T) «field.name.normalizeVarName»)«ELSE»«field.name.normalizeVarName»«ENDIF».eIsProxy()) {
 				$ieo:T «field.name.normalizeVarOldName» = ($ieo:T) «field.name.normalizeVarName»;
 				«field.name.normalizeVarName» = ($fieldType:T) eResolveProxy(«field.name.normalizeVarOldName»);
 				if («field.name.normalizeVarName» != «field.name.normalizeVarOldName») {
@@ -188,28 +186,6 @@ class EClassGetterCompiler {
 			.build
 	}
 	
-//	def buildBasicSetter(EStructuralFeature field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
-//		MethodSpec.methodBuilder('''basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(
-//			NotificationChain).addParameter(rt, '''«field.name.normalizeVarNewName»''').addParameter(NotificationChain,
-//			'msgs').addModifiers(PUBLIC).addNamedCode('''
-//			$fieldType:T «field.name.normalizeVarOldName» = «field.name.normalizeVarName»;
-//			«field.name.normalizeVarName» = «field.name.normalizeVarNewName»;
-//			if (eNotificationRequired()) {
-//				$eni:T notification = new $eni:T(this, $notif:T.SET, $epit:T.«field.normalizeUpperField», «field.name.normalizeVarOldName», «field.name.normalizeVarNewName»);
-//				if (msgs == null)
-//					msgs = notification;
-//				else
-//					msgs.add(notification);
-//			}
-//			return msgs;
-//		''', newHashMap(
-//			"fieldType" -> rt,
-//			"eni" -> ClassName.get(ENotificationImpl),
-//			"notif" -> ClassName.get(Notification),
-//			"epit" -> ePackageInterfaceType
-//		)).build
-//	}
-	
 	def buildWithOppositeWithOppositeContainmentBasicSetter(EStructuralFeature field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
 		MethodSpec.methodBuilder('''basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
 			.returns(NotificationChain)
@@ -242,10 +218,8 @@ class EClassGetterCompiler {
 	}
 	
 	def isObjectExtensionType(EStructuralFeature field) {
-//		!(ecls instanceof EReference)
 		val ecls = field.EContainingClass
 		val gen = this.resolved.filter[it.eCls.name == ecls.name && it.eCls.EPackage.name == ecls.EPackage.name].head.genCls
-//		println('''«field» -> «gen.ESetGenFeatures.filter[it.name == field.name].head.getSafeNameAsEObject()»''')
 		gen.ESetGenFeatures.filter[it.name == field.name].head.getSafeNameAsEObject().startsWith("((org.eclipse.emf.ecore.EObject)")
 	}
 	
@@ -255,7 +229,7 @@ class EClassGetterCompiler {
 			returns(fieldType).applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
 				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 			]).addModifiers(PUBLIC).addNamedCode('''
-				if («field.name.normalizeVarName» != null && «IF field.isObjectExtensionType»(($eobj:T)«field.name»)«ELSE»«field.name»«ENDIF».eIsProxy()) {
+				if («field.name.normalizeVarName» != null && «IF field.isObjectExtensionType»(($eobj:T) «field.name»)«ELSE»«field.name»«ENDIF».eIsProxy()) {
 					$ieo:T «field.name.normalizeVarOldName» = ($ieo:T) «field.name.normalizeVarName»;
 					«field.name.normalizeVarName» = ($ft:T) eResolveProxy(«field.name.normalizeVarOldName»);
 					if («field.name.normalizeVarName» != «field.name.normalizeVarOldName») {
@@ -280,9 +254,9 @@ class EClassGetterCompiler {
 				if («field.name.normalizeVarNewName» != «field.name.normalizeVarName») {
 					$nc:T msgs = null;
 					if («field.name.normalizeVarName» != null)
-						msgs = (($ieo:T) «field.name.normalizeVarName»).eInverseRemove(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldType:T.class, msgs);
+						msgs = (($ieo:T) «field.name.normalizeVarName»).eInverseRemove(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldTypeNoGen:T.class, msgs);
 					if («field.name.normalizeVarNewName» != null)
-						msgs = (($ieo:T) «field.name.normalizeVarNewName»).eInverseAdd(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldType:T.class, msgs);
+						msgs = (($ieo:T) «field.name.normalizeVarNewName»).eInverseAdd(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldTypeNoGen:T.class, msgs);
 					msgs = basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»(«field.name.normalizeVarNewName», msgs);
 					if (msgs != null)
 						msgs.dispatch();
@@ -293,6 +267,7 @@ class EClassGetterCompiler {
 				"ieo" -> ClassName.get(InternalEObject),
 				"epit" -> ePackageInterfaceType,
 				"fieldType" -> rt,
+				"fieldTypeNoGen" -> if(rt instanceof ParameterizedTypeName) rt.rawType else rt, 
 				"eni" -> ClassName.get(ENotificationImpl),
 				"notif" -> ClassName.get(Notification)
 				)).addModifiers(PUBLIC).build
@@ -365,7 +340,7 @@ class EClassGetterCompiler {
 				if («field.name.normalizeVarNewName» != «field.name.normalizeVarName») {
 					$nc:T msgs = null;
 					if («field.name.normalizeVarName» != null)
-						msgs = (($ieo:T) «field.name.normalizeVarName»).eInverseRemove(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldType:T.class, msgs);
+						msgs = (($ieo:T) «field.name.normalizeVarName»).eInverseRemove(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldTypeNoGen:T.class, msgs);
 					if («field.name.normalizeVarNewName» != null)
 						msgs = (($ieo:T) «field.name.normalizeVarNewName»).eInverseAdd(this, $epit:T.«field.EOpposite.normalizeUpperField», $fieldType:T.class, msgs);
 					msgs = basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»(«field.name.normalizeVarNewName», msgs);
@@ -378,6 +353,7 @@ class EClassGetterCompiler {
 				"ieo" -> ClassName.get(InternalEObject),
 				"epit" -> ePackageInterfaceType,
 				"fieldType" -> rt,
+				"fieldTypeNoGen" -> if (rt instanceof ParameterizedTypeName) rt.rawType else rt,
 				"eni" -> ClassName.get(ENotificationImpl),
 				"notif" -> ClassName.get(Notification)
 			))
@@ -391,7 +367,7 @@ class EClassGetterCompiler {
 			.addParameter(rt, field.name.normalizeVarNewName)
 			.addNamedCode('''
 			if («field.name.normalizeVarNewName» != eInternalContainer() || (eContainerFeatureID() != $epit:T.«field.normalizeUpperField» && «field.name.normalizeVarNewName» != null)) {
-				if ($eu:T.isAncestor(this, ($eot:T) «field.name.normalizeVarNewName»))
+				if ($eu:T.isAncestor(this, «IF rt.toString.startsWith("java.util.Map.Entry")»($eot:T) «ENDIF»«field.name.normalizeVarNewName»))
 					throw new $iae:T("Recursive containment not allowed for " + toString());
 				$nc:T msgs = null;
 				if (eInternalContainer() != null)

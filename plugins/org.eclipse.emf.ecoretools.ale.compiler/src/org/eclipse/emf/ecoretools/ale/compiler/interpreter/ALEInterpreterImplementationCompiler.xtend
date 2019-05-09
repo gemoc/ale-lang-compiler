@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenmodelCompiler
@@ -32,7 +33,6 @@ import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 
 class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
@@ -118,6 +118,9 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
 		val isTruffle = dsl.dslProp.getProperty('truffle', "false") == "true"
+		
+		val tsu =  new TypeSystemUtils(syntaxes, packageRoot, resolved, namingUtils)
+		
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			try {
 				fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
@@ -135,7 +138,7 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 						if(eclazz.instanceClassName != "java.util.Map$Entry")
 							eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
 						eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
-							registeredServices, dsl, base)
+							registeredServices, dsl, base, tsu, namingUtils)
 
 					} catch (Exception e) {
 						e.printStackTrace

@@ -15,10 +15,11 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 
-class TypeSystemUtils implements AbstractTypeSystem { 
-	val  Map<String, Pair<EPackage, GenModel>> syntaxes
-	extension EcoreUtils 	eu
+class TypeSystemUtils extends CommonTypeSystemUtils implements AbstractTypeSystem { 
+	val Map<String, Pair<EPackage, GenModel>> syntaxes
+	extension EcoreUtils eu
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, EcoreUtils 	eu) {
 		this.syntaxes = syntaxes
@@ -93,6 +94,6 @@ class TypeSystemUtils implements AbstractTypeSystem {
 		} else {
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
-
 	}
+	
 }

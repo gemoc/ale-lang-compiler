@@ -34,9 +34,9 @@ public class SegmentImpl extends MinimalEObjectImpl.Container implements Segment
 			if (newBegin != null)
 				msgs = ((InternalEObject)newBegin).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__BEGIN, null, msgs);
 			msgs = basicSetBegin(newBegin, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__BEGIN, newBegin, newBegin));
 	}
 
@@ -62,9 +62,9 @@ public class SegmentImpl extends MinimalEObjectImpl.Container implements Segment
 			if (newEnd != null)
 				msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__END, null, msgs);
 			msgs = basicSetEnd(newEnd, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__END, newEnd, newEnd));
 	}
 

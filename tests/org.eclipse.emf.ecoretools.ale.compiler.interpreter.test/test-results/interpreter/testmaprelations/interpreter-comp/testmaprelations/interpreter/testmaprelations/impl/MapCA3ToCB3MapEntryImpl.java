@@ -1,7 +1,8 @@
 package testmaprelations.interpreter.testmaprelations.impl;
 
+import java.lang.Object;
+import java.lang.Override;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
@@ -12,16 +13,16 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import testmaprelations.interpreter.testmaprelations.CA3;
 import testmaprelations.interpreter.testmaprelations.CB3;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
 public class MapCA3ToCB3MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EList<CA3>, EList<CB3>> {
-
 	protected EList<CA3> key;
 
 	protected EList<CB3> value;
+
+	protected int hash = -1;
 
 	protected MapCA3ToCB3MapEntryImpl() {
 		super();
@@ -47,23 +48,25 @@ public class MapCA3ToCB3MapEntryImpl extends MinimalEObjectImpl.Container implem
 	}
 
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA3_TO_CB3_MAP_ENTRY__KEY :
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTypedKey()).basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>) (InternalEList<?>) getTypedKey()).basicAdd(otherEnd, msgs);
 			case TestmaprelationsPackage.MAP_CA3_TO_CB3_MAP_ENTRY__VALUE :
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTypedValue()).basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>) (InternalEList<?>) getTypedValue()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA3_TO_CB3_MAP_ENTRY__KEY :
-				return ((InternalEList<?>)getTypedKey()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>) getTypedKey()).basicRemove(otherEnd, msgs);
 			case TestmaprelationsPackage.MAP_CA3_TO_CB3_MAP_ENTRY__VALUE :
-				return ((InternalEList<?>)getTypedValue()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>) getTypedValue()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -84,11 +87,11 @@ public class MapCA3ToCB3MapEntryImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA3_TO_CB3_MAP_ENTRY__KEY :
 				getTypedKey().clear();
-				getTypedKey().addAll((Collection<? extends CA3>)newValue);
+				getTypedKey().addAll((Collection<? extends CA3>) newValue);
 				return;
 			case TestmaprelationsPackage.MAP_CA3_TO_CB3_MAP_ENTRY__VALUE :
 				getTypedValue().clear();
-				getTypedValue().addAll((Collection<? extends CB3>)newValue);
+				getTypedValue().addAll((Collection<? extends CB3>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -117,8 +120,6 @@ public class MapCA3ToCB3MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return super.eIsSet(featureID);
 	}
-
-	protected int hash = -1;
 
 	public int getHash() {
 		if (hash == -1) {

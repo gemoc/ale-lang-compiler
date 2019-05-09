@@ -16,10 +16,11 @@ import testmaprelations.interpreter.testmaprelations.CB8;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
 public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<CA8, CB8> {
-
 	protected CA8 key;
 
 	protected CB8 value;
+
+	protected int hash = -1;
 
 	protected MapCA8ToCB8MapEntryImpl() {
 		super();
@@ -39,7 +40,10 @@ public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implem
 		key = newKey;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__KEY, oldKey, newKey);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -48,13 +52,13 @@ public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implem
 		if (newKey != key) {
 			NotificationChain msgs = null;
 			if (key != null)
-				msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__KEY, null, msgs);
+				msgs = ((InternalEObject) key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__KEY, null, msgs);
 			if (newKey != null)
-				msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__KEY, null, msgs);
+				msgs = ((InternalEObject) newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__KEY, null, msgs);
 			msgs = basicSetTypedKey(newKey, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__KEY, newKey, newKey));
 	}
 
@@ -67,7 +71,10 @@ public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implem
 		value = newValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__VALUE, oldValue, newValue);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -76,18 +83,19 @@ public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implem
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
-				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__VALUE, null, msgs);
+				msgs = ((InternalEObject) value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__VALUE, null, msgs);
 			if (newValue != null)
-				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__VALUE, null, msgs);
+				msgs = ((InternalEObject) newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__VALUE, null, msgs);
 			msgs = basicSetTypedValue(newValue, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__VALUE, newValue, newValue));
 	}
 
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__KEY :
 				return basicSetTypedKey(null, msgs);
@@ -125,10 +133,10 @@ public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implem
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__KEY :
-				setTypedKey((CA8)null);
+				setTypedKey((CA8) null);
 				return;
 			case TestmaprelationsPackage.MAP_CA8_TO_CB8_MAP_ENTRY__VALUE :
-				setTypedValue((CB8)null);
+				setTypedValue((CB8) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -144,8 +152,6 @@ public class MapCA8ToCB8MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return super.eIsSet(featureID);
 	}
-
-	protected int hash = -1;
 
 	public int getHash() {
 		if (hash == -1) {

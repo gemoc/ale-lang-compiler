@@ -1,6 +1,7 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import execboa.MapService;
+import execboa.SerializeService;
 import interpreter.boa.interpreter.boa.BoaPackage;
 import interpreter.boa.interpreter.boa.Ctx;
 import interpreter.boa.interpreter.boa.Def;
@@ -135,7 +136,7 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
 
 	public void nextLine(Ctx ctx) {
 		EvalRes e = ((EvalRes) (((Expr) (this.expr)).eval((Ctx) (ctx))));
-		LogService.log(((this.name) + (" = ")) + (SerializeService.serialize(e)));
+		LogService.log(((this.name) + (" = ")) + (SerializeService.serialize((EvalRes) (e))));
 		MapService.put((EMap) (ctx.getEnv()), (String) (this.name), (EvalRes) (e));
 	}
 }

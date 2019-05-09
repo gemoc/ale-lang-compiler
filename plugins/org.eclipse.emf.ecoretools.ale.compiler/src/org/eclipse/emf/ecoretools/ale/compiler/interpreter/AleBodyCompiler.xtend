@@ -31,6 +31,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 
 class AleBodyCompiler {
 
@@ -41,8 +42,8 @@ class AleBodyCompiler {
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
-		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es) {
-		tsu = new TypeSystemUtils(syntaxes, packageRoot, resolved)
+		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es, AbstractNamingUtils anu) {
+		tsu = new TypeSystemUtils(syntaxes, packageRoot, resolved, anu)
 		aec = new AleExpressionsCompiler(syntaxes, packageRoot, resolved, registreredDispatch, registeredArray,
 			registeredServices, isTruffle, cti, es, tsu)
 		this.cti = cti

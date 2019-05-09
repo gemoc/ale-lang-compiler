@@ -18,7 +18,7 @@ abstract class AbstractNamingUtils {
 	def String getIdentifier()
 	
 	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name»'''
+		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name»'''
 	}
 
 	def String normalizeVarName(String name) {

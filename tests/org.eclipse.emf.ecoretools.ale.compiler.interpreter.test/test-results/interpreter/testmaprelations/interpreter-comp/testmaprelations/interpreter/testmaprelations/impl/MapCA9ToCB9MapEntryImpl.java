@@ -1,7 +1,8 @@
 package testmaprelations.interpreter.testmaprelations.impl;
 
+import java.lang.Object;
+import java.lang.Override;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EList;
@@ -12,16 +13,16 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import testmaprelations.interpreter.testmaprelations.CA9;
 import testmaprelations.interpreter.testmaprelations.CB9;
 import testmaprelations.interpreter.testmaprelations.TestmaprelationsPackage;
 
 public class MapCA9ToCB9MapEntryImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EList<CA9>, EList<CB9>> {
-
 	protected EList<CA9> key;
 
 	protected EList<CB9> value;
+
+	protected int hash = -1;
 
 	protected MapCA9ToCB9MapEntryImpl() {
 		super();
@@ -47,12 +48,13 @@ public class MapCA9ToCB9MapEntryImpl extends MinimalEObjectImpl.Container implem
 	}
 
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA9_TO_CB9_MAP_ENTRY__KEY :
-				return ((InternalEList<?>)getTypedKey()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>) getTypedKey()).basicRemove(otherEnd, msgs);
 			case TestmaprelationsPackage.MAP_CA9_TO_CB9_MAP_ENTRY__VALUE :
-				return ((InternalEList<?>)getTypedValue()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>) getTypedValue()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -73,11 +75,11 @@ public class MapCA9ToCB9MapEntryImpl extends MinimalEObjectImpl.Container implem
 		switch (featureID) {
 			case TestmaprelationsPackage.MAP_CA9_TO_CB9_MAP_ENTRY__KEY :
 				getTypedKey().clear();
-				getTypedKey().addAll((Collection<? extends CA9>)newValue);
+				getTypedKey().addAll((Collection<? extends CA9>) newValue);
 				return;
 			case TestmaprelationsPackage.MAP_CA9_TO_CB9_MAP_ENTRY__VALUE :
 				getTypedValue().clear();
-				getTypedValue().addAll((Collection<? extends CB9>)newValue);
+				getTypedValue().addAll((Collection<? extends CB9>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -106,8 +108,6 @@ public class MapCA9ToCB9MapEntryImpl extends MinimalEObjectImpl.Container implem
 		}
 		return super.eIsSet(featureID);
 	}
-
-	protected int hash = -1;
 
 	public int getHash() {
 		if (hash == -1) {

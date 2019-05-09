@@ -15,10 +15,11 @@ import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 
-class VisitorTypeSystemUtil implements AbstractTypeSystem {
+class VisitorTypeSystemUtil  extends CommonTypeSystemUtils implements AbstractTypeSystem {
 
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	extension VisitorNamingUtils vnu

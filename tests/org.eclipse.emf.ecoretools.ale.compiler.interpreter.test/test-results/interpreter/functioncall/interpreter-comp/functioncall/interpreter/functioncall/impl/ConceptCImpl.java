@@ -85,9 +85,9 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 			if (newConcepta1 != null)
 				msgs = ((InternalEObject)newConcepta1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA1, null, msgs);
 			msgs = basicSetConcepta1(newConcepta1, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, FunctioncallPackage.CONCEPT_C__CONCEPTA1, newConcepta1, newConcepta1));
 	}
 
@@ -116,9 +116,9 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 			if (newConceptb != null)
 				msgs = ((InternalEObject)newConceptb).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTB, null, msgs);
 			msgs = basicSetConceptb(newConceptb, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, FunctioncallPackage.CONCEPT_C__CONCEPTB, newConceptb, newConceptb));
 	}
 

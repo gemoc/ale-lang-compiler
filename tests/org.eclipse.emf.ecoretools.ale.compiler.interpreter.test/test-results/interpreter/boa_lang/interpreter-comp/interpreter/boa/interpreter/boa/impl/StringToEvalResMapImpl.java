@@ -44,7 +44,7 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 	public EvalRes getTypedValue() {
 		if (value != null && value.eIsProxy()) {
 			InternalEObject oldValue = (InternalEObject)value;
-			value = (EvalRes)eResolveProxy(oldValue);
+			value = (EvalRes) eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE, oldValue, value));
@@ -70,7 +70,8 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 			case BoaPackage.STRING_TO_EVAL_RES_MAP__KEY :
 				return getTypedKey();
 			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE :
-				if (resolve) return getTypedValue();
+				if (resolve)
+					return getTypedValue();
 				return basicGetTypedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
