@@ -18,7 +18,7 @@ public abstract class ExpressionImpl extends InstructionImpl implements Expressi
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = 0.0;
+		result = (double) (0.0) ;
 		return result;
 	}
 }

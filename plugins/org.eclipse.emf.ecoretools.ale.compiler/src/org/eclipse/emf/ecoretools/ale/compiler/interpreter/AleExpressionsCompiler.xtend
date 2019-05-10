@@ -164,12 +164,16 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 							hm.put("typecaller", lt.resolveType2)
 							hm.put("lhs", call.arguments.head.compileExpression(ctx))
 							for (param : call.arguments.tail.enumerate) {
-								hm.put("typeparam" + param.value, param.key.infereType.head.type?.resolveType2.solveNothing(param.key))
+								val tmp = param.key.infereType.head
+								if(tmp !== null)
+									hm.put("typeparam" + param.value, tmp.type?.resolveType2?.solveNothing(param.key))
+								else
+									hm.put("typeparam" + param.value, null)
 								hm.put("expr"+param.value, param.key.compileExpression(ctx))
 							}
 
 							CodeBlock.builder.
-								addNamed('''(($typecaller:T) ($lhs:L)).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«param.value»:T) ($expr«param.value»:L)«ENDFOR»)''', hm).build
+								addNamed('''(($typecaller:T) ($lhs:L)).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("typeparam"+param.value) !== null»($typeparam«param.value»:T) ($expr«param.value»:L)«ELSE»$expr«param.value»:L«ENDIF»«ENDFOR»)''', hm).build
 						}
 					} else {
 						val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten.toList
@@ -189,15 +193,24 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 							)
 							
 							for(p: call.arguments.enumerate) {
-								hm.put("paramType" + p.value, p.key.infereType.head.resolveType3.solveNothing(p.key))
+								val tmp = p.key.infereType.head
+								if(tmp !== null)
+									hm.put("paramType" + p.value, tmp.resolveType3?.solveNothing(p.key))
+								else 
+									hm.put("paramType" + p.value, null)
 								hm.put("paramValue" + p.value, p.key.compileExpression(ctx))
 							}
 							
 
 							CodeBlock.builder.addNamed('''$serviceType:T.$serviceMethodName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»($paramType«p.value»:T) ($paramValue«p.value»:L)«ENDFOR»)''', hm).build
 						} else {
-							CodeBlock.
-								of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)/*SB*/''')
+							val Map<String, Object> hm = newHashMap
+							hm.put("leftExpr", call.arguments.head.compileExpression(ctx))
+							hm.put("serviceName", call.serviceName)
+							for(param: call.arguments.tail.enumerate) {
+								hm.put('''param«param.value»''', param.key.compileExpression(ctx))
+							}
+							CodeBlock.builder.addNamed('''$leftExpr:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»$param«param.value»«ENDFOR»)/*SB*/''', hm).build
 
 						}
 					}
@@ -222,12 +235,17 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 					} else {
 						val hm = newHashMap()
 
+						hm.put("leftexpr", call.arguments.head.compileExpression(ctx))
 						for (param : call.arguments.tail.enumerate) {
-							hm.put("typeparam" + param.value, param.key.infereType.head.type?.resolveType2)
+							if(param.key.infereType.head !== null)
+								hm.put("typeparam" + param.value, param.key.infereType.head.type?.resolveType2)
+							else 
+								hm.put("typeparam" + param.value, null) 
+							hm.put("exprparam" + param.value, param.key.compileExpression(ctx))
 						}
 
 						CodeBlock.builder.
-							addNamed('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«param.value»:T)«param.key.compileExpression(ctx)»«ENDFOR»)''',
+							addNamed('''$leftexpr:L.«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«param.value»:T) ($exprparam«param.value»:L)«ENDFOR»)''',
 								hm).build
 					}
 				}

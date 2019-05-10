@@ -23,32 +23,35 @@ public class ControlStructureImpl extends InstructionImpl implements ControlStru
 		return KmLogoPackage.Literals.CONTROL_STRUCTURE;
 	}
 
-	public void setCondition(Expression newCondition) {
-		if (newCondition != condition) {
-			NotificationChain msgs = null;
-			if (condition != null)
-				msgs = ((InternalEObject) condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION, null, msgs);
-			if (newCondition != null)
-				msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION, null, msgs);
-			msgs = basicSetCondition(newCondition, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION, newCondition, newCondition));
+	public Expression getCondition() {
+		return condition;
 	}
 
 	public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
 		Expression oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.CONTROL_STRUCTURE__CONDITION, oldCondition, newCondition);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.CONTROL_STRUCTURE__CONDITION, oldCondition, newCondition);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Expression getCondition() {
-		return condition;
+	public void setCondition(Expression newCondition) {
+		if (newCondition != condition) {
+			NotificationChain msgs = null;
+			if (condition != null)
+				msgs = ((InternalEObject) condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.CONTROL_STRUCTURE__CONDITION, null, msgs);
+			if (newCondition != null)
+				msgs = ((InternalEObject) newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.CONTROL_STRUCTURE__CONDITION, null, msgs);
+			msgs = basicSetCondition(newCondition, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.CONTROL_STRUCTURE__CONDITION, newCondition, newCondition));
 	}
 
 	@Override

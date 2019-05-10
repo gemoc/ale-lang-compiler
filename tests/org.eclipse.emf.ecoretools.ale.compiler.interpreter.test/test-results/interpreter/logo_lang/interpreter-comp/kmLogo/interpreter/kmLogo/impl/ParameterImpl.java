@@ -68,7 +68,7 @@ public class ParameterImpl extends MinimalEObjectImpl.Container implements Param
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.PARAMETER__NAME :
-				return name != NAME_EDEFAULT;
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}

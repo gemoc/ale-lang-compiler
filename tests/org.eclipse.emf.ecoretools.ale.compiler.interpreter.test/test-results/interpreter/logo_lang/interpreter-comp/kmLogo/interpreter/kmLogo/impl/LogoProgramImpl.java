@@ -59,7 +59,7 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
 		switch (featureID) {
 			case KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends Instruction>) newValue);
+				getInstructions().addAll((Collection<? extends Instruction>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -86,12 +86,12 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
 
 	public Turtle eval() {
 		Turtle result;
-		Turtle turtle = ((Turtle) (((LogoProgram) this).createTurtle()));
-		result = turtle;
+		Turtle turtle = ((Turtle) (((LogoProgram) (this)).createTurtle()));
+		result = (Turtle) (turtle) ;
 		for (Instruction it : this.getInstructions()) {
-			((Instruction) it).eval((Turtle) (turtle));
+			((Instruction) (it)).eval((Turtle) (turtle));
 		}
-		result = turtle;
+		result = (Turtle) (turtle) ;
 		return result;
 	}
 
@@ -103,7 +103,7 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
 		turtle.getPosition().setY(0.0);
 		turtle.setCallStack(KmLogoFactory.eINSTANCE.createCallStack());
 		turtle.getCallStack().getFrames().add(KmLogoFactory.eINSTANCE.createStackFrame());
-		result = turtle;
+		result = (Turtle) (turtle) ;
 		return result;
 	}
 }

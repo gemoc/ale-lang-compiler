@@ -1,8 +1,8 @@
 package visitor;
 
 import java.lang.Object;
-import test1.visitor.test1.ConceptA;
+import test1unique.visitor.test1unique.ConceptA;
 
 public interface VisitorInterface {
-	Object visittest1__ConceptA(ConceptA it);
+	Object visittest1unique__ConceptA(ConceptA it);
 }

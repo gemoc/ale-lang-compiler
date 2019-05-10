@@ -24,32 +24,35 @@ public class LeftImpl extends PrimitiveImpl implements Left {
 		return KmLogoPackage.Literals.LEFT;
 	}
 
-	public void setAngle(Expression newAngle) {
-		if (newAngle != angle) {
-			NotificationChain msgs = null;
-			if (angle != null)
-				msgs = ((InternalEObject) angle).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, null, msgs);
-			if (newAngle != null)
-				msgs = ((InternalEObject)newAngle).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, null, msgs);
-			msgs = basicSetAngle(newAngle, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, newAngle, newAngle));
+	public Expression getAngle() {
+		return angle;
 	}
 
 	public NotificationChain basicSetAngle(Expression newAngle, NotificationChain msgs) {
 		Expression oldAngle = angle;
 		angle = newAngle;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.LEFT__ANGLE, oldAngle, newAngle);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.LEFT__ANGLE, oldAngle, newAngle);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Expression getAngle() {
-		return angle;
+	public void setAngle(Expression newAngle) {
+		if (newAngle != angle) {
+			NotificationChain msgs = null;
+			if (angle != null)
+				msgs = ((InternalEObject) angle).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.LEFT__ANGLE, null, msgs);
+			if (newAngle != null)
+				msgs = ((InternalEObject) newAngle).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.LEFT__ANGLE, null, msgs);
+			msgs = basicSetAngle(newAngle, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.LEFT__ANGLE, newAngle, newAngle));
 	}
 
 	@Override
@@ -102,9 +105,9 @@ public class LeftImpl extends PrimitiveImpl implements Left {
 
 	public double eval(Turtle turtle) {
 		double result;
-		double angle = ((double) (((Expression) this.angle).eval((Turtle) (turtle))));
-		((Turtle) turtle).rotate((double) (angle));
-		result = 0.0;
+		double angle = ((double) (((Expression) (this.angle)).eval((Turtle) (turtle))));
+		((Turtle) (turtle)).rotate((double) (angle));
+		result = (double) (0.0) ;
 		return result;
 	}
 }

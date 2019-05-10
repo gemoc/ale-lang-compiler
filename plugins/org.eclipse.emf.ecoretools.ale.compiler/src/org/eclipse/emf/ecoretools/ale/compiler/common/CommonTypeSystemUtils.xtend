@@ -13,7 +13,7 @@ abstract class CommonTypeSystemUtils {
 	
 	def TypeName solveNothing(TypeName _pt, Expression expr) {
 		var pt = _pt
-		if(pt.toString == "org.eclipse.acceleo.query.runtime.impl.Nothing") {
+		if(pt !== null && pt.toString == "org.eclipse.acceleo.query.runtime.impl.Nothing") {
 			val blk = EcoreUtil2.getContainerOfType(expr, Block)
 			var idx = blk.statements.indexOf(expr)
 			var prt = expr.eContainer

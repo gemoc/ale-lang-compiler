@@ -26,60 +26,66 @@ public class SegmentImpl extends MinimalEObjectImpl.Container implements Segment
 		return KmLogoPackage.Literals.SEGMENT;
 	}
 
-	public void setBegin(Point newBegin) {
-		if (newBegin != begin) {
-			NotificationChain msgs = null;
-			if (begin != null)
-				msgs = ((InternalEObject) begin).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__BEGIN, null, msgs);
-			if (newBegin != null)
-				msgs = ((InternalEObject)newBegin).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__BEGIN, null, msgs);
-			msgs = basicSetBegin(newBegin, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__BEGIN, newBegin, newBegin));
+	public Point getBegin() {
+		return begin;
 	}
 
 	public NotificationChain basicSetBegin(Point newBegin, NotificationChain msgs) {
 		Point oldBegin = begin;
 		begin = newBegin;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__BEGIN, oldBegin, newBegin);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.SEGMENT__BEGIN, oldBegin, newBegin);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Point getBegin() {
-		return begin;
-	}
-
-	public void setEnd(Point newEnd) {
-		if (newEnd != end) {
+	public void setBegin(Point newBegin) {
+		if (newBegin != begin) {
 			NotificationChain msgs = null;
-			if (end != null)
-				msgs = ((InternalEObject) end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__END, null, msgs);
-			if (newEnd != null)
-				msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__END, null, msgs);
-			msgs = basicSetEnd(newEnd, msgs);
+			if (begin != null)
+				msgs = ((InternalEObject) begin).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.SEGMENT__BEGIN, null, msgs);
+			if (newBegin != null)
+				msgs = ((InternalEObject) newBegin).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.SEGMENT__BEGIN, null, msgs);
+			msgs = basicSetBegin(newBegin, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__END, newEnd, newEnd));
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.SEGMENT__BEGIN, newBegin, newBegin));
+	}
+
+	public Point getEnd() {
+		return end;
 	}
 
 	public NotificationChain basicSetEnd(Point newEnd, NotificationChain msgs) {
 		Point oldEnd = end;
 		end = newEnd;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.SEGMENT__END, oldEnd, newEnd);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.SEGMENT__END, oldEnd, newEnd);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Point getEnd() {
-		return end;
+	public void setEnd(Point newEnd) {
+		if (newEnd != end) {
+			NotificationChain msgs = null;
+			if (end != null)
+				msgs = ((InternalEObject) end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.SEGMENT__END, null, msgs);
+			if (newEnd != null)
+				msgs = ((InternalEObject) newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.SEGMENT__END, null, msgs);
+			msgs = basicSetEnd(newEnd, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.SEGMENT__END, newEnd, newEnd));
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 
 public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 	protected static final double HEADING_EDEFAULT = 0.0;
@@ -45,32 +46,35 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 		return KmLogoPackage.Literals.TURTLE;
 	}
 
-	public void setPosition(Point newPosition) {
-		if (newPosition != position) {
-			NotificationChain msgs = null;
-			if (position != null)
-				msgs = ((InternalEObject) position).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__POSITION, null, msgs);
-			if (newPosition != null)
-				msgs = ((InternalEObject)newPosition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__POSITION, null, msgs);
-			msgs = basicSetPosition(newPosition, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__POSITION, newPosition, newPosition));
+	public Point getPosition() {
+		return position;
 	}
 
 	public NotificationChain basicSetPosition(Point newPosition, NotificationChain msgs) {
 		Point oldPosition = position;
 		position = newPosition;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__POSITION, oldPosition, newPosition);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.TURTLE__POSITION, oldPosition, newPosition);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Point getPosition() {
-		return position;
+	public void setPosition(Point newPosition) {
+		if (newPosition != position) {
+			NotificationChain msgs = null;
+			if (position != null)
+				msgs = ((InternalEObject) position).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.TURTLE__POSITION, null, msgs);
+			if (newPosition != null)
+				msgs = ((InternalEObject) newPosition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.TURTLE__POSITION, null, msgs);
+			msgs = basicSetPosition(newPosition, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.TURTLE__POSITION, newPosition, newPosition));
 	}
 
 	public double getHeading() {
@@ -102,32 +106,35 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 		return drawings;
 	}
 
-	public void setCallStack(CallStack newCallStack) {
-		if (newCallStack != callStack) {
-			NotificationChain msgs = null;
-			if (callStack != null)
-				msgs = ((InternalEObject) callStack).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__CALL_STACK, null, msgs);
-			if (newCallStack != null)
-				msgs = ((InternalEObject)newCallStack).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__CALL_STACK, null, msgs);
-			msgs = basicSetCallStack(newCallStack, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__CALL_STACK, newCallStack, newCallStack));
+	public CallStack getCallStack() {
+		return callStack;
 	}
 
 	public NotificationChain basicSetCallStack(CallStack newCallStack, NotificationChain msgs) {
 		CallStack oldCallStack = callStack;
 		callStack = newCallStack;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.TURTLE__CALL_STACK, oldCallStack, newCallStack);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.TURTLE__CALL_STACK, oldCallStack, newCallStack);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public CallStack getCallStack() {
-		return callStack;
+	public void setCallStack(CallStack newCallStack) {
+		if (newCallStack != callStack) {
+			NotificationChain msgs = null;
+			if (callStack != null)
+				msgs = ((InternalEObject) callStack).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.TURTLE__CALL_STACK, null, msgs);
+			if (newCallStack != null)
+				msgs = ((InternalEObject) newCallStack).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.TURTLE__CALL_STACK, null, msgs);
+			msgs = basicSetCallStack(newCallStack, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.TURTLE__CALL_STACK, newCallStack, newCallStack));
 	}
 
 	@Override
@@ -175,7 +182,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 				return;
 			case KmLogoPackage.TURTLE__DRAWINGS :
 				getDrawings().clear();
-				getDrawings().addAll((Collection<? extends Segment>) newValue);
+				getDrawings().addAll((Collection<? extends Segment>)newValue);
 				return;
 			case KmLogoPackage.TURTLE__CALL_STACK :
 				setCallStack((CallStack) newValue);
@@ -242,7 +249,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 	}
 
 	public void forward(double steps) {
-		((Turtle) this).move((Double) ((steps) * (TrigoServices.cosinus((double)this.heading))),(Double) ((steps) * (TrigoServices.sinus((double)this.heading))));
+		((Turtle) (this)).move((Double) ((steps) * (TrigoServices.cosinus((double) (this.heading)))), (Double) ((steps) * (TrigoServices.sinus((double) (this.heading)))));
 	}
 
 	public void rotate(double angle) {

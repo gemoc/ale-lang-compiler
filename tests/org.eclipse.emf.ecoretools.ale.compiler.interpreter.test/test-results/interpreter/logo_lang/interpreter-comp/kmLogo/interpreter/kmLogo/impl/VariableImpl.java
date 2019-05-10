@@ -92,7 +92,7 @@ public class VariableImpl extends MinimalEObjectImpl.Container implements Variab
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.VARIABLE__NAME :
-				return name != NAME_EDEFAULT;
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case KmLogoPackage.VARIABLE__VALUE :
 				return value != VALUE_EDEFAULT;
 		}

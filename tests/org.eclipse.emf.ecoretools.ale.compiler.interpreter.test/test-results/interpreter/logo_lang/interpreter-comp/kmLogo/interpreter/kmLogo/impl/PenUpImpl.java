@@ -19,7 +19,7 @@ public class PenUpImpl extends PrimitiveImpl implements PenUp {
 	public double eval(Turtle turtle) {
 		double result;
 		turtle.setPenUp(true);
-		result = 0.0;
+		result = (double) (0.0) ;
 		return result;
 	}
 }

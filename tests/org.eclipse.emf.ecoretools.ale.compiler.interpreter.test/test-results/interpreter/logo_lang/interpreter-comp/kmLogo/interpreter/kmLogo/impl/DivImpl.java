@@ -20,11 +20,11 @@ public class DivImpl extends BinaryExpImpl implements Div {
 
 	public double eval(Turtle turtle) {
 		double result;
-		if (!EqualService.equals((((Expression) this.rhs).eval((Turtle) (turtle))), (0.0))) {
-			result = (((Expression) this.lhs).eval((Turtle) (turtle))) / (((Expression) this.rhs).eval((Turtle) (turtle)));
+		if (!EqualService.equals((((Expression) (this.rhs)).eval((Turtle) (turtle))), (0.0))) {
+			result = (double) ((((Expression) (this.lhs)).eval((Turtle) (turtle))) / (((Expression) (this.rhs)).eval((Turtle) (turtle)))) ;
 		}
 		else {
-			result = 0.0;
+			result = (double) (0.0) ;
 		}
 		return result;
 	}

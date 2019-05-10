@@ -57,7 +57,7 @@ public class StackFrameImpl extends MinimalEObjectImpl.Container implements Stac
 		switch (featureID) {
 			case KmLogoPackage.STACK_FRAME__VARIABLES :
 				getVariables().clear();
-				getVariables().addAll((Collection<? extends Variable>) newValue);
+				getVariables().addAll((Collection<? extends Variable>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

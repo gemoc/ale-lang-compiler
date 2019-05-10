@@ -25,60 +25,66 @@ public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp 
 		return KmLogoPackage.Literals.BINARY_EXP;
 	}
 
-	public void setLhs(Expression newLhs) {
-		if (newLhs != lhs) {
-			NotificationChain msgs = null;
-			if (lhs != null)
-				msgs = ((InternalEObject) lhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, null, msgs);
-			if (newLhs != null)
-				msgs = ((InternalEObject)newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, null, msgs);
-			msgs = basicSetLhs(newLhs, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, newLhs, newLhs));
+	public Expression getLhs() {
+		return lhs;
 	}
 
 	public NotificationChain basicSetLhs(Expression newLhs, NotificationChain msgs) {
 		Expression oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__LHS, oldLhs, newLhs);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.BINARY_EXP__LHS, oldLhs, newLhs);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Expression getLhs() {
-		return lhs;
-	}
-
-	public void setRhs(Expression newRhs) {
-		if (newRhs != rhs) {
+	public void setLhs(Expression newLhs) {
+		if (newLhs != lhs) {
 			NotificationChain msgs = null;
-			if (rhs != null)
-				msgs = ((InternalEObject) rhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, null, msgs);
-			if (newRhs != null)
-				msgs = ((InternalEObject)newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, null, msgs);
-			msgs = basicSetRhs(newRhs, msgs);
+			if (lhs != null)
+				msgs = ((InternalEObject) lhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.BINARY_EXP__LHS, null, msgs);
+			if (newLhs != null)
+				msgs = ((InternalEObject) newLhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.BINARY_EXP__LHS, null, msgs);
+			msgs = basicSetLhs(newLhs, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, newRhs, newRhs));
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.BINARY_EXP__LHS, newLhs, newLhs));
+	}
+
+	public Expression getRhs() {
+		return rhs;
 	}
 
 	public NotificationChain basicSetRhs(Expression newRhs, NotificationChain msgs) {
 		Expression oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.BINARY_EXP__RHS, oldRhs, newRhs);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.BINARY_EXP__RHS, oldRhs, newRhs);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Expression getRhs() {
-		return rhs;
+	public void setRhs(Expression newRhs) {
+		if (newRhs != rhs) {
+			NotificationChain msgs = null;
+			if (rhs != null)
+				msgs = ((InternalEObject) rhs).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.BINARY_EXP__RHS, null, msgs);
+			if (newRhs != null)
+				msgs = ((InternalEObject) newRhs).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.BINARY_EXP__RHS, null, msgs);
+			msgs = basicSetRhs(newRhs, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.BINARY_EXP__RHS, newRhs, newRhs));
 	}
 
 	@Override

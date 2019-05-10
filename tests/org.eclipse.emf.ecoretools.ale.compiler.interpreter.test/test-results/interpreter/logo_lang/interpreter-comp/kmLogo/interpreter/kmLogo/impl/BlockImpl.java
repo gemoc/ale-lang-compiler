@@ -57,7 +57,7 @@ public class BlockImpl extends InstructionImpl implements Block {
 		switch (featureID) {
 			case KmLogoPackage.BLOCK__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends Instruction>) newValue);
+				getInstructions().addAll((Collection<? extends Instruction>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -85,9 +85,9 @@ public class BlockImpl extends InstructionImpl implements Block {
 	public double eval(Turtle turtle) {
 		double result;
 		for (Instruction inst : this.getInstructions()) {
-			((Instruction) inst).eval((Turtle) (turtle));
+			((Instruction) (inst)).eval((Turtle) (turtle));
 		}
-		result = 0.0;
+		result = (double) (0.0) ;
 		return result;
 	}
 }

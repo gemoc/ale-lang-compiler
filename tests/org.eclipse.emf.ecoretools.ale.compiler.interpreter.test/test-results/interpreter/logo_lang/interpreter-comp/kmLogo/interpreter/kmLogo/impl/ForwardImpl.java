@@ -24,32 +24,35 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
 		return KmLogoPackage.Literals.FORWARD;
 	}
 
-	public void setSteps(Expression newSteps) {
-		if (newSteps != steps) {
-			NotificationChain msgs = null;
-			if (steps != null)
-				msgs = ((InternalEObject) steps).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, null, msgs);
-			if (newSteps != null)
-				msgs = ((InternalEObject)newSteps).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, null, msgs);
-			msgs = basicSetSteps(newSteps, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, newSteps, newSteps));
+	public Expression getSteps() {
+		return steps;
 	}
 
 	public NotificationChain basicSetSteps(Expression newSteps, NotificationChain msgs) {
 		Expression oldSteps = steps;
 		steps = newSteps;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.FORWARD__STEPS, oldSteps, newSteps);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.FORWARD__STEPS, oldSteps, newSteps);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Expression getSteps() {
-		return steps;
+	public void setSteps(Expression newSteps) {
+		if (newSteps != steps) {
+			NotificationChain msgs = null;
+			if (steps != null)
+				msgs = ((InternalEObject) steps).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.FORWARD__STEPS, null, msgs);
+			if (newSteps != null)
+				msgs = ((InternalEObject) newSteps).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.FORWARD__STEPS, null, msgs);
+			msgs = basicSetSteps(newSteps, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.FORWARD__STEPS, newSteps, newSteps));
 	}
 
 	@Override
@@ -102,9 +105,9 @@ public class ForwardImpl extends PrimitiveImpl implements Forward {
 
 	public double eval(Turtle turtle) {
 		double result;
-		double move = ((double) (((Expression) this.steps).eval((Turtle) (turtle))));
-		((Turtle) turtle).forward((double) (move));
-		result = 0.0;
+		double move = ((double) (((Expression) (this.steps)).eval((Turtle) (turtle))));
+		((Turtle) (turtle)).forward((double) (move));
+		result = (double) (0.0) ;
 		return result;
 	}
 }

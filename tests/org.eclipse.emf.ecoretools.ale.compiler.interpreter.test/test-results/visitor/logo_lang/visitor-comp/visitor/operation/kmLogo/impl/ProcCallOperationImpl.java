@@ -1,0 +1,47 @@
+package visitor.operation.kmLogo.impl;
+
+import kmLogo.visitor.kmLogo.Expression;
+import kmLogo.visitor.kmLogo.KmLogoFactory;
+import kmLogo.visitor.kmLogo.ProcCall;
+import kmLogo.visitor.kmLogo.ProcDeclaration;
+import kmLogo.visitor.kmLogo.StackFrame;
+import kmLogo.visitor.kmLogo.Turtle;
+import kmLogo.visitor.kmLogo.Variable;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
+import visitor.VisitorInterface;
+import visitor.operation.kmLogo.ProcCallOperation;
+import visitor.operation.kmLogo.ProcDeclarationOperation;
+
+public class ProcCallOperationImpl extends ExpressionOperationImpl implements ProcCallOperation {
+	private final ProcCall it;
+
+	private final VisitorInterface vis;
+
+	public ProcCallOperationImpl(ProcCall it, VisitorInterface vis) {
+		super(it, vis);
+		this.it = it;
+		this.vis = vis;
+	}
+
+	public double eval(Turtle turtle) {
+		double result;
+		LogService.log(("Calling ") + (this.it.getDeclaration().getName()));
+		StackFrame newFrame = ((StackFrame) (KmLogoFactory.eINSTANCE.createStackFrame()));
+		int i = ((int) (0));
+		for(Expression exp: this.it.getActualArgs()) {
+			Variable newVar = ((Variable) (KmLogoFactory.eINSTANCE.createVariable()));
+			newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.it.getDeclaration().getArgs(), i).getName());
+			newVar.setValue(((visitor.operation.kmLogo.ExpressionOperation)exp.accept(vis)).eval((kmLogo.visitor.kmLogo.Turtle) (turtle)));
+			newFrame.getVariables().add(newVar);
+			i = (i) + (1);
+		}
+		turtle.getCallStack().getFrames().add(newFrame);
+		result = 0.0;
+		if(this.it.getDeclaration() instanceof ProcDeclaration) {
+			ProcDeclaration decl = ((ProcDeclaration) (this.it.getDeclaration()));
+			((ProcDeclarationOperation)decl.accept(vis)).deval((Turtle) (turtle));
+		}
+		turtle.getCallStack().getFrames().remove(newFrame);
+		return result;
+	}
+}

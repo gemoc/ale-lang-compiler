@@ -23,32 +23,35 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl implements Unar
 		return KmLogoPackage.Literals.UNARY_EXPRESSION;
 	}
 
-	public void setExpression(Expression newExpression) {
-		if (newExpression != expression) {
-			NotificationChain msgs = null;
-			if (expression != null)
-				msgs = ((InternalEObject) expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, null, msgs);
-			if (newExpression != null)
-				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, null, msgs);
-			msgs = basicSetExpression(newExpression, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, newExpression, newExpression));
+	public Expression getExpression() {
+		return expression;
 	}
 
 	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
 		Expression oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, oldExpression, newExpression);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, oldExpression, newExpression);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Expression getExpression() {
-		return expression;
+	public void setExpression(Expression newExpression) {
+		if (newExpression != expression) {
+			NotificationChain msgs = null;
+			if (expression != null)
+				msgs = ((InternalEObject) expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, null, msgs);
+			if (newExpression != null)
+				msgs = ((InternalEObject) newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, null, msgs);
+			msgs = basicSetExpression(newExpression, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, newExpression, newExpression));
 	}
 
 	@Override

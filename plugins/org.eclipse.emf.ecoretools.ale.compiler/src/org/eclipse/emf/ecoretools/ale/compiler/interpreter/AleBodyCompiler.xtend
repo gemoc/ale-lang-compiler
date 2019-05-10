@@ -118,7 +118,7 @@ class AleBodyCompiler {
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, VariableDeclaration body,
 		CompilerExpressionCtx ctx) {
 
-		val inft = body.initialValue.infereType.head
+		val inft = body.initialValue?.infereType?.head
 		if (inft instanceof SequenceType) {
 			val ict = inft.collectionType.type
 			val t = if(ict instanceof EClass) {
@@ -134,7 +134,7 @@ class AleBodyCompiler {
 			val cbb = CodeBlock.builder.addNamed('''$t:T $name:N = (($t:T) ($expr:L))''', newHashMap(
 				"t" -> t, 
 				"name" -> body.name,
-				"expr" -> body.initialValue.compileExpression(ctx)
+				"expr" -> body.initialValue?.compileExpression(ctx)
 			))
 			val cb = cbb.build
 			builderSeed.addStatement(cb)

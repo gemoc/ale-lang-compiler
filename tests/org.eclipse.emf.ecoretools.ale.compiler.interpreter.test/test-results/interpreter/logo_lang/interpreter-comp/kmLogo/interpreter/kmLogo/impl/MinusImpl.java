@@ -19,7 +19,7 @@ public class MinusImpl extends BinaryExpImpl implements Minus {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = (((Expression) this.lhs).eval((Turtle) (turtle))) - (((Expression) this.rhs).eval((Turtle) (turtle)));
+		result = (double) ((((Expression) (this.lhs)).eval((Turtle) (turtle))) - (((Expression) (this.rhs)).eval((Turtle) (turtle)))) ;
 		return result;
 	}
 }

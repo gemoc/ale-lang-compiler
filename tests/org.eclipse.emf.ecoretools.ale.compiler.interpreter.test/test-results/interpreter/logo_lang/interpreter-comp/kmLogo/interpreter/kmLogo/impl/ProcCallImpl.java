@@ -128,7 +128,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 		switch (featureID) {
 			case KmLogoPackage.PROC_CALL__ACTUAL_ARGS :
 				getActualArgs().clear();
-				getActualArgs().addAll((Collection<? extends Expression>) newValue);
+				getActualArgs().addAll((Collection<? extends Expression>)newValue);
 				return;
 			case KmLogoPackage.PROC_CALL__DECLARATION :
 				setDeclaration((ProcDeclaration) newValue);
@@ -169,15 +169,15 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 		for (Expression exp : this.getActualArgs()) {
 			Variable newVar = ((Variable) (KmLogoFactory.eINSTANCE.createVariable()));
 			newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.declaration.getArgs(), i).getName());
-			newVar.setValue(((Expression) exp).eval((Turtle) (turtle)));
+			newVar.setValue(((Expression) (exp)).eval((Turtle) (turtle)));
 			newFrame.getVariables().add(newVar);
 			i = (i) + (1);
 		}
 		turtle.getCallStack().getFrames().add(newFrame);
-		result = 0.0;
+		result = (double) (0.0) ;
 		if (this.declaration instanceof ProcDeclaration) {
 			ProcDeclaration decl = ((ProcDeclaration) (this.declaration));
-			((ProcDeclaration) decl).deval((Turtle) (turtle));
+			((ProcDeclaration) (decl)).deval((Turtle) (turtle));
 		}
 		turtle.getCallStack().getFrames().remove(newFrame);
 		return result;

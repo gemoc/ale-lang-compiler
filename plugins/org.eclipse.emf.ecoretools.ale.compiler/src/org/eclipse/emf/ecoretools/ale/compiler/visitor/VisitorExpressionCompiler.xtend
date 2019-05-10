@@ -112,7 +112,7 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 							ClassName.get(packageRoot.operationInterfacePackageName(t.type as EClass),
 								(t.type as EClass).operationInterfaceClassName))
 						for (param : call.arguments.tail.enumerate) {
-							hm.put("typeparam" + param.value, param.key.infereType?.head?.type?.resolveType2)
+							hm.put("typeparam" + param.value, param.key.infereType?.head?.type?.resolveType2.solveNothing(param.key))
 							hm.put("expression" + param.value, param.key.compileExpression(ctx))
 						}
 
@@ -132,8 +132,14 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 						].head
 
 						if (candidate !== null) {
-							CodeBlock.
-								of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
+							val Map<String, Object> hm = newHashMap
+							val splt = candidate.key.split("\\.").reverse
+							hm.put('serviceClass', ClassName.get(splt.tail.toList.reverse.join("."), splt.head))
+							hm.put('serviceName', candidate.value.name)
+							for(p: call.arguments.enumerate) {
+								hm.put('''paramExpr«p.value»''', p.key.compileExpression(ctx))
+							}
+							CodeBlock.builder.addNamed('''$serviceClass:T.$serviceName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$paramExpr«p.value»:L«ENDFOR»)''', hm).build
 						} else {
 							CodeBlock.
 								of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''')
@@ -148,8 +154,14 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 					].head
 
 					if (candidate !== null) {
-						CodeBlock.
-							of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
+						val Map<String, Object> hm = newHashMap
+						val splt = candidate.key.split("\\.").reverse
+						hm.put('serviceClass', ClassName.get(splt.tail.toList.reverse.join("."), splt.head))
+						hm.put('serviceName', candidate.value.name)
+						for(p: call.arguments.enumerate) {
+							hm.put('''paramExpr«p.value»''', p.key.compileExpression(ctx))
+						}
+						CodeBlock.builder.addNamed('''$serviceClass:T.$serviceName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$paramExpr«p.value»:L«ENDFOR»)''', hm).build
 					} else {
 						CodeBlock.
 							of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''')

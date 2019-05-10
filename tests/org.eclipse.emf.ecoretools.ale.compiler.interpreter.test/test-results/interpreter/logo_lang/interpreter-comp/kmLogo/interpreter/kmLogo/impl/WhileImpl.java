@@ -25,32 +25,35 @@ public class WhileImpl extends ControlStructureImpl implements While {
 		return KmLogoPackage.Literals.WHILE;
 	}
 
-	public void setBlock(Block newBlock) {
-		if (newBlock != block) {
-			NotificationChain msgs = null;
-			if (block != null)
-				msgs = ((InternalEObject) block).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.WHILE__BLOCK, null, msgs);
-			if (newBlock != null)
-				msgs = ((InternalEObject)newBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.WHILE__BLOCK, null, msgs);
-			msgs = basicSetBlock(newBlock, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.WHILE__BLOCK, newBlock, newBlock));
+	public Block getBlock() {
+		return block;
 	}
 
 	public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
 		Block oldBlock = block;
 		block = newBlock;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.WHILE__BLOCK, oldBlock, newBlock);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.WHILE__BLOCK, oldBlock, newBlock);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Block getBlock() {
-		return block;
+	public void setBlock(Block newBlock) {
+		if (newBlock != block) {
+			NotificationChain msgs = null;
+			if (block != null)
+				msgs = ((InternalEObject) block).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.WHILE__BLOCK, null, msgs);
+			if (newBlock != null)
+				msgs = ((InternalEObject) newBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.WHILE__BLOCK, null, msgs);
+			msgs = basicSetBlock(newBlock, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.WHILE__BLOCK, newBlock, newBlock));
 	}
 
 	@Override
@@ -103,10 +106,10 @@ public class WhileImpl extends ControlStructureImpl implements While {
 
 	public double eval(Turtle turtle) {
 		double result;
-		while ((((Expression) this.condition).eval((Turtle) (turtle))) > (0.0)) {
-			((Block) this.block).eval((Turtle) (turtle));
+		while ((((Expression) (this.condition)).eval((Turtle) (turtle))) > (0.0)) {
+			((Block) (this.block)).eval((Turtle) (turtle));
 		}
-		result = 0.0;
+		result = (double) (0.0) ;
 		return result;
 	}
 }

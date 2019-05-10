@@ -57,7 +57,7 @@ public class CallStackImpl extends MinimalEObjectImpl.Container implements CallS
 		switch (featureID) {
 			case KmLogoPackage.CALL_STACK__FRAMES :
 				getFrames().clear();
-				getFrames().addAll((Collection<? extends StackFrame>) newValue);
+				getFrames().addAll((Collection<? extends StackFrame>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

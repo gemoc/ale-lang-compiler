@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 
 import static javax.lang.model.element.Modifier.*
+import java.util.Comparator
 
 class PackageInterfaceCompiler {
 
@@ -46,7 +47,13 @@ class PackageInterfaceCompiler {
 			}
 			result.addAll(extendChain)
 		}
-		result
+		result.sortWith(new Comparator<EClass>() {
+			
+			override compare(EClass o1, EClass o2) {
+				if(o1.EAllSuperTypes.contains(o2)) 1 else -1
+			}
+			
+		})
 	}
 	
 	def  getOrderedClassifiers(EPackage ePackage) {
@@ -216,9 +223,9 @@ class PackageInterfaceCompiler {
 			if (eClassifier instanceof EClass) {
 				packageTmp = packageTmp.addField(
 					FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_FEATURE_COUNT''', PUBLIC, STATIC,
-						FINAL).
-						initializer('''«FOR parentClazz : eClassifier.ESuperTypes»«parentClazz.name.normalizeUpperField»_FEATURE_COUNT + «ENDFOR»«eClassifier.EStructuralFeatures.size»''').
-						build
+						FINAL)
+						.initializer('''«IF !eClassifier.ESuperTypes.empty»«eClassifier.ESuperTypes.head.name.normalizeUpperField»_FEATURE_COUNT + «ENDIF»«eClassifier.EStructuralFeatures.size»''')
+						.build
 				)
 				packageTmp = packageTmp.addField(
 					FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_OPERATION_COUNT''', PUBLIC, STATIC,

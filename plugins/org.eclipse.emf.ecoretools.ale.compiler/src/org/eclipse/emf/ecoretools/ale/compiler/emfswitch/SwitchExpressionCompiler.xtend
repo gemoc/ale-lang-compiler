@@ -159,12 +159,12 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 						)
 
 						for (param : call.arguments.tail.enumerate) {
-							hm.put("paramType" + param.value, param.key.infereType.head.type.resolveType2)
+							hm.put("paramType" + param.value, param.key.infereType.head.type.resolveType2.solveNothing(param.key))
 							hm.put("paramExpr" + param.value, param.key.compileExpression(ctx))
 						}
 
 						CodeBlock.builder.
-							addNamed('''(($operationType:T) emfswitch.doSwitch($switched:L)).$callService:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($paramType«param.value»:T) $paramExpr«param.value»:L«ENDFOR»)''',
+							addNamed('''(($operationType:T) emfswitch.doSwitch($switched:L)).$callService:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($paramType«param.value»:T) ($paramExpr«param.value»:L)«ENDFOR»)''',
 								hm).build
 					} else {
 
@@ -175,11 +175,15 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 						].head
 
 						if (candidate !== null) {
-							CodeBlock.
-								of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
+							val Map<String, Object> hm = newHashMap
+							val splt = candidate.key.split("\\.").reverse
+							hm.put('serviceClass', ClassName.get(splt.tail.toList.reverse.join("."), splt.head))
+							hm.put('serviceName', candidate.value.name)
+							for(p: call.arguments.enumerate) {
+								hm.put('''paramExpr«p.value»''', p.key.compileExpression(ctx))
+							}
+							CodeBlock.builder.addNamed('''$serviceClass:T.$serviceName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$paramExpr«p.value»:L«ENDFOR»)''', hm).build
 						} else {
-
-							// TODO add parameters cast 
 							CodeBlock.
 								of('''(($T) emfswitch.doSwitch(«call.arguments.head.compileExpression(ctx)»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''',
 									ClassName.get(packageRoot.operationPackageName,
@@ -194,12 +198,17 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 					].head
 
 					if (candidate !== null) {
-						CodeBlock.
-							of('''«candidate.key».«candidate.value.name»(«FOR p : call.arguments SEPARATOR ', '»«p.compileExpression(ctx)»«ENDFOR»)''')
+						val Map<String, Object> hm = newHashMap
+						val splt = candidate.key.split("\\.").reverse
+						hm.put('serviceClass', ClassName.get(splt.tail.toList.reverse.join("."), splt.head))
+						hm.put('serviceName', candidate.value.name)
+						for(p: call.arguments.enumerate) {
+							hm.put('''paramExpr«p.value»''', p.key.compileExpression(ctx))
+						}
+						CodeBlock.builder.addNamed('''$serviceClass:T.$serviceName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$paramExpr«p.value»:L«ENDFOR»)''', hm).build
 					} else {
 						if (t !== null && t.type !== null && t.type instanceof EClassifier &&
 							(t.type as EClassifier).solveType instanceof EClass)
-							// TODO add parameters cast 
 							CodeBlock.
 								of('''(($T) emfswitch.doSwitch(«call.arguments.head.compileExpression(ctx)»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''',
 									ClassName.get(packageRoot.operationPackageName,

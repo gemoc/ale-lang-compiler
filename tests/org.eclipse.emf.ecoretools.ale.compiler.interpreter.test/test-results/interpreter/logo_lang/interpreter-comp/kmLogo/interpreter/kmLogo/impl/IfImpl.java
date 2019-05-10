@@ -28,60 +28,66 @@ public class IfImpl extends ControlStructureImpl implements If {
 		return KmLogoPackage.Literals.IF;
 	}
 
-	public void setThenPart(Block newThenPart) {
-		if (newThenPart != thenPart) {
-			NotificationChain msgs = null;
-			if (thenPart != null)
-				msgs = ((InternalEObject) thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART, null, msgs);
-			if (newThenPart != null)
-				msgs = ((InternalEObject)newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART, null, msgs);
-			msgs = basicSetThenPart(newThenPart, msgs);
-			if (msgs != null)
-				msgs.dispatch();
-		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART, newThenPart, newThenPart));
+	public Block getThenPart() {
+		return thenPart;
 	}
 
 	public NotificationChain basicSetThenPart(Block newThenPart, NotificationChain msgs) {
 		Block oldThenPart = thenPart;
 		thenPart = newThenPart;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.IF__THEN_PART, oldThenPart, newThenPart);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.IF__THEN_PART, oldThenPart, newThenPart);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Block getThenPart() {
-		return thenPart;
-	}
-
-	public void setElsePart(Block newElsePart) {
-		if (newElsePart != elsePart) {
+	public void setThenPart(Block newThenPart) {
+		if (newThenPart != thenPart) {
 			NotificationChain msgs = null;
-			if (elsePart != null)
-				msgs = ((InternalEObject) elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART, null, msgs);
-			if (newElsePart != null)
-				msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART, null, msgs);
-			msgs = basicSetElsePart(newElsePart, msgs);
+			if (thenPart != null)
+				msgs = ((InternalEObject) thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.IF__THEN_PART, null, msgs);
+			if (newThenPart != null)
+				msgs = ((InternalEObject) newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.IF__THEN_PART, null, msgs);
+			msgs = basicSetThenPart(newThenPart, msgs);
 			if (msgs != null)
 				msgs.dispatch();
 		} else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART, newElsePart, newElsePart));
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.IF__THEN_PART, newThenPart, newThenPart));
+	}
+
+	public Block getElsePart() {
+		return elsePart;
 	}
 
 	public NotificationChain basicSetElsePart(Block newElsePart, NotificationChain msgs) {
 		Block oldElsePart = elsePart;
 		elsePart = newElsePart;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, kmLogo.interpreter.kmLogo.KmLogoPackage.IF__ELSE_PART, oldElsePart, newElsePart);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.IF__ELSE_PART, oldElsePart, newElsePart);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public Block getElsePart() {
-		return elsePart;
+	public void setElsePart(Block newElsePart) {
+		if (newElsePart != elsePart) {
+			NotificationChain msgs = null;
+			if (elsePart != null)
+				msgs = ((InternalEObject) elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.IF__ELSE_PART, null, msgs);
+			if (newElsePart != null)
+				msgs = ((InternalEObject) newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KmLogoPackage.IF__ELSE_PART, null, msgs);
+			msgs = basicSetElsePart(newElsePart, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.IF__ELSE_PART, newElsePart, newElsePart));
 	}
 
 	@Override
@@ -146,15 +152,15 @@ public class IfImpl extends ControlStructureImpl implements If {
 
 	public double eval(Turtle turtle) {
 		double result;
-		if (!EqualService.equals((((Expression) this.condition).eval((Turtle) (turtle))), (0.0))) {
-			result = ((Block) this.thenPart).eval((Turtle) (turtle));
+		if (!EqualService.equals((((Expression) (this.condition)).eval((Turtle) (turtle))), (0.0))) {
+			result = (double) (((Block) (this.thenPart)).eval((Turtle) (turtle))) ;
 		}
 		else {
 			if (!EqualService.equals((this.elsePart), (null))) {
-				result = ((Block) this.elsePart).eval((Turtle) (turtle));
+				result = (double) (((Block) (this.elsePart)).eval((Turtle) (turtle))) ;
 			}
 			else {
-				result = 0.0;
+				result = (double) (0.0) ;
 			}
 		}
 		return result;

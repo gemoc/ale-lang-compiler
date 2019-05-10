@@ -75,7 +75,7 @@ public class ConstantImpl extends ExpressionImpl implements Constant {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = this.value;
+		result = (double) (this.value) ;
 		return result;
 	}
 }

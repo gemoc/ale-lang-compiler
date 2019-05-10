@@ -19,11 +19,11 @@ public class LowerImpl extends BinaryExpImpl implements Lower {
 
 	public double eval(Turtle turtle) {
 		double result;
-		if ((((Expression) this.lhs).eval((Turtle) (turtle))) < (((Expression) this.rhs).eval((Turtle) (turtle)))) {
-			result = 1.0;
+		if ((((Expression) (this.lhs)).eval((Turtle) (turtle))) < (((Expression) (this.rhs)).eval((Turtle) (turtle)))) {
+			result = (double) (1.0) ;
 		}
 		else {
-			result = 0.0;
+			result = (double) (0.0) ;
 		}
 		return result;
 	}

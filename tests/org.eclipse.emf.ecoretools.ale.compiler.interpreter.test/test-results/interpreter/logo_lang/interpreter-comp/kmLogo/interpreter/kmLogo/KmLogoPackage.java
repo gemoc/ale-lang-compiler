@@ -4,7 +4,6 @@ import java.lang.String;
 import kmLogo.interpreter.kmLogo.impl.KmLogoPackageImpl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -31,7 +30,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int BACK = 2;
 
-	int BACK__STEPS = PRIMITIVE_FEATURE_COUNT + 0;
+	int BACK__STEPS = 0;
 
 	int BACK_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 1;
 
@@ -39,7 +38,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int FORWARD = 3;
 
-	int FORWARD__STEPS = PRIMITIVE_FEATURE_COUNT + 0;
+	int FORWARD__STEPS = 0;
 
 	int FORWARD_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 1;
 
@@ -47,7 +46,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int LEFT = 4;
 
-	int LEFT__ANGLE = PRIMITIVE_FEATURE_COUNT + 0;
+	int LEFT__ANGLE = 0;
 
 	int LEFT_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 1;
 
@@ -55,7 +54,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int RIGHT = 5;
 
-	int RIGHT__ANGLE = PRIMITIVE_FEATURE_COUNT + 0;
+	int RIGHT__ANGLE = 0;
 
 	int RIGHT_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 1;
 
@@ -87,9 +86,9 @@ public interface KmLogoPackage extends EPackage {
 
 	int BINARY_EXP = 10;
 
-	int BINARY_EXP__LHS = EXPRESSION_FEATURE_COUNT + 0;
+	int BINARY_EXP__LHS = 0;
 
-	int BINARY_EXP__RHS = EXPRESSION_FEATURE_COUNT + 1;
+	int BINARY_EXP__RHS = 1;
 
 	int BINARY_EXP_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
@@ -97,7 +96,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int UNARY_EXPRESSION = 11;
 
-	int UNARY_EXPRESSION__EXPRESSION = EXPRESSION_FEATURE_COUNT + 0;
+	int UNARY_EXPRESSION__EXPRESSION = 0;
 
 	int UNARY_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
@@ -105,7 +104,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int CONSTANT = 12;
 
-	int CONSTANT__VALUE = EXPRESSION_FEATURE_COUNT + 0;
+	int CONSTANT__VALUE = 0;
 
 	int CONSTANT_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
@@ -113,9 +112,9 @@ public interface KmLogoPackage extends EPackage {
 
 	int PROC_CALL = 13;
 
-	int PROC_CALL__ACTUAL_ARGS = EXPRESSION_FEATURE_COUNT + 0;
+	int PROC_CALL__ACTUAL_ARGS = 0;
 
-	int PROC_CALL__DECLARATION = EXPRESSION_FEATURE_COUNT + 1;
+	int PROC_CALL__DECLARATION = 1;
 
 	int PROC_CALL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
@@ -123,13 +122,13 @@ public interface KmLogoPackage extends EPackage {
 
 	int PROC_DECLARATION = 14;
 
-	int PROC_DECLARATION__NAME = INSTRUCTION_FEATURE_COUNT + 0;
+	int PROC_DECLARATION__NAME = 0;
 
-	int PROC_DECLARATION__ARGS = INSTRUCTION_FEATURE_COUNT + 1;
+	int PROC_DECLARATION__ARGS = 1;
 
-	int PROC_DECLARATION__PROC_CALL = INSTRUCTION_FEATURE_COUNT + 2;
+	int PROC_DECLARATION__PROC_CALL = 2;
 
-	int PROC_DECLARATION__INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 3;
+	int PROC_DECLARATION__INSTRUCTIONS = 3;
 
 	int PROC_DECLARATION_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
 
@@ -137,27 +136,27 @@ public interface KmLogoPackage extends EPackage {
 
 	int BLOCK = 15;
 
-	int BLOCK__INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 0;
+	int BLOCK__INSTRUCTIONS = 0;
 
 	int BLOCK_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
 	int BLOCK_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
-	int CONTROL_STRUCTURE = 17;
+	int CONTROL_STRUCTURE = 16;
 
-	int CONTROL_STRUCTURE__CONDITION = INSTRUCTION_FEATURE_COUNT + 0;
+	int CONTROL_STRUCTURE__CONDITION = 0;
 
 	int CONTROL_STRUCTURE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
 	int CONTROL_STRUCTURE_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
-	int IF = 16;
+	int IF = 17;
 
 	int IF__CONDITION = CONTROL_STRUCTURE__CONDITION;
 
-	int IF__THEN_PART = CONTROL_STRUCTURE_FEATURE_COUNT + 0;
+	int IF__THEN_PART = 1;
 
-	int IF__ELSE_PART = CONTROL_STRUCTURE_FEATURE_COUNT + 1;
+	int IF__ELSE_PART = 2;
 
 	int IF_FEATURE_COUNT = CONTROL_STRUCTURE_FEATURE_COUNT + 2;
 
@@ -167,7 +166,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int REPEAT__CONDITION = CONTROL_STRUCTURE__CONDITION;
 
-	int REPEAT__BLOCK = CONTROL_STRUCTURE_FEATURE_COUNT + 0;
+	int REPEAT__BLOCK = 1;
 
 	int REPEAT_FEATURE_COUNT = CONTROL_STRUCTURE_FEATURE_COUNT + 1;
 
@@ -177,7 +176,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int WHILE__CONDITION = CONTROL_STRUCTURE__CONDITION;
 
-	int WHILE__BLOCK = CONTROL_STRUCTURE_FEATURE_COUNT + 0;
+	int WHILE__BLOCK = 1;
 
 	int WHILE_FEATURE_COUNT = CONTROL_STRUCTURE_FEATURE_COUNT + 1;
 
@@ -193,7 +192,7 @@ public interface KmLogoPackage extends EPackage {
 
 	int PARAMETER_CALL = 21;
 
-	int PARAMETER_CALL__PARAMETER = EXPRESSION_FEATURE_COUNT + 0;
+	int PARAMETER_CALL__PARAMETER = 0;
 
 	int PARAMETER_CALL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
@@ -363,12 +362,6 @@ public interface KmLogoPackage extends EPackage {
 
 	int VARIABLE_OPERATION_COUNT = 0;
 
-	int INTEGER = 39;
-
-	int BOOLEAN = 40;
-
-	int STRING = 41;
-
 	EClass getInstruction();
 
 	EClass getPrimitive();
@@ -519,12 +512,6 @@ public interface KmLogoPackage extends EPackage {
 
 	EAttribute getVariable_Value();
 
-	EDataType getInteger();
-
-	EDataType getBoolean();
-
-	EDataType getString();
-
 	KmLogoFactory getKmLogoFactory();
 
 	interface Literals {
@@ -590,15 +577,15 @@ public interface KmLogoPackage extends EPackage {
 
 		EReference BLOCK__INSTRUCTIONS = eINSTANCE.getBlock_Instructions();
 
+		EClass CONTROL_STRUCTURE = eINSTANCE.getControlStructure();
+
+		EReference CONTROL_STRUCTURE__CONDITION = eINSTANCE.getControlStructure_Condition();
+
 		EClass IF = eINSTANCE.getIf();
 
 		EReference IF__THEN_PART = eINSTANCE.getIf_ThenPart();
 
 		EReference IF__ELSE_PART = eINSTANCE.getIf_ElsePart();
-
-		EClass CONTROL_STRUCTURE = eINSTANCE.getControlStructure();
-
-		EReference CONTROL_STRUCTURE__CONDITION = eINSTANCE.getControlStructure_Condition();
 
 		EClass REPEAT = eINSTANCE.getRepeat();
 
@@ -677,11 +664,5 @@ public interface KmLogoPackage extends EPackage {
 		EAttribute VARIABLE__NAME = eINSTANCE.getVariable_Name();
 
 		EAttribute VARIABLE__VALUE = eINSTANCE.getVariable_Value();
-
-		EDataType INTEGER = eINSTANCE.getInteger();
-
-		EDataType BOOLEAN = eINSTANCE.getBoolean();
-
-		EDataType STRING = eINSTANCE.getString();
 	}
 }

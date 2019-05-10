@@ -19,7 +19,7 @@ public abstract class InstructionImpl extends MinimalEObjectImpl.Container imple
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = 0.0;
+		result = (double) (0.0) ;
 		return result;
 	}
 }

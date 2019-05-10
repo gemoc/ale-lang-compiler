@@ -119,15 +119,15 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
 				return;
 			case KmLogoPackage.PROC_DECLARATION__ARGS :
 				getArgs().clear();
-				getArgs().addAll((Collection<? extends Parameter>) newValue);
+				getArgs().addAll((Collection<? extends Parameter>)newValue);
 				return;
 			case KmLogoPackage.PROC_DECLARATION__PROC_CALL :
 				getProcCall().clear();
-				getProcCall().addAll((Collection<? extends ProcCall>) newValue);
+				getProcCall().addAll((Collection<? extends ProcCall>)newValue);
 				return;
 			case KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends Instruction>) newValue);
+				getInstructions().addAll((Collection<? extends Instruction>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -156,7 +156,7 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.PROC_DECLARATION__NAME :
-				return name != NAME_EDEFAULT;
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case KmLogoPackage.PROC_DECLARATION__ARGS :
 				return args != null && !args.isEmpty();
 			case KmLogoPackage.PROC_DECLARATION__PROC_CALL :
@@ -169,16 +169,16 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = 0.0;
+		result = (double) (0.0) ;
 		for (Instruction instr : this.getInstructions()) {
-			result = ((Instruction) instr).eval((Turtle) (turtle));
+			result = (double) (((Instruction) (instr)).eval((Turtle) (turtle))) ;
 		}
 		return result;
 	}
 
 	public double deval(Turtle turtle) {
 		double result;
-		result = ((ProcDeclaration) this).eval((Turtle) (turtle));
+		result = (double) (((ProcDeclaration) (this)).eval((Turtle) (turtle))) ;
 		return result;
 	}
 }

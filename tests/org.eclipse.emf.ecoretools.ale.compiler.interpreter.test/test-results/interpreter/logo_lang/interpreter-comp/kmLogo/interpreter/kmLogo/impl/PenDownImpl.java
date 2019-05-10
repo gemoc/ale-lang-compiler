@@ -19,7 +19,7 @@ public class PenDownImpl extends PrimitiveImpl implements PenDown {
 	public double eval(Turtle turtle) {
 		double result;
 		turtle.setPenUp(false);
-		result = 0.0;
+		result = (double) (0.0) ;
 		return result;
 	}
 }
