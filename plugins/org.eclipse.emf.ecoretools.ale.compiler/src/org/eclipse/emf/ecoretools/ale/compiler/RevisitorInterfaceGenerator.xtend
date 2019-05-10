@@ -30,9 +30,9 @@ class RevisitorInterfaceGenerator {
 			z.key.loadEPackage.EClassifiers
 		]
 		val Iterable<EClassifier> classifiers = pkg.EClassifiers + complementaryClassifiers
-		val eclasses = classifiers.filter(EClass)
-		val localClasses = eclasses.sortBy[name].filter[it.instanceClassName != "java.util.Map$Entry"].toList.buildExtendedFactoryNames
-		val allClasses = pkg.allClassesCompl.filter[it.instanceClassName != "java.util.Map$Entry"].toList.buildExtendedFactoryNames
+		val eclasses = classifiers.filter(EClass).toSet
+		val localClasses = eclasses.sortBy[name].filter[it.instanceClassName != "java.util.Map$Entry"].toSet.toList.buildExtendedFactoryNames.toSet
+		val allClasses = pkg.allClassesCompl.filter[it.instanceClassName != "java.util.Map$Entry"].toSet.toList.buildExtendedFactoryNames
 		return '''
 			package «gp.revisitorPackageFqn»;
 			
@@ -68,7 +68,7 @@ class RevisitorInterfaceGenerator {
 	}
 
 	def String getTypeParams(List<Pair<EClass, EClass>> classes, boolean withExtends) {
-		'''«FOR cls : classes BEFORE '<' SEPARATOR ', ' AFTER '>'»«
+		'''«FOR cls : classes.toSet BEFORE '<' SEPARATOR ', ' AFTER '>'»«
 		»«cls.getTypeParam(withExtends)»«ENDFOR»'''
 
 	}

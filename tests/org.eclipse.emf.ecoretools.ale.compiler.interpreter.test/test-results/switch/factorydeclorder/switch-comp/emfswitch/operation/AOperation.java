@@ -1,14 +1,14 @@
 package emfswitch.operation;
 
-import boa.EvalMapRes;
 import emfswitch.SwitchImplementation;
+import factorydeclorder.A;
 
-public class EvalMapResOperation extends EvalResOperation {
-	private final EvalMapRes it;
+public class AOperation extends DOperation {
+	private final A it;
 
 	private final SwitchImplementation emfswitch;
 
-	public EvalMapResOperation(EvalMapRes it, SwitchImplementation emfswitch) {
+	public AOperation(A it, SwitchImplementation emfswitch) {
 		super(it, emfswitch);
 		this.it = it;
 		this.emfswitch = emfswitch;

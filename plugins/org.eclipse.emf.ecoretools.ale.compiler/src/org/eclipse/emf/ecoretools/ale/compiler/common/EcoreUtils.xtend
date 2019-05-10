@@ -197,9 +197,14 @@ class EcoreUtils {
 	def GenClass getGenClass(EClass cls, GenModel gm) {
 
 		val allPkgs = gm.allGenPkgs
-		val fgm = allPkgs.findFirst [
+		val fgm2 = allPkgs.findFirst [
 			getEcorePackage.nsURI == cls.EPackage.nsURI
 		]
+		
+		val fgm = if(fgm2 === null) allPkgs.head else fgm2
+		
+		
+		fgm.ecorePackage = cls.EPackage
 
 		val classes = fgm?.genClasses
 

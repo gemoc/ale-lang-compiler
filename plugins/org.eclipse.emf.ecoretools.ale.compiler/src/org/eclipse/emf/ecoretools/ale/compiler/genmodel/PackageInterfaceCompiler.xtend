@@ -48,12 +48,21 @@ class PackageInterfaceCompiler {
 			result.addAll(extendChain)
 		}
 		result.sortWith(new Comparator<EClass>() {
-			
 			override compare(EClass o1, EClass o2) {
-				if(o1.EAllSuperTypes.contains(o2)) 1 else -1
+				if(o1 == o2) 0
+				else if(o1.EAllSuperTypes.contains(o2)) 1
+				else if(o2.EAllSuperTypes.contains(o1)) -1
+				else 0
 			}
-			
 		})
+	}
+	
+	def Iterable<EClass> getAllLeftParents(EClass ec) {
+		if(ec.ESuperTypes.empty) #[]
+		else {
+			val tmp = getAllLeftParents(ec.ESuperTypes.head)
+			#[ec.ESuperTypes.head] + tmp	
+		}
 	}
 	
 	def  getOrderedClassifiers(EPackage ePackage) {
@@ -229,9 +238,9 @@ class PackageInterfaceCompiler {
 				)
 				packageTmp = packageTmp.addField(
 					FieldSpec.builder(int, '''«eClassifier.name.normalizeUpperField»_OPERATION_COUNT''', PUBLIC, STATIC,
-						FINAL).
-						initializer('''«FOR parentClazz : eClassifier.ESuperTypes»«parentClazz.name.normalizeUpperField»_OPERATION_COUNT + «ENDFOR»0''').
-						build
+						FINAL)
+						.initializer('''«IF !eClassifier.ESuperTypes.empty»«eClassifier.ESuperTypes.head.name.normalizeUpperField»_OPERATION_COUNT + «ENDIF»0''')
+						.build
 				)
 			}
 		}

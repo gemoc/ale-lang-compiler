@@ -1,5 +1,8 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter.test
 
+import execboa.MapService
+import execboa.MathService
+import execboa.SerializeService
 import java.io.File
 import java.nio.charset.Charset
 import java.nio.file.Files
@@ -13,6 +16,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementation
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
@@ -20,11 +24,8 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DynamicContainer
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
-import execboa.MapService
-import execboa.MathService
-import execboa.SerializeService
-import static spoon.testing.Assert.assertThat;
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
+
+import static spoon.testing.Assert.assertThat
 
 class InterpreterTestAll {
 
@@ -39,8 +40,6 @@ class InterpreterTestAll {
 
 	private static final boolean DEBUG = false
 
-	static val mutex = new Object
-
 	def static void log(String txt) {
 		if(DEBUG) println(txt)
 	}
@@ -52,15 +51,15 @@ class InterpreterTestAll {
 		]
 
 		compilers.forEach [ k, v |
-			new File("assets").listFiles.filter[it.isDirectory].forEach [
+			new File("assets").listFiles
+			.filter[it.isDirectory]
+//			.filter[it.path == "assets/boa_lang"]
+			.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))
 				} catch (Exception e) {
-					synchronized (mutex) {
-						println('''Compilation failed for «k» -> «it»:''')
-						e.printStackTrace
-					}
-
+					println('''Compilation failed for «k» -> «it»:''')
+					e.printStackTrace
 				}
 			]
 		]
@@ -133,7 +132,7 @@ class InterpreterTestAll {
 			])
 		]
 	}
-	
+
 	def static Map<String, Class<?>> getServices(String pts) {
 		switch (pts) {
 			case "assets/boa_lang":
@@ -146,12 +145,18 @@ class InterpreterTestAll {
 				newHashMap(
 					"org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices" -> TrigoServices
 				)
+			case "assets/testmap1":
+				newHashMap(
+					"execboa.MapService" -> MapService
+				)
 			default:
 				newHashMap
 		}
 	}
 
 	def static compileProjectInterpreter(File directory) {
+
+//		if(directory.path == "assets/testmap1") {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 		val compiler = new ALEInterpreterImplementationCompiler(directory.path.services)
 
@@ -161,12 +166,13 @@ class InterpreterTestAll {
 
 		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), newHashMap)
 		tmpDir
+//		}
 	}
 
 	def static compileProjectRevisitor(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 
-		val compiler = new ALERevisitorImplementationCompiler(directory.path.services) 
+		val compiler = new ALERevisitorImplementationCompiler(directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
@@ -196,7 +202,7 @@ class InterpreterTestAll {
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
 
-		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''))
+		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), newHashMap)
 		tmpDir
 	}
 }

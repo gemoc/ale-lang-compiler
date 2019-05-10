@@ -1,0 +1,2 @@
+syntax=assets/factorydeclorder/factorydeclorder.ecore
+behavior=assets/factorydeclorder/test.ale
