@@ -23,19 +23,19 @@ import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecore.ETypedElement
 import org.eclipse.emf.ecore.InternalEObject
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl
 import org.eclipse.emf.ecore.util.InternalEList
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 class EClassImplementationCompiler {
 
@@ -44,14 +44,16 @@ class EClassImplementationCompiler {
 	extension JavaPoetUtils jpu
 	val EClassGetterCompiler eClassGetterCompiler
 	val List<ResolvedClass> resolved
+	extension EnumeratorService es
 
 	new(CommonCompilerUtils ccu, GenmodelNamingUtils anu, EClassGetterCompiler eClassGetterCompiler,
-		JavaPoetUtils jpu, List<ResolvedClass> resolved) {
+		JavaPoetUtils jpu, List<ResolvedClass> resolved, EnumeratorService es) {
 		this.ccu = ccu
 		this.anu = anu
 		this.eClassGetterCompiler = eClassGetterCompiler
 		this.jpu = jpu
 		this.resolved = resolved
+		this.es = es
 	}
 	
 	def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass,  String packageRoot, Dsl dsl) {
@@ -77,7 +79,9 @@ class EClassImplementationCompiler {
 		val eInverseRemove = this.getEInverseRemove(eClass, dsl, packageRoot, isMapElement)
 		val eBasicRemoveFromContainerFeature = this.getEBasicRemoveFromContainerFeature(eClass, dsl, packageRoot)
 		val eInverseAdd = this.getEInverseAdd(eClass, dsl, packageRoot, isMapElement)
-		val eMethods = #[eInverseAdd, eInverseRemove, eBasicRemoveFromContainerFeature, eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod]
+		val eBaseStructuralFeatureID = this.getEBaseStructuralFeatureID(eClass, packageRoot)
+		val eDerivedStructuralFeatureID = this.getEDerivedStructuralFeatureID(eClass, packageRoot)
+		val eMethods = #[eInverseAdd, eInverseRemove, eBasicRemoveFromContainerFeature, eGetMethod, eSetMethod, eUnsetMethod, eIsSetMethod, eBaseStructuralFeatureID, eDerivedStructuralFeatureID]
 			.map[it.map[#[it]].orElse(#[])].flatten
 		val eMapMethods = this.getEMapMethods(eClass, dsl, packageRoot)
 
@@ -210,57 +214,7 @@ class EClassImplementationCompiler {
 			#[getHash, setHash, keyGetter, keySetter, valueGetter, valueSetter, eMapGetter]
 		}
 	}
-	def fieldSetter(EStructuralFeature esf, String packageRoot) {
-		val ekrt = esf.EGenericType.ERawType
-		val vrt = ekrt.scopedInterfaceTypeRef(packageRoot)
-		if(esf instanceof EReference) {
-			MethodSpec.methodBuilder('''set«esf.name.toFirstUpper»''')
-			.addParameter(vrt, '''«esf.name.normalizeVarName»''')
-			.returns(vrt)
-			.addModifiers(PUBLIC)
-			.addNamedCode('''
-			$rt:T $oldName:L = get$name:L();
-			setTyped$name:L($ename:L);
-			return $oldName:L;
-			''', newHashMap(
-				"rt" -> vrt,
-				"oldName" -> esf.name.normalizeVarOldName,
-				"name" -> esf.name.toFirstUpper,
-				"ename" -> esf.name.normalizeVarName
-			))
-			.build
-		} else if(esf instanceof EAttribute) {
-			MethodSpec.methodBuilder('''set«esf.name.toFirstUpper»''')
-			.addParameter(vrt, '''«esf.name.normalizeVarName»''')
-			.addModifiers(PUBLIC)
-			.addNamedCode('''
-			setTyped$name:L($ename:L);
-			''', newHashMap(
-				"name" -> esf.name.toFirstUpper,
-				"ename" -> esf.name.normalizeVarName
-			))
-			.build
-		}
-		
-	}
-	
-	def boolean isResolveProxies(EStructuralFeature eStructuralFeature) {
-		if (eStructuralFeature instanceof EReference) {
-			val isContainer = eStructuralFeature.isContainer
-			val isContains = eStructuralFeature.isContainment
-			!isContainer && !isContains && eStructuralFeature.isResolveProxies
-		} else {
-			false
-		}
-	}
-	
-	def boolean isListType(ETypedElement eTypedElement) {
-		eTypedElement !== null &&
-			(eTypedElement.isMany() ||
-				((eTypedElement instanceof EClass) &&
-					(eTypedElement as EClass).instanceClassName == "java.util.Map$Entry"))
-	}
-	
+
 	private def produceFeatureSwitchMap(EClass eClass, String packageRoot) {
 		val ePackageInterfaceType = eClass.packageIntClassName(packageRoot)
 		
@@ -273,13 +227,83 @@ class EClassImplementationCompiler {
 			"esf" -> ClassName.get(EStructuralFeature.Setting),
 			"essf" ->  ClassName.get("org.eclipse.emf.ecore.EStructuralFeature", "Setting")
 		)
-		for (esf : eClass.EStructuralFeatures) {
+		for (esf : eClass.allESFPlusInheritedESF) {
 			val tnp = esf.computeFieldTypeEClass(packageRoot, f).box
 			val tn = if(tnp instanceof ParameterizedTypeName) tnp.typeArguments.head else tnp
 			namedMap.put("fieldtype" + esf.name, tn)
 			namedMap.put("collection" + esf.name, tnp)
 		}
 		return namedMap
+	}
+	
+	def Optional<MethodSpec> getEBaseStructuralFeatureID(EClass eClass, String packageRoot) {
+		if(eClass.allESFPlusInheritedESF.size <= eClass.EStructuralFeatures.size) {
+			Optional.empty
+		} else {
+			val hm = newHashMap
+			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot)
+			hm.put("epit", ePackageInterfaceType)
+			for(clazz: eClass.allRightSupertypes.enumerate) {
+				hm.put("baseClass" + clazz.value, clazz.key.scopedInterfaceTypeRef(packageRoot))
+			}
+			
+			val method = MethodSpec.methodBuilder('eBaseStructuralFeatureID')
+				.addAnnotation(Override)
+				.addModifiers(PUBLIC)
+				.addParameter(int, 'derivedFeatureID')
+				.addParameter(ParameterizedTypeName.get(ClassName.get(Class), WildcardTypeName.subtypeOf(Object)), 'baseClass')
+				.returns(int)
+				.addNamedCode('''
+				«FOR clazz: eClass.allRightSupertypes.enumerate»
+				if (baseClass == $baseClass«clazz.value»:T.class) {
+					switch (derivedFeatureID) {
+						«FOR esf: clazz.key.EStructuralFeatures»
+						case $epit:T.«esf.normalizeUpperField(eClass)»: return $epit:T.«esf.normalizeUpperField(clazz.key)»;
+						«ENDFOR»
+						default: return -1;
+					}
+				}
+				«ENDFOR»
+				return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+				''', hm)
+				.build
+			Optional.of(method)
+		}
+	}
+	
+	def Optional<MethodSpec> getEDerivedStructuralFeatureID(EClass eClass, String packageRoot) {
+		if(eClass.allESFPlusInheritedESF.size <= eClass.EStructuralFeatures.size) {
+			Optional.empty
+		} else {
+			val hm = newHashMap
+			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot)
+			hm.put("epit", ePackageInterfaceType)
+			for(clazz: eClass.allRightSupertypes.enumerate) {
+				hm.put("baseClass" + clazz.value, clazz.key.scopedInterfaceTypeRef(packageRoot))
+			}
+			
+			val method = MethodSpec.methodBuilder('eDerivedStructuralFeatureID')
+				.addAnnotation(Override)
+				.addModifiers(PUBLIC)
+				.addParameter(int, 'baseFeatureID')
+				.addParameter(ParameterizedTypeName.get(ClassName.get(Class), WildcardTypeName.subtypeOf(Object)), 'baseClass')
+				.returns(int)
+				.addNamedCode('''
+				«FOR clazz: eClass.allRightSupertypes.enumerate»
+				if (baseClass == $baseClass«clazz.value»:T.class) {
+					switch (baseFeatureID) {
+						«FOR esf: clazz.key.EStructuralFeatures»
+						case $epit:T.«esf.normalizeUpperField(clazz.key)»: return $epit:T.«esf.normalizeUpperField(eClass)»;
+						«ENDFOR»
+						default: return -1;
+					}
+				}
+				«ENDFOR»
+				return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+				''', hm)
+				.build
+			Optional.of(method)
+		}
 	}
 	
 	def getEInverseAdd(EClass eClass, Dsl dsl, String packageRoot, boolean isTyped) {
@@ -408,8 +432,8 @@ class EClassImplementationCompiler {
 				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 			]).addParameter(Object, 'newValue').addModifiers(PUBLIC).addNamedCode('''
 				switch (featureID) {
-					«FOR esf : eClass.EStructuralFeatures»
-						«esf.generateESetCase(isMapElement)»
+					«FOR esf : eClass.allESFPlusInheritedESF»
+						«esf.generateESetCase(isMapElement, eClass)»
 					«ENDFOR»
 				}
 				super.eSet(featureID, newValue);
@@ -418,12 +442,6 @@ class EClassImplementationCompiler {
 		} else {
 			Optional.empty
 		}
-	}
-	
-	def hasDefault(EStructuralFeature esf) {
-		 esf instanceof EAttribute &&
-			(esf.EType !== null && esf.EType.ETypeParameters.isEmpty && esf.EGenericType.ETypeParameter === null &&
-				esf.EType.instanceTypeName == esf.EType.instanceClassName)
 	}
 	
 	def isPrimitive(EStructuralFeature esf) {
@@ -443,8 +461,8 @@ class EClassImplementationCompiler {
 				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 			]).addModifiers(PUBLIC).addCode( '''
 				switch (featureID) {
-					«FOR esf : eClass.EStructuralFeatures»
-						case $1T.«esf.normalizeUpperField» :
+					«FOR esf : eClass.allESFPlusInheritedESF»
+						case $1T.«esf.normalizeUpperField(eClass)» :
 							«IF esf instanceof EAttribute»
 								«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 									«IF esf.isPrimitive || esf.isEnum»
@@ -481,12 +499,11 @@ class EClassImplementationCompiler {
 	}
 	
 	
-	def String generateESetCase(EStructuralFeature esf, boolean isTyped) {
-		val eClass = esf.EContainingClass
+	def String generateESetCase(EStructuralFeature esf, boolean isTyped, EClass eClass) {
 		val genCls = resolved.filter[it.eCls.name == eClass.name && it.eCls.EPackage.name == eClass.EPackage.name].head.genCls
 		val genFeature = genCls.declaredFieldGenFeatures.filter[it.name == esf.name].head
 		'''
-		case $epit:T.«esf.normalizeUpperField» :
+		case $epit:T.«esf.normalizeUpperField(eClass)» :
 			«IF genFeature.isListType()»
 				«IF genFeature.isWrappedFeatureMapType() »
 					// TODO ((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal)((<%=genModel.getImportedName("org.eclipse.emf.ecore.util.FeatureMap")%>.Internal.Wrapper)get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»()).featureMap()).set(newValue);
@@ -509,13 +526,13 @@ class EClassImplementationCompiler {
 		'''
 	}
 	
-	def generatedEGetCase(EStructuralFeature esf, boolean isTyped) {
+	def generatedEGetCase(EStructuralFeature esf, boolean isTyped, EClass currentEClass) {
 		// FIXME: a lot of corner cases are not implemeted in this method		
 		val eClass = esf.EContainingClass
 		val genCls = resolved.filter[it.eCls.name == eClass.name && it.eCls.EPackage.name == eClass.EPackage.name].head.genCls
 		val genFeature = genCls.declaredFieldGenFeatures.filter[it.name == esf.name].head
 		'''
-		case $1T.«esf.normalizeUpperField» :
+		case $1T.«esf.normalizeUpperField(currentEClass)» :
 			«IF esf instanceof EAttribute»
 			«IF esf.EType.name == "EBoolean" && !esf.many»
 				return «IF isTyped»getTyped«ELSE»is«ENDIF»«esf.name.toFirstUpper»();
@@ -559,8 +576,8 @@ class EClassImplementationCompiler {
 				.addModifiers(PUBLIC)
 				.addCode('''
 				switch (featureID) {
-					«FOR esf : eClass.EStructuralFeatures»
-						«esf.generatedEGetCase(isTyped)»
+					«FOR esf : eClass.allESFPlusInheritedESF»
+						«esf.generatedEGetCase(isTyped, eClass)»
 					«ENDFOR»
 				}
 				return super.eGet(featureID, resolve, coreType);
@@ -581,8 +598,8 @@ class EClassImplementationCompiler {
 					addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 				]).addNamedCode('''
 					switch (featureID) {
-						«FOR esf : eClass.EStructuralFeatures»
-							case $epit:T.«esf.normalizeUpperField» :
+						«FOR esf : eClass.allESFPlusInheritedESF»
+							case $epit:T.«esf.normalizeUpperField(eClass)» :
 								«IF esf instanceof EAttribute»
 									«IF esf.upperBound <= 1 && esf.upperBound >= 0»
 										set«IF isMapElement»Typed«ENDIF»«esf.name.toFirstUpper»(«esf.name.toUpperCase»_EDEFAULT);
@@ -615,27 +632,49 @@ class EClassImplementationCompiler {
 				return $T.Literals.$L;
 			''', eClass.packageIntClassName(packageRoot), eClass.name.normalizeUpperField).build
 	}
+	
+	
+	def allESFPlusInheritedESF(EClass eClass) {
+		eClass.EAllStructuralFeatures
+			.filter[eClass.ESuperTypes.head === null || !eClass.ESuperTypes.head.EAllStructuralFeatures.contains(it)]
+	}
+	
+	def Iterable<EClass> allRightSupertypes(EClass eClass) {
+		val superTypes = eClass.ESuperTypes
+		if (superTypes.isEmpty() || (superTypes.size() == 1 && !superTypes.get(0).isInterface())) {
+			return newArrayList;
+		}
+
+		val allBases = eClass.EAllSuperTypes
+		val result = newArrayList
+
+		// If extending an interface, its mix-ins must be included, since there is no implementation to handle them.
+		//
+		val baseGenClass = eClass.ESuperTypes.head
+		if (baseGenClass !== null && baseGenClass.isInterface()) {
+			result.addAll(baseGenClass.allRightSupertypes())
+		}
+
+		// Mix-ins are everything after the base class.
+		//
+		val i = allBases.indexOf(baseGenClass) + 1;
+		result.addAll(allBases.subList(i, allBases.size()));
+		return result;
+	}
 
 	def Iterable<MethodSpec> getMethodsEReferences(EClass eClass, String packageRoot, Dsl dsl,
 		ClassName ePackageInterfaceType, boolean isMapElement) {
-		eClass.EStructuralFeatures.map [ field |
+		eClass.allESFPlusInheritedESF
+			.map [ field |
 			val fieldType = field.resolveFieldType(packageRoot)
 			eClassGetterCompiler.compileAccessors(field, fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, isMapElement)
 		].flatten
 	}
 
-	def Iterable<FieldSpec> getFieldsEReferences(EClass eClass, String packageRoot) {
-		this.getFieldsEReferences(eClass, packageRoot, [b, e|b])
-	}
-
-	def isBlank(String string) {
-		string === null || string.length() == 0
-	}
-	
-	
-
 	def Iterable<FieldSpec> getFieldsEReferences(EClass eClass, String packageRoot, Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2) {
-		eClass.EReferences.filter[field|if(field.EOpposite !== null) !field.EOpposite.containment else true].map [ field |
+		eClass.EAllReferences
+			.filter[eClass.ESuperTypes.head === null || !eClass.ESuperTypes.head.EAllReferences.contains(it)]
+			.filter[field|if(field.EOpposite !== null) !field.EOpposite.containment else true].map [ field |
 			val fieldType = field.computeFieldTypeEClass(packageRoot)
 			val builderTmp = FieldSpec.builder(fieldType, field.name)
 			val builderTmp2 = if(f2 !== null) f2.apply(builderTmp, field) else builderTmp
@@ -644,7 +683,9 @@ class EClassImplementationCompiler {
 	}
 
 	def Iterable<FieldSpec> getFieldsEAttributes(EClass eClass, String packageRoot) {
-		eClass.EAttributes.map [ field |
+		eClass.EAllAttributes
+			.filter[eClass.ESuperTypes.head === null || !eClass.ESuperTypes.head.EAllAttributes.contains(it)]
+			.map [ field |
 			val fet = field.EType
 			val type = fet.scopedTypeRef(packageRoot)
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0

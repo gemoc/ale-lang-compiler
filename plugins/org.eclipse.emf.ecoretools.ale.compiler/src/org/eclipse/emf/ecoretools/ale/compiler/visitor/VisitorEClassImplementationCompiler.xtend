@@ -19,6 +19,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
@@ -32,12 +33,13 @@ class VisitorEClassImplementationCompiler {
 	val Dsl dsl
 	val String packageRoot
 
-	new(String packageRoot, Dsl dsl, List<ResolvedClass> resolved, CommonCompilerUtils ccu) {
+	new(String packageRoot, Dsl dsl, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es) {
 		this.packageRoot = packageRoot
 		this.dsl = dsl
 		this.namingUtils = new VisitorNamingUtils
 		this.jpu = new JavaPoetUtils
-		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils, ccu, resolved), jpu, resolved)
+		this.ecic = new EClassImplementationCompiler(ccu, namingUtils,
+			new EClassGetterCompiler(namingUtils, ccu, resolved), jpu, resolved, es)
 	}
 	
 	def TypeSpec.Builder addAcceptMethod(TypeSpec.Builder builder, EClass eClass) {

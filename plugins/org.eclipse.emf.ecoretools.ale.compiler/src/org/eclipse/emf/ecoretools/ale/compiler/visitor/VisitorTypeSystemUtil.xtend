@@ -35,9 +35,9 @@ class VisitorTypeSystemUtil  extends CommonTypeSystemUtils implements AbstractTy
 		this.base = base
 	}
 
-	def dispatch TypeName resolveType2(Object type) {
-		return null
-	}
+//	def dispatch TypeName resolveType2(Object type) {
+//		return null
+//	}
 
 	def dispatch TypeName resolveType2(Class<?> clazz) {
 		return TypeName.get(clazz)

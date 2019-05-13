@@ -90,8 +90,8 @@ class EClassGetterCompiler {
 			.build		
 	}
 	
-	def buildSimpleSetter(EStructuralFeature field, TypeName fieldType, TypeName ePackageInterfaceType, boolean isTyped) {
-		field.buildSimpleSetter(fieldType, ePackageInterfaceType, Optional.empty, isTyped)
+	def buildSimpleSetter(EStructuralFeature field, TypeName fieldType, TypeName ePackageInterfaceType, boolean isTyped, EClass eClass) {
+		field.buildSimpleSetter(fieldType, ePackageInterfaceType, Optional.empty, isTyped, eClass)
 	}
 	
 	def buildWithOppositeGetter(EStructuralFeature field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
@@ -141,25 +141,25 @@ class EClassGetterCompiler {
 		''').addModifiers(PUBLIC).build
 	}
 	
-	def buildSimpleSetterNoNotification(EStructuralFeature field, TypeName fieldType, Dsl dsl, boolean isTyped) {
-		val newName = '''«field.name.normalizeVarNewName»'''
-		val oldName = '''«field.name.normalizeVarOldName»'''
-		MethodSpec.methodBuilder('''set«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
-			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
-				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-			])
-			.returns(fieldType)
-			.addParameter(ParameterSpec.builder(fieldType, newName).build)
-			.addCode('''
-			$1T «oldName» = this.«field.name.normalizeVarName»;
-			this.«field.name.normalizeVarName» = «newName»;
-			return «oldName»;
-			''', fieldType)
-			.addModifiers(PUBLIC)
-			.build	
-	}
+//	def buildSimpleSetterNoNotification(EStructuralFeature field, TypeName fieldType, Dsl dsl, boolean isTyped) {
+//		val newName = '''«field.name.normalizeVarNewName»'''
+//		val oldName = '''«field.name.normalizeVarOldName»'''
+//		MethodSpec.methodBuilder('''set«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
+//			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
+//				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
+//			])
+//			.returns(fieldType)
+//			.addParameter(ParameterSpec.builder(fieldType, newName).build)
+//			.addCode('''
+//			$1T «oldName» = this.«field.name.normalizeVarName»;
+//			this.«field.name.normalizeVarName» = «newName»;
+//			return «oldName»;
+//			''', fieldType)
+//			.addModifiers(PUBLIC)
+//			.build	
+//	}
 	
-	def buildSimpleSetter(EStructuralFeature field, TypeName fieldType, TypeName ePackageInterfaceType, Optional<Dsl> dsl, boolean isTyped) {
+	def buildSimpleSetter(EStructuralFeature field, TypeName fieldType, TypeName ePackageInterfaceType, Optional<Dsl> dsl, boolean isTyped, EClass eClass) {
 		val hm = newHashMap(
 			"ft" -> fieldType,
 			"eni" -> ClassName.get(ENotificationImpl),
@@ -180,7 +180,7 @@ class EClassGetterCompiler {
 				«field.name.normalizeVarName» = «field.name.normalizeVarNewName»;
 				«ENDIF»
 				if (eNotificationRequired())
-					eNotify(new $eni:T(this, $notif:T.SET, $epit:T.«field.normalizeUpperField», old«field.name.toFirstUpper», «field.name.normalizeVarName»));
+					eNotify(new $eni:T(this, $notif:T.SET, $epit:T.«field.normalizeUpperField(eClass)», old«field.name.toFirstUpper», «field.name.normalizeVarName»));
 			''', hm)
 			.addModifiers(PUBLIC)
 			.build
@@ -431,7 +431,7 @@ class EClassGetterCompiler {
 		
 		if (!isMultiple) {
 			val getter = field.buildSimpleGetter(fieldType, isTyped)
-			val setter = field.buildSimpleSetter(fieldType, ePackageInterfaceType, isTyped)
+			val setter = field.buildSimpleSetter(fieldType, ePackageInterfaceType, isTyped, eClass)
 			#[getter, setter]
 		} else {
 			val getter = field.buildSimpleMultipleGetter(fieldType, ePackageInterfaceType, isTyped, packageRoot)
@@ -440,10 +440,10 @@ class EClassGetterCompiler {
 
 	}
 	
-	def List<MethodSpec> compileAccessors(EStructuralFeature field, TypeName fieldType, String packageRoot, EClass eClass,
-		Dsl dsl, ClassName ePackageInterfaceType) {
-			field.compileAccessors(fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, false)			
-		}
+//	def List<MethodSpec> compileAccessors(EStructuralFeature field, TypeName fieldType, String packageRoot, EClass eClass,
+//		Dsl dsl, ClassName ePackageInterfaceType) {
+//			field.compileAccessors(fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, false)			
+//		}
 
 	def dispatch List<MethodSpec> compileAccessors(EReference field, TypeName fieldType, String packageRoot, EClass eClass,
 		Dsl dsl, ClassName ePackageInterfaceType, boolean isTyped) {
@@ -479,7 +479,7 @@ class EClassGetterCompiler {
 		} else if (!existEOpposite && !isMultiple && !isContainment && !isOppositeContainment) {
 			val getter = field.buildWithAllFalseGetter(fieldType, ePackageInterfaceType, dsl, isTyped)
 			val basicGetter = field.buildBasicGetter(rt, isTyped)
-			val setter = field.buildSimpleSetter(fieldType, ePackageInterfaceType, isTyped) 
+			val setter = field.buildSimpleSetter(fieldType, ePackageInterfaceType, isTyped, eClass) 
 			
 			#[getter, basicGetter, setter]
 		} else if (!existEOpposite &&  !isMultiple && isContainment) {

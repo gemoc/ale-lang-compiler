@@ -14,10 +14,10 @@ abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 		'''«ePackage.name.toFirstUpper»Factory'''
 	}
 	
-	def factoryIntClassName(EClass eClass, String packageRoot) {
-		eClass.EPackage.factoryIntClassName(packageRoot)
-	}
-	
+//	def factoryIntClassName(EClass eClass, String packageRoot) {
+//		eClass.EPackage.factoryIntClassName(packageRoot)
+//	}
+//	
 	def factoryIntClassName(EPackage ePackage, String packageRoot) {
 		ClassName.get(ePackage.factoryInterfacePackageName(packageRoot), ePackage.factoryInterfaceClassName)
 	}

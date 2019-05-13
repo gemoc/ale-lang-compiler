@@ -218,9 +218,9 @@ class EcoreUtils {
 		return ret
 	}
 
-	def List<GenPackage> getAllGenPkgs(List<GenModel> gms) {
-		return gms.map[allGenPkgs].flatten.toList
-	}
+//	def List<GenPackage> getAllGenPkgs(List<GenModel> gms) {
+//		return gms.map[allGenPkgs].flatten.toList
+//	}
 
 	def List<GenPackage> getAllGenPkgs(GenModel gm) {
 		val ret = newArrayList

@@ -57,14 +57,6 @@ class PackageInterfaceCompiler {
 		})
 	}
 	
-	def Iterable<EClass> getAllLeftParents(EClass ec) {
-		if(ec.ESuperTypes.empty) #[]
-		else {
-			val tmp = getAllLeftParents(ec.ESuperTypes.head)
-			#[ec.ESuperTypes.head] + tmp	
-		}
-	}
-	
 	def  getOrderedClassifiers(EPackage ePackage) {
 		val packageClasses = ePackage.EClassifiers.filter(EClass).getOrderedClasses(ePackage)
 		val packageEnums = ePackage.EClassifiers.filter(EEnum).toList

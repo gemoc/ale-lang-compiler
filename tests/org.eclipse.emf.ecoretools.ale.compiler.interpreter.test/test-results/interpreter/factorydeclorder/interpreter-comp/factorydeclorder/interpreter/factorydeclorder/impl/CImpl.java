@@ -1,20 +1,24 @@
 package factorydeclorder.interpreter.factorydeclorder.impl;
 
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import factorydeclorder.interpreter.factorydeclorder.A;
 import factorydeclorder.interpreter.factorydeclorder.C;
 import factorydeclorder.interpreter.factorydeclorder.D;
 import factorydeclorder.interpreter.factorydeclorder.FactorydeclorderPackage;
+import java.lang.Boolean;
+import java.lang.Class;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.Override;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class CImpl extends BImpl implements C {
 	protected static final int FA_EDEFAULT = 0;
 
-	protected int fa = FA_EDEFAULT;
-
 	protected static final boolean FC_EDEFAULT = false;
+
+	protected int fa = FA_EDEFAULT;
 
 	protected boolean fc = FC_EDEFAULT;
 
@@ -52,9 +56,9 @@ public class CImpl extends BImpl implements C {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case FactorydeclorderPackage.C__FA:
+			case FactorydeclorderPackage.C__FA :
 				return getFa();
-			case FactorydeclorderPackage.C__FC:
+			case FactorydeclorderPackage.C__FC :
 				return isFc();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -63,11 +67,11 @@ public class CImpl extends BImpl implements C {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case FactorydeclorderPackage.C__FA:
-				setFa((Integer)newValue);
+			case FactorydeclorderPackage.C__FA :
+				setFa((Integer) newValue);
 				return;
-			case FactorydeclorderPackage.C__FC:
-				setFc((Boolean)newValue);
+			case FactorydeclorderPackage.C__FC :
+				setFc((Boolean) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -76,10 +80,10 @@ public class CImpl extends BImpl implements C {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case FactorydeclorderPackage.C__FA:
+			case FactorydeclorderPackage.C__FA :
 				setFa(FA_EDEFAULT);
 				return;
-			case FactorydeclorderPackage.C__FC:
+			case FactorydeclorderPackage.C__FC :
 				setFc(FC_EDEFAULT);
 				return;
 		}
@@ -89,9 +93,9 @@ public class CImpl extends BImpl implements C {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case FactorydeclorderPackage.C__FA:
+			case FactorydeclorderPackage.C__FA :
 				return fa != FA_EDEFAULT;
-			case FactorydeclorderPackage.C__FC:
+			case FactorydeclorderPackage.C__FC :
 				return fc != FC_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

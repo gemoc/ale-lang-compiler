@@ -120,7 +120,8 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		visitorImplementationCompiler.compile
 
 		val eic = new VisitorEClassInterfaceCompiler(namingUtils, ccu)
-		val eimplc = new VisitorEClassImplementationCompiler(packageRoot, dsl, resolved, ccu)
+		val es = new EnumeratorService
+		val eimplc = new VisitorEClassImplementationCompiler(packageRoot, dsl, resolved, ccu, es)
 
 		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
 		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,

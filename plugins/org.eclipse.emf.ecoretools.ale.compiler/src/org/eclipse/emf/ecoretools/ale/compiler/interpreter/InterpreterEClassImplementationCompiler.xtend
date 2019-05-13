@@ -19,8 +19,6 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecore.ETypedElement
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
@@ -48,7 +46,6 @@ class InterpreterEClassImplementationCompiler {
 	extension TypeSystemUtils tsu
 	extension AleBodyCompiler abc
 
-	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	var Dsl dsl
 	val String packageRoot
 	var Set<Method> registreredDispatch = newHashSet
@@ -56,13 +53,13 @@ class InterpreterEClassImplementationCompiler {
 	val List<ResolvedClass> resolved
 	extension EClassImplementationCompiler ecic
 
-	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu) {
+	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es) {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 		this.namingUtils = new InterpreterNamingUtils
-		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, new EClassGetterCompiler(namingUtils, ccu, resolved), jpu, resolved)
+		this.ecic = new EClassImplementationCompiler(ccu, namingUtils,
+			new EClassGetterCompiler(namingUtils, ccu, resolved), jpu, resolved, es)
 	}
-
 	
 
 	def dispatch compileEClassImplementation(EClassifier eClass, ExtendedClass aleClass, File directory,
@@ -73,10 +70,9 @@ class InterpreterEClassImplementationCompiler {
 	def dispatch compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
 		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, TypeSystemUtils tsu, AbstractNamingUtils anu) {
-		this.syntaxes = syntaxes
 		this.dsl = dsl
 		val isTruffle = dsl.dslProp.getOrDefault("truffle", "false") == "true"
-		this.tsu = tsu // new TypeSystemUtils(syntaxes, packageRoot, resolved)
+		this.tsu = tsu
 		abc = new AleBodyCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registreredArrays,
 			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService, anu)
 
@@ -428,37 +424,37 @@ class InterpreterEClassImplementationCompiler {
 		return builder
 	}
 
-	def getEcoreInterfacesPackage() {
-		val gm = syntaxes.get(dsl.allSyntaxes.head).value
-		gm.genPackages.head.qualifiedPackageName
-	}
+//	def getEcoreInterfacesPackage() {
+//		val gm = syntaxes.get(dsl.allSyntaxes.head).value
+//		gm.genPackages.head.qualifiedPackageName
+//	}
 
-	def returnType(MethodSpec.Builder builder, EClassifier type) {
-		if (type !== null) {
-			if (type.instanceClass !== null) {
-				builder.returns(type.instanceClass)
-			} else {
-				builder.returns(type.resolveType)
-			}
-		} else {
-			builder
-		}
-	}
+//	def returnType(MethodSpec.Builder builder, EClassifier type) {
+//		if (type !== null) {
+//			if (type.instanceClass !== null) {
+//				builder.returns(type.instanceClass)
+//			} else {
+//				builder.returns(type.resolveType)
+//			}
+//		} else {
+//			builder
+//		}
+//	}
+//
+//	def boolean isResolveProxies(EStructuralFeature eStructuralFeature) {
+//		if (eStructuralFeature instanceof EReference) {
+//			val isContainer = eStructuralFeature.isContainer
+//			val isContains = eStructuralFeature.isContainment
+//			!isContainer && !isContains && eStructuralFeature.isResolveProxies
+//		} else {
+//			false
+//		}
+//	}
 
-	def boolean isResolveProxies(EStructuralFeature eStructuralFeature) {
-		if (eStructuralFeature instanceof EReference) {
-			val isContainer = eStructuralFeature.isContainer
-			val isContains = eStructuralFeature.isContainment
-			!isContainer && !isContains && eStructuralFeature.isResolveProxies
-		} else {
-			false
-		}
-	}
-
-	def boolean isListType(ETypedElement eTypedElement) {
-		eTypedElement !== null &&
-			(eTypedElement.isMany() ||
-				((eTypedElement instanceof EClass) &&
-					(eTypedElement as EClass).instanceClassName == "java.util.Map$Entry"))
-	}
+//	def boolean isListType(ETypedElement eTypedElement) {
+//		eTypedElement !== null &&
+//			(eTypedElement.isMany() ||
+//				((eTypedElement instanceof EClass) &&
+//					(eTypedElement as EClass).instanceClassName == "java.util.Map$Entry"))
+//	}
 }

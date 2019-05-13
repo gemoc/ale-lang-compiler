@@ -33,6 +33,7 @@ import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 
 class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
@@ -111,7 +112,8 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		val pimplc = new PackageImplementationCompiler(namingUtils)
 
 		val eic = new InterpreterEClassInterfaceCompiler(namingUtils, ccu)
-		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved, ccu)
+		val es = new EnumeratorService
+		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved, ccu, es)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 

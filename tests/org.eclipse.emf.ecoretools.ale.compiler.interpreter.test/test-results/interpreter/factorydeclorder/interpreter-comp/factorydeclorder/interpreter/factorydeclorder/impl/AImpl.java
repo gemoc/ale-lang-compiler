@@ -1,9 +1,11 @@
 package factorydeclorder.interpreter.factorydeclorder.impl;
 
-import factorydeclorder.interpreter.factorydeclorder.B;
 import factorydeclorder.interpreter.factorydeclorder.A;
+import factorydeclorder.interpreter.factorydeclorder.B;
 import factorydeclorder.interpreter.factorydeclorder.FactorydeclorderPackage;
+import java.lang.Class;
 import java.lang.Integer;
+import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
@@ -11,11 +13,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class AImpl extends DImpl implements A {
-	protected static final long FB_EDEFAULT = 0L;
-
-	protected long fb = FB_EDEFAULT;
+	protected static final long FB_EDEFAULT = 0;
 
 	protected static final int FA_EDEFAULT = 0;
+
+	protected long fb = FB_EDEFAULT;
 
 	protected int fa = FA_EDEFAULT;
 
@@ -53,9 +55,9 @@ public class AImpl extends DImpl implements A {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case FactorydeclorderPackage.A__FB:
+			case FactorydeclorderPackage.A__FB :
 				return getFb();
-			case FactorydeclorderPackage.A__FA:
+			case FactorydeclorderPackage.A__FA :
 				return getFa();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -64,11 +66,11 @@ public class AImpl extends DImpl implements A {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case FactorydeclorderPackage.A__FB:
-				setFb((Long)newValue);
+			case FactorydeclorderPackage.A__FB :
+				setFb((Long) newValue);
 				return;
-			case FactorydeclorderPackage.A__FA:
-				setFa((Integer)newValue);
+			case FactorydeclorderPackage.A__FA :
+				setFa((Integer) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -77,10 +79,10 @@ public class AImpl extends DImpl implements A {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case FactorydeclorderPackage.A__FB:
+			case FactorydeclorderPackage.A__FB :
 				setFb(FB_EDEFAULT);
 				return;
-			case FactorydeclorderPackage.A__FA:
+			case FactorydeclorderPackage.A__FA :
 				setFa(FA_EDEFAULT);
 				return;
 		}
@@ -90,9 +92,9 @@ public class AImpl extends DImpl implements A {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case FactorydeclorderPackage.A__FB:
+			case FactorydeclorderPackage.A__FB :
 				return fb != FB_EDEFAULT;
-			case FactorydeclorderPackage.A__FA:
+			case FactorydeclorderPackage.A__FA :
 				return fa != FA_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
