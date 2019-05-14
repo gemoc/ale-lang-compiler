@@ -14,6 +14,9 @@ import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import java.lang.reflect.Type
+import org.eclipse.emf.ecore.EReference
+import java.util.Map.Entry
 
 class CommonCompilerUtils {
 	extension GenmodelNamingUtils anu
@@ -55,19 +58,38 @@ class CommonCompilerUtils {
 
 		if (isMultiple) {
 			if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
+				
 				val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
 				val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 				if (key !== null && value !== null) {
-					ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot).box,
-						value.EType.scopedInterfaceTypeRef(packageRoot).box)
+					if(field instanceof EReference && (field as EReference).isContainment) {
+						ParameterizedTypeName.get(ClassName.get(EMap), key.EType.scopedInterfaceTypeRef(packageRoot).box,
+							value.EType.scopedInterfaceTypeRef(packageRoot).box)
+					} else {
+						val tmp = ParameterizedTypeName.get(ClassName.get(Map.Entry), key.EType.scopedInterfaceTypeRef(packageRoot).box,
+							value.EType.scopedInterfaceTypeRef(packageRoot).box)
+						ParameterizedTypeName.get(ClassName.get(EList), tmp)
+					}
 				} else {
 					ParameterizedTypeName.get(ClassName.get(EList), rt.box)
 				}
 			} else {
 				ParameterizedTypeName.get(ClassName.get(EList), rt.box)
 			}
-		} else
-			rt
+		} else {
+			if (ert.instanceClass !== null && ert.instanceClass == Map.Entry) {
+				val key = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "key"].head
+				val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
+				if (key !== null && value !== null) {
+					ParameterizedTypeName.get(ClassName.get(Entry), key.EType.scopedInterfaceTypeRef(packageRoot).box,
+							value.EType.scopedInterfaceTypeRef(packageRoot).box)
+				} else {
+					rt
+				}
+			} else
+				rt
+			
+		}
 	}
 	
 	def TypeName computeFieldTypeEClass(EStructuralFeature field, String packageRoot) {

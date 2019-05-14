@@ -118,7 +118,10 @@ class EClassGetterCompiler {
 	}
 	
 	def buildWithMultipleGetter(EStructuralFeature field, TypeName fieldType, Dsl dsl, TypeName ePackageInterfaceType, TypeName rt, boolean isTyped, String packageRoot) {
-		val simpleType = field.EType.scopedInterfaceTypeRef(packageRoot)
+		val simpleType = if(field.EType.instanceClassName == "java.util.Map$Entry") 
+				(fieldType as ParameterizedTypeName).typeArguments.head 
+			else 
+				field.EType.scopedInterfaceTypeRef(packageRoot)
 		MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
 			.returns(fieldType)
 			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
@@ -131,7 +134,8 @@ class EClassGetterCompiler {
 				return «field.name.normalizeVarName»;
 				''',newHashMap(
 					"eoce" -> ParameterizedTypeName.get(ClassName.get(EObjectResolvingEList), simpleType),
-					"epit" -> ePackageInterfaceType, "rt" -> simpleType))
+					"epit" -> ePackageInterfaceType, 
+					"rt" -> if(simpleType instanceof ParameterizedTypeName) simpleType.rawType else simpleType))
 			.build
 	}
 	
@@ -140,25 +144,7 @@ class EClassGetterCompiler {
 			return «field.name.normalizeVarName»;
 		''').addModifiers(PUBLIC).build
 	}
-	
-//	def buildSimpleSetterNoNotification(EStructuralFeature field, TypeName fieldType, Dsl dsl, boolean isTyped) {
-//		val newName = '''«field.name.normalizeVarNewName»'''
-//		val oldName = '''«field.name.normalizeVarOldName»'''
-//		MethodSpec.methodBuilder('''set«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
-//			.applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
-//				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-//			])
-//			.returns(fieldType)
-//			.addParameter(ParameterSpec.builder(fieldType, newName).build)
-//			.addCode('''
-//			$1T «oldName» = this.«field.name.normalizeVarName»;
-//			this.«field.name.normalizeVarName» = «newName»;
-//			return «oldName»;
-//			''', fieldType)
-//			.addModifiers(PUBLIC)
-//			.build	
-//	}
-	
+
 	def buildSimpleSetter(EStructuralFeature field, TypeName fieldType, TypeName ePackageInterfaceType, Optional<Dsl> dsl, boolean isTyped, EClass eClass) {
 		val hm = newHashMap(
 			"ft" -> fieldType,
@@ -404,18 +390,10 @@ class EClassGetterCompiler {
 			]).addParameter(ParameterSpec.builder(fieldType, newName).build).addCode('''
 			if («newName» != «name») {
 				$1T msgs = null;
-				«IF field.EOpposite !== null»
-					if («name» != null)
-						msgs = (($2T) «name»).eInverseRemove(this, $5T.«field.EOpposite.normalizeUpperField», «rt».class, msgs);
-					if («newName» != null)
-						msgs = (($2T) «newName»).eInverseAdd(this, $5T.«field.EOpposite.normalizeUpperField», «rt».class,
-								msgs);
-				«ELSE»
-					if («name» != null)
-						msgs = (($2T) «name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - $5T.«field.normalizeUpperField», null, msgs);
-					if («newName» != null)
-						msgs = (($2T) «newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - $5T.«field.normalizeUpperField», null, msgs);
-				«ENDIF»
+				if («name» != null)
+					msgs = (($2T) «name»).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - $5T.«field.normalizeUpperField», null, msgs);
+				if («newName» != null)
+					msgs = (($2T) «newName»).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - $5T.«field.normalizeUpperField», null, msgs);
 				msgs = basicSet«IF isTyped»Typed«ENDIF»«name.toFirstUpper»(«newName», msgs);
 				if (msgs != null)
 					msgs.dispatch();
@@ -439,11 +417,6 @@ class EClassGetterCompiler {
 		}
 
 	}
-	
-//	def List<MethodSpec> compileAccessors(EStructuralFeature field, TypeName fieldType, String packageRoot, EClass eClass,
-//		Dsl dsl, ClassName ePackageInterfaceType) {
-//			field.compileAccessors(fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, false)			
-//		}
 
 	def dispatch List<MethodSpec> compileAccessors(EReference field, TypeName fieldType, String packageRoot, EClass eClass,
 		Dsl dsl, ClassName ePackageInterfaceType, boolean isTyped) {
