@@ -70,7 +70,8 @@ class AleBodyCompiler {
 				builderSeed.
 					addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 			} else {
-				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, t, body.value.compileExpression(ctx))
+				val tb = t.type.resolveType2.solveNothing(body.target)
+				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, tb, body.value.compileExpression(ctx))
 			}
 
 		}

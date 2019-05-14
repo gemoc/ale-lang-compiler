@@ -159,7 +159,7 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 						)
 
 						for (param : call.arguments.tail.enumerate) {
-							hm.put("paramType" + param.value, param.key.infereType.head.type.resolveType2.solveNothing(param.key))
+							hm.put("paramType" + param.value, param.key.infereType.head?.type?.resolveType2?.solveNothing(param.key))
 							hm.put("paramExpr" + param.value, param.key.compileExpression(ctx))
 						}
 

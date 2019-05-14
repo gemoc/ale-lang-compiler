@@ -77,7 +77,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 							CodeBlock.of('''«lhs».get«rhs.toFirstUpper»()''')
 						}
 					} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-						CodeBlock.of('''«lhs».«(call.arguments.get(1) as StringLiteral).value»''')
+						CodeBlock.of('''$L.$L''', lhs, (call.arguments.get(1) as StringLiteral).value)
 					} else {
 						CodeBlock.
 							of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»«(call.arguments.get(1) as StringLiteral).value»«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''')
@@ -91,7 +91,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 							(t.type as EDataType).instanceClass == boolean))
 							CodeBlock.of('''«lhs».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
 						else
-							CodeBlock.of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+							CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 					} else {
 						CodeBlock.
 							of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''')
@@ -197,12 +197,12 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 								if(tmp !== null)
 									hm.put("paramType" + p.value, tmp.resolveType3?.solveNothing(p.key))
 								else 
-									hm.put("paramType" + p.value, null)
+									hm.put("paramType" + p.value, solveNothing(null, p.key))
 								hm.put("paramValue" + p.value, p.key.compileExpression(ctx))
 							}
 							
 
-							CodeBlock.builder.addNamed('''$serviceType:T.$serviceMethodName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»($paramType«p.value»:T) ($paramValue«p.value»:L)«ENDFOR»)''', hm).build
+							CodeBlock.builder.addNamed('''$serviceType:T.$serviceMethodName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»«IF hm.get("paramType" + p.value) !== null»($paramType«p.value»:T) «ENDIF»($paramValue«p.value»:L)«ENDFOR»)''', hm).build
 						} else {
 							val Map<String, Object> hm = newHashMap
 							hm.put("leftExpr", call.arguments.head.compileExpression(ctx))
@@ -210,7 +210,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 							for(param: call.arguments.tail.enumerate) {
 								hm.put('''param«param.value»''', param.key.compileExpression(ctx))
 							}
-							CodeBlock.builder.addNamed('''$leftExpr:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»$param«param.value»«ENDFOR»)/*SB*/''', hm).build
+							CodeBlock.builder.addNamed('''$leftExpr:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»$param«param.value»:L«ENDFOR»)''', hm).build
 
 						}
 					}
@@ -226,7 +226,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 							"cdt" -> ClassName.get(candidate.value.declaringClass)
 						)
 						for (param : call.arguments.enumerate) {
-							hm.put("typeparam" + param.value, param.key.infereType.head.resolveType3)
+							hm.put("typeparam" + param.value, param.key.infereType.head.resolveType3.solveNothing(param.key))
 							hm.put("exprparam" + param.value, param.key.compileExpression(ctx))
 						}
 						CodeBlock.builder.
@@ -237,15 +237,13 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 
 						hm.put("leftexpr", call.arguments.head.compileExpression(ctx))
 						for (param : call.arguments.tail.enumerate) {
-							if(param.key.infereType.head !== null)
-								hm.put("typeparam" + param.value, param.key.infereType.head.type?.resolveType2)
-							else 
-								hm.put("typeparam" + param.value, null) 
+							val its = param.key.infereType.head?.type?.resolveType2.solveNothing(param.key)
+							hm.put("typeparam" + param.value, its) 
 							hm.put("exprparam" + param.value, param.key.compileExpression(ctx))
 						}
 
 						CodeBlock.builder.
-							addNamed('''$leftexpr:L.«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($typeparam«param.value»:T) ($exprparam«param.value»:L)«ENDFOR»)''',
+							addNamed('''$leftexpr:L.«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("typeparam"+param.value) !== null»($typeparam«param.value»:T)«ENDIF» ($exprparam«param.value»:L)«ENDFOR»)''',
 								hm).build
 					}
 				}

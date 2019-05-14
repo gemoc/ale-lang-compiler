@@ -145,7 +145,7 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 						)
 
 						call.arguments.tail.enumerate.forEach [
-							var pt = it.key.infereType.head.type.resolveType2.solveNothing(it.key)
+							var pt = it.key.infereType.head?.type?.resolveType2?.solveNothing(it.key)
 							
 							hm.put('paramType' + it.value, pt)
 							val pe = it.key.compileExpression(ctx)

@@ -165,7 +165,7 @@ abstract class AbstractExpressionCompiler {
 
 	def dispatch CodeBlock compileExpression(And call, CompilerExpressionCtx ctx) {
 		CodeBlock.
-			of('''((«call.arguments.get(0).compileExpression(ctx)») && («call.arguments.get(1).compileExpression(ctx)»))''')
+			of('''(($L) && ($L))''', call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 	}
 
 	def dispatch CodeBlock compileExpression(ErrorCall call, CompilerExpressionCtx ctx) {
@@ -178,7 +178,7 @@ abstract class AbstractExpressionCompiler {
 
 	def dispatch CodeBlock compileExpression(Or call, CompilerExpressionCtx ctx) {
 		CodeBlock.
-			of('''((«call.arguments.get(0).compileExpression(ctx)») || («call.arguments.get(1).compileExpression(ctx)»))''')
+			of('''(($L) || ($L))''', call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx))
 	}
 
 	def dispatch CodeBlock compileExpression(ErrorConditional call, CompilerExpressionCtx ctx) {
