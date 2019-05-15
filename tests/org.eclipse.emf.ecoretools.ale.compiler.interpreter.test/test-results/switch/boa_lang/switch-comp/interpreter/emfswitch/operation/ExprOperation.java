@@ -3,6 +3,7 @@ package interpreter.emfswitch.operation;
 import boa.Ctx;
 import boa.EvalRes;
 import boa.Expr;
+import execboa.SerializeService;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
@@ -24,6 +25,6 @@ public class ExprOperation extends TopLevelCmdOperation {
 	}
 
 	public void nextLine(Ctx ctx) {
-		LogService.log(execboa.SerializeService.serialize(((interpreter.emfswitch.operation.ExprOperation) emfswitch.doSwitch(this.it)).eval((boa.Ctx) ctx)));
+		LogService.log(SerializeService.serialize((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it)).eval((Ctx) (ctx)))));
 	}
 }

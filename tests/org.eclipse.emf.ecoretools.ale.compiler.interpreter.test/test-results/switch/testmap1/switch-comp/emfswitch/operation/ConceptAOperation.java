@@ -1,9 +1,11 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import execboa.MapService;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Map;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test1.ConceptA;
 
@@ -22,6 +24,6 @@ public class ConceptAOperation {
 			LogService.log(c.getKey());
 			LogService.log(c.getValue());
 		}
-		LogService.log(execboa.MapService.containsKey(this.it.getCs(), "ok"));
+		LogService.log(MapService.containsKey((EMap) (this.it.getCs()), (String) ("ok")));
 	}
 }

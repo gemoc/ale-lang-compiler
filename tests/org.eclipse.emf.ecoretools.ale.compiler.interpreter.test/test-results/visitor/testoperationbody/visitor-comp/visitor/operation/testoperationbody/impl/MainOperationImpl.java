@@ -28,8 +28,8 @@ public class MainOperationImpl implements MainOperation {
 	}
 
 	public void testPolymorphism() {
-		this.it.getChildren().add(testoperationbody.visitor.testoperationbody.TestoperationbodyFactory.eINSTANCE.createChildA());
-		this.it.getChildren().add(testoperationbody.visitor.testoperationbody.TestoperationbodyFactory.eINSTANCE.createChildB());
+		this.it.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildA());
+		this.it.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildB());
 		for(Parent child: this.it.getChildren()) {
 			((ParentOperation)child.accept(vis)).overriden();
 			((ParentOperation)child.accept(vis)).notOverriden();
@@ -42,10 +42,10 @@ public class MainOperationImpl implements MainOperation {
 	public void main() {
 		this.it.getListint().add(1);
 		this.it.getListint().remove(1);
-		this.it.getListconcepta().add(testoperationbody.visitor.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
-		this.it.getListconcepta().remove(testoperationbody.visitor.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.it.getListconcepta().add(TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.it.getListconcepta().remove(TestoperationbodyFactory.eINSTANCE.createConceptA());
 		this.it.setSinglebool(false);
-		this.it.setSingleconcepta(testoperationbody.visitor.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.it.setSingleconcepta(TestoperationbodyFactory.eINSTANCE.createConceptA());
 		int a = ((int) (1));
 		ConceptA b = ((ConceptA) (TestoperationbodyFactory.eINSTANCE.createConceptA()));
 		EList<String> events = ((EList<String>) (CollectionService.createEList("event1", "event2")));

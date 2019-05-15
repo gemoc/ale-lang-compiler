@@ -6,6 +6,9 @@ import boa.EvalRes;
 import boa.Expr;
 import boa.Let;
 import boa.revisitor.BoaRevisitor;
+import execboa.MapService;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -63,11 +66,11 @@ public class LetOpImpl extends ExprOpImpl implements LetOp {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     Expr lhs = ((Expr) (this.obj.getLhs()));
-    EvalRes vlhs = ((EvalRes) (rev.$((Expr)lhs).eval(((Ctx) ctx))));
+    EvalRes vlhs = ((EvalRes) (rev.$((Expr)lhs).eval(((Ctx) (ctx)))));
     Ctx nctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
-    execboa.MapService.putAll(nctx.getEnv(), ctx.getEnv());
-    execboa.MapService.put(nctx.getEnv(), this.obj.getName(), vlhs);
-    result = rev.$((Expr)this.obj.getRhs()).eval(((Ctx) nctx));
+    MapService.putAll((EMap) (nctx.getEnv()), (EMap) (ctx.getEnv()));
+    MapService.put((EMap) (nctx.getEnv()), (String) (this.obj.getName()), (EvalRes) (vlhs));
+    result = rev.$((Expr)this.obj.getRhs()).eval(((Ctx) (nctx)));
     return result;
   }
 }

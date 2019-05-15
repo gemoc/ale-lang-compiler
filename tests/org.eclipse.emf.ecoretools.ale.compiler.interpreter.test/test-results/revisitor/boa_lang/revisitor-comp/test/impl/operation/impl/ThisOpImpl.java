@@ -6,6 +6,8 @@ import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.This;
 import boa.revisitor.BoaRevisitor;
+import execboa.MapService;
+import org.eclipse.emf.common.util.EMap;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -63,7 +65,7 @@ public class ThisOpImpl extends ExprOpImpl implements ThisOp {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-    execboa.MapService.putAll(ret.getValues(), ctx.getTh());
+    MapService.putAll((EMap) (ret.getValues()), (EMap) (ctx.getTh()));
     result = ret;
     return result;
   }

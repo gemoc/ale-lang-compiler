@@ -1,7 +1,6 @@
-package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
+package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 
 import com.squareup.javapoet.ClassName
-import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import java.util.List
 import java.util.Map
@@ -12,31 +11,36 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
-import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 
-class TypeSystemUtils  extends CommonTypeSystemUtils implements AbstractTypeSystem{
+class InterpreterTypeSystemUtils extends CommonTypeSystemUtils implements AbstractTypeSystem {
 
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	extension EcoreUtils ecoreUtils = new EcoreUtils
-	
+	extension AbstractNamingUtils namingUtils 
+	val String packageRoot
 	var List<ResolvedClass> resolved
 
-	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot,  List<ResolvedClass> resolved) {
+	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved, AbstractNamingUtils nu) {
 		this.syntaxes = syntaxes
+		this.packageRoot = packageRoot
 		this.resolved = resolved
+		this.namingUtils = nu
 	}
 
-	def dispatch TypeName solveType(EClass type) {
+	def dispatch solveType(EClass type) {
 		resolveType(type)
 	}
 
-	def dispatch TypeName solveType(EDataType edt) {
+	def dispatch solveType(EDataType edt) {
 		TypeName.get(edt.instanceClass)
 	}
 
@@ -52,20 +56,10 @@ class TypeSystemUtils  extends CommonTypeSystemUtils implements AbstractTypeSyst
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
-				if(e.instanceClassName == "java.util.Map$Entry") {
-					val keyType = e.EStructuralFeatures.filter[it.name == 'key'].head.EType.solveType
-					val valueType = e.EStructuralFeatures.filter[it.name == 'value'].head.EType.solveType
-					ParameterizedTypeName.get(ClassName.get(Map.Entry), keyType, valueType)
-				} else{
-					val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.exists[it.name == e.name && it.EPackage.name == e.EPackage.name]].values.map[value].map [
-						it.genPackages.map[it.genClasses].flatten
-					].flatten.filter[
-						it.ecoreClass.name == e.name && it.ecoreClass.EPackage.name == e.EPackage.name
-					].head
-					ClassName.get(gl.genPackage.interfacePackageName, e.name)
-				
-				}
-			} else {
+				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
+			} else if(e instanceof EEnum) {
+				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
+			}else {
 				val GenClassifier gclass = gm.allGenPkgs.map [
 					it.genClassifiers.filter [
 						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
@@ -73,7 +67,7 @@ class TypeSystemUtils  extends CommonTypeSystemUtils implements AbstractTypeSyst
 				].flatten.head
 				if(gclass instanceof GenClass) {
 					ClassName.get(gclass.qualifiedInterfaceName, gclass.name)
-				} else if (gclass instanceof GenEnum ) {
+				} else if (gclass instanceof GenEnum) {
 					ClassName.get(gclass.genPackage.interfacePackageName, gclass.name)
 				}
 
@@ -91,12 +85,13 @@ class TypeSystemUtils  extends CommonTypeSystemUtils implements AbstractTypeSyst
 	}
 	
 	def allParents(ExtendedClass aleClass) {
-		val ecls = resolved.filter[it.getAleCls == aleClass].head.eCls
+		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls
 
-		resolved.filter[it.eCls == ecls || (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
-			it.getAleCls
+		resolved.filter[it.eCls == ecls || it.eCls instanceof EClass && ecls instanceof EClass && (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
+			it.aleCls
 		].filter[it !== null]
 	}
+
 	
 	def dispatch TypeName resolveType2(Object type) {
 		return null
@@ -107,10 +102,18 @@ class TypeSystemUtils  extends CommonTypeSystemUtils implements AbstractTypeSyst
 	}
 	
 	def dispatch TypeName resolveType2(EClassifier type) {
-		if (type.instanceClass !== null) {
+		val rt = if (type instanceof EEnum) {
+			type.resolveType
+		} else if (type instanceof EClass) {
+			type.resolveType
+		} else if (type.instanceClass !== null) {
 			TypeName.get(type.instanceClass)
 		} else {
 			type.resolveType
-		}	
+		}
+		if(rt.toString == "org.eclipse.acceleo.query.runtime.impl.Nothing") {
+			println('NOTHING')
+		}
+		rt
 	}
 }

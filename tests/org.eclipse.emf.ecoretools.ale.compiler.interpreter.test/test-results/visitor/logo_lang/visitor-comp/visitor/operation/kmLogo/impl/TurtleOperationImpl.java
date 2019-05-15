@@ -38,7 +38,7 @@ public class TurtleOperationImpl implements TurtleOperation {
 	}
 
 	public void forward(double steps) {
-		((TurtleOperation)this.it.accept(vis)).move((Double) ((steps) * (TrigoServices.cosinus(this.it.getHeading()))), (Double) ((steps) * (TrigoServices.sinus(this.it.getHeading()))));
+		((TurtleOperation)this.it.accept(vis)).move((Double) ((steps) * (TrigoServices.cosinus((double) (this.it.getHeading())))), (Double) ((steps) * (TrigoServices.sinus((double) (this.it.getHeading())))));
 	}
 
 	public void rotate(double angle) {

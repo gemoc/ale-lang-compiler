@@ -1,10 +1,11 @@
 package interpreter.emfswitch.operation;
 
 import boa.ArithOpRemainder;
-import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalIntRes;
 import boa.EvalRes;
+import execboa.MathService;
+import interpreter.emfswitch.BoaFactory;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
 
 public class ArithOpRemainderOperation extends ArithOpOperation {
@@ -20,14 +21,14 @@ public class ArithOpRemainderOperation extends ArithOpOperation {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getLhs())).eval((Ctx) ctx)));
-		EvalRes vrhs = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Ctx) ctx)));
+		EvalRes vlhs = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getLhs())).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Ctx) (ctx))));
 		if(vlhs instanceof EvalIntRes) {
 			if(vrhs instanceof EvalIntRes) {
 				EvalIntRes ivlhs = ((EvalIntRes) (vlhs));
 				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
 				EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
-				ret.setValue(execboa.MathService.mod(this.it, ivlhs.getValue(), ivrhs.getValue()));
+				ret.setValue(MathService.mod((ArithOpRemainder) (this.it), (int) (ivlhs.getValue()), (int) (ivrhs.getValue())));
 				result = ret;
 			}
 			else {

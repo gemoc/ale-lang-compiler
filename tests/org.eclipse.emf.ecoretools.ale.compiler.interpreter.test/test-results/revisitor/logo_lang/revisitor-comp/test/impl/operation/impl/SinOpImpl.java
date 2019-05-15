@@ -1,11 +1,10 @@
 package test.impl.operation.impl;
 
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
-
 import kmLogo.Expression;
 import kmLogo.Sin;
 import kmLogo.Turtle;
 import kmLogo.revisitor.KmLogoRevisitor;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 import test.impl.operation.BackOp;
 import test.impl.operation.BinaryExpOp;
 import test.impl.operation.BlockOp;
@@ -60,7 +59,7 @@ public class SinOpImpl extends UnaryExpressionOpImpl implements SinOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = TrigoServices.sinus(rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle))));
+    result = TrigoServices.sinus((double) (rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle)))));
     return result;
   }
 }

@@ -9,7 +9,9 @@ import boa.EvalRes;
 import boa.Expr;
 import boa.Project;
 import boa.revisitor.BoaRevisitor;
-import org.eclipse.acceleo.query.runtime.impl.Nothing;
+import execboa.MapService;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -69,11 +71,11 @@ public class ProjectOpImpl extends ExprOpImpl implements ProjectOp {
     EvalRes vexp = ((EvalRes) (rev.$((Expr)this.obj.getExp()).eval(((Ctx) (ctx)))));
     if(vexp instanceof EvalMapRes) {
       EvalMapRes mvexp = ((EvalMapRes) (vexp));
-      if(execboa.MapService.containsKey(mvexp.getValues(), this.obj.getName())) {
-        EvalRes x = ((EvalRes) (mvexp.getValues().get(this.obj.getName())));
+      if(MapService.containsKey((EMap) (mvexp.getValues()), (String) (this.obj.getName()))) {
+        EvalRes x = ((EvalRes) (mvexp.getValues().get((String) (this.obj.getName()))));
         if(x instanceof EvalFunRes) {
           EvalFunRes func = ((EvalFunRes) (x));
-          result = rev.$((Project)this.obj).project(((EvalFunRes) (func)),((EvalMapRes) (mvexp)));
+          result = rev.$((Project)this.obj).project(((EvalFunRes) (func)), ((EvalMapRes) (mvexp)));
         }
         else {
           result = x;
@@ -95,7 +97,7 @@ public class ProjectOpImpl extends ExprOpImpl implements ProjectOp {
     ret.setExp(func.getExp());
     ret.setCtx(func.getCtx());
     ret.setName(func.getName());
-    execboa.MapService.replaceWith(ret.getTh(), mvexp.getValues());
+    MapService.replaceWith((EMap) (ret.getTh()), (EMap) (mvexp.getValues()));
     result = ret;
     return result;
   }

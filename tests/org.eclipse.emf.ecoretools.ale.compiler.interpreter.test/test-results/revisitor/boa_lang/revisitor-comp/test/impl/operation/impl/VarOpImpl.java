@@ -4,6 +4,9 @@ import boa.Ctx;
 import boa.EvalRes;
 import boa.Var;
 import boa.revisitor.BoaRevisitor;
+import execboa.MapService;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -60,8 +63,8 @@ public class VarOpImpl extends ExprOpImpl implements VarOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    if(execboa.MapService.containsKey(ctx.getEnv(), this.obj.getName())) {
-      result = execboa.MapService.getFromMap(ctx.getEnv(), this.obj.getName());
+    if(MapService.containsKey((EMap) (ctx.getEnv()), (String) (this.obj.getName()))) {
+      result = MapService.getFromMap((EMap) (ctx.getEnv()), (String) (this.obj.getName()));
     }
     else {
       result = null;

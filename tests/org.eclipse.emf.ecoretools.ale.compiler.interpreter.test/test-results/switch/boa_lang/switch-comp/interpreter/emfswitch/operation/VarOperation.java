@@ -3,7 +3,10 @@ package interpreter.emfswitch.operation;
 import boa.Ctx;
 import boa.EvalRes;
 import boa.Var;
+import execboa.MapService;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 
 public class VarOperation extends ExprOperation {
 	private final Var it;
@@ -18,8 +21,8 @@ public class VarOperation extends ExprOperation {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		if(execboa.MapService.containsKey(ctx.getEnv(), this.it.getName())) {
-			result = execboa.MapService.getFromMap(ctx.getEnv(), this.it.getName());
+		if(MapService.containsKey((EMap) (ctx.getEnv()), (String) (this.it.getName()))) {
+			result = MapService.getFromMap((EMap) (ctx.getEnv()), (String) (this.it.getName()));
 		}
 		else {
 			result = null;

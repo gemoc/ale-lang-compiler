@@ -8,6 +8,9 @@ import boa.EvalRes;
 import boa.Expr;
 import boa.Field;
 import boa.revisitor.BoaRevisitor;
+import execboa.MapService;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -66,8 +69,8 @@ public class BObjectOpImpl extends ExprOpImpl implements BObjectOp {
     EvalRes result;
     EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
     for(Field x: this.obj.getFields()) {
-      EvalRes v = ((EvalRes) (rev.$((Expr)x.getValue()).eval(((Ctx) ctx))));
-      execboa.MapService.put(ret.getValues(), x.getName(), v);
+      EvalRes v = ((EvalRes) (rev.$((Expr)x.getValue()).eval(((Ctx) (ctx)))));
+      MapService.put((EMap) (ret.getValues()), (String) (x.getName()), (EvalRes) (v));
     }
     result = ret;
     return result;

@@ -32,11 +32,11 @@ public class LogoProgramOperationImpl implements LogoProgramOperation {
 	public Turtle createTurtle() {
 		Turtle result;
 		Turtle turtle = ((Turtle) (KmLogoFactory.eINSTANCE.createTurtle()));
-		turtle.setPosition(kmLogo.visitor.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+		turtle.setPosition(KmLogoFactory.eINSTANCE.createPoint());
 		turtle.getPosition().setX(0.0);
 		turtle.getPosition().setY(0.0);
-		turtle.setCallStack(kmLogo.visitor.kmLogo.KmLogoFactory.eINSTANCE.createCallStack());
-		turtle.getCallStack().getFrames().add(kmLogo.visitor.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
+		turtle.setCallStack(KmLogoFactory.eINSTANCE.createCallStack());
+		turtle.getCallStack().getFrames().add(KmLogoFactory.eINSTANCE.createStackFrame());
 		result = turtle;
 		return result;
 	}

@@ -1,8 +1,8 @@
 package emfswitch.operation;
 
+import emfswitch.KmLogoFactory;
 import emfswitch.SwitchImplementation;
 import java.lang.Double;
-import kmLogo.KmLogoFactory;
 import kmLogo.Point;
 import kmLogo.Segment;
 import kmLogo.Turtle;
@@ -37,7 +37,7 @@ public class TurtleOperation {
 	}
 
 	public void forward(double steps) {
-		((TurtleOperation) emfswitch.doSwitch(this.it)).move((Double) ((steps) * (TrigoServices.cosinus(this.it.getHeading()))), (Double) ((steps) * (TrigoServices.sinus(this.it.getHeading()))));
+		((TurtleOperation) emfswitch.doSwitch(this.it)).move((Double) ((steps) * (TrigoServices.cosinus((double) (this.it.getHeading())))), (Double) ((steps) * (TrigoServices.sinus((double) (this.it.getHeading())))));
 	}
 
 	public void rotate(double angle) {

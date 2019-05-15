@@ -60,7 +60,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	extension EcoreUtils eu = new EcoreUtils
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension RevisitorExpressionCompiler rec
-	extension TypeSystemUtils tsu
+	extension RevisitorTypeSystemUtils tsu
 	extension CommonTypeInferer cti
 
 	var List<ParseResult<ModelUnit>> parsedSemantics
@@ -125,7 +125,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
 		
-		this.tsu = new TypeSystemUtils(syntaxes, eu)
+		this.tsu = new RevisitorTypeSystemUtils(syntaxes, eu)
 		this.cti = new CommonTypeInferer(base)
 		val tmp = syntaxes.get(dsl.allSyntaxes.head)
 		val syntax = tmp.key
@@ -133,7 +133,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		val genSyntax = tmp.value.genPackages.head
 		resolved = resolve(aleClasses, syntax, syntaxes)
 		this.rec = new RevisitorExpressionCompiler(tsu, syntaxes, resolved, eu, dsl, registeredServices,
-			new CommonTypeInferer(base), new EnumeratorService)
+			new CommonTypeInferer(base), new EnumeratorService, rnu)
 
 		val interfaceName = dsl.revisitorImplementationClass
 

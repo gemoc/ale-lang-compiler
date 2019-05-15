@@ -7,8 +7,10 @@ import kmLogo.visitor.kmLogo.ProcDeclaration;
 import kmLogo.visitor.kmLogo.StackFrame;
 import kmLogo.visitor.kmLogo.Turtle;
 import kmLogo.visitor.kmLogo.Variable;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import visitor.VisitorInterface;
+import visitor.operation.kmLogo.ExpressionOperation;
 import visitor.operation.kmLogo.ProcCallOperation;
 import visitor.operation.kmLogo.ProcDeclarationOperation;
 
@@ -30,8 +32,8 @@ public class ProcCallOperationImpl extends ExpressionOperationImpl implements Pr
 		int i = ((int) (0));
 		for(Expression exp: this.it.getActualArgs()) {
 			Variable newVar = ((Variable) (KmLogoFactory.eINSTANCE.createVariable()));
-			newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.it.getDeclaration().getArgs(), i).getName());
-			newVar.setValue(((visitor.operation.kmLogo.ExpressionOperation)exp.accept(vis)).eval((kmLogo.visitor.kmLogo.Turtle) (turtle)));
+			newVar.setName(CollectionService.get(this.it.getDeclaration().getArgs(), i).getName());
+			newVar.setValue(((ExpressionOperation)exp.accept(vis)).eval((Turtle) (turtle)));
 			newFrame.getVariables().add(newVar);
 			i = (i) + (1);
 		}

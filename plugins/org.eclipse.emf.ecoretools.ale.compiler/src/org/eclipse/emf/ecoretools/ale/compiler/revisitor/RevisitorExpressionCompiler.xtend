@@ -1,8 +1,6 @@
 package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 
-import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
-import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
 import org.eclipse.acceleo.query.ast.Call
@@ -17,37 +15,32 @@ import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractExpressionCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
-import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
-import org.eclipse.xtext.EcoreUtil2
 
 class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
-	extension TypeSystemUtils tsu
+	extension RevisitorTypeSystemUtils tsu
 	extension EcoreUtils eu
 	extension CommonTypeInferer cti
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	val List<ResolvedClass> resolved
 	extension EnumeratorService es
 	val Dsl dsl
-	val Map<String, Class<?>> registeredServices
 
-
-	new(TypeSystemUtils tsu, Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		EcoreUtils eu, Dsl dsl, Map<String, Class<?>> registeredServices, CommonTypeInferer cti, EnumeratorService es) {
-		super(cti, es, tsu)
+	new(RevisitorTypeSystemUtils tsu, Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
+		EcoreUtils eu, Dsl dsl, Map<String, Class<?>> registeredServices, CommonTypeInferer cti, EnumeratorService es, AbstractNamingUtils anu) {
+		super(cti, es, tsu, anu, registeredServices)
 		this.tsu = tsu
 		this.syntaxes = syntaxes
 		this.resolved = resolved
 		this.eu = eu
 		this.dsl = dsl
-		this.registeredServices = registeredServices
 		this.cti = cti
 		this.es = es
 	}
@@ -110,12 +103,7 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 					).build
 				}
 			} else if (call.serviceName == 'create') {
-				val e = call.arguments.get(0)
-				val t = infereType(e).head
-				val gm = findGenModelFromExpression(e)
-				CodeBlock.of('''$T.eINSTANCE.create«(t.type as EClass).name»()''',
-					ClassName.get(
-						gm.genPackages.head.qualifiedPackageName, '''«gm.EPackage.name.toFirstUpper»Factory'''))
+				call.callCreate(null)	
 			} else {
 
 				// TODO: better identification of the caller in order to route to a $ operation or a service.
@@ -156,74 +144,10 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 							addNamed('''rev.$dispatch:L(($callerType:T)$callerExpr:L).$callerServiceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»(($paramType«param.value»:T) ($paramExpr«param.value»:L))«ENDFOR»)''',
 								hm).build
 					} else {
-
-						// duplicate to following else block !!!
-						val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten.toList
-
-						val candidate = methods.filter[Modifier.isStatic(it.value.modifiers)].filter [
-							it.value.name == call.serviceName
-						].head
-
-						if (candidate !== null) {
-							
-							val Map<String,Object> hm = newHashMap(
-								"callerLhs" -> candidate.key,
-								"callerRhs" -> candidate.value.name
-							)
-							
-							for(p: call.arguments.enumerate) {
-								hm.put("param" + p.value, p.key.compileExpression(ctx))
-							}
-							CodeBlock.builder.addNamed('''$callerLhs:L.$callerRhs:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$param«p.value»:L«ENDFOR»)''', hm).build
-						} else {
-							val hm = newHashMap(
-								"caller" -> call.arguments.head.compileExpression(ctx),
-								"serviceName" -> call.serviceName
-							)
-
-							for (param : call.arguments.tail.enumerate) {
-								hm.put("param" + param.value, param.key.compileExpression(ctx))
-							}
-
-							CodeBlock.builder.
-								addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»$param«param.value»:L«ENDFOR»)''',
-									hm).build
-
-						}
+						call.callService(ctx)
 					}
 				} else {
-					val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten
-
-					val candidate = methods.filter[Modifier.isStatic(it.value.modifiers)].filter [
-						it.value.name == call.serviceName
-					].head
-
-					if (candidate !== null) {
-						val Map<String, Object> hm = newHashMap(
-							"callerLhs" -> candidate.key,
-							"callerRhs" -> candidate.value.name
-						)
-						
-						for(p: call.arguments.enumerate) {
-							hm.put("param" + p.value, p.key.compileExpression(ctx))
-						}
-						
-						CodeBlock.builder.addNamed('''$callerLhs:L.$callerRhs:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$param«p.value»:L«ENDFOR»)''', hm).build
-					} else {
-						val hm = newHashMap(
-							"caller" -> call.arguments.head.compileExpression(ctx),
-							"serviceName" -> call.serviceName
-						)
-
-						for (param : call.arguments.tail.enumerate) {
-							hm.put("param" + param.value, param.key.compileExpression(ctx))
-						}
-
-						CodeBlock.builder.
-							addNamed('''$caller:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»$param«param.value»:L«ENDFOR»)''',
-								hm).build
-
-					}
+					call.callService(ctx)
 				}
 			}
 		else

@@ -20,7 +20,7 @@ public class CosOperationImpl extends UnaryExpressionOperationImpl implements Co
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = TrigoServices.cosinus(((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle)));
+		result = TrigoServices.cosinus((double) (((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle))));
 		return result;
 	}
 }

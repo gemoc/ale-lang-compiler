@@ -7,6 +7,8 @@ import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.Expr;
 import boa.revisitor.BoaRevisitor;
+import execboa.MapService;
+import org.eclipse.emf.common.util.EMap;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -63,11 +65,11 @@ public class CopyOpImpl extends ExprOpImpl implements CopyOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalRes vcopy = ((EvalRes) (rev.$((Expr)this.obj.getCopy()).eval(((Ctx) ctx))));
+    EvalRes vcopy = ((EvalRes) (rev.$((Expr)this.obj.getCopy()).eval(((Ctx) (ctx)))));
     if(vcopy instanceof EvalMapRes) {
       EvalMapRes mvcopy = ((EvalMapRes) (vcopy));
       EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-      execboa.MapService.putAll(ret.getValues(), mvcopy.getValues());
+      MapService.putAll((EMap) (ret.getValues()), (EMap) (mvcopy.getValues()));
       result = ret;
     }
     else {

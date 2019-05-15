@@ -1,11 +1,15 @@
 package interpreter.visitor.operation.boa.impl;
 
+import execboa.MapService;
+import execboa.SerializeService;
 import interpreter.boa.visitor.boa.Ctx;
 import interpreter.boa.visitor.boa.Def;
 import interpreter.boa.visitor.boa.EvalRes;
 import interpreter.visitor.VisitorInterface;
 import interpreter.visitor.operation.boa.DefOperation;
 import interpreter.visitor.operation.boa.ExprOperation;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
 public class DefOperationImpl extends TopLevelCmdOperationImpl implements DefOperation {
@@ -21,7 +25,7 @@ public class DefOperationImpl extends TopLevelCmdOperationImpl implements DefOpe
 
 	public void nextLine(Ctx ctx) {
 		EvalRes e = ((EvalRes) (((ExprOperation)this.it.getExpr().accept(vis)).eval((Ctx) (ctx))));
-		LogService.log(((this.it.getName()) + (" = ")) + (execboa.SerializeService.serialize(e)));
-		execboa.MapService.put(ctx.getEnv(), this.it.getName(), e);
+		LogService.log(((this.it.getName()) + (" = ")) + (SerializeService.serialize((EvalRes) (e))));
+		MapService.put((EMap) (ctx.getEnv()), (String) (this.it.getName()), (EvalRes) (e));
 	}
 }

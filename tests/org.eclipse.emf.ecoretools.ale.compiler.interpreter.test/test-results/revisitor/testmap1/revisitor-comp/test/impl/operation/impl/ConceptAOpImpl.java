@@ -1,8 +1,10 @@
 package test.impl.operation.impl;
 
+import execboa.MapService;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Map;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.ConceptAOp;
 import test1.ConceptA;
@@ -23,6 +25,6 @@ public class ConceptAOpImpl implements ConceptAOp {
       LogService.log(c.getKey());
       LogService.log(c.getValue());
     }
-    LogService.log(execboa.MapService.containsKey(this.obj.getCs(), "ok"));
+    LogService.log(MapService.containsKey((EMap) (this.obj.getCs()), (String) ("ok")));
   }
 }

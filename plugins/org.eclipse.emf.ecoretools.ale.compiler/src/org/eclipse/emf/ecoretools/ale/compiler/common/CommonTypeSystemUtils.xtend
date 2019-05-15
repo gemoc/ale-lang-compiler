@@ -4,21 +4,23 @@ import com.squareup.javapoet.TypeName
 import org.eclipse.acceleo.query.ast.Call
 import org.eclipse.acceleo.query.ast.Expression
 import org.eclipse.acceleo.query.ast.VarRef
+import org.eclipse.acceleo.query.validation.type.IType
+import org.eclipse.acceleo.query.validation.type.SequenceType
+import org.eclipse.emf.common.util.EMap
+import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 
-abstract class CommonTypeSystemUtils {
+abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 	
 	abstract def TypeName resolveType2(Object type)
 	
-	def TypeName solveNothing(TypeName pt, Expression expr) {
-//		var pt = _pt
+	override TypeName solveNothing(TypeName pt, Expression expr) {
 		if(pt === null || pt.toString == "org.eclipse.acceleo.query.runtime.impl.Nothing") {
 			var EObject blk = expr
 			
 			while(true) {
-//				if(blk instanceof CodeBlock) 
 				if(blk instanceof Block) {
 					var EObject stmt = expr
 					var stop = false
@@ -53,35 +55,25 @@ abstract class CommonTypeSystemUtils {
 					return pt 
 				}				
 			}
-			
-//			return _pt
-			
-//			var idx = blk.statements.indexOf(expr)
-//			var prt = expr.eContainer
-//			// TODO: WHAT A MESS !!!
-//			while(idx < 0) {
-//				if(prt === null) {
-//					prt 
-//				}
-//				prt = prt.eContainer
-//				idx = blk.statements.indexOf(prt)
-//			}
-//			var stop = false
-//			for(var i = idx-1; i >=0 && !stop; i--) {
-//				val crt = blk.statements.get(i)
-//				if(crt instanceof VariableDeclaration) {
-//					if(crt.name == (expr as VarRef).variableName) {
-//						pt = crt.type.resolveType2
-//						stop = true
-//					}
-//				}
-//			}
-////			if(!stop) {
-////				println("NOTSPOT")
-////			}
-//			pt								
 		} else {
 			pt
+		}
+	}
+	
+	def dispatch TypeName resolveType3(IType iType) {
+		iType.type.resolveType2
+	}
+	
+	def dispatch TypeName resolveType3(SequenceType iType) {
+		val ct = iType.getCollectionType().getType()
+		if(ct instanceof EClass) {
+			if(ct.instanceClassName == "java.util.Map$Entry") {
+				TypeName.get(EMap)
+			} else {
+				iType.type.resolveType2
+			}
+		} else {
+			iType.type.resolveType2
 		}
 	}
 }

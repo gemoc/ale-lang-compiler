@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
@@ -43,7 +42,7 @@ import static javax.lang.model.element.Modifier.*
 class InterpreterEClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils
 	extension JavaPoetUtils jpu = new JavaPoetUtils
-	extension TypeSystemUtils tsu
+	extension InterpreterTypeSystemUtils tsu
 	extension AleBodyCompiler abc
 
 	var Dsl dsl
@@ -64,17 +63,17 @@ class InterpreterEClassImplementationCompiler {
 
 	def dispatch compileEClassImplementation(EClassifier eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, TypeSystemUtils tsu, AbstractNamingUtils anu) {
+		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
 	}
 
 	def dispatch compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, TypeSystemUtils tsu, AbstractNamingUtils anu) {
+		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
 		this.dsl = dsl
 		val isTruffle = dsl.dslProp.getOrDefault("truffle", "false") == "true"
 		this.tsu = tsu
 		abc = new AleBodyCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registreredArrays,
-			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService, anu)
+			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService, inu)
 
 		val implPackage = eClass.classImplementationPackageName(packageRoot)
 
@@ -423,38 +422,4 @@ class InterpreterEClassImplementationCompiler {
 
 		return builder
 	}
-
-//	def getEcoreInterfacesPackage() {
-//		val gm = syntaxes.get(dsl.allSyntaxes.head).value
-//		gm.genPackages.head.qualifiedPackageName
-//	}
-
-//	def returnType(MethodSpec.Builder builder, EClassifier type) {
-//		if (type !== null) {
-//			if (type.instanceClass !== null) {
-//				builder.returns(type.instanceClass)
-//			} else {
-//				builder.returns(type.resolveType)
-//			}
-//		} else {
-//			builder
-//		}
-//	}
-//
-//	def boolean isResolveProxies(EStructuralFeature eStructuralFeature) {
-//		if (eStructuralFeature instanceof EReference) {
-//			val isContainer = eStructuralFeature.isContainer
-//			val isContains = eStructuralFeature.isContainment
-//			!isContainer && !isContains && eStructuralFeature.isResolveProxies
-//		} else {
-//			false
-//		}
-//	}
-
-//	def boolean isListType(ETypedElement eTypedElement) {
-//		eTypedElement !== null &&
-//			(eTypedElement.isMany() ||
-//				((eTypedElement instanceof EClass) &&
-//					(eTypedElement as EClass).instanceClassName == "java.util.Map$Entry"))
-//	}
 }

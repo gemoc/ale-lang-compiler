@@ -1,11 +1,23 @@
 package org.eclipse.emf.ecoretools.ale.compiler.common
 
+import com.squareup.javapoet.ClassName
+import javax.lang.model.SourceVersion
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
-import javax.lang.model.SourceVersion
 
 abstract class AbstractNamingUtils {
+	
+	def String factoryInterfaceClassName(EPackage ePackage) {
+		'''«ePackage.name.toFirstUpper»Factory'''
+	}
+	
+	def packageFactoryClassName(EPackage ePackage, String packageRoot) {
+		ClassName.get(ePackage.packageInterfacePackageName(packageRoot), ePackage.factoryInterfaceClassName)
+	}
+	
+	def String packageInterfacePackageName(EPackage epkg, String packageRoot)
+	
 
 	def String classInterfacePackageName(EClass eClass, String packageRoot) {
 		eClass.EPackage.factoryInterfacePackageName(packageRoot)

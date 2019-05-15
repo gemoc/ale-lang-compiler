@@ -1,12 +1,12 @@
 package test.impl.operation.impl;
 
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
-
+import java.lang.Double;
 import kmLogo.KmLogoFactory;
 import kmLogo.Point;
 import kmLogo.Segment;
 import kmLogo.Turtle;
 import kmLogo.revisitor.KmLogoRevisitor;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 import test.impl.operation.BackOp;
 import test.impl.operation.BinaryExpOp;
 import test.impl.operation.BlockOp;
@@ -77,7 +77,7 @@ public class TurtleOpImpl implements TurtleOp {
   }
 
   public void forward(double steps) {
-    rev.$((Turtle)this.obj).move(((Double) ((steps) * (TrigoServices.cosinus(this.obj.getHeading())))),((Double) ((steps) * (TrigoServices.sinus(this.obj.getHeading())))));
+    rev.$((Turtle)this.obj).move(((Double) ((steps) * (TrigoServices.cosinus((double) (this.obj.getHeading()))))), ((Double) ((steps) * (TrigoServices.sinus((double) (this.obj.getHeading()))))));
   }
 
   public void rotate(double angle) {

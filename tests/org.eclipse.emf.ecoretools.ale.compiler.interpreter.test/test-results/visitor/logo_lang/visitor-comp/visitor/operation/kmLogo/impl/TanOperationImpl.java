@@ -20,7 +20,7 @@ public class TanOperationImpl extends UnaryExpressionOperationImpl implements Ta
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = TrigoServices.tan(((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle)));
+		result = TrigoServices.tan((double) (((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle))));
 		return result;
 	}
 }

@@ -1,5 +1,8 @@
 package visitor.operation.test1.impl;
 
+import execboa.MapService;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test1.visitor.test1.ConceptA;
 import test1.visitor.test1.StringToIntegerMapEntry;
@@ -21,6 +24,6 @@ public class ConceptAOperationImpl implements ConceptAOperation {
 			LogService.log(c.getKey());
 			LogService.log(c.getValue());
 		}
-		LogService.log(execboa.MapService.containsKey(this.it.getCs(), "ok"));
+		LogService.log(MapService.containsKey((EMap) (this.it.getCs()), (String) ("ok")));
 	}
 }

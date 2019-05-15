@@ -26,6 +26,6 @@ public abstract class ExprOperationImpl extends TopLevelCmdOperationImpl impleme
 	}
 
 	public void nextLine(Ctx ctx) {
-		LogService.log(SerializeService.serialize(((ExprOperation)this.it.accept(vis)).eval((Ctx) (ctx))));
+		LogService.log(SerializeService.serialize((EvalRes) (((ExprOperation)this.it.accept(vis)).eval((Ctx) (ctx)))));
 	}
 }

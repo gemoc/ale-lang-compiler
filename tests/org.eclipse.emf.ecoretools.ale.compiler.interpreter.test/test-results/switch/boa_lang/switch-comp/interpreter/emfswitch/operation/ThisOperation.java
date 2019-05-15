@@ -1,11 +1,13 @@
 package interpreter.emfswitch.operation;
 
-import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.This;
+import execboa.MapService;
+import interpreter.emfswitch.BoaFactory;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
+import org.eclipse.emf.common.util.EMap;
 
 public class ThisOperation extends ExprOperation {
 	private final This it;
@@ -21,7 +23,7 @@ public class ThisOperation extends ExprOperation {
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
 		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-		execboa.MapService.putAll(ret.getValues(), ctx.getTh());
+		MapService.putAll((EMap) (ret.getValues()), (EMap) (ctx.getTh()));
 		result = ret;
 		return result;
 	}

@@ -11,6 +11,10 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
+import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ConditionalBlock
@@ -25,27 +29,22 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
-import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
-import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
-import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
+import org.eclipse.xtext.EcoreUtil2
 
 class AleBodyCompiler {
 
-	extension TypeSystemUtils tsu
-	extension AleExpressionsCompiler aec
+	extension InterpreterTypeSystemUtils tsu
+	extension InterpreterExpressionCompiler aec
 	extension CommonTypeInferer cti
-	
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
-		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es, AbstractNamingUtils anu) {
-		tsu = new TypeSystemUtils(syntaxes, packageRoot, resolved, anu)
-		aec = new AleExpressionsCompiler(syntaxes, packageRoot, resolved, registreredDispatch, registeredArray,
-			registeredServices, isTruffle, cti, es, tsu)
+		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
+		InterpreterNamingUtils inu) {
+		tsu = new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, inu)
+		aec = new InterpreterExpressionCompiler(syntaxes, packageRoot, resolved, registreredDispatch, registeredArray,
+			registeredServices, isTruffle, cti, es, tsu, inu)
 		this.cti = cti
 	}
 
@@ -197,9 +196,5 @@ class AleBodyCompiler {
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, While body, CompilerExpressionCtx ctx) {
 			builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression(ctx)).compileBody(body.body, ctx).
 				endControlFlow
-	}
-
-	def escapeDollar(String s) {
-		s.replaceAll("\\$\\(", "\\$\\$(")
 	}
 }

@@ -1,5 +1,6 @@
 package interpreter.visitor.operation.boa.impl;
 
+import execboa.MapService;
 import interpreter.boa.visitor.boa.BoaFactory;
 import interpreter.boa.visitor.boa.Copy;
 import interpreter.boa.visitor.boa.Ctx;
@@ -8,6 +9,7 @@ import interpreter.boa.visitor.boa.EvalRes;
 import interpreter.visitor.VisitorInterface;
 import interpreter.visitor.operation.boa.CopyOperation;
 import interpreter.visitor.operation.boa.ExprOperation;
+import org.eclipse.emf.common.util.EMap;
 
 public class CopyOperationImpl extends ExprOperationImpl implements CopyOperation {
 	private final Copy it;
@@ -26,7 +28,7 @@ public class CopyOperationImpl extends ExprOperationImpl implements CopyOperatio
 		if(vcopy instanceof EvalMapRes) {
 			EvalMapRes mvcopy = ((EvalMapRes) (vcopy));
 			EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-			execboa.MapService.putAll(ret.getValues(), mvcopy.getValues());
+			MapService.putAll((EMap) (ret.getValues()), (EMap) (mvcopy.getValues()));
 			result = ret;
 		}
 		else {

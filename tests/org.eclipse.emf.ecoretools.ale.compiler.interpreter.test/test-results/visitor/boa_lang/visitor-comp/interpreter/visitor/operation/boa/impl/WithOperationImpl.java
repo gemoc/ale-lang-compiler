@@ -1,5 +1,6 @@
 package interpreter.visitor.operation.boa.impl;
 
+import execboa.MapService;
 import interpreter.boa.visitor.boa.BoaFactory;
 import interpreter.boa.visitor.boa.Ctx;
 import interpreter.boa.visitor.boa.EvalMapRes;
@@ -8,6 +9,7 @@ import interpreter.boa.visitor.boa.With;
 import interpreter.visitor.VisitorInterface;
 import interpreter.visitor.operation.boa.ExprOperation;
 import interpreter.visitor.operation.boa.WithOperation;
+import org.eclipse.emf.common.util.EMap;
 
 public class WithOperationImpl extends ExprOperationImpl implements WithOperation {
 	private final With it;
@@ -29,8 +31,8 @@ public class WithOperationImpl extends ExprOperationImpl implements WithOperatio
 			if(vrhs instanceof EvalMapRes) {
 				EvalMapRes mvrhs = ((EvalMapRes) (vrhs));
 				EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-				execboa.MapService.putAll(ret.getValues(), mvlhs.getValues());
-				execboa.MapService.putAll(ret.getValues(), mvrhs.getValues());
+				MapService.putAll((EMap) (ret.getValues()), (EMap) (mvlhs.getValues()));
+				MapService.putAll((EMap) (ret.getValues()), (EMap) (mvrhs.getValues()));
 				result = ret;
 			}
 			else {

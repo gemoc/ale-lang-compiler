@@ -7,6 +7,8 @@ import boa.EvalRes;
 import boa.Expr;
 import boa.With;
 import boa.revisitor.BoaRevisitor;
+import execboa.MapService;
+import org.eclipse.emf.common.util.EMap;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -63,15 +65,15 @@ public class WithOpImpl extends ExprOpImpl implements WithOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalRes vlhs = ((EvalRes) (rev.$((Expr)this.obj.getLhs()).eval(((Ctx) ctx))));
-    EvalRes vrhs = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) ctx))));
+    EvalRes vlhs = ((EvalRes) (rev.$((Expr)this.obj.getLhs()).eval(((Ctx) (ctx)))));
+    EvalRes vrhs = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) (ctx)))));
     if(vlhs instanceof EvalMapRes) {
       EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
       if(vrhs instanceof EvalMapRes) {
         EvalMapRes mvrhs = ((EvalMapRes) (vrhs));
         EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-        execboa.MapService.putAll(ret.getValues(), mvlhs.getValues());
-        execboa.MapService.putAll(ret.getValues(), mvrhs.getValues());
+        MapService.putAll((EMap) (ret.getValues()), (EMap) (mvlhs.getValues()));
+        MapService.putAll((EMap) (ret.getValues()), (EMap) (mvrhs.getValues()));
         result = ret;
       }
       else {

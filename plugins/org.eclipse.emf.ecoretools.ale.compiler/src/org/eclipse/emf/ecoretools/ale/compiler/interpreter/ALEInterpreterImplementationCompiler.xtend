@@ -121,7 +121,7 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		base.validate(parsedSemantics)
 		val isTruffle = dsl.dslProp.getProperty('truffle', "false") == "true"
 		
-		val tsu =  new TypeSystemUtils(syntaxes, packageRoot, resolved, namingUtils)
+		val tsu =  new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, namingUtils)
 		
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			try {

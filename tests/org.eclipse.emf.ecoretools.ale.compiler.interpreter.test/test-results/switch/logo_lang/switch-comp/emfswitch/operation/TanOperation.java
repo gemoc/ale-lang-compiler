@@ -18,7 +18,7 @@ public class TanOperation extends UnaryExpressionOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = TrigoServices.tan(((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).eval((Turtle) (turtle)));
+		result = TrigoServices.tan((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).eval((Turtle) (turtle))));
 		return result;
 	}
 }

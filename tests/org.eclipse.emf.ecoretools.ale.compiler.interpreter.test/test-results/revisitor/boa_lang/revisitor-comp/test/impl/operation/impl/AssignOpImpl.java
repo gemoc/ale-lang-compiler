@@ -6,6 +6,9 @@ import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.Expr;
 import boa.revisitor.BoaRevisitor;
+import execboa.MapService;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -62,12 +65,12 @@ public class AssignOpImpl extends ExprOpImpl implements AssignOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalRes vlhs = ((EvalRes) (rev.$((Expr)this.obj.getLhs()).eval(((Ctx) ctx))));
-    EvalRes vrhs = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) ctx))));
+    EvalRes vlhs = ((EvalRes) (rev.$((Expr)this.obj.getLhs()).eval(((Ctx) (ctx)))));
+    EvalRes vrhs = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) (ctx)))));
     if(vlhs instanceof EvalMapRes) {
       EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
-      if(execboa.MapService.containsKey(mvlhs.getValues(), this.obj.getName())) {
-        execboa.MapService.put(mvlhs.getValues(), this.obj.getName(), vrhs);
+      if(MapService.containsKey((EMap) (mvlhs.getValues()), (String) (this.obj.getName()))) {
+        MapService.put((EMap) (mvlhs.getValues()), (String) (this.obj.getName()), (EvalRes) (vrhs));
         result = vrhs;
       }
       else {

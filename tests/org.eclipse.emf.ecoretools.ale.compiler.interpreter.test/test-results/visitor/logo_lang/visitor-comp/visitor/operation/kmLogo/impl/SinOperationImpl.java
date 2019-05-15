@@ -20,7 +20,7 @@ public class SinOperationImpl extends UnaryExpressionOperationImpl implements Si
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = TrigoServices.sinus(((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle)));
+		result = TrigoServices.sinus((double) (((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle))));
 		return result;
 	}
 }

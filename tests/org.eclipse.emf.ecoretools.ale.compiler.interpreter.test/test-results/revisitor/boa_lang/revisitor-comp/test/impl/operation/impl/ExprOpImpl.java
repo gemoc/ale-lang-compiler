@@ -4,6 +4,7 @@ import boa.Ctx;
 import boa.EvalRes;
 import boa.Expr;
 import boa.revisitor.BoaRevisitor;
+import execboa.SerializeService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
@@ -66,6 +67,6 @@ public class ExprOpImpl extends TopLevelCmdOpImpl implements ExprOp {
   }
 
   public void nextLine(Ctx ctx) {
-    LogService.log(execboa.SerializeService.serialize(rev.$((Expr)this.obj).eval(((Ctx) ctx))));
+    LogService.log(SerializeService.serialize((EvalRes) (rev.$((Expr)this.obj).eval(((Ctx) (ctx))))));
   }
 }

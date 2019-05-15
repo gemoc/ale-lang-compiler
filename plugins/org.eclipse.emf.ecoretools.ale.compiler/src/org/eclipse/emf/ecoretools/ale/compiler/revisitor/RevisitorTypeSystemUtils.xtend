@@ -17,7 +17,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 
-class TypeSystemUtils extends CommonTypeSystemUtils implements AbstractTypeSystem { 
+class RevisitorTypeSystemUtils extends CommonTypeSystemUtils implements AbstractTypeSystem { 
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	extension EcoreUtils eu
 

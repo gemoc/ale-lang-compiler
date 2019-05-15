@@ -7,6 +7,7 @@ import boa.EvalIntRes;
 import boa.EvalRes;
 import boa.Expr;
 import boa.revisitor.BoaRevisitor;
+import execboa.MathService;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
 import test.impl.operation.ArithOpMinusOp;
@@ -63,14 +64,14 @@ public class ArithOpRemainderOpImpl extends ArithOpOpImpl implements ArithOpRema
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalRes vlhs = ((EvalRes) (rev.$((Expr)this.obj.getLhs()).eval(((Ctx) ctx))));
-    EvalRes vrhs = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) ctx))));
+    EvalRes vlhs = ((EvalRes) (rev.$((Expr)this.obj.getLhs()).eval(((Ctx) (ctx)))));
+    EvalRes vrhs = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) (ctx)))));
     if(vlhs instanceof EvalIntRes) {
       if(vrhs instanceof EvalIntRes) {
         EvalIntRes ivlhs = ((EvalIntRes) (vlhs));
         EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
         EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
-        ret.setValue(execboa.MathService.mod(this.obj, ivlhs.getValue(), ivrhs.getValue()));
+        ret.setValue(MathService.mod((ArithOpRemainder) (this.obj), (int) (ivlhs.getValue()), (int) (ivrhs.getValue())));
         result = ret;
       }
       else {

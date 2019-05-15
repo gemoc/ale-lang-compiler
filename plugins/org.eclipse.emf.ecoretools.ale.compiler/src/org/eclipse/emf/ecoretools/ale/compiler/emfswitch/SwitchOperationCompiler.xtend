@@ -44,7 +44,7 @@ import static javax.lang.model.element.Modifier.*
 class SwitchOperationCompiler {
 
 	extension SwitchNamingUtils namingUtils
-	extension TypeSystemUtils tsu
+	extension SwitchTypeSystemUtils tsu
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension SwitchExpressionCompiler swe
 	extension CommonTypeInferer cti
@@ -67,7 +67,7 @@ class SwitchOperationCompiler {
 		this.directory = directory
 		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
-		this.tsu = new TypeSystemUtils(syntaxes, packageRoot, resolved)
+		this.tsu = new SwitchTypeSystemUtils(syntaxes, packageRoot, resolved)
 		this.cti = new CommonTypeInferer(base)
 		this.namingUtils = new SwitchNamingUtils
 		this.swe = new SwitchExpressionCompiler(tsu, resolved, namingUtils, syntaxes, packageRoot, registeredServices,
@@ -233,9 +233,4 @@ class SwitchOperationCompiler {
 		val a = builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression)
 		a.compileBody(body.body).endControlFlow
 	}
-
-//	def getEcoreInterfacesPackage() {
-//		val gm = syntaxes.get(dsl.allSyntaxes.head).value
-//		gm.genPackages.head.qualifiedPackageName
-//	}
 }

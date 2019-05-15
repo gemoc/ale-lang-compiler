@@ -2,7 +2,6 @@ package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
-import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
 import org.eclipse.acceleo.query.ast.Call
@@ -25,26 +24,24 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 
 class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 
-	extension TypeSystemUtils tsu
+	extension SwitchTypeSystemUtils tsu
 	extension SwitchNamingUtils snu
 	extension CommonTypeInferer cti
 	extension EnumeratorService es
 	val List<ResolvedClass> resolved
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
-	val Map<String, Class<?>> registeredServices
 	val String packageRoot
 	val Dsl dsl
 
-	new(TypeSystemUtils tsu, List<ResolvedClass> resolved, SwitchNamingUtils snu,
+	new(SwitchTypeSystemUtils tsu, List<ResolvedClass> resolved, SwitchNamingUtils snu,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, Map<String, Class<?>> registeredServices,
 		Dsl dsl, CommonTypeInferer cti, EnumeratorService es) {
-		super(cti, es, tsu)
+		super(cti, es, tsu, snu, registeredServices)
 		this.tsu = tsu
 		this.resolved = resolved
 		this.snu = snu
 		this.syntaxes = syntaxes
 		this.packageRoot = packageRoot
-		this.registeredServices = registeredServices
 		this.dsl = dsl
 		this.cti = cti
 		this.es = es
@@ -96,12 +93,7 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 					}
 				}
 			} else if (call.serviceName == 'create') {
-				val e = call.arguments.get(0)
-				val t = infereType(e).head
-				val ecls = t.type as EClass
-				val epks = ecls.EPackage
-				CodeBlock.of('''$T.eINSTANCE.create«ecls.name»()''',
-					ClassName.get(getEcoreInterfacesPackage, epks.factoryInterfaceClassName))
+				call.callCreate(packageRoot)
 			} else {
 				val argumentsh = call.arguments.head
 				val ts = argumentsh.infereType
@@ -167,57 +159,10 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 							addNamed('''(($operationType:T) emfswitch.doSwitch($switched:L)).$callService:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($paramType«param.value»:T) ($paramExpr«param.value»:L)«ENDFOR»)''',
 								hm).build
 					} else {
-
-						val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten.toList
-
-						val candidate = methods.filter[Modifier.isStatic(it.value.modifiers)].filter [
-							it.value.name == call.serviceName
-						].head
-
-						if (candidate !== null) {
-							val Map<String, Object> hm = newHashMap
-							val splt = candidate.key.split("\\.").reverse
-							hm.put('serviceClass', ClassName.get(splt.tail.toList.reverse.join("."), splt.head))
-							hm.put('serviceName', candidate.value.name)
-							for(p: call.arguments.enumerate) {
-								hm.put('''paramExpr«p.value»''', p.key.compileExpression(ctx))
-							}
-							CodeBlock.builder.addNamed('''$serviceClass:T.$serviceName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$paramExpr«p.value»:L«ENDFOR»)''', hm).build
-						} else {
-							CodeBlock.
-								of('''(($T) emfswitch.doSwitch(«call.arguments.head.compileExpression(ctx)»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''',
-									ClassName.get(packageRoot.operationPackageName,
-										((t.type as EClassifier).solveType).operationClassName))
-						}
+						call.callService(ctx)
 					}
 				} else {
-					val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten
-
-					val candidate = methods.filter[Modifier.isStatic(it.value.modifiers)].filter [
-						it.value.name == call.serviceName
-					].head
-
-					if (candidate !== null) {
-						val Map<String, Object> hm = newHashMap
-						val splt = candidate.key.split("\\.").reverse
-						hm.put('serviceClass', ClassName.get(splt.tail.toList.reverse.join("."), splt.head))
-						hm.put('serviceName', candidate.value.name)
-						for(p: call.arguments.enumerate) {
-							hm.put('''paramExpr«p.value»''', p.key.compileExpression(ctx))
-						}
-						CodeBlock.builder.addNamed('''$serviceClass:T.$serviceName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»$paramExpr«p.value»:L«ENDFOR»)''', hm).build
-					} else {
-						if (t !== null && t.type !== null && t.type instanceof EClassifier &&
-							(t.type as EClassifier).solveType instanceof EClass)
-							CodeBlock.
-								of('''(($T) emfswitch.doSwitch(«call.arguments.head.compileExpression(ctx)»)).«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''',
-									ClassName.get(packageRoot.operationPackageName,
-										((t.type as EClassifier).solveType as EClass).operationClassName))
-						else
-							CodeBlock.
-								of('''«call.arguments.head.compileExpression(ctx)».«call.serviceName»(«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»)''')
-
-					}
+					call.callService(ctx)
 				}
 			}
 		else

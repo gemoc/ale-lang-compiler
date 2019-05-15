@@ -5,6 +5,10 @@ import boa.Def;
 import boa.EvalRes;
 import boa.Expr;
 import boa.revisitor.BoaRevisitor;
+import execboa.MapService;
+import execboa.SerializeService;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.AppOp;
 import test.impl.operation.ArithOpDivideOp;
@@ -61,8 +65,8 @@ public class DefOpImpl extends TopLevelCmdOpImpl implements DefOp {
   }
 
   public void nextLine(Ctx ctx) {
-    EvalRes e = ((EvalRes) (rev.$((Expr)this.obj.getExpr()).eval(((Ctx) ctx))));
-    LogService.log(((this.obj.getName()) + (" = ")) + (execboa.SerializeService.serialize(e)));
-    execboa.MapService.put(ctx.getEnv(), this.obj.getName(), e);
+    EvalRes e = ((EvalRes) (rev.$((Expr)this.obj.getExpr()).eval(((Ctx) (ctx)))));
+    LogService.log(((this.obj.getName()) + (" = ")) + (SerializeService.serialize((EvalRes) (e))));
+    MapService.put((EMap) (ctx.getEnv()), (String) (this.obj.getName()), (EvalRes) (e));
   }
 }

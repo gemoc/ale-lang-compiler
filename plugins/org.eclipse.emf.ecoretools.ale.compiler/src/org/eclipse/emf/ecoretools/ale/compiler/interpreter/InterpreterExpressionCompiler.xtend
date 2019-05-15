@@ -1,7 +1,6 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 
 import com.squareup.javapoet.CodeBlock
-import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
 import java.util.Set
@@ -22,11 +21,10 @@ import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
-import com.squareup.javapoet.ClassName
 
-class AleExpressionsCompiler extends AbstractExpressionCompiler {
+class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 
-	extension TypeSystemUtils tsu
+	extension InterpreterTypeSystemUtils tsu
 	extension InterpreterNamingUtils namingUtils
 	extension CommonTypeInferer cti
 	extension EnumeratorService es
@@ -34,22 +32,22 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 	val String packageRoot
 	var List<ResolvedClass> resolved
 	val Set<Method> registreredDispatch
-	val Map<String, Class<?>> registeredServices
+	
 	val Set<String> registeredArray
 	val boolean isTruffle
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, 
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
-		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,  TypeSystemUtils tsu) {
-			super(cti, es, tsu)
+		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, 
+		EnumeratorService es,  InterpreterTypeSystemUtils tsu, InterpreterNamingUtils namingUtils) {
+		super(cti, es, tsu, namingUtils, registeredServices)
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 		this.tsu = tsu 
 		this.registreredDispatch = registreredDispatch
-		this.registeredServices = registeredServices
 		this.registeredArray = registeredArray
 		this.isTruffle = isTruffle
-		this.namingUtils = new InterpreterNamingUtils
+		this.namingUtils = namingUtils
 		this.cti = cti
 		this.es = es
 	}
@@ -59,7 +57,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 	}
 
 	override defaultCall(Call call, CompilerExpressionCtx ctx) {
-		if (call.type == CallType.CALLORAPPLY)
+		if (call.type == CallType.CALLORAPPLY) {
 			if (call.serviceName == 'aqlFeatureAccess') {
 				val t = infereType(call).head
 
@@ -98,12 +96,7 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 					}
 				}
 			} else if (call.serviceName == 'create') {
-				val e = call.arguments.get(0)
-				val t = infereType(e).head
-				val ecls = t.type as EClass
-				val epks = ecls.EPackage
-				val hm = newHashMap("factory" -> epks.factoryIntClassName(packageRoot))
-				CodeBlock.builder.addNamed('''$factory:T.eINSTANCE.create«ecls.name»()''', hm).build
+				call.callCreate(packageRoot)
 			} else {
 				val argumentsh = call.arguments.head
 				val ts = argumentsh.infereType
@@ -176,79 +169,15 @@ class AleExpressionsCompiler extends AbstractExpressionCompiler {
 								addNamed('''(($typecaller:T) ($lhs:L)).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("typeparam"+param.value) !== null»($typeparam«param.value»:T) ($expr«param.value»:L)«ELSE»$expr«param.value»:L«ENDIF»«ENDFOR»)''', hm).build
 						}
 					} else {
-						val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten.toList
-
-						val candidate = methods.filter[Modifier.isStatic(it.value.modifiers)].filter [
-							it.value.name == call.serviceName
-						].head
-
-						if (candidate !== null) {
-							
-							val splied = candidate.key.split('\\.').reverse
-							val cn = ClassName.get(splied.tail.toList.reverse.join('.'), splied.head)
-							
-							val Map<String, Object> hm = newHashMap(
-								"serviceType" -> cn,
-								"serviceMethodName" -> candidate.value.name
-							)
-							
-							for(p: call.arguments.enumerate) {
-								val tmp = p.key.infereType.head
-								if(tmp !== null)
-									hm.put("paramType" + p.value, tmp.resolveType3?.solveNothing(p.key))
-								else 
-									hm.put("paramType" + p.value, solveNothing(null, p.key))
-								hm.put("paramValue" + p.value, p.key.compileExpression(ctx))
-							}
-							
-
-							CodeBlock.builder.addNamed('''$serviceType:T.$serviceMethodName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»«IF hm.get("paramType" + p.value) !== null»($paramType«p.value»:T) «ENDIF»($paramValue«p.value»:L)«ENDFOR»)''', hm).build
-						} else {
-							val Map<String, Object> hm = newHashMap
-							hm.put("leftExpr", call.arguments.head.compileExpression(ctx))
-							hm.put("serviceName", call.serviceName)
-							for(param: call.arguments.tail.enumerate) {
-								hm.put('''param«param.value»''', param.key.compileExpression(ctx))
-							}
-							CodeBlock.builder.addNamed('''$leftExpr:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»$param«param.value»:L«ENDFOR»)''', hm).build
-
-						}
+						call.callService(ctx)
 					}
 				} else {
-					val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten
-
-					val candidate = methods.filter[Modifier.isStatic(it.value.modifiers)].filter [
-						it.value.name == call.serviceName
-					].head
-
-					if (candidate !== null) {
-						val Map<String, Object> hm = newHashMap(
-							"cdt" -> ClassName.get(candidate.value.declaringClass)
-						)
-						for (param : call.arguments.enumerate) {
-							hm.put("typeparam" + param.value, param.key.infereType.head.resolveType3.solveNothing(param.key))
-							hm.put("exprparam" + param.value, param.key.compileExpression(ctx))
-						}
-						CodeBlock.builder.
-							addNamed('''$cdt:T.«candidate.value.name»(«FOR p : call.arguments.enumerate SEPARATOR ', '»($typeparam«p.value»:T) ($exprparam«p.value»:L)«ENDFOR»)''',
-								hm).build
-					} else {
-						val hm = newHashMap()
-
-						hm.put("leftexpr", call.arguments.head.compileExpression(ctx))
-						for (param : call.arguments.tail.enumerate) {
-							val its = param.key.infereType.head?.type?.resolveType2.solveNothing(param.key)
-							hm.put("typeparam" + param.value, its) 
-							hm.put("exprparam" + param.value, param.key.compileExpression(ctx))
-						}
-
-						CodeBlock.builder.
-							addNamed('''$leftexpr:L.«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("typeparam"+param.value) !== null»($typeparam«param.value»:T)«ENDIF» ($exprparam«param.value»:L)«ENDFOR»)''',
-								hm).build
-					}
+					call.callService(ctx)
 				}
 			}
-		else
+			
+		} else {
 			CodeBlock.of('''/*Call «call»*/''')
+		}
 	}
 }

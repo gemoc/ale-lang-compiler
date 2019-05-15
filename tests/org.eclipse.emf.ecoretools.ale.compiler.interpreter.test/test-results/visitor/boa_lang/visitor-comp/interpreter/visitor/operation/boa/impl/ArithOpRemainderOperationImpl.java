@@ -1,5 +1,6 @@
 package interpreter.visitor.operation.boa.impl;
 
+import execboa.MathService;
 import interpreter.boa.visitor.boa.ArithOpRemainder;
 import interpreter.boa.visitor.boa.BoaFactory;
 import interpreter.boa.visitor.boa.Ctx;
@@ -29,7 +30,7 @@ public class ArithOpRemainderOperationImpl extends ArithOpOperationImpl implemen
 				EvalIntRes ivlhs = ((EvalIntRes) (vlhs));
 				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
 				EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
-				ret.setValue(execboa.MathService.mod(this.it, ivlhs.getValue(), ivrhs.getValue()));
+				ret.setValue(MathService.mod((ArithOpRemainder) (this.it), (int) (ivlhs.getValue()), (int) (ivrhs.getValue())));
 				result = ret;
 			}
 			else {

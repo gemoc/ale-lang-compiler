@@ -1,5 +1,6 @@
 package interpreter.visitor.operation.boa.impl;
 
+import execboa.MapService;
 import interpreter.boa.visitor.boa.BObject;
 import interpreter.boa.visitor.boa.BoaFactory;
 import interpreter.boa.visitor.boa.Ctx;
@@ -9,6 +10,8 @@ import interpreter.boa.visitor.boa.Field;
 import interpreter.visitor.VisitorInterface;
 import interpreter.visitor.operation.boa.BObjectOperation;
 import interpreter.visitor.operation.boa.ExprOperation;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 
 public class BObjectOperationImpl extends ExprOperationImpl implements BObjectOperation {
 	private final BObject it;
@@ -26,7 +29,7 @@ public class BObjectOperationImpl extends ExprOperationImpl implements BObjectOp
 		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 		for(Field x: this.it.getFields()) {
 			EvalRes v = ((EvalRes) (((ExprOperation)x.getValue().accept(vis)).eval((Ctx) (ctx))));
-			execboa.MapService.put(ret.getValues(), x.getName(), v);
+			MapService.put((EMap) (ret.getValues()), (String) (x.getName()), (EvalRes) (v));
 		}
 		result = ret;
 		return result;

@@ -1,11 +1,10 @@
 package test.impl.operation.impl;
 
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
-
 import kmLogo.Expression;
 import kmLogo.Tan;
 import kmLogo.Turtle;
 import kmLogo.revisitor.KmLogoRevisitor;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 import test.impl.operation.BackOp;
 import test.impl.operation.BinaryExpOp;
 import test.impl.operation.BlockOp;
@@ -60,7 +59,7 @@ public class TanOpImpl extends UnaryExpressionOpImpl implements TanOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = TrigoServices.tan(rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle))));
+    result = TrigoServices.tan((double) (rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle)))));
     return result;
   }
 }

@@ -10,19 +10,13 @@ import org.eclipse.emf.ecore.EStructuralFeature
 
 abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 
-	def String factoryInterfaceClassName(EPackage ePackage) {
-		'''«ePackage.name.toFirstUpper»Factory'''
-	}
 	
-//	def factoryIntClassName(EClass eClass, String packageRoot) {
-//		eClass.EPackage.factoryIntClassName(packageRoot)
-//	}
-//	
+	
 	def factoryIntClassName(EPackage ePackage, String packageRoot) {
 		ClassName.get(ePackage.factoryInterfacePackageName(packageRoot), ePackage.factoryInterfaceClassName)
 	}
 
-	def String packageInterfacePackageName(EPackage ePackage, String packageRoot) {
+	override String packageInterfacePackageName(EPackage ePackage, String packageRoot) {
 		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name»'''
 	}
 
@@ -33,7 +27,7 @@ abstract class GenmodelNamingUtils extends AbstractNamingUtils {
 	def packageIntClassName(EClass eClass, String packageRoot) {
 		eClass.EPackage.packageIntClassName(packageRoot)
 	}
-
+	
 	def packageIntClassName(EPackage ePackage, String packageRoot) {
 		ClassName.get(ePackage.packageInterfacePackageName(packageRoot), ePackage.packageInterfaceClassName)
 	}

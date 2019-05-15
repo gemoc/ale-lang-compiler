@@ -1,5 +1,6 @@
 package interpreter.visitor.operation.boa.impl;
 
+import execboa.MapService;
 import interpreter.boa.visitor.boa.BoaFactory;
 import interpreter.boa.visitor.boa.Ctx;
 import interpreter.boa.visitor.boa.EvalMapRes;
@@ -7,6 +8,7 @@ import interpreter.boa.visitor.boa.EvalRes;
 import interpreter.boa.visitor.boa.This;
 import interpreter.visitor.VisitorInterface;
 import interpreter.visitor.operation.boa.ThisOperation;
+import org.eclipse.emf.common.util.EMap;
 
 public class ThisOperationImpl extends ExprOperationImpl implements ThisOperation {
 	private final This it;
@@ -22,7 +24,7 @@ public class ThisOperationImpl extends ExprOperationImpl implements ThisOperatio
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
 		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-		execboa.MapService.putAll(ret.getValues(), ctx.getTh());
+		MapService.putAll((EMap) (ret.getValues()), (EMap) (ctx.getTh()));
 		result = ret;
 		return result;
 	}

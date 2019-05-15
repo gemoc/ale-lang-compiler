@@ -4,7 +4,10 @@ import boa.Assign;
 import boa.Ctx;
 import boa.EvalMapRes;
 import boa.EvalRes;
+import execboa.MapService;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 
 public class AssignOperation extends ExprOperation {
 	private final Assign it;
@@ -19,12 +22,12 @@ public class AssignOperation extends ExprOperation {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getLhs())).eval((Ctx) ctx)));
-		EvalRes vrhs = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Ctx) ctx)));
+		EvalRes vlhs = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getLhs())).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Ctx) (ctx))));
 		if(vlhs instanceof EvalMapRes) {
 			EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
-			if(execboa.MapService.containsKey(mvlhs.getValues(), this.it.getName())) {
-				execboa.MapService.put(mvlhs.getValues(), this.it.getName(), vrhs);
+			if(MapService.containsKey((EMap) (mvlhs.getValues()), (String) (this.it.getName()))) {
+				MapService.put((EMap) (mvlhs.getValues()), (String) (this.it.getName()), (EvalRes) (vrhs));
 				result = vrhs;
 			}
 			else {

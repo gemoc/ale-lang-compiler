@@ -28,7 +28,12 @@ class SwitchNamingUtils extends AbstractNamingUtils {
 		'''«eCls.simpleName»Operation'''
 	}
 
-	def String factoryInterfaceClassName(EPackage ePackage) {
+	override String factoryInterfaceClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»Factory'''
 	}
+	
+	override packageInterfacePackageName(EPackage epkg, String packageRoot) {
+		switchImplementationPackageName(packageRoot)
+	}
+	
 }

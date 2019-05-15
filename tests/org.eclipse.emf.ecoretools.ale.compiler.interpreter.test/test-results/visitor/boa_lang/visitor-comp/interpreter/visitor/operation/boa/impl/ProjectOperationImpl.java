@@ -1,5 +1,6 @@
 package interpreter.visitor.operation.boa.impl;
 
+import execboa.MapService;
 import interpreter.boa.visitor.boa.BoaFactory;
 import interpreter.boa.visitor.boa.Ctx;
 import interpreter.boa.visitor.boa.EvalBoundFunRes;
@@ -10,6 +11,8 @@ import interpreter.boa.visitor.boa.Project;
 import interpreter.visitor.VisitorInterface;
 import interpreter.visitor.operation.boa.ExprOperation;
 import interpreter.visitor.operation.boa.ProjectOperation;
+import java.lang.String;
+import org.eclipse.emf.common.util.EMap;
 
 public class ProjectOperationImpl extends ExprOperationImpl implements ProjectOperation {
 	private final Project it;
@@ -27,8 +30,8 @@ public class ProjectOperationImpl extends ExprOperationImpl implements ProjectOp
 		EvalRes vexp = ((EvalRes) (((ExprOperation)this.it.getExp().accept(vis)).eval((Ctx) (ctx))));
 		if(vexp instanceof EvalMapRes) {
 			EvalMapRes mvexp = ((EvalMapRes) (vexp));
-			if(execboa.MapService.containsKey(mvexp.getValues(), this.it.getName())) {
-				EvalRes x = ((EvalRes) (mvexp.getValues().get(this.it.getName())));
+			if(MapService.containsKey((EMap) (mvexp.getValues()), (String) (this.it.getName()))) {
+				EvalRes x = ((EvalRes) (mvexp.getValues().get((String) (this.it.getName()))));
 				if(x instanceof EvalFunRes) {
 					EvalFunRes func = ((EvalFunRes) (x));
 					result = ((ProjectOperation)this.it.accept(vis)).project((EvalFunRes) (func), (EvalMapRes) (mvexp));
@@ -53,7 +56,7 @@ public class ProjectOperationImpl extends ExprOperationImpl implements ProjectOp
 		ret.setExp(func.getExp());
 		ret.setCtx(func.getCtx());
 		ret.setName(func.getName());
-		execboa.MapService.replaceWith(ret.getTh(), mvexp.getValues());
+		MapService.replaceWith((EMap) (ret.getTh()), (EMap) (mvexp.getValues()));
 		result = ret;
 		return result;
 	}
