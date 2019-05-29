@@ -10,18 +10,14 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
-import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractTypeSystem
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 
-class VisitorTypeSystemUtil  extends CommonTypeSystemUtils implements AbstractTypeSystem {
-
-	val Map<String, Pair<EPackage, GenModel>> syntaxes
+class VisitorTypeSystemUtil extends CommonTypeSystemUtils {
 	extension VisitorNamingUtils vnu
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	val String packageRoot
@@ -29,15 +25,11 @@ class VisitorTypeSystemUtil  extends CommonTypeSystemUtils implements AbstractTy
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, VisitorNamingUtils vnu, String packageRoot,
 		BaseValidator base) {
-		this.syntaxes = syntaxes
+		super(syntaxes);
 		this.vnu = vnu
 		this.packageRoot = packageRoot
 		this.base = base
 	}
-
-//	def dispatch TypeName resolveType2(Object type) {
-//		return null
-//	}
 
 	def dispatch TypeName resolveType2(Class<?> clazz) {
 		return TypeName.get(clazz)
@@ -55,7 +47,7 @@ class VisitorTypeSystemUtil  extends CommonTypeSystemUtils implements AbstractTy
 		}
 	}
 
-	def resolveType(EClassifier e) {
+	override resolveType(EClassifier e) {
 		val stxs = syntaxes.values + #[(EcorePackage.eINSTANCE -> null)]
 		val stx = stxs.filter [
 			it.key.allClassifiers.exists [
@@ -68,15 +60,15 @@ class VisitorTypeSystemUtil  extends CommonTypeSystemUtils implements AbstractTy
 		if (gm !== null) {
 			if (e instanceof EClass) {
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
-			} else if(e instanceof EEnum) {
+			} else if (e instanceof EEnum) {
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
-			}else {
+			} else {
 				val GenClassifier gclass = gm.allGenPkgs.map [
 					it.genClassifiers.filter [
 						it.name == e.name && it.genPackage.getEcorePackage.name == (e.eContainer as EPackage).name
 					]
 				].flatten.head
-				if(gclass instanceof GenClass) {
+				if (gclass instanceof GenClass) {
 					ClassName.get(gclass.qualifiedInterfaceName, gclass.name)
 				} else if (gclass instanceof GenEnum) {
 					ClassName.get(gclass.genPackage.interfacePackageName, gclass.name)
@@ -87,18 +79,5 @@ class VisitorTypeSystemUtil  extends CommonTypeSystemUtils implements AbstractTy
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
 
-	}
-
-	def infereType(Expression exp) {
-
-		base.getPossibleTypes(exp)
-	}
-
-	def dispatch TypeName solveType(EClass type) {
-		resolveType(type)
-	}
-
-	def dispatch TypeName solveType(EDataType edt) {
-		TypeName.get(edt.instanceClass)
-	}
+	}	
 }

@@ -32,10 +32,11 @@ class InterpreterTestAll {
 	static Map<String, Map<File, File>> compilations = newHashMap
 
 	static val compilers = newHashMap(
-		"interpreter" -> [f|compileProjectInterpreter(f)],
-		"revisitor" -> [f|compileProjectRevisitor(f)],
-		"switch" -> [f|compileProjectSwitch(f)],
-		"visitor" -> [f|compileProjectVisitor(f)]
+		"interpreter" -> [f|compileProjectInterpreter(f)]
+//		,
+//		"revisitor" -> [f|compileProjectRevisitor(f)],
+//		"switch" -> [f|compileProjectSwitch(f)],
+//		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
 	private static final boolean DEBUG = false
@@ -140,6 +141,11 @@ class InterpreterTestAll {
 					"execboa.MapService" -> MapService,
 					"execboa.MathService" -> MathService,
 					"execboa.SerializeService" -> SerializeService
+				)
+			case "assets/minijava":
+				newHashMap(
+					"execboa.MapService" -> MapService,
+					"execboa.MathService" -> MathService
 				)
 			case "assets/logo_lang":
 				newHashMap(

@@ -1,3 +1,3 @@
 syntax=platform:/resource/testbidirectionalrelation/src/testbidirectionalrelation.ecore
 behavior=platform:/resource/testbidirectionalrelation/src/test.ale
-compilationType=switch
+compilationType=visitor

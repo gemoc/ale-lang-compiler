@@ -1,6 +1,7 @@
 package visitor.operation.functioncall.impl;
 
 import functioncall.visitor.functioncall.ConceptA;
+import functioncall.visitor.functioncall.FunctioncallFactory;
 import visitor.VisitorInterface;
 import visitor.operation.functioncall.ConceptAOperation;
 
@@ -19,7 +20,7 @@ public class ConceptAOperationImpl implements ConceptAOperation {
 
 	public ConceptA fct2() {
 		ConceptA result;
-		result = functioncall.visitor.functioncall.FunctioncallFactory.eINSTANCE.createConceptA();
+		result = FunctioncallFactory.eINSTANCE.createConceptA();
 		return result;
 	}
 }

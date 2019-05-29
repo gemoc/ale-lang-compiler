@@ -7,19 +7,15 @@ import java.util.Map
 import org.eclipse.acceleo.query.ast.Call
 import org.eclipse.acceleo.query.ast.CallType
 import org.eclipse.acceleo.query.ast.StringLiteral
-import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.validation.type.SequenceType
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
-import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractExpressionCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 
 class SwitchExpressionCompiler extends AbstractExpressionCompiler {
@@ -28,37 +24,24 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 	extension SwitchNamingUtils snu
 	extension CommonTypeInferer cti
 	extension EnumeratorService es
-	val List<ResolvedClass> resolved
-	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	val String packageRoot
-	val Dsl dsl
 
-	new(SwitchTypeSystemUtils tsu, List<ResolvedClass> resolved, SwitchNamingUtils snu,
-		Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, Map<String, Class<?>> registeredServices,
-		Dsl dsl, CommonTypeInferer cti, EnumeratorService es) {
-		super(cti, es, tsu, snu, registeredServices)
+	new(SwitchTypeSystemUtils tsu, List<ResolvedClass> resolved, SwitchNamingUtils snu, String packageRoot,
+		Map<String, Class<?>> registeredServices, CommonTypeInferer cti, EnumeratorService es) {
+		super(cti, es, tsu, snu, registeredServices, resolved)
 		this.tsu = tsu
-		this.resolved = resolved
 		this.snu = snu
-		this.syntaxes = syntaxes
 		this.packageRoot = packageRoot
-		this.dsl = dsl
 		this.cti = cti
 		this.es = es
-
 	}
 
-	override compileThis(VarRef call, CompilerExpressionCtx ctx) {
-		CodeBlock.of(if(call.variableName == 'self') 'this.it' else call.variableName)
-	}
-
-	def getEcoreInterfacesPackage() {
-		val gm = syntaxes.get(dsl.allSyntaxes.head).value
-		gm.genPackages.head.qualifiedPackageName
+	override getThis(CompilerExpressionCtx ctx) {
+		'this.it'
 	}
 
 	override defaultCall(Call call, CompilerExpressionCtx ctx) {
-		if (call.type == CallType.CALLORAPPLY)
+		if (call.type == CallType.CALLORAPPLY) {
 			if (call.serviceName == 'aqlFeatureAccess') {
 				val t = infereType(call).head
 
@@ -80,16 +63,19 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 
 				} else {
 					if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-						CodeBlock.of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+						CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 					} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
 						if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 							(t.type as EDataType).instanceClass == boolean))
-							CodeBlock.of('''«lhs».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+							CodeBlock.of('''$L.is$L()''', lhs,
+								(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 						else
-							CodeBlock.of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+							CodeBlock.of('''$L.get$L()''', lhs,
+								(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 					} else {
 						CodeBlock.
-							of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''')
+							of('''$L.«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''',
+								lhs)
 					}
 				}
 			} else if (call.serviceName == 'create') {
@@ -151,7 +137,8 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 						)
 
 						for (param : call.arguments.tail.enumerate) {
-							hm.put("paramType" + param.value, param.key.infereType.head?.type?.resolveType2?.solveNothing(param.key))
+							hm.put("paramType" + param.value,
+								param.key.infereType.head?.type?.resolveType2?.solveNothing(param.key))
 							hm.put("paramExpr" + param.value, param.key.compileExpression(ctx))
 						}
 
@@ -165,7 +152,8 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 					call.callService(ctx)
 				}
 			}
-		else
+		} else {
 			CodeBlock.of('''/*Call «call»*/''')
+		}
 	}
 }

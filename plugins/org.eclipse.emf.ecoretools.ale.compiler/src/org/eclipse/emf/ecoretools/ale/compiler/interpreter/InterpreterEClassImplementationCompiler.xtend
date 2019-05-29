@@ -57,7 +57,7 @@ class InterpreterEClassImplementationCompiler {
 		this.resolved = resolved
 		this.namingUtils = new InterpreterNamingUtils
 		this.ecic = new EClassImplementationCompiler(ccu, namingUtils,
-			new EClassGetterCompiler(namingUtils, ccu, resolved), jpu, resolved, es)
+			new EClassGetterCompiler(namingUtils, ccu, resolved, dsl), jpu, resolved, es)
 	}
 	
 

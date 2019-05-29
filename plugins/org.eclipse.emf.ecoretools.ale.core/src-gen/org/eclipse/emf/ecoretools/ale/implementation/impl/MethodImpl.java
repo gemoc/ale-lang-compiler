@@ -290,7 +290,7 @@ public class MethodImpl extends MinimalEObjectImpl.Container implements Method {
 				return;
 			case ImplementationPackage.METHOD__TAGS:
 				getTags().clear();
-				getTags().addAll((Collection<? extends String>)newValue);
+				getTags().addAll((Collection<? extends String>) newValue);
 				return;
 			case ImplementationPackage.METHOD__DISPATCH:
 				setDispatch((Boolean)newValue);

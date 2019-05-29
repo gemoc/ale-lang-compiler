@@ -1,10 +1,9 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
+import java.lang.Override;
 import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.BooleanValue;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.State;
@@ -15,153 +14,148 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "WhileStatement"
-)
 public class WhileStatementImpl extends StatementImpl implements WhileStatement {
-  @Child
-  protected Expression condition;
+	protected Expression condition;
 
-  @Child
-  protected Block block;
+	protected Block block;
 
-  protected WhileStatementImpl() {
-    super();
-  }
+	protected WhileStatementImpl() {
+		super();
+	}
 
-  @TruffleBoundary
-  public void setCondition(Expression newCondition) {
-    if (newCondition != condition) {
-    	NotificationChain msgs = null;
-    	if (condition != null)
-    		msgs = ((InternalEObject)condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__CONDITION, null, msgs);
-    	if (newCondition != null)
-    		msgs = ((InternalEObject)newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__CONDITION, null, msgs);
-    	msgs = basicSetCondition(newCondition, msgs);
-    	if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__CONDITION, newCondition, newCondition));
-  }
+	@Override
+	protected EClass eStaticClass() {
+		return MiniJavaPackage.Literals.WHILE_STATEMENT;
+	}
 
-  @TruffleBoundary
-  public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
-    Expression oldCondition = condition;
-    condition = newCondition;
-    if (eNotificationRequired()) {
-    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__CONDITION, oldCondition, newCondition);
-    	if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
+	public Expression getCondition() {
+		return condition;
+	}
 
-  @TruffleBoundary
-  public Expression getCondition() {
-    return condition;
-  }
+	public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
+		Expression oldCondition = condition;
+		condition = newCondition;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.WHILE_STATEMENT__CONDITION, oldCondition, newCondition);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
+		}
+		return msgs;
+	}
 
-  @TruffleBoundary
-  public void setBlock(Block newBlock) {
-    if (newBlock != block) {
-    	NotificationChain msgs = null;
-    	if (block != null)
-    		msgs = ((InternalEObject)block).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__BLOCK, null, msgs);
-    	if (newBlock != null)
-    		msgs = ((InternalEObject)newBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__BLOCK, null, msgs);
-    	msgs = basicSetBlock(newBlock, msgs);
-    	if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__BLOCK, newBlock, newBlock));
-  }
+	public void setCondition(Expression newCondition) {
+		if (newCondition != condition) {
+			NotificationChain msgs = null;
+			if (condition != null)
+				msgs = ((InternalEObject) condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MiniJavaPackage.WHILE_STATEMENT__CONDITION, null, msgs);
+			if (newCondition != null)
+				msgs = ((InternalEObject) newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MiniJavaPackage.WHILE_STATEMENT__CONDITION, null, msgs);
+			msgs = basicSetCondition(newCondition, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.WHILE_STATEMENT__CONDITION, newCondition, newCondition));
+	}
 
-  @TruffleBoundary
-  public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
-    Block oldBlock = block;
-    block = newBlock;
-    if (eNotificationRequired()) {
-    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__BLOCK, oldBlock, newBlock);
-    	if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
+	public Block getBlock() {
+		return block;
+	}
 
-  @TruffleBoundary
-  public Block getBlock() {
-    return block;
-  }
+	public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
+		Block oldBlock = block;
+		block = newBlock;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.WHILE_STATEMENT__BLOCK, oldBlock, newBlock);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
+		}
+		return msgs;
+	}
 
-  @TruffleBoundary
-  protected EClass eStaticClass() {
-    return MiniJavaPackage.Literals.WHILE_STATEMENT;}
+	public void setBlock(Block newBlock) {
+		if (newBlock != block) {
+			NotificationChain msgs = null;
+			if (block != null)
+				msgs = ((InternalEObject) block).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MiniJavaPackage.WHILE_STATEMENT__BLOCK, null, msgs);
+			if (newBlock != null)
+				msgs = ((InternalEObject) newBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MiniJavaPackage.WHILE_STATEMENT__BLOCK, null, msgs);
+			msgs = basicSetBlock(newBlock, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.WHILE_STATEMENT__BLOCK, newBlock, newBlock));
+	}
 
-  @TruffleBoundary
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case MiniJavaPackage.WHILE_STATEMENT__CONDITION:
-    	setCondition((miniJava.interpreter.miniJava.Expression) newValue);
-    return;
-    case MiniJavaPackage.WHILE_STATEMENT__BLOCK:
-    	setBlock((miniJava.interpreter.miniJava.Block) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
+		switch (featureID) {
+			case MiniJavaPackage.WHILE_STATEMENT__CONDITION :
+				return basicSetCondition(null, msgs);
+			case MiniJavaPackage.WHILE_STATEMENT__BLOCK :
+				return basicSetBlock(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
-  @TruffleBoundary
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.WHILE_STATEMENT__CONDITION:
-    	setCondition((miniJava.interpreter.miniJava.Expression) null);
-    return;
-    case MiniJavaPackage.WHILE_STATEMENT__BLOCK:
-    	setBlock((miniJava.interpreter.miniJava.Block) null);
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case MiniJavaPackage.WHILE_STATEMENT__CONDITION :
+				return getCondition();
+			case MiniJavaPackage.WHILE_STATEMENT__BLOCK :
+				return getBlock();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
-  @TruffleBoundary
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case MiniJavaPackage.WHILE_STATEMENT__CONDITION:
-    return getCondition();
-    case MiniJavaPackage.WHILE_STATEMENT__BLOCK:
-    return getBlock();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case MiniJavaPackage.WHILE_STATEMENT__CONDITION :
+				setCondition((Expression)newValue);
+				return;
+			case MiniJavaPackage.WHILE_STATEMENT__BLOCK :
+				setBlock((Block)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  @TruffleBoundary
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.WHILE_STATEMENT__CONDITION:
-    	return condition != null;
-    case MiniJavaPackage.WHILE_STATEMENT__BLOCK:
-    	return block != null;
-    }
-    return super.eIsSet(featureID);
-  }
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case MiniJavaPackage.WHILE_STATEMENT__CONDITION :
+				setCondition((Expression) null);
+				return;
+			case MiniJavaPackage.WHILE_STATEMENT__BLOCK :
+				setBlock((Block) null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
-  @TruffleBoundary
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    case miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__CONDITION:
-    	return basicSetCondition(null, msgs);
-    case miniJava.interpreter.miniJava.MiniJavaPackage.WHILE_STATEMENT__BLOCK:
-    	return basicSetBlock(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case MiniJavaPackage.WHILE_STATEMENT__CONDITION :
+				return condition != null;
+			case MiniJavaPackage.WHILE_STATEMENT__BLOCK :
+				return block != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
-  public void evaluateStatement(State state) {
-    miniJava.interpreter.miniJava.BooleanValue continueWhile = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
-        while (continueWhile.isValue()) {
-          this.block.evaluateStatement(state);
-          miniJava.interpreter.miniJava.BooleanValue continueWhile2 = ((miniJava.interpreter.miniJava.BooleanValue)this.condition.evaluateExpression(state));
-          continueWhile = continueWhile2;
-        }
-        ;
-  }
+	public void evaluateStatement(State state) {
+		BooleanValue continueWhile = ((BooleanValue) (((Expression) (this.condition)).evaluateExpression((State) (state))));
+		while (continueWhile.isValue()) {
+			((Block) (this.block)).evaluateStatement((State) (state));
+			BooleanValue continueWhile2 = ((BooleanValue) (((Expression) (this.condition)).evaluateExpression((State) (state))));
+			continueWhile = continueWhile2;
+		}
+	}
 }

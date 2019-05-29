@@ -1,13 +1,12 @@
 package testoperationbody.visitor.testoperationbody;
 
+import java.lang.Integer;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import visitor.AcceptInterface;
 
 public interface Main extends EObject, AcceptInterface {
-	int getListint();
-
-	void setListint(int value);
+	EList<Integer> getListint();
 
 	boolean isSinglebool();
 

@@ -9,1183 +9,1549 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 public interface MiniJavaPackage extends EPackage {
-  MiniJavaPackage eINSTANCE = MiniJavaPackageImpl.init();
+	String eNAME = "miniJava";
 
-  String eNS_URI = "http://miniJava.miniJava.miniJava/";
+	String eNS_URI = "http://miniJava.miniJava.miniJava/";
 
-  String eNAME = "miniJava";
+	String eNS_PREFIX = "miniJava";
 
-  String eNS_PREFIX = "miniJava";
+	MiniJavaPackage eINSTANCE = MiniJavaPackageImpl.init();
 
-  int PROGRAM = 0;
+	int PROGRAM = 0;
 
-  int IMPORT = 1;
+	int PROGRAM__NAME = 0;
 
-  int TYPE_DECLARATION = 2;
+	int PROGRAM__IMPORTS = 1;
 
-  int CLAZZ = 3;
+	int PROGRAM__CLASSES = 2;
 
-  int INTERFACE = 4;
+	int PROGRAM__STATE = 3;
 
-  int MEMBER = 5;
+	int PROGRAM_FEATURE_COUNT = 4;
 
-  int METHOD = 6;
+	int PROGRAM_OPERATION_COUNT = 0;
 
-  int PARAMETER = 7;
+	int IMPORT = 1;
 
-  int FIELD = 8;
+	int IMPORT__IMPORTED_NAMESPACE = 0;
 
-  int BLOCK = 9;
+	int IMPORT_FEATURE_COUNT = 1;
 
-  int STATEMENT = 10;
+	int IMPORT_OPERATION_COUNT = 0;
 
-  int PRINT_STATEMENT = 11;
+	int NAMED_ELEMENT = 2;
 
-  int RETURN = 12;
+	int NAMED_ELEMENT__NAME = 0;
 
-  int IF_STATEMENT = 13;
+	int NAMED_ELEMENT_FEATURE_COUNT = 1;
 
-  int WHILE_STATEMENT = 14;
+	int NAMED_ELEMENT_OPERATION_COUNT = 0;
 
-  int FOR_STATEMENT = 15;
+	int TYPE_DECLARATION = 3;
 
-  int TYPE_REF = 16;
+	int TYPE_DECLARATION__NAME = NAMED_ELEMENT__NAME;
 
-  int SINGLE_TYPE_REF = 17;
+	int TYPE_DECLARATION__ACCESS_LEVEL = 1;
 
-  int CLASS_REF = 18;
+	int TYPE_DECLARATION__IMPLEMENTZ = 2;
 
-  int NAMED_ELEMENT = 19;
+	int TYPE_DECLARATION__MEMBERS = 3;
 
-  int TYPED_DECLARATION = 20;
+	int TYPE_DECLARATION_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 3;
 
-  int SYMBOL = 21;
+	int TYPE_DECLARATION_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
-  int VARIABLE_DECLARATION = 22;
+	int CLAZZ = 4;
 
-  int ASSIGNMENT = 23;
+	int CLAZZ__NAME = NAMED_ELEMENT__NAME;
 
-  int ASSIGNEE = 24;
+	int CLAZZ__ACCESS_LEVEL = TYPE_DECLARATION__ACCESS_LEVEL;
 
-  int EXPRESSION = 25;
+	int CLAZZ__IMPLEMENTZ = TYPE_DECLARATION__IMPLEMENTZ;
 
-  int ARRAY_TYPE_REF = 26;
+	int CLAZZ__MEMBERS = TYPE_DECLARATION__MEMBERS;
 
-  int INTEGER_TYPE_REF = 27;
+	int CLAZZ__ISABSTRACT = 4;
 
-  int BOOLEAN_TYPE_REF = 28;
+	int CLAZZ__SUPER_CLASS = 5;
 
-  int STRING_TYPE_REF = 29;
+	int CLAZZ_FEATURE_COUNT = TYPE_DECLARATION_FEATURE_COUNT + 2;
 
-  int VOID_TYPE_REF = 30;
+	int CLAZZ_OPERATION_COUNT = TYPE_DECLARATION_OPERATION_COUNT + 0;
 
-  int OR = 31;
+	int INTERFACE = 5;
 
-  int AND = 32;
+	int INTERFACE__NAME = NAMED_ELEMENT__NAME;
 
-  int EQUALITY = 33;
+	int INTERFACE__ACCESS_LEVEL = TYPE_DECLARATION__ACCESS_LEVEL;
 
-  int INEQUALITY = 34;
+	int INTERFACE__IMPLEMENTZ = TYPE_DECLARATION__IMPLEMENTZ;
 
-  int SUPERIOR_OR_EQUAL = 35;
+	int INTERFACE__MEMBERS = TYPE_DECLARATION__MEMBERS;
 
-  int INFERIOR_OR_EQUAL = 36;
+	int INTERFACE_FEATURE_COUNT = TYPE_DECLARATION_FEATURE_COUNT + 0;
 
-  int SUPERIOR = 37;
+	int INTERFACE_OPERATION_COUNT = TYPE_DECLARATION_OPERATION_COUNT + 0;
 
-  int INFERIOR = 38;
+	int TYPED_DECLARATION = 6;
 
-  int PLUS = 39;
+	int TYPED_DECLARATION__NAME = NAMED_ELEMENT__NAME;
 
-  int MINUS = 40;
+	int TYPED_DECLARATION__TYPE_REF = 1;
 
-  int MULTIPLICATION = 41;
+	int TYPED_DECLARATION_FEATURE_COUNT = NAMED_ELEMENT_FEATURE_COUNT + 1;
 
-  int DIVISION = 42;
+	int TYPED_DECLARATION_OPERATION_COUNT = NAMED_ELEMENT_OPERATION_COUNT + 0;
 
-  int ARRAY_ACCESS = 43;
+	int MEMBER = 7;
 
-  int ARRAY_LENGTH = 44;
+	int MEMBER__NAME = NAMED_ELEMENT__NAME;
 
-  int NOT = 45;
+	int MEMBER__TYPE_REF = TYPED_DECLARATION__TYPE_REF;
 
-  int NEG = 46;
+	int MEMBER__ACCESS = 2;
 
-  int FIELD_ACCESS = 47;
+	int MEMBER_FEATURE_COUNT = TYPED_DECLARATION_FEATURE_COUNT + 1;
 
-  int METHOD_CALL = 48;
+	int MEMBER_OPERATION_COUNT = TYPED_DECLARATION_OPERATION_COUNT + 0;
 
-  int STRING_CONSTANT = 49;
+	int METHOD = 8;
 
-  int INT_CONSTANT = 50;
+	int METHOD__NAME = NAMED_ELEMENT__NAME;
 
-  int BOOL_CONSTANT = 51;
+	int METHOD__TYPE_REF = TYPED_DECLARATION__TYPE_REF;
 
-  int THIS = 52;
+	int METHOD__ACCESS = MEMBER__ACCESS;
 
-  int SUPER = 53;
+	int METHOD__ISABSTRACT = 3;
 
-  int NULL = 54;
+	int METHOD__ISSTATIC = 4;
 
-  int NEW_OBJECT = 55;
+	int METHOD__PARAMS = 5;
 
-  int NEW_ARRAY = 56;
+	int METHOD__BODY = 6;
 
-  int SYMBOL_REF = 57;
+	int METHOD__CACHE = 7;
 
-  int CONTEXT = 58;
+	int METHOD_FEATURE_COUNT = MEMBER_FEATURE_COUNT + 5;
 
-  int VALUE = 59;
+	int METHOD_OPERATION_COUNT = MEMBER_OPERATION_COUNT + 0;
 
-  int INTEGER_VALUE = 60;
+	int SYMBOL = 9;
 
-  int SYMBOL_BINDING = 61;
+	int SYMBOL__NAME = NAMED_ELEMENT__NAME;
 
-  int FIELD_BINDING = 62;
+	int SYMBOL__TYPE_REF = TYPED_DECLARATION__TYPE_REF;
 
-  int STRING_VALUE = 63;
+	int SYMBOL_FEATURE_COUNT = TYPED_DECLARATION_FEATURE_COUNT + 0;
 
-  int BOOLEAN_VALUE = 64;
+	int SYMBOL_OPERATION_COUNT = TYPED_DECLARATION_OPERATION_COUNT + 0;
 
-  int OUTPUT_STREAM = 65;
+	int PARAMETER = 10;
 
-  int STATE = 66;
+	int PARAMETER__NAME = NAMED_ELEMENT__NAME;
 
-  int FRAME = 67;
+	int PARAMETER__TYPE_REF = TYPED_DECLARATION__TYPE_REF;
 
-  int NULL_VALUE = 68;
+	int PARAMETER_FEATURE_COUNT = SYMBOL_FEATURE_COUNT + 0;
 
-  int CALL = 69;
+	int PARAMETER_OPERATION_COUNT = SYMBOL_OPERATION_COUNT + 0;
 
-  int NEW_CALL = 70;
+	int FIELD = 11;
 
-  int METHOD_CALL2 = 71;
+	int FIELD__NAME = NAMED_ELEMENT__NAME;
 
-  int OBJECT_INSTANCE = 72;
+	int FIELD__TYPE_REF = TYPED_DECLARATION__TYPE_REF;
 
-  int ARRAY_INSTANCE = 73;
+	int FIELD__ACCESS = MEMBER__ACCESS;
 
-  int OBJECT_REF_VALUE = 74;
+	int FIELD__DEFAULT_VALUE = 3;
 
-  int ARRAY_REF_VALUE = 75;
+	int FIELD_FEATURE_COUNT = MEMBER_FEATURE_COUNT + 1;
 
-  int SYMBOL_TO_SYMBOL_BINDING_MAP = 76;
+	int FIELD_OPERATION_COUNT = MEMBER_OPERATION_COUNT + 0;
 
-  int CLAZZ_TO_METHOD_MAP = 77;
+	int STATEMENT = 12;
 
-  int MODULO = 78;
+	int STATEMENT_FEATURE_COUNT = 0;
 
-  int ACCESS_LEVEL = 79;
+	int STATEMENT_OPERATION_COUNT = 0;
 
-  int PROGRAM__NAME = 0;
+	int BLOCK = 13;
 
-  int PROGRAM__IMPORTS = 1;
+	int BLOCK__STATEMENTS = 0;
 
-  int PROGRAM__CLASSES = 2;
+	int BLOCK_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
-  int PROGRAM__STATE = 3;
+	int BLOCK_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 0;
 
-  int IMPORT__IMPORTED_NAMESPACE = 0;
+	int PRINT_STATEMENT = 14;
 
-  int TYPE_DECLARATION__ACCESS_LEVEL = 1;
+	int PRINT_STATEMENT__EXPRESSION = 0;
 
-  int TYPE_DECLARATION__IMPLEMENTZ = 2;
+	int PRINT_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
-  int TYPE_DECLARATION__MEMBERS = 3;
+	int PRINT_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 0;
 
-  int CLAZZ__ISABSTRACT = 4;
+	int RETURN = 15;
 
-  int CLAZZ__SUPER_CLASS = 5;
+	int RETURN__EXPRESSION = 0;
 
-  int MEMBER__ACCESS = 2;
+	int RETURN_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
-  int METHOD__ISABSTRACT = 3;
+	int RETURN_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 0;
 
-  int METHOD__ISSTATIC = 4;
+	int IF_STATEMENT = 16;
 
-  int METHOD__PARAMS = 5;
+	int IF_STATEMENT__EXPRESSION = 0;
 
-  int METHOD__BODY = 6;
+	int IF_STATEMENT__THEN_BLOCK = 1;
 
-  int METHOD__CACHE = 7;
+	int IF_STATEMENT__ELSE_BLOCK = 2;
 
-  int FIELD__DEFAULT_VALUE = 3;
+	int IF_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 3;
 
-  int BLOCK__STATEMENTS = 0;
+	int IF_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 0;
 
-  int PRINT_STATEMENT__EXPRESSION = 0;
+	int WHILE_STATEMENT = 17;
 
-  int RETURN__EXPRESSION = 0;
+	int WHILE_STATEMENT__CONDITION = 0;
 
-  int IF_STATEMENT__EXPRESSION = 0;
+	int WHILE_STATEMENT__BLOCK = 1;
 
-  int IF_STATEMENT__THEN_BLOCK = 1;
+	int WHILE_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
-  int IF_STATEMENT__ELSE_BLOCK = 2;
+	int WHILE_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 0;
 
-  int WHILE_STATEMENT__CONDITION = 0;
+	int FOR_STATEMENT = 18;
 
-  int WHILE_STATEMENT__BLOCK = 1;
+	int FOR_STATEMENT__DECLARATION = 0;
 
-  int FOR_STATEMENT__DECLARATION = 0;
+	int FOR_STATEMENT__CONDITION = 1;
 
-  int FOR_STATEMENT__CONDITION = 1;
+	int FOR_STATEMENT__PROGRESSION = 2;
 
-  int FOR_STATEMENT__PROGRESSION = 2;
+	int FOR_STATEMENT__BLOCK = 3;
 
-  int FOR_STATEMENT__BLOCK = 3;
+	int FOR_STATEMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 4;
 
-  int CLASS_REF__REFERENCED_CLASS = 0;
+	int FOR_STATEMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 0;
 
-  int NAMED_ELEMENT__NAME = 0;
+	int TYPE_REF = 19;
 
-  int TYPED_DECLARATION__TYPE_REF = 1;
+	int TYPE_REF_FEATURE_COUNT = 0;
 
-  int ASSIGNMENT__ASSIGNEE = 0;
+	int TYPE_REF_OPERATION_COUNT = 0;
 
-  int ASSIGNMENT__VALUE = 1;
+	int SINGLE_TYPE_REF = 20;
 
-  int ARRAY_TYPE_REF__TYPE_REF = 0;
+	int SINGLE_TYPE_REF_FEATURE_COUNT = TYPE_REF_FEATURE_COUNT + 0;
 
-  int OR__LEFT = 0;
+	int SINGLE_TYPE_REF_OPERATION_COUNT = TYPE_REF_OPERATION_COUNT + 0;
 
-  int OR__RIGHT = 1;
+	int CLASS_REF = 21;
 
-  int AND__LEFT = 0;
+	int CLASS_REF__REFERENCED_CLASS = 0;
 
-  int AND__RIGHT = 1;
+	int CLASS_REF_FEATURE_COUNT = SINGLE_TYPE_REF_FEATURE_COUNT + 1;
 
-  int EQUALITY__LEFT = 0;
+	int CLASS_REF_OPERATION_COUNT = SINGLE_TYPE_REF_OPERATION_COUNT + 0;
 
-  int EQUALITY__RIGHT = 1;
+	int VARIABLE_DECLARATION = 22;
 
-  int INEQUALITY__LEFT = 0;
+	int VARIABLE_DECLARATION__NAME = NAMED_ELEMENT__NAME;
 
-  int INEQUALITY__RIGHT = 1;
+	int VARIABLE_DECLARATION__TYPE_REF = TYPED_DECLARATION__TYPE_REF;
 
-  int SUPERIOR_OR_EQUAL__LEFT = 0;
+	int VARIABLE_DECLARATION_FEATURE_COUNT = SYMBOL_FEATURE_COUNT + ASSIGNEE_FEATURE_COUNT + 0;
 
-  int SUPERIOR_OR_EQUAL__RIGHT = 1;
+	int VARIABLE_DECLARATION_OPERATION_COUNT = SYMBOL_OPERATION_COUNT + ASSIGNEE_OPERATION_COUNT + 0;
 
-  int INFERIOR_OR_EQUAL__LEFT = 0;
+	int ASSIGNMENT = 23;
 
-  int INFERIOR_OR_EQUAL__RIGHT = 1;
+	int ASSIGNMENT__ASSIGNEE = 0;
 
-  int SUPERIOR__LEFT = 0;
+	int ASSIGNMENT__VALUE = 1;
 
-  int SUPERIOR__RIGHT = 1;
+	int ASSIGNMENT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
-  int INFERIOR__LEFT = 0;
+	int ASSIGNMENT_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + 0;
 
-  int INFERIOR__RIGHT = 1;
+	int ASSIGNEE = 24;
 
-  int PLUS__LEFT = 0;
+	int ASSIGNEE_FEATURE_COUNT = 0;
 
-  int PLUS__RIGHT = 1;
+	int ASSIGNEE_OPERATION_COUNT = 0;
 
-  int MINUS__LEFT = 0;
+	int EXPRESSION = 25;
 
-  int MINUS__RIGHT = 1;
+	int EXPRESSION_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + ASSIGNEE_FEATURE_COUNT + 0;
 
-  int MULTIPLICATION__LEFT = 0;
+	int EXPRESSION_OPERATION_COUNT = STATEMENT_OPERATION_COUNT + ASSIGNEE_OPERATION_COUNT + 0;
 
-  int MULTIPLICATION__RIGHT = 1;
+	int ARRAY_TYPE_REF = 26;
 
-  int DIVISION__LEFT = 0;
+	int ARRAY_TYPE_REF__TYPE_REF = 0;
 
-  int DIVISION__RIGHT = 1;
+	int ARRAY_TYPE_REF_FEATURE_COUNT = TYPE_REF_FEATURE_COUNT + 1;
 
-  int ARRAY_ACCESS__OBJECT = 0;
+	int ARRAY_TYPE_REF_OPERATION_COUNT = TYPE_REF_OPERATION_COUNT + 0;
 
-  int ARRAY_ACCESS__INDEX = 1;
+	int INTEGER_TYPE_REF = 27;
 
-  int ARRAY_LENGTH__ARRAY = 0;
+	int INTEGER_TYPE_REF_FEATURE_COUNT = SINGLE_TYPE_REF_FEATURE_COUNT + 0;
 
-  int NOT__EXPRESSION = 0;
+	int INTEGER_TYPE_REF_OPERATION_COUNT = SINGLE_TYPE_REF_OPERATION_COUNT + 0;
 
-  int NEG__EXPRESSION = 0;
+	int BOOLEAN_TYPE_REF = 28;
 
-  int FIELD_ACCESS__RECEIVER = 0;
+	int BOOLEAN_TYPE_REF_FEATURE_COUNT = SINGLE_TYPE_REF_FEATURE_COUNT + 0;
 
-  int FIELD_ACCESS__FIELD = 1;
+	int BOOLEAN_TYPE_REF_OPERATION_COUNT = SINGLE_TYPE_REF_OPERATION_COUNT + 0;
 
-  int METHOD_CALL__RECEIVER = 0;
+	int STRING_TYPE_REF = 29;
 
-  int METHOD_CALL__METHOD = 1;
+	int STRING_TYPE_REF_FEATURE_COUNT = SINGLE_TYPE_REF_FEATURE_COUNT + 0;
 
-  int METHOD_CALL__ARGS = 2;
+	int STRING_TYPE_REF_OPERATION_COUNT = SINGLE_TYPE_REF_OPERATION_COUNT + 0;
 
-  int STRING_CONSTANT__VALUE = 0;
+	int VOID_TYPE_REF = 30;
 
-  int INT_CONSTANT__VALUE = 0;
+	int VOID_TYPE_REF_FEATURE_COUNT = SINGLE_TYPE_REF_FEATURE_COUNT + 0;
 
-  int BOOL_CONSTANT__VALUE = 0;
+	int VOID_TYPE_REF_OPERATION_COUNT = SINGLE_TYPE_REF_OPERATION_COUNT + 0;
 
-  int NEW_OBJECT__TYPE = 0;
+	int OR = 31;
 
-  int NEW_OBJECT__ARGS = 1;
+	int OR__LEFT = 0;
 
-  int NEW_ARRAY__TYPE = 0;
+	int OR__RIGHT = 1;
 
-  int NEW_ARRAY__SIZE = 1;
+	int OR_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int SYMBOL_REF__SYMBOL = 0;
+	int OR_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int CONTEXT__BINDINGS = 0;
+	int AND = 32;
 
-  int CONTEXT__PARENT_CONTEXT = 1;
+	int AND__LEFT = 0;
 
-  int CONTEXT__CHILD_CONTEXT = 2;
+	int AND__RIGHT = 1;
 
-  int CONTEXT__CACHE = 3;
+	int AND_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int INTEGER_VALUE__VALUE = 0;
+	int AND_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int SYMBOL_BINDING__VALUE = 0;
+	int EQUALITY = 33;
 
-  int SYMBOL_BINDING__SYMBOL = 1;
+	int EQUALITY__LEFT = 0;
 
-  int FIELD_BINDING__FIELD = 0;
+	int EQUALITY__RIGHT = 1;
 
-  int FIELD_BINDING__VALUE = 1;
+	int EQUALITY_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int STRING_VALUE__VALUE = 0;
+	int EQUALITY_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int BOOLEAN_VALUE__VALUE = 0;
+	int INEQUALITY = 34;
 
-  int OUTPUT_STREAM__STREAM = 0;
+	int INEQUALITY__LEFT = 0;
 
-  int STATE__ROOT_FRAME = 0;
+	int INEQUALITY__RIGHT = 1;
 
-  int STATE__OBJECTS_HEAP = 1;
+	int INEQUALITY_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int STATE__OUTPUT_STREAM = 2;
+	int INEQUALITY_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int STATE__ARRAYS_HEAP = 3;
+	int SUPERIOR_OR_EQUAL = 35;
 
-  int STATE__CONTEXT_CACHE = 4;
+	int SUPERIOR_OR_EQUAL__LEFT = 0;
 
-  int STATE__FRAME_CACHE = 5;
+	int SUPERIOR_OR_EQUAL__RIGHT = 1;
 
-  int FRAME__CALL = 0;
+	int SUPERIOR_OR_EQUAL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int FRAME__INSTANCE = 1;
+	int SUPERIOR_OR_EQUAL_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int FRAME__CHILD_FRAME = 2;
+	int INFERIOR_OR_EQUAL = 36;
 
-  int FRAME__PARENT_FRAME = 3;
+	int INFERIOR_OR_EQUAL__LEFT = 0;
 
-  int FRAME__ROOT_CONTEXT = 4;
+	int INFERIOR_OR_EQUAL__RIGHT = 1;
 
-  int FRAME__RETURN_VALUE = 5;
+	int INFERIOR_OR_EQUAL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int NEW_CALL__NEWZ = 0;
+	int INFERIOR_OR_EQUAL_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int METHOD_CALL2__METHODCALL = 0;
+	int SUPERIOR = 37;
 
-  int OBJECT_INSTANCE__FIELDBINDINGS = 0;
+	int SUPERIOR__LEFT = 0;
 
-  int OBJECT_INSTANCE__TYPE = 1;
+	int SUPERIOR__RIGHT = 1;
 
-  int ARRAY_INSTANCE__VALUE = 0;
+	int SUPERIOR_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int ARRAY_INSTANCE__SIZE = 1;
+	int SUPERIOR_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int OBJECT_REF_VALUE__INSTANCE = 0;
+	int INFERIOR = 38;
 
-  int ARRAY_REF_VALUE__INSTANCE = 0;
+	int INFERIOR__LEFT = 0;
 
-  int SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = 0;
+	int INFERIOR__RIGHT = 1;
 
-  int SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = 1;
+	int INFERIOR_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int CLAZZ_TO_METHOD_MAP__KEY = 0;
+	int INFERIOR_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int CLAZZ_TO_METHOD_MAP__VALUE = 1;
+	int PLUS = 39;
 
-  int MODULO__LEFT = 0;
+	int PLUS__LEFT = 0;
 
-  int MODULO__RIGHT = 1;
+	int PLUS__RIGHT = 1;
 
-  EClass getProgram();
+	int PLUS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EClass getImport();
+	int PLUS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getTypeDeclaration();
+	int MINUS = 40;
 
-  EClass getClazz();
+	int MINUS__LEFT = 0;
 
-  EClass getInterface();
+	int MINUS__RIGHT = 1;
 
-  EClass getMember();
+	int MINUS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EClass getMethod();
+	int MINUS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getParameter();
+	int MULTIPLICATION = 41;
 
-  EClass getField();
+	int MULTIPLICATION__LEFT = 0;
 
-  EClass getBlock();
+	int MULTIPLICATION__RIGHT = 1;
 
-  EClass getStatement();
+	int MULTIPLICATION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EClass getPrintStatement();
+	int MULTIPLICATION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getReturn();
+	int DIVISION = 42;
 
-  EClass getIfStatement();
+	int DIVISION__LEFT = 0;
 
-  EClass getWhileStatement();
+	int DIVISION__RIGHT = 1;
 
-  EClass getForStatement();
+	int DIVISION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EClass getTypeRef();
+	int DIVISION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getSingleTypeRef();
+	int ARRAY_ACCESS = 43;
 
-  EClass getClassRef();
+	int ARRAY_ACCESS__OBJECT = 0;
 
-  EClass getNamedElement();
+	int ARRAY_ACCESS__INDEX = 1;
 
-  EClass getTypedDeclaration();
+	int ARRAY_ACCESS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EClass getSymbol();
+	int ARRAY_ACCESS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getVariableDeclaration();
+	int ARRAY_LENGTH = 44;
 
-  EClass getAssignment();
+	int ARRAY_LENGTH__ARRAY = 0;
 
-  EClass getAssignee();
+	int ARRAY_LENGTH_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  EClass getExpression();
+	int ARRAY_LENGTH_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getArrayTypeRef();
+	int NOT = 45;
 
-  EClass getIntegerTypeRef();
+	int NOT__EXPRESSION = 0;
 
-  EClass getBooleanTypeRef();
+	int NOT_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  EClass getStringTypeRef();
+	int NOT_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getVoidTypeRef();
+	int NEG = 46;
 
-  EClass getOr();
+	int NEG__EXPRESSION = 0;
 
-  EClass getAnd();
+	int NEG_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  EClass getEquality();
+	int NEG_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getInequality();
+	int FIELD_ACCESS = 47;
 
-  EClass getSuperiorOrEqual();
+	int FIELD_ACCESS__RECEIVER = 0;
 
-  EClass getInferiorOrEqual();
+	int FIELD_ACCESS__FIELD = 1;
 
-  EClass getSuperior();
+	int FIELD_ACCESS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EClass getInferior();
+	int FIELD_ACCESS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getPlus();
+	int METHOD_CALL = 48;
 
-  EClass getMinus();
+	int METHOD_CALL__RECEIVER = 0;
 
-  EClass getMultiplication();
+	int METHOD_CALL__METHOD = 1;
 
-  EClass getDivision();
+	int METHOD_CALL__ARGS = 2;
 
-  EClass getArrayAccess();
+	int METHOD_CALL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 3;
 
-  EClass getArrayLength();
+	int METHOD_CALL_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getNot();
+	int STRING_CONSTANT = 49;
 
-  EClass getNeg();
+	int STRING_CONSTANT__VALUE = 0;
 
-  EClass getFieldAccess();
+	int STRING_CONSTANT_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  EClass getMethodCall();
+	int STRING_CONSTANT_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getStringConstant();
+	int INT_CONSTANT = 50;
 
-  EClass getIntConstant();
+	int INT_CONSTANT__VALUE = 0;
 
-  EClass getBoolConstant();
+	int INT_CONSTANT_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  EClass getThis();
+	int INT_CONSTANT_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getSuper();
+	int BOOL_CONSTANT = 51;
 
-  EClass getNull();
+	int BOOL_CONSTANT__VALUE = 0;
 
-  EClass getNewObject();
+	int BOOL_CONSTANT_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  EClass getNewArray();
+	int BOOL_CONSTANT_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getSymbolRef();
+	int THIS = 52;
 
-  EClass getContext();
+	int THIS_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 0;
 
-  EClass getValue();
+	int THIS_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getIntegerValue();
+	int SUPER = 53;
 
-  EClass getSymbolBinding();
+	int SUPER_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 0;
 
-  EClass getFieldBinding();
+	int SUPER_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getStringValue();
+	int NULL = 54;
 
-  EClass getBooleanValue();
+	int NULL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 0;
 
-  EClass getOutputStream();
+	int NULL_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getState();
+	int NEW_OBJECT = 55;
 
-  EClass getFrame();
+	int NEW_OBJECT__TYPE = 0;
 
-  EClass getNullValue();
+	int NEW_OBJECT__ARGS = 1;
 
-  EClass getCall();
+	int NEW_OBJECT_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EClass getNewCall();
+	int NEW_OBJECT_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getMethodCall2();
+	int NEW_ARRAY = 56;
 
-  EClass getObjectInstance();
+	int NEW_ARRAY__TYPE = 0;
 
-  EClass getArrayInstance();
+	int NEW_ARRAY__SIZE = 1;
 
-  EClass getObjectRefValue();
+	int NEW_ARRAY_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EClass getArrayRefValue();
+	int NEW_ARRAY_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getSymbolToSymbolBindingMap();
+	int SYMBOL_REF = 57;
 
-  EClass getClazzToMethodMap();
+	int SYMBOL_REF__SYMBOL = 0;
 
-  EClass getModulo();
+	int SYMBOL_REF_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  EEnum getAccessLevel();
+	int SYMBOL_REF_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EReference getProgram_Imports();
+	int CONTEXT = 58;
 
-  EReference getProgram_Classes();
+	int CONTEXT__BINDINGS = 0;
 
-  EReference getProgram_State();
+	int CONTEXT__PARENT_CONTEXT = 1;
 
-  EReference getTypeDeclaration_Implementz();
+	int CONTEXT__CHILD_CONTEXT = 2;
 
-  EReference getTypeDeclaration_Members();
+	int CONTEXT__CACHE = 3;
 
-  EReference getClazz_SuperClass();
+	int CONTEXT_FEATURE_COUNT = 4;
 
-  EReference getMethod_Params();
+	int CONTEXT_OPERATION_COUNT = 0;
 
-  EReference getMethod_Body();
+	int VALUE = 59;
 
-  EReference getMethod_Cache();
+	int VALUE_FEATURE_COUNT = 0;
 
-  EReference getField_DefaultValue();
+	int VALUE_OPERATION_COUNT = 0;
 
-  EReference getBlock_Statements();
+	int INTEGER_VALUE = 60;
 
-  EReference getPrintStatement_Expression();
+	int INTEGER_VALUE__VALUE = 0;
 
-  EReference getReturn_Expression();
+	int INTEGER_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
-  EReference getIfStatement_Expression();
+	int INTEGER_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
 
-  EReference getIfStatement_ThenBlock();
+	int SYMBOL_BINDING = 61;
 
-  EReference getIfStatement_ElseBlock();
+	int SYMBOL_BINDING__VALUE = 0;
 
-  EReference getWhileStatement_Condition();
+	int SYMBOL_BINDING__SYMBOL = 1;
 
-  EReference getWhileStatement_Block();
+	int SYMBOL_BINDING_FEATURE_COUNT = 2;
 
-  EReference getForStatement_Declaration();
+	int SYMBOL_BINDING_OPERATION_COUNT = 0;
 
-  EReference getForStatement_Condition();
+	int FIELD_BINDING = 62;
 
-  EReference getForStatement_Progression();
+	int FIELD_BINDING__FIELD = 0;
 
-  EReference getForStatement_Block();
+	int FIELD_BINDING__VALUE = 1;
 
-  EReference getClassRef_ReferencedClass();
+	int FIELD_BINDING_FEATURE_COUNT = 2;
 
-  EReference getTypedDeclaration_TypeRef();
+	int FIELD_BINDING_OPERATION_COUNT = 0;
 
-  EReference getAssignment_Assignee();
+	int STRING_VALUE = 63;
 
-  EReference getAssignment_Value();
+	int STRING_VALUE__VALUE = 0;
 
-  EReference getArrayTypeRef_TypeRef();
+	int STRING_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
-  EReference getOr_Left();
+	int STRING_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
 
-  EReference getOr_Right();
+	int BOOLEAN_VALUE = 64;
 
-  EReference getAnd_Left();
+	int BOOLEAN_VALUE__VALUE = 0;
 
-  EReference getAnd_Right();
+	int BOOLEAN_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
-  EReference getEquality_Left();
+	int BOOLEAN_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
 
-  EReference getEquality_Right();
+	int OUTPUT_STREAM = 65;
 
-  EReference getInequality_Left();
+	int OUTPUT_STREAM__STREAM = 0;
 
-  EReference getInequality_Right();
+	int OUTPUT_STREAM_FEATURE_COUNT = 1;
 
-  EReference getSuperiorOrEqual_Left();
+	int OUTPUT_STREAM_OPERATION_COUNT = 0;
 
-  EReference getSuperiorOrEqual_Right();
+	int STATE = 66;
 
-  EReference getInferiorOrEqual_Left();
+	int STATE__ROOT_FRAME = 0;
 
-  EReference getInferiorOrEqual_Right();
+	int STATE__OBJECTS_HEAP = 1;
 
-  EReference getSuperior_Left();
+	int STATE__OUTPUT_STREAM = 2;
 
-  EReference getSuperior_Right();
+	int STATE__ARRAYS_HEAP = 3;
 
-  EReference getInferior_Left();
+	int STATE__CONTEXT_CACHE = 4;
 
-  EReference getInferior_Right();
+	int STATE__FRAME_CACHE = 5;
 
-  EReference getPlus_Left();
+	int STATE_FEATURE_COUNT = 6;
 
-  EReference getPlus_Right();
+	int STATE_OPERATION_COUNT = 0;
 
-  EReference getMinus_Left();
+	int FRAME = 67;
 
-  EReference getMinus_Right();
+	int FRAME__CALL = 0;
 
-  EReference getMultiplication_Left();
+	int FRAME__INSTANCE = 1;
 
-  EReference getMultiplication_Right();
+	int FRAME__CHILD_FRAME = 2;
 
-  EReference getDivision_Left();
+	int FRAME__PARENT_FRAME = 3;
 
-  EReference getDivision_Right();
+	int FRAME__ROOT_CONTEXT = 4;
 
-  EReference getArrayAccess_Object();
+	int FRAME__RETURN_VALUE = 5;
 
-  EReference getArrayAccess_Index();
+	int FRAME_FEATURE_COUNT = 6;
 
-  EReference getArrayLength_Array();
+	int FRAME_OPERATION_COUNT = 0;
 
-  EReference getNot_Expression();
+	int NULL_VALUE = 68;
 
-  EReference getNeg_Expression();
+	int NULL_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 0;
 
-  EReference getFieldAccess_Receiver();
+	int NULL_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
 
-  EReference getFieldAccess_Field();
+	int CALL = 69;
 
-  EReference getMethodCall_Receiver();
+	int CALL_FEATURE_COUNT = 0;
 
-  EReference getMethodCall_Method();
+	int CALL_OPERATION_COUNT = 0;
 
-  EReference getMethodCall_Args();
+	int NEW_CALL = 70;
 
-  EReference getNewObject_Type();
+	int NEW_CALL__NEWZ = 0;
 
-  EReference getNewObject_Args();
+	int NEW_CALL_FEATURE_COUNT = CALL_FEATURE_COUNT + 1;
 
-  EReference getNewArray_Type();
+	int NEW_CALL_OPERATION_COUNT = CALL_OPERATION_COUNT + 0;
 
-  EReference getNewArray_Size();
+	int METHOD_CALL2 = 71;
 
-  EReference getSymbolRef_Symbol();
+	int METHOD_CALL2__METHODCALL = 0;
 
-  EReference getContext_Bindings();
+	int METHOD_CALL2_FEATURE_COUNT = CALL_FEATURE_COUNT + 1;
 
-  EReference getContext_ParentContext();
+	int METHOD_CALL2_OPERATION_COUNT = CALL_OPERATION_COUNT + 0;
 
-  EReference getContext_ChildContext();
+	int OBJECT_INSTANCE = 72;
 
-  EReference getContext_Cache();
+	int OBJECT_INSTANCE__FIELDBINDINGS = 0;
 
-  EReference getSymbolBinding_Value();
+	int OBJECT_INSTANCE__TYPE = 1;
 
-  EReference getSymbolBinding_Symbol();
+	int OBJECT_INSTANCE_FEATURE_COUNT = 2;
 
-  EReference getFieldBinding_Field();
+	int OBJECT_INSTANCE_OPERATION_COUNT = 0;
 
-  EReference getFieldBinding_Value();
+	int ARRAY_INSTANCE = 73;
 
-  EReference getState_RootFrame();
+	int ARRAY_INSTANCE__VALUE = 0;
 
-  EReference getState_ObjectsHeap();
+	int ARRAY_INSTANCE__SIZE = 1;
 
-  EReference getState_OutputStream();
+	int ARRAY_INSTANCE_FEATURE_COUNT = 2;
 
-  EReference getState_ArraysHeap();
+	int ARRAY_INSTANCE_OPERATION_COUNT = 0;
 
-  EReference getState_ContextCache();
+	int OBJECT_REF_VALUE = 74;
 
-  EReference getState_FrameCache();
+	int OBJECT_REF_VALUE__INSTANCE = 0;
 
-  EReference getFrame_Call();
+	int OBJECT_REF_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
-  EReference getFrame_Instance();
+	int OBJECT_REF_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
 
-  EReference getFrame_ChildFrame();
+	int ARRAY_REF_VALUE = 75;
 
-  EReference getFrame_ParentFrame();
+	int ARRAY_REF_VALUE__INSTANCE = 0;
 
-  EReference getFrame_RootContext();
+	int ARRAY_REF_VALUE_FEATURE_COUNT = VALUE_FEATURE_COUNT + 1;
 
-  EReference getFrame_ReturnValue();
+	int ARRAY_REF_VALUE_OPERATION_COUNT = VALUE_OPERATION_COUNT + 0;
 
-  EReference getNewCall_Newz();
+	int SYMBOL_TO_SYMBOL_BINDING_MAP = 76;
 
-  EReference getMethodCall2_Methodcall();
+	int SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = 0;
 
-  EReference getObjectInstance_Fieldbindings();
+	int SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = 1;
 
-  EReference getObjectInstance_Type();
+	int SYMBOL_TO_SYMBOL_BINDING_MAP_FEATURE_COUNT = 2;
 
-  EReference getArrayInstance_Value();
+	int SYMBOL_TO_SYMBOL_BINDING_MAP_OPERATION_COUNT = 0;
 
-  EReference getObjectRefValue_Instance();
+	int CLAZZ_TO_METHOD_MAP = 77;
 
-  EReference getArrayRefValue_Instance();
+	int CLAZZ_TO_METHOD_MAP__KEY = 0;
 
-  EReference getSymbolToSymbolBindingMap_Key();
+	int CLAZZ_TO_METHOD_MAP__VALUE = 1;
 
-  EReference getSymbolToSymbolBindingMap_Value();
+	int CLAZZ_TO_METHOD_MAP_FEATURE_COUNT = 2;
 
-  EReference getClazzToMethodMap_Key();
+	int CLAZZ_TO_METHOD_MAP_OPERATION_COUNT = 0;
 
-  EReference getClazzToMethodMap_Value();
+	int MODULO = 78;
 
-  EReference getModulo_Left();
+	int MODULO__LEFT = 0;
 
-  EReference getModulo_Right();
+	int MODULO__RIGHT = 1;
 
-  EAttribute getProgram_Name();
+	int MODULO_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  EAttribute getImport_ImportedNamespace();
+	int MODULO_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EAttribute getTypeDeclaration_AccessLevel();
+	int ACCESS_LEVEL = 79;
 
-  EAttribute getClazz_Isabstract();
+	EClass getProgram();
 
-  EAttribute getMember_Access();
+	EAttribute getProgram_Name();
 
-  EAttribute getMethod_Isabstract();
+	EReference getProgram_Imports();
 
-  EAttribute getMethod_Isstatic();
+	EReference getProgram_Classes();
 
-  EAttribute getNamedElement_Name();
+	EReference getProgram_State();
 
-  EAttribute getStringConstant_Value();
+	EClass getImport();
 
-  EAttribute getIntConstant_Value();
+	EAttribute getImport_ImportedNamespace();
 
-  EAttribute getBoolConstant_Value();
+	EClass getTypeDeclaration();
 
-  EAttribute getIntegerValue_Value();
+	EAttribute getTypeDeclaration_AccessLevel();
 
-  EAttribute getStringValue_Value();
+	EReference getTypeDeclaration_Implementz();
 
-  EAttribute getBooleanValue_Value();
+	EReference getTypeDeclaration_Members();
 
-  EAttribute getOutputStream_Stream();
+	EClass getClazz();
 
-  EAttribute getArrayInstance_Size();
+	EAttribute getClazz_Isabstract();
 
-  MiniJavaFactory getMiniJavaFactory();
+	EReference getClazz_SuperClass();
 
-  interface Literals {
-    EClass PROGRAM = eINSTANCE.getProgram();
+	EClass getInterface();
 
-    EClass IMPORT = eINSTANCE.getImport();
+	EClass getMember();
 
-    EClass TYPE_DECLARATION = eINSTANCE.getTypeDeclaration();
+	EAttribute getMember_Access();
 
-    EClass CLAZZ = eINSTANCE.getClazz();
+	EClass getMethod();
 
-    EClass INTERFACE = eINSTANCE.getInterface();
+	EAttribute getMethod_Isabstract();
 
-    EClass MEMBER = eINSTANCE.getMember();
+	EAttribute getMethod_Isstatic();
 
-    EClass METHOD = eINSTANCE.getMethod();
+	EReference getMethod_Params();
 
-    EClass PARAMETER = eINSTANCE.getParameter();
+	EReference getMethod_Body();
 
-    EClass FIELD = eINSTANCE.getField();
+	EReference getMethod_Cache();
 
-    EClass BLOCK = eINSTANCE.getBlock();
+	EClass getParameter();
 
-    EClass STATEMENT = eINSTANCE.getStatement();
+	EClass getField();
 
-    EClass PRINT_STATEMENT = eINSTANCE.getPrintStatement();
+	EReference getField_DefaultValue();
 
-    EClass RETURN = eINSTANCE.getReturn();
+	EEnum getAccessLevel();
 
-    EClass IF_STATEMENT = eINSTANCE.getIfStatement();
+	EClass getBlock();
 
-    EClass WHILE_STATEMENT = eINSTANCE.getWhileStatement();
+	EReference getBlock_Statements();
 
-    EClass FOR_STATEMENT = eINSTANCE.getForStatement();
+	EClass getStatement();
 
-    EClass TYPE_REF = eINSTANCE.getTypeRef();
+	EClass getPrintStatement();
 
-    EClass SINGLE_TYPE_REF = eINSTANCE.getSingleTypeRef();
+	EReference getPrintStatement_Expression();
 
-    EClass CLASS_REF = eINSTANCE.getClassRef();
+	EClass getReturn();
 
-    EClass NAMED_ELEMENT = eINSTANCE.getNamedElement();
+	EReference getReturn_Expression();
 
-    EClass TYPED_DECLARATION = eINSTANCE.getTypedDeclaration();
+	EClass getIfStatement();
 
-    EClass SYMBOL = eINSTANCE.getSymbol();
+	EReference getIfStatement_Expression();
 
-    EClass VARIABLE_DECLARATION = eINSTANCE.getVariableDeclaration();
+	EReference getIfStatement_ThenBlock();
 
-    EClass ASSIGNMENT = eINSTANCE.getAssignment();
+	EReference getIfStatement_ElseBlock();
 
-    EClass ASSIGNEE = eINSTANCE.getAssignee();
+	EClass getWhileStatement();
 
-    EClass EXPRESSION = eINSTANCE.getExpression();
+	EReference getWhileStatement_Condition();
 
-    EClass ARRAY_TYPE_REF = eINSTANCE.getArrayTypeRef();
+	EReference getWhileStatement_Block();
 
-    EClass INTEGER_TYPE_REF = eINSTANCE.getIntegerTypeRef();
+	EClass getForStatement();
 
-    EClass BOOLEAN_TYPE_REF = eINSTANCE.getBooleanTypeRef();
+	EReference getForStatement_Declaration();
 
-    EClass STRING_TYPE_REF = eINSTANCE.getStringTypeRef();
+	EReference getForStatement_Condition();
 
-    EClass VOID_TYPE_REF = eINSTANCE.getVoidTypeRef();
+	EReference getForStatement_Progression();
 
-    EClass OR = eINSTANCE.getOr();
+	EReference getForStatement_Block();
 
-    EClass AND = eINSTANCE.getAnd();
+	EClass getTypeRef();
 
-    EClass EQUALITY = eINSTANCE.getEquality();
+	EClass getSingleTypeRef();
 
-    EClass INEQUALITY = eINSTANCE.getInequality();
+	EClass getClassRef();
 
-    EClass SUPERIOR_OR_EQUAL = eINSTANCE.getSuperiorOrEqual();
+	EReference getClassRef_ReferencedClass();
 
-    EClass INFERIOR_OR_EQUAL = eINSTANCE.getInferiorOrEqual();
+	EClass getNamedElement();
 
-    EClass SUPERIOR = eINSTANCE.getSuperior();
+	EAttribute getNamedElement_Name();
 
-    EClass INFERIOR = eINSTANCE.getInferior();
+	EClass getTypedDeclaration();
 
-    EClass PLUS = eINSTANCE.getPlus();
+	EReference getTypedDeclaration_TypeRef();
 
-    EClass MINUS = eINSTANCE.getMinus();
+	EClass getSymbol();
 
-    EClass MULTIPLICATION = eINSTANCE.getMultiplication();
+	EClass getVariableDeclaration();
 
-    EClass DIVISION = eINSTANCE.getDivision();
+	EClass getAssignment();
 
-    EClass ARRAY_ACCESS = eINSTANCE.getArrayAccess();
+	EReference getAssignment_Assignee();
 
-    EClass ARRAY_LENGTH = eINSTANCE.getArrayLength();
+	EReference getAssignment_Value();
 
-    EClass NOT = eINSTANCE.getNot();
+	EClass getAssignee();
 
-    EClass NEG = eINSTANCE.getNeg();
+	EClass getExpression();
 
-    EClass FIELD_ACCESS = eINSTANCE.getFieldAccess();
+	EClass getArrayTypeRef();
 
-    EClass METHOD_CALL = eINSTANCE.getMethodCall();
+	EReference getArrayTypeRef_TypeRef();
 
-    EClass STRING_CONSTANT = eINSTANCE.getStringConstant();
+	EClass getIntegerTypeRef();
 
-    EClass INT_CONSTANT = eINSTANCE.getIntConstant();
+	EClass getBooleanTypeRef();
 
-    EClass BOOL_CONSTANT = eINSTANCE.getBoolConstant();
+	EClass getStringTypeRef();
 
-    EClass THIS = eINSTANCE.getThis();
+	EClass getVoidTypeRef();
 
-    EClass SUPER = eINSTANCE.getSuper();
+	EClass getOr();
 
-    EClass NULL = eINSTANCE.getNull();
+	EReference getOr_Left();
 
-    EClass NEW_OBJECT = eINSTANCE.getNewObject();
+	EReference getOr_Right();
 
-    EClass NEW_ARRAY = eINSTANCE.getNewArray();
+	EClass getAnd();
 
-    EClass SYMBOL_REF = eINSTANCE.getSymbolRef();
+	EReference getAnd_Left();
 
-    EClass CONTEXT = eINSTANCE.getContext();
+	EReference getAnd_Right();
 
-    EClass VALUE = eINSTANCE.getValue();
+	EClass getEquality();
 
-    EClass INTEGER_VALUE = eINSTANCE.getIntegerValue();
+	EReference getEquality_Left();
 
-    EClass SYMBOL_BINDING = eINSTANCE.getSymbolBinding();
+	EReference getEquality_Right();
 
-    EClass FIELD_BINDING = eINSTANCE.getFieldBinding();
+	EClass getInequality();
 
-    EClass STRING_VALUE = eINSTANCE.getStringValue();
+	EReference getInequality_Left();
 
-    EClass BOOLEAN_VALUE = eINSTANCE.getBooleanValue();
+	EReference getInequality_Right();
 
-    EClass OUTPUT_STREAM = eINSTANCE.getOutputStream();
+	EClass getSuperiorOrEqual();
 
-    EClass STATE = eINSTANCE.getState();
+	EReference getSuperiorOrEqual_Left();
 
-    EClass FRAME = eINSTANCE.getFrame();
+	EReference getSuperiorOrEqual_Right();
 
-    EClass NULL_VALUE = eINSTANCE.getNullValue();
+	EClass getInferiorOrEqual();
 
-    EClass CALL = eINSTANCE.getCall();
+	EReference getInferiorOrEqual_Left();
 
-    EClass NEW_CALL = eINSTANCE.getNewCall();
+	EReference getInferiorOrEqual_Right();
 
-    EClass METHOD_CALL2 = eINSTANCE.getMethodCall2();
+	EClass getSuperior();
 
-    EClass OBJECT_INSTANCE = eINSTANCE.getObjectInstance();
+	EReference getSuperior_Left();
 
-    EClass ARRAY_INSTANCE = eINSTANCE.getArrayInstance();
+	EReference getSuperior_Right();
 
-    EClass OBJECT_REF_VALUE = eINSTANCE.getObjectRefValue();
+	EClass getInferior();
 
-    EClass ARRAY_REF_VALUE = eINSTANCE.getArrayRefValue();
+	EReference getInferior_Left();
 
-    EClass SYMBOL_TO_SYMBOL_BINDING_MAP = eINSTANCE.getSymbolToSymbolBindingMap();
+	EReference getInferior_Right();
 
-    EClass CLAZZ_TO_METHOD_MAP = eINSTANCE.getClazzToMethodMap();
+	EClass getPlus();
 
-    EClass MODULO = eINSTANCE.getModulo();
+	EReference getPlus_Left();
 
-    EReference PROGRAM__IMPORTS = eINSTANCE.getProgram_Imports();
+	EReference getPlus_Right();
 
-    EReference PROGRAM__CLASSES = eINSTANCE.getProgram_Classes();
+	EClass getMinus();
 
-    EReference PROGRAM__STATE = eINSTANCE.getProgram_State();
+	EReference getMinus_Left();
 
-    EReference TYPE_DECLARATION__IMPLEMENTZ = eINSTANCE.getTypeDeclaration_Implementz();
+	EReference getMinus_Right();
 
-    EReference TYPE_DECLARATION__MEMBERS = eINSTANCE.getTypeDeclaration_Members();
+	EClass getMultiplication();
 
-    EReference CLAZZ__SUPER_CLASS = eINSTANCE.getClazz_SuperClass();
+	EReference getMultiplication_Left();
 
-    EReference METHOD__PARAMS = eINSTANCE.getMethod_Params();
+	EReference getMultiplication_Right();
 
-    EReference METHOD__BODY = eINSTANCE.getMethod_Body();
+	EClass getDivision();
 
-    EReference METHOD__CACHE = eINSTANCE.getMethod_Cache();
+	EReference getDivision_Left();
 
-    EReference FIELD__DEFAULT_VALUE = eINSTANCE.getField_DefaultValue();
+	EReference getDivision_Right();
 
-    EReference BLOCK__STATEMENTS = eINSTANCE.getBlock_Statements();
+	EClass getArrayAccess();
 
-    EReference PRINT_STATEMENT__EXPRESSION = eINSTANCE.getPrintStatement_Expression();
+	EReference getArrayAccess_Object();
 
-    EReference RETURN__EXPRESSION = eINSTANCE.getReturn_Expression();
+	EReference getArrayAccess_Index();
 
-    EReference IF_STATEMENT__EXPRESSION = eINSTANCE.getIfStatement_Expression();
+	EClass getArrayLength();
 
-    EReference IF_STATEMENT__THEN_BLOCK = eINSTANCE.getIfStatement_ThenBlock();
+	EReference getArrayLength_Array();
 
-    EReference IF_STATEMENT__ELSE_BLOCK = eINSTANCE.getIfStatement_ElseBlock();
+	EClass getNot();
 
-    EReference WHILE_STATEMENT__CONDITION = eINSTANCE.getWhileStatement_Condition();
+	EReference getNot_Expression();
 
-    EReference WHILE_STATEMENT__BLOCK = eINSTANCE.getWhileStatement_Block();
+	EClass getNeg();
 
-    EReference FOR_STATEMENT__DECLARATION = eINSTANCE.getForStatement_Declaration();
+	EReference getNeg_Expression();
 
-    EReference FOR_STATEMENT__CONDITION = eINSTANCE.getForStatement_Condition();
+	EClass getFieldAccess();
 
-    EReference FOR_STATEMENT__PROGRESSION = eINSTANCE.getForStatement_Progression();
+	EReference getFieldAccess_Receiver();
 
-    EReference FOR_STATEMENT__BLOCK = eINSTANCE.getForStatement_Block();
+	EReference getFieldAccess_Field();
 
-    EReference CLASS_REF__REFERENCED_CLASS = eINSTANCE.getClassRef_ReferencedClass();
+	EClass getMethodCall();
 
-    EReference TYPED_DECLARATION__TYPE_REF = eINSTANCE.getTypedDeclaration_TypeRef();
+	EReference getMethodCall_Receiver();
 
-    EReference ASSIGNMENT__ASSIGNEE = eINSTANCE.getAssignment_Assignee();
+	EReference getMethodCall_Method();
 
-    EReference ASSIGNMENT__VALUE = eINSTANCE.getAssignment_Value();
+	EReference getMethodCall_Args();
 
-    EReference ARRAY_TYPE_REF__TYPE_REF = eINSTANCE.getArrayTypeRef_TypeRef();
+	EClass getStringConstant();
 
-    EReference OR__LEFT = eINSTANCE.getOr_Left();
+	EAttribute getStringConstant_Value();
 
-    EReference OR__RIGHT = eINSTANCE.getOr_Right();
+	EClass getIntConstant();
 
-    EReference AND__LEFT = eINSTANCE.getAnd_Left();
+	EAttribute getIntConstant_Value();
 
-    EReference AND__RIGHT = eINSTANCE.getAnd_Right();
+	EClass getBoolConstant();
 
-    EReference EQUALITY__LEFT = eINSTANCE.getEquality_Left();
+	EAttribute getBoolConstant_Value();
 
-    EReference EQUALITY__RIGHT = eINSTANCE.getEquality_Right();
+	EClass getThis();
 
-    EReference INEQUALITY__LEFT = eINSTANCE.getInequality_Left();
+	EClass getSuper();
 
-    EReference INEQUALITY__RIGHT = eINSTANCE.getInequality_Right();
+	EClass getNull();
 
-    EReference SUPERIOR_OR_EQUAL__LEFT = eINSTANCE.getSuperiorOrEqual_Left();
+	EClass getNewObject();
 
-    EReference SUPERIOR_OR_EQUAL__RIGHT = eINSTANCE.getSuperiorOrEqual_Right();
+	EReference getNewObject_Type();
 
-    EReference INFERIOR_OR_EQUAL__LEFT = eINSTANCE.getInferiorOrEqual_Left();
+	EReference getNewObject_Args();
 
-    EReference INFERIOR_OR_EQUAL__RIGHT = eINSTANCE.getInferiorOrEqual_Right();
+	EClass getNewArray();
 
-    EReference SUPERIOR__LEFT = eINSTANCE.getSuperior_Left();
+	EReference getNewArray_Type();
 
-    EReference SUPERIOR__RIGHT = eINSTANCE.getSuperior_Right();
+	EReference getNewArray_Size();
 
-    EReference INFERIOR__LEFT = eINSTANCE.getInferior_Left();
+	EClass getSymbolRef();
 
-    EReference INFERIOR__RIGHT = eINSTANCE.getInferior_Right();
+	EReference getSymbolRef_Symbol();
 
-    EReference PLUS__LEFT = eINSTANCE.getPlus_Left();
+	EClass getContext();
 
-    EReference PLUS__RIGHT = eINSTANCE.getPlus_Right();
+	EReference getContext_Bindings();
 
-    EReference MINUS__LEFT = eINSTANCE.getMinus_Left();
+	EReference getContext_ParentContext();
 
-    EReference MINUS__RIGHT = eINSTANCE.getMinus_Right();
+	EReference getContext_ChildContext();
 
-    EReference MULTIPLICATION__LEFT = eINSTANCE.getMultiplication_Left();
+	EReference getContext_Cache();
 
-    EReference MULTIPLICATION__RIGHT = eINSTANCE.getMultiplication_Right();
+	EClass getValue();
 
-    EReference DIVISION__LEFT = eINSTANCE.getDivision_Left();
+	EClass getIntegerValue();
 
-    EReference DIVISION__RIGHT = eINSTANCE.getDivision_Right();
+	EAttribute getIntegerValue_Value();
 
-    EReference ARRAY_ACCESS__OBJECT = eINSTANCE.getArrayAccess_Object();
+	EClass getSymbolBinding();
 
-    EReference ARRAY_ACCESS__INDEX = eINSTANCE.getArrayAccess_Index();
+	EReference getSymbolBinding_Value();
 
-    EReference ARRAY_LENGTH__ARRAY = eINSTANCE.getArrayLength_Array();
+	EReference getSymbolBinding_Symbol();
 
-    EReference NOT__EXPRESSION = eINSTANCE.getNot_Expression();
+	EClass getFieldBinding();
 
-    EReference NEG__EXPRESSION = eINSTANCE.getNeg_Expression();
+	EReference getFieldBinding_Field();
 
-    EReference FIELD_ACCESS__RECEIVER = eINSTANCE.getFieldAccess_Receiver();
+	EReference getFieldBinding_Value();
 
-    EReference FIELD_ACCESS__FIELD = eINSTANCE.getFieldAccess_Field();
+	EClass getStringValue();
 
-    EReference METHOD_CALL__RECEIVER = eINSTANCE.getMethodCall_Receiver();
+	EAttribute getStringValue_Value();
 
-    EReference METHOD_CALL__METHOD = eINSTANCE.getMethodCall_Method();
+	EClass getBooleanValue();
 
-    EReference METHOD_CALL__ARGS = eINSTANCE.getMethodCall_Args();
+	EAttribute getBooleanValue_Value();
 
-    EReference NEW_OBJECT__TYPE = eINSTANCE.getNewObject_Type();
+	EClass getOutputStream();
 
-    EReference NEW_OBJECT__ARGS = eINSTANCE.getNewObject_Args();
+	EAttribute getOutputStream_Stream();
 
-    EReference NEW_ARRAY__TYPE = eINSTANCE.getNewArray_Type();
+	EClass getState();
 
-    EReference NEW_ARRAY__SIZE = eINSTANCE.getNewArray_Size();
+	EReference getState_RootFrame();
 
-    EReference SYMBOL_REF__SYMBOL = eINSTANCE.getSymbolRef_Symbol();
+	EReference getState_ObjectsHeap();
 
-    EReference CONTEXT__BINDINGS = eINSTANCE.getContext_Bindings();
+	EReference getState_OutputStream();
 
-    EReference CONTEXT__PARENT_CONTEXT = eINSTANCE.getContext_ParentContext();
+	EReference getState_ArraysHeap();
 
-    EReference CONTEXT__CHILD_CONTEXT = eINSTANCE.getContext_ChildContext();
+	EReference getState_ContextCache();
 
-    EReference CONTEXT__CACHE = eINSTANCE.getContext_Cache();
+	EReference getState_FrameCache();
 
-    EReference SYMBOL_BINDING__VALUE = eINSTANCE.getSymbolBinding_Value();
+	EClass getFrame();
 
-    EReference SYMBOL_BINDING__SYMBOL = eINSTANCE.getSymbolBinding_Symbol();
+	EReference getFrame_Call();
 
-    EReference FIELD_BINDING__FIELD = eINSTANCE.getFieldBinding_Field();
+	EReference getFrame_Instance();
 
-    EReference FIELD_BINDING__VALUE = eINSTANCE.getFieldBinding_Value();
+	EReference getFrame_ChildFrame();
 
-    EReference STATE__ROOT_FRAME = eINSTANCE.getState_RootFrame();
+	EReference getFrame_ParentFrame();
 
-    EReference STATE__OBJECTS_HEAP = eINSTANCE.getState_ObjectsHeap();
+	EReference getFrame_RootContext();
 
-    EReference STATE__OUTPUT_STREAM = eINSTANCE.getState_OutputStream();
+	EReference getFrame_ReturnValue();
 
-    EReference STATE__ARRAYS_HEAP = eINSTANCE.getState_ArraysHeap();
+	EClass getNullValue();
 
-    EReference STATE__CONTEXT_CACHE = eINSTANCE.getState_ContextCache();
+	EClass getCall();
 
-    EReference STATE__FRAME_CACHE = eINSTANCE.getState_FrameCache();
+	EClass getNewCall();
 
-    EReference FRAME__CALL = eINSTANCE.getFrame_Call();
+	EReference getNewCall_Newz();
 
-    EReference FRAME__INSTANCE = eINSTANCE.getFrame_Instance();
+	EClass getMethodCall2();
 
-    EReference FRAME__CHILD_FRAME = eINSTANCE.getFrame_ChildFrame();
+	EReference getMethodCall2_Methodcall();
 
-    EReference FRAME__PARENT_FRAME = eINSTANCE.getFrame_ParentFrame();
+	EClass getObjectInstance();
 
-    EReference FRAME__ROOT_CONTEXT = eINSTANCE.getFrame_RootContext();
+	EReference getObjectInstance_Fieldbindings();
 
-    EReference FRAME__RETURN_VALUE = eINSTANCE.getFrame_ReturnValue();
+	EReference getObjectInstance_Type();
 
-    EReference NEW_CALL__NEWZ = eINSTANCE.getNewCall_Newz();
+	EClass getArrayInstance();
 
-    EReference METHOD_CALL2__METHODCALL = eINSTANCE.getMethodCall2_Methodcall();
+	EReference getArrayInstance_Value();
 
-    EReference OBJECT_INSTANCE__FIELDBINDINGS = eINSTANCE.getObjectInstance_Fieldbindings();
+	EAttribute getArrayInstance_Size();
 
-    EReference OBJECT_INSTANCE__TYPE = eINSTANCE.getObjectInstance_Type();
+	EClass getObjectRefValue();
 
-    EReference ARRAY_INSTANCE__VALUE = eINSTANCE.getArrayInstance_Value();
+	EReference getObjectRefValue_Instance();
 
-    EReference OBJECT_REF_VALUE__INSTANCE = eINSTANCE.getObjectRefValue_Instance();
+	EClass getArrayRefValue();
 
-    EReference ARRAY_REF_VALUE__INSTANCE = eINSTANCE.getArrayRefValue_Instance();
+	EReference getArrayRefValue_Instance();
 
-    EReference SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = eINSTANCE.getSymbolToSymbolBindingMap_Key();
+	EClass getSymbolToSymbolBindingMap();
 
-    EReference SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = eINSTANCE.getSymbolToSymbolBindingMap_Value();
+	EReference getSymbolToSymbolBindingMap_Key();
 
-    EReference CLAZZ_TO_METHOD_MAP__KEY = eINSTANCE.getClazzToMethodMap_Key();
+	EReference getSymbolToSymbolBindingMap_Value();
 
-    EReference CLAZZ_TO_METHOD_MAP__VALUE = eINSTANCE.getClazzToMethodMap_Value();
+	EClass getClazzToMethodMap();
 
-    EReference MODULO__LEFT = eINSTANCE.getModulo_Left();
+	EReference getClazzToMethodMap_Key();
 
-    EReference MODULO__RIGHT = eINSTANCE.getModulo_Right();
+	EReference getClazzToMethodMap_Value();
 
-    EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
+	EClass getModulo();
 
-    EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
+	EReference getModulo_Left();
 
-    EAttribute TYPE_DECLARATION__ACCESS_LEVEL = eINSTANCE.getTypeDeclaration_AccessLevel();
+	EReference getModulo_Right();
 
-    EAttribute CLAZZ__ISABSTRACT = eINSTANCE.getClazz_Isabstract();
+	MiniJavaFactory getMiniJavaFactory();
 
-    EAttribute MEMBER__ACCESS = eINSTANCE.getMember_Access();
+	interface Literals {
+		EClass PROGRAM = eINSTANCE.getProgram();
 
-    EAttribute METHOD__ISABSTRACT = eINSTANCE.getMethod_Isabstract();
+		EAttribute PROGRAM__NAME = eINSTANCE.getProgram_Name();
 
-    EAttribute METHOD__ISSTATIC = eINSTANCE.getMethod_Isstatic();
+		EReference PROGRAM__IMPORTS = eINSTANCE.getProgram_Imports();
 
-    EAttribute NAMED_ELEMENT__NAME = eINSTANCE.getNamedElement_Name();
+		EReference PROGRAM__CLASSES = eINSTANCE.getProgram_Classes();
 
-    EAttribute STRING_CONSTANT__VALUE = eINSTANCE.getStringConstant_Value();
+		EReference PROGRAM__STATE = eINSTANCE.getProgram_State();
 
-    EAttribute INT_CONSTANT__VALUE = eINSTANCE.getIntConstant_Value();
+		EClass IMPORT = eINSTANCE.getImport();
 
-    EAttribute BOOL_CONSTANT__VALUE = eINSTANCE.getBoolConstant_Value();
+		EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
 
-    EAttribute INTEGER_VALUE__VALUE = eINSTANCE.getIntegerValue_Value();
+		EClass NAMED_ELEMENT = eINSTANCE.getNamedElement();
 
-    EAttribute STRING_VALUE__VALUE = eINSTANCE.getStringValue_Value();
+		EAttribute NAMED_ELEMENT__NAME = eINSTANCE.getNamedElement_Name();
 
-    EAttribute BOOLEAN_VALUE__VALUE = eINSTANCE.getBooleanValue_Value();
+		EClass TYPE_DECLARATION = eINSTANCE.getTypeDeclaration();
 
-    EAttribute OUTPUT_STREAM__STREAM = eINSTANCE.getOutputStream_Stream();
+		EAttribute TYPE_DECLARATION__ACCESS_LEVEL = eINSTANCE.getTypeDeclaration_AccessLevel();
 
-    EAttribute ARRAY_INSTANCE__SIZE = eINSTANCE.getArrayInstance_Size();
-  }
+		EReference TYPE_DECLARATION__IMPLEMENTZ = eINSTANCE.getTypeDeclaration_Implementz();
+
+		EReference TYPE_DECLARATION__MEMBERS = eINSTANCE.getTypeDeclaration_Members();
+
+		EClass CLAZZ = eINSTANCE.getClazz();
+
+		EAttribute CLAZZ__ISABSTRACT = eINSTANCE.getClazz_Isabstract();
+
+		EReference CLAZZ__SUPER_CLASS = eINSTANCE.getClazz_SuperClass();
+
+		EClass INTERFACE = eINSTANCE.getInterface();
+
+		EClass TYPED_DECLARATION = eINSTANCE.getTypedDeclaration();
+
+		EReference TYPED_DECLARATION__TYPE_REF = eINSTANCE.getTypedDeclaration_TypeRef();
+
+		EClass MEMBER = eINSTANCE.getMember();
+
+		EAttribute MEMBER__ACCESS = eINSTANCE.getMember_Access();
+
+		EClass METHOD = eINSTANCE.getMethod();
+
+		EAttribute METHOD__ISABSTRACT = eINSTANCE.getMethod_Isabstract();
+
+		EAttribute METHOD__ISSTATIC = eINSTANCE.getMethod_Isstatic();
+
+		EReference METHOD__PARAMS = eINSTANCE.getMethod_Params();
+
+		EReference METHOD__BODY = eINSTANCE.getMethod_Body();
+
+		EReference METHOD__CACHE = eINSTANCE.getMethod_Cache();
+
+		EClass SYMBOL = eINSTANCE.getSymbol();
+
+		EClass PARAMETER = eINSTANCE.getParameter();
+
+		EClass FIELD = eINSTANCE.getField();
+
+		EReference FIELD__DEFAULT_VALUE = eINSTANCE.getField_DefaultValue();
+
+		EClass STATEMENT = eINSTANCE.getStatement();
+
+		EClass BLOCK = eINSTANCE.getBlock();
+
+		EReference BLOCK__STATEMENTS = eINSTANCE.getBlock_Statements();
+
+		EClass PRINT_STATEMENT = eINSTANCE.getPrintStatement();
+
+		EReference PRINT_STATEMENT__EXPRESSION = eINSTANCE.getPrintStatement_Expression();
+
+		EClass RETURN = eINSTANCE.getReturn();
+
+		EReference RETURN__EXPRESSION = eINSTANCE.getReturn_Expression();
+
+		EClass IF_STATEMENT = eINSTANCE.getIfStatement();
+
+		EReference IF_STATEMENT__EXPRESSION = eINSTANCE.getIfStatement_Expression();
+
+		EReference IF_STATEMENT__THEN_BLOCK = eINSTANCE.getIfStatement_ThenBlock();
+
+		EReference IF_STATEMENT__ELSE_BLOCK = eINSTANCE.getIfStatement_ElseBlock();
+
+		EClass WHILE_STATEMENT = eINSTANCE.getWhileStatement();
+
+		EReference WHILE_STATEMENT__CONDITION = eINSTANCE.getWhileStatement_Condition();
+
+		EReference WHILE_STATEMENT__BLOCK = eINSTANCE.getWhileStatement_Block();
+
+		EClass FOR_STATEMENT = eINSTANCE.getForStatement();
+
+		EReference FOR_STATEMENT__DECLARATION = eINSTANCE.getForStatement_Declaration();
+
+		EReference FOR_STATEMENT__CONDITION = eINSTANCE.getForStatement_Condition();
+
+		EReference FOR_STATEMENT__PROGRESSION = eINSTANCE.getForStatement_Progression();
+
+		EReference FOR_STATEMENT__BLOCK = eINSTANCE.getForStatement_Block();
+
+		EClass TYPE_REF = eINSTANCE.getTypeRef();
+
+		EClass SINGLE_TYPE_REF = eINSTANCE.getSingleTypeRef();
+
+		EClass CLASS_REF = eINSTANCE.getClassRef();
+
+		EReference CLASS_REF__REFERENCED_CLASS = eINSTANCE.getClassRef_ReferencedClass();
+
+		EClass VARIABLE_DECLARATION = eINSTANCE.getVariableDeclaration();
+
+		EClass ASSIGNMENT = eINSTANCE.getAssignment();
+
+		EReference ASSIGNMENT__ASSIGNEE = eINSTANCE.getAssignment_Assignee();
+
+		EReference ASSIGNMENT__VALUE = eINSTANCE.getAssignment_Value();
+
+		EClass ASSIGNEE = eINSTANCE.getAssignee();
+
+		EClass EXPRESSION = eINSTANCE.getExpression();
+
+		EClass ARRAY_TYPE_REF = eINSTANCE.getArrayTypeRef();
+
+		EReference ARRAY_TYPE_REF__TYPE_REF = eINSTANCE.getArrayTypeRef_TypeRef();
+
+		EClass INTEGER_TYPE_REF = eINSTANCE.getIntegerTypeRef();
+
+		EClass BOOLEAN_TYPE_REF = eINSTANCE.getBooleanTypeRef();
+
+		EClass STRING_TYPE_REF = eINSTANCE.getStringTypeRef();
+
+		EClass VOID_TYPE_REF = eINSTANCE.getVoidTypeRef();
+
+		EClass OR = eINSTANCE.getOr();
+
+		EReference OR__LEFT = eINSTANCE.getOr_Left();
+
+		EReference OR__RIGHT = eINSTANCE.getOr_Right();
+
+		EClass AND = eINSTANCE.getAnd();
+
+		EReference AND__LEFT = eINSTANCE.getAnd_Left();
+
+		EReference AND__RIGHT = eINSTANCE.getAnd_Right();
+
+		EClass EQUALITY = eINSTANCE.getEquality();
+
+		EReference EQUALITY__LEFT = eINSTANCE.getEquality_Left();
+
+		EReference EQUALITY__RIGHT = eINSTANCE.getEquality_Right();
+
+		EClass INEQUALITY = eINSTANCE.getInequality();
+
+		EReference INEQUALITY__LEFT = eINSTANCE.getInequality_Left();
+
+		EReference INEQUALITY__RIGHT = eINSTANCE.getInequality_Right();
+
+		EClass SUPERIOR_OR_EQUAL = eINSTANCE.getSuperiorOrEqual();
+
+		EReference SUPERIOR_OR_EQUAL__LEFT = eINSTANCE.getSuperiorOrEqual_Left();
+
+		EReference SUPERIOR_OR_EQUAL__RIGHT = eINSTANCE.getSuperiorOrEqual_Right();
+
+		EClass INFERIOR_OR_EQUAL = eINSTANCE.getInferiorOrEqual();
+
+		EReference INFERIOR_OR_EQUAL__LEFT = eINSTANCE.getInferiorOrEqual_Left();
+
+		EReference INFERIOR_OR_EQUAL__RIGHT = eINSTANCE.getInferiorOrEqual_Right();
+
+		EClass SUPERIOR = eINSTANCE.getSuperior();
+
+		EReference SUPERIOR__LEFT = eINSTANCE.getSuperior_Left();
+
+		EReference SUPERIOR__RIGHT = eINSTANCE.getSuperior_Right();
+
+		EClass INFERIOR = eINSTANCE.getInferior();
+
+		EReference INFERIOR__LEFT = eINSTANCE.getInferior_Left();
+
+		EReference INFERIOR__RIGHT = eINSTANCE.getInferior_Right();
+
+		EClass PLUS = eINSTANCE.getPlus();
+
+		EReference PLUS__LEFT = eINSTANCE.getPlus_Left();
+
+		EReference PLUS__RIGHT = eINSTANCE.getPlus_Right();
+
+		EClass MINUS = eINSTANCE.getMinus();
+
+		EReference MINUS__LEFT = eINSTANCE.getMinus_Left();
+
+		EReference MINUS__RIGHT = eINSTANCE.getMinus_Right();
+
+		EClass MULTIPLICATION = eINSTANCE.getMultiplication();
+
+		EReference MULTIPLICATION__LEFT = eINSTANCE.getMultiplication_Left();
+
+		EReference MULTIPLICATION__RIGHT = eINSTANCE.getMultiplication_Right();
+
+		EClass DIVISION = eINSTANCE.getDivision();
+
+		EReference DIVISION__LEFT = eINSTANCE.getDivision_Left();
+
+		EReference DIVISION__RIGHT = eINSTANCE.getDivision_Right();
+
+		EClass ARRAY_ACCESS = eINSTANCE.getArrayAccess();
+
+		EReference ARRAY_ACCESS__OBJECT = eINSTANCE.getArrayAccess_Object();
+
+		EReference ARRAY_ACCESS__INDEX = eINSTANCE.getArrayAccess_Index();
+
+		EClass ARRAY_LENGTH = eINSTANCE.getArrayLength();
+
+		EReference ARRAY_LENGTH__ARRAY = eINSTANCE.getArrayLength_Array();
+
+		EClass NOT = eINSTANCE.getNot();
+
+		EReference NOT__EXPRESSION = eINSTANCE.getNot_Expression();
+
+		EClass NEG = eINSTANCE.getNeg();
+
+		EReference NEG__EXPRESSION = eINSTANCE.getNeg_Expression();
+
+		EClass FIELD_ACCESS = eINSTANCE.getFieldAccess();
+
+		EReference FIELD_ACCESS__RECEIVER = eINSTANCE.getFieldAccess_Receiver();
+
+		EReference FIELD_ACCESS__FIELD = eINSTANCE.getFieldAccess_Field();
+
+		EClass METHOD_CALL = eINSTANCE.getMethodCall();
+
+		EReference METHOD_CALL__RECEIVER = eINSTANCE.getMethodCall_Receiver();
+
+		EReference METHOD_CALL__METHOD = eINSTANCE.getMethodCall_Method();
+
+		EReference METHOD_CALL__ARGS = eINSTANCE.getMethodCall_Args();
+
+		EClass STRING_CONSTANT = eINSTANCE.getStringConstant();
+
+		EAttribute STRING_CONSTANT__VALUE = eINSTANCE.getStringConstant_Value();
+
+		EClass INT_CONSTANT = eINSTANCE.getIntConstant();
+
+		EAttribute INT_CONSTANT__VALUE = eINSTANCE.getIntConstant_Value();
+
+		EClass BOOL_CONSTANT = eINSTANCE.getBoolConstant();
+
+		EAttribute BOOL_CONSTANT__VALUE = eINSTANCE.getBoolConstant_Value();
+
+		EClass THIS = eINSTANCE.getThis();
+
+		EClass SUPER = eINSTANCE.getSuper();
+
+		EClass NULL = eINSTANCE.getNull();
+
+		EClass NEW_OBJECT = eINSTANCE.getNewObject();
+
+		EReference NEW_OBJECT__TYPE = eINSTANCE.getNewObject_Type();
+
+		EReference NEW_OBJECT__ARGS = eINSTANCE.getNewObject_Args();
+
+		EClass NEW_ARRAY = eINSTANCE.getNewArray();
+
+		EReference NEW_ARRAY__TYPE = eINSTANCE.getNewArray_Type();
+
+		EReference NEW_ARRAY__SIZE = eINSTANCE.getNewArray_Size();
+
+		EClass SYMBOL_REF = eINSTANCE.getSymbolRef();
+
+		EReference SYMBOL_REF__SYMBOL = eINSTANCE.getSymbolRef_Symbol();
+
+		EClass CONTEXT = eINSTANCE.getContext();
+
+		EReference CONTEXT__BINDINGS = eINSTANCE.getContext_Bindings();
+
+		EReference CONTEXT__PARENT_CONTEXT = eINSTANCE.getContext_ParentContext();
+
+		EReference CONTEXT__CHILD_CONTEXT = eINSTANCE.getContext_ChildContext();
+
+		EReference CONTEXT__CACHE = eINSTANCE.getContext_Cache();
+
+		EClass VALUE = eINSTANCE.getValue();
+
+		EClass INTEGER_VALUE = eINSTANCE.getIntegerValue();
+
+		EAttribute INTEGER_VALUE__VALUE = eINSTANCE.getIntegerValue_Value();
+
+		EClass SYMBOL_BINDING = eINSTANCE.getSymbolBinding();
+
+		EReference SYMBOL_BINDING__VALUE = eINSTANCE.getSymbolBinding_Value();
+
+		EReference SYMBOL_BINDING__SYMBOL = eINSTANCE.getSymbolBinding_Symbol();
+
+		EClass FIELD_BINDING = eINSTANCE.getFieldBinding();
+
+		EReference FIELD_BINDING__FIELD = eINSTANCE.getFieldBinding_Field();
+
+		EReference FIELD_BINDING__VALUE = eINSTANCE.getFieldBinding_Value();
+
+		EClass STRING_VALUE = eINSTANCE.getStringValue();
+
+		EAttribute STRING_VALUE__VALUE = eINSTANCE.getStringValue_Value();
+
+		EClass BOOLEAN_VALUE = eINSTANCE.getBooleanValue();
+
+		EAttribute BOOLEAN_VALUE__VALUE = eINSTANCE.getBooleanValue_Value();
+
+		EClass OUTPUT_STREAM = eINSTANCE.getOutputStream();
+
+		EAttribute OUTPUT_STREAM__STREAM = eINSTANCE.getOutputStream_Stream();
+
+		EClass STATE = eINSTANCE.getState();
+
+		EReference STATE__ROOT_FRAME = eINSTANCE.getState_RootFrame();
+
+		EReference STATE__OBJECTS_HEAP = eINSTANCE.getState_ObjectsHeap();
+
+		EReference STATE__OUTPUT_STREAM = eINSTANCE.getState_OutputStream();
+
+		EReference STATE__ARRAYS_HEAP = eINSTANCE.getState_ArraysHeap();
+
+		EReference STATE__CONTEXT_CACHE = eINSTANCE.getState_ContextCache();
+
+		EReference STATE__FRAME_CACHE = eINSTANCE.getState_FrameCache();
+
+		EClass FRAME = eINSTANCE.getFrame();
+
+		EReference FRAME__CALL = eINSTANCE.getFrame_Call();
+
+		EReference FRAME__INSTANCE = eINSTANCE.getFrame_Instance();
+
+		EReference FRAME__CHILD_FRAME = eINSTANCE.getFrame_ChildFrame();
+
+		EReference FRAME__PARENT_FRAME = eINSTANCE.getFrame_ParentFrame();
+
+		EReference FRAME__ROOT_CONTEXT = eINSTANCE.getFrame_RootContext();
+
+		EReference FRAME__RETURN_VALUE = eINSTANCE.getFrame_ReturnValue();
+
+		EClass NULL_VALUE = eINSTANCE.getNullValue();
+
+		EClass CALL = eINSTANCE.getCall();
+
+		EClass NEW_CALL = eINSTANCE.getNewCall();
+
+		EReference NEW_CALL__NEWZ = eINSTANCE.getNewCall_Newz();
+
+		EClass METHOD_CALL2 = eINSTANCE.getMethodCall2();
+
+		EReference METHOD_CALL2__METHODCALL = eINSTANCE.getMethodCall2_Methodcall();
+
+		EClass OBJECT_INSTANCE = eINSTANCE.getObjectInstance();
+
+		EReference OBJECT_INSTANCE__FIELDBINDINGS = eINSTANCE.getObjectInstance_Fieldbindings();
+
+		EReference OBJECT_INSTANCE__TYPE = eINSTANCE.getObjectInstance_Type();
+
+		EClass ARRAY_INSTANCE = eINSTANCE.getArrayInstance();
+
+		EReference ARRAY_INSTANCE__VALUE = eINSTANCE.getArrayInstance_Value();
+
+		EAttribute ARRAY_INSTANCE__SIZE = eINSTANCE.getArrayInstance_Size();
+
+		EClass OBJECT_REF_VALUE = eINSTANCE.getObjectRefValue();
+
+		EReference OBJECT_REF_VALUE__INSTANCE = eINSTANCE.getObjectRefValue_Instance();
+
+		EClass ARRAY_REF_VALUE = eINSTANCE.getArrayRefValue();
+
+		EReference ARRAY_REF_VALUE__INSTANCE = eINSTANCE.getArrayRefValue_Instance();
+
+		EClass SYMBOL_TO_SYMBOL_BINDING_MAP = eINSTANCE.getSymbolToSymbolBindingMap();
+
+		EReference SYMBOL_TO_SYMBOL_BINDING_MAP__KEY = eINSTANCE.getSymbolToSymbolBindingMap_Key();
+
+		EReference SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE = eINSTANCE.getSymbolToSymbolBindingMap_Value();
+
+		EClass CLAZZ_TO_METHOD_MAP = eINSTANCE.getClazzToMethodMap();
+
+		EReference CLAZZ_TO_METHOD_MAP__KEY = eINSTANCE.getClazzToMethodMap_Key();
+
+		EReference CLAZZ_TO_METHOD_MAP__VALUE = eINSTANCE.getClazzToMethodMap_Value();
+
+		EClass MODULO = eINSTANCE.getModulo();
+
+		EReference MODULO__LEFT = eINSTANCE.getModulo_Left();
+
+		EReference MODULO__RIGHT = eINSTANCE.getModulo_Right();
+
+		EEnum ACCESSLEVEL = eINSTANCE.getAccessLevel();
+	}
 }

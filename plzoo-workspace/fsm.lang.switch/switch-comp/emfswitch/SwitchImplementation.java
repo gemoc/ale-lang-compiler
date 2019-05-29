@@ -15,28 +15,28 @@ import java.lang.Object;
 import java.lang.Override;
 
 public class SwitchImplementation extends FsmSwitch<Object> {
-  @Override
-  public Object caseFSM(FSM it) {
-    return new FSMOperation(it, this);
-  }
+	@Override
+	public Object caseFSM(FSM it) {
+		return new FSMOperation(it, this);
+	}
 
-  @Override
-  public Object caseState(State it) {
-    return new StateOperation(it, this);
-  }
+	@Override
+	public Object caseState(State it) {
+		return new StateOperation(it, this);
+	}
 
-  @Override
-  public Object caseBuffer(Buffer it) {
-    return new BufferOperation(it, this);
-  }
+	@Override
+	public Object caseBuffer(Buffer it) {
+		return new BufferOperation(it, this);
+	}
 
-  @Override
-  public Object caseTransition(Transition it) {
-    return new TransitionOperation(it, this);
-  }
+	@Override
+	public Object caseTransition(Transition it) {
+		return new TransitionOperation(it, this);
+	}
 
-  @Override
-  public Object caseSystem(System it) {
-    return new SystemOperation(it, this);
-  }
+	@Override
+	public Object caseSystem(System it) {
+		return new SystemOperation(it, this);
+	}
 }

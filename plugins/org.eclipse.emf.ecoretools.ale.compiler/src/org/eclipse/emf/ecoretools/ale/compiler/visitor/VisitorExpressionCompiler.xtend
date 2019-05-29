@@ -7,7 +7,6 @@ import java.util.Map
 import org.eclipse.acceleo.query.ast.Call
 import org.eclipse.acceleo.query.ast.CallType
 import org.eclipse.acceleo.query.ast.StringLiteral
-import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
@@ -23,23 +22,22 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 	extension VisitorTypeSystemUtil vtsu
 	extension VisitorNamingUtils vnu
 	extension EnumeratorService es
-	val List<ResolvedClass> resolved
+	extension CommonTypeInferer cti
+
 	val String packageRoot
 
 	new(VisitorTypeSystemUtil vtsu, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices,
 		VisitorNamingUtils vnu, String packageRoot, CommonTypeInferer cti, EnumeratorService es) {
-		super(cti, es, vtsu, vnu, registeredServices)
+		super(cti, es, vtsu, vnu, registeredServices, resolved)
 		this.vtsu = vtsu
-		this.resolved = resolved
 		this.vnu = vnu
 		this.packageRoot = packageRoot
 		this.es = es
+		this.cti = cti
 	}
 
-
-	
-	override compileThis(VarRef call, CompilerExpressionCtx ctx) {
-		CodeBlock.of(if(call.variableName == 'self') 'this.it' else call.variableName)
+	override getThis(CompilerExpressionCtx ctx) {
+		'this.it'
 	}
 
 	def allMethods(ExtendedClass aleClass) {
@@ -60,23 +58,19 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 		if (call.type == CallType.CALLORAPPLY) {
 			if (call.serviceName == 'aqlFeatureAccess') {
 				val t = infereType(call).head
+				val lhs = call.arguments.head.compileExpression(ctx)
 				if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-					CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression(ctx),
-						(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
-				} else if (t !==null && (t.type instanceof EClass || t.type instanceof EDataType)) {
+					CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
+				} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
 					if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 						(t.type as EDataType).instanceClass == boolean))
-						CodeBlock.of('''$L.is$L()''', call.arguments.head.compileExpression(ctx),
-							(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
+						CodeBlock.of('''$L.is$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 					else
-						CodeBlock.of('''$L.get$L()''', call.arguments.head.compileExpression(ctx),
-							(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
+						CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 				} else {
-					// TODO: add named block
 					CodeBlock.
 						of('''$L.«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''',
-							call.arguments.head.compileExpression(ctx))
-
+							lhs)
 				}
 			} else if (call.serviceName == 'create') {
 				call.callCreate(packageRoot)
@@ -104,7 +98,8 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 							ClassName.get(packageRoot.operationInterfacePackageName(t.type as EClass),
 								(t.type as EClass).operationInterfaceClassName))
 						for (param : call.arguments.tail.enumerate) {
-							hm.put("typeparam" + param.value, param.key.infereType?.head?.type?.resolveType2.solveNothing(param.key))
+							hm.put("typeparam" + param.value,
+								param.key.infereType?.head?.type?.resolveType2.solveNothing(param.key))
 							hm.put("expression" + param.value, param.key.compileExpression(ctx))
 						}
 
@@ -123,7 +118,7 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 				}
 			}
 		} else {
-			CodeBlock.of('''/*Call «call»*/''')	
+			CodeBlock.of('''/*Call «call»*/''')
 		}
 	}
 }

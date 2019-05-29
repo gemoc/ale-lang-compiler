@@ -4,13 +4,13 @@ import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Def extends EObject, TopLevelCmd {
-  String getName();
+	String getName();
 
-  void setName(String value);
+	void setName(String value);
 
-  Expr getExpr();
+	Expr getExpr();
 
-  void setExpr(Expr value);
+	void setExpr(Expr value);
 
-  void nextLine(Ctx ctx);
+	void nextLine(Ctx ctx);
 }

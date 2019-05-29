@@ -1,7 +1,11 @@
 package testoperationbody.interpreter.testoperationbody.impl;
 
+import java.lang.Boolean;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -15,7 +19,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
-
 import testoperationbody.interpreter.testoperationbody.ChildA;
 import testoperationbody.interpreter.testoperationbody.ConceptA;
 import testoperationbody.interpreter.testoperationbody.Main;
@@ -70,13 +73,6 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.MAIN__SINGLEBOOL, oldSinglebool, singlebool));
 	}
 
-	public void setSingleconcepta(ConceptA newSingleconcepta) {
-		ConceptA oldSingleconcepta = singleconcepta;
-		singleconcepta = newSingleconcepta;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.MAIN__SINGLECONCEPTA, oldSingleconcepta, singleconcepta));
-	}
-
 	public ConceptA getSingleconcepta() {
 		if (singleconcepta != null && singleconcepta.eIsProxy()) {
 			InternalEObject oldSingleconcepta = (InternalEObject) singleconcepta;
@@ -89,9 +85,16 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		}
 		return singleconcepta;
 	}
-	
+
 	public ConceptA basicGetSingleconcepta() {
 		return singleconcepta;
+	}
+
+	public void setSingleconcepta(ConceptA newSingleconcepta) {
+		ConceptA oldSingleconcepta = singleconcepta;
+		singleconcepta = newSingleconcepta;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.MAIN__SINGLECONCEPTA, oldSingleconcepta, singleconcepta));
 	}
 
 	public EList<Parent> getChildren() {
@@ -197,13 +200,13 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 	}
 
 	public void testPolymorphism() {
-		this.getChildren().add(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createChildA());
-		this.getChildren().add(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createChildB());
+		this.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildA());
+		this.getChildren().add(TestoperationbodyFactory.eINSTANCE.createChildB());
 		for (Parent child : this.getChildren()) {
-			((Parent)child).overriden();
-			((Parent)child).notOverriden();
+			((Parent) (child)).overriden();
+			((Parent) (child)).notOverriden();
 			if (child instanceof ChildA) {
-				((ChildA)child).onlyA();
+				((ChildA) (child)).onlyA();
 			}
 		}
 	}
@@ -211,10 +214,10 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 	public void main() {
 		this.getListint().add(1);
 		this.getListint().remove(1);
-		this.getListconcepta().add(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
-		this.getListconcepta().remove(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.getListconcepta().add(TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.getListconcepta().remove(TestoperationbodyFactory.eINSTANCE.createConceptA());
 		this.setSinglebool(false);
-		this.setSingleconcepta(testoperationbody.interpreter.testoperationbody.TestoperationbodyFactory.eINSTANCE.createConceptA());
+		this.setSingleconcepta(TestoperationbodyFactory.eINSTANCE.createConceptA());
 		int a = ((int) (1));
 		ConceptA b = ((ConceptA) (TestoperationbodyFactory.eINSTANCE.createConceptA()));
 		EList<String> events = ((EList<String>) (CollectionService.createEList("event1", "event2")));
@@ -232,16 +235,16 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			CollectionService.get(this.getListconcepta(), 0);
 			CollectionService.head(this.getListconcepta());
 			CollectionService.isEmpty(this.getListconcepta());
-			CollectionService.select(this.getListconcepta(), (x) -> ((testoperationbody.interpreter.testoperationbody.ConceptA)x).op());
-			CollectionService.exists(this.getListconcepta(), (x) -> ((testoperationbody.interpreter.testoperationbody.ConceptA)x).op());
+			CollectionService.select(this.getListconcepta(), (x) -> ((ConceptA) (x)).op());
+			CollectionService.exists(this.getListconcepta(), (x) -> ((ConceptA) (x)).op());
 		}
 		for (String i3: events) {
 			CollectionService.size(events);
 			CollectionService.get(events, 0);
 			CollectionService.head(events);
 			CollectionService.isEmpty(events);
-			CollectionService.select(events, (x) -> !org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((x), ("ok")));
-			CollectionService.exists(events, (x) -> !org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((x), ("ok")));
+			CollectionService.select(events, (x) -> !EqualService.equals((x), ("ok")));
+			CollectionService.exists(events, (x) -> !EqualService.equals((x), ("ok")));
 		}
 		for (Integer i4: ax) {
 			CollectionService.size(ax);
@@ -251,23 +254,23 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			CollectionService.select(ax, (x) -> (x) < (0));
 			CollectionService.exists(ax, (x) -> (x) < (0));
 		}
-		LogService.log(((testoperationbody.interpreter.testoperationbody.Main)this).ma());
-		if ((((Main)this).ma()) < (12)) {
+		LogService.log(((Main) (this)).ma());
+		if ((((Main) (this)).ma()) < (12)) {
 			LogService.log("ok");
 		}
 		else {
 			LogService.log("fail");
 		}
 		int cptr = ((int) (1));
-		while ((cptr) < (((Main)this).ma())) {
+		while ((cptr) < (((Main) (this)).ma())) {
 			cptr = (cptr) + (1);
 		}
 		boolean truz = ((boolean) (!(false)));
 		boolean gt = ((boolean) ((1) > (2)));
-		boolean ne = ((boolean) (!EqualService.equals((((Main)this).ma()), (42))));
+		boolean ne = ((boolean) (!EqualService.equals((((Main) (this)).ma()), (42))));
 		int x = ((int) ((CollectionService.get(this.listint, 0)) - (1)));
 		int xd = ((int) ((43) / (3)));
-		boolean eq = ((boolean) (EqualService.equals((((Main)this).ma()), (CollectionService.head(this.listint)))));
+		boolean eq = ((boolean) (EqualService.equals((((Main) (this)).ma()), (CollectionService.head(this.listint)))));
 		boolean leq = ((boolean) ((12) <= (11)));
 		boolean geq = ((boolean) ((12.3) >= (11)));
 		double multpl = ((double) ((12.3) * (11.4)));

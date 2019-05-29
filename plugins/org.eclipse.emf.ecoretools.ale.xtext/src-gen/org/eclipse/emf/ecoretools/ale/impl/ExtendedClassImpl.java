@@ -217,11 +217,11 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
         return;
       case AlePackage.EXTENDED_CLASS__EXTENDS:
         getExtends().clear();
-        getExtends().addAll((Collection<? extends String>)newValue);
+        getExtends().addAll((Collection<? extends String>) newValue);
         return;
       case AlePackage.EXTENDED_CLASS__MUTABLES:
         getMutables().clear();
-        getMutables().addAll((Collection<? extends MutableRef>)newValue);
+        getMutables().addAll((Collection<? extends MutableRef>) newValue);
         return;
     }
     super.eSet(featureID, newValue);

@@ -5,113 +5,149 @@ import interpreter.boa.interpreter.boa.Ctx;
 import interpreter.boa.interpreter.boa.EvalFunRes;
 import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 public class EvalFunResImpl extends EvalResImpl implements EvalFunRes {
-  protected static final String NAME_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = null;
 
-  protected String name = NAME_EDEFAULT;
+	protected String name = NAME_EDEFAULT;
 
-  protected Expr exp;
+	protected Expr exp;
 
-  protected Ctx ctx;
+	protected Ctx ctx;
 
-  protected EvalFunResImpl() {
-    super();
-  }
+	protected EvalFunResImpl() {
+		super();
+	}
 
-  public String getName() {
-    return name;}
+	@Override
+	protected EClass eStaticClass() {
+		return BoaPackage.Literals.EVAL_FUN_RES;
+	}
 
-  public void setName(String name) {
-    this.name = name;}
+	public Expr getExp() {
+		if (exp != null && exp.eIsProxy()) {
+			InternalEObject oldExp = (InternalEObject) exp;
+			exp = (Expr) eResolveProxy(oldExp);
+			if (exp != oldExp) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.EVAL_FUN_RES__EXP,
+							oldExp, exp));
+			}
+		}
+		return exp;
+	}
 
-  public void setExp(Expr newExp) {
-    Expr oldExp = exp;
-    exp = newExp;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.EVAL_FUN_RES__EXP, oldExp, exp));
-  }
+	public Expr basicGetExp() {
+		return exp;
+	}
 
-  public Expr getExp() {
-    return exp;}
+	public void setExp(Expr newExp) {
+		Expr oldExp = exp;
+		exp = newExp;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.EVAL_FUN_RES__EXP, oldExp, exp));
+	}
 
-  public void setCtx(Ctx newCtx) {
-    Ctx oldCtx = ctx;
-    ctx = newCtx;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.EVAL_FUN_RES__CTX, oldCtx, ctx));
-  }
+	public Ctx getCtx() {
+		if (ctx != null && ctx.eIsProxy()) {
+			InternalEObject oldCtx = (InternalEObject) ctx;
+			ctx = (Ctx) eResolveProxy(oldCtx);
+			if (ctx != oldCtx) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.EVAL_FUN_RES__CTX,
+							oldCtx, ctx));
+			}
+		}
+		return ctx;
+	}
 
-  public Ctx getCtx() {
-    return ctx;}
+	public Ctx basicGetCtx() {
+		return ctx;
+	}
 
-  protected EClass eStaticClass() {
-    return BoaPackage.Literals.EVAL_FUN_RES;}
+	public void setCtx(Ctx newCtx) {
+		Ctx oldCtx = ctx;
+		ctx = newCtx;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.EVAL_FUN_RES__CTX, oldCtx, ctx));
+	}
 
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case BoaPackage.EVAL_FUN_RES__EXP:
-    	setExp((interpreter.boa.interpreter.boa.Expr) newValue);
-    return;
-    case BoaPackage.EVAL_FUN_RES__CTX:
-    	setCtx((interpreter.boa.interpreter.boa.Ctx) newValue);
-    return;
-    case BoaPackage.EVAL_FUN_RES__NAME:
-    	setName((java.lang.String) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	public String getName() {
+		return name;
+	}
 
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case BoaPackage.EVAL_FUN_RES__EXP:
-    	setExp((interpreter.boa.interpreter.boa.Expr) null);
-    return;
-    case BoaPackage.EVAL_FUN_RES__CTX:
-    	setCtx((interpreter.boa.interpreter.boa.Ctx) null);
-    return;
-    case BoaPackage.EVAL_FUN_RES__NAME:
-    	setName(NAME_EDEFAULT);
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.EVAL_FUN_RES__NAME, oldName, name));
+	}
 
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case BoaPackage.EVAL_FUN_RES__EXP:
-    return getExp();
-    case BoaPackage.EVAL_FUN_RES__CTX:
-    return getCtx();
-    case BoaPackage.EVAL_FUN_RES__NAME:
-    return getName();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case BoaPackage.EVAL_FUN_RES__EXP :
+				if (resolve)
+					return getExp();
+				return basicGetExp();
+			case BoaPackage.EVAL_FUN_RES__CTX :
+				if (resolve)
+					return getCtx();
+				return basicGetCtx();
+			case BoaPackage.EVAL_FUN_RES__NAME :
+				return getName();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case BoaPackage.EVAL_FUN_RES__EXP:
-    	return exp != null;
-    case BoaPackage.EVAL_FUN_RES__CTX:
-    	return ctx != null;
-    case BoaPackage.EVAL_FUN_RES__NAME:
-    	return name != NAME_EDEFAULT;
-    }
-    return super.eIsSet(featureID);
-  }
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case BoaPackage.EVAL_FUN_RES__EXP :
+				setExp((Expr) newValue);
+				return;
+			case BoaPackage.EVAL_FUN_RES__CTX :
+				setCtx((Ctx) newValue);
+				return;
+			case BoaPackage.EVAL_FUN_RES__NAME :
+				setName((String) newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case BoaPackage.EVAL_FUN_RES__EXP :
+				setExp((Expr) null);
+				return;
+			case BoaPackage.EVAL_FUN_RES__CTX :
+				setCtx((Ctx) null);
+				return;
+			case BoaPackage.EVAL_FUN_RES__NAME :
+				setName(NAME_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
+
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case BoaPackage.EVAL_FUN_RES__EXP :
+				return exp != null;
+			case BoaPackage.EVAL_FUN_RES__CTX :
+				return ctx != null;
+			case BoaPackage.EVAL_FUN_RES__NAME :
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+		}
+		return super.eIsSet(featureID);
+	}
 }

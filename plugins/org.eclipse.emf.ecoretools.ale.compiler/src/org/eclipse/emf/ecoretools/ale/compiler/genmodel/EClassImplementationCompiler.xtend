@@ -427,7 +427,7 @@ class EClassImplementationCompiler {
 		if (!eClass.EStructuralFeatures.empty) {
 			val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
 			val namedMap = produceFeatureSwitchMap(eClass, packageRoot)
-			val ret = MethodSpec.methodBuilder('eSet').addAnnotation(Override) // TODO: add conditional SuppressWarning annotation here
+			val ret = MethodSpec.methodBuilder('eSet').addAnnotation(Override)
 			.addParameter(int, 'featureID').applyIfTrue(dsl.dslProp.getProperty('truffle', "false") == "true", [
 				addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
 			]).addParameter(Object, 'newValue').addModifiers(PUBLIC).addNamedCode('''
@@ -517,7 +517,7 @@ class EClassImplementationCompiler {
 					«ENDIF»
 				«ELSE»
 					get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»().clear();
-					get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T)newValue);
+					get«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»().addAll(($collection«esf.name»:T) newValue);
 				«ENDIF»
 			«ELSE»
 				set«IF isTyped»Typed«ENDIF»«esf.name.toFirstUpper»(«IF  (genFeature.getTypeGenDataType() === null || !genFeature.getTypeGenDataType().isObjectType() || !genFeature.getRawType().equals(genFeature.getType(genCls))) »($collection«esf.name»:T) «ENDIF»newValue);
@@ -527,7 +527,6 @@ class EClassImplementationCompiler {
 	}
 	
 	def generatedEGetCase(EStructuralFeature esf, boolean isTyped, EClass currentEClass) {
-		// FIXME: a lot of corner cases are not implemeted in this method		
 		val eClass = esf.EContainingClass
 		val genCls = resolved.filter[it.eCls.name == eClass.name && it.eCls.EPackage.name == eClass.EPackage.name].head.genCls
 		val genFeature = genCls.declaredFieldGenFeatures.filter[it.name == esf.name].head
@@ -667,7 +666,7 @@ class EClassImplementationCompiler {
 		eClass.allESFPlusInheritedESF
 			.map [ field |
 			val fieldType = field.resolveFieldType(packageRoot)
-			eClassGetterCompiler.compileAccessors(field, fieldType, packageRoot, eClass, dsl, ePackageInterfaceType, isMapElement)
+			eClassGetterCompiler.compileAccessors(field, fieldType, packageRoot, eClass, ePackageInterfaceType, isMapElement)
 		].flatten
 	}
 

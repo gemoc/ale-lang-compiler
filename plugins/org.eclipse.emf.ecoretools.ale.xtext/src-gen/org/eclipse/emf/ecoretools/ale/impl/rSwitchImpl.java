@@ -320,7 +320,7 @@ public class rSwitchImpl extends MinimalEObjectImpl.Container implements rSwitch
         return;
       case AlePackage.RSWITCH__CASES:
         getCases().clear();
-        getCases().addAll((Collection<? extends rCase>)newValue);
+        getCases().addAll((Collection<? extends rCase>) newValue);
         return;
       case AlePackage.RSWITCH__OTHER:
         setOther((ExpressionStmt)newValue);

@@ -254,7 +254,7 @@ public class SwitchImpl extends ExpressionImpl implements Switch {
 				return;
 			case ImplementationPackage.SWITCH__CASES:
 				getCases().clear();
-				getCases().addAll((Collection<? extends Case>)newValue);
+				getCases().addAll((Collection<? extends Case>) newValue);
 				return;
 			case ImplementationPackage.SWITCH__DEFAULT:
 				setDefault((Expression)newValue);

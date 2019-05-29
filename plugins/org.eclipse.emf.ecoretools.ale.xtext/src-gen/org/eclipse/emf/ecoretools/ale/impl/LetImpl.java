@@ -202,7 +202,7 @@ public class LetImpl extends ExpressionImpl implements Let
     {
       case AlePackage.LET__BINDINGS:
         getBindings().clear();
-        getBindings().addAll((Collection<? extends binding>)newValue);
+        getBindings().addAll((Collection<? extends binding>) newValue);
         return;
       case AlePackage.LET__EXP:
         setExp((Expression)newValue);

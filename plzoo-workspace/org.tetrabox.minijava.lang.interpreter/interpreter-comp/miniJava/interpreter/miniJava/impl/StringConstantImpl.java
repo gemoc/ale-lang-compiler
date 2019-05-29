@@ -1,91 +1,86 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
+import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.State;
 import miniJava.interpreter.miniJava.StringConstant;
+import miniJava.interpreter.miniJava.StringValue;
 import miniJava.interpreter.miniJava.Value;
-import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "StringConstant"
-)
 public class StringConstantImpl extends ExpressionImpl implements StringConstant {
-  protected static final String VALUE_EDEFAULT = null;
+	protected static final String VALUE_EDEFAULT = null;
 
-  protected String value = VALUE_EDEFAULT;
+	protected String value = VALUE_EDEFAULT;
 
-  protected StringConstantImpl() {
-    super();
-  }
+	protected StringConstantImpl() {
+		super();
+	}
 
-  public String getValue() {
-    return value;}
+	@Override
+	protected EClass eStaticClass() {
+		return MiniJavaPackage.Literals.STRING_CONSTANT;
+	}
 
-  public void setValue(String value) {
-    this.value = value;}
+	public String getValue() {
+		return value;
+	}
 
-  @TruffleBoundary
-  protected EClass eStaticClass() {
-    return MiniJavaPackage.Literals.STRING_CONSTANT;}
+	public void setValue(String newValue) {
+		String oldValue = value;
+		value = newValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.STRING_CONSTANT__VALUE, oldValue, value));
+	}
 
-  @TruffleBoundary
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case MiniJavaPackage.STRING_CONSTANT__VALUE:
-    	setValue((java.lang.String) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case MiniJavaPackage.STRING_CONSTANT__VALUE :
+				return getValue();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
-  @TruffleBoundary
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.STRING_CONSTANT__VALUE:
-    	setValue(VALUE_EDEFAULT);
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case MiniJavaPackage.STRING_CONSTANT__VALUE :
+				setValue((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  @TruffleBoundary
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case MiniJavaPackage.STRING_CONSTANT__VALUE:
-    return getValue();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case MiniJavaPackage.STRING_CONSTANT__VALUE :
+				setValue(VALUE_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
-  @TruffleBoundary
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.STRING_CONSTANT__VALUE:
-    	return value != VALUE_EDEFAULT;
-    }
-    return super.eIsSet(featureID);
-  }
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case MiniJavaPackage.STRING_CONSTANT__VALUE :
+				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+		}
+		return super.eIsSet(featureID);
+	}
 
-  @TruffleBoundary
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  public Value evaluateExpression(State state) {
-    Value result;
-    miniJava.interpreter.miniJava.StringValue ret = ((miniJava.interpreter.miniJava.StringValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createStringValue());
-        ret.setValue(this.value);
-        result = ret;
-        ;
-    return result;
-  }
+	public Value evaluateExpression(State state) {
+		Value result;
+		StringValue ret = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+		ret.setValue(this.value);
+		result = (Value) (ret) ;
+		return result;
+	}
 }

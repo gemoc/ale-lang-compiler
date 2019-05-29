@@ -7,9 +7,7 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: emfrelations,
- emfrelations.impl,
- emfrelations.util,
+Export-Package: 
  fr.mleduc.xp.emfrelations.emfrelations,
  fr.mleduc.xp.emfrelations.emfrelations.impl,
  fr.mleduc.xp.emfrelations.emfrelations.util

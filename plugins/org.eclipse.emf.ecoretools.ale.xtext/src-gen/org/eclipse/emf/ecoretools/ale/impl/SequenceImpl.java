@@ -135,7 +135,7 @@ public class SequenceImpl extends literalImpl implements Sequence
     {
       case AlePackage.SEQUENCE__PARAMS:
         getParams().clear();
-        getParams().addAll((Collection<? extends Expression>)newValue);
+        getParams().addAll((Collection<? extends Expression>) newValue);
         return;
     }
     super.eSet(featureID, newValue);

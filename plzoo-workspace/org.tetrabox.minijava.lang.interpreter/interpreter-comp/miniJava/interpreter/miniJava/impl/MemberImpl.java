@@ -1,80 +1,74 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
+import java.lang.Override;
 import miniJava.interpreter.miniJava.AccessLevel;
 import miniJava.interpreter.miniJava.Member;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
-import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-@NodeInfo(
-    description = "Member"
-)
 public class MemberImpl extends TypedDeclarationImpl implements Member {
-  protected static final AccessLevel ACCESS_EDEFAULT = miniJava.interpreter.miniJava.AccessLevel.valueOf("PRIVATE");
+	protected static final AccessLevel ACCESS_EDEFAULT = AccessLevel.PRIVATE;
 
-  protected AccessLevel access = ACCESS_EDEFAULT;
+	protected AccessLevel access = ACCESS_EDEFAULT;
 
-  protected MemberImpl() {
-    super();
-  }
+	protected MemberImpl() {
+		super();
+	}
 
-  public AccessLevel getAccess() {
-    return access;}
+	@Override
+	protected EClass eStaticClass() {
+		return MiniJavaPackage.Literals.MEMBER;
+	}
 
-  public void setAccess(AccessLevel access) {
-    this.access = access;}
+	public AccessLevel getAccess() {
+		return access;
+	}
 
-  @TruffleBoundary
-  protected EClass eStaticClass() {
-    return MiniJavaPackage.Literals.MEMBER;}
+	public void setAccess(AccessLevel newAccess) {
+		AccessLevel oldAccess = access;
+		access = newAccess == null ? ACCESS_EDEFAULT : newAccess;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.MEMBER__ACCESS, oldAccess, access));
+	}
 
-  @TruffleBoundary
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case MiniJavaPackage.MEMBER__ACCESS:
-    	setAccess((miniJava.interpreter.miniJava.AccessLevel) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case MiniJavaPackage.MEMBER__ACCESS :
+				return getAccess();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
-  @TruffleBoundary
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.MEMBER__ACCESS:
-    	setAccess(ACCESS_EDEFAULT);
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case MiniJavaPackage.MEMBER__ACCESS :
+				setAccess((AccessLevel)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  @TruffleBoundary
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case MiniJavaPackage.MEMBER__ACCESS:
-    return getAccess();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case MiniJavaPackage.MEMBER__ACCESS :
+				setAccess(ACCESS_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
-  @TruffleBoundary
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.MEMBER__ACCESS:
-    	return access != ACCESS_EDEFAULT;
-    }
-    return super.eIsSet(featureID);
-  }
-
-  @TruffleBoundary
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case MiniJavaPackage.MEMBER__ACCESS :
+				return access != ACCESS_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 }

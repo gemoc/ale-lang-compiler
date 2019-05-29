@@ -437,7 +437,7 @@ public class ApplyImpl extends ExpressionImpl implements Apply
         return;
       case AlePackage.APPLY__PARAMS:
         getParams().clear();
-        getParams().addAll((Collection<? extends Expression>)newValue);
+        getParams().addAll((Collection<? extends Expression>) newValue);
         return;
     }
     super.eSet(featureID, newValue);

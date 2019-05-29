@@ -1,30 +1,29 @@
 package miniJava.interpreter.miniJava;
 
-import com.oracle.truffle.api.nodes.NodeInterface;
+import java.util.Map.Entry;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
-public interface Method extends EObject, NodeInterface, Member {
-  boolean isIsabstract();
+public interface Method extends EObject, Member {
+	boolean isIsabstract();
 
-  void setIsabstract(boolean value);
+	void setIsabstract(boolean value);
 
-  boolean isIsstatic();
+	boolean isIsstatic();
 
-  void setIsstatic(boolean value);
+	void setIsstatic(boolean value);
 
-  EList<Parameter> getParams();
+	EList<Parameter> getParams();
 
-  Block getBody();
+	Block getBody();
 
-  void setBody(Block value);
+	void setBody(Block value);
 
-  EMap<Clazz, Method> getCache();
+	EList<Map.Entry<Clazz, Method>> getCache();
 
-  void evaluateStatement(State state);
+	void evaluateStatement(State state);
 
-  Method findOverride(Clazz c);
+	Method findOverride(Clazz c);
 
-  void call(State state);
+	void call(State state);
 }

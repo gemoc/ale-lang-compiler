@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/testmaprelations/interpreter-comp" complianceLevel="8.0"
+    copyrightFields="false">
+  <foreignModel>testmaprelations.ecore</foreignModel>
+  <genPackages prefix="Testmaprelations" basePackage="testmaprelations.interpreter"
+      disposableProviderFactory="true" ecorePackage="platform:/resource/testmaprelations/src/testmaprelations.ecore#/">
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA0ToCB0MapEntry">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA0ToCB0MapEntry/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA0ToCB0MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA0">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA0/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB0">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB0/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA1ToCB1MapEntry">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA1ToCB1MapEntry/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA1ToCB1MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB1">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB1/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA1">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA1/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA2">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA2/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB2">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB2/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA2ToCB2MapEntry">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA2ToCB2MapEntry/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA2ToCB2MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB3">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB3/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA3">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA3/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA3ToCB3MapEntry">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA3ToCB3MapEntry/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA3ToCB3MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA4">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA4/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA4ToCB4MapEntry">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA4ToCB4MapEntry/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA4ToCB4MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB4">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB4/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA5">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA5/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB5">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB5/mapca0tocb0mapentry"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA5ToCB5MapEntry">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA5ToCB5MapEntry/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA5ToCB5MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA6ToCB6MapEntry">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA6ToCB6MapEntry/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA6ToCB6MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA6"/>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB6"/>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA7"/>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA7ToCB7MapEntry">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA7ToCB7MapEntry/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA7ToCB7MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB7"/>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA8"/>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA8ToCB8MapEntry">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA8ToCB8MapEntry/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA8ToCB8MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB8"/>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA9ToCB9MapEntry">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA9ToCB9MapEntry/key"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testmaprelations/src/testmaprelations.ecore#//MapCA9ToCB9MapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CB9"/>
+    <genClasses ecoreClass="platform:/resource/testmaprelations/src/testmaprelations.ecore#//CA9"/>
+  </genPackages>
+</genmodel:GenModel>

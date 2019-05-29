@@ -226,7 +226,8 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImplementationPackage.EXTENDED_CLASS__BASE_CLASS:
-				if (resolve) return getBaseClass();
+				if (resolve)
+					return getBaseClass();
 				return basicGetBaseClass();
 			case ImplementationPackage.EXTENDED_CLASS__EXTENDS:
 				return getExtends();
@@ -252,15 +253,15 @@ public class ExtendedClassImpl extends BehavioredClassImpl implements ExtendedCl
 				return;
 			case ImplementationPackage.EXTENDED_CLASS__EXTENDS:
 				getExtends().clear();
-				getExtends().addAll((Collection<? extends ExtendedClass>)newValue);
+				getExtends().addAll((Collection<? extends ExtendedClass>) newValue);
 				return;
 			case ImplementationPackage.EXTENDED_CLASS__CHILDREN:
 				getChildren().clear();
-				getChildren().addAll((Collection<? extends ExtendedClass>)newValue);
+				getChildren().addAll((Collection<? extends ExtendedClass>) newValue);
 				return;
 			case ImplementationPackage.EXTENDED_CLASS__MUTABLE:
 				getMutable().clear();
-				getMutable().addAll((Collection<? extends String>)newValue);
+				getMutable().addAll((Collection<? extends String>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

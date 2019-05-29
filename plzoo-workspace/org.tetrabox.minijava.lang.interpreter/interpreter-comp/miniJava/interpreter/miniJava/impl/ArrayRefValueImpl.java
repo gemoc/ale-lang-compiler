@@ -1,124 +1,117 @@
 package miniJava.interpreter.miniJava.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import miniJava.interpreter.miniJava.ArrayInstance;
 import miniJava.interpreter.miniJava.ArrayRefValue;
+import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 
 public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
-  protected ArrayInstance instance;
+	protected ArrayInstance instance;
 
-  protected ArrayRefValueImpl() {
-    super();
-  }
+	protected ArrayRefValueImpl() {
+		super();
+	}
 
-  @TruffleBoundary
-  public void setInstance(ArrayInstance newInstance) {
-    ArrayInstance oldInstance = instance;
-    instance = newInstance;
-    if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE, oldInstance, instance));
-  }
+	@Override
+	protected EClass eStaticClass() {
+		return MiniJavaPackage.Literals.ARRAY_REF_VALUE;
+	}
 
-  @TruffleBoundary
-  public ArrayInstance getInstance() {
-    if (instance != null && instance.eIsProxy()) {
-    	InternalEObject oldinstance = (InternalEObject) instance;
-    	instance = (ArrayInstance) eResolveProxy(oldinstance);
-    	if (instance != oldinstance) {
-    		if (eNotificationRequired())
-    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE,
-    					oldinstance, instance));
-    	}
-    }
-    return instance;
-  }
+	public ArrayInstance getInstance() {
+		if (instance != null && instance.eIsProxy()) {
+			InternalEObject oldInstance = (InternalEObject) instance;
+			instance = (ArrayInstance) eResolveProxy(oldInstance);
+			if (instance != oldInstance) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE,
+							oldInstance, instance));
+			}
+		}
+		return instance;
+	}
 
-  @TruffleBoundary
-  protected EClass eStaticClass() {
-    return MiniJavaPackage.Literals.ARRAY_REF_VALUE;}
+	public ArrayInstance basicGetInstance() {
+		return instance;
+	}
 
-  @TruffleBoundary
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE:
-    	setInstance((miniJava.interpreter.miniJava.ArrayInstance) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	public void setInstance(ArrayInstance newInstance) {
+		ArrayInstance oldInstance = instance;
+		instance = newInstance;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE, oldInstance, instance));
+	}
 
-  @TruffleBoundary
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE:
-    	setInstance((miniJava.interpreter.miniJava.ArrayInstance) null);
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE :
+				if (resolve) return getInstance();
+				return basicGetInstance();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
-  @TruffleBoundary
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE:
-    return getInstance();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@Override
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE :
+				setInstance((ArrayInstance)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  @TruffleBoundary
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE:
-    	return instance != null;
-    }
-    return super.eIsSet(featureID);
-  }
+	@Override
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE :
+				setInstance((ArrayInstance) null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
-  @TruffleBoundary
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+	@Override
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE :
+				return instance != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
-  @TruffleBoundary
-  public Value copyj() {
-    Value result;
-    miniJava.interpreter.miniJava.ArrayRefValue tmp = ((miniJava.interpreter.miniJava.ArrayRefValue)miniJava.interpreter.miniJava.MiniJavaFactory.eINSTANCE.createArrayRefValue());
-        tmp.setInstance(this.instance);
-        result = tmp;
-        ;
-    return result;
-  }
+	public Value copyj() {
+		Value result;
+		ArrayRefValue tmp = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
+		tmp.setInstance(this.instance);
+		result = (Value) (tmp) ;
+		return result;
+	}
 
-  @TruffleBoundary
-  public String customToString() {
-    String result;
-    java.lang.String res = ((java.lang.String)"[");
-        int i = ((int)0);
-        int lgt = ((int)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.getInstance().getValue()));
-        while ((i) < (lgt)) {
-          miniJava.interpreter.miniJava.Value tmpv = ((miniJava.interpreter.miniJava.Value)org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.instance.getValue(), i));
-          res = (res) + (tmpv.customToString());
-          if((i) < ((lgt) - (1))) {
-            res = (res) + (", ");
-          }
-          i = (i) + (1);
-        }
-        res = (res) + ("]");
-        result = res;
-        ;
-    return result;
-  }
+	public String customToString() {
+		String result;
+		String res = ((String) ("["));
+		int i = ((int) (0));
+		int lgt = ((int) (CollectionService.size(this.getInstance().getValue())));
+		while ((i) < (lgt)) {
+			Value tmpv = ((Value) (CollectionService.get(this.instance.getValue(), i)));
+			res = (res) + (((Value) (tmpv)).customToString());
+			if ((i) < ((lgt) - (1))) {
+				res = (res) + (", ");
+			}
+			i = (i) + (1);
+		}
+		res = (res) + ("]");
+		result = (String) (res) ;
+		return result;
+	}
 }

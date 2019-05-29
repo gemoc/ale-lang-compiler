@@ -4,17 +4,17 @@ import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Let extends EObject, Expr {
-  String getName();
+	String getName();
 
-  void setName(String value);
+	void setName(String value);
 
-  Expr getLhs();
+	Expr getLhs();
 
-  void setLhs(Expr value);
+	void setLhs(Expr value);
 
-  Expr getRhs();
+	Expr getRhs();
 
-  void setRhs(Expr value);
+	void setRhs(Expr value);
 
-  EvalRes eval(Ctx ctx);
+	EvalRes eval(Ctx ctx);
 }

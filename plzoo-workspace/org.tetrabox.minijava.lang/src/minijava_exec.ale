@@ -179,7 +179,7 @@ open class Method {
 	}
 	
 	def miniJava::Method findOverride(Clazz c) {
-		if(not self.getCache().containsKey(c)) {
+		if(not self.cache.containsKey(c)) {
 			miniJava::Method that := self;
 			if(c.members->exists(x | x == that)) {
 				result := self;
@@ -191,7 +191,7 @@ open class Method {
 					if(tmpm.oclIsKindOf(miniJava::Method)) {
 						miniJava::Method m := tmpm;
 						if(m.name == self.name and m.params.size() == self.params.size()) {
-							boolean compared := m.typeRef.compare(self.typeRef);W
+							boolean compared := m.typeRef.compare(self.typeRef);
 							int j := 0;
 							int paramlgt := m.params.size();
 							boolean alltrue := compared;
@@ -218,9 +218,9 @@ open class Method {
 					}
 				}
 			}
-			self.getCache().put(c, result);
+			self.cache.put(c, result);
 		} else {
-			result := self.getCache().get(c);
+			result := self.cache.get(c);
 		}
 	}
 	
@@ -688,7 +688,7 @@ open class MethodCall {
 
 open class SymbolRef {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
-		result := state.findCurrentContext().findBinding(self.getSymbol()).value.copyj();
+		result := state.findCurrentContext().findBinding(self.symbol).value.copyj();
 	}
 }
 
@@ -919,19 +919,21 @@ open class Frame {
 	}
 }
 
+open class SymbolBinding {}
+
 open class Context {
 	
 	[ mutable bindings ] 
 	
 	def miniJava::SymbolBinding findBinding(miniJava::Symbol symbol) {
-		if (not self.getCache().containsKey(symbol)) {
+		if (not self.cache.containsKey(symbol)) {
 			miniJava::SymbolBinding binding := self.bindings->select(x | x.symbol == symbol)->first();
 			if (binding != null) {
-				self.getCache().put(symbol, binding);
+				self.cache.put(symbol, binding);
 			} else {
 				if (self.getParentContext() != null) {
 					miniJava::SymbolBinding binding2 := self.getParentContext().findBinding(symbol);
-					self.getCache().put(symbol, binding2);
+					self.cache.put(symbol, binding2);
 				} else {
 					('No binding for symbol ' + symbol).log();
 				}

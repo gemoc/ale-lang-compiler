@@ -247,7 +247,8 @@ public class CaseImpl extends MinimalEObjectImpl.Container implements Case {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImplementationPackage.CASE__GUARD:
-				if (resolve) return getGuard();
+				if (resolve)
+					return getGuard();
 				return basicGetGuard();
 			case ImplementationPackage.CASE__MATCH:
 				return getMatch();

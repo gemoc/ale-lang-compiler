@@ -25,32 +25,35 @@ public class ConceptA10Impl extends MinimalEObjectImpl.Container implements Conc
 		return EmfrelationsPackage.Literals.CONCEPT_A10;
 	}
 
-	public void setConceptb10(ConceptB10 newConceptb10) {
-		if (newConceptb10 != conceptb10) {
-			NotificationChain msgs = null;
-			if (conceptb10 != null)
-				msgs = ((InternalEObject) conceptb10).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - emfrelations.visitor.emfrelations.EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, null, msgs);
-			if (newConceptb10 != null)
-				msgs = ((InternalEObject)newConceptb10).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - emfrelations.visitor.emfrelations.EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, null, msgs);
-			msgs = basicSetConceptb10(newConceptb10, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, emfrelations.visitor.emfrelations.EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, newConceptb10, newConceptb10));
+	public ConceptB10 getConceptb10() {
+		return conceptb10;
 	}
 
 	public NotificationChain basicSetConceptb10(ConceptB10 newConceptb10, NotificationChain msgs) {
 		ConceptB10 oldConceptb10 = conceptb10;
 		conceptb10 = newConceptb10;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, emfrelations.visitor.emfrelations.EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, oldConceptb10, newConceptb10);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, oldConceptb10, newConceptb10);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
-	public ConceptB10 getConceptb10() {
-		return conceptb10;
+	public void setConceptb10(ConceptB10 newConceptb10) {
+		if (newConceptb10 != conceptb10) {
+			NotificationChain msgs = null;
+			if (conceptb10 != null)
+				msgs = ((InternalEObject) conceptb10).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, null, msgs);
+			if (newConceptb10 != null)
+				msgs = ((InternalEObject) newConceptb10).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, null, msgs);
+			msgs = basicSetConceptb10(newConceptb10, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A10__CONCEPTB10, newConceptb10, newConceptb10));
 	}
 
 	@Override

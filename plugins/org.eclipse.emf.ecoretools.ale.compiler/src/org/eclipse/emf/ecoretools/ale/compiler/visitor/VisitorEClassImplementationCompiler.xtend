@@ -39,7 +39,7 @@ class VisitorEClassImplementationCompiler {
 		this.namingUtils = new VisitorNamingUtils
 		this.jpu = new JavaPoetUtils
 		this.ecic = new EClassImplementationCompiler(ccu, namingUtils,
-			new EClassGetterCompiler(namingUtils, ccu, resolved), jpu, resolved, es)
+			new EClassGetterCompiler(namingUtils, ccu, resolved, dsl), jpu, resolved, es)
 	}
 	
 	def TypeSpec.Builder addAcceptMethod(TypeSpec.Builder builder, EClass eClass) {

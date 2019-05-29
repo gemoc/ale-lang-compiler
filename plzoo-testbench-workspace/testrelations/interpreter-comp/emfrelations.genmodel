@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/testrelations/interpreter-comp" complianceLevel="8.0"
+    copyrightFields="false">
+  <foreignModel>emfrelations.ecore</foreignModel>
+  <genPackages prefix="Emfrelations" basePackage="emfrelations.interpreter" disposableProviderFactory="true"
+      ecorePackage="platform:/resource/testrelations/src/emfrelations.ecore#/">
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA0">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA0/conceptb0"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB0">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB0/concepta0"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA1">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA1/conceptb1"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB1">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB1/concepta1"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA2">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA2/conceptb2"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB2">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB2/concepta2"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA3">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA3/conceptb3"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB3">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB3/concepta3"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA4">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA4/conceptb4"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB4">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB4/concepta4"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA5">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA5/conceptb5"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB5">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB5/concepta5"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA8">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA8/conceptb8"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB8"/>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA9">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA9/conceptb9"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB9"/>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA10">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA10/conceptb10"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB10"/>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA11">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/testrelations/src/emfrelations.ecore#//ConceptA11/conceptb11"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/testrelations/src/emfrelations.ecore#//ConceptB11"/>
+  </genPackages>
+</genmodel:GenModel>

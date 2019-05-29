@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="multipleinheritence" nsURI="http://www.example.org/multipleinheritence"
+    nsPrefix="multipleinheritence">
+  <eClassifiers xsi:type="ecore:EClass" name="NewEClass1" eSuperTypes="#//NewEClass2 #//NewEClass3">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="f1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NewEClass2">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="f2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NewEClass3" eSuperTypes="#//NewEClass4 #//NewEClass5">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="f3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NewEClass4">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="f4" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NewEClass5">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="f5" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+</ecore:EPackage>

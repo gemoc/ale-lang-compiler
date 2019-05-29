@@ -1,0 +1,14 @@
+grammar org.xtext.example.mydsl.RmMe with org.eclipse.xtext.common.Terminals
+
+generate rmMe "http://www.xtext.org/example/mydsl/RmMe"
+
+Model:
+	A|B;
+	
+A:
+	'def' name=ID
+;
+
+B:
+	'ref' a=[A]
+;

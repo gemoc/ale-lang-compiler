@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/emapvselistentry/src" modelPluginID="emapvselistentry"
+    modelName="Emapvselistentry" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>emapvselistentry.ecore</foreignModel>
+  <genPackages prefix="Emapvselistentry" disposableProviderFactory="true" ecorePackage="emapvselistentry.ecore#/">
+    <genClasses ecoreClass="emapvselistentry.ecore#//NewEClass1">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emapvselistentry.ecore#//NewEClass1/neweclass2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference emapvselistentry.ecore#//NewEClass1/neweclass3"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference emapvselistentry.ecore#//NewEClass1/neweclass4"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference emapvselistentry.ecore#//NewEClass1/neweclass5"/>
+    </genClasses>
+    <genClasses ecoreClass="emapvselistentry.ecore#//NewEClass2">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emapvselistentry.ecore#//NewEClass2/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emapvselistentry.ecore#//NewEClass2/value"/>
+    </genClasses>
+    <genClasses ecoreClass="emapvselistentry.ecore#//NewEClass3">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emapvselistentry.ecore#//NewEClass3/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emapvselistentry.ecore#//NewEClass3/value"/>
+    </genClasses>
+    <genClasses ecoreClass="emapvselistentry.ecore#//NewEClass4">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emapvselistentry.ecore#//NewEClass4/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emapvselistentry.ecore#//NewEClass4/value"/>
+    </genClasses>
+    <genClasses ecoreClass="emapvselistentry.ecore#//NewEClass5">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emapvselistentry.ecore#//NewEClass5/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute emapvselistentry.ecore#//NewEClass5/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

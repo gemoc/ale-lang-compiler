@@ -217,11 +217,11 @@ public abstract class BehavioredClassImpl extends ENamedElementImpl implements B
 		switch (featureID) {
 			case ImplementationPackage.BEHAVIORED_CLASS__METHODS:
 				getMethods().clear();
-				getMethods().addAll((Collection<? extends Method>)newValue);
+				getMethods().addAll((Collection<? extends Method>) newValue);
 				return;
 			case ImplementationPackage.BEHAVIORED_CLASS__ATTRIBUTES:
 				getAttributes().clear();
-				getAttributes().addAll((Collection<? extends Attribute>)newValue);
+				getAttributes().addAll((Collection<? extends Attribute>) newValue);
 				return;
 			case ImplementationPackage.BEHAVIORED_CLASS__FRAGMENT:
 				setFragment((EClass)newValue);

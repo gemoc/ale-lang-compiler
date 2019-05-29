@@ -3,9 +3,9 @@ package interpreter.boa.interpreter.boa;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Int extends EObject, Expr {
-  int getValue();
+	int getValue();
 
-  void setValue(int value);
+	void setValue(int value);
 
-  EvalRes eval(Ctx ctx);
+	EvalRes eval(Ctx ctx);
 }

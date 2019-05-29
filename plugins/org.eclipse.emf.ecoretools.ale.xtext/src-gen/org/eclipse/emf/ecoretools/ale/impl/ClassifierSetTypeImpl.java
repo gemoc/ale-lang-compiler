@@ -135,7 +135,7 @@ public class ClassifierSetTypeImpl extends typeLiteralImpl implements Classifier
     {
       case AlePackage.CLASSIFIER_SET_TYPE__TYPES:
         getTypes().clear();
-        getTypes().addAll((Collection<? extends classifierTypeRule>)newValue);
+        getTypes().addAll((Collection<? extends classifierTypeRule>) newValue);
         return;
     }
     super.eSet(featureID, newValue);

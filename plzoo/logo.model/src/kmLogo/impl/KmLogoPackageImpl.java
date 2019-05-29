@@ -1455,6 +1455,55 @@ public class KmLogoPackageImpl extends EPackageImpl implements KmLogoPackage {
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// RuntimeData
+		createRuntimeDataAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>RuntimeData</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createRuntimeDataAnnotations() {
+		String source = "RuntimeData";
+		addAnnotation
+		  (this,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (turtleEClass,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (pointEClass,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (segmentEClass,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (callStackEClass,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (stackFrameEClass,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (variableEClass,
+		   source,
+		   new String[] {
+		   });
 	}
 
 } //KmLogoPackageImpl

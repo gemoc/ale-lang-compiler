@@ -91,7 +91,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 	public void exec1() {
 		for (ConceptA a : this.getAx()) {
 			if (a instanceof ConceptB) {
-				((ConceptC)this).execB((ConceptB) a);
+				((ConceptC) this).execB((ConceptB) (a));
 			}
 		}
 	}
@@ -99,7 +99,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 	public void exec2() {
 		for (ConceptA a : this.getAx()) {
 			if (a instanceof ConceptB) {
-				ConceptB b = ((ConceptB) a);
+				ConceptB b = ((ConceptB) (a));
 				LogService.log(b.getName());
 			}
 		}
@@ -108,7 +108,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 	public void exec3() {
 		for (ConceptA a : this.getAx()) {
 			if (a instanceof ConceptB) {
-				((ConceptB)a).callB();
+				((ConceptB) a).callB();
 			}
 		}
 	}

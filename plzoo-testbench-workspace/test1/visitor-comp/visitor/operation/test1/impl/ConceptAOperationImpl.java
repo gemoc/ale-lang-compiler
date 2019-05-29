@@ -17,7 +17,7 @@ public class ConceptAOperationImpl implements ConceptAOperation {
 
 	public void exec() {
 		LogService.log("ok");
-		int a = ((int)1);
+		int a = ((int) (1));
 		this.it.setB(42);
 	}
 }

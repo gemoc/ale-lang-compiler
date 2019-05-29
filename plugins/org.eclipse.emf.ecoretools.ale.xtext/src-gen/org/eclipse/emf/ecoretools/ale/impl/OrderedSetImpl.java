@@ -135,7 +135,7 @@ public class OrderedSetImpl extends literalImpl implements OrderedSet
     {
       case AlePackage.ORDERED_SET__PARAMS:
         getParams().clear();
-        getParams().addAll((Collection<? extends Expression>)newValue);
+        getParams().addAll((Collection<? extends Expression>) newValue);
         return;
     }
     super.eSet(featureID, newValue);

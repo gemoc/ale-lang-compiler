@@ -1,6 +1,5 @@
 package logo.benchmark.interpreter;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
+
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import kmLogo.interpreter.kmLogo.LogoProgram;
 

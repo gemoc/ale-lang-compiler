@@ -5,7 +5,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Ctx extends EObject {
-  EMap<String, EvalRes> getEnv();
+	EMap<String, EvalRes> getEnv();
 
-  EMap<String, EvalRes> getTh();
+	EMap<String, EvalRes> getTh();
 }

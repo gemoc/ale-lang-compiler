@@ -1,10 +1,14 @@
 behavior test1_exec;
 
+use execboa.MapService;
+ 
 open class ConceptA {
   def void exec() {
   	for(c in self.cs) {
   		c.key.log();
   		c.value.log();
   	}
+  	
+  	self.cs.containsKey('ok').log();
   }
 }

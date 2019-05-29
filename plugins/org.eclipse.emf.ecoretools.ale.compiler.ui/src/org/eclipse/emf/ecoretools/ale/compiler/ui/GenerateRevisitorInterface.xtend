@@ -7,7 +7,6 @@ import org.eclipse.core.runtime.IAdaptable
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.core.runtime.Path
 import org.eclipse.e4.core.services.log.Logger
-import org.eclipse.emf.ecoretools.ale.compiler.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.RevisitorInterfaceGenerator
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.RevisitorNamingUtils
 import org.eclipse.jface.action.IAction
@@ -21,6 +20,7 @@ import org.eclipse.ui.PlatformUI
 import org.eclipse.emf.ecoretools.ale.compiler.AlexException
 import java.io.IOException
 import org.eclipse.core.runtime.CoreException
+import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 
 class GenerateRevisitorInterface implements IObjectActionDelegate {
 	extension EcoreUtils = new EcoreUtils()

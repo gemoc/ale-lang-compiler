@@ -8,7 +8,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import testenums.visitor.testenums.Enum1;
 import testenums.visitor.testenums.Root;
 import testenums.visitor.testenums.TestenumsPackage;
@@ -43,7 +43,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 
 	public EList<Enum1> getEnums() {
 		if (enums == null) {
-			enums = new EDataTypeEList<Enum1>(Enum1.class, this, TestenumsPackage.ROOT__ENUMS);
+			enums = new EDataTypeUniqueEList<Enum1>(Enum1.class, this, TestenumsPackage.ROOT__ENUMS);
 		}
 		return enums;
 	}

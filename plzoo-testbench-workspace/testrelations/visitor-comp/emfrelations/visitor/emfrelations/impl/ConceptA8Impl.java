@@ -24,13 +24,6 @@ public class ConceptA8Impl extends MinimalEObjectImpl.Container implements Conce
 		return EmfrelationsPackage.Literals.CONCEPT_A8;
 	}
 
-	public void setConceptb8(ConceptB8 newConceptb8) {
-		ConceptB8 oldConceptb8 = conceptb8;
-		conceptb8 = newConceptb8;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A8__CONCEPTB8, oldConceptb8, conceptb8));
-	}
-
 	public ConceptB8 getConceptb8() {
 		if (conceptb8 != null && conceptb8.eIsProxy()) {
 			InternalEObject oldConceptb8 = (InternalEObject) conceptb8;
@@ -42,6 +35,17 @@ public class ConceptA8Impl extends MinimalEObjectImpl.Container implements Conce
 			}
 		}
 		return conceptb8;
+	}
+
+	public ConceptB8 basicGetConceptb8() {
+		return conceptb8;
+	}
+
+	public void setConceptb8(ConceptB8 newConceptb8) {
+		ConceptB8 oldConceptb8 = conceptb8;
+		conceptb8 = newConceptb8;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, EmfrelationsPackage.CONCEPT_A8__CONCEPTB8, oldConceptb8, conceptb8));
 	}
 
 	@Override

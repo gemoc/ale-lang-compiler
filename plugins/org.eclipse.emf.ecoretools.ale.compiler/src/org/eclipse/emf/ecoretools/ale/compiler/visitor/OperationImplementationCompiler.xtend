@@ -46,6 +46,7 @@ class OperationImplementationCompiler {
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension VisitorTypeSystemUtil tsu
 	extension VisitorExpressionCompiler vec
+	extension CommonTypeInferer cti
 	
 	val File directory
 	val String packageRoot
@@ -55,7 +56,6 @@ class OperationImplementationCompiler {
 	val Map<String, Class<?>> registeredServices
 	var BaseValidator base
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
-	var CommonTypeInferer cti
 	val EnumeratorService es
 
 	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes,

@@ -21,5 +21,6 @@ public class ConceptAOperationImpl implements ConceptAOperation {
 			LogService.log(c.getKey());
 			LogService.log(c.getValue());
 		}
+		LogService.log(execboa.MapService.containsKey(this.it.getCs(), "ok"));
 	}
 }

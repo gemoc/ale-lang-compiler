@@ -1,7 +1,7 @@
 package visitor.operation.testoperationbody.impl;
 
-import testoperationbody.EnumA;
 import testoperationbody.visitor.testoperationbody.ChildA;
+import testoperationbody.visitor.testoperationbody.EnumA;
 import visitor.VisitorInterface;
 import visitor.operation.testoperationbody.ChildAOperation;
 

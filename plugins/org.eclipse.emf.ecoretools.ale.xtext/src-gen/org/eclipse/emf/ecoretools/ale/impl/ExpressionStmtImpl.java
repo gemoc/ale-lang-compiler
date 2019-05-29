@@ -163,7 +163,7 @@ public class ExpressionStmtImpl extends StatementImpl implements ExpressionStmt
     switch (featureID)
     {
       case AlePackage.EXPRESSION_STMT__EXP:
-        setExp((EObject)newValue);
+        setExp((EObject) newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -180,7 +180,7 @@ public class ExpressionStmtImpl extends StatementImpl implements ExpressionStmt
     switch (featureID)
     {
       case AlePackage.EXPRESSION_STMT__EXP:
-        setExp((EObject)null);
+        setExp((EObject) null);
         return;
     }
     super.eUnset(featureID);

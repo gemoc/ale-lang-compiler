@@ -94,7 +94,6 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		Status.OK_STATUS
 	}
 
-
 	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
 		val IQueryEnvironment newEnv = new ExtensionEnvironment()
 		newEnv.registerEPackage(EcorePackage.eINSTANCE)
@@ -113,7 +112,6 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
 		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
-		
 
 		val aleClasses = newArrayList
 		for (ParseResult<ModelUnit> pr : parsedSemantics) {
@@ -124,7 +122,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		syntaxes = dsl.allSyntaxes.toMap([it], [
 			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
-		
+
 		this.tsu = new RevisitorTypeSystemUtils(syntaxes, eu)
 		this.cti = new CommonTypeInferer(base)
 		val tmp = syntaxes.get(dsl.allSyntaxes.head)
@@ -132,8 +130,8 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		// FIXME: make the invalid assumption that the metamodel contains a single package
 		val genSyntax = tmp.value.genPackages.head
 		resolved = resolve(aleClasses, syntax, syntaxes)
-		this.rec = new RevisitorExpressionCompiler(tsu, syntaxes, resolved, eu, dsl, registeredServices,
-			new CommonTypeInferer(base), new EnumeratorService, rnu)
+		this.rec = new RevisitorExpressionCompiler(tsu, resolved, registeredServices, new CommonTypeInferer(base),
+			new EnumeratorService, rnu)
 
 		val interfaceName = dsl.revisitorImplementationClass
 
@@ -146,10 +144,9 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 				arg0.eCls.EPackage.name
 			}
 		})
-		val typeParams = resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"]
-			.filter[it.eCls instanceof EClass]
-			.sortWith(comparator)
-			.map [dsl.getRevisitorOperationInterfaceClassName(it.eCls as EClass)]
+		val typeParams = resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].filter [
+			it.eCls instanceof EClass
+		].sortWith(comparator).map[dsl.getRevisitorOperationInterfaceClassName(it.eCls as EClass)]
 		val fullInterfaceType = ParameterizedTypeName.get(
 			ClassName.get(genSyntax.revisitorPackageFqn, genSyntax.revisitorInterfaceName), typeParams)
 
@@ -157,15 +154,11 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 			addModifiers(Modifier.PUBLIC).addMethods(syntax.allClasses.filter [
 				it.instanceClassName != "java.util.Map$Entry"
 			].map [
-				MethodSpec.methodBuilder(it.denotationName)
-					.returns(dsl.getRevisitorOperationInterfaceClassName(it))
-					.addParameter(it.solveType, "it")
-					.addCode('''
-					return new $T(it, this);
-					''', 
-					dsl.getRevisitorOperationImplementationClassName(it))
-					.addModifiers(Modifier.DEFAULT, Modifier.PUBLIC)
-					.build
+				MethodSpec.methodBuilder(it.denotationName).returns(dsl.getRevisitorOperationInterfaceClassName(it)).
+					addParameter(it.solveType, "it").addCode('''
+						return new $T(it, this);
+					''', dsl.getRevisitorOperationImplementationClassName(it)).addModifiers(Modifier.DEFAULT,
+						Modifier.PUBLIC).build
 			]).build
 
 		val javaFile = JavaFile.builder(dsl.revisitorImplementationPackage, revisitorInterface).indent('\t').build
@@ -174,20 +167,21 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
 		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry" && it.eCls instanceof EClass].forEach [
 			try {
-				val operationInterface = TypeSpec.interfaceBuilder((it.eCls as EClass).revisitorOperationInterfaceClassName)
-					.addSuperinterfaces((eCls as EClass)
-						.ESuperTypes.map [dsl.getRevisitorOperationInterfaceClassName(it)])
-						.addModifiers(Modifier.PUBLIC).addMethods(it.aleCls?.methods?.map [
-					MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT).
-						returnType(it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
-							if (it.EType.instanceClass !== null) {
-								ParameterSpec.builder(it.EType.instanceClass, it.name).build
-							} else {
-								ParameterSpec.builder(it.EType.resolveType, it.name).build
-							}
-						]).build
-				] ?: newArrayList).build
-				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorOperationInterfacePackage»''', operationInterface).indent('\t').build
+				val operationInterface = TypeSpec.interfaceBuilder(
+					(it.eCls as EClass).revisitorOperationInterfaceClassName).addSuperinterfaces((eCls as EClass).
+					ESuperTypes.map[dsl.getRevisitorOperationInterfaceClassName(it)]).addModifiers(Modifier.PUBLIC).
+					addMethods(it.aleCls?.methods?.map [
+						MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT).
+							returnType(it.operationRef.EType).addParameters(it.operationRef.EParameters.map [
+								if (it.EType.instanceClass !== null) {
+									ParameterSpec.builder(it.EType.instanceClass, it.name).build
+								} else {
+									ParameterSpec.builder(it.EType.resolveType, it.name).build
+								}
+							]).build
+					] ?: newArrayList).build
+				val operationInterfaceFile = JavaFile.builder('''«dsl.revisitorOperationInterfacePackage»''',
+					operationInterface).indent('\t').build
 				operationInterfaceFile.writeTo(compileDirectory)
 
 				val revField = FieldSpec.builder(fullInterfaceType, "rev", Modifier.PRIVATE).build
@@ -195,35 +189,29 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 				val objField = FieldSpec.builder(ClassName.get(getEcoreInterfacesPackage, it.eCls.name), "obj",
 					Modifier.PRIVATE).build
 
-				val operationImplementation = TypeSpec.classBuilder((it.eCls as EClass).revisitorOperationImplementationClassName).addSuperinterfaces(
+				val operationImplementation = TypeSpec.classBuilder(
+					(it.eCls as EClass).revisitorOperationImplementationClassName).addSuperinterfaces(
 					#[ClassName.get(operationInterfaceFile.packageName, operationInterface.name)]).superOperationImpl(
-					(eCls as EClass).ESuperTypes.head).addField(revField).addField(objField).addModifiers(Modifier.PUBLIC).
-					addMethod(
-						MethodSpec.constructorBuilder.addParameter(objField.type, "obj").addParameter(revField.type,
-							"rev").addConditionalStatement([!(eCls as EClass).ESuperTypes.empty], 'super(obj, rev)').
-							addStatement('''this.obj = obj''').addStatement('''this.rev = rev''').addModifiers(
-								Modifier.PUBLIC).build).addModifiers(Modifier.PUBLIC).addMethods(
-						it.aleCls?.methods?.map [
-							val type = it.operationRef.EType
-							val typeResolved = type?.resolveType2
-							val parameters = it.operationRef.EParameters.map [
-								if (it.EType.instanceClass !== null) {
-									ParameterSpec.builder(it.EType.instanceClass, it.name).build
-								} else {
-									ParameterSpec.builder(it.EType.resolveType, it.name).build
-								}
-							]
-							MethodSpec.methodBuilder(it.operationRef.name)
-								.addModifiers(Modifier.PUBLIC)
-								.returnType(type)
-								.addParameters(parameters)
-								.openMethod(typeResolved)
-								.compileBody(it.body)
-								.closeMethod(type)
-								.build
-						] ?: newArrayList).build
-				val operationImplementationFile = JavaFile.
-					builder('''«dsl.revisitorOperationImplementationPackage»''', operationImplementation).build
+					(eCls as EClass).ESuperTypes.head).addField(revField).addField(objField).addModifiers(
+					Modifier.PUBLIC).addMethod(
+					MethodSpec.constructorBuilder.addParameter(objField.type, "obj").addParameter(revField.type, "rev").
+						addConditionalStatement([!(eCls as EClass).ESuperTypes.empty], 'super(obj, rev)').
+						addStatement('''this.obj = obj''').addStatement('''this.rev = rev''').addModifiers(
+							Modifier.PUBLIC).build).addModifiers(Modifier.PUBLIC).addMethods(it.aleCls?.methods?.map [
+					val type = it.operationRef.EType
+					val typeResolved = type?.resolveType2
+					val parameters = it.operationRef.EParameters.map [
+						if (it.EType.instanceClass !== null) {
+							ParameterSpec.builder(it.EType.instanceClass, it.name).build
+						} else {
+							ParameterSpec.builder(it.EType.resolveType, it.name).build
+						}
+					]
+					MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(type).
+						addParameters(parameters).openMethod(typeResolved).compileBody(it.body).closeMethod(type).build
+				] ?: newArrayList).build
+				val operationImplementationFile = JavaFile.builder('''«dsl.revisitorOperationImplementationPackage»''',
+					operationImplementation).build
 				operationImplementationFile.writeTo(compileDirectory)
 
 			} catch (Exception e) {
@@ -236,27 +224,27 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body) {
 		val t = infereType(body.target).head
 		if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-			builderSeed.
-				addStatement('''$L.get$L().add($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+			builderSeed.addStatement('''$L.get$L().add($L)''', body.target.compileExpression,
+				body.targetFeature.toFirstUpper, body.value.compileExpression)
 		} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-			builderSeed.
-				addStatement('''$L.set$L($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+			builderSeed.addStatement('''$L.set$L($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper,
+				body.value.compileExpression)
 		} else {
-			builderSeed.
-				addStatement('''$L.$L = $L''', body.target.compileExpression, body.targetFeature, body.value.compileExpression)
+			builderSeed.addStatement('''$L.$L = $L''', body.target.compileExpression, body.targetFeature,
+				body.value.compileExpression)
 
 		}
 
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureInsert body) {
-		builderSeed.
-			addStatement('''$L.get$L().add($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+		builderSeed.addStatement('''$L.get$L().add($L)''', body.target.compileExpression,
+			body.targetFeature.toFirstUpper, body.value.compileExpression)
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureRemove body) {
-		builderSeed.
-			addStatement('''$L.get$L().remove($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+		builderSeed.addStatement('''$L.get$L().remove($L)''', body.target.compileExpression,
+			body.targetFeature.toFirstUpper, body.value.compileExpression)
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body) {
@@ -300,10 +288,8 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 			val iteratorType = lt.collectionType.type.resolveType2
 			val iteratorName = body.variable
 			val iterable = body.collectionExpression.compileExpression
-			builderSeed
-				.beginControlFlow('''for($T $L: $L)''', iteratorType, iteratorName, iterable)
-				.compileBody(body.body)
-				.endControlFlow
+			builderSeed.beginControlFlow('''for($T $L: $L)''', iteratorType, iteratorName, iterable).
+				compileBody(body.body).endControlFlow
 		}
 	}
 
@@ -327,8 +313,6 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		val a = builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression)
 		a.compileBody(body.body).endControlFlow
 	}
-	
-	
 
 	def MethodSpec.Builder returnType(MethodSpec.Builder builder, EClassifier type) {
 		if (type !== null) {
@@ -358,4 +342,9 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		}
 	}
 
+	@Deprecated
+	def getEcoreInterfacesPackage() {
+		val gm = syntaxes.get(dsl.allSyntaxes.head).value
+		gm.genPackages.head.qualifiedPackageName
+	}
 }

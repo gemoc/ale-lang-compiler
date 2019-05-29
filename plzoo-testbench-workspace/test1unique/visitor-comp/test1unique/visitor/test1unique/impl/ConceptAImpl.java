@@ -7,7 +7,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import test1unique.visitor.test1unique.ConceptA;
 import test1unique.visitor.test1unique.Test1uniquePackage;
 import visitor.VisitorInterface;
@@ -26,7 +26,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 
 	public EList<Boolean> getBs() {
 		if (bs == null) {
-			bs = new EDataTypeEList<Boolean>(Boolean.class, this, Test1uniquePackage.CONCEPT_A__BS);
+			bs = new EDataTypeUniqueEList<Boolean>(Boolean.class, this, Test1uniquePackage.CONCEPT_A__BS);
 		}
 		return bs;
 	}
@@ -45,7 +45,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 		switch (featureID) {
 			case Test1uniquePackage.CONCEPT_A__BS :
 				getBs().clear();
-				getBs().addAll((Collection<? extends Boolean>) newValue);
+				getBs().addAll((Collection<? extends Boolean>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

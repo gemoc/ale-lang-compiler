@@ -3,17 +3,17 @@ package interpreter.boa.interpreter.boa;
 import org.eclipse.emf.ecore.EObject;
 
 public interface If extends EObject, Expr {
-  Expr getCond();
+	Expr getCond();
 
-  void setCond(Expr value);
+	void setCond(Expr value);
 
-  Expr getThn();
+	Expr getThn();
 
-  void setThn(Expr value);
+	void setThn(Expr value);
 
-  Expr getEls();
+	Expr getEls();
 
-  void setEls(Expr value);
+	void setEls(Expr value);
 
-  EvalRes eval(Ctx ctx);
+	EvalRes eval(Ctx ctx);
 }

@@ -1,5 +1,6 @@
 package testenums.visitor.testenums;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import visitor.AcceptInterface;
 
@@ -8,7 +9,5 @@ public interface Root extends EObject, AcceptInterface {
 
 	void setEnum(Enum1 value);
 
-	Enum1 getEnums();
-
-	void setEnums(Enum1 value);
+	EList<Enum1> getEnums();
 }

@@ -250,15 +250,15 @@ public class UnitImpl extends MinimalEObjectImpl.Container implements Unit
         return;
       case AlePackage.UNIT__IMPORTS:
         getImports().clear();
-        getImports().addAll((Collection<? extends Import>)newValue);
+        getImports().addAll((Collection<? extends Import>) newValue);
         return;
       case AlePackage.UNIT__SERVICES:
         getServices().clear();
-        getServices().addAll((Collection<? extends Service>)newValue);
+        getServices().addAll((Collection<? extends Service>) newValue);
         return;
       case AlePackage.UNIT__XTENDED_CLASSES:
         getXtendedClasses().clear();
-        getXtendedClasses().addAll((Collection<? extends BehavioredClass>)newValue);
+        getXtendedClasses().addAll((Collection<? extends BehavioredClass>) newValue);
         return;
     }
     super.eSet(featureID, newValue);

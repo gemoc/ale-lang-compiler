@@ -3,7 +3,7 @@ package interpreter.boa.interpreter.boa;
 import org.eclipse.emf.ecore.EObject;
 
 public interface EvalIntRes extends EObject, EvalRes {
-  int getValue();
+	int getValue();
 
-  void setValue(int value);
+	void setValue(int value);
 }

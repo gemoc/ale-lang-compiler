@@ -3,13 +3,13 @@ package interpreter.boa.interpreter.boa;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Seq extends EObject, Expr {
-  Expr getLhs();
+	Expr getLhs();
 
-  void setLhs(Expr value);
+	void setLhs(Expr value);
 
-  Expr getRhs();
+	Expr getRhs();
 
-  void setRhs(Expr value);
+	void setRhs(Expr value);
 
-  EvalRes eval(Ctx ctx);
+	EvalRes eval(Ctx ctx);
 }

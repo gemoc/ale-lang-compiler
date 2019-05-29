@@ -5,5 +5,5 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 public interface EvalMapRes extends EObject, EvalRes {
-  EMap<String, EvalRes> getValues();
+	EMap<String, EvalRes> getValues();
 }

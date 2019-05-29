@@ -1,12 +1,12 @@
 package test.impl.operation.impl;
 
-import .revisitor.Test1Revisitor;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.ConceptAOp;
 import test.impl.operation.ConceptBOp;
 import test.impl.operation.ConceptCOp;
 import test1.ConceptA;
 import test1.ConceptC;
+import test1.revisitor.Test1Revisitor;
 
 public class ConceptAOpImpl implements ConceptAOp {
   private Test1Revisitor<ConceptAOp, ConceptBOp, ConceptCOp> rev;
@@ -21,7 +21,7 @@ public class ConceptAOpImpl implements ConceptAOp {
   public void exec() {
     LogService.log("ok");
     for(ConceptC c: this.obj.getCs()) {
-      rev.$(c).call();
+      rev.$((ConceptC)c).call();
     }
   }
 }

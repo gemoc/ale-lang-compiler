@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/multipleinheritence/src-gen" creationIcons="false"
+    editDirectory="/multipleinheritence.edit/src-gen" editorDirectory="/multipleinheritence.editor/src-gen"
+    modelPluginID="multipleinheritence" modelName="Multipleinheritence" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0"
+    copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>multipleinheritence.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Multipleinheritence" disposableProviderFactory="true" ecorePackage="multipleinheritence.ecore#/">
+    <genClasses ecoreClass="multipleinheritence.ecore#//NewEClass1">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multipleinheritence.ecore#//NewEClass1/f1"/>
+    </genClasses>
+    <genClasses ecoreClass="multipleinheritence.ecore#//NewEClass2">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multipleinheritence.ecore#//NewEClass2/f2"/>
+    </genClasses>
+    <genClasses ecoreClass="multipleinheritence.ecore#//NewEClass3">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multipleinheritence.ecore#//NewEClass3/f3"/>
+    </genClasses>
+    <genClasses ecoreClass="multipleinheritence.ecore#//NewEClass4">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multipleinheritence.ecore#//NewEClass4/f4"/>
+    </genClasses>
+    <genClasses ecoreClass="multipleinheritence.ecore#//NewEClass5">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute multipleinheritence.ecore#//NewEClass5/f5"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

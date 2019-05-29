@@ -4,9 +4,9 @@ import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Var extends EObject, Expr {
-  String getName();
+	String getName();
 
-  void setName(String value);
+	void setName(String value);
 
-  EvalRes eval(Ctx ctx);
+	EvalRes eval(Ctx ctx);
 }

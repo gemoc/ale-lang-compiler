@@ -182,15 +182,15 @@ public class ModelUnitImpl extends ENamedElementImpl implements ModelUnit {
 		switch (featureID) {
 			case ImplementationPackage.MODEL_UNIT__SERVICES:
 				getServices().clear();
-				getServices().addAll((Collection<? extends String>)newValue);
+				getServices().addAll((Collection<? extends String>) newValue);
 				return;
 			case ImplementationPackage.MODEL_UNIT__CLASS_EXTENSIONS:
 				getClassExtensions().clear();
-				getClassExtensions().addAll((Collection<? extends ExtendedClass>)newValue);
+				getClassExtensions().addAll((Collection<? extends ExtendedClass>) newValue);
 				return;
 			case ImplementationPackage.MODEL_UNIT__CLASS_DEFINITIONS:
 				getClassDefinitions().clear();
-				getClassDefinitions().addAll((Collection<? extends RuntimeClass>)newValue);
+				getClassDefinitions().addAll((Collection<? extends RuntimeClass>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

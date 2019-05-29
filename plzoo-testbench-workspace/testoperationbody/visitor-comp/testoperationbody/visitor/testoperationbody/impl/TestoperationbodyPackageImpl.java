@@ -173,7 +173,7 @@ public class TestoperationbodyPackageImpl extends EPackageImpl implements Testop
 		initEClass(parentEClass, Parent.class, "Parent", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(childAEClass, ChildA.class, "ChildA", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getChildA_Value(), this.getEnumA(), "value", "CASE1", 0, 1, ChildA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getChildA_Value(), this.getEnumA(), "value", null, 0, 1, ChildA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(childBEClass, ChildB.class, "ChildB", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

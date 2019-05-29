@@ -4,77 +4,77 @@ import interpreter.boa.interpreter.boa.impl.BoaFactoryImpl;
 import org.eclipse.emf.ecore.EFactory;
 
 public interface BoaFactory extends EFactory {
-  BoaFactory eINSTANCE = BoaFactoryImpl.init();
+	BoaFactory eINSTANCE = BoaFactoryImpl.init();
 
-  File createFile();
+	File createFile();
 
-  Def createDef();
+	Def createDef();
 
-  App createApp();
+	App createApp();
 
-  Var createVar();
+	Var createVar();
 
-  This createThis();
+	This createThis();
 
-  Bool createBool();
+	Bool createBool();
 
-  Int createInt();
+	Int createInt();
 
-  Skip createSkip();
+	Skip createSkip();
 
-  Project createProject();
+	Project createProject();
 
-  BObject createBObject();
+	BObject createBObject();
 
-  Field createField();
+	Field createField();
 
-  Copy createCopy();
+	Copy createCopy();
 
-  With createWith();
+	With createWith();
 
-  Not createNot();
+	Not createNot();
 
-  If createIf();
+	If createIf();
 
-  Let createLet();
+	Let createLet();
 
-  Fun createFun();
+	Fun createFun();
 
-  Assign createAssign();
+	Assign createAssign();
 
-  ArithOpPlus createArithOpPlus();
+	ArithOpPlus createArithOpPlus();
 
-  ArithOpMinus createArithOpMinus();
+	ArithOpMinus createArithOpMinus();
 
-  ArithOpTimes createArithOpTimes();
+	ArithOpTimes createArithOpTimes();
 
-  ArithOpDivide createArithOpDivide();
+	ArithOpDivide createArithOpDivide();
 
-  ArithOpRemainder createArithOpRemainder();
+	ArithOpRemainder createArithOpRemainder();
 
-  BoolOpAnd createBoolOpAnd();
+	BoolOpAnd createBoolOpAnd();
 
-  BoolOpOr createBoolOpOr();
+	BoolOpOr createBoolOpOr();
 
-  Seq createSeq();
+	Seq createSeq();
 
-  CmpOpEqual createCmpOpEqual();
+	CmpOpEqual createCmpOpEqual();
 
-  CmpOpUnequal createCmpOpUnequal();
+	CmpOpUnequal createCmpOpUnequal();
 
-  CmpOpLess createCmpOpLess();
+	CmpOpLess createCmpOpLess();
 
-  Ctx createCtx();
+	Ctx createCtx();
 
-  EvalMapRes createEvalMapRes();
+	EvalMapRes createEvalMapRes();
 
-  EvalFunRes createEvalFunRes();
+	EvalFunRes createEvalFunRes();
 
-  EvalBoundFunRes createEvalBoundFunRes();
+	EvalBoundFunRes createEvalBoundFunRes();
 
-  EvalIntRes createEvalIntRes();
+	EvalIntRes createEvalIntRes();
 
-  EvalBoolRes createEvalBoolRes();
+	EvalBoolRes createEvalBoolRes();
 
-  BoaPackage getBoaPackage();
+	BoaPackage getBoaPackage();
 }

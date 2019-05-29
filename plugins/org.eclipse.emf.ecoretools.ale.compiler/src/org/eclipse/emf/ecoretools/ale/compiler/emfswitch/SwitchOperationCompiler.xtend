@@ -52,6 +52,8 @@ class SwitchOperationCompiler {
 	val String packageRoot
 	val File directory
 	val BaseValidator base
+	val Map<String, Pair<EPackage, GenModel>> syntaxes
+	val Dsl dsl
 
 	new(
 		String packageRoot,
@@ -70,8 +72,16 @@ class SwitchOperationCompiler {
 		this.tsu = new SwitchTypeSystemUtils(syntaxes, packageRoot, resolved)
 		this.cti = new CommonTypeInferer(base)
 		this.namingUtils = new SwitchNamingUtils
-		this.swe = new SwitchExpressionCompiler(tsu, resolved, namingUtils, syntaxes, packageRoot, registeredServices,
-			dsl, cti, new EnumeratorService)
+		this.swe = new SwitchExpressionCompiler(tsu, resolved, namingUtils, packageRoot, registeredServices, cti,
+			new EnumeratorService)
+		this.syntaxes = syntaxes
+		this.dsl = dsl
+	}
+
+	@Deprecated
+	def getEcoreInterfacesPackage() {
+		val gm = syntaxes.get(dsl.allSyntaxes.head).value
+		gm.genPackages.head.qualifiedPackageName
 	}
 
 	def compile(ResolvedClass resolved) {
@@ -142,8 +152,8 @@ class SwitchOperationCompiler {
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body) {
 		val t = infereType(body.target).head
 		if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-			builderSeed.
-				addStatement('''$L.get$L().add($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+			builderSeed.addStatement('''$L.get$L().add($L)''', body.target.compileExpression,
+				body.targetFeature.toFirstUpper, body.value.compileExpression)
 		} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 			builderSeed.addStatement('''$L.set$L($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper,
 				body.value.compileExpression)

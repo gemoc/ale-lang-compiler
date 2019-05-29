@@ -5,5 +5,5 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 public interface EvalBoundFunRes extends EObject, EvalFunRes {
-  EMap<String, EvalRes> getTh();
+	EMap<String, EvalRes> getTh();
 }

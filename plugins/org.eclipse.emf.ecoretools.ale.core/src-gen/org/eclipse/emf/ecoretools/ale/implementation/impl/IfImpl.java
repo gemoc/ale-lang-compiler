@@ -187,7 +187,7 @@ public class IfImpl extends StatementImpl implements If {
 		switch (featureID) {
 			case ImplementationPackage.IF__BLOCKS:
 				getBlocks().clear();
-				getBlocks().addAll((Collection<? extends ConditionalBlock>)newValue);
+				getBlocks().addAll((Collection<? extends ConditionalBlock>) newValue);
 				return;
 			case ImplementationPackage.IF__ELSE:
 				setElse((Block)newValue);

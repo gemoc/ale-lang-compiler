@@ -4,7 +4,6 @@ Bundle-Name: Test
 Bundle-SymbolicName: org.eclipse.emf.ecoretools.ale.compiler.test
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: org.eclipse.emf.ecoretools.ale.compiler.test
-Bundle-RequiredExecutionEnvironment: JavaSE-10
 Require-Bundle: org.eclipse.emf.ecoretools.ale.core;bundle-version="0.0.1",
  org.eclipse.emf.ecoretools.ale.compiler,
  org.eclipse.emf.ecore.xmi;bundle-version="2.14.0",

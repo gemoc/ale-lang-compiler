@@ -1,0 +1,25 @@
+behavior fieldandclassintroduction;
+
+
+open class Existing {
+	
+	Boolean y := false;
+	
+	def Integer test2()  {
+		if(self.y) {
+			result := 1;
+		} else {
+			result := 2;
+		}
+	}
+	
+}
+
+class NewA {
+	
+	Integer x := 1;
+	
+	def void test() {
+		self.x.log();
+	}
+}

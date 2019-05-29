@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Declarationorder
+Bundle-SymbolicName: declarationorder
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: declarationorder
+Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.14.0"

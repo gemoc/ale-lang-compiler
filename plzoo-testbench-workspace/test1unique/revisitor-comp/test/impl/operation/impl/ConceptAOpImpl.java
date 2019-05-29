@@ -2,15 +2,15 @@ package test.impl.operation.impl;
 
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.ConceptAOp;
-import test1unique.ConceptA;
-import test1unique.revisitor.Test1uniqueRevisitor;
+import test1.ConceptA;
+import test1.revisitor.Test1Revisitor;
 
 public class ConceptAOpImpl implements ConceptAOp {
-  private Test1uniqueRevisitor<ConceptAOp> rev;
+  private Test1Revisitor<ConceptAOp> rev;
 
   private ConceptA obj;
 
-  public ConceptAOpImpl(ConceptA obj, Test1uniqueRevisitor<ConceptAOp> rev) {
+  public ConceptAOpImpl(ConceptA obj, Test1Revisitor<ConceptAOp> rev) {
     this.obj = obj;
     this.rev = rev;
   }

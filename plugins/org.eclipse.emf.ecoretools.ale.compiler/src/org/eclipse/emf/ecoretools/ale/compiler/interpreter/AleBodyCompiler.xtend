@@ -43,7 +43,7 @@ class AleBodyCompiler {
 		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
 		InterpreterNamingUtils inu) {
 		tsu = new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, inu)
-		aec = new InterpreterExpressionCompiler(syntaxes, packageRoot, resolved, registreredDispatch, registeredArray,
+		aec = new InterpreterExpressionCompiler(packageRoot, resolved, registreredDispatch, registeredArray,
 			registeredServices, isTruffle, cti, es, tsu, inu)
 		this.cti = cti
 	}
@@ -54,23 +54,26 @@ class AleBodyCompiler {
 		val lhs = body.target.compileExpression(ctx)
 		if (lhs == 'this') {
 			if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-				builderSeed.addStatement('''$L.$L.add($L)''', lhs, body.targetFeature, body.value.compileExpression(ctx))
+				builderSeed.addStatement('''$L.$L.add($L)''', lhs, body.targetFeature,
+					body.value.compileExpression(ctx))
 			} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-				builderSeed.
-					addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
+				builderSeed.addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper,
+					body.value.compileExpression(ctx))
 			} else {
-				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, t, body.value.compileExpression(ctx))
+				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, t,
+					body.value.compileExpression(ctx))
 			}
 		} else {
 			if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-				builderSeed.
-					addStatement('''$L.get$L().add($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
+				builderSeed.addStatement('''$L.get$L().add($L)''', lhs, body.targetFeature.toFirstUpper,
+					body.value.compileExpression(ctx))
 			} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-				builderSeed.
-					addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
+				builderSeed.addStatement('''$L.set$L($L)''', lhs, body.targetFeature.toFirstUpper,
+					body.value.compileExpression(ctx))
 			} else {
 				val tb = t.type.resolveType2.solveNothing(body.target)
-				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, tb, body.value.compileExpression(ctx))
+				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, tb,
+					body.value.compileExpression(ctx))
 			}
 
 		}
@@ -94,25 +97,27 @@ class AleBodyCompiler {
 		if (lhs == 'this') {
 			builderSeed.addStatement('''$L.$L.remove($L)''', lhs, body.targetFeature, body.value.compileExpression(ctx))
 		} else {
-			builderSeed.
-				addStatement('''$L.get$L().remove($L)''', lhs, body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
+			builderSeed.addStatement('''$L.get$L().remove($L)''', lhs, body.targetFeature.toFirstUpper,
+				body.value.compileExpression(ctx))
 
 		}
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, VariableAssignment body,
 		CompilerExpressionCtx ctx) {
-			
-		val t = if(body.name == 'result') {
-			EcoreUtil2.getContainerOfType(body, MethodImpl).operationRef.EType.resolveType2
-		} else null
-		
+
+		val t = if (body.name == 'result') {
+				EcoreUtil2.getContainerOfType(body, MethodImpl).operationRef.EType.resolveType2
+			} else
+				null
+
 		builderSeed.addStatement(
-			CodeBlock.builder.addNamed('''$name:N = «IF t !== null»($exprtype:T) ($expr:L) «ELSE»$expr:L«ENDIF»''', newHashMap(
-				"name" -> body.name,
-				"exprtype" -> t,
-				"expr" -> body.value.compileExpression(ctx)
-			)).build)
+			CodeBlock.builder.addNamed('''$name:N = «IF t !== null»($exprtype:T) ($expr:L) «ELSE»$expr:L«ENDIF»''',
+				newHashMap(
+					"name" -> body.name,
+					"exprtype" -> t,
+					"expr" -> body.value.compileExpression(ctx)
+				)).build)
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, VariableDeclaration body,
@@ -121,18 +126,19 @@ class AleBodyCompiler {
 		val inft = body.initialValue?.infereType?.head
 		if (inft instanceof SequenceType) {
 			val ict = inft.collectionType.type
-			val t = if(ict instanceof EClass) {
-				ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"), ict.resolveType)
-			} else {
-			ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
-				ClassName.get(inft.collectionType.type as Class<?>))
-			}
-			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression(ctx))
+			val t = if (ict instanceof EClass) {
+					ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"), ict.resolveType)
+				} else {
+					ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
+						ClassName.get(inft.collectionType.type as Class<?>))
+				}
+			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t,
+				body.initialValue.compileExpression(ctx))
 		} else {
 			val t = body.type.solveType
 			// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
 			val cbb = CodeBlock.builder.addNamed('''$t:T $name:N = (($t:T) ($expr:L))''', newHashMap(
-				"t" -> t, 
+				"t" -> t,
 				"name" -> body.name,
 				"expr" -> body.initialValue?.compileExpression(ctx)
 			))
@@ -157,22 +163,19 @@ class AleBodyCompiler {
 		builderSeed.addStatement('''throw new $T("FeaturePut not implemented")''', RuntimeException)
 	}
 
-	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, ForEach body,
-		CompilerExpressionCtx ctx) {
+	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, ForEach body, CompilerExpressionCtx ctx) {
 		val lt = infereType(body.collectionExpression).head as SequenceType
 
 		if (lt.collectionType.type instanceof EClass) {
 			builderSeed.beginControlFlow('''for ($T $L : «body.collectionExpression.compileExpression(ctx)»)''',
 				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body, ctx).endControlFlow
 		} else {
-			
+
 			val iteratorType = lt.collectionType.type.resolveType2
 			val iteratorVariable = body.variable
 			val iterable = body.collectionExpression.compileExpression(ctx)
-			builderSeed
-				.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable)
-				.compileBody(body.body, ctx)
-				.endControlFlow
+			builderSeed.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable).
+				compileBody(body.body, ctx).endControlFlow
 		}
 	}
 
@@ -194,7 +197,7 @@ class AleBodyCompiler {
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, While body, CompilerExpressionCtx ctx) {
-			builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression(ctx)).compileBody(body.body, ctx).
-				endControlFlow
+		builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression(ctx)).compileBody(body.body, ctx).
+			endControlFlow
 	}
 }

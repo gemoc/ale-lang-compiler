@@ -391,7 +391,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
     {
       case AlePackage.OPERATION__TAG:
         getTag().clear();
-        getTag().addAll((Collection<? extends Tag>)newValue);
+        getTag().addAll((Collection<? extends Tag>) newValue);
         return;
       case AlePackage.OPERATION__DISPATCH:
         setDispatch((Boolean)newValue);
@@ -404,7 +404,7 @@ public class OperationImpl extends MinimalEObjectImpl.Container implements Opera
         return;
       case AlePackage.OPERATION__PARAMS:
         getParams().clear();
-        getParams().addAll((Collection<? extends Variable>)newValue);
+        getParams().addAll((Collection<? extends Variable>) newValue);
         return;
       case AlePackage.OPERATION__BODY:
         setBody((Block)newValue);

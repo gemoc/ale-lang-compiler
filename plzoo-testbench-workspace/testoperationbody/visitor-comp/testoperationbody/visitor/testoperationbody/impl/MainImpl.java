@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import testoperationbody.visitor.testoperationbody.ConceptA;
@@ -45,7 +45,7 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 
 	public EList<Integer> getListint() {
 		if (listint == null) {
-			listint = new EDataTypeEList<Integer>(int.class, this, TestoperationbodyPackage.MAIN__LISTINT);
+			listint = new EDataTypeUniqueEList<Integer>(Integer.class, this, TestoperationbodyPackage.MAIN__LISTINT);
 		}
 		return listint;
 	}
@@ -68,13 +68,6 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.MAIN__SINGLEBOOL, oldSinglebool, singlebool));
 	}
 
-	public void setSingleconcepta(ConceptA newSingleconcepta) {
-		ConceptA oldSingleconcepta = singleconcepta;
-		singleconcepta = newSingleconcepta;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.MAIN__SINGLECONCEPTA, oldSingleconcepta, singleconcepta));
-	}
-
 	public ConceptA getSingleconcepta() {
 		if (singleconcepta != null && singleconcepta.eIsProxy()) {
 			InternalEObject oldSingleconcepta = (InternalEObject) singleconcepta;
@@ -86,6 +79,17 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 			}
 		}
 		return singleconcepta;
+	}
+
+	public ConceptA basicGetSingleconcepta() {
+		return singleconcepta;
+	}
+
+	public void setSingleconcepta(ConceptA newSingleconcepta) {
+		ConceptA oldSingleconcepta = singleconcepta;
+		singleconcepta = newSingleconcepta;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TestoperationbodyPackage.MAIN__SINGLECONCEPTA, oldSingleconcepta, singleconcepta));
 	}
 
 	public EList<Parent> getChildren() {

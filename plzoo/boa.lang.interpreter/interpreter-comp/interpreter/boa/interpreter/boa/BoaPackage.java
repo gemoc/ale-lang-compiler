@@ -8,561 +8,767 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 public interface BoaPackage extends EPackage {
-  BoaPackage eINSTANCE = BoaPackageImpl.init();
+	String eNAME = "boa";
 
-  String eNS_URI = "http://boa.boa.boa/";
+	String eNS_URI = "http://boa.boa.boa/";
 
-  String eNAME = "boa";
+	String eNS_PREFIX = "boa";
 
-  String eNS_PREFIX = "boa";
+	BoaPackage eINSTANCE = BoaPackageImpl.init();
 
-  int FILE = 0;
+	int FILE = 0;
 
-  int TOP_LEVEL_CMD = 1;
+	int FILE__COMMANDS = 0;
 
-  int EXPR = 2;
+	int FILE_FEATURE_COUNT = 1;
 
-  int DEF = 3;
+	int FILE_OPERATION_COUNT = 0;
 
-  int APP = 4;
+	int TOP_LEVEL_CMD = 1;
 
-  int VAR = 5;
+	int TOP_LEVEL_CMD_FEATURE_COUNT = 0;
 
-  int THIS = 6;
+	int TOP_LEVEL_CMD_OPERATION_COUNT = 0;
 
-  int BOOL = 7;
+	int EXPR = 2;
 
-  int INT = 8;
+	int EXPR_FEATURE_COUNT = TOP_LEVEL_CMD_FEATURE_COUNT + 0;
 
-  int SKIP = 9;
+	int EXPR_OPERATION_COUNT = TOP_LEVEL_CMD_OPERATION_COUNT + 0;
 
-  int PROJECT = 10;
+	int DEF = 3;
 
-  int BOBJECT = 11;
+	int DEF__NAME = 0;
 
-  int FIELD = 12;
+	int DEF__EXPR = 1;
 
-  int COPY = 13;
+	int DEF_FEATURE_COUNT = TOP_LEVEL_CMD_FEATURE_COUNT + 2;
 
-  int WITH = 14;
+	int DEF_OPERATION_COUNT = TOP_LEVEL_CMD_OPERATION_COUNT + 0;
 
-  int ARITH_OP = 15;
+	int APP = 4;
 
-  int NOT = 16;
+	int APP__LHS = 0;
 
-  int CMP_OP = 17;
+	int APP__RHS = 1;
 
-  int BOOL_OP = 18;
+	int APP_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
-  int IF = 19;
+	int APP_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int LET = 20;
+	int VAR = 5;
 
-  int FUN = 21;
+	int VAR__NAME = 0;
 
-  int ASSIGN = 22;
+	int VAR_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
-  int ARITH_OP_PLUS = 23;
+	int VAR_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int ARITH_OP_MINUS = 24;
+	int THIS = 6;
 
-  int ARITH_OP_TIMES = 25;
+	int THIS_FEATURE_COUNT = EXPR_FEATURE_COUNT + 0;
 
-  int ARITH_OP_DIVIDE = 26;
+	int THIS_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int ARITH_OP_REMAINDER = 27;
+	int BOOL = 7;
 
-  int BOOL_OP_AND = 28;
+	int BOOL__VALUE = 0;
 
-  int BOOL_OP_OR = 29;
+	int BOOL_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
-  int SEQ = 30;
+	int BOOL_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int CMP_OP_EQUAL = 31;
+	int INT = 8;
 
-  int CMP_OP_UNEQUAL = 32;
+	int INT__VALUE = 0;
 
-  int CMP_OP_LESS = 33;
+	int INT_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
-  int CTX = 34;
+	int INT_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int STRING_TO_EVAL_RES_MAP = 35;
+	int SKIP = 9;
 
-  int EVAL_RES = 36;
+	int SKIP_FEATURE_COUNT = EXPR_FEATURE_COUNT + 0;
 
-  int EVAL_MAP_RES = 37;
+	int SKIP_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int EVAL_FUN_RES = 38;
+	int PROJECT = 10;
 
-  int EVAL_BOUND_FUN_RES = 39;
+	int PROJECT__EXP = 0;
 
-  int EVAL_INT_RES = 40;
+	int PROJECT__NAME = 1;
 
-  int EVAL_BOOL_RES = 41;
+	int PROJECT_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
-  int FILE__COMMANDS = 0;
+	int PROJECT_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int DEF__NAME = 0;
+	int BOBJECT = 11;
 
-  int DEF__EXPR = 1;
+	int BOBJECT__FIELDS = 0;
 
-  int APP__LHS = 0;
+	int BOBJECT_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
-  int APP__RHS = 1;
+	int BOBJECT_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int VAR__NAME = 0;
+	int FIELD = 12;
 
-  int BOOL__VALUE = 0;
+	int FIELD__NAME = 0;
 
-  int INT__VALUE = 0;
+	int FIELD__VALUE = 1;
 
-  int PROJECT__EXP = 0;
+	int FIELD_FEATURE_COUNT = 2;
 
-  int PROJECT__NAME = 1;
+	int FIELD_OPERATION_COUNT = 0;
 
-  int BOBJECT__FIELDS = 0;
+	int COPY = 13;
 
-  int FIELD__NAME = 0;
+	int COPY__COPY = 0;
 
-  int FIELD__VALUE = 1;
+	int COPY_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
-  int COPY__COPY = 0;
+	int COPY_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int WITH__LHS = 0;
+	int WITH = 14;
 
-  int WITH__RHS = 1;
+	int WITH__LHS = 0;
 
-  int ARITH_OP__LHS = 0;
+	int WITH__RHS = 1;
 
-  int ARITH_OP__RHS = 1;
+	int WITH_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
-  int NOT__VALUE = 0;
+	int WITH_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int CMP_OP__LHS = 0;
+	int ARITH_OP = 15;
 
-  int CMP_OP__RHS = 1;
+	int ARITH_OP__LHS = 0;
 
-  int IF__COND = 0;
+	int ARITH_OP__RHS = 1;
 
-  int IF__THN = 1;
+	int ARITH_OP_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
-  int IF__ELS = 2;
+	int ARITH_OP_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int LET__NAME = 0;
+	int NOT = 16;
 
-  int LET__LHS = 1;
+	int NOT__VALUE = 0;
 
-  int LET__RHS = 2;
+	int NOT_FEATURE_COUNT = EXPR_FEATURE_COUNT + 1;
 
-  int FUN__NAME = 0;
+	int NOT_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int FUN__BODY = 1;
+	int CMP_OP = 17;
 
-  int ASSIGN__LHS = 0;
+	int CMP_OP__LHS = 0;
 
-  int ASSIGN__RHS = 1;
+	int CMP_OP__RHS = 1;
 
-  int ASSIGN__NAME = 2;
+	int CMP_OP_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
-  int BOOL_OP_AND__LHS = 0;
+	int CMP_OP_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int BOOL_OP_AND__RHS = 1;
+	int BOOL_OP = 18;
 
-  int BOOL_OP_OR__LHS = 0;
+	int BOOL_OP_FEATURE_COUNT = EXPR_FEATURE_COUNT + 0;
 
-  int BOOL_OP_OR__RHS = 1;
+	int BOOL_OP_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int SEQ__LHS = 0;
+	int IF = 19;
 
-  int SEQ__RHS = 1;
+	int IF__COND = 0;
 
-  int CTX__ENV = 0;
+	int IF__THN = 1;
 
-  int CTX__TH = 1;
+	int IF__ELS = 2;
 
-  int STRING_TO_EVAL_RES_MAP__KEY = 0;
+	int IF_FEATURE_COUNT = EXPR_FEATURE_COUNT + 3;
 
-  int STRING_TO_EVAL_RES_MAP__VALUE = 1;
+	int IF_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int EVAL_MAP_RES__VALUES = 0;
+	int LET = 20;
 
-  int EVAL_FUN_RES__EXP = 0;
+	int LET__NAME = 0;
 
-  int EVAL_FUN_RES__CTX = 1;
+	int LET__LHS = 1;
 
-  int EVAL_FUN_RES__NAME = 2;
+	int LET__RHS = 2;
 
-  int EVAL_BOUND_FUN_RES__TH = 3;
+	int LET_FEATURE_COUNT = EXPR_FEATURE_COUNT + 3;
 
-  int EVAL_INT_RES__VALUE = 0;
+	int LET_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  int EVAL_BOOL_RES__VALUE = 0;
+	int FUN = 21;
 
-  EClass getFile();
+	int FUN__NAME = 0;
 
-  EClass getTopLevelCmd();
+	int FUN__BODY = 1;
 
-  EClass getExpr();
+	int FUN_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
-  EClass getDef();
+	int FUN_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  EClass getApp();
+	int ASSIGN = 22;
 
-  EClass getVar();
+	int ASSIGN__LHS = 0;
 
-  EClass getThis();
+	int ASSIGN__RHS = 1;
 
-  EClass getBool();
+	int ASSIGN__NAME = 2;
 
-  EClass getInt();
+	int ASSIGN_FEATURE_COUNT = EXPR_FEATURE_COUNT + 3;
 
-  EClass getSkip();
+	int ASSIGN_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  EClass getProject();
+	int ARITH_OP_PLUS = 23;
 
-  EClass getBObject();
+	int ARITH_OP_PLUS__LHS = ARITH_OP__LHS;
 
-  EClass getField();
+	int ARITH_OP_PLUS__RHS = ARITH_OP__RHS;
 
-  EClass getCopy();
+	int ARITH_OP_PLUS_FEATURE_COUNT = ARITH_OP_FEATURE_COUNT + 0;
 
-  EClass getWith();
+	int ARITH_OP_PLUS_OPERATION_COUNT = ARITH_OP_OPERATION_COUNT + 0;
 
-  EClass getArithOp();
+	int ARITH_OP_MINUS = 24;
 
-  EClass getNot();
+	int ARITH_OP_MINUS__LHS = ARITH_OP__LHS;
 
-  EClass getCmpOp();
+	int ARITH_OP_MINUS__RHS = ARITH_OP__RHS;
 
-  EClass getBoolOp();
+	int ARITH_OP_MINUS_FEATURE_COUNT = ARITH_OP_FEATURE_COUNT + 0;
 
-  EClass getIf();
+	int ARITH_OP_MINUS_OPERATION_COUNT = ARITH_OP_OPERATION_COUNT + 0;
 
-  EClass getLet();
+	int ARITH_OP_TIMES = 25;
 
-  EClass getFun();
+	int ARITH_OP_TIMES__LHS = ARITH_OP__LHS;
 
-  EClass getAssign();
+	int ARITH_OP_TIMES__RHS = ARITH_OP__RHS;
 
-  EClass getArithOpPlus();
+	int ARITH_OP_TIMES_FEATURE_COUNT = ARITH_OP_FEATURE_COUNT + 0;
 
-  EClass getArithOpMinus();
+	int ARITH_OP_TIMES_OPERATION_COUNT = ARITH_OP_OPERATION_COUNT + 0;
 
-  EClass getArithOpTimes();
+	int ARITH_OP_DIVIDE = 26;
 
-  EClass getArithOpDivide();
+	int ARITH_OP_DIVIDE__LHS = ARITH_OP__LHS;
 
-  EClass getArithOpRemainder();
+	int ARITH_OP_DIVIDE__RHS = ARITH_OP__RHS;
 
-  EClass getBoolOpAnd();
+	int ARITH_OP_DIVIDE_FEATURE_COUNT = ARITH_OP_FEATURE_COUNT + 0;
 
-  EClass getBoolOpOr();
+	int ARITH_OP_DIVIDE_OPERATION_COUNT = ARITH_OP_OPERATION_COUNT + 0;
 
-  EClass getSeq();
+	int ARITH_OP_REMAINDER = 27;
 
-  EClass getCmpOpEqual();
+	int ARITH_OP_REMAINDER__LHS = ARITH_OP__LHS;
 
-  EClass getCmpOpUnequal();
+	int ARITH_OP_REMAINDER__RHS = ARITH_OP__RHS;
 
-  EClass getCmpOpLess();
+	int ARITH_OP_REMAINDER_FEATURE_COUNT = ARITH_OP_FEATURE_COUNT + 0;
 
-  EClass getCtx();
+	int ARITH_OP_REMAINDER_OPERATION_COUNT = ARITH_OP_OPERATION_COUNT + 0;
 
-  EClass getStringToEvalResMap();
+	int BOOL_OP_AND = 28;
 
-  EClass getEvalRes();
+	int BOOL_OP_AND__LHS = 0;
 
-  EClass getEvalMapRes();
+	int BOOL_OP_AND__RHS = 1;
 
-  EClass getEvalFunRes();
+	int BOOL_OP_AND_FEATURE_COUNT = BOOL_OP_FEATURE_COUNT + 2;
 
-  EClass getEvalBoundFunRes();
+	int BOOL_OP_AND_OPERATION_COUNT = BOOL_OP_OPERATION_COUNT + 0;
 
-  EClass getEvalIntRes();
+	int BOOL_OP_OR = 29;
 
-  EClass getEvalBoolRes();
+	int BOOL_OP_OR__LHS = 0;
 
-  EReference getFile_Commands();
+	int BOOL_OP_OR__RHS = 1;
 
-  EReference getDef_Expr();
+	int BOOL_OP_OR_FEATURE_COUNT = BOOL_OP_FEATURE_COUNT + 2;
 
-  EReference getApp_Lhs();
+	int BOOL_OP_OR_OPERATION_COUNT = BOOL_OP_OPERATION_COUNT + 0;
 
-  EReference getApp_Rhs();
+	int SEQ = 30;
 
-  EReference getProject_Exp();
+	int SEQ__LHS = 0;
 
-  EReference getBobject_Fields();
+	int SEQ__RHS = 1;
 
-  EReference getField_Value();
+	int SEQ_FEATURE_COUNT = EXPR_FEATURE_COUNT + 2;
 
-  EReference getCopy_Copy();
+	int SEQ_OPERATION_COUNT = EXPR_OPERATION_COUNT + 0;
 
-  EReference getWith_Lhs();
+	int CMP_OP_EQUAL = 31;
 
-  EReference getWith_Rhs();
+	int CMP_OP_EQUAL__LHS = CMP_OP__LHS;
 
-  EReference getArith_op_Lhs();
+	int CMP_OP_EQUAL__RHS = CMP_OP__RHS;
 
-  EReference getArith_op_Rhs();
+	int CMP_OP_EQUAL_FEATURE_COUNT = CMP_OP_FEATURE_COUNT + 0;
 
-  EReference getNot_Value();
+	int CMP_OP_EQUAL_OPERATION_COUNT = CMP_OP_OPERATION_COUNT + 0;
 
-  EReference getCmp_op_Lhs();
+	int CMP_OP_UNEQUAL = 32;
 
-  EReference getCmp_op_Rhs();
+	int CMP_OP_UNEQUAL__LHS = CMP_OP__LHS;
 
-  EReference getIf_Cond();
+	int CMP_OP_UNEQUAL__RHS = CMP_OP__RHS;
 
-  EReference getIf_Thn();
+	int CMP_OP_UNEQUAL_FEATURE_COUNT = CMP_OP_FEATURE_COUNT + 0;
 
-  EReference getIf_Els();
+	int CMP_OP_UNEQUAL_OPERATION_COUNT = CMP_OP_OPERATION_COUNT + 0;
 
-  EReference getLet_Lhs();
+	int CMP_OP_LESS = 33;
 
-  EReference getLet_Rhs();
+	int CMP_OP_LESS__LHS = CMP_OP__LHS;
 
-  EReference getFun_Body();
+	int CMP_OP_LESS__RHS = CMP_OP__RHS;
 
-  EReference getAssign_Lhs();
+	int CMP_OP_LESS_FEATURE_COUNT = CMP_OP_FEATURE_COUNT + 0;
 
-  EReference getAssign_Rhs();
+	int CMP_OP_LESS_OPERATION_COUNT = CMP_OP_OPERATION_COUNT + 0;
 
-  EReference getBool_op_and_Lhs();
+	int CTX = 34;
 
-  EReference getBool_op_and_Rhs();
+	int CTX__ENV = 0;
 
-  EReference getBool_op_or_Lhs();
+	int CTX__TH = 1;
 
-  EReference getBool_op_or_Rhs();
+	int CTX_FEATURE_COUNT = 2;
 
-  EReference getSeq_Lhs();
+	int CTX_OPERATION_COUNT = 0;
 
-  EReference getSeq_Rhs();
+	int STRING_TO_EVAL_RES_MAP = 35;
 
-  EReference getCtx_Env();
+	int STRING_TO_EVAL_RES_MAP__KEY = 0;
 
-  EReference getCtx_Th();
+	int STRING_TO_EVAL_RES_MAP__VALUE = 1;
 
-  EReference getString_to_eval_res_map_Value();
+	int STRING_TO_EVAL_RES_MAP_FEATURE_COUNT = 2;
 
-  EReference getEval_map_res_Values();
+	int STRING_TO_EVAL_RES_MAP_OPERATION_COUNT = 0;
 
-  EReference getEval_fun_res_Exp();
+	int EVAL_RES = 36;
 
-  EReference getEval_fun_res_Ctx();
+	int EVAL_RES_FEATURE_COUNT = 0;
 
-  EReference getEval_bound_fun_res_Th();
+	int EVAL_RES_OPERATION_COUNT = 0;
 
-  EAttribute getDef_Name();
+	int EVAL_MAP_RES = 37;
 
-  EAttribute getVar_Name();
+	int EVAL_MAP_RES__VALUES = 0;
 
-  EAttribute getBool_Value();
+	int EVAL_MAP_RES_FEATURE_COUNT = EVAL_RES_FEATURE_COUNT + 1;
 
-  EAttribute getInt_Value();
+	int EVAL_MAP_RES_OPERATION_COUNT = EVAL_RES_OPERATION_COUNT + 0;
 
-  EAttribute getProject_Name();
+	int EVAL_FUN_RES = 38;
 
-  EAttribute getField_Name();
+	int EVAL_FUN_RES__EXP = 0;
 
-  EAttribute getLet_Name();
+	int EVAL_FUN_RES__CTX = 1;
 
-  EAttribute getFun_Name();
+	int EVAL_FUN_RES__NAME = 2;
 
-  EAttribute getAssign_Name();
+	int EVAL_FUN_RES_FEATURE_COUNT = EVAL_RES_FEATURE_COUNT + 3;
 
-  EAttribute getString_to_eval_res_map_Key();
+	int EVAL_FUN_RES_OPERATION_COUNT = EVAL_RES_OPERATION_COUNT + 0;
 
-  EAttribute getEval_fun_res_Name();
+	int EVAL_BOUND_FUN_RES = 39;
 
-  EAttribute getEval_int_res_Value();
+	int EVAL_BOUND_FUN_RES__EXP = EVAL_FUN_RES__EXP;
 
-  EAttribute getEval_bool_res_Value();
+	int EVAL_BOUND_FUN_RES__CTX = EVAL_FUN_RES__CTX;
 
-  BoaFactory getBoaFactory();
+	int EVAL_BOUND_FUN_RES__NAME = EVAL_FUN_RES__NAME;
 
-  interface Literals {
-    EClass FILE = eINSTANCE.getFile();
+	int EVAL_BOUND_FUN_RES__TH = 3;
 
-    EClass TOP_LEVEL_CMD = eINSTANCE.getTopLevelCmd();
+	int EVAL_BOUND_FUN_RES_FEATURE_COUNT = EVAL_FUN_RES_FEATURE_COUNT + 1;
 
-    EClass EXPR = eINSTANCE.getExpr();
+	int EVAL_BOUND_FUN_RES_OPERATION_COUNT = EVAL_FUN_RES_OPERATION_COUNT + 0;
 
-    EClass DEF = eINSTANCE.getDef();
+	int EVAL_INT_RES = 40;
 
-    EClass APP = eINSTANCE.getApp();
+	int EVAL_INT_RES__VALUE = 0;
 
-    EClass VAR = eINSTANCE.getVar();
+	int EVAL_INT_RES_FEATURE_COUNT = EVAL_RES_FEATURE_COUNT + 1;
 
-    EClass THIS = eINSTANCE.getThis();
+	int EVAL_INT_RES_OPERATION_COUNT = EVAL_RES_OPERATION_COUNT + 0;
 
-    EClass BOOL = eINSTANCE.getBool();
+	int EVAL_BOOL_RES = 41;
 
-    EClass INT = eINSTANCE.getInt();
+	int EVAL_BOOL_RES__VALUE = 0;
 
-    EClass SKIP = eINSTANCE.getSkip();
+	int EVAL_BOOL_RES_FEATURE_COUNT = EVAL_RES_FEATURE_COUNT + 1;
 
-    EClass PROJECT = eINSTANCE.getProject();
+	int EVAL_BOOL_RES_OPERATION_COUNT = EVAL_RES_OPERATION_COUNT + 0;
 
-    EClass BOBJECT = eINSTANCE.getBObject();
+	EClass getFile();
 
-    EClass FIELD = eINSTANCE.getField();
+	EReference getFile_Commands();
 
-    EClass COPY = eINSTANCE.getCopy();
+	EClass getTopLevelCmd();
 
-    EClass WITH = eINSTANCE.getWith();
+	EClass getExpr();
 
-    EClass ARITH_OP = eINSTANCE.getArithOp();
+	EClass getDef();
 
-    EClass NOT = eINSTANCE.getNot();
+	EAttribute getDef_Name();
 
-    EClass CMP_OP = eINSTANCE.getCmpOp();
+	EReference getDef_Expr();
 
-    EClass BOOL_OP = eINSTANCE.getBoolOp();
+	EClass getApp();
 
-    EClass IF = eINSTANCE.getIf();
+	EReference getApp_Lhs();
 
-    EClass LET = eINSTANCE.getLet();
+	EReference getApp_Rhs();
 
-    EClass FUN = eINSTANCE.getFun();
+	EClass getVar();
 
-    EClass ASSIGN = eINSTANCE.getAssign();
+	EAttribute getVar_Name();
 
-    EClass ARITH_OP_PLUS = eINSTANCE.getArithOpPlus();
+	EClass getThis();
 
-    EClass ARITH_OP_MINUS = eINSTANCE.getArithOpMinus();
+	EClass getBool();
 
-    EClass ARITH_OP_TIMES = eINSTANCE.getArithOpTimes();
+	EAttribute getBool_Value();
 
-    EClass ARITH_OP_DIVIDE = eINSTANCE.getArithOpDivide();
+	EClass getInt();
 
-    EClass ARITH_OP_REMAINDER = eINSTANCE.getArithOpRemainder();
+	EAttribute getInt_Value();
 
-    EClass BOOL_OP_AND = eINSTANCE.getBoolOpAnd();
+	EClass getSkip();
 
-    EClass BOOL_OP_OR = eINSTANCE.getBoolOpOr();
+	EClass getProject();
 
-    EClass SEQ = eINSTANCE.getSeq();
+	EReference getProject_Exp();
 
-    EClass CMP_OP_EQUAL = eINSTANCE.getCmpOpEqual();
+	EAttribute getProject_Name();
 
-    EClass CMP_OP_UNEQUAL = eINSTANCE.getCmpOpUnequal();
+	EClass getBObject();
 
-    EClass CMP_OP_LESS = eINSTANCE.getCmpOpLess();
+	EReference getBObject_Fields();
 
-    EClass CTX = eINSTANCE.getCtx();
+	EClass getField();
 
-    EClass STRING_TO_EVAL_RES_MAP = eINSTANCE.getStringToEvalResMap();
+	EAttribute getField_Name();
 
-    EClass EVAL_RES = eINSTANCE.getEvalRes();
+	EReference getField_Value();
 
-    EClass EVAL_MAP_RES = eINSTANCE.getEvalMapRes();
+	EClass getCopy();
 
-    EClass EVAL_FUN_RES = eINSTANCE.getEvalFunRes();
+	EReference getCopy_Copy();
 
-    EClass EVAL_BOUND_FUN_RES = eINSTANCE.getEvalBoundFunRes();
+	EClass getWith();
 
-    EClass EVAL_INT_RES = eINSTANCE.getEvalIntRes();
+	EReference getWith_Lhs();
 
-    EClass EVAL_BOOL_RES = eINSTANCE.getEvalBoolRes();
+	EReference getWith_Rhs();
 
-    EReference FILE__COMMANDS = eINSTANCE.getFile_Commands();
+	EClass getArithOp();
 
-    EReference DEF__EXPR = eINSTANCE.getDef_Expr();
+	EReference getArithOp_Lhs();
 
-    EReference APP__LHS = eINSTANCE.getApp_Lhs();
+	EReference getArithOp_Rhs();
 
-    EReference APP__RHS = eINSTANCE.getApp_Rhs();
+	EClass getNot();
 
-    EReference PROJECT__EXP = eINSTANCE.getProject_Exp();
+	EReference getNot_Value();
 
-    EReference BOBJECT__FIELDS = eINSTANCE.getBobject_Fields();
+	EClass getCmpOp();
 
-    EReference FIELD__VALUE = eINSTANCE.getField_Value();
+	EReference getCmpOp_Lhs();
 
-    EReference COPY__COPY = eINSTANCE.getCopy_Copy();
+	EReference getCmpOp_Rhs();
 
-    EReference WITH__LHS = eINSTANCE.getWith_Lhs();
+	EClass getBoolOp();
 
-    EReference WITH__RHS = eINSTANCE.getWith_Rhs();
+	EClass getIf();
 
-    EReference ARITH_OP__LHS = eINSTANCE.getArith_op_Lhs();
+	EReference getIf_Cond();
 
-    EReference ARITH_OP__RHS = eINSTANCE.getArith_op_Rhs();
+	EReference getIf_Thn();
 
-    EReference NOT__VALUE = eINSTANCE.getNot_Value();
+	EReference getIf_Els();
 
-    EReference CMP_OP__LHS = eINSTANCE.getCmp_op_Lhs();
+	EClass getLet();
 
-    EReference CMP_OP__RHS = eINSTANCE.getCmp_op_Rhs();
+	EAttribute getLet_Name();
 
-    EReference IF__COND = eINSTANCE.getIf_Cond();
+	EReference getLet_Lhs();
 
-    EReference IF__THN = eINSTANCE.getIf_Thn();
+	EReference getLet_Rhs();
 
-    EReference IF__ELS = eINSTANCE.getIf_Els();
+	EClass getFun();
 
-    EReference LET__LHS = eINSTANCE.getLet_Lhs();
+	EAttribute getFun_Name();
 
-    EReference LET__RHS = eINSTANCE.getLet_Rhs();
+	EReference getFun_Body();
 
-    EReference FUN__BODY = eINSTANCE.getFun_Body();
+	EClass getAssign();
 
-    EReference ASSIGN__LHS = eINSTANCE.getAssign_Lhs();
+	EReference getAssign_Lhs();
 
-    EReference ASSIGN__RHS = eINSTANCE.getAssign_Rhs();
+	EReference getAssign_Rhs();
 
-    EReference BOOL_OP_AND__LHS = eINSTANCE.getBool_op_and_Lhs();
+	EAttribute getAssign_Name();
 
-    EReference BOOL_OP_AND__RHS = eINSTANCE.getBool_op_and_Rhs();
+	EClass getArithOpPlus();
 
-    EReference BOOL_OP_OR__LHS = eINSTANCE.getBool_op_or_Lhs();
+	EClass getArithOpMinus();
 
-    EReference BOOL_OP_OR__RHS = eINSTANCE.getBool_op_or_Rhs();
+	EClass getArithOpTimes();
 
-    EReference SEQ__LHS = eINSTANCE.getSeq_Lhs();
+	EClass getArithOpDivide();
 
-    EReference SEQ__RHS = eINSTANCE.getSeq_Rhs();
+	EClass getArithOpRemainder();
 
-    EReference CTX__ENV = eINSTANCE.getCtx_Env();
+	EClass getBoolOpAnd();
 
-    EReference CTX__TH = eINSTANCE.getCtx_Th();
+	EReference getBoolOpAnd_Lhs();
 
-    EReference STRING_TO_EVAL_RES_MAP__VALUE = eINSTANCE.getString_to_eval_res_map_Value();
+	EReference getBoolOpAnd_Rhs();
 
-    EReference EVAL_MAP_RES__VALUES = eINSTANCE.getEval_map_res_Values();
+	EClass getBoolOpOr();
 
-    EReference EVAL_FUN_RES__EXP = eINSTANCE.getEval_fun_res_Exp();
+	EReference getBoolOpOr_Lhs();
 
-    EReference EVAL_FUN_RES__CTX = eINSTANCE.getEval_fun_res_Ctx();
+	EReference getBoolOpOr_Rhs();
 
-    EReference EVAL_BOUND_FUN_RES__TH = eINSTANCE.getEval_bound_fun_res_Th();
+	EClass getSeq();
 
-    EAttribute DEF__NAME = eINSTANCE.getDef_Name();
+	EReference getSeq_Lhs();
 
-    EAttribute VAR__NAME = eINSTANCE.getVar_Name();
+	EReference getSeq_Rhs();
 
-    EAttribute BOOL__VALUE = eINSTANCE.getBool_Value();
+	EClass getCmpOpEqual();
 
-    EAttribute INT__VALUE = eINSTANCE.getInt_Value();
+	EClass getCmpOpUnequal();
 
-    EAttribute PROJECT__NAME = eINSTANCE.getProject_Name();
+	EClass getCmpOpLess();
 
-    EAttribute FIELD__NAME = eINSTANCE.getField_Name();
+	EClass getCtx();
 
-    EAttribute LET__NAME = eINSTANCE.getLet_Name();
+	EReference getCtx_Env();
 
-    EAttribute FUN__NAME = eINSTANCE.getFun_Name();
+	EReference getCtx_Th();
 
-    EAttribute ASSIGN__NAME = eINSTANCE.getAssign_Name();
+	EClass getStringToEvalResMap();
 
-    EAttribute STRING_TO_EVAL_RES_MAP__KEY = eINSTANCE.getString_to_eval_res_map_Key();
+	EAttribute getStringToEvalResMap_Key();
 
-    EAttribute EVAL_FUN_RES__NAME = eINSTANCE.getEval_fun_res_Name();
+	EReference getStringToEvalResMap_Value();
 
-    EAttribute EVAL_INT_RES__VALUE = eINSTANCE.getEval_int_res_Value();
+	EClass getEvalRes();
 
-    EAttribute EVAL_BOOL_RES__VALUE = eINSTANCE.getEval_bool_res_Value();
-  }
+	EClass getEvalMapRes();
+
+	EReference getEvalMapRes_Values();
+
+	EClass getEvalFunRes();
+
+	EReference getEvalFunRes_Exp();
+
+	EReference getEvalFunRes_Ctx();
+
+	EAttribute getEvalFunRes_Name();
+
+	EClass getEvalBoundFunRes();
+
+	EReference getEvalBoundFunRes_Th();
+
+	EClass getEvalIntRes();
+
+	EAttribute getEvalIntRes_Value();
+
+	EClass getEvalBoolRes();
+
+	EAttribute getEvalBoolRes_Value();
+
+	BoaFactory getBoaFactory();
+
+	interface Literals {
+		EClass FILE = eINSTANCE.getFile();
+
+		EReference FILE__COMMANDS = eINSTANCE.getFile_Commands();
+
+		EClass TOP_LEVEL_CMD = eINSTANCE.getTopLevelCmd();
+
+		EClass EXPR = eINSTANCE.getExpr();
+
+		EClass DEF = eINSTANCE.getDef();
+
+		EAttribute DEF__NAME = eINSTANCE.getDef_Name();
+
+		EReference DEF__EXPR = eINSTANCE.getDef_Expr();
+
+		EClass APP = eINSTANCE.getApp();
+
+		EReference APP__LHS = eINSTANCE.getApp_Lhs();
+
+		EReference APP__RHS = eINSTANCE.getApp_Rhs();
+
+		EClass VAR = eINSTANCE.getVar();
+
+		EAttribute VAR__NAME = eINSTANCE.getVar_Name();
+
+		EClass THIS = eINSTANCE.getThis();
+
+		EClass BOOL = eINSTANCE.getBool();
+
+		EAttribute BOOL__VALUE = eINSTANCE.getBool_Value();
+
+		EClass INT = eINSTANCE.getInt();
+
+		EAttribute INT__VALUE = eINSTANCE.getInt_Value();
+
+		EClass SKIP = eINSTANCE.getSkip();
+
+		EClass PROJECT = eINSTANCE.getProject();
+
+		EReference PROJECT__EXP = eINSTANCE.getProject_Exp();
+
+		EAttribute PROJECT__NAME = eINSTANCE.getProject_Name();
+
+		EClass BOBJECT = eINSTANCE.getBObject();
+
+		EReference BOBJECT__FIELDS = eINSTANCE.getBObject_Fields();
+
+		EClass FIELD = eINSTANCE.getField();
+
+		EAttribute FIELD__NAME = eINSTANCE.getField_Name();
+
+		EReference FIELD__VALUE = eINSTANCE.getField_Value();
+
+		EClass COPY = eINSTANCE.getCopy();
+
+		EReference COPY__COPY = eINSTANCE.getCopy_Copy();
+
+		EClass WITH = eINSTANCE.getWith();
+
+		EReference WITH__LHS = eINSTANCE.getWith_Lhs();
+
+		EReference WITH__RHS = eINSTANCE.getWith_Rhs();
+
+		EClass ARITH_OP = eINSTANCE.getArithOp();
+
+		EReference ARITH_OP__LHS = eINSTANCE.getArithOp_Lhs();
+
+		EReference ARITH_OP__RHS = eINSTANCE.getArithOp_Rhs();
+
+		EClass NOT = eINSTANCE.getNot();
+
+		EReference NOT__VALUE = eINSTANCE.getNot_Value();
+
+		EClass CMP_OP = eINSTANCE.getCmpOp();
+
+		EReference CMP_OP__LHS = eINSTANCE.getCmpOp_Lhs();
+
+		EReference CMP_OP__RHS = eINSTANCE.getCmpOp_Rhs();
+
+		EClass BOOL_OP = eINSTANCE.getBoolOp();
+
+		EClass IF = eINSTANCE.getIf();
+
+		EReference IF__COND = eINSTANCE.getIf_Cond();
+
+		EReference IF__THN = eINSTANCE.getIf_Thn();
+
+		EReference IF__ELS = eINSTANCE.getIf_Els();
+
+		EClass LET = eINSTANCE.getLet();
+
+		EAttribute LET__NAME = eINSTANCE.getLet_Name();
+
+		EReference LET__LHS = eINSTANCE.getLet_Lhs();
+
+		EReference LET__RHS = eINSTANCE.getLet_Rhs();
+
+		EClass FUN = eINSTANCE.getFun();
+
+		EAttribute FUN__NAME = eINSTANCE.getFun_Name();
+
+		EReference FUN__BODY = eINSTANCE.getFun_Body();
+
+		EClass ASSIGN = eINSTANCE.getAssign();
+
+		EReference ASSIGN__LHS = eINSTANCE.getAssign_Lhs();
+
+		EReference ASSIGN__RHS = eINSTANCE.getAssign_Rhs();
+
+		EAttribute ASSIGN__NAME = eINSTANCE.getAssign_Name();
+
+		EClass ARITH_OP_PLUS = eINSTANCE.getArithOpPlus();
+
+		EClass ARITH_OP_MINUS = eINSTANCE.getArithOpMinus();
+
+		EClass ARITH_OP_TIMES = eINSTANCE.getArithOpTimes();
+
+		EClass ARITH_OP_DIVIDE = eINSTANCE.getArithOpDivide();
+
+		EClass ARITH_OP_REMAINDER = eINSTANCE.getArithOpRemainder();
+
+		EClass BOOL_OP_AND = eINSTANCE.getBoolOpAnd();
+
+		EReference BOOL_OP_AND__LHS = eINSTANCE.getBoolOpAnd_Lhs();
+
+		EReference BOOL_OP_AND__RHS = eINSTANCE.getBoolOpAnd_Rhs();
+
+		EClass BOOL_OP_OR = eINSTANCE.getBoolOpOr();
+
+		EReference BOOL_OP_OR__LHS = eINSTANCE.getBoolOpOr_Lhs();
+
+		EReference BOOL_OP_OR__RHS = eINSTANCE.getBoolOpOr_Rhs();
+
+		EClass SEQ = eINSTANCE.getSeq();
+
+		EReference SEQ__LHS = eINSTANCE.getSeq_Lhs();
+
+		EReference SEQ__RHS = eINSTANCE.getSeq_Rhs();
+
+		EClass CMP_OP_EQUAL = eINSTANCE.getCmpOpEqual();
+
+		EClass CMP_OP_UNEQUAL = eINSTANCE.getCmpOpUnequal();
+
+		EClass CMP_OP_LESS = eINSTANCE.getCmpOpLess();
+
+		EClass CTX = eINSTANCE.getCtx();
+
+		EReference CTX__ENV = eINSTANCE.getCtx_Env();
+
+		EReference CTX__TH = eINSTANCE.getCtx_Th();
+
+		EClass STRING_TO_EVAL_RES_MAP = eINSTANCE.getStringToEvalResMap();
+
+		EAttribute STRING_TO_EVAL_RES_MAP__KEY = eINSTANCE.getStringToEvalResMap_Key();
+
+		EReference STRING_TO_EVAL_RES_MAP__VALUE = eINSTANCE.getStringToEvalResMap_Value();
+
+		EClass EVAL_RES = eINSTANCE.getEvalRes();
+
+		EClass EVAL_MAP_RES = eINSTANCE.getEvalMapRes();
+
+		EReference EVAL_MAP_RES__VALUES = eINSTANCE.getEvalMapRes_Values();
+
+		EClass EVAL_FUN_RES = eINSTANCE.getEvalFunRes();
+
+		EReference EVAL_FUN_RES__EXP = eINSTANCE.getEvalFunRes_Exp();
+
+		EReference EVAL_FUN_RES__CTX = eINSTANCE.getEvalFunRes_Ctx();
+
+		EAttribute EVAL_FUN_RES__NAME = eINSTANCE.getEvalFunRes_Name();
+
+		EClass EVAL_BOUND_FUN_RES = eINSTANCE.getEvalBoundFunRes();
+
+		EReference EVAL_BOUND_FUN_RES__TH = eINSTANCE.getEvalBoundFunRes_Th();
+
+		EClass EVAL_INT_RES = eINSTANCE.getEvalIntRes();
+
+		EAttribute EVAL_INT_RES__VALUE = eINSTANCE.getEvalIntRes_Value();
+
+		EClass EVAL_BOOL_RES = eINSTANCE.getEvalBoolRes();
+
+		EAttribute EVAL_BOOL_RES__VALUE = eINSTANCE.getEvalBoolRes_Value();
+	}
 }

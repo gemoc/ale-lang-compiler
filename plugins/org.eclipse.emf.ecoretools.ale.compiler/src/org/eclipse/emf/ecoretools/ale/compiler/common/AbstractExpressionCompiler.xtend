@@ -1,8 +1,9 @@
 package org.eclipse.emf.ecoretools.ale.compiler.common
 
 import com.squareup.javapoet.ClassName
-import java.lang.reflect.Modifier
 import com.squareup.javapoet.CodeBlock
+import java.lang.reflect.Modifier
+import java.util.List
 import java.util.Map
 import org.eclipse.acceleo.query.ast.And
 import org.eclipse.acceleo.query.ast.BooleanLiteral
@@ -41,18 +42,30 @@ abstract class AbstractExpressionCompiler {
 	val equalServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "EqualService")
 	val logServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService")
 	val Map<String, Class<?>> registeredServices
+	val List<ResolvedClass> resolved
+	
+	protected def getResolved() {
+		resolved
+	}
+	
+	def compileThis(VarRef call, CompilerExpressionCtx ctx) {
+		CodeBlock.of(if(call.variableName == 'self') getThis(ctx) else call.variableName)
+	}
+	
+	def String getThis(CompilerExpressionCtx ctx)
 
 	extension CommonTypeInferer cti
 	extension EnumeratorService es
 	extension AbstractTypeSystem ats
 	extension AbstractNamingUtils anu
 
-	new(CommonTypeInferer cti, EnumeratorService es, AbstractTypeSystem ats, AbstractNamingUtils anu, Map<String, Class<?>> registeredServices) {
+	new(CommonTypeInferer cti, EnumeratorService es, AbstractTypeSystem ats, AbstractNamingUtils anu, Map<String, Class<?>> registeredServices, List<ResolvedClass> resolved) {
 		this.cti = cti
 		this.es = es
 		this.ats = ats
 		this.anu = anu
 		this.registeredServices = registeredServices
+		this.resolved = resolved
 	}
 
 	def CodeBlock compileExpression(Expression call) {
@@ -330,5 +343,4 @@ abstract class AbstractExpressionCompiler {
 		}
 	}
 
-	def CodeBlock compileThis(VarRef call, CompilerExpressionCtx ctx)
 }

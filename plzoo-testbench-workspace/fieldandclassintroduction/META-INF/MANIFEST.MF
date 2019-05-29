@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Fieldandclassintroduction
+Bundle-SymbolicName: fieldandclassintroduction
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: fieldandclassintroduction
+Require-Bundle: org.eclipse.emf.ecore

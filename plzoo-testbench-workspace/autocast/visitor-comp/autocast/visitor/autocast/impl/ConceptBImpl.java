@@ -68,7 +68,7 @@ public class ConceptBImpl extends ConceptAImpl implements ConceptB {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case AutocastPackage.CONCEPT_B__NAME :
-				return name != NAME_EDEFAULT;
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}

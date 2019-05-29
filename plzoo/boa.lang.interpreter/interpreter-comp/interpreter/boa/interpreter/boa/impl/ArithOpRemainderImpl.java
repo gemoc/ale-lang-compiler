@@ -1,73 +1,45 @@
 package interpreter.boa.interpreter.boa.impl;
 
+import execboa.MathService;
 import interpreter.boa.interpreter.boa.ArithOpRemainder;
+import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
 import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalIntRes;
 import interpreter.boa.interpreter.boa.EvalRes;
-import java.lang.Object;
-import org.eclipse.emf.common.notify.NotificationChain;
+import interpreter.boa.interpreter.boa.Expr;
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 public class ArithOpRemainderImpl extends ArithOpImpl implements ArithOpRemainder {
-  protected ArithOpRemainderImpl() {
-    super();
-  }
+	protected ArithOpRemainderImpl() {
+		super();
+	}
 
-  protected EClass eStaticClass() {
-    return BoaPackage.Literals.ARITH_OP_REMAINDER;}
+	@Override
+	protected EClass eStaticClass() {
+		return BoaPackage.Literals.ARITH_OP_REMAINDER;
+	}
 
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    }
-    super.eSet(featureID, newValue);
-  }
-
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    }
-    super.eUnset(featureID);
-  }
-
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
-
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    }
-    return super.eIsSet(featureID);
-  }
-
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  public EvalRes eval(Ctx ctx) {
-    EvalRes result;
-    interpreter.boa.interpreter.boa.EvalRes vlhs = ((interpreter.boa.interpreter.boa.EvalRes)this.lhs.eval(ctx));
-        interpreter.boa.interpreter.boa.EvalRes vrhs = ((interpreter.boa.interpreter.boa.EvalRes)this.rhs.eval(ctx));
-        if(vlhs instanceof interpreter.boa.interpreter.boa.EvalIntRes) {
-          if(vrhs instanceof interpreter.boa.interpreter.boa.EvalIntRes) {
-            interpreter.boa.interpreter.boa.EvalIntRes ivlhs = ((interpreter.boa.interpreter.boa.EvalIntRes)vlhs);
-            interpreter.boa.interpreter.boa.EvalIntRes ivrhs = ((interpreter.boa.interpreter.boa.EvalIntRes)vrhs);
-            interpreter.boa.interpreter.boa.EvalIntRes ret = ((interpreter.boa.interpreter.boa.EvalIntRes)interpreter.boa.interpreter.boa.BoaFactory.eINSTANCE.createEvalIntRes());
-            ret.setValue(execboa.MathService.mod(this, ivlhs.getValue(), ivrhs.getValue()));
-            result = ret;
-          }
-          else {
-            result = null;
-          }
-        }
-        else {
-          result = null;
-        }
-        ;
-    return result;
-  }
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.lhs)).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.rhs)).eval((Ctx) (ctx))));
+		if (vlhs instanceof EvalIntRes) {
+			if (vrhs instanceof EvalIntRes) {
+				EvalIntRes ivlhs = ((EvalIntRes) (vlhs));
+				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
+				EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
+				ret.setValue(MathService.mod((ArithOpRemainder) (this), (int) (ivlhs.getValue()), (int) (ivrhs.getValue())));
+				result = (EvalRes) (ret) ;
+			}
+			else {
+				result = (EvalRes) (null) ;
+			}
+		}
+		else {
+			result = (EvalRes) (null) ;
+		}
+		return result;
+	}
 }

@@ -1,6 +1,5 @@
 package test.impl;
 
-import .revisitor.Test1Revisitor;
 import test.impl.operation.ConceptAOp;
 import test.impl.operation.ConceptBOp;
 import test.impl.operation.ConceptCOp;
@@ -10,6 +9,7 @@ import test.impl.operation.impl.ConceptCOpImpl;
 import test1.ConceptA;
 import test1.ConceptB;
 import test1.ConceptC;
+import test1.revisitor.Test1Revisitor;
 
 public interface TestImplementation extends Test1Revisitor<ConceptAOp, ConceptBOp, ConceptCOp> {
 	default ConceptAOp test1__ConceptA(ConceptA it) {

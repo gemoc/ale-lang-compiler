@@ -179,7 +179,7 @@ public class ModelBehaviorImpl extends MinimalEObjectImpl.Container implements M
 				return;
 			case ImplementationPackage.MODEL_BEHAVIOR__UNITS:
 				getUnits().clear();
-				getUnits().addAll((Collection<? extends ModelUnit>)newValue);
+				getUnits().addAll((Collection<? extends ModelUnit>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

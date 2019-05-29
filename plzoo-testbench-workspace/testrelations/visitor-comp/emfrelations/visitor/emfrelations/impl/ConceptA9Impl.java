@@ -9,7 +9,7 @@ import java.util.Collection;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import visitor.VisitorInterface;
 
 public class ConceptA9Impl extends MinimalEObjectImpl.Container implements ConceptA9 {
@@ -26,7 +26,7 @@ public class ConceptA9Impl extends MinimalEObjectImpl.Container implements Conce
 
 	public EList<ConceptB9> getConceptb9() {
 		if (conceptb9 == null) {
-			conceptb9 = new EObjectContainmentEList<ConceptB9>(ConceptB9.class, this, EmfrelationsPackage.CONCEPT_A9__CONCEPTB9);
+			conceptb9 = new EObjectResolvingEList<ConceptB9>(ConceptB9.class, this, EmfrelationsPackage.CONCEPT_A9__CONCEPTB9);
 		}
 		return conceptb9;
 	}

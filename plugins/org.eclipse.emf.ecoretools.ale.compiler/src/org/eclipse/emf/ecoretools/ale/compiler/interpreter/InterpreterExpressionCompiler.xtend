@@ -7,12 +7,9 @@ import java.util.Set
 import org.eclipse.acceleo.query.ast.Call
 import org.eclipse.acceleo.query.ast.CallType
 import org.eclipse.acceleo.query.ast.StringLiteral
-import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.validation.type.SequenceType
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
-import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractExpressionCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
@@ -30,19 +27,17 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 	extension EnumeratorService es
 
 	val String packageRoot
-	var List<ResolvedClass> resolved
 	val Set<Method> registreredDispatch
 	
 	val Set<String> registeredArray
 	val boolean isTruffle
 
-	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, 
+	new(String packageRoot, 
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
 		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, 
 		EnumeratorService es,  InterpreterTypeSystemUtils tsu, InterpreterNamingUtils namingUtils) {
-		super(cti, es, tsu, namingUtils, registeredServices)
+		super(cti, es, tsu, namingUtils, registeredServices, resolved)
 		this.packageRoot = packageRoot
-		this.resolved = resolved
 		this.tsu = tsu 
 		this.registreredDispatch = registreredDispatch
 		this.registeredArray = registeredArray
@@ -52,10 +47,10 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 		this.es = es
 	}
 
-	override compileThis(VarRef call, CompilerExpressionCtx ctx) {
-		CodeBlock.of(if(call.variableName == 'self') ctx.thisCtxName else call.variableName)
+	override getThis(CompilerExpressionCtx ctx) {
+		ctx.thisCtxName
 	}
-
+	
 	override defaultCall(Call call, CompilerExpressionCtx ctx) {
 		if (call.type == CallType.CALLORAPPLY) {
 			if (call.serviceName == 'aqlFeatureAccess') {
@@ -80,19 +75,17 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 						CodeBlock.
 							of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»«(call.arguments.get(1) as StringLiteral).value»«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''')
 					}
-
 				} else {
 					if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-						CodeBlock.of('''«lhs».get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+						CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 					} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
 						if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
 							(t.type as EDataType).instanceClass == boolean))
-							CodeBlock.of('''«lhs».is«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()''')
+							CodeBlock.of('''$L.is$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 						else
 							CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
 					} else {
-						CodeBlock.
-							of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''')
+						CodeBlock.of('''$L.«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''', lhs)
 					}
 				}
 			} else if (call.serviceName == 'create') {
@@ -165,8 +158,7 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 								hm.put("expr"+param.value, param.key.compileExpression(ctx))
 							}
 
-							CodeBlock.builder.
-								addNamed('''(($typecaller:T) ($lhs:L)).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("typeparam"+param.value) !== null»($typeparam«param.value»:T) ($expr«param.value»:L)«ELSE»$expr«param.value»:L«ENDIF»«ENDFOR»)''', hm).build
+							CodeBlock.builder.addNamed('''(($typecaller:T) ($lhs:L)).«call.serviceName»(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("typeparam"+param.value) !== null»($typeparam«param.value»:T) ($expr«param.value»:L)«ELSE»$expr«param.value»:L«ENDIF»«ENDFOR»)''', hm).build
 						}
 					} else {
 						call.callService(ctx)

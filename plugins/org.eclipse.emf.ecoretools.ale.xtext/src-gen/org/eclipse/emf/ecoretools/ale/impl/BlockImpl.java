@@ -137,7 +137,7 @@ public class BlockImpl extends MinimalEObjectImpl.Container implements Block
     {
       case AlePackage.BLOCK__STATEMENTS:
         getStatements().clear();
-        getStatements().addAll((Collection<? extends Statement>)newValue);
+        getStatements().addAll((Collection<? extends Statement>) newValue);
         return;
     }
     super.eSet(featureID, newValue);

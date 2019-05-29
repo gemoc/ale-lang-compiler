@@ -190,7 +190,8 @@ public class AttributeImpl extends EModelElementImpl implements Attribute {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ImplementationPackage.ATTRIBUTE__FEATURE_REF:
-				if (resolve) return getFeatureRef();
+				if (resolve)
+					return getFeatureRef();
 				return basicGetFeatureRef();
 			case ImplementationPackage.ATTRIBUTE__INITIAL_VALUE:
 				return getInitialValue();

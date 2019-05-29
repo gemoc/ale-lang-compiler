@@ -4,11 +4,11 @@ import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Field extends EObject {
-  String getName();
+	String getName();
 
-  void setName(String value);
+	void setName(String value);
 
-  Expr getValue();
+	Expr getValue();
 
-  void setValue(Expr value);
+	void setValue(Expr value);
 }

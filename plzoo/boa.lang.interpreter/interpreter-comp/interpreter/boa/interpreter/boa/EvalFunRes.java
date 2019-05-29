@@ -4,15 +4,15 @@ import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
 public interface EvalFunRes extends EObject, EvalRes {
-  String getName();
+	String getName();
 
-  void setName(String value);
+	void setName(String value);
 
-  Expr getExp();
+	Expr getExp();
 
-  void setExp(Expr value);
+	void setExp(Expr value);
 
-  Ctx getCtx();
+	Ctx getCtx();
 
-  void setCtx(Ctx value);
+	void setCtx(Ctx value);
 }

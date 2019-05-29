@@ -3,6 +3,6 @@ eclipse.preferences.version=1
 extraProperties=
 fileExclusions=
 idePrefixKey=
-projectKey=org.eclipse.emf.ecoretools.ale.compiler
+projectKey=org.eclipse.emf.ecoretools.ale.compiler\:org.eclipse.emf.ecoretools.ale.compiler
 serverId=localhost
 sqPrefixKey=

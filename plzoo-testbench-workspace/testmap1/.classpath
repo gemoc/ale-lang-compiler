@@ -10,5 +10,6 @@
 	<classpathentry kind="src" path="revisitor-comp"/>
 	<classpathentry kind="src" path="visitor-comp"/>
 	<classpathentry kind="src" path="switch-comp"/>
+	<classpathentry kind="src" path="interpreter-comp"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -220,11 +220,11 @@ public class BehavioredClassImpl extends MinimalEObjectImpl.Container implements
         return;
       case AlePackage.BEHAVIORED_CLASS__ATTRIBUTES:
         getAttributes().clear();
-        getAttributes().addAll((Collection<? extends Attribute>)newValue);
+        getAttributes().addAll((Collection<? extends Attribute>) newValue);
         return;
       case AlePackage.BEHAVIORED_CLASS__OPERATIONS:
         getOperations().clear();
-        getOperations().addAll((Collection<? extends Operation>)newValue);
+        getOperations().addAll((Collection<? extends Operation>) newValue);
         return;
     }
     super.eSet(featureID, newValue);
