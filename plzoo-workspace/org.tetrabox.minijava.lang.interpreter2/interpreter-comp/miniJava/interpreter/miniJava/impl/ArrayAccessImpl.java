@@ -155,7 +155,7 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
 		Value result;
 		ArrayRefValue arrayVal = ((ArrayRefValue) (((Expression) (this.object)).evaluateExpression((State) (state))));
 		IntegerValue indexVal = ((IntegerValue) (((Expression) (this.index)).evaluateExpression((State) (state))));
-		result = (Value) (arrayVal.getInstance().getValue().get( (indexVal.getValue())).copyj()) ;
+		result = (Value) (arrayVal.getInstance().getValue().get((indexVal.getValue())).copyj()) ;
 		return result;
 	}
 }

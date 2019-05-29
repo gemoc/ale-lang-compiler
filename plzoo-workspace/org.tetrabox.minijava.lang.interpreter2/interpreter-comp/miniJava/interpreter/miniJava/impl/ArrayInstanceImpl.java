@@ -77,7 +77,7 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements A
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_INSTANCE__VALUE :
 				getValue().clear();
-				getValue().addAll((Collection<? extends Value>)newValue);
+				getValue().addAll((Collection<? extends Value>) newValue);
 				return;
 			case MiniJavaPackage.ARRAY_INSTANCE__SIZE :
 				setSize((Integer) newValue);

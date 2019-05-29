@@ -33,6 +33,8 @@ import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
@@ -105,7 +107,9 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		val namingUtils = new VisitorNamingUtils
 		val fic = new FactoryInterfaceCompiler(namingUtils)
 		val ccu = new CommonCompilerUtils(namingUtils, resolved)
-		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu)
+		val jpu = new JavaPoetUtils
+		val th = new TruffleHelper(jpu)
+		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu, th)
 
 		val pic = new PackageInterfaceCompiler(namingUtils)
 		val pimplc = new PackageImplementationCompiler(namingUtils)

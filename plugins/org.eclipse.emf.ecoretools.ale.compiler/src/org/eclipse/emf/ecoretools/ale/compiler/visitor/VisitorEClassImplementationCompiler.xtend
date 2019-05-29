@@ -23,6 +23,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 
 class VisitorEClassImplementationCompiler {
 	extension VisitorNamingUtils namingUtils
@@ -38,8 +39,9 @@ class VisitorEClassImplementationCompiler {
 		this.dsl = dsl
 		this.namingUtils = new VisitorNamingUtils
 		this.jpu = new JavaPoetUtils
-		this.ecic = new EClassImplementationCompiler(ccu, namingUtils,
-			new EClassGetterCompiler(namingUtils, ccu, resolved, dsl), jpu, resolved, es)
+		val th = new TruffleHelper(jpu)
+		val ecgc = new EClassGetterCompiler(namingUtils, ccu, resolved, dsl, th)
+		this.ecic = new EClassImplementationCompiler(ccu, namingUtils, ecgc, jpu, resolved, es, th)
 	}
 	
 	def TypeSpec.Builder addAcceptMethod(TypeSpec.Builder builder, EClass eClass) {

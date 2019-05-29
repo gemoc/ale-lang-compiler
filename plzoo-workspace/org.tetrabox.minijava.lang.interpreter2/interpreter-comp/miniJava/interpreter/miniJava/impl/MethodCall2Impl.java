@@ -28,8 +28,7 @@ public class MethodCall2Impl extends CallImpl implements MethodCall2 {
 			methodcall = (MethodCall) eResolveProxy(oldMethodcall);
 			if (methodcall != oldMethodcall) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.METHOD_CALL2__METHODCALL,
-							oldMethodcall, methodcall));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.METHOD_CALL2__METHODCALL, oldMethodcall, methodcall));
 			}
 		}
 		return methodcall;

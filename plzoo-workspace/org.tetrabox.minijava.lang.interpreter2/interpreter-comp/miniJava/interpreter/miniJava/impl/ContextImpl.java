@@ -176,7 +176,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 		switch (featureID) {
 			case MiniJavaPackage.CONTEXT__BINDINGS :
 				getBindings().clear();
-				getBindings().addAll((Collection<? extends SymbolBinding>)newValue);
+				getBindings().addAll((Collection<? extends SymbolBinding>) newValue);
 				return;
 			case MiniJavaPackage.CONTEXT__PARENT_CONTEXT :
 				setParentContext((Context) newValue);

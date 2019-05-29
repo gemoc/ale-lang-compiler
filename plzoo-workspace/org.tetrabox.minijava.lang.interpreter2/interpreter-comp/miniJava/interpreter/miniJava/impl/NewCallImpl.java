@@ -28,8 +28,7 @@ public class NewCallImpl extends CallImpl implements NewCall {
 			newz = (NewObject) eResolveProxy(oldNewz);
 			if (newz != oldNewz) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.NEW_CALL__NEWZ,
-							oldNewz, newz));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.NEW_CALL__NEWZ, oldNewz, newz));
 			}
 		}
 		return newz;

@@ -51,8 +51,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
 			type = (Clazz) eResolveProxy(oldType);
 			if (type != oldType) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.NEW_OBJECT__TYPE,
-							oldType, type));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.NEW_OBJECT__TYPE, oldType, type));
 			}
 		}
 		return type;
@@ -107,7 +106,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
 				return;
 			case MiniJavaPackage.NEW_OBJECT__ARGS :
 				getArgs().clear();
-				getArgs().addAll((Collection<? extends Expression>)newValue);
+				getArgs().addAll((Collection<? extends Expression>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

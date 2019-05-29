@@ -27,10 +27,12 @@ class FactoryImplementationCompiler {
 	extension GenmodelNamingUtils namingUtils
 	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils = new JavaPoetUtils
+	extension TruffleHelper th
 	
-	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu) {
+	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu, TruffleHelper th) {
 		this.namingUtils = namingUtils
 		this.ccu = ccu
+		this.th = th
 	}
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
@@ -69,7 +71,7 @@ class FactoryImplementationCompiler {
 		val createMethod = MethodSpec.methodBuilder('create')
 			.addAnnotation(Override)
 			.returns(EObject)
-			.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+			.addTruffleBoundaryAnnotation(isTruffle)
 			.addParameter(ParameterSpec.builder(EClass, 'eClass').build)
 			.addNamedCode('''
 			switch (eClass.getClassifierID()) {
@@ -189,7 +191,7 @@ class FactoryImplementationCompiler {
 
 			val safeName = CodeGenUtil.uncapPrefixedName(eClass.name, false, Locale.^default).normalizeVarName
 			MethodSpec.methodBuilder('''create«eClass.name.toFirstUpper»''')
-				.applyIfTrue(isTruffle, [addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))])
+				.addTruffleBoundaryAnnotation(isTruffle)
 				.returns(returnType)
 				.addCode('''
 					$1T «safeName» = new $1T();

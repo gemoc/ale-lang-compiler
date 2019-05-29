@@ -38,26 +38,29 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 
 class InterpreterEClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils
 	extension JavaPoetUtils jpu = new JavaPoetUtils
 	extension InterpreterTypeSystemUtils tsu
 	extension AleBodyCompiler abc
+	extension EClassImplementationCompiler ecic
+	extension TruffleHelper th
 
 	var Dsl dsl
 	val String packageRoot
 	var Set<Method> registreredDispatch = newHashSet
 	var Set<String> registreredArrays = newHashSet
 	val List<ResolvedClass> resolved
-	extension EClassImplementationCompiler ecic
 
-	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es) {
+	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es, TruffleHelper th) {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 		this.namingUtils = new InterpreterNamingUtils
 		this.ecic = new EClassImplementationCompiler(ccu, namingUtils,
-			new EClassGetterCompiler(namingUtils, ccu, resolved, dsl), jpu, resolved, es)
+			new EClassGetterCompiler(namingUtils, ccu, resolved, dsl, th), jpu, resolved, es, th)
+			this.th = th
 	}
 	
 
@@ -359,9 +362,9 @@ class InterpreterEClassImplementationCompiler {
 		val retType = method.operationRef.EType?.resolveType2 // TODO: DEBUG & correct !!!
 		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [
 			returns(retType)
-		]).applyIfTrue(aClass.EAnnotations.exists[it.source == 'RuntimeData'] && dsl.dslProp.getProperty('truffle', "false") == "true", [
-			addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-		]).addParameters(method.operationRef.EParameters.map [
+		])
+		.addTruffleBoundaryAnnotation(aClass.EAnnotations.exists[it.source == 'RuntimeData'] && dsl.dslProp.getProperty('truffle', "false") == "true")
+		.addParameters(method.operationRef.EParameters.map [
 			if (it.EType.instanceClass !== null) {
 				if (it.EType instanceof EClass && !(it.EType.EPackage == EcorePackage.eINSTANCE)) {
 					ParameterSpec.builder(

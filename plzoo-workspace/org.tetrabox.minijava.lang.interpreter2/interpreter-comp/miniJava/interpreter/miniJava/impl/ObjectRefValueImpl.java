@@ -31,8 +31,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
 			instance = (ObjectInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE,
-							oldInstance, instance));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE, oldInstance, instance));
 			}
 		}
 		return instance;

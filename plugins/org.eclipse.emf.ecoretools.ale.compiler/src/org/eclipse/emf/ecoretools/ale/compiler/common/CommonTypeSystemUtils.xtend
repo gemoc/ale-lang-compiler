@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
 
 abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 
@@ -43,41 +45,47 @@ abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 
 	override TypeName solveNothing(TypeName pt, Expression expr) {
 		if (pt === null || pt.toString == "org.eclipse.acceleo.query.runtime.impl.Nothing") {
-			var EObject blk = expr
-
-			while (true) {
-				if (blk instanceof Block) {
-					var EObject stmt = expr
-					var stop = false
-					while (stmt !== null && !stop) {
-						if (blk.statements.contains(stmt)) {
-							stop = true
-						} else {
-							stmt = stmt.eContainer
+			
+			if(expr instanceof VarRef && (expr as VarRef).variableName == 'result') {
+				val method = EcoreUtil2.getContainerOfType(expr, MethodImpl)
+				method.operationRef.EType.resolveType2
+			 } else {
+				var EObject blk = expr
+	
+				while (true) {
+					if (blk instanceof Block) {
+						var EObject stmt = expr
+						var stop = false
+						while (stmt !== null && !stop) {
+							if (blk.statements.contains(stmt)) {
+								stop = true
+							} else {
+								stmt = stmt.eContainer
+							}
 						}
-					}
-
-					if (stmt === null) {
-						return pt
-					}
-
-					val idx = blk.statements.indexOf(stmt)
-					if (idx > 0) {
-						for (var i = idx - 1; i >= 0; i--) {
-							val crt = blk.statements.get(i)
-							if (crt instanceof VariableDeclaration) {
-								if (expr instanceof VarRef && crt.name == (expr as VarRef).variableName) {
-									return crt.type.resolveType2
-								} else if (expr instanceof Call && crt.name == (expr as Call).serviceName) {
-									return crt.type.resolveType2
+	
+						if (stmt === null) {
+							return pt
+						}
+	
+						val idx = blk.statements.indexOf(stmt)
+						if (idx > 0) {
+							for (var i = idx - 1; i >= 0; i--) {
+								val crt = blk.statements.get(i)
+								if (crt instanceof VariableDeclaration) {
+									if (expr instanceof VarRef && crt.name == (expr as VarRef).variableName) {
+										return crt.type.resolveType2
+									} else if (expr instanceof Call && crt.name == (expr as Call).serviceName) {
+										return crt.type.resolveType2
+									}
 								}
 							}
 						}
 					}
-				}
-				blk = blk.eContainer
-				if (blk === null) {
-					return pt
+					blk = blk.eContainer
+					if (blk === null) {
+						return pt
+					}
 				}
 			}
 		} else {

@@ -5,7 +5,7 @@
 	<classpathentry exported="true" kind="lib" path="mvn/com.fasterxml.jackson.core.jackson-databind-2.9.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="mvn/com.martiansoftware.jsap-2.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="mvn/commons-io.commons-io-2.6.jar"/>
-	<classpathentry exported="true" kind="lib" path="mvn/fr.inria.gforge.spoon.spoon-core-7.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="mvn/fr.inria.gforge.spoon.spoon-core-7.4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="mvn/log4j.log4j-1.2.17.jar"/>
 	<classpathentry exported="true" kind="lib" path="mvn/org.apache.commons.commons-compress-1.18.jar"/>
 	<classpathentry exported="true" kind="lib" path="mvn/org.apache.commons.commons-lang3-3.8.1.jar"/>

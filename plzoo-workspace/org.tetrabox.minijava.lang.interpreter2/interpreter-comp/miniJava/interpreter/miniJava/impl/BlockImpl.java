@@ -60,7 +60,7 @@ public class BlockImpl extends StatementImpl implements Block {
 		switch (featureID) {
 			case MiniJavaPackage.BLOCK__STATEMENTS :
 				getStatements().clear();
-				getStatements().addAll((Collection<? extends Statement>)newValue);
+				getStatements().addAll((Collection<? extends Statement>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

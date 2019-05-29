@@ -335,10 +335,10 @@ abstract class AbstractExpressionCompiler {
 			hm.put("leftExpr", call.arguments.head.compileExpression(ctx))
 			hm.put("serviceName", call.serviceName)
 			for(param: call.arguments.tail.enumerate) {
-				hm.put('''paramtype«param.value»''', param.key.infereType.head.resolveType3.solveNothing(param.key))
+				hm.put('''paramtype«param.value»''', param.key.infereType.head?.resolveType3.solveNothing(param.key))
 				hm.put('''param«param.value»''', param.key.compileExpression(ctx))
 			}
-			CodeBlock.builder.addNamed('''$leftExpr:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»($paramtype«param.value»:T) ($param«param.value»:L)«ENDFOR»)''', hm).build
+			CodeBlock.builder.addNamed('''$leftExpr:L.$serviceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("paramtype" + param.value) !== null»($paramtype«param.value»:T) «ENDIF»($param«param.value»:L)«ENDFOR»)''', hm).build
 	
 		}
 	}

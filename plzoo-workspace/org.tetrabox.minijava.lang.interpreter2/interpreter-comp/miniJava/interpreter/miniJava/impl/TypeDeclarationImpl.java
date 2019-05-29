@@ -92,11 +92,11 @@ public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclara
 				return;
 			case MiniJavaPackage.TYPE_DECLARATION__IMPLEMENTZ :
 				getImplementz().clear();
-				getImplementz().addAll((Collection<? extends Interface>)newValue);
+				getImplementz().addAll((Collection<? extends Interface>) newValue);
 				return;
 			case MiniJavaPackage.TYPE_DECLARATION__MEMBERS :
 				getMembers().clear();
-				getMembers().addAll((Collection<? extends Member>)newValue);
+				getMembers().addAll((Collection<? extends Member>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

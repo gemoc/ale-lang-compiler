@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList
 import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
@@ -36,15 +35,16 @@ class EClassGetterCompiler {
 
 	extension GenmodelNamingUtils namingUtils
 	extension CommonCompilerUtils icu
-	extension JavaPoetUtils = new JavaPoetUtils
+	extension TruffleHelper th
 	val List<ResolvedClass> resolved
 	val Dsl dsl
 
-	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu, List<ResolvedClass> resolved, Dsl dsl) {
+	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu, List<ResolvedClass> resolved, Dsl dsl, TruffleHelper th) {
 		this.namingUtils = namingUtils
 		this.icu = ccu
 		this.resolved = resolved
 		this.dsl = dsl
+		this.th = th
 	}
 
 	private def buildSimpleMultipleGetter(EStructuralFeature field, TypeName fieldType, TypeName ePackageInterfaceType,
@@ -113,7 +113,8 @@ class EClassGetterCompiler {
 				(fieldType as ParameterizedTypeName).typeArguments.head
 			else
 				field.EType.scopedInterfaceTypeRef(packageRoot)
-		val hm = newHashMap("eoce" -> ParameterizedTypeName.get(ClassName.get(EObjectResolvingEList), simpleType),
+		val hm = newHashMap(
+			"eoce" -> ParameterizedTypeName.get(ClassName.get(EObjectResolvingEList), simpleType),
 			"epit" -> ePackageInterfaceType,
 			"rt" -> if(simpleType instanceof ParameterizedTypeName) simpleType.rawType else simpleType)
 		commonBuildSimpleGetter(isTyped, field, fieldType, hm)
@@ -281,6 +282,7 @@ class EClassGetterCompiler {
 		val rt = field.computeFieldTypeEClass(packageRoot)
 		val isMultiple = field.upperBound > 1 || field.upperBound < 0
 		val existEOpposite = field.EOpposite !== null
+		val isOppositeMulti = existEOpposite && (field.EOpposite.upperBound > 1 || field.EOpposite.upperBound < 0)
 		val isContainment = field.containment
 		val isOppositeContainment = existEOpposite && field.EOpposite.containment
 
@@ -302,7 +304,7 @@ class EClassGetterCompiler {
 			val setter = field.buildWithOppositeSetter(rt, ePackageInterfaceType, isTyped)
 			#[getter, basicSetter, setter]
 		} else if (existEOpposite && isMultiple && !isContainment && !isOppositeContainment) {
-			val getter = field.buildWithOppositeWithMultipleGetter(fieldType, rt, ePackageInterfaceType, isTyped)
+			val getter = field.buildWithOppositeWithMultipleGetter(fieldType, rt, ePackageInterfaceType, isTyped, isOppositeMulti)
 			#[getter]
 		} else if (!existEOpposite && !isMultiple && !isContainment && !isOppositeContainment) {
 			val getter = field.buildWithOppositeGetter(fieldType, ePackageInterfaceType,  isTyped)
@@ -332,11 +334,7 @@ class EClassGetterCompiler {
 		'''«IF isTyped»getTyped«ELSE»«IF field.EType.name == "EBoolean"»is«ELSE»get«ENDIF»«ENDIF»«field.name.toFirstUpper»'''
 	}
 	
-	private def addTruffleBoundaryAnnotation(MethodSpec.Builder builder, Dsl dsl) {
-		builder.applyIfTrue(dsl !== null && dsl.dslProp.getProperty('truffle', "false") == "true", [
-			addAnnotation(ClassName.get("com.oracle.truffle.api.CompilerDirectives", "TruffleBoundary"))
-		])
-	}
+	
 	
 	private def buildWithOppositeSetter(EReference field, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
 		val hm = newHashMap(
@@ -380,11 +378,14 @@ class EClassGetterCompiler {
 		''', hm).addModifiers(PUBLIC).build
 	}
 	
-	private def buildWithOppositeWithMultipleGetter(EReference field, TypeName fieldType, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped) {
+	private def buildWithOppositeWithMultipleGetter(EReference field, TypeName fieldType, TypeName rt, TypeName ePackageInterfaceType, boolean isTyped, boolean isOppositedMulty) {
 		val mapEntry = if(rt instanceof ParameterizedTypeName) rt.typeArguments.head else rt
 		val entry = if(mapEntry instanceof ParameterizedTypeName) mapEntry.rawType else mapEntry
+		
+		val eoce = if(!isOppositedMulty) ParameterizedTypeName.get(ClassName.get(EObjectWithInverseResolvingEList), mapEntry)
+			else ParameterizedTypeName.get(ClassName.get(EObjectWithInverseResolvingEList.ManyInverse), mapEntry)
 		val hm = newHashMap(
-			"eowrel" -> ParameterizedTypeName.get(ClassName.get(EObjectWithInverseResolvingEList), mapEntry),
+			"eoce" -> eoce,
 			"ft" -> entry,
 			"epit" -> ePackageInterfaceType
 		)
@@ -392,7 +393,7 @@ class EClassGetterCompiler {
 			.returns(rt)
 			.addNamedCode('''
 				if («field.name.normalizeVarName» == null) {
-					«field.name.normalizeVarName» = new $eowrel:T($ft:T.class, this, $epit:T.«field.normalizeUpperField», $epit:T.«field.EOpposite.normalizeUpperField»);
+					«field.name.normalizeVarName» = new $eoce:T($ft:T.class, this, $epit:T.«field.normalizeUpperField», $epit:T.«field.EOpposite.normalizeUpperField»);
 				}
 				return «field.name.normalizeVarName»;
 			''', hm)
@@ -422,12 +423,19 @@ class EClassGetterCompiler {
 					ClassName.get((field.EType as EClass).classImplementationPackageName(packageRoot),
 						(field.EType as EClass).classImplementationClassName)).build
 		} else if (field.EOpposite !== null) {
-			val hm = newHashMap("eoce" ->
-				ParameterizedTypeName.get(ClassName.get(EObjectContainmentWithInverseEList), rt),
-				"epit" -> ePackageInterfaceType, "rt" -> rt)
-			commonBuildSimpleGetter(isTyped, field, fieldType, hm)
+			MethodSpec.methodBuilder('''get«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(fieldType)
+				.addTruffleBoundaryAnnotation(dsl)
+				.addModifiers(PUBLIC)
+				.addCode('''
+				if («field.name.normalizeVarName» == null) {
+					«field.name.normalizeVarName» = new $1T($2T.class, this, $3T.«field.normalizeUpperField», $3T.«field.EOpposite.normalizeUpperField»);
+				}
+				return «field.name.normalizeVarName»;
+			''', ParameterizedTypeName.get(ClassName.get(EObjectContainmentWithInverseEList), rt), rt,
+				ePackageInterfaceType).build
 		} else {
-			val hm = newHashMap("eoce" -> ParameterizedTypeName.get(ClassName.get(EObjectContainmentEList), rt),
+			val hm = newHashMap(
+				"eoce" -> ParameterizedTypeName.get(ClassName.get(EObjectContainmentEList), rt),
 				"epit" -> ePackageInterfaceType, "rt" -> rt)
 			commonBuildSimpleGetter(isTyped, field, fieldType, hm)
 		}

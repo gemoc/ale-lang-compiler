@@ -33,7 +33,6 @@ class InterpreterTestAll {
 
 	static val compilers = newHashMap(
 		"interpreter" -> [f|compileProjectInterpreter(f)]
-//		,
 //		"revisitor" -> [f|compileProjectRevisitor(f)],
 //		"switch" -> [f|compileProjectSwitch(f)],
 //		"visitor" -> [f|compileProjectVisitor(f)]
@@ -52,9 +51,8 @@ class InterpreterTestAll {
 		]
 
 		compilers.forEach [ k, v |
-			new File("assets").listFiles
-			.filter[it.isDirectory]
-//			.filter[it.path == "assets/boa_lang"]
+			new File("assets").listFiles.filter[it.isDirectory]
+			.filter[it.path == "assets/minijava"]
 			.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))

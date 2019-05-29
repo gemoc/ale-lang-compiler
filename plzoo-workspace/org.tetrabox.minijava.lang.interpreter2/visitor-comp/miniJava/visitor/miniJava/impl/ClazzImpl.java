@@ -44,8 +44,7 @@ public class ClazzImpl extends TypeDeclarationImpl implements Clazz {
 			superClass = (Clazz) eResolveProxy(oldSuperClass);
 			if (superClass != oldSuperClass) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLAZZ__SUPER_CLASS,
-							oldSuperClass, superClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLAZZ__SUPER_CLASS, oldSuperClass, superClass));
 			}
 		}
 		return superClass;

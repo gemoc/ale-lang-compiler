@@ -79,8 +79,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
 			method = (Method) eResolveProxy(oldMethod);
 			if (method != oldMethod) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.METHOD_CALL__METHOD,
-							oldMethod, method));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.METHOD_CALL__METHOD, oldMethod, method));
 			}
 		}
 		return method;
@@ -142,7 +141,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
 				return;
 			case MiniJavaPackage.METHOD_CALL__ARGS :
 				getArgs().clear();
-				getArgs().addAll((Collection<? extends Expression>)newValue);
+				getArgs().addAll((Collection<? extends Expression>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -181,7 +180,7 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
 		Value result;
 		ObjectRefValue realReceiver0 = ((ObjectRefValue) (((Expression) (this.receiver)).evaluateExpression((State) (state))));
 		ObjectInstance realReceiver = ((ObjectInstance) (realReceiver0.getInstance()));
-		Method realMethod = ((Method) (this.getMethod().findOverride( (realReceiver.getType()))));
+		Method realMethod = ((Method) (this.getMethod().findOverride((realReceiver.getType()))));
 		Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
 		int argsLength = ((int) (CollectionService.size(this.getArgs())));
 		int i = ((int) (0));

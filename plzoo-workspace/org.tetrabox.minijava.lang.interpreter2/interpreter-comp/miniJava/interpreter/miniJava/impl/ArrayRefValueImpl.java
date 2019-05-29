@@ -32,8 +32,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
 			instance = (ArrayInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE,
-							oldInstance, instance));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE, oldInstance, instance));
 			}
 		}
 		return instance;

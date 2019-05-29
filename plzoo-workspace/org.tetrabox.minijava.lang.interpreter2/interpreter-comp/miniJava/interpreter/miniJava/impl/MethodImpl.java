@@ -161,7 +161,7 @@ public class MethodImpl extends MemberImpl implements Method {
 				return;
 			case MiniJavaPackage.METHOD__PARAMS :
 				getParams().clear();
-				getParams().addAll((Collection<? extends Parameter>)newValue);
+				getParams().addAll((Collection<? extends Parameter>) newValue);
 				return;
 			case MiniJavaPackage.METHOD__BODY :
 				setBody((Block) newValue);

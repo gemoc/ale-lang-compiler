@@ -75,8 +75,7 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
 			instance = (ObjectInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FRAME__INSTANCE,
-							oldInstance, instance));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FRAME__INSTANCE, oldInstance, instance));
 			}
 		}
 		return instance;

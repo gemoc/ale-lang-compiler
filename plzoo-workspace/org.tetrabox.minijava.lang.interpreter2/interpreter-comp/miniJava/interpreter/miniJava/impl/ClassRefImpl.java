@@ -30,8 +30,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
 			referencedClass = (TypeDeclaration) eResolveProxy(oldReferencedClass);
 			if (referencedClass != oldReferencedClass) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLASS_REF__REFERENCED_CLASS,
-							oldReferencedClass, referencedClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLASS_REF__REFERENCED_CLASS, oldReferencedClass, referencedClass));
 			}
 		}
 		return referencedClass;

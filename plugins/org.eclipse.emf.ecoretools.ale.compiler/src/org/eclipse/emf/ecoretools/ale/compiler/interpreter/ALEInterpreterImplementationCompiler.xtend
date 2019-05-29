@@ -34,6 +34,8 @@ import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
@@ -106,14 +108,16 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		val namingUtils = new InterpreterNamingUtils
 		val fic = new FactoryInterfaceCompiler(namingUtils)
 		val ccu = new CommonCompilerUtils(namingUtils, resolved)
-		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu)
+		val jpu = new JavaPoetUtils
+		val th = new TruffleHelper(jpu)
+		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu, th)
 
 		val pic = new PackageInterfaceCompiler(namingUtils)
 		val pimplc = new PackageImplementationCompiler(namingUtils)
 
 		val eic = new InterpreterEClassInterfaceCompiler(namingUtils, ccu)
 		val es = new EnumeratorService
-		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved, ccu, es)
+		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved, ccu, es, th)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 

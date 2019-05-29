@@ -7,7 +7,6 @@ import miniJava.visitor.miniJava.Parameter;
 import miniJava.visitor.miniJava.State;
 import miniJava.visitor.miniJava.TypeRef;
 import minijava.MapService;
-import org.eclipse.acceleo.query.runtime.impl.Nothing;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -76,7 +75,7 @@ public class MethodOperationImpl extends MemberOperationImpl implements MethodOp
 					}
 				}
 			}
-			MapService.put((EMap) (this.it.getCache()), (Clazz) (c), (Nothing) (result));
+			MapService.put((EMap) (this.it.getCache()), (Clazz) (c), (Method) (result));
 		}
 		else {
 			result = this.it.getCache().get((Clazz) (c));

@@ -36,8 +36,7 @@ public class ClazzToMethodMapImpl extends MinimalEObjectImpl.Container implement
 			key = (Clazz) eResolveProxy(oldKey);
 			if (key != oldKey) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLAZZ_TO_METHOD_MAP__KEY,
-							oldKey, key));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLAZZ_TO_METHOD_MAP__KEY, oldKey, key));
 			}
 		}
 		return key;
@@ -60,8 +59,7 @@ public class ClazzToMethodMapImpl extends MinimalEObjectImpl.Container implement
 			value = (Method) eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLAZZ_TO_METHOD_MAP__VALUE,
-							oldValue, value));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLAZZ_TO_METHOD_MAP__VALUE, oldValue, value));
 			}
 		}
 		return value;

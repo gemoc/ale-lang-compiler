@@ -36,8 +36,7 @@ public class SymbolToSymbolBindingMapImpl extends MinimalEObjectImpl.Container i
 			key = (Symbol) eResolveProxy(oldKey);
 			if (key != oldKey) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__KEY,
-							oldKey, key));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__KEY, oldKey, key));
 			}
 		}
 		return key;
@@ -60,8 +59,7 @@ public class SymbolToSymbolBindingMapImpl extends MinimalEObjectImpl.Container i
 			value = (SymbolBinding) eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE,
-							oldValue, value));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE, oldValue, value));
 			}
 		}
 		return value;

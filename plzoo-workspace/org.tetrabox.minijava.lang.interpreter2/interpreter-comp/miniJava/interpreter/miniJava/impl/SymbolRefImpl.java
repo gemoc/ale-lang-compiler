@@ -31,8 +31,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
 			symbol = (Symbol) eResolveProxy(oldSymbol);
 			if (symbol != oldSymbol) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_REF__SYMBOL,
-							oldSymbol, symbol));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_REF__SYMBOL, oldSymbol, symbol));
 			}
 		}
 		return symbol;

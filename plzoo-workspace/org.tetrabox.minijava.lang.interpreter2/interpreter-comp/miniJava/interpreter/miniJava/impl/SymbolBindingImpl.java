@@ -64,8 +64,7 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container implements S
 			symbol = (Symbol) eResolveProxy(oldSymbol);
 			if (symbol != oldSymbol) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_BINDING__SYMBOL,
-							oldSymbol, symbol));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_BINDING__SYMBOL, oldSymbol, symbol));
 			}
 		}
 		return symbol;

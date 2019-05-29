@@ -70,8 +70,7 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
 			field = (Field) eResolveProxy(oldField);
 			if (field != oldField) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_ACCESS__FIELD,
-							oldField, field));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_ACCESS__FIELD, oldField, field));
 			}
 		}
 		return field;

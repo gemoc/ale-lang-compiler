@@ -44,7 +44,7 @@ public class OutputStreamImpl extends MinimalEObjectImpl.Container implements Ou
 		switch (featureID) {
 			case MiniJavaPackage.OUTPUT_STREAM__STREAM :
 				getStream().clear();
-				getStream().addAll((Collection<? extends String>)newValue);
+				getStream().addAll((Collection<? extends String>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

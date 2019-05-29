@@ -9,7 +9,7 @@
 		<sourceDirectory>src</sourceDirectory>
 	</build>
 	<properties>
-		<graalvm.version>1.0.0-rc9</graalvm.version>
+		<graalvm.version>19.0.0</graalvm.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>

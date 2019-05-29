@@ -33,8 +33,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container implements Fi
 			field = (Field) eResolveProxy(oldField);
 			if (field != oldField) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_BINDING__FIELD,
-							oldField, field));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_BINDING__FIELD, oldField, field));
 			}
 		}
 		return field;

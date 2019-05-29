@@ -44,8 +44,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
 			type = (Clazz) eResolveProxy(oldType);
 			if (type != oldType) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_INSTANCE__TYPE,
-							oldType, type));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_INSTANCE__TYPE, oldType, type));
 			}
 		}
 		return type;
@@ -90,7 +89,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements 
 		switch (featureID) {
 			case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS :
 				getFieldbindings().clear();
-				getFieldbindings().addAll((Collection<? extends FieldBinding>)newValue);
+				getFieldbindings().addAll((Collection<? extends FieldBinding>) newValue);
 				return;
 			case MiniJavaPackage.OBJECT_INSTANCE__TYPE :
 				setType((Clazz) newValue);
