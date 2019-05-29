@@ -163,10 +163,10 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
 	public Value evaluateExpression(State state) {
 		Value result;
 		ArrayInstance res = ((ArrayInstance) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
-		IntegerValue sizeArray = ((IntegerValue) (((Expression) (this.size)).evaluateExpression((State) (state))));
+		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((Expression) (this.size)).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
-		Value defaultValue = ((Value) (null));
+		Value defaultValue = ((Value) (MiniJavaFactory.eINSTANCE.createValue()));
 		if (this.type instanceof IntegerTypeRef) {
 			IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 			idv.setValue(0);
@@ -194,7 +194,7 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			res.getValue().add(defaultValue.copyj());
+			res.getValue().add(((Value) (defaultValue)).copyj());
 			i = (i) + (1);
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));

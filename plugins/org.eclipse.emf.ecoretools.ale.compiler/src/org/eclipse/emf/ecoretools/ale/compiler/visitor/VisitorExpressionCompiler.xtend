@@ -5,17 +5,14 @@ import com.squareup.javapoet.CodeBlock
 import java.util.List
 import java.util.Map
 import org.eclipse.acceleo.query.ast.Call
-import org.eclipse.acceleo.query.ast.CallType
-import org.eclipse.acceleo.query.ast.StringLiteral
-import org.eclipse.acceleo.query.validation.type.SequenceType
+import org.eclipse.acceleo.query.validation.type.IType
 import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractExpressionCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecoretools.ale.implementation.Method
 
 class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 
@@ -24,14 +21,11 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 	extension EnumeratorService es
 	extension CommonTypeInferer cti
 
-	val String packageRoot
-
 	new(VisitorTypeSystemUtil vtsu, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices,
 		VisitorNamingUtils vnu, String packageRoot, CommonTypeInferer cti, EnumeratorService es) {
-		super(cti, es, vtsu, vnu, registeredServices, resolved)
+		super(cti, es, vtsu, vnu, registeredServices, resolved, packageRoot, false, newHashSet)
 		this.vtsu = vtsu
 		this.vnu = vnu
-		this.packageRoot = packageRoot
 		this.es = es
 		this.cti = cti
 	}
@@ -40,85 +34,23 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 		'this.it'
 	}
 
-	def allMethods(ExtendedClass aleClass) {
-		aleClass.allParents.map [
-			it.methods
-		].flatten
-	}
-
-	def allParents(ExtendedClass aleClass) {
-		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls
-
-		resolved.filter[it.eCls == ecls || (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
-			it.aleCls
-		].filter[it !== null]
-	}
-
-	override defaultCall(Call call, CompilerExpressionCtx ctx) {
-		if (call.type == CallType.CALLORAPPLY) {
-			if (call.serviceName == 'aqlFeatureAccess') {
-				val t = infereType(call).head
-				val lhs = call.arguments.head.compileExpression(ctx)
-				if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-					CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
-				} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
-					if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
-						(t.type as EDataType).instanceClass == boolean))
-						CodeBlock.of('''$L.is$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
-					else
-						CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
-				} else {
-					CodeBlock.
-						of('''$L.«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''',
-							lhs)
-				}
-			} else if (call.serviceName == 'create') {
-				call.callCreate(packageRoot)
-			} else {
-				val argumentsh = call.arguments.head
-				val ts = argumentsh.infereType
-				val t = ts.head
-				val re = resolved.filter [
-					if (t !== null && t.type instanceof EClass) {
-						val tecls = t.type as EClass
-						it.ECls.name == tecls.name && it.ECls.EPackage.name == tecls.EPackage.name
-					} else {
-						false
-					}
-				].head
-				if (re !== null) {
-					val allMethods = re.getAleCls.allMethods
-					val methodExist = allMethods.exists [
-						it.operationRef.name == call.serviceName
-					]
-					if (methodExist) {
-						val hm = newHashMap()
-						hm.put("typecaller", (call.arguments.head.infereType.head.type as EClass).solveType)
-						hm.put("typeoperation",
-							ClassName.get(packageRoot.operationInterfacePackageName(t.type as EClass),
-								(t.type as EClass).operationInterfaceClassName))
-						for (param : call.arguments.tail.enumerate) {
-							hm.put("typeparam" + param.value,
-								param.key.infereType?.head?.type?.resolveType2.solveNothing(param.key))
-							hm.put("expression" + param.value, param.key.compileExpression(ctx))
-						}
-
-						val a0 = call.arguments.head
-						hm.put("caller", a0.compileExpression(ctx))
-						hm.put("serviceName", call.serviceName)
-
-						CodeBlock.builder.
-							addNamed('''(($typeoperation:T)$caller:L.accept(vis)).$serviceName:L(«FOR p : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("typeparam" + p.value) !== null»($typeparam«p.value»:T)«ENDIF» ($expression«p.value»:L)«ENDFOR»)''',
-								hm).build
-					} else {
-						call.callService(ctx)
-					}
-				} else {
-					call.callService(ctx)
-				}
-			}
-		} else {
-			CodeBlock.of('''/*Call «call»*/''')
+	override implementationSpecificCall(Call call, CompilerExpressionCtx ctx, IType iType, Iterable<Method> allMethods, ResolvedClass re) {
+		val hm = newHashMap()
+		hm.put("typecaller", (call.arguments.head.infereType.head.type as EClass).solveType)
+		hm.put("typeoperation",
+			ClassName.get(packageRoot.operationInterfacePackageName(iType.type as EClass),
+				(iType.type as EClass).operationInterfaceClassName))
+		for (param : call.arguments.tail.enumerate) {
+			hm.put("typeparam" + param.value, param.key.infereType?.head?.type?.resolveType2.solveNothing(param.key))
+			hm.put("expression" + param.value, param.key.compileExpression(ctx))
 		}
+
+		val a0 = call.arguments.head
+		hm.put("caller", a0.compileExpression(ctx))
+		hm.put("serviceName", call.serviceName)
+
+		CodeBlock.builder.
+			addNamed('''(($typeoperation:T)$caller:L.accept(vis)).$serviceName:L(«FOR p : call.arguments.tail.enumerate SEPARATOR ', '»«IF hm.get("typeparam" + p.value) !== null»($typeparam«p.value»:T)«ENDIF» ($expression«p.value»:L)«ENDFOR»)''',
+				hm).build
 	}
 }

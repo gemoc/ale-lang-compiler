@@ -7,6 +7,7 @@ import miniJava.visitor.miniJava.State;
 import miniJava.visitor.miniJava.Value;
 import visitor.VisitorInterface;
 import visitor.operation.miniJava.AndOperation;
+import visitor.operation.miniJava.ExpressionOperation;
 
 public class AndOperationImpl extends ExpressionOperationImpl implements AndOperation {
 	private final And it;
@@ -21,8 +22,8 @@ public class AndOperationImpl extends ExpressionOperationImpl implements AndOper
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		Value left = ((Value) (this.it.getLeft().evaluateExpression((State) (state))));
-		Value right = ((Value) (this.it.getRight().evaluateExpression((State) (state))));
+		Value left = ((Value) (((ExpressionOperation)this.it.getLeft().accept(vis)).evaluateExpression((State) (state))));
+		Value right = ((Value) (((ExpressionOperation)this.it.getRight().accept(vis)).evaluateExpression((State) (state))));
 		if(left instanceof BooleanValue) {
 			if(right instanceof BooleanValue) {
 				BooleanValue bleft = ((BooleanValue) (left));

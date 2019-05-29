@@ -77,8 +77,6 @@ import emfswitch.operation.ValueOperation;
 import emfswitch.operation.VariableDeclarationOperation;
 import emfswitch.operation.VoidTypeRefOperation;
 import emfswitch.operation.WhileStatementOperation;
-import java.lang.Object;
-import java.lang.Override;
 import miniJava.And;
 import miniJava.ArrayAccess;
 import miniJava.ArrayInstance;

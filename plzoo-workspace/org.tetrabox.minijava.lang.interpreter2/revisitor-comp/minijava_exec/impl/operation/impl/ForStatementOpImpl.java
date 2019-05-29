@@ -100,11 +100,11 @@ public class ForStatementOpImpl extends StatementOpImpl implements ForStatementO
   public void evaluateStatement(State state) {
     rev.$((State)state).pushNewContext();
     rev.$((Assignment)this.obj.getDeclaration()).evaluateStatement(((State) (state)));
-    BooleanValue continueFor = ((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))));
+    BooleanValue continueFor = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))))));
     while (continueFor.isValue()) {
       rev.$((Block)this.obj.getBlock()).evaluateStatement(((State) (state)));
       rev.$((Assignment)this.obj.getProgression()).evaluateStatement(((State) (state)));
-      BooleanValue continueFor2 = ((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))));
+      BooleanValue continueFor2 = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))))));
       continueFor = continueFor2;
     }
     rev.$((State)state).popCurrentContext();

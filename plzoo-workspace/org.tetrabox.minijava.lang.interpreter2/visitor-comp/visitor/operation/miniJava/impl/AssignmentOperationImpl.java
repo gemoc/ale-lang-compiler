@@ -14,6 +14,7 @@ import miniJava.visitor.miniJava.MiniJavaFactory;
 import miniJava.visitor.miniJava.ObjectInstance;
 import miniJava.visitor.miniJava.ObjectRefValue;
 import miniJava.visitor.miniJava.State;
+import miniJava.visitor.miniJava.Symbol;
 import miniJava.visitor.miniJava.SymbolBinding;
 import miniJava.visitor.miniJava.SymbolRef;
 import miniJava.visitor.miniJava.Value;
@@ -43,8 +44,8 @@ public class AssignmentOperationImpl extends StatementOperationImpl implements A
 		Assignee assignee = ((Assignee) (this.it.getAssignee()));
 		if(assignee instanceof SymbolRef) {
 			SymbolRef assigneeSymbolRef = ((SymbolRef) (assignee));
-			SymbolBinding existingBinding = ((SymbolBinding) (((ContextOperation)context.accept(vis)).findBinding( (assigneeSymbolRef.getSymbol()))));
-			existingBinding.setValue((Value) (right));
+			SymbolBinding existingBinding = ((SymbolBinding) (((ContextOperation)context.accept(vis)).findBinding((Symbol) (assigneeSymbolRef.getSymbol()))));
+			existingBinding.setValue(right);
 		}
 		else {
 			if(assignee instanceof VariableDeclaration) {
@@ -58,7 +59,7 @@ public class AssignmentOperationImpl extends StatementOperationImpl implements A
 				if(assignee instanceof FieldAccess) {
 					FieldAccess assigneeFieldAccess = ((FieldAccess) (assignee));
 					Field f = ((Field) (assigneeFieldAccess.getField()));
-					ObjectRefValue realReceiverValue = ((ObjectRefValue) (assigneeFieldAccess.getReceiver().evaluateExpression((State) (state))));
+					ObjectRefValue realReceiverValue = ((ObjectRefValue) (((ObjectRefValue) (((ExpressionOperation)assigneeFieldAccess.getReceiver().accept(vis)).evaluateExpression((State) (state))))));
 					ObjectInstance realReceiver = ((ObjectInstance) (realReceiverValue.getInstance()));
 					FieldBinding existingBinding = ((FieldBinding) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (f))))));
 					if(EqualService.equals((existingBinding), (null))) {
@@ -68,17 +69,17 @@ public class AssignmentOperationImpl extends StatementOperationImpl implements A
 						realReceiver.getFieldbindings().add(binding);
 					}
 					else {
-						existingBinding.setValue((Value) (right));
+						existingBinding.setValue(right);
 					}
 				}
 				else {
 					if(assignee instanceof ArrayAccess) {
 						ArrayAccess assigneeArrayAccess = ((ArrayAccess) (assignee));
-						ArrayRefValue arrayRefValue = ((ArrayRefValue) (assigneeArrayAccess.getObject().evaluateExpression((State) (state))));
+						ArrayRefValue arrayRefValue = ((ArrayRefValue) (((ArrayRefValue) (((ExpressionOperation)assigneeArrayAccess.getObject().accept(vis)).evaluateExpression((State) (state))))));
 						ArrayInstance array = ((ArrayInstance) (arrayRefValue.getInstance()));
-						IntegerValue integerValue = ((IntegerValue) (assigneeArrayAccess.getIndex().evaluateExpression((State) (state))));
+						IntegerValue integerValue = ((IntegerValue) (((IntegerValue) (((ExpressionOperation)assigneeArrayAccess.getIndex().accept(vis)).evaluateExpression((State) (state))))));
 						int index = ((int) (integerValue.getValue()));
-						array.getValue().set((int) (index), (Value) (right));
+						CollectionService.set(array.getValue(), index, right);
 					}
 					else {
 					}

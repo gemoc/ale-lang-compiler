@@ -153,8 +153,8 @@ public class AndImpl extends ExpressionImpl implements And {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		Value left = ((Value) (this.left.evaluateExpression((State) (state))));
-		Value right = ((Value) (this.right.evaluateExpression((State) (state))));
+		Value left = ((Value) (((Expression) (this.left)).evaluateExpression((State) (state))));
+		Value right = ((Value) (((Expression) (this.right)).evaluateExpression((State) (state))));
 		if (left instanceof BooleanValue) {
 			if (right instanceof BooleanValue) {
 				BooleanValue bleft = ((BooleanValue) (left));

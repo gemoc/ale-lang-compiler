@@ -18,6 +18,7 @@ import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.ObjectInstance;
 import miniJava.interpreter.miniJava.ObjectRefValue;
 import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Symbol;
 import miniJava.interpreter.miniJava.SymbolBinding;
 import miniJava.interpreter.miniJava.SymbolRef;
 import miniJava.interpreter.miniJava.Value;
@@ -169,11 +170,11 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
 	public void evaluateStatement(State state) {
 		Context context = ((Context) (((State) (state)).findCurrentContext()));
 		Value right = ((Value) (((Expression) (this.value)).evaluateExpression((State) (state))));
-		Assignee assignee = ((Assignee) (this.getAssignee()));
+		Assignee assignee = ((Assignee) (this.assignee));
 		if (assignee instanceof SymbolRef) {
 			SymbolRef assigneeSymbolRef = ((SymbolRef) (assignee));
-			SymbolBinding existingBinding = ((SymbolBinding) (((Context) (context)).findBinding(assigneeSymbolRef.getSymbol())));
-			existingBinding.setValue((Value) (right));
+			SymbolBinding existingBinding = ((SymbolBinding) (((Context) (context)).findBinding((Symbol) (assigneeSymbolRef.getSymbol()))));
+			existingBinding.setValue(right);
 		}
 		else {
 			if (assignee instanceof VariableDeclaration) {
@@ -187,7 +188,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
 				if (assignee instanceof FieldAccess) {
 					FieldAccess assigneeFieldAccess = ((FieldAccess) (assignee));
 					Field f = ((Field) (assigneeFieldAccess.getField()));
-					ObjectRefValue realReceiverValue = ((ObjectRefValue) (assigneeFieldAccess.getReceiver().evaluateExpression((State) (state))));
+					ObjectRefValue realReceiverValue = ((ObjectRefValue) (((ObjectRefValue) (((Expression) (assigneeFieldAccess.getReceiver())).evaluateExpression((State) (state))))));
 					ObjectInstance realReceiver = ((ObjectInstance) (realReceiverValue.getInstance()));
 					FieldBinding existingBinding = ((FieldBinding) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (f))))));
 					if (EqualService.equals((existingBinding), (null))) {
@@ -197,17 +198,17 @@ public class AssignmentImpl extends StatementImpl implements Assignment {
 						realReceiver.getFieldbindings().add(binding);
 					}
 					else {
-						existingBinding.setValue((Value) (right));
+						existingBinding.setValue(right);
 					}
 				}
 				else {
 					if (assignee instanceof ArrayAccess) {
 						ArrayAccess assigneeArrayAccess = ((ArrayAccess) (assignee));
-						ArrayRefValue arrayRefValue = ((ArrayRefValue) (assigneeArrayAccess.getObject().evaluateExpression((State) (state))));
+						ArrayRefValue arrayRefValue = ((ArrayRefValue) (((ArrayRefValue) (((Expression) (assigneeArrayAccess.getObject())).evaluateExpression((State) (state))))));
 						ArrayInstance array = ((ArrayInstance) (arrayRefValue.getInstance()));
-						IntegerValue integerValue = ((IntegerValue) (assigneeArrayAccess.getIndex().evaluateExpression((State) (state))));
+						IntegerValue integerValue = ((IntegerValue) (((IntegerValue) (((Expression) (assigneeArrayAccess.getIndex())).evaluateExpression((State) (state))))));
 						int index = ((int) (integerValue.getValue()));
-						array.getValue().set((int) (index), (Value) (right));
+						CollectionService.set(array.getValue(), index, right);
 					}
 					else {
 					}

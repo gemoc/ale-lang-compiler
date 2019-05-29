@@ -16,16 +16,13 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 class SwitchTypeSystemUtils extends CommonTypeSystemUtils {
 
 	extension EcoreUtils ecoreUtils = new EcoreUtils
-	var List<ResolvedClass> resolved
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved) {
-		super(syntaxes)
-		this.resolved = resolved
+		super(syntaxes, resolved)
 	}
 
 	override resolveType(EClassifier e) {
@@ -72,20 +69,6 @@ class SwitchTypeSystemUtils extends CommonTypeSystemUtils {
 			ClassName.get("org.eclipse.emf.ecore", e.name)
 		}
 
-	}
-
-	def allMethods(ExtendedClass aleClass) {
-		aleClass.allParents.map [
-			it.methods
-		].flatten
-	}
-
-	def allParents(ExtendedClass aleClass) {
-		val ecls = resolved.filter[it.getAleCls == aleClass].head.eCls
-
-		resolved.filter[it.eCls == ecls || (it.eCls as EClass).isSuperTypeOf(ecls as EClass)].map [
-			it.getAleCls
-		].filter[it !== null]
 	}
 
 	def dispatch TypeName resolveType2(Object type) {

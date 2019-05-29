@@ -78,7 +78,7 @@ public class MethodOperationImpl extends MemberOperationImpl implements MethodOp
 			MapService.put((EMap) (this.it.getCache()), (Clazz) (c), (Method) (result));
 		}
 		else {
-			result = this.it.getCache().get((Clazz) (c));
+			result = MapService.getFromMap((EMap) (this.it.getCache()), (Clazz) (c));
 		}
 		return result;
 	}

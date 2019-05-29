@@ -21,7 +21,7 @@ public class IfStatementOperationImpl extends StatementOperationImpl implements 
 	}
 
 	public void evaluateStatement(State state) {
-		BooleanValue booleanValue = ((BooleanValue) (((ExpressionOperation)this.it.getExpression().accept(vis)).evaluateExpression((State) (state))));
+		BooleanValue booleanValue = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getExpression().accept(vis)).evaluateExpression((State) (state))))));
 		if(booleanValue.isValue()) {
 			((BlockOperation)this.it.getThenBlock().accept(vis)).evaluateStatement((State) (state));
 		}

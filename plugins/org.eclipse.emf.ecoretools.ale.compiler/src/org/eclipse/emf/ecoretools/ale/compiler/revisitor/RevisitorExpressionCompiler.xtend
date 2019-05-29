@@ -6,6 +6,7 @@ import java.util.Map
 import org.eclipse.acceleo.query.ast.Call
 import org.eclipse.acceleo.query.ast.CallType
 import org.eclipse.acceleo.query.ast.StringLiteral
+import org.eclipse.acceleo.query.validation.type.IType
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
@@ -16,6 +17,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecoretools.ale.implementation.Method
 
 class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 	extension RevisitorTypeSystemUtils tsu
@@ -23,8 +25,8 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 	extension EnumeratorService es
 
 	new(RevisitorTypeSystemUtils tsu, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices,
-		CommonTypeInferer cti, EnumeratorService es, AbstractNamingUtils anu) {
-		super(cti, es, tsu, anu, registeredServices, resolved)
+		CommonTypeInferer cti, EnumeratorService es, AbstractNamingUtils anu, String packageRoot) {
+		super(cti, es, tsu, anu, registeredServices, resolved, packageRoot, false, newHashSet())
 		this.tsu = tsu
 		this.cti = cti
 		this.es = es
@@ -47,8 +49,8 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 			it.aleCls
 		].filter[it !== null]
 	}
-
-	override defaultCall(Call call, CompilerExpressionCtx ctx) {
+	
+	def defaultCallBis(Call call, CompilerExpressionCtx ctx) {
 		if (call.type == CallType.CALLORAPPLY) {
 			if (call.serviceName == 'aqlFeatureAccess') {
 				val t = infereType(call).head
@@ -96,25 +98,8 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 						it.operationRef.name == call.serviceName
 					]
 					if (methodExist) {
-						// TODO: also add explicit cast on parameters !
-						val hm = newHashMap(
-							'dispatch' -> "$",
-							"callerType" -> t.type.resolveType2,
-							"callerExpr" -> call.arguments.head.compileExpression(ctx),
-							"callerServiceName" -> call.serviceName
-						)
-
-						call.arguments.tail.enumerate.forEach [
-							var pt = it.key.infereType.head?.type?.resolveType2?.solveNothing(it.key)
-
-							hm.put('paramType' + it.value, pt)
-							val pe = it.key.compileExpression(ctx)
-							hm.put('paramExpr' + it.value, pe)
-						]
-
-						CodeBlock.builder.
-							addNamed('''rev.$dispatch:L(($callerType:T)$callerExpr:L).$callerServiceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»(($paramType«param.value»:T) ($paramExpr«param.value»:L))«ENDFOR»)''',
-								hm).build
+						// TOOD
+						null
 					} else {
 						call.callService(ctx)
 					}
@@ -125,6 +110,27 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 		} else {
 			CodeBlock.of('''/*Call «call»*/''')
 		}
+	}
+
+	override CodeBlock implementationSpecificCall(Call call, CompilerExpressionCtx ctx, IType iType, Iterable<Method> allMethods, ResolvedClass re) {
+		val hm = newHashMap(
+			'dispatch' -> "$",
+			"callerType" -> iType.type.resolveType2,
+			"callerExpr" -> call.arguments.head.compileExpression(ctx),
+			"callerServiceName" -> call.serviceName
+		)
+
+		call.arguments.tail.enumerate.forEach [
+			var pt = it.key.infereType.head?.type?.resolveType2?.solveNothing(it.key)
+
+			hm.put('paramType' + it.value, pt)
+			val pe = it.key.compileExpression(ctx)
+			hm.put('paramExpr' + it.value, pe)
+		]
+
+		CodeBlock.builder.
+			addNamed('''rev.$dispatch:L(($callerType:T)$callerExpr:L).$callerServiceName:L(«FOR param : call.arguments.tail.enumerate SEPARATOR ', '»(«IF hm.get("paramType" + param.value) !== null»($paramType«param.value»:T) «ENDIF»($paramExpr«param.value»:L))«ENDFOR»)''',
+				hm).build
 	}
 
 }

@@ -2,6 +2,7 @@ package minijava_exec.impl.operation.impl;
 
 import miniJava.And;
 import miniJava.BooleanValue;
+import miniJava.Expression;
 import miniJava.MiniJavaFactory;
 import miniJava.State;
 import miniJava.Value;
@@ -98,8 +99,8 @@ public class AndOpImpl extends ExpressionOpImpl implements AndOp {
 
   public Value evaluateExpression(State state) {
     Value result;
-    Value left = ((Value) (this.obj.getLeft().evaluateExpression((State) (state))));
-    Value right = ((Value) (this.obj.getRight().evaluateExpression((State) (state))));
+    Value left = ((Value) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))));
+    Value right = ((Value) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))));
     if(left instanceof BooleanValue) {
       if(right instanceof BooleanValue) {
         BooleanValue bleft = ((BooleanValue) (left));

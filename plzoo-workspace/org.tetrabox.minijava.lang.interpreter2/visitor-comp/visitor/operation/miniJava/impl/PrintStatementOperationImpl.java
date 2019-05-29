@@ -7,6 +7,7 @@ import visitor.VisitorInterface;
 import visitor.operation.miniJava.ExpressionOperation;
 import visitor.operation.miniJava.PrintStatementOperation;
 import visitor.operation.miniJava.StateOperation;
+import visitor.operation.miniJava.ValueOperation;
 
 public class PrintStatementOperationImpl extends StatementOperationImpl implements PrintStatementOperation {
 	private final PrintStatement it;
@@ -20,7 +21,7 @@ public class PrintStatementOperationImpl extends StatementOperationImpl implemen
 	}
 
 	public void evaluateStatement(State state) {
-		String res = ((String) (((ExpressionOperation)this.it.getExpression().accept(vis)).evaluateExpression((State) (state)).customToString()));
+		String res = ((String) (((ValueOperation)((ExpressionOperation)this.it.getExpression().accept(vis)).evaluateExpression((State) (state)).accept(vis)).customToString()));
 		((StateOperation)state.accept(vis)).println((String) (res));
 	}
 }

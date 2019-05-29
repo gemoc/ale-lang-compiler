@@ -18,7 +18,7 @@ public class ExpressionOperationImpl extends StatementOperationImpl implements E
 	}
 
 	public void evaluateStatement(State state) {
-		this.it.evaluateExpression((State) (state));
+		((ExpressionOperation)this.it.accept(vis)).evaluateExpression((State) (state));
 	}
 
 	public Value evaluateExpression(State state) {

@@ -167,7 +167,7 @@ public class PlusImpl extends ExpressionImpl implements Plus {
 			else {
 				if (right instanceof StringValue) {
 					StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-					tmp.setValue((left.customToString()) + (right.customToString()));
+					tmp.setValue((((IntegerValue) (left)).customToString()) + (((StringValue) (right)).customToString()));
 					result = (Value) (tmp) ;
 				}
 				else {
@@ -178,7 +178,7 @@ public class PlusImpl extends ExpressionImpl implements Plus {
 		else {
 			if (((left instanceof StringValue) || (right instanceof StringValue))) {
 				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-				tmp.setValue((left.customToString()) + (right.customToString()));
+				tmp.setValue((((StringValue) (left)).customToString()) + (((StringValue) (right)).customToString()));
 				result = (Value) (tmp) ;
 			}
 			else {

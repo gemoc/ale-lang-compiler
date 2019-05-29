@@ -27,15 +27,16 @@ import org.junit.jupiter.api.TestFactory
 
 import static spoon.testing.Assert.assertThat
 
+
 class InterpreterTestAll {
 
 	static Map<String, Map<File, File>> compilations = newHashMap
 
 	static val compilers = newHashMap(
-		"interpreter" -> [f|compileProjectInterpreter(f)]
+//		"interpreter" -> [f|compileProjectInterpreter(f)],
 //		"revisitor" -> [f|compileProjectRevisitor(f)],
 //		"switch" -> [f|compileProjectSwitch(f)],
-//		"visitor" -> [f|compileProjectVisitor(f)]
+		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
 	private static final boolean DEBUG = false

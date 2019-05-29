@@ -16,6 +16,7 @@ import miniJava.visitor.miniJava.Value;
 import visitor.VisitorInterface;
 import visitor.operation.miniJava.ExpressionOperation;
 import visitor.operation.miniJava.NewArrayOperation;
+import visitor.operation.miniJava.ValueOperation;
 
 public class NewArrayOperationImpl extends ExpressionOperationImpl implements NewArrayOperation {
 	private final NewArray it;
@@ -31,10 +32,10 @@ public class NewArrayOperationImpl extends ExpressionOperationImpl implements Ne
 	public Value evaluateExpression(State state) {
 		Value result;
 		ArrayInstance res = ((ArrayInstance) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
-		IntegerValue sizeArray = ((IntegerValue) (((ExpressionOperation)this.it.getSize().accept(vis)).evaluateExpression((State) (state))));
+		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((ExpressionOperation)this.it.getSize().accept(vis)).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
-		Value defaultValue = ((Value) (null));
+		Value defaultValue = ((Value) (MiniJavaFactory.eINSTANCE.createValue()));
 		if(this.it.getType() instanceof IntegerTypeRef) {
 			IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 			idv.setValue(0);
@@ -62,7 +63,7 @@ public class NewArrayOperationImpl extends ExpressionOperationImpl implements Ne
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			res.getValue().add(defaultValue.copyj());
+			res.getValue().add(((ValueOperation)defaultValue.accept(vis)).copyj());
 			i = (i) + (1);
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));

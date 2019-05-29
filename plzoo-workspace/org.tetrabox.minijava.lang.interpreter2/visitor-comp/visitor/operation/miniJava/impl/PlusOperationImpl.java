@@ -8,7 +8,9 @@ import miniJava.visitor.miniJava.StringValue;
 import miniJava.visitor.miniJava.Value;
 import visitor.VisitorInterface;
 import visitor.operation.miniJava.ExpressionOperation;
+import visitor.operation.miniJava.IntegerValueOperation;
 import visitor.operation.miniJava.PlusOperation;
+import visitor.operation.miniJava.StringValueOperation;
 
 public class PlusOperationImpl extends ExpressionOperationImpl implements PlusOperation {
 	private final Plus it;
@@ -36,7 +38,7 @@ public class PlusOperationImpl extends ExpressionOperationImpl implements PlusOp
 			else {
 				if(right instanceof StringValue) {
 					StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-					tmp.setValue((left.customToString()) + (right.customToString()));
+					tmp.setValue((((IntegerValueOperation)left.accept(vis)).customToString()) + (((StringValueOperation)right.accept(vis)).customToString()));
 					result = tmp;
 				}
 				else {
@@ -47,7 +49,7 @@ public class PlusOperationImpl extends ExpressionOperationImpl implements PlusOp
 		else {
 			if(((left instanceof StringValue) || (right instanceof StringValue))) {
 				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-				tmp.setValue((left.customToString()) + (right.customToString()));
+				tmp.setValue((((StringValueOperation)left.accept(vis)).customToString()) + (((StringValueOperation)right.accept(vis)).customToString()));
 				result = tmp;
 			}
 			else {

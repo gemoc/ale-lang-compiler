@@ -108,10 +108,10 @@ public class NewArrayOpImpl extends ExpressionOpImpl implements NewArrayOp {
   public Value evaluateExpression(State state) {
     Value result;
     ArrayInstance res = ((ArrayInstance) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
-    IntegerValue sizeArray = ((IntegerValue) (rev.$((Expression)this.obj.getSize()).evaluateExpression(((State) (state)))));
+    IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (rev.$((Expression)this.obj.getSize()).evaluateExpression(((State) (state)))))));
     res.setSize(sizeArray.getValue());
     state.getArraysHeap().add(res);
-    Value defaultValue = ((Value) (null));
+    Value defaultValue = ((Value) (MiniJavaFactory.eINSTANCE.createValue()));
     if(this.obj.getType() instanceof IntegerTypeRef) {
       IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
       idv.setValue(0);
@@ -139,7 +139,7 @@ public class NewArrayOpImpl extends ExpressionOpImpl implements NewArrayOp {
     int i = ((int) (0));
     int sz = ((int) (res.getSize()));
     while ((i) < (sz)) {
-      res.getValue().add(defaultValue.copyj());
+      res.getValue().add(rev.$((Value)defaultValue).copyj());
       i = (i) + (1);
     }
     ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));

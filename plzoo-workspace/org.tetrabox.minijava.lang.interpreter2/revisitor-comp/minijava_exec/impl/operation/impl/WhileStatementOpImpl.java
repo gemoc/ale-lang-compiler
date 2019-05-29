@@ -97,10 +97,10 @@ public class WhileStatementOpImpl extends StatementOpImpl implements WhileStatem
   }
 
   public void evaluateStatement(State state) {
-    BooleanValue continueWhile = ((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))));
+    BooleanValue continueWhile = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))))));
     while (continueWhile.isValue()) {
       rev.$((Block)this.obj.getBlock()).evaluateStatement(((State) (state)));
-      BooleanValue continueWhile2 = ((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))));
+      BooleanValue continueWhile2 = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))))));
       continueWhile = continueWhile2;
     }
   }

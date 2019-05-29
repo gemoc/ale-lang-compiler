@@ -95,7 +95,7 @@ public class ExpressionOpImpl extends StatementOpImpl implements ExpressionOp {
   }
 
   public void evaluateStatement(State state) {
-    this.obj.evaluateExpression((State) (state));
+    rev.$((Expression)this.obj).evaluateExpression(((State) (state)));
   }
 
   public Value evaluateExpression(State state) {

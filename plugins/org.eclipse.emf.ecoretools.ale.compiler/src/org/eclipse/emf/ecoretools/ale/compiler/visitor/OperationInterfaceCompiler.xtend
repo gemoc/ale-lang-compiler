@@ -6,12 +6,14 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import java.util.List
 import java.util.Map
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 import static javax.lang.model.element.Modifier.*
@@ -25,10 +27,10 @@ class OperationInterfaceCompiler {
 	val String packageRoot
 	
 
-	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes) {
+	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved) {
 		this.directory = directory
 		this.packageRoot = packageRoot
-		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot, null)
+		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot, resolved)
 	}
 	
 	def compile(EClass eClass, ExtendedClass aleClass) {

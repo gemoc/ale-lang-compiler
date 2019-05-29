@@ -107,7 +107,7 @@ public class ContextOpImpl implements ContextOp {
       }
       else {
         if(!EqualService.equals((this.obj.getParentContext()), (null))) {
-          SymbolBinding binding2 = ((SymbolBinding) (this.obj.getParentContext().findBinding((Symbol) (symbol))));
+          SymbolBinding binding2 = ((SymbolBinding) (rev.$((Context)this.obj.getParentContext()).findBinding(((Symbol) (symbol)))));
           MapService.put((EMap) (this.obj.getCache()), (Symbol) (symbol), (SymbolBinding) (binding2));
         }
         else {

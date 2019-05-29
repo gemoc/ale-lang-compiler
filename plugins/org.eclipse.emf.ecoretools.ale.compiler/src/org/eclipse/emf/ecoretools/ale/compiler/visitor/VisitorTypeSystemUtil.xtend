@@ -2,8 +2,8 @@ package org.eclipse.emf.ecoretools.ale.compiler.visitor
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.TypeName
+import java.util.List
 import java.util.Map
-import org.eclipse.acceleo.query.ast.Expression
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.codegen.ecore.genmodel.GenEnum
@@ -15,20 +15,18 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class VisitorTypeSystemUtil extends CommonTypeSystemUtils {
 	extension VisitorNamingUtils vnu
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	val String packageRoot
-	val BaseValidator base
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, VisitorNamingUtils vnu, String packageRoot,
-		BaseValidator base) {
-		super(syntaxes);
+		List<ResolvedClass> resolved) {
+		super(syntaxes, resolved);
 		this.vnu = vnu
 		this.packageRoot = packageRoot
-		this.base = base
 	}
 
 	def dispatch TypeName resolveType2(Class<?> clazz) {

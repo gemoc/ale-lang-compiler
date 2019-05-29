@@ -3,6 +3,7 @@ package org.eclipse.emf.ecoretools.ale.compiler.lib;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -111,6 +112,11 @@ public class CollectionService {
 		}
 
 		return ret;
+	}
+	
+	@TruffleBoundary
+	public static <T> void set(final List<T> collection, int index, T value) {
+		collection.set(index, value);
 	}
 
 	@TruffleBoundary

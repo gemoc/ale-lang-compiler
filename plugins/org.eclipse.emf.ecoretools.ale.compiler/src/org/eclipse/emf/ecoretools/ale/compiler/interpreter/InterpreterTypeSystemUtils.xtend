@@ -17,19 +17,17 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 class InterpreterTypeSystemUtils extends CommonTypeSystemUtils {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension AbstractNamingUtils namingUtils
 	val String packageRoot
-	var List<ResolvedClass> resolved
+	
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved,
 		AbstractNamingUtils nu) {
-		super(syntaxes)
+		super(syntaxes, resolved)
 		this.packageRoot = packageRoot
-		this.resolved = resolved
 		this.namingUtils = nu
 	}
 
@@ -67,22 +65,7 @@ class InterpreterTypeSystemUtils extends CommonTypeSystemUtils {
 
 	}
 
-	def allMethods(ExtendedClass aleClass) {
-		aleClass.allParents.map [
-			it.methods
-		].flatten
-	}
-
-	def allParents(ExtendedClass aleClass) {
-		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls
-
-		resolved.filter [
-			it.eCls == ecls ||
-				it.eCls instanceof EClass && ecls instanceof EClass && (it.eCls as EClass).isSuperTypeOf(ecls as EClass)
-		].map [
-			it.aleCls
-		].filter[it !== null]
-	}
+	
 
 	def dispatch TypeName resolveType2(Object type) {
 		return null

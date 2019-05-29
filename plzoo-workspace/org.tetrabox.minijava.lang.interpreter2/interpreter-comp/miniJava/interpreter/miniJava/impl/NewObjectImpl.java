@@ -3,6 +3,7 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Block;
 import miniJava.interpreter.miniJava.Clazz;
 import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.Expression;
@@ -158,7 +159,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
 			i = (i) + (1);
 		}
 		i = 0;
-		Method constructor = ((Method) (null));
+		Method constructor = ((Method) (MiniJavaFactory.eINSTANCE.createMethod()));
 		while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
 			Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
 			if (m instanceof Method) {
@@ -185,7 +186,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
 			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this);
 			((State) (state)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
-			constructor.getBody().evaluateStatement((State) (state));
+			((Block) (constructor.getBody())).evaluateStatement((State) (state));
 			((State) (state)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));

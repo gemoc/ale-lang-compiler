@@ -7,6 +7,7 @@ import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.PrintStatement;
 import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -105,7 +106,7 @@ public class PrintStatementImpl extends StatementImpl implements PrintStatement 
 	}
 
 	public void evaluateStatement(State state) {
-		String res = ((String) (((Expression) (this.expression)).evaluateExpression((State) (state)).customToString()));
+		String res = ((String) (((Value) (((Expression) (this.expression)).evaluateExpression((State) (state)))).customToString()));
 		((State) (state)).println((String) (res));
 	}
 }

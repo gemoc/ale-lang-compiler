@@ -127,7 +127,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		val es = new EnumeratorService
 		val eimplc = new VisitorEClassImplementationCompiler(packageRoot, dsl, resolved, ccu, es)
 
-		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes)
+		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes, resolved)
 		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,
 			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices, new EnumeratorService)
 

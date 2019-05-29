@@ -98,7 +98,7 @@ public class IfStatementOpImpl extends StatementOpImpl implements IfStatementOp 
   }
 
   public void evaluateStatement(State state) {
-    BooleanValue booleanValue = ((BooleanValue) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))));
+    BooleanValue booleanValue = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))))));
     if(booleanValue.isValue()) {
       rev.$((Block)this.obj.getThenBlock()).evaluateStatement(((State) (state)));
     }

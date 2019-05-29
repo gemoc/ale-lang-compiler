@@ -263,7 +263,7 @@ public class MethodImpl extends MemberImpl implements Method {
 			MapService.put((EMap) (this.cache), (Clazz) (c), (Method) (result));
 		}
 		else {
-			result = (Method) (this.cache.get((Clazz) (c))) ;
+			result = (Method) (MapService.getFromMap((EMap) (this.cache), (Clazz) (c))) ;
 		}
 		return result;
 	}

@@ -197,7 +197,7 @@ public class IfStatementImpl extends StatementImpl implements IfStatement {
 	}
 
 	public void evaluateStatement(State state) {
-		BooleanValue booleanValue = ((BooleanValue) (((Expression) (this.expression)).evaluateExpression((State) (state))));
+		BooleanValue booleanValue = ((BooleanValue) (((BooleanValue) (((Expression) (this.expression)).evaluateExpression((State) (state))))));
 		if (booleanValue.isValue()) {
 			((Block) (this.thenBlock)).evaluateStatement((State) (state));
 		}

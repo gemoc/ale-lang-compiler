@@ -86,7 +86,6 @@ import minijava_exec.impl.operation.ValueOp;
 import minijava_exec.impl.operation.VariableDeclarationOp;
 import minijava_exec.impl.operation.VoidTypeRefOp;
 import minijava_exec.impl.operation.WhileStatementOp;
-import org.eclipse.acceleo.query.runtime.impl.Nothing;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -151,7 +150,7 @@ public class MethodOpImpl extends MemberOpImpl implements MethodOp {
           }
         }
       }
-      MapService.put((EMap) (this.obj.getCache()), (Clazz) (c), (Nothing) (result));
+      MapService.put((EMap) (this.obj.getCache()), (Clazz) (c), (Method) (result));
     }
     else {
       result = this.obj.getCache().get((Clazz) (c));

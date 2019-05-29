@@ -3,6 +3,7 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Clazz;
 import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.Method;
@@ -178,9 +179,9 @@ public class MethodCallImpl extends ExpressionImpl implements MethodCall {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		ObjectRefValue realReceiver0 = ((ObjectRefValue) (((Expression) (this.receiver)).evaluateExpression((State) (state))));
+		ObjectRefValue realReceiver0 = ((ObjectRefValue) (((ObjectRefValue) (((Expression) (this.receiver)).evaluateExpression((State) (state))))));
 		ObjectInstance realReceiver = ((ObjectInstance) (realReceiver0.getInstance()));
-		Method realMethod = ((Method) (this.getMethod().findOverride((realReceiver.getType()))));
+		Method realMethod = ((Method) (((Method) (((Method) (this.method)).findOverride((Clazz) (realReceiver.getType()))))));
 		Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
 		int argsLength = ((int) (CollectionService.size(this.getArgs())));
 		int i = ((int) (0));

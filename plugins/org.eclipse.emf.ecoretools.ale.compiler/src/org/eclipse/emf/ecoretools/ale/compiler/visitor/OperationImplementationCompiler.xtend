@@ -39,6 +39,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 
 class OperationImplementationCompiler {
 
@@ -77,7 +78,7 @@ class OperationImplementationCompiler {
 		base.validate(parsedSemantics)
 		
 		this.cti = new CommonTypeInferer(base)
-		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot, base)
+		this.tsu = new VisitorTypeSystemUtil(syntaxes, namingUtils, packageRoot, resolved)
 		
 		this.vec = new VisitorExpressionCompiler(tsu, resolved, registeredServices, namingUtils, packageRoot, cti, es)
 		
@@ -124,7 +125,7 @@ class OperationImplementationCompiler {
 					])
 					.addModifiers(PUBLIC)
 					.openMethod(method.operationRef.EType?.resolveType2)
-					.compileBody(method.body)
+					.compileBody(method.body, new CompilerExpressionCtx('????VISITOR???', aleClass, eClass))
 					.closeMethod(method.operationRef.EType)
 					.build
 			])
@@ -140,102 +141,102 @@ class OperationImplementationCompiler {
 
 	
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureAssignment body, CompilerExpressionCtx ctx) {
 		val t = infereType(body.target).head
 		if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
-			builderSeed.addStatement('''$L.get$L().add($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+			builderSeed.addStatement('''$L.get$L().add($L)''', body.target.compileExpression(ctx), body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 		} else if (t.type instanceof EClass || t.type instanceof EDataType) {
 			builderSeed.
-				addStatement('''$L.set$L($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+				addStatement('''$L.set$L($L)''', body.target.compileExpression(ctx), body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 		} else {
 			builderSeed.
-				addStatement('''$L.$L = $L''', body.target.compileExpression, body.targetFeature, body.value.compileExpression)
+				addStatement('''$L.$L = $L''', body.target.compileExpression(ctx), body.targetFeature, body.value.compileExpression(ctx))
 
 		}
 
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureInsert body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureInsert body, CompilerExpressionCtx ctx) {
 		builderSeed.
-			addStatement('''$L.get$L().add($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+			addStatement('''$L.get$L().add($L)''', body.target.compileExpression(ctx), body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureRemove body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeatureRemove body, CompilerExpressionCtx ctx) {
 		builderSeed.
-			addStatement('''$L.get$L().remove($L)''', body.target.compileExpression, body.targetFeature.toFirstUpper, body.value.compileExpression)
+			addStatement('''$L.get$L().remove($L)''', body.target.compileExpression(ctx), body.targetFeature.toFirstUpper, body.value.compileExpression(ctx))
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body) {
-		builderSeed.addStatement('''$L = $L''', body.name, body.value.compileExpression)
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body, CompilerExpressionCtx ctx) {
+		builderSeed.addStatement('''$L = $L''', body.name, body.value.compileExpression(ctx))
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body, CompilerExpressionCtx ctx) {
 
 		val inft = body.initialValue?.infereType?.head
 		if (inft instanceof SequenceType) {
 			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
-			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression)
+			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression(ctx))
 		} else {
 			val t = body.type.solveType
 			if(body.initialValue === null) {
 				builderSeed.addStatement('''$T $L = null''', t, body.name)
 			} else {
-				builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression)
+				builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression(ctx))
 			}
 		}
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, Block body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, Block body, CompilerExpressionCtx ctx) {
 		body.statements.fold(builderSeed, [ builder, statement |
-			builder.compileBody(statement)
+			builder.compileBody(statement, ctx)
 		])
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ExpressionStatement body) {
-		builderSeed.addStatement(body.expression.compileExpression)
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ExpressionStatement body, CompilerExpressionCtx ctx) {
+		builderSeed.addStatement(body.expression.compileExpression(ctx))
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeaturePut body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, FeaturePut body, CompilerExpressionCtx ctx) {
 		builderSeed.addStatement('''throw new $T("FeaturePut not implemented")''', RuntimeException)
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ForEach body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ForEach body, CompilerExpressionCtx ctx) {
 		val lt = infereType(body.collectionExpression).head as SequenceType
 
 		if (lt.collectionType.type instanceof EClass) {
-			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression»)''',
-				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body).endControlFlow
+			builderSeed.beginControlFlow('''for($T $L: «body.collectionExpression.compileExpression(ctx)»)''',
+				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body, ctx).endControlFlow
 		} else {
 			val iteratorType = lt.collectionType.type.resolveType2
 			val iteratorVariable = body.variable
-			val iterable = body.collectionExpression.compileExpression
+			val iterable = body.collectionExpression.compileExpression(ctx)
 			builderSeed
 				.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable)
-				.compileBody(body.body)
+				.compileBody(body.body, ctx)
 				.endControlFlow
 		}
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, If body) {
-		var ret = builderSeed.beginControlFlow('''if($L)''', body.blocks.head.condition.compileExpression).compileBody(
-			body.blocks.head.block).endControlFlow
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, If body, CompilerExpressionCtx ctx) {
+		var ret = builderSeed.beginControlFlow('''if($L)''', body.blocks.head.condition.compileExpression(ctx)).compileBody(
+			body.blocks.head.block, ctx).endControlFlow
 		for (ConditionalBlock x : body.blocks.tail) {
-			ret = ret.beginControlFlow('''else if ($L''', x.condition.compileExpression).compileBody(x.block).
+			ret = ret.beginControlFlow('''else if ($L''', x.condition.compileExpression(ctx)).compileBody(x.block, ctx).
 				endControlFlow
 		}
 		if (body.^else !== null)
-			ret = ret.beginControlFlow("else").compileBody(body.^else).endControlFlow
+			ret = ret.beginControlFlow("else").compileBody(body.^else, ctx).endControlFlow
 		ret
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ConditionalBlock body) {
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, ConditionalBlock body, CompilerExpressionCtx ctx) {
 		builderSeed.addStatement('''throw new $T("ConditionalBlock not implemented")''', RuntimeException)
 	}
 
-	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, While body) {
-		val a = builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression)
-		a.compileBody(body.body).endControlFlow
+	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, While body, CompilerExpressionCtx ctx) {
+		val a = builderSeed.beginControlFlow("while ($L)", body.condition.compileExpression(ctx))
+		a.compileBody(body.body, ctx).endControlFlow
 	}
 	
 	

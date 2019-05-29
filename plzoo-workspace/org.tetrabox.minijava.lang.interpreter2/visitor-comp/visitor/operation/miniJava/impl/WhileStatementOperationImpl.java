@@ -20,10 +20,10 @@ public class WhileStatementOperationImpl extends StatementOperationImpl implemen
 	}
 
 	public void evaluateStatement(State state) {
-		BooleanValue continueWhile = ((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))));
+		BooleanValue continueWhile = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))))));
 		while (continueWhile.isValue()) {
 			((BlockOperation)this.it.getBlock().accept(vis)).evaluateStatement((State) (state));
-			BooleanValue continueWhile2 = ((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))));
+			BooleanValue continueWhile2 = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))))));
 			continueWhile = continueWhile2;
 		}
 	}

@@ -30,7 +30,7 @@ public class ModuloOperationImpl extends ExpressionOperationImpl implements Modu
 				IntegerValue bleft = ((IntegerValue) (left));
 				IntegerValue bright = ((IntegerValue) (right));
 				IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
-				tmp.setValue(MathService.mod((Modulo) (this.it), (bleft.getValue()), (bright.getValue())));
+				tmp.setValue(MathService.mod((Modulo) (this.it), (int) (bleft.getValue()), (int) (bright.getValue())));
 				result = tmp;
 			}
 			else {

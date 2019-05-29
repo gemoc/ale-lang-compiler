@@ -113,7 +113,7 @@ public class PlusOpImpl extends ExpressionOpImpl implements PlusOp {
       else {
         if(right instanceof StringValue) {
           StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-          tmp.setValue((left.customToString()) + (right.customToString()));
+          tmp.setValue((rev.$((IntegerValue)left).customToString()) + (rev.$((StringValue)right).customToString()));
           result = tmp;
         }
         else {
@@ -124,7 +124,7 @@ public class PlusOpImpl extends ExpressionOpImpl implements PlusOp {
     else {
       if(((left instanceof StringValue) || (right instanceof StringValue))) {
         StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-        tmp.setValue((left.customToString()) + (right.customToString()));
+        tmp.setValue((rev.$((StringValue)left).customToString()) + (rev.$((StringValue)right).customToString()));
         result = tmp;
       }
       else {

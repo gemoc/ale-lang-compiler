@@ -24,11 +24,11 @@ public class ForStatementOperationImpl extends StatementOperationImpl implements
 	public void evaluateStatement(State state) {
 		((StateOperation)state.accept(vis)).pushNewContext();
 		((AssignmentOperation)this.it.getDeclaration().accept(vis)).evaluateStatement((State) (state));
-		BooleanValue continueFor = ((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))));
+		BooleanValue continueFor = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))))));
 		while (continueFor.isValue()) {
 			((BlockOperation)this.it.getBlock().accept(vis)).evaluateStatement((State) (state));
 			((AssignmentOperation)this.it.getProgression().accept(vis)).evaluateStatement((State) (state));
-			BooleanValue continueFor2 = ((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))));
+			BooleanValue continueFor2 = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))))));
 			continueFor = continueFor2;
 		}
 		((StateOperation)state.accept(vis)).popCurrentContext();

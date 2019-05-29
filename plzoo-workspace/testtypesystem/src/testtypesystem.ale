@@ -1,0 +1,15 @@
+behavior testtypesystem_exec;
+
+open class Assignment {
+	def void passParam() {
+//		testtypesystem::State right := self.value.exec();
+		testtypesystem::Expression tmp := testtypesystem::Expression.create();
+		tmp.exec();
+	}
+}
+
+open class testtypesystem.Expression {
+	def testtypesystem::State exec() {
+		result := testtypesystem::State.create();
+	}
+}

@@ -6,6 +6,7 @@ import miniJava.visitor.miniJava.Or;
 import miniJava.visitor.miniJava.State;
 import miniJava.visitor.miniJava.Value;
 import visitor.VisitorInterface;
+import visitor.operation.miniJava.ExpressionOperation;
 import visitor.operation.miniJava.OrOperation;
 
 public class OrOperationImpl extends ExpressionOperationImpl implements OrOperation {
@@ -21,8 +22,8 @@ public class OrOperationImpl extends ExpressionOperationImpl implements OrOperat
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		BooleanValue left = ((BooleanValue) (this.it.getLeft().evaluateExpression((State) (state))));
-		BooleanValue right = ((BooleanValue) (this.it.getRight().evaluateExpression((State) (state))));
+		BooleanValue left = ((BooleanValue) (((ExpressionOperation)this.it.getLeft().accept(vis)).evaluateExpression((State) (state))));
+		BooleanValue right = ((BooleanValue) (((ExpressionOperation)this.it.getRight().accept(vis)).evaluateExpression((State) (state))));
 		BooleanValue res = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		res.setValue(((left.isValue()) || (right.isValue())));
 		result = res;

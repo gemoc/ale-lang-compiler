@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import miniJava.visitor.miniJava.Clazz;
 import miniJava.visitor.miniJava.Context;
 import miniJava.visitor.miniJava.Expression;
 import miniJava.visitor.miniJava.Method;
@@ -32,9 +33,9 @@ public class MethodCallOperationImpl extends ExpressionOperationImpl implements 
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		ObjectRefValue realReceiver0 = ((ObjectRefValue) (((ExpressionOperation)this.it.getReceiver().accept(vis)).evaluateExpression((State) (state))));
+		ObjectRefValue realReceiver0 = ((ObjectRefValue) (((ObjectRefValue) (((ExpressionOperation)this.it.getReceiver().accept(vis)).evaluateExpression((State) (state))))));
 		ObjectInstance realReceiver = ((ObjectInstance) (realReceiver0.getInstance()));
-		Method realMethod = ((Method) (this.it.getMethod().findOverride((realReceiver.getType()))));
+		Method realMethod = ((Method) (((Method) (((MethodOperation)this.it.getMethod().accept(vis)).findOverride((Clazz) (realReceiver.getType()))))));
 		Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
 		int argsLength = ((int) (CollectionService.size(this.it.getArgs())));
 		int i = ((int) (0));

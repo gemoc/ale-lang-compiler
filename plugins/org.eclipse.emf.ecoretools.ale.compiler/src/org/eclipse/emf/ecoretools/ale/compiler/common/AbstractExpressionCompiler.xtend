@@ -5,6 +5,7 @@ import com.squareup.javapoet.CodeBlock
 import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
+import java.util.Set
 import org.eclipse.acceleo.query.ast.And
 import org.eclipse.acceleo.query.ast.BooleanLiteral
 import org.eclipse.acceleo.query.ast.Call
@@ -17,7 +18,6 @@ import org.eclipse.acceleo.query.ast.ErrorExpression
 import org.eclipse.acceleo.query.ast.ErrorStringLiteral
 import org.eclipse.acceleo.query.ast.ErrorTypeLiteral
 import org.eclipse.acceleo.query.ast.ErrorVariableDeclaration
-import org.eclipse.acceleo.query.ast.Expression
 import org.eclipse.acceleo.query.ast.Implies
 import org.eclipse.acceleo.query.ast.IntegerLiteral
 import org.eclipse.acceleo.query.ast.Lambda
@@ -31,9 +31,13 @@ import org.eclipse.acceleo.query.ast.StringLiteral
 import org.eclipse.acceleo.query.ast.TypeLiteral
 import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.validation.type.EClassifierType
+import org.eclipse.acceleo.query.validation.type.IType
+import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
+import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
 
 abstract class AbstractExpressionCompiler {
@@ -54,22 +58,36 @@ abstract class AbstractExpressionCompiler {
 	
 	def String getThis(CompilerExpressionCtx ctx)
 
+	val String packageRoot
+	val boolean isTruffle
+	val Set<String> registeredArray
 	extension CommonTypeInferer cti
 	extension EnumeratorService es
-	extension AbstractTypeSystem ats
+	extension CommonTypeSystemUtils ats
 	extension AbstractNamingUtils anu
+	
+	protected def getPackageRoot() {
+		this.packageRoot
+	}
+	
+	protected def getIsTruffle() {
+		this.isTruffle
+	}
+	
+	protected def getRegistrerArray() {
+		this.registeredArray
+	}
 
-	new(CommonTypeInferer cti, EnumeratorService es, AbstractTypeSystem ats, AbstractNamingUtils anu, Map<String, Class<?>> registeredServices, List<ResolvedClass> resolved) {
+	new(CommonTypeInferer cti, EnumeratorService es, CommonTypeSystemUtils ats, AbstractNamingUtils anu, Map<String, Class<?>> registeredServices, List<ResolvedClass> resolved, String packageRoot, boolean isTruffle, Set<String> registeredArray) {
 		this.cti = cti
 		this.es = es
 		this.ats = ats
 		this.anu = anu
 		this.registeredServices = registeredServices
 		this.resolved = resolved
-	}
-
-	def CodeBlock compileExpression(Expression call) {
-		call.compileExpression(null)
+		this.packageRoot = packageRoot
+		this.isTruffle = isTruffle
+		this.registeredArray = registeredArray 
 	}
 
 	def dispatch CodeBlock compileExpression(Call call, CompilerExpressionCtx ctx) {
@@ -136,6 +154,13 @@ abstract class AbstractExpressionCompiler {
 				} else {
 					CodeBlock.of('''/*FIRST «call»*/''')
 				}
+			case "insertAt":
+				if (call.type == CallType.COLLECTIONCALL) {
+					CodeBlock.of('''$T.set($L, $L, $L)''', collectionServiceClassName,
+						call.arguments.get(0).compileExpression(ctx), call.arguments.get(1).compileExpression(ctx), call.arguments.get(2).compileExpression(ctx))
+				} else {
+					CodeBlock.of('''/*FIRST «call»*/''')
+				}
 			case "filter":
 				if (call.type == CallType.COLLECTIONCALL) {
 					val t = infereType(call.arguments.get(1)).head
@@ -170,6 +195,9 @@ abstract class AbstractExpressionCompiler {
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}
+			case "oclAsType":
+				if(call.type == CallType.CALLORAPPLY)
+					CodeBlock.of('''(($L) ($L))''', call.arguments.get(1).compileExpression(ctx), call.arguments.get(0).compileExpression(ctx))
 			case "log":
 				if (call.type == CallType.CALLORAPPLY) {
 					CodeBlock.of('''$T.log($L)''', logServiceClassName, call.arguments.get(0).compileExpression(ctx))
@@ -289,8 +317,6 @@ abstract class AbstractExpressionCompiler {
 		call.compileThis(ctx)
 	}
 
-	def CodeBlock defaultCall(Call call, CompilerExpressionCtx ctx)
-	
 	def CodeBlock callCreate(Call call, String packageRoot) {
 		val e = call.arguments.get(0)
 		val t = infereType(e).head
@@ -342,5 +368,82 @@ abstract class AbstractExpressionCompiler {
 	
 		}
 	}
+	
+	def defaultCall(Call call, CompilerExpressionCtx ctx) {
+		val eCls = ctx.EClass
+		println('''EClass = «eCls.name»''')
+		if (call.type == CallType.CALLORAPPLY) {
+			if (call.serviceName == 'aqlFeatureAccess') {
+				val t = infereType(call).head
+				val lhs = call.arguments.head.compileExpression(ctx)
+				if (lhs.toString == 'this') {
+					if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass &&
+						((t as SequenceType).collectionType.type as EClass).instanceClassName !=
+							"java.util.Map$Entry") {
+						val rhs = (call.arguments.get(1) as StringLiteral).value
+						if (isTruffle && !(ctx.aleClass.mutable.contains(rhs))) {
+							registeredArray.add(rhs)
+							CodeBlock.of('''«lhs».«rhs»Arr''')
+						} else {
+							CodeBlock.of('''«lhs».get«rhs.toFirstUpper»()''')
+						}
+					} else if (t.type instanceof EClass || t.type instanceof EDataType) {
+						CodeBlock.of('''$L.$L''', lhs, (call.arguments.get(1) as StringLiteral).value)
+					} else {
+						CodeBlock.
+							of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»«(call.arguments.get(1) as StringLiteral).value»«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''')
+					}
+				} else {
+					if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {
+						CodeBlock.of('''$L.get$L()''', lhs, (call.arguments.get(1) as StringLiteral).value.toFirstUpper)
+					} else if (t !== null && (t.type instanceof EClass || t.type instanceof EDataType)) {
+						if (t.type instanceof EDataType && ((t.type as EDataType).instanceClass == Boolean ||
+							(t.type as EDataType).instanceClass == boolean))
+							CodeBlock.of('''$L.is$L()''', lhs,
+								(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
+						else
+							CodeBlock.of('''$L.get$L()''', lhs,
+								(call.arguments.get(1) as StringLiteral).value.toFirstUpper)
+					} else {
+						CodeBlock.
+							of('''$L.«IF call.arguments.get(1) instanceof StringLiteral»get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''',
+								lhs)
+					}
+				}
+			} else if (call.serviceName == 'create') {
+				call.callCreate(packageRoot)
+			} else {
+				val argumentsh = call.arguments.head
+				val ts = argumentsh.infereType
+				val t = ts.head
+				val re = resolved.filter [
+					if (t !== null && t.type instanceof EClass) {
+						val tecls = t.type as EClass
+						it.ECls.name == tecls.name && it.ECls.EPackage.name == tecls.EPackage.name
+					} else {
+						false
+					}
+				].head
+				if (re !== null) {
+					val allMethods = re.getAleCls.allMethods
+					val methodExist = allMethods.exists [
+						it.operationRef.name == call.serviceName
+					]
+					if (methodExist) {
+						this.implementationSpecificCall(call, ctx, t, allMethods, re)
+					} else {
+						call.callService(ctx)
+					}
+				} else {
+					call.callService(ctx)
+				}
+			}
+
+		} else {
+			CodeBlock.of('''/*Call «call»*/''')
+		}
+	}
+	
+	def CodeBlock implementationSpecificCall(Call call, CompilerExpressionCtx ctx, IType iType, Iterable<Method> allMethods, ResolvedClass re)
 
 }

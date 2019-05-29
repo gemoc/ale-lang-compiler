@@ -1,16 +1,10 @@
 package minijava;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.eclipse.emf.common.util.BasicEMap;
-import org.eclipse.emf.common.util.BasicEMap.Entry;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
-import org.eclipse.emf.ecore.impl.DynamicEObjectImpl.BasicEMapEntry;
 
 public class MapService {
 

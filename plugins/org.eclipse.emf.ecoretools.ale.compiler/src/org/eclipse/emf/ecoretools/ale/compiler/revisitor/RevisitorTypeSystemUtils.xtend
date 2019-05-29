@@ -3,6 +3,7 @@ package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
+import java.util.List
 import java.util.Map
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
@@ -14,12 +15,13 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class RevisitorTypeSystemUtils extends CommonTypeSystemUtils {
 	extension EcoreUtils eu
 
-	new(Map<String, Pair<EPackage, GenModel>> syntaxes, EcoreUtils eu) {
-		super(syntaxes)
+	new(Map<String, Pair<EPackage, GenModel>> syntaxes, EcoreUtils eu, List<ResolvedClass> resolved) {
+		super(syntaxes, resolved)
 		this.eu = eu
 	}
 

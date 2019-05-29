@@ -15,13 +15,16 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.implementation.Block
+import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
-import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
+import org.eclipse.xtext.EcoreUtil2
+import java.util.List
 
 abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
+	val List<ResolvedClass> resolved
 
 	protected def getSyntaxes() {
 		this.syntaxes
@@ -37,8 +40,9 @@ abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 		TypeName.get(edt.instanceClass)
 	}
 
-	new(Map<String, Pair<EPackage, GenModel>> syntaxes) {
+	new(Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved) {
 		this.syntaxes = syntaxes
+		this.resolved = resolved
 	}
 
 	abstract def TypeName resolveType2(Object type)
@@ -108,5 +112,22 @@ abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 		} else {
 			iType.type.resolveType2
 		}
+	}
+	
+	def allMethods(ExtendedClass aleClass) {
+		aleClass.allParents.map [
+			it.methods
+		].flatten
+	}
+
+	def allParents(ExtendedClass aleClass) {
+		val ecls = resolved.filter[it.aleCls == aleClass].head.eCls
+
+		resolved.filter [
+			it.eCls == ecls ||
+				it.eCls instanceof EClass && ecls instanceof EClass && (it.eCls as EClass).isSuperTypeOf(ecls as EClass)
+		].map [
+			it.aleCls
+		].filter[it !== null]
 	}
 }

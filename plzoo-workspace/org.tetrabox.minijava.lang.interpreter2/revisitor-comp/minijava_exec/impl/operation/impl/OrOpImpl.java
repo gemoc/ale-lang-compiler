@@ -1,6 +1,7 @@
 package minijava_exec.impl.operation.impl;
 
 import miniJava.BooleanValue;
+import miniJava.Expression;
 import miniJava.MiniJavaFactory;
 import miniJava.Or;
 import miniJava.State;
@@ -98,8 +99,8 @@ public class OrOpImpl extends ExpressionOpImpl implements OrOp {
 
   public Value evaluateExpression(State state) {
     Value result;
-    BooleanValue left = ((BooleanValue) (this.obj.getLeft().evaluateExpression((State) (state))));
-    BooleanValue right = ((BooleanValue) (this.obj.getRight().evaluateExpression((State) (state))));
+    BooleanValue left = ((BooleanValue) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))));
+    BooleanValue right = ((BooleanValue) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))));
     BooleanValue res = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
     res.setValue(((left.isValue()) || (right.isValue())));
     result = res;

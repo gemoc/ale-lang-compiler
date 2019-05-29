@@ -8,6 +8,6 @@ import org.eclipse.xtend.lib.annotations.Data
 class CompilerExpressionCtx {
 	String thisCtxName
 	ExtendedClass aleClass
-	public EClass eClass
+	EClass eClass
 
 }

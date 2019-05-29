@@ -387,7 +387,7 @@ class InterpreterEClassImplementationCompiler {
 		val cbb = compileBody(CodeBlock.builder, body, ctx)
 		if (isTruffle) {
 			registreredArrays.fold(builder, [ b, array |
-				val x = ctx.eClass.EAllReferences.filter[it.name == array].head.EType.resolveType
+				val x = ctx.EClass.EAllReferences.filter[it.name == array].head.EType.resolveType
 				b.addStatement(CodeBlock.builder.addNamed('''
 					if (this.«array»Arr == null) {
 						$cd:T.transferToInterpreterAndInvalidate();

@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 
 public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
 	protected Expression object;
@@ -153,9 +154,11 @@ public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		ArrayRefValue arrayVal = ((ArrayRefValue) (((Expression) (this.object)).evaluateExpression((State) (state))));
-		IntegerValue indexVal = ((IntegerValue) (((Expression) (this.index)).evaluateExpression((State) (state))));
-		result = (Value) (arrayVal.getInstance().getValue().get((indexVal.getValue())).copyj()) ;
+		ArrayRefValue arrayVal = ((ArrayRefValue) (((ArrayRefValue) (((Expression) (this.object)).evaluateExpression((State) (state))))));
+		IntegerValue indexVal = ((IntegerValue) (((IntegerValue) (((Expression) (this.index)).evaluateExpression((State) (state))))));
+		int v = ((int) (indexVal.getValue()));
+		Value vtmp = ((Value) (CollectionService.get(arrayVal.getInstance().getValue(), v)));
+		result = (Value) (((Value) (vtmp)).copyj()) ;
 		return result;
 	}
 }

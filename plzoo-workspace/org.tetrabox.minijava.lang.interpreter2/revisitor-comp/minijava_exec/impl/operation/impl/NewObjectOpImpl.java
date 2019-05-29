@@ -1,5 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.Block;
 import miniJava.Context;
 import miniJava.Expression;
 import miniJava.Field;
@@ -130,7 +131,7 @@ public class NewObjectOpImpl extends ExpressionOpImpl implements NewObjectOp {
       i = (i) + (1);
     }
     i = 0;
-    Method constructor = ((Method) (null));
+    Method constructor = ((Method) (MiniJavaFactory.eINSTANCE.createMethod()));
     while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
       Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
       if(m instanceof Method) {
@@ -157,7 +158,7 @@ public class NewObjectOpImpl extends ExpressionOpImpl implements NewObjectOp {
       NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
       call.setNewz(this.obj);
       rev.$((State)state).pushNewFrame(((ObjectInstance) (res)), ((NewCall) (call)), ((Context) (newContext)));
-      constructor.getBody().evaluateStatement((State) (state));
+      rev.$((Block)constructor.getBody()).evaluateStatement(((State) (state)));
       rev.$((State)state).popCurrentFrame();
     }
     ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));

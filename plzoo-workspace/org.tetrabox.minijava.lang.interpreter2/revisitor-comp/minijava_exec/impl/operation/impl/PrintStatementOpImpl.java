@@ -4,6 +4,7 @@ import java.lang.String;
 import miniJava.Expression;
 import miniJava.PrintStatement;
 import miniJava.State;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -96,7 +97,7 @@ public class PrintStatementOpImpl extends StatementOpImpl implements PrintStatem
   }
 
   public void evaluateStatement(State state) {
-    String res = ((String) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state))).customToString()));
+    String res = ((String) (rev.$((Value)rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))).customToString()));
     rev.$((State)state).println(((String) (res)));
   }
 }
