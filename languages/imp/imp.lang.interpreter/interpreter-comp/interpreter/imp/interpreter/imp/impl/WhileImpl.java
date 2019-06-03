@@ -156,11 +156,11 @@ public class WhileImpl extends StmtImpl implements While {
 		boolean stop = ((boolean) (false));
 		Store tmp = ((Store) (s));
 		while (!(stop)) {
-			Value conde = ((Value) (((Expr) (this.cond)).evaluate((Store) (s))));
+			Value conde = ((Value) (((Expr) (this.getCond())).evaluate((Store) (s))));
 			if (conde instanceof BoolValue) {
 				BoolValue condeb = ((BoolValue) (conde));
 				if (condeb.isValue()) {
-					tmp = ((Stmt) (this.body)).execute((Store) (tmp));
+					tmp = ((Stmt) (this.getBody())).execute((Store) (tmp));
 				}
 				else {
 					stop = true;

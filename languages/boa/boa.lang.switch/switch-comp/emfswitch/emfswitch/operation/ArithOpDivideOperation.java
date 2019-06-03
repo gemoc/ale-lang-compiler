@@ -1,10 +1,10 @@
 package emfswitch.emfswitch.operation;
 
 import boa.ArithOpDivide;
+import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalIntRes;
 import boa.EvalRes;
-import emfswitch.emfswitch.BoaFactory;
 import emfswitch.emfswitch.EmfswitchSwitchImplementation;
 
 public class ArithOpDivideOperation extends ArithOpOperation {

@@ -135,7 +135,7 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
 	}
 
 	public void nextLine(Ctx ctx) {
-		EvalRes e = ((EvalRes) (((Expr) (this.expr)).eval((Ctx) (ctx))));
+		EvalRes e = ((EvalRes) (((Expr) (this.getExpr())).eval((Ctx) (ctx))));
 		LogService.log(((this.name) + (" = ")) + (SerializeService.serialize((EvalRes) (e))));
 		MapService.put((EMap) (ctx.getEnv()), (String) (this.name), (EvalRes) (e));
 	}

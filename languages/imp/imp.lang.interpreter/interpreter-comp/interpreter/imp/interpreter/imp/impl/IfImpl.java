@@ -198,15 +198,15 @@ public class IfImpl extends StmtImpl implements If {
 
 	public Store execute(Store s) {
 		Store result;
-		Value conde = ((Value) (((Expr) (this.cond)).evaluate((Store) (s))));
+		Value conde = ((Value) (((Expr) (this.getCond())).evaluate((Store) (s))));
 		result = (Store) (s) ;
 		if (conde instanceof BoolValue) {
 			BoolValue condeb = ((BoolValue) (conde));
 			if (condeb.isValue()) {
-				result = (Store) (((Stmt) (this.lhs)).execute((Store) (s))) ;
+				result = (Store) (((Stmt) (this.getLhs())).execute((Store) (s))) ;
 			}
 			else {
-				result = (Store) (((Stmt) (this.rhs)).execute((Store) (s))) ;
+				result = (Store) (((Stmt) (this.getRhs())).execute((Store) (s))) ;
 			}
 		}
 		return result;

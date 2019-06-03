@@ -197,14 +197,14 @@ public class IfImpl extends ExprImpl implements If {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vcond = ((EvalRes) (((Expr) (this.cond)).eval((Ctx) (ctx))));
+		EvalRes vcond = ((EvalRes) (((Expr) (this.getCond())).eval((Ctx) (ctx))));
 		if (vcond instanceof EvalBoolRes) {
 			EvalBoolRes bvcond = ((EvalBoolRes) (vcond));
 			if (bvcond.isValue()) {
-				result = (EvalRes) (((Expr) (this.thn)).eval((Ctx) (ctx))) ;
+				result = (EvalRes) (((Expr) (this.getThn())).eval((Ctx) (ctx))) ;
 			}
 			else {
-				result = (EvalRes) (((Expr) (this.els)).eval((Ctx) (ctx))) ;
+				result = (EvalRes) (((Expr) (this.getEls())).eval((Ctx) (ctx))) ;
 			}
 		}
 		else {

@@ -135,7 +135,7 @@ public class FunImpl extends ExprImpl implements Fun {
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
 		EvalFunRes ret = ((EvalFunRes) (BoaFactory.eINSTANCE.createEvalFunRes()));
-		ret.setExp(this.body);
+		ret.setExp(this.getBody());
 		ret.setCtx(ctx);
 		ret.setName(this.name);
 		result = (EvalRes) (ret) ;

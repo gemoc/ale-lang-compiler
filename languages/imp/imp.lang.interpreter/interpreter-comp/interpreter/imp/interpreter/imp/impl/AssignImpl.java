@@ -134,7 +134,7 @@ public class AssignImpl extends StmtImpl implements Assign {
 
 	public Store execute(Store s) {
 		Store result;
-		MapService.put((EMap) (s.getValues()), (String) (this.name), (Value) (((Expr) (this.exp)).evaluate((Store) (s))));
+		MapService.put((EMap) (s.getValues()), (String) (this.name), (Value) (((Expr) (this.getExp())).evaluate((Store) (s))));
 		result = (Store) (s) ;
 		return result;
 	}

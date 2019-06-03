@@ -180,12 +180,12 @@ public class LetImpl extends ExprImpl implements Let {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		Expr lhs = ((Expr) (this.lhs));
+		Expr lhs = ((Expr) (this.getLhs()));
 		EvalRes vlhs = ((EvalRes) (((Expr) (lhs)).eval((Ctx) (ctx))));
 		Ctx nctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
 		MapService.putAll((EMap) (nctx.getEnv()), (EMap) (ctx.getEnv()));
 		MapService.put((EMap) (nctx.getEnv()), (String) (this.name), (EvalRes) (vlhs));
-		result = (EvalRes) (((Expr) (this.rhs)).eval((Ctx) (nctx))) ;
+		result = (EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (nctx))) ;
 		return result;
 	}
 }

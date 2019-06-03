@@ -138,7 +138,7 @@ public class ProjectImpl extends ExprImpl implements Project {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vexp = ((EvalRes) (((Expr) (this.exp)).eval((Ctx) (ctx))));
+		EvalRes vexp = ((EvalRes) (((Expr) (this.getExp())).eval((Ctx) (ctx))));
 		if (vexp instanceof EvalMapRes) {
 			EvalMapRes mvexp = ((EvalMapRes) (vexp));
 			if (MapService.containsKey((EMap) (mvexp.getValues()), (String) (this.name))) {

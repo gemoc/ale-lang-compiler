@@ -51,8 +51,8 @@ public class NotTruffleTest extends AbstractBoaTest {
 
 		try {
 			timer.before();
-			new Boa_execImplementation() {
-			}.$(result).eval();
+//			new Boa_execImplementation() {
+//			}.$(result).eval();
 			timer.after(pathname);
 		} catch (RuntimeException e) {
 			// throw new RuntimeException(Sideeffects.SB.toString() + e.getMessage());

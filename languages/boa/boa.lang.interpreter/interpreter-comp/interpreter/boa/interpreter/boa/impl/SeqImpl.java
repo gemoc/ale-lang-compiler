@@ -151,8 +151,8 @@ public class SeqImpl extends ExprImpl implements Seq {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((Expr) (this.lhs)).eval((Ctx) (ctx))));
-		EvalRes vrhs = ((EvalRes) (((Expr) (this.rhs)).eval((Ctx) (ctx))));
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.getLhs())).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (ctx))));
 		result = (EvalRes) (vrhs) ;
 		return result;
 	}

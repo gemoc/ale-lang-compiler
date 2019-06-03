@@ -1,15 +1,15 @@
 package emfswitch.emfswitch.operation;
 
+import org.eclipse.emf.common.util.EMap;
+
 import boa.App;
+import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalBoundFunRes;
 import boa.EvalFunRes;
 import boa.EvalRes;
-import emfswitch.emfswitch.BoaFactory;
 import emfswitch.emfswitch.EmfswitchSwitchImplementation;
 import execboa.MapService;
-import java.lang.String;
-import org.eclipse.emf.common.util.EMap;
 
 public class AppOperation extends ExprOperation {
 	private final App it;
