@@ -1,11 +1,16 @@
 package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
 
 import com.squareup.javapoet.ClassName
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreNotGenNamingUtils
 
-class SwitchNamingUtils extends AbstractNamingUtils {
+class SwitchNamingUtils extends EcoreNotGenNamingUtils {
+	
+	new(GenPackage genPackage) {
+		super(genPackage)
+	}
 	
 	override getIdentifier(){ "emfswitch" }
 	
@@ -32,8 +37,6 @@ class SwitchNamingUtils extends AbstractNamingUtils {
 		'''«ePackage.name.toFirstUpper»Factory'''
 	}
 	
-	override packageInterfacePackageName(EPackage epkg, String packageRoot) {
-		switchImplementationPackageName(packageRoot)
-	}
+
 	
 }

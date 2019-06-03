@@ -33,13 +33,13 @@ import static javax.lang.model.element.Modifier.*
 
 class EClassGetterCompiler {
 
-	extension GenmodelNamingUtils namingUtils
+	extension EcoreGenNamingUtils namingUtils
 	extension CommonCompilerUtils icu
 	extension TruffleHelper th
 	val List<ResolvedClass> resolved
 	val Dsl dsl
 
-	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu, List<ResolvedClass> resolved, Dsl dsl, TruffleHelper th) {
+	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, List<ResolvedClass> resolved, Dsl dsl, TruffleHelper th) {
 		this.namingUtils = namingUtils
 		this.icu = ccu
 		this.resolved = resolved

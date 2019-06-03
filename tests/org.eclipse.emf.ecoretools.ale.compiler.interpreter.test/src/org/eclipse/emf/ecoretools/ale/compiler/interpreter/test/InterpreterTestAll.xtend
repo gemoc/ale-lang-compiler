@@ -32,10 +32,9 @@ class InterpreterTestAll {
 	static Map<String, Map<File, File>> compilations = newHashMap
 
 	static val compilers = newHashMap(
-		"interpreter" -> [f|compileProjectInterpreter(f)]
-//		,
+//		"interpreter" -> [f|compileProjectInterpreter(f)],
 //		"revisitor" -> [f|compileProjectRevisitor(f)],
-//		"switch" -> [f|compileProjectSwitch(f)],
+		"switch" -> [f|compileProjectSwitch(f)] //,
 //		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 

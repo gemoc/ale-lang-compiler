@@ -23,9 +23,9 @@ import java.util.Comparator
 
 class PackageInterfaceCompiler {
 
-	extension GenmodelNamingUtils namingUtils
+	extension EcoreGenNamingUtils namingUtils
 
-	new(GenmodelNamingUtils namingUtils) {
+	new(EcoreGenNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 	}
 	

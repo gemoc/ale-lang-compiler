@@ -77,13 +77,15 @@ class ALESwitchImplementationCompiler extends AbstractALECompiler {
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
 
 		val String packageRoot = dsl.dslProp.get("rootPackage") as String
+		
+		val snu = new SwitchNamingUtils(resolved.head.genCls.genPackage)
 
-		val sic = new SwitchImplementationCompiler(compileDirectory, syntaxes, packageRoot, resolved)
+		val sic = new SwitchImplementationCompiler(compileDirectory, syntaxes, packageRoot, resolved, snu)
 
 		sic.compile
 
 		val soc = new SwitchOperationCompiler(packageRoot, compileDirectory, syntaxes, queryEnvironment,
-			parsedSemantics, resolved, registeredServices, dsl)
+			parsedSemantics, resolved, registeredServices, dsl, snu)
 
 		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].forEach [ resolved |
 			soc.compile(resolved)

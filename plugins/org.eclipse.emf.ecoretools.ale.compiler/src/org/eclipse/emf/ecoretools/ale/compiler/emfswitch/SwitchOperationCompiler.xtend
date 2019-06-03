@@ -65,7 +65,7 @@ class SwitchOperationCompiler {
 		List<ParseResult<ModelUnit>> parsedSemantics,
 		List<ResolvedClass> resolved,
 		Map<String, Class<?>> registeredServices,
-		Dsl dsl
+		Dsl dsl, SwitchNamingUtils namingUtils
 	) {
 		this.packageRoot = packageRoot
 		this.directory = directory
@@ -73,7 +73,7 @@ class SwitchOperationCompiler {
 		base.validate(parsedSemantics)
 		this.tsu = new SwitchTypeSystemUtils(syntaxes, packageRoot, resolved)
 		this.cti = new CommonTypeInferer(base)
-		this.namingUtils = new SwitchNamingUtils
+		this.namingUtils = namingUtils
 		this.swe = new SwitchExpressionCompiler(tsu, resolved, namingUtils, packageRoot, registeredServices, cti,
 			new EnumeratorService)
 		this.syntaxes = syntaxes

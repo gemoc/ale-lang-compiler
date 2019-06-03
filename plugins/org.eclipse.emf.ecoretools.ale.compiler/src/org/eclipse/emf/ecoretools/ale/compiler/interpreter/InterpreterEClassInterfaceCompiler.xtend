@@ -13,20 +13,20 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassInterfaceCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
 
 class InterpreterEClassInterfaceCompiler {
 
-	extension GenmodelNamingUtils namingUtils
+	extension EcoreGenNamingUtils namingUtils
 	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils jpu
 	EClassInterfaceCompiler ecic
 
-	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu) {
+	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu) {
 		this.namingUtils = namingUtils
 		this.ccu = ccu
 		this.jpu = new JavaPoetUtils

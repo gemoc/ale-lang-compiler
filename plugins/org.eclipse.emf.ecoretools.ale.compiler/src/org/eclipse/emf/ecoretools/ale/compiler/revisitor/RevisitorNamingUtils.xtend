@@ -3,11 +3,14 @@ package org.eclipse.emf.ecoretools.ale.compiler.revisitor
 import com.squareup.javapoet.ClassName
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreNotGenNamingUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecore.EPackage
 
-class RevisitorNamingUtils extends AbstractNamingUtils {
+class RevisitorNamingUtils extends EcoreNotGenNamingUtils {
+	
+	new(GenPackage genPackage) {
+		super(genPackage)
+	}
 
 	override getIdentifier() { "revisitor" }
 
@@ -80,8 +83,8 @@ class RevisitorNamingUtils extends AbstractNamingUtils {
 		'''«camelCased»Implementation'''
 	}
 	
-	override packageInterfacePackageName(EPackage epkg, String packageRoot) {
-		epkg.name
-	}
+//	override packageInterfacePackageName(EPackage epkg, String packageRoot) {
+//		epkg.name
+//	}
 	
 }

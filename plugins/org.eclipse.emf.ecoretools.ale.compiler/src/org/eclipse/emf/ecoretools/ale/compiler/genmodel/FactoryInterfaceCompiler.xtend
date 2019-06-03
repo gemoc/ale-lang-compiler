@@ -14,9 +14,9 @@ import org.eclipse.emf.ecore.EPackage
 import static javax.lang.model.element.Modifier.*
 
 class FactoryInterfaceCompiler {
-	extension GenmodelNamingUtils namingUtils
+	extension EcoreGenNamingUtils namingUtils
 
-	new(GenmodelNamingUtils namingUtils) {
+	new(EcoreGenNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 	}
 

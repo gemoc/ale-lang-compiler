@@ -20,9 +20,9 @@ import java.util.Locale
 import org.eclipse.emf.codegen.util.CodeGenUtil
 
 class PackageImplementationCompiler {
-	protected extension GenmodelNamingUtils namingUtils
+	protected extension EcoreGenNamingUtils namingUtils
 
-	new(GenmodelNamingUtils namingUtils) {
+	new(EcoreGenNamingUtils namingUtils) {
 		this.namingUtils = namingUtils
 	}
 	

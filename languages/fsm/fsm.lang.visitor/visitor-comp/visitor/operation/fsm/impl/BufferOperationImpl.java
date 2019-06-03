@@ -1,7 +1,10 @@
 package visitor.operation.fsm.impl;
 
+import fsm.FsmService;
 import fsm.visitor.fsm.Buffer;
+import java.lang.Integer;
 import java.lang.String;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import visitor.VisitorInterface;
 import visitor.operation.fsm.BufferOperation;
@@ -27,7 +30,7 @@ public class BufferOperationImpl implements BufferOperation {
 
 	public boolean bisEmpty() {
 		boolean result;
-		result = ((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.it.getCurrentValues())), (0))) || (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.it.getCurrentValues()), ("'empty'"))));
+		result = ((EqualService.equals((CollectionService.size(this.it.getCurrentValues())), (0))) || (EqualService.equals((this.it.getCurrentValues()), ("'empty'"))));
 		return result;
 	}
 
@@ -43,15 +46,15 @@ public class BufferOperationImpl implements BufferOperation {
 	public String dequeue() {
 		String result;
 		String res = ((String) (""));
-		int firstComma = ((int) (fsm.FsmService.indexOf(this.it.getCurrentValues(), ",")));
+		int firstComma = ((int) (FsmService.indexOf((String) (this.it.getCurrentValues()), (String) (","))));
 		if((firstComma) < (0)) {
 			res = this.it.getCurrentValues();
 			this.it.setCurrentValues("'empty'");
 			result = res;
 		}
 		else {
-			res = fsm.FsmService.substring(this.it.getCurrentValues(), 0, firstComma);
-			this.it.setCurrentValues(fsm.FsmService.substring(this.it.getCurrentValues(), (firstComma) + (1), org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.it.getCurrentValues())));
+			res = FsmService.substring((String) (this.it.getCurrentValues()), (Integer) (0), (int) (firstComma));
+			this.it.setCurrentValues(FsmService.substring((String) (this.it.getCurrentValues()), ((firstComma) + (1)), (Integer) (CollectionService.size(this.it.getCurrentValues()))));
 			result = res;
 		}
 		return result;

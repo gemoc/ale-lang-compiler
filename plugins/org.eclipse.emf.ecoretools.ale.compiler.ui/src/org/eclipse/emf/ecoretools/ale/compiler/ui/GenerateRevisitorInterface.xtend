@@ -24,8 +24,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 
 class GenerateRevisitorInterface implements IObjectActionDelegate {
 	extension EcoreUtils = new EcoreUtils()
-	extension RevisitorNamingUtils = new RevisitorNamingUtils()
-	RevisitorInterfaceGenerator generator = new RevisitorInterfaceGenerator()
+	extension RevisitorNamingUtils rnu
+	RevisitorInterfaceGenerator generator 
 	Shell shell
 	IFile selectedIFile
 
@@ -38,6 +38,8 @@ class GenerateRevisitorInterface implements IObjectActionDelegate {
 		val gm = loadGenmodel(gmPath)
 		val pkg = gm?.getEPackage
 		val gpkg = gm?.genPackage
+		rnu  = new RevisitorNamingUtils(gpkg)
+		this.generator = new RevisitorInterfaceGenerator(gpkg)
 
 		if (gm === null) {
 			MessageDialog.openError(shell, "Error", "Cannot find GenModel for " + gmPath);

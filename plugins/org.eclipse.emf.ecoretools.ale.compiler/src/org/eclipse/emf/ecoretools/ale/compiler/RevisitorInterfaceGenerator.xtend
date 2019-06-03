@@ -14,7 +14,12 @@ import org.eclipse.emf.ecoretools.ale.compiler.revisitor.RevisitorNamingUtils
  * TODO: Migrate to Javapoet!
  */
 class RevisitorInterfaceGenerator {
-	extension RevisitorNamingUtils = new RevisitorNamingUtils()
+	
+	new(GenPackage gp) {
+		this.rnu = new RevisitorNamingUtils(gp)
+	}
+	
+	extension RevisitorNamingUtils rnu
 	extension EcoreUtils = new EcoreUtils()
 
 	def allClassesCompl(EPackage pkg) {

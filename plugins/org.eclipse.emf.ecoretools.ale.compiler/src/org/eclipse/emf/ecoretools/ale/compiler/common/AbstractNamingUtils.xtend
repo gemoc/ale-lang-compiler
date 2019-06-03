@@ -5,8 +5,15 @@ import javax.lang.model.SourceVersion
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 
 abstract class AbstractNamingUtils {
+	
+//	GenPackage genPackage
+//	
+//	new(GenPackage genPackage) {
+//		this.genPackage = genPackage
+//	}
 	
 	def String factoryInterfaceClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»Factory'''

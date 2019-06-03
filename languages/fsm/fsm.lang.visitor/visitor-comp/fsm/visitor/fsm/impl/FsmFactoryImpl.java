@@ -52,8 +52,8 @@ public class FsmFactoryImpl extends EFactoryImpl implements FsmFactory {
 	}
 
 	public FSM createFSM() {
-		FSMImpl fSM = new FSMImpl();
-		return fSM;
+		FSMImpl fsm = new FSMImpl();
+		return fsm;
 	}
 
 	public State createState() {

@@ -12,17 +12,17 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import java.lang.reflect.Type
 import org.eclipse.emf.ecore.EReference
 import java.util.Map.Entry
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
 
 class CommonCompilerUtils {
-	extension GenmodelNamingUtils anu
+	extension EcoreGenNamingUtils anu
 	val List<ResolvedClass> resolved
 
-	new(GenmodelNamingUtils anu, List<ResolvedClass> resolved) {
+	new(EcoreGenNamingUtils anu, List<ResolvedClass> resolved) {
 		this.anu = anu
 		this.resolved = resolved
 	}

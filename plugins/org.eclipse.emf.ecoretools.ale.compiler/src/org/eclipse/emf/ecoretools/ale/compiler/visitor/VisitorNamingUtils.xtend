@@ -1,9 +1,9 @@
 package org.eclipse.emf.ecoretools.ale.compiler.visitor
 
 import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.GenmodelNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
 
-class VisitorNamingUtils extends GenmodelNamingUtils {
+class VisitorNamingUtils extends EcoreGenNamingUtils {
 
 	override getIdentifier() { "visitor" }
 

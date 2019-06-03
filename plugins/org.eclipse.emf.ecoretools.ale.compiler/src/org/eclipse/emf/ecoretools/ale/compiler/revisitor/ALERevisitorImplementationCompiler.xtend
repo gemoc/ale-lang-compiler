@@ -80,7 +80,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		this.rnu = new RevisitorNamingUtils
+		this.rnu = new RevisitorNamingUtils(this.resolved.head.genCls.genPackage)
 	}
 
 	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {

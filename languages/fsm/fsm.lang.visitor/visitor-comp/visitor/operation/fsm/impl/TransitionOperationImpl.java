@@ -22,7 +22,7 @@ public class TransitionOperationImpl implements TransitionOperation {
 		LogService.log(((("Firing ") + (this.it.getName())) + (" and entering ")) + (this.it.getTgt().getName()));
 		FSM fsm = ((FSM) (this.it.getSrc().getFsm()));
 		fsm.setCurrentState(this.it.getTgt());
-		((BufferOperation)fsm.getOutputBuffer().accept(vis)).enqueue((String)this.it.getAction());
+		((BufferOperation)fsm.getOutputBuffer().accept(vis)).enqueue((String) (this.it.getAction()));
 		fsm.setConsummedString((fsm.getConsummedString()) + (fsm.getUnderProcessTrigger()));
 	}
 }

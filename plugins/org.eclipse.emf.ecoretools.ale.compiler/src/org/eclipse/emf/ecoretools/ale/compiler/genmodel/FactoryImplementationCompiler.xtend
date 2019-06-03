@@ -24,12 +24,12 @@ import org.eclipse.emf.codegen.util.CodeGenUtil
 
 class FactoryImplementationCompiler {
 
-	extension GenmodelNamingUtils namingUtils
+	extension EcoreGenNamingUtils namingUtils
 	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils = new JavaPoetUtils
 	extension TruffleHelper th
 	
-	new(GenmodelNamingUtils namingUtils, CommonCompilerUtils ccu, TruffleHelper th) {
+	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, TruffleHelper th) {
 		this.namingUtils = namingUtils
 		this.ccu = ccu
 		this.th = th

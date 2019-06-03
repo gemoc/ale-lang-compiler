@@ -171,8 +171,7 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 			initialState = (State) eResolveProxy(oldInitialState);
 			if (initialState != oldInitialState) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FsmPackage.FSM__INITIAL_STATE,
-							oldInitialState, initialState));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FsmPackage.FSM__INITIAL_STATE, oldInitialState, initialState));
 			}
 		}
 		return initialState;
@@ -195,8 +194,7 @@ public class FSMImpl extends MinimalEObjectImpl.Container implements FSM {
 			currentState = (State) eResolveProxy(oldCurrentState);
 			if (currentState != oldCurrentState) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FsmPackage.FSM__CURRENT_STATE,
-							oldCurrentState, currentState));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FsmPackage.FSM__CURRENT_STATE, oldCurrentState, currentState));
 			}
 		}
 		return currentState;

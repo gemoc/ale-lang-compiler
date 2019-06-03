@@ -6,6 +6,7 @@ import java.lang.String;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import visitor.VisitorInterface;
+import visitor.operation.fsm.BufferOperation;
 import visitor.operation.fsm.StateOperation;
 import visitor.operation.fsm.TransitionOperation;
 
@@ -22,7 +23,7 @@ public class StateOperationImpl implements StateOperation {
 	public void step(String inputString) {
 		Transition validTransition = ((Transition) (CollectionService.head(CollectionService.select(this.it.getOutgoing(), (t) -> EqualService.equals((inputString), (t.getTrigger()))))));
 		if(EqualService.equals((validTransition), (null))) {
-			((BufferOperationImpl) this.it.getFsm().getOutputBuffer().accept(vis)).enqueue(inputString);
+			((BufferOperation)this.it.getFsm().getOutputBuffer().accept(vis)).enqueue((String) (inputString));
 		}
 		else {
 			((TransitionOperation)validTransition.accept(vis)).fire();

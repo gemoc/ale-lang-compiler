@@ -40,14 +40,14 @@ import static javax.lang.model.element.Modifier.*
 class EClassImplementationCompiler {
 
 	extension CommonCompilerUtils ccu
-	extension GenmodelNamingUtils anu
+	extension EcoreGenNamingUtils anu
 	extension JavaPoetUtils jpu
 	val EClassGetterCompiler eClassGetterCompiler
 	val List<ResolvedClass> resolved
 	extension EnumeratorService es
 	extension TruffleHelper th
 
-	new(CommonCompilerUtils ccu, GenmodelNamingUtils anu, EClassGetterCompiler eClassGetterCompiler,
+	new(CommonCompilerUtils ccu, EcoreGenNamingUtils anu, EClassGetterCompiler eClassGetterCompiler,
 		JavaPoetUtils jpu, List<ResolvedClass> resolved, EnumeratorService es, TruffleHelper th) {
 		this.ccu = ccu
 		this.anu = anu

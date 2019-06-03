@@ -46,7 +46,7 @@ class RevisitorInterfaceTestAll {
 			}
 			DynamicTest.dynamicTest('''Revisitor interface «directory»''', [
 				try {
-					val inter = new RevisitorInterfaceGenerator().generateInterface(ecoreRes, genmodelRes,
+					val inter = new RevisitorInterfaceGenerator(genmodelRes.genPackages.head).generateInterface(ecoreRes, genmodelRes,
 						genmodelRes.genPackages.head)
 					val charset = Charset.defaultCharset().toString;
 					val expected = FileUtils.readFileToString(new File('''revisitors-result/«directory.name».java'''),

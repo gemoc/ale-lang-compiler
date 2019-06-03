@@ -16,18 +16,19 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 
 class SwitchImplementationCompiler {
 
-	extension SwitchNamingUtils namingUtils = new SwitchNamingUtils
+	extension SwitchNamingUtils namingUtils
 	val File directory
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	val String packageRoot
 	
 	val List<ResolvedClass> resolved
 
-	new(File rootDirectory, Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved) {
+	new(File rootDirectory, Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved, SwitchNamingUtils namingUtils) {
 		this.directory = rootDirectory
 		this.syntaxes = syntaxes
 		this.packageRoot = packageRoot
 		this.resolved = resolved
+		this.namingUtils = namingUtils
 	}
 
 	def compile() {
