@@ -1,0 +1,58 @@
+File {
+	commands {
+		Def fib {
+			expr BObject {
+				fields {
+					Field app {
+						value Fun n {
+							body If {
+								cond CmpOpLess {
+									lhs Var "n"
+									rhs Int { value 3 }
+								}
+								then Int { value 1 }
+								els ArithOpPlus {
+									lhs App {
+										lhs Project app {
+										exp This
+									}
+									rhs ArithOpMinus {
+										lhs Var "n"
+										rhs Int {value 1}
+									}
+
+									}
+									rhs App {
+										lhs Project app {
+										exp This
+									}
+									rhs ArithOpMinus {
+										lhs Var "n"
+										rhs Int {value 2}
+									}
+
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		App { lhs Project app { exp Var "fib" } rhs Int { value 21 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 22 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 23 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 24 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 25 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 26 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 27 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 28 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 29 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 30 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 31 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 32 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 33 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 34 } },
+		App { lhs Project app { exp Var "fib" } rhs Int { value 35 } }
+	}
+}

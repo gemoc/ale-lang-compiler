@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Switch
+Bundle-SymbolicName: boa.lang.switch
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0",
+ boa.lang.services;bundle-version="1.0.0",
+ boa.model;bundle-version="1.0.0"
+Export-Package: emfswitch.emfswitch,
+ emfswitch.emfswitch.operation

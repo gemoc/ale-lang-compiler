@@ -395,12 +395,12 @@ abstract class AbstractExpressionCompiler {
 							'rhs' -> if(call.arguments.get(1) instanceof StringLiteral) {
 								val field = ctx.EClass.EStructuralFeatures.filter[it.name == (call.arguments.get(1) as StringLiteral).value].head
 								val shoudlGoThroughAccessor = field !== null && if(field instanceof EReference) {
-									val isMultiple = field.upperBound > 1 || field.upperBound < 0
-									val existEOpposite = field.EOpposite !== null
-									val isContainment = field.containment
-									val isOppositeContainment = existEOpposite && field.EOpposite.containment
+//									val isMultiple = field.upperBound > 1 || field.upperBound < 0
+//									val existEOpposite = field.EOpposite !== null
+//									val isContainment = field.containment
+//									val isOppositeContainment = existEOpposite && field.EOpposite.containment
 								
-									!(existEOpposite && !isMultiple && !isContainment && !isOppositeContainment) && (existEOpposite && !isMultiple && !isContainment && !isOppositeContainment)
+									true //!(existEOpposite && !isMultiple && !isContainment && !isOppositeContainment) && (existEOpposite && !isMultiple && !isContainment && !isOppositeContainment)
 								
 								} else {
 									false

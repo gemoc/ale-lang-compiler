@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Services
+Bundle-SymbolicName: boa.lang.services
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: boa.lang.services
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.emf.common;bundle-version="2.14.0"
+Export-Package: execboa

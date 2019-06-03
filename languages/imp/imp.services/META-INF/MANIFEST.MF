@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Services
+Bundle-SymbolicName: imp.services
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.emf.common
+Export-Package: execimp

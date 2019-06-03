@@ -1,0 +1,80 @@
+behavior petrinet_exec;
+
+open class Petrinet {
+	@main
+	def void run() {
+		int x := 0;
+		boolean stop := false;
+		while(not stop) {
+			Node enabledNode := self.nodes->select(n |n.canFire())->first();
+			//enabledNode.log();
+			if(enabledNode != null) {
+				x := x + 1 ;
+				enabledNode.fire();
+			} else {
+				stop := true;
+			}
+		}
+		
+		x.log();
+	}
+}
+
+open class Arc {
+	def boolean canFire() {
+		result := self.source.hasToken();
+	}
+	
+	def void removeToken() {
+		self.source.removeToken();
+	}
+	
+	def void addToken() {
+		self.target.addToken();
+	}
+}
+
+/* abstract */
+open class Node {
+	def boolean canFire() { result := false; }
+	def boolean hasToken() { result := false; }
+	def dispatch void fire() {}
+	def void removeToken() {}
+	def void addToken() {}
+}
+
+open class Transition {
+	def boolean canFire() {
+		result := not self.incomming->select(it | it.canFire())->isEmpty();
+	}
+	def boolean hasToken() {
+		result := false;
+	}
+	def void fire() {
+		for(it in self.incomming) { 
+			it.removeToken();
+		}
+		for(it in self.outgoing) {
+			it.addToken();			
+		}
+	}
+	def void removeToken() {}
+	def void addToken() {}
+}
+
+open class Place {
+	def boolean canFire() {
+		result := false;
+	}
+	def boolean hasToken() {
+		result := self.tokenNb > 0;	
+	}
+	def void fire() {}
+	def void removeToken() {
+		self.tokenNb := self.tokenNb - 1;
+	}
+	def void addToken() {
+		self.tokenNb := self.tokenNb + 1;
+	}
+}
+

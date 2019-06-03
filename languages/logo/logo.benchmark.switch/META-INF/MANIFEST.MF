@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Switch
+Bundle-SymbolicName: logo.benchmark.switch
+Bundle-Version: 1.0.0.qualifier
+Export-Package: logo.benchmark.emfswitch
+Require-Bundle: logo.model;bundle-version="1.0.1",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.14.0",
+ logo.lang.switch;bundle-version="1.0.0"
