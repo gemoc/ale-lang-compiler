@@ -7,88 +7,81 @@ import fsm.interpreter.fsm.FsmPackage;
 import fsm.interpreter.fsm.State;
 import fsm.interpreter.fsm.System;
 import fsm.interpreter.fsm.Transition;
+import java.lang.Deprecated;
 import java.lang.IllegalArgumentException;
-import java.lang.Object;
-import java.lang.String;
+import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 public class FsmFactoryImpl extends EFactoryImpl implements FsmFactory {
-  public FsmFactoryImpl() {
-  }
+	public FsmFactoryImpl() {
+		super();
+	}
 
-  public static FsmFactory init() {
-    try {
-    	FsmFactory theFsmFactory = (FsmFactory) EPackage.Registry.INSTANCE.getEFactory(FsmPackage.eNS_URI);
-    	if (theFsmFactory != null) {
-    		return theFsmFactory;
-    	}
-    } catch (Exception exception) {
-    	EcorePlugin.INSTANCE.log(exception);
-    }
-    return new FsmFactoryImpl();
-  }
+	public static FsmFactory init() {
+		try {
+			FsmFactory theFsmFactory = (FsmFactory) EPackage.Registry.INSTANCE.getEFactory(FsmPackage.eNS_URI);
+			if (theFsmFactory != null) {
+				return theFsmFactory;
+			}
+		} catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new FsmFactoryImpl();
+	}
 
-  public EObject create(EClass eClass) {
-    switch (eClass.getClassifierID()) {
-    case FsmPackage.FSM:
-    	return createFSM();
-    case FsmPackage.STATE:
-    	return createState();
-    case FsmPackage.BUFFER:
-    	return createBuffer();
-    case FsmPackage.TRANSITION:
-    	return createTransition();
-    case FsmPackage.SYSTEM:
-    	return createSystem();
-    default:
-    	throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-    }
-  }
+	@Override
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
+			case FsmPackage.FSM :
+				return createFSM();
+			case FsmPackage.STATE :
+				return createState();
+			case FsmPackage.BUFFER :
+				return createBuffer();
+			case FsmPackage.TRANSITION :
+				return createTransition();
+			case FsmPackage.SYSTEM :
+				return createSystem();
+			default :
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
-  public Object createFromString(EDataType eDataType, String initialValue) {
-    switch (eDataType.getClassifierID()) {
-    default:
-    	throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-    }
-  }
+	public FSM createFSM() {
+		FSMImpl fsm = new FSMImpl();
+		return fsm;
+	}
 
-  public String convertToString(EDataType eDataType, Object instanceValue) {
-    switch (eDataType.getClassifierID()) {
-    default:
-    	throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-    }
-  }
+	public State createState() {
+		StateImpl state = new StateImpl();
+		return state;
+	}
 
-  public FsmPackage getFsmPackage() {
-    return (FsmPackage)getEPackage();}
+	public Buffer createBuffer() {
+		BufferImpl buffer = new BufferImpl();
+		return buffer;
+	}
 
-  public FSM createFSM() {
-    FSMImpl ret = new FSMImpl();
-    return ret;
-  }
+	public Transition createTransition() {
+		TransitionImpl transition = new TransitionImpl();
+		return transition;
+	}
 
-  public State createState() {
-    StateImpl ret = new StateImpl();
-    return ret;
-  }
+	public System createSystem() {
+		SystemImpl system = new SystemImpl();
+		return system;
+	}
 
-  public Buffer createBuffer() {
-    BufferImpl ret = new BufferImpl();
-    return ret;
-  }
+	public FsmPackage getFsmPackage() {
+		return (FsmPackage) getEPackage();
+	}
 
-  public Transition createTransition() {
-    TransitionImpl ret = new TransitionImpl();
-    return ret;
-  }
-
-  public System createSystem() {
-    SystemImpl ret = new SystemImpl();
-    return ret;
-  }
+	@Deprecated
+	public static FsmPackage getPackage() {
+		return FsmPackage.eINSTANCE;
+	}
 }

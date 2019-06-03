@@ -50,7 +50,7 @@ open class State {
 		
 		if(validTransition == null) {
 			//just copy the token to the output buffer
-			self.getFsm().outputBuffer.enqueue(inputString);
+			self.fsm.outputBuffer.enqueue(inputString);
 		} else {
 			validTransition.fire();
 		}

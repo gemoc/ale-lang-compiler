@@ -8,201 +8,221 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 public interface FsmPackage extends EPackage {
-  FsmPackage eINSTANCE = FsmPackageImpl.init();
+	String eNAME = "fsm";
 
-  String eNS_URI = "http://fsm.fsm.fsm/";
+	String eNS_URI = "http://fsm.fsm.fsm/";
 
-  String eNAME = "fsm";
+	String eNS_PREFIX = "fsm";
 
-  String eNS_PREFIX = "fsm";
+	FsmPackage eINSTANCE = FsmPackageImpl.init();
 
-  int FSM = 0;
+	int FSM = 0;
 
-  int STATE = 1;
+	int FSM__NAME = 0;
 
-  int BUFFER = 2;
+	int FSM__OWNED_STATES = 1;
 
-  int TRANSITION = 3;
+	int FSM__OWNED_TRANSITIONS = 2;
 
-  int SYSTEM = 4;
+	int FSM__INPUT_BUFFER = 3;
 
-  int FSM__NAME = 0;
+	int FSM__OUTPUT_BUFFER = 4;
 
-  int FSM__OWNED_STATES = 1;
+	int FSM__INITIAL_STATE = 5;
 
-  int FSM__OWNED_TRANSITIONS = 2;
+	int FSM__CURRENT_STATE = 6;
 
-  int FSM__INPUT_BUFFER = 3;
+	int FSM__UNDER_PROCESS_TRIGGER = 7;
 
-  int FSM__OUTPUT_BUFFER = 4;
+	int FSM__CONSUMMED_STRING = 8;
 
-  int FSM__INITIAL_STATE = 5;
+	int FSM_FEATURE_COUNT = 9;
 
-  int FSM__CURRENT_STATE = 6;
+	int FSM_OPERATION_COUNT = 0;
 
-  int FSM__UNDER_PROCESS_TRIGGER = 7;
+	int STATE = 1;
 
-  int FSM__CONSUMMED_STRING = 8;
+	int STATE__INCOMING = 0;
 
-  int STATE__INCOMING = 0;
+	int STATE__NAME = 1;
 
-  int STATE__NAME = 1;
+	int STATE__OUTGOING = 2;
 
-  int STATE__OUTGOING = 2;
+	int STATE__FSM = 3;
 
-  int STATE__FSM = 3;
+	int STATE_FEATURE_COUNT = 4;
 
-  int BUFFER__INITIAL_VALUE = 0;
+	int STATE_OPERATION_COUNT = 0;
 
-  int BUFFER__OUTGOING_FSM = 1;
+	int BUFFER = 2;
 
-  int BUFFER__INCOMING_FSM = 2;
+	int BUFFER__INITIAL_VALUE = 0;
 
-  int BUFFER__NAME = 3;
+	int BUFFER__OUTGOING_FSM = 1;
 
-  int BUFFER__CURRENT_VALUES = 4;
+	int BUFFER__INCOMING_FSM = 2;
 
-  int TRANSITION__TGT = 0;
+	int BUFFER__NAME = 3;
 
-  int TRANSITION__NAME = 1;
+	int BUFFER__CURRENT_VALUES = 4;
 
-  int TRANSITION__SRC = 2;
+	int BUFFER_FEATURE_COUNT = 5;
 
-  int TRANSITION__FSM = 3;
+	int BUFFER_OPERATION_COUNT = 0;
 
-  int TRANSITION__TRIGGER = 4;
+	int TRANSITION = 3;
 
-  int TRANSITION__ACTION = 5;
+	int TRANSITION__TGT = 0;
 
-  int SYSTEM__OWNED_FSMS = 0;
+	int TRANSITION__NAME = 1;
 
-  int SYSTEM__OWNED_BUFFERS = 1;
+	int TRANSITION__SRC = 2;
 
-  EClass getFSM();
+	int TRANSITION__FSM = 3;
 
-  EClass getState();
+	int TRANSITION__TRIGGER = 4;
 
-  EClass getBuffer();
+	int TRANSITION__ACTION = 5;
 
-  EClass getTransition();
+	int TRANSITION_FEATURE_COUNT = 6;
 
-  EClass getSystem();
+	int TRANSITION_OPERATION_COUNT = 0;
 
-  EReference getFSM_OwnedStates();
+	int SYSTEM = 4;
 
-  EReference getFSM_OwnedTransitions();
+	int SYSTEM__OWNED_FSMS = 0;
 
-  EReference getFSM_InputBuffer();
+	int SYSTEM__OWNED_BUFFERS = 1;
 
-  EReference getFSM_OutputBuffer();
+	int SYSTEM_FEATURE_COUNT = 2;
 
-  EReference getFSM_InitialState();
+	int SYSTEM_OPERATION_COUNT = 0;
 
-  EReference getFSM_CurrentState();
+	EClass getFSM();
 
-  EReference getState_Incoming();
+	EAttribute getFSM_Name();
 
-  EReference getState_Outgoing();
+	EReference getFSM_OwnedStates();
 
-  EReference getState_Fsm();
+	EReference getFSM_OwnedTransitions();
 
-  EReference getBuffer_OutgoingFSM();
+	EReference getFSM_InputBuffer();
 
-  EReference getBuffer_IncomingFSM();
+	EReference getFSM_OutputBuffer();
 
-  EReference getTransition_Tgt();
+	EReference getFSM_InitialState();
 
-  EReference getTransition_Src();
+	EReference getFSM_CurrentState();
 
-  EReference getTransition_Fsm();
+	EAttribute getFSM_UnderProcessTrigger();
 
-  EReference getSystem_OwnedFsms();
+	EAttribute getFSM_ConsummedString();
 
-  EReference getSystem_OwnedBuffers();
+	EClass getState();
 
-  EAttribute getFSM_Name();
+	EReference getState_Incoming();
 
-  EAttribute getFSM_UnderProcessTrigger();
+	EAttribute getState_Name();
 
-  EAttribute getFSM_ConsummedString();
+	EReference getState_Outgoing();
 
-  EAttribute getState_Name();
+	EReference getState_Fsm();
 
-  EAttribute getBuffer_InitialValue();
+	EClass getBuffer();
 
-  EAttribute getBuffer_Name();
+	EAttribute getBuffer_InitialValue();
 
-  EAttribute getBuffer_CurrentValues();
+	EReference getBuffer_OutgoingFSM();
 
-  EAttribute getTransition_Name();
+	EReference getBuffer_IncomingFSM();
 
-  EAttribute getTransition_Trigger();
+	EAttribute getBuffer_Name();
 
-  EAttribute getTransition_Action();
+	EAttribute getBuffer_CurrentValues();
 
-  FsmFactory getFsmFactory();
+	EClass getTransition();
 
-  interface Literals {
-    EClass FSM = eINSTANCE.getFSM();
+	EReference getTransition_Tgt();
 
-    EClass STATE = eINSTANCE.getState();
+	EAttribute getTransition_Name();
 
-    EClass BUFFER = eINSTANCE.getBuffer();
+	EReference getTransition_Src();
 
-    EClass TRANSITION = eINSTANCE.getTransition();
+	EReference getTransition_Fsm();
 
-    EClass SYSTEM = eINSTANCE.getSystem();
+	EAttribute getTransition_Trigger();
 
-    EReference FSM__OWNED_STATES = eINSTANCE.getFSM_OwnedStates();
+	EAttribute getTransition_Action();
 
-    EReference FSM__OWNED_TRANSITIONS = eINSTANCE.getFSM_OwnedTransitions();
+	EClass getSystem();
 
-    EReference FSM__INPUT_BUFFER = eINSTANCE.getFSM_InputBuffer();
+	EReference getSystem_OwnedFsms();
 
-    EReference FSM__OUTPUT_BUFFER = eINSTANCE.getFSM_OutputBuffer();
+	EReference getSystem_OwnedBuffers();
 
-    EReference FSM__INITIAL_STATE = eINSTANCE.getFSM_InitialState();
+	FsmFactory getFsmFactory();
 
-    EReference FSM__CURRENT_STATE = eINSTANCE.getFSM_CurrentState();
+	interface Literals {
+		EClass FSM = eINSTANCE.getFSM();
 
-    EReference STATE__INCOMING = eINSTANCE.getState_Incoming();
+		EAttribute FSM__NAME = eINSTANCE.getFSM_Name();
 
-    EReference STATE__OUTGOING = eINSTANCE.getState_Outgoing();
+		EReference FSM__OWNED_STATES = eINSTANCE.getFSM_OwnedStates();
 
-    EReference STATE__FSM = eINSTANCE.getState_Fsm();
+		EReference FSM__OWNED_TRANSITIONS = eINSTANCE.getFSM_OwnedTransitions();
 
-    EReference BUFFER__OUTGOING_FSM = eINSTANCE.getBuffer_OutgoingFSM();
+		EReference FSM__INPUT_BUFFER = eINSTANCE.getFSM_InputBuffer();
 
-    EReference BUFFER__INCOMING_FSM = eINSTANCE.getBuffer_IncomingFSM();
+		EReference FSM__OUTPUT_BUFFER = eINSTANCE.getFSM_OutputBuffer();
 
-    EReference TRANSITION__TGT = eINSTANCE.getTransition_Tgt();
+		EReference FSM__INITIAL_STATE = eINSTANCE.getFSM_InitialState();
 
-    EReference TRANSITION__SRC = eINSTANCE.getTransition_Src();
+		EReference FSM__CURRENT_STATE = eINSTANCE.getFSM_CurrentState();
 
-    EReference TRANSITION__FSM = eINSTANCE.getTransition_Fsm();
+		EAttribute FSM__UNDER_PROCESS_TRIGGER = eINSTANCE.getFSM_UnderProcessTrigger();
 
-    EReference SYSTEM__OWNED_FSMS = eINSTANCE.getSystem_OwnedFsms();
+		EAttribute FSM__CONSUMMED_STRING = eINSTANCE.getFSM_ConsummedString();
 
-    EReference SYSTEM__OWNED_BUFFERS = eINSTANCE.getSystem_OwnedBuffers();
+		EClass STATE = eINSTANCE.getState();
 
-    EAttribute FSM__NAME = eINSTANCE.getFSM_Name();
+		EReference STATE__INCOMING = eINSTANCE.getState_Incoming();
 
-    EAttribute FSM__UNDER_PROCESS_TRIGGER = eINSTANCE.getFSM_UnderProcessTrigger();
+		EAttribute STATE__NAME = eINSTANCE.getState_Name();
 
-    EAttribute FSM__CONSUMMED_STRING = eINSTANCE.getFSM_ConsummedString();
+		EReference STATE__OUTGOING = eINSTANCE.getState_Outgoing();
 
-    EAttribute STATE__NAME = eINSTANCE.getState_Name();
+		EReference STATE__FSM = eINSTANCE.getState_Fsm();
 
-    EAttribute BUFFER__INITIAL_VALUE = eINSTANCE.getBuffer_InitialValue();
+		EClass BUFFER = eINSTANCE.getBuffer();
 
-    EAttribute BUFFER__NAME = eINSTANCE.getBuffer_Name();
+		EAttribute BUFFER__INITIAL_VALUE = eINSTANCE.getBuffer_InitialValue();
 
-    EAttribute BUFFER__CURRENT_VALUES = eINSTANCE.getBuffer_CurrentValues();
+		EReference BUFFER__OUTGOING_FSM = eINSTANCE.getBuffer_OutgoingFSM();
 
-    EAttribute TRANSITION__NAME = eINSTANCE.getTransition_Name();
+		EReference BUFFER__INCOMING_FSM = eINSTANCE.getBuffer_IncomingFSM();
 
-    EAttribute TRANSITION__TRIGGER = eINSTANCE.getTransition_Trigger();
+		EAttribute BUFFER__NAME = eINSTANCE.getBuffer_Name();
 
-    EAttribute TRANSITION__ACTION = eINSTANCE.getTransition_Action();
-  }
+		EAttribute BUFFER__CURRENT_VALUES = eINSTANCE.getBuffer_CurrentValues();
+
+		EClass TRANSITION = eINSTANCE.getTransition();
+
+		EReference TRANSITION__TGT = eINSTANCE.getTransition_Tgt();
+
+		EAttribute TRANSITION__NAME = eINSTANCE.getTransition_Name();
+
+		EReference TRANSITION__SRC = eINSTANCE.getTransition_Src();
+
+		EReference TRANSITION__FSM = eINSTANCE.getTransition_Fsm();
+
+		EAttribute TRANSITION__TRIGGER = eINSTANCE.getTransition_Trigger();
+
+		EAttribute TRANSITION__ACTION = eINSTANCE.getTransition_Action();
+
+		EClass SYSTEM = eINSTANCE.getSystem();
+
+		EReference SYSTEM__OWNED_FSMS = eINSTANCE.getSystem_OwnedFsms();
+
+		EReference SYSTEM__OWNED_BUFFERS = eINSTANCE.getSystem_OwnedBuffers();
+	}
 }

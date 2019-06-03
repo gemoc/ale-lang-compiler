@@ -4,31 +4,31 @@ import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Buffer extends EObject {
-  String getInitialValue();
+	String getInitialValue();
 
-  void setInitialValue(String value);
+	void setInitialValue(String value);
 
-  String getName();
+	String getName();
 
-  void setName(String value);
+	void setName(String value);
 
-  String getCurrentValues();
+	String getCurrentValues();
 
-  void setCurrentValues(String value);
+	void setCurrentValues(String value);
 
-  FSM getOutgoingFSM();
+	FSM getOutgoingFSM();
 
-  void setOutgoingFSM(FSM value);
+	void setOutgoingFSM(FSM value);
 
-  FSM getIncomingFSM();
+	FSM getIncomingFSM();
 
-  void setIncomingFSM(FSM value);
+	void setIncomingFSM(FSM value);
 
-  void initialize();
+	void initialize();
 
-  boolean bisEmpty();
+	boolean bisEmpty();
 
-  void enqueue(String v);
+	void enqueue(String v);
 
-  String dequeue();
+	String dequeue();
 }

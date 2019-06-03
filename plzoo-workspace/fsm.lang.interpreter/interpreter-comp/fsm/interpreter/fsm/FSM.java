@@ -5,39 +5,39 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 public interface FSM extends EObject {
-  String getName();
+	String getName();
 
-  void setName(String value);
+	void setName(String value);
 
-  String getUnderProcessTrigger();
+	String getUnderProcessTrigger();
 
-  void setUnderProcessTrigger(String value);
+	void setUnderProcessTrigger(String value);
 
-  String getConsummedString();
+	String getConsummedString();
 
-  void setConsummedString(String value);
+	void setConsummedString(String value);
 
-  EList<State> getOwnedStates();
+	EList<State> getOwnedStates();
 
-  EList<Transition> getOwnedTransitions();
+	EList<Transition> getOwnedTransitions();
 
-  Buffer getInputBuffer();
+	Buffer getInputBuffer();
 
-  void setInputBuffer(Buffer value);
+	void setInputBuffer(Buffer value);
 
-  Buffer getOutputBuffer();
+	Buffer getOutputBuffer();
 
-  void setOutputBuffer(Buffer value);
+	void setOutputBuffer(Buffer value);
 
-  State getInitialState();
+	State getInitialState();
 
-  void setInitialState(State value);
+	void setInitialState(State value);
 
-  State getCurrentState();
+	State getCurrentState();
 
-  void setCurrentState(State value);
+	void setCurrentState(State value);
 
-  void initialize();
+	void initialize();
 
-  void run();
+	void run();
 }

@@ -4,17 +4,17 @@ import fsm.interpreter.fsm.impl.FsmFactoryImpl;
 import org.eclipse.emf.ecore.EFactory;
 
 public interface FsmFactory extends EFactory {
-  FsmFactory eINSTANCE = FsmFactoryImpl.init();
+	FsmFactory eINSTANCE = FsmFactoryImpl.init();
 
-  FSM createFSM();
+	FSM createFSM();
 
-  State createState();
+	State createState();
 
-  Buffer createBuffer();
+	Buffer createBuffer();
 
-  Transition createTransition();
+	Transition createTransition();
 
-  System createSystem();
+	System createSystem();
 
-  FsmPackage getFsmPackage();
+	FsmPackage getFsmPackage();
 }

@@ -4,29 +4,29 @@ import java.lang.String;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Transition extends EObject {
-  String getName();
+	String getName();
 
-  void setName(String value);
+	void setName(String value);
 
-  String getTrigger();
+	String getTrigger();
 
-  void setTrigger(String value);
+	void setTrigger(String value);
 
-  String getAction();
+	String getAction();
 
-  void setAction(String value);
+	void setAction(String value);
 
-  State getTgt();
+	State getTgt();
 
-  void setTgt(State value);
+	void setTgt(State value);
 
-  State getSrc();
+	State getSrc();
 
-  void setSrc(State value);
+	void setSrc(State value);
 
-  FSM getFsm();
+	FSM getFsm();
 
-  void setFsm(FSM value);
+	void setFsm(FSM value);
 
-  void fire();
+	void fire();
 }
