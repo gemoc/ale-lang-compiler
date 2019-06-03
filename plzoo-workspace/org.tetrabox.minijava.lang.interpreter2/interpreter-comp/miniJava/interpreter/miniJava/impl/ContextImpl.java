@@ -227,15 +227,15 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 
 	public SymbolBinding findBinding(Symbol symbol) {
 		SymbolBinding result;
-		if (!(MapService.containsKey((EMap) (this.cache), (Symbol) (symbol)))) {
+		if (!(MapService.containsKey((EMap) (this.getCache()), (Symbol) (symbol)))) {
 			SymbolBinding binding = ((SymbolBinding) (CollectionService.head(CollectionService.select(this.getBindings(), (x) -> EqualService.equals((x.getSymbol()), (symbol))))));
 			if (!EqualService.equals((binding), (null))) {
-				MapService.put((EMap) (this.cache), (Symbol) (symbol), (SymbolBinding) (binding));
+				MapService.put((EMap) (this.getCache()), (Symbol) (symbol), (SymbolBinding) (binding));
 			}
 			else {
 				if (!EqualService.equals((this.getParentContext()), (null))) {
 					SymbolBinding binding2 = ((SymbolBinding) (this.getParentContext().findBinding((Symbol) (symbol))));
-					MapService.put((EMap) (this.cache), (Symbol) (symbol), (SymbolBinding) (binding2));
+					MapService.put((EMap) (this.getCache()), (Symbol) (symbol), (SymbolBinding) (binding2));
 				}
 				else {
 					LogService.log(("No binding for symbol ") + (symbol));

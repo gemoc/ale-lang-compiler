@@ -387,11 +387,21 @@ abstract class AbstractExpressionCompiler {
 						} else {
 							CodeBlock.of('''«lhs».get«rhs.toFirstUpper»()''')
 						}
-					} else if (t.type instanceof EClass || t.type instanceof EDataType) {
-						CodeBlock.of('''$L.$L''', lhs, (call.arguments.get(1) as StringLiteral).value)
 					} else {
-						CodeBlock.
-							of('''«lhs».«IF call.arguments.get(1) instanceof StringLiteral»«(call.arguments.get(1) as StringLiteral).value»«ELSE»«call.arguments.get(1).compileExpression(ctx)»«ENDIF»''')
+						val Map<String, Object> hm = newHashMap(
+							'lhs' -> lhs,
+							'rhs' -> if(call.arguments.get(1) instanceof StringLiteral) {
+								val field = ctx.EClass.EStructuralFeatures.filter[it.name == (call.arguments.get(1) as StringLiteral).value].head
+								if(field !== null && field.many) {
+								'''get«(call.arguments.get(1) as StringLiteral).value.toFirstUpper»()'''
+								} else {
+									(call.arguments.get(1) as StringLiteral).value
+								}
+							} else {
+								call.arguments.get(1).compileExpression(ctx)
+							}
+						)
+						CodeBlock.builder.addNamed('''$lhs:L.$rhs:L''', hm).build
 					}
 				} else {
 					if (t instanceof SequenceType && (t as SequenceType).collectionType.type instanceof EClass) {

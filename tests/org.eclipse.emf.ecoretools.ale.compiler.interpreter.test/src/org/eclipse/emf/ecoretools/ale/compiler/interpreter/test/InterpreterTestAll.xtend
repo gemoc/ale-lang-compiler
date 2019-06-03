@@ -27,19 +27,19 @@ import org.junit.jupiter.api.TestFactory
 
 import static spoon.testing.Assert.assertThat
 
-
 class InterpreterTestAll {
 
 	static Map<String, Map<File, File>> compilations = newHashMap
 
 	static val compilers = newHashMap(
-//		"interpreter" -> [f|compileProjectInterpreter(f)],
+		"interpreter" -> [f|compileProjectInterpreter(f)]
+//		,
 //		"revisitor" -> [f|compileProjectRevisitor(f)],
 //		"switch" -> [f|compileProjectSwitch(f)],
-		"visitor" -> [f|compileProjectVisitor(f)]
+//		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
-	private static final boolean DEBUG = false
+	private static final boolean DEBUG = true
 
 	def static void log(String txt) {
 		if(DEBUG) println(txt)
@@ -53,8 +53,8 @@ class InterpreterTestAll {
 
 		compilers.forEach [ k, v |
 			new File("assets").listFiles.filter[it.isDirectory]
-			.filter[it.path == "assets/minijava"]
-			.forEach [
+//				.filter[it.path == "assets/testaccessors"]
+				.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))
 				} catch (Exception e) {

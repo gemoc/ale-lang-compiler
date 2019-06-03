@@ -170,7 +170,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
 			}
 			i = (i) + (1);
 		}
-		if (!EqualService.equals((constructor), (null))) {
+		if (((!EqualService.equals((constructor), (null))) && (!EqualService.equals((constructor.getBody()), (null))))) {
 			Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
 			i = 0;
 			z = CollectionService.size(this.getArgs());

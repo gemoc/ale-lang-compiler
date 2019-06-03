@@ -770,7 +770,7 @@ open class miniJava.NewObject {
 			i:=i+1;
 		}
 		
-		if(constructor != null) {
+		if(constructor != null and constructor.body != null) {
 			
 //
 //		// If any, call it
@@ -926,7 +926,7 @@ open class miniJava.Context {
 				}
 			}
 		}
-		result := self.getCache().get(symbol);
+		result := self.cache.get(symbol);
 	}
 	
 	def miniJava::Context findCurrentContext() {

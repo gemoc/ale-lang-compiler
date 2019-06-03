@@ -1,0 +1,10 @@
+behavior testaccessors;
+
+open class EAcc {
+	def void logacc() {
+	    self.b.log();
+	    self.i.log();
+	    self.bs.log();
+	    self.is.log();
+	}
+}

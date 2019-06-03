@@ -89,10 +89,10 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	}
 
 	public void exec() {
-		for (StringToIntegerMapEntry c : this.cs) {
+		for (StringToIntegerMapEntry c : this.getCs()) {
 			LogService.log(c.getKey());
 			LogService.log(c.getValue());
 		}
-		LogService.log(MapService.containsKey((EMap) (this.cs), (String) ("ok")));
+		LogService.log(MapService.containsKey((EMap) (this.getCs()), (String) ("ok")));
 	}
 }

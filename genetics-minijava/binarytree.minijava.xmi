@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<miniJava:Program xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:miniJava="http://miniJava.miniJava.miniJava/">
+<miniJava:Program xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:miniJava="http://miniJava.miniJava.miniJava/">
   <imports importedNamespace="java.util.concurrent.ExecutorService"/>
   <imports importedNamespace="java.util.concurrent.Executors"/>
   <imports importedNamespace="java.util.concurrent.TimeUnit"/>

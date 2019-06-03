@@ -218,7 +218,7 @@ public class MethodImpl extends MemberImpl implements Method {
 
 	public Method findOverride(Clazz c) {
 		Method result;
-		if (!(MapService.containsKey((EMap) (this.cache), (Clazz) (c)))) {
+		if (!(MapService.containsKey((EMap) (this.getCache()), (Clazz) (c)))) {
 			Method that = ((Method) (this));
 			if (CollectionService.exists(c.getMembers(), (x) -> EqualService.equals((x), (that)))) {
 				result = (Method) (this) ;
@@ -260,10 +260,10 @@ public class MethodImpl extends MemberImpl implements Method {
 					}
 				}
 			}
-			MapService.put((EMap) (this.cache), (Clazz) (c), (Method) (result));
+			MapService.put((EMap) (this.getCache()), (Clazz) (c), (Method) (result));
 		}
 		else {
-			result = (Method) (MapService.getFromMap((EMap) (this.cache), (Clazz) (c))) ;
+			result = (Method) (MapService.getFromMap((EMap) (this.getCache()), (Clazz) (c))) ;
 		}
 		return result;
 	}
