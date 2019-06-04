@@ -28,7 +28,7 @@ public class ArrayAccessOperationImpl extends ExpressionOperationImpl implements
 		IntegerValue indexVal = ((IntegerValue) (((IntegerValue) (((ExpressionOperation)this.it.getIndex().accept(vis)).evaluateExpression((State) (state))))));
 		int v = ((int) (indexVal.getValue()));
 		Value vtmp = ((Value) (CollectionService.get(arrayVal.getInstance().getValue(), v)));
-		result = ((ValueOperation)vtmp.accept(vis)).copyj();
+		result = ((Value) (((ValueOperation)vtmp.accept(vis)).copyj()));
 		return result;
 	}
 }

@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Boolean;
 import miniJava.visitor.miniJava.ClassRef;
 import miniJava.visitor.miniJava.TypeRef;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -21,10 +22,10 @@ public class ClassRefOperationImpl extends SingleTypeRefOperationImpl implements
 		boolean result;
 		if(other instanceof ClassRef) {
 			ClassRef ocr = ((ClassRef) (other));
-			result = EqualService.equals((this.it.getReferencedClass()), (ocr.getReferencedClass()));
+			result = ((Boolean) (EqualService.equals((this.it.getReferencedClass()), (ocr.getReferencedClass()))));
 		}
 		else {
-			result = false;
+			result = ((Boolean) (false));
 		}
 		return result;
 	}

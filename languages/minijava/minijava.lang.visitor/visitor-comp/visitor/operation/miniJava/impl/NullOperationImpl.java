@@ -2,6 +2,7 @@ package visitor.operation.miniJava.impl;
 
 import miniJava.visitor.miniJava.MiniJavaFactory;
 import miniJava.visitor.miniJava.Null;
+import miniJava.visitor.miniJava.NullValue;
 import miniJava.visitor.miniJava.State;
 import miniJava.visitor.miniJava.Value;
 import visitor.VisitorInterface;
@@ -20,7 +21,7 @@ public class NullOperationImpl extends ExpressionOperationImpl implements NullOp
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		result = MiniJavaFactory.eINSTANCE.createNullValue();
+		result = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
 		return result;
 	}
 }

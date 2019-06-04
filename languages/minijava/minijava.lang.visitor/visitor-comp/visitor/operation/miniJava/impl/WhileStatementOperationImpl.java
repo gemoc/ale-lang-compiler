@@ -24,7 +24,7 @@ public class WhileStatementOperationImpl extends StatementOperationImpl implemen
 		while (continueWhile.isValue()) {
 			((BlockOperation)this.it.getBlock().accept(vis)).evaluateStatement((State) (state));
 			BooleanValue continueWhile2 = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))))));
-			continueWhile = continueWhile2;
+			continueWhile = ((BooleanValue) (continueWhile2));
 		}
 	}
 }

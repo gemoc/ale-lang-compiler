@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Integer;
 import miniJava.visitor.miniJava.Block;
 import miniJava.visitor.miniJava.Frame;
 import miniJava.visitor.miniJava.State;
@@ -28,7 +29,7 @@ public class BlockOperationImpl extends StatementOperationImpl implements BlockO
 		int i = ((int) (0));
 		while ((((i) < (lgt)) && (EqualService.equals((currentFrame.getReturnValue()), (null))))) {
 			((StatementOperation)CollectionService.get(this.it.getStatements(), i).accept(vis)).evaluateStatement((State) (state));
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
 	}
 

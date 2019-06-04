@@ -20,10 +20,10 @@ public class NegOperation extends ExpressionOperation {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		IntegerValue left = ((IntegerValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).evaluateExpression((State) (state))));
+		IntegerValue left = ((IntegerValue) (((IntegerValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).evaluateExpression((State) (state))))));
 		IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		tmp.setValue(-(left.getValue()));
-		result = tmp;
+		result = ((IntegerValue) (tmp));
 		return result;
 	}
 }

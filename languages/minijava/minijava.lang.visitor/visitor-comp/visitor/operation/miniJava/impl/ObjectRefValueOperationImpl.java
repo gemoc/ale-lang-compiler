@@ -20,7 +20,7 @@ public class ObjectRefValueOperationImpl extends ValueOperationImpl implements O
 
 	public String customToString() {
 		String result;
-		result = this.it.getInstance().toString();
+		result = ((String) (this.it.getInstance().toString()));
 		return result;
 	}
 
@@ -28,7 +28,7 @@ public class ObjectRefValueOperationImpl extends ValueOperationImpl implements O
 		Value result;
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(this.it.getInstance());
-		result = tmp;
+		result = ((ObjectRefValue) (tmp));
 		return result;
 	}
 }

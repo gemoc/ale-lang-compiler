@@ -20,10 +20,10 @@ public class NotOperation extends ExpressionOperation {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		BooleanValue left = ((BooleanValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).evaluateExpression((State) (state))));
+		BooleanValue left = ((BooleanValue) (((BooleanValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).evaluateExpression((State) (state))))));
 		BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmp.setValue(!(left.isValue()));
-		result = tmp;
+		result = ((BooleanValue) (tmp));
 		return result;
 	}
 }

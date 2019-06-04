@@ -28,7 +28,7 @@ public class FieldAccessOperation extends ExpressionOperation {
 		ObjectInstance realReceiver = ((ObjectInstance) (tmp0.getInstance()));
 		Field fld = ((Field) (this.it.getField()));
 		FieldBinding fb = ((FieldBinding) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (fld))))));
-		result = fb.getValue();
+		result = ((Value) (fb.getValue()));
 		return result;
 	}
 }

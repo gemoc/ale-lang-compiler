@@ -20,7 +20,7 @@ public class StringValueOperationImpl extends ValueOperationImpl implements Stri
 
 	public String customToString() {
 		String result;
-		result = this.it.getValue().toString();
+		result = ((String) (this.it.getValue().toString()));
 		return result;
 	}
 
@@ -28,7 +28,7 @@ public class StringValueOperationImpl extends ValueOperationImpl implements Stri
 		Value result;
 		StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
 		tmp.setValue(this.it.getValue());
-		result = tmp;
+		result = ((StringValue) (tmp));
 		return result;
 	}
 }

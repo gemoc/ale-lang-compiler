@@ -23,7 +23,7 @@ public class StringConstantOperationImpl extends ExpressionOperationImpl impleme
 		Value result;
 		StringValue ret = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
 		ret.setValue(this.it.getValue());
-		result = ret;
+		result = ((StringValue) (ret));
 		return result;
 	}
 }

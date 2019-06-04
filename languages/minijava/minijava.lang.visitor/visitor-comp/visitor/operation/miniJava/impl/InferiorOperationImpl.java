@@ -31,14 +31,14 @@ public class InferiorOperationImpl extends ExpressionOperationImpl implements In
 				IntegerValue bright = ((IntegerValue) (right));
 				BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 				tmp.setValue((bleft.getValue()) < (bright.getValue()));
-				result = tmp;
+				result = ((BooleanValue) (tmp));
 			}
 			else {
-				result = null;
+				result = ((Value) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((Value) (null));
 		}
 		return result;
 	}

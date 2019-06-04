@@ -28,7 +28,7 @@ public class StateOperationImpl implements StateOperation {
 		if(EqualService.equals((this.it.getFrameCache()), (null))) {
 			this.it.setFrameCache(((FrameOperation)this.it.getRootFrame().accept(vis)).findCurrentFrame());
 		}
-		result = this.it.getFrameCache();
+		result = ((Frame) (this.it.getFrameCache()));
 		return result;
 	}
 
@@ -37,7 +37,7 @@ public class StateOperationImpl implements StateOperation {
 		if(EqualService.equals((this.it.getContextCache()), (null))) {
 			this.it.setContextCache(((FrameOperation)this.it.getRootFrame().accept(vis)).findCurrentContext());
 		}
-		result = this.it.getContextCache();
+		result = ((Context) (this.it.getContextCache()));
 		return result;
 	}
 

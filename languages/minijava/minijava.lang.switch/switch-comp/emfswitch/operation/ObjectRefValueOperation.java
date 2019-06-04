@@ -19,7 +19,7 @@ public class ObjectRefValueOperation extends ValueOperation {
 
 	public String customToString() {
 		String result;
-		result = this.it.getInstance().toString();
+		result = ((String) (this.it.getInstance().toString()));
 		return result;
 	}
 
@@ -27,7 +27,7 @@ public class ObjectRefValueOperation extends ValueOperation {
 		Value result;
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(this.it.getInstance());
-		result = tmp;
+		result = ((ObjectRefValue) (tmp));
 		return result;
 	}
 }

@@ -179,20 +179,27 @@ class SwitchOperationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body, CompilerExpressionCtx ctx) {
-		builderSeed.addStatement('''«body.name» = $L''', body.value.compileExpression(ctx))
+		val t = body.value.infereType.head?.type?.resolveType2.solveNothing(body)
+		if(t === null)
+			builderSeed.addStatement('''$L = $L''', body.name, body.value.compileExpression(ctx))
+		else
+			builderSeed.addStatement('''$L = (($T) ($L))''', body.name, t, body.value.compileExpression(ctx))
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body, CompilerExpressionCtx ctx) {
 
-		val inft = body.initialValue.infereType.head
+		val inft = body.initialValue?.infereType?.head
 		if (inft instanceof SequenceType) {
 			val t = ParameterizedTypeName.get(ClassName.get("org.eclipse.emf.common.util", "EList"),
 				ClassName.get(inft.collectionType.type as Class<?>))
 			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression(ctx))
 		} else {
-			val t = body.type.solveType
-			// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
-			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression(ctx))
+			val t = body.type.resolveType2.solveNothing(body.initialValue)
+			if(body.initialValue === null) {
+				builderSeed.addStatement('''$T $L = null''', t, body.name)
+			} else {
+				builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression(ctx))
+			}
 		}
 	}
 

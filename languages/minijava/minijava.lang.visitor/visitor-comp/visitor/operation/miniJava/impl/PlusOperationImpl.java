@@ -33,16 +33,16 @@ public class PlusOperationImpl extends ExpressionOperationImpl implements PlusOp
 				IntegerValue bright = ((IntegerValue) (right));
 				IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 				tmp.setValue((bleft.getValue()) + (bright.getValue()));
-				result = tmp;
+				result = ((IntegerValue) (tmp));
 			}
 			else {
 				if(right instanceof StringValue) {
 					StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
 					tmp.setValue((((IntegerValueOperation)left.accept(vis)).customToString()) + (((StringValueOperation)right.accept(vis)).customToString()));
-					result = tmp;
+					result = ((StringValue) (tmp));
 				}
 				else {
-					result = null;
+					result = ((Value) (null));
 				}
 			}
 		}
@@ -50,10 +50,10 @@ public class PlusOperationImpl extends ExpressionOperationImpl implements PlusOp
 			if(((left instanceof StringValue) || (right instanceof StringValue))) {
 				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
 				tmp.setValue((((StringValueOperation)left.accept(vis)).customToString()) + (((StringValueOperation)right.accept(vis)).customToString()));
-				result = tmp;
+				result = ((StringValue) (tmp));
 			}
 			else {
-				result = null;
+				result = ((Value) (null));
 			}
 		}
 		return result;

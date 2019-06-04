@@ -23,7 +23,7 @@ public class ExpressionOperationImpl extends StatementOperationImpl implements E
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		result = null;
+		result = ((Value) (null));
 		return result;
 	}
 }

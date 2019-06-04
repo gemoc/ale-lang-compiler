@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Boolean;
 import miniJava.visitor.miniJava.Parameter;
 import miniJava.visitor.miniJava.TypeRef;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -20,7 +21,7 @@ public class ParameterOperationImpl extends SymbolOperationImpl implements Param
 
 	public boolean compare(Parameter other) {
 		boolean result;
-		result = ((EqualService.equals((this.it.getName()), (other.getName()))) && (((TypeRefOperation)this.it.getTypeRef().accept(vis)).compare((TypeRef) (other.getTypeRef()))));
+		result = ((Boolean) (((EqualService.equals((this.it.getName()), (other.getName()))) && (((TypeRefOperation)this.it.getTypeRef().accept(vis)).compare((TypeRef) (other.getTypeRef()))))));
 		return result;
 	}
 }

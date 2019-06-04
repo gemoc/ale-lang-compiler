@@ -29,7 +29,7 @@ public class ForStatementOperationImpl extends StatementOperationImpl implements
 			((BlockOperation)this.it.getBlock().accept(vis)).evaluateStatement((State) (state));
 			((AssignmentOperation)this.it.getProgression().accept(vis)).evaluateStatement((State) (state));
 			BooleanValue continueFor2 = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getCondition().accept(vis)).evaluateExpression((State) (state))))));
-			continueFor = continueFor2;
+			continueFor = ((BooleanValue) (continueFor2));
 		}
 		((StateOperation)state.accept(vis)).popCurrentContext();
 	}

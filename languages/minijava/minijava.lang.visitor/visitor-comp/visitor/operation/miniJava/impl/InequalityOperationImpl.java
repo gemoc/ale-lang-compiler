@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Boolean;
 import miniJava.visitor.miniJava.BooleanValue;
 import miniJava.visitor.miniJava.Inequality;
 import miniJava.visitor.miniJava.IntegerValue;
@@ -34,7 +35,7 @@ public class InequalityOperationImpl extends ExpressionOperationImpl implements 
 			if(right instanceof IntegerValue) {
 				IntegerValue ileft = ((IntegerValue) (left));
 				IntegerValue iright = ((IntegerValue) (right));
-				tmp = EqualService.equals((ileft.getValue()), (iright.getValue()));
+				tmp = ((Boolean) (EqualService.equals((ileft.getValue()), (iright.getValue()))));
 			}
 		}
 		else {
@@ -42,7 +43,7 @@ public class InequalityOperationImpl extends ExpressionOperationImpl implements 
 				if(right instanceof StringValue) {
 					StringValue ileft = ((StringValue) (left));
 					StringValue iright = ((StringValue) (right));
-					tmp = EqualService.equals((ileft.getValue()), (iright.getValue()));
+					tmp = ((Boolean) (EqualService.equals((ileft.getValue()), (iright.getValue()))));
 				}
 			}
 			else {
@@ -50,13 +51,13 @@ public class InequalityOperationImpl extends ExpressionOperationImpl implements 
 					if(right instanceof BooleanValue) {
 						BooleanValue ileft = ((BooleanValue) (left));
 						BooleanValue iright = ((BooleanValue) (right));
-						tmp = EqualService.equals((ileft.isValue()), (iright.isValue()));
+						tmp = ((Boolean) (EqualService.equals((ileft.isValue()), (iright.isValue()))));
 					}
 				}
 				else {
 					if(left instanceof NullValue) {
 						if(right instanceof NullValue) {
-							tmp = true;
+							tmp = ((Boolean) (true));
 						}
 					}
 					else {
@@ -64,7 +65,7 @@ public class InequalityOperationImpl extends ExpressionOperationImpl implements 
 							if(right instanceof ObjectRefValue) {
 								ObjectRefValue ileft = ((ObjectRefValue) (left));
 								ObjectRefValue iright = ((ObjectRefValue) (right));
-								tmp = EqualService.equals((ileft.getInstance()), (iright.getInstance()));
+								tmp = ((Boolean) (EqualService.equals((ileft.getInstance()), (iright.getInstance()))));
 							}
 						}
 					}
@@ -73,7 +74,7 @@ public class InequalityOperationImpl extends ExpressionOperationImpl implements 
 		}
 		BooleanValue tmpo = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmpo.setValue(!(tmp));
-		result = tmpo;
+		result = ((BooleanValue) (tmpo));
 		return result;
 	}
 }

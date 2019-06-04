@@ -24,7 +24,7 @@ public class ForStatementOperation extends StatementOperation {
 			((BlockOperation) emfswitch.doSwitch(this.it.getBlock())).evaluateStatement((State) (state));
 			((AssignmentOperation) emfswitch.doSwitch(this.it.getProgression())).evaluateStatement((State) (state));
 			BooleanValue continueFor2 = ((BooleanValue) (((BooleanValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).evaluateExpression((State) (state))))));
-			continueFor = continueFor2;
+			continueFor = ((BooleanValue) (continueFor2));
 		}
 		((StateOperation) emfswitch.doSwitch(state)).popCurrentContext();
 	}

@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Integer;
 import miniJava.Clazz;
 import miniJava.Context;
 import miniJava.Expression;
@@ -42,7 +43,7 @@ public class MethodCallOperation extends ExpressionOperation {
 			binding.setSymbol(param);
 			binding.setValue(((ExpressionOperation) emfswitch.doSwitch(arg)).evaluateExpression((State) (state)));
 			newContext.getBindings().add(binding);
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
 		MethodCall2 call = ((MethodCall2) (MiniJavaFactory.eINSTANCE.createMethodCall2()));
 		call.setMethodcall(this.it);
@@ -50,7 +51,7 @@ public class MethodCallOperation extends ExpressionOperation {
 		((MethodCallOperation) emfswitch.doSwitch(this.it)).call((Method) (realMethod), (State) (state));
 		Value returnValue = ((Value) (((StateOperation) emfswitch.doSwitch(state)).findCurrentFrame().getReturnValue()));
 		((StateOperation) emfswitch.doSwitch(state)).popCurrentFrame();
-		result = returnValue;
+		result = ((Value) (returnValue));
 		return result;
 	}
 

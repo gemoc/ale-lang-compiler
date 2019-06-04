@@ -38,17 +38,17 @@ public class ContextOperationImpl implements ContextOperation {
 				}
 			}
 		}
-		result = this.it.getCache().get((Symbol) (symbol));
+		result = ((SymbolBinding) (MapService.getFromMap((EMap) (this.it.getCache()), (Symbol) (symbol))));
 		return result;
 	}
 
 	public Context findCurrentContext() {
 		Context result;
 		if(!EqualService.equals((this.it.getChildContext()), (null))) {
-			result = ((ContextOperation)this.it.getChildContext().accept(vis)).findCurrentContext();
+			result = ((Context) (((ContextOperation)this.it.getChildContext().accept(vis)).findCurrentContext()));
 		}
 		else {
-			result = this.it;
+			result = ((Context) (this.it));
 		}
 		return result;
 	}

@@ -19,7 +19,7 @@ public class IntegerValueOperation extends ValueOperation {
 
 	public String customToString() {
 		String result;
-		result = (this.it.getValue()) + ("");
+		result = ((String) ((this.it.getValue()) + ("")));
 		return result;
 	}
 
@@ -27,7 +27,7 @@ public class IntegerValueOperation extends ValueOperation {
 		Value result;
 		IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		tmp.setValue(this.it.getValue());
-		result = tmp;
+		result = ((IntegerValue) (tmp));
 		return result;
 	}
 }

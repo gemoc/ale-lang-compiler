@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Integer;
 import miniJava.visitor.miniJava.Context;
 import miniJava.visitor.miniJava.Expression;
 import miniJava.visitor.miniJava.Field;
@@ -18,6 +19,7 @@ import miniJava.visitor.miniJava.Value;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import visitor.VisitorInterface;
+import visitor.operation.miniJava.BlockOperation;
 import visitor.operation.miniJava.ExpressionOperation;
 import visitor.operation.miniJava.NewObjectOperation;
 import visitor.operation.miniJava.StateOperation;
@@ -52,42 +54,42 @@ public class NewObjectOperationImpl extends ExpressionOperationImpl implements N
 					res.getFieldbindings().add(fb);
 				}
 			}
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
-		i = 0;
-		Method constructor = ((Method) (null));
+		i = ((Integer) (0));
+		Method constructor = null;
 		while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
 			Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
 			if(m instanceof Method) {
 				Method mtd = ((Method) (m));
 				if(((EqualService.equals((mtd.getName()), (null))) && (EqualService.equals((CollectionService.size(mtd.getParams())), (CollectionService.size(this.it.getArgs())))))) {
-					constructor = mtd;
+					constructor = ((Method) (mtd));
 				}
 			}
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
 		if(!EqualService.equals((constructor), (null))) {
 			Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
-			i = 0;
-			z = CollectionService.size(this.it.getArgs());
+			i = ((Integer) (0));
+			z = ((Integer) (CollectionService.size(this.it.getArgs())));
 			while ((i) < (z)) {
 				Expression arg = ((Expression) (CollectionService.get(this.it.getArgs(), i)));
 				Parameter param = ((Parameter) (CollectionService.get(constructor.getParams(), i)));
 				SymbolBinding binding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
 				binding.setSymbol(param);
 				binding.setValue(((ExpressionOperation)arg.accept(vis)).evaluateExpression((State) (state)));
-				i = (i) + (1);
+				i = ((Integer) ((i) + (1)));
 				newContext.getBindings().add(binding);
 			}
 			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this.it);
 			((StateOperation)state.accept(vis)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
-			constructor.getBody().evaluateStatement((State) (state));
+			((BlockOperation)constructor.getBody().accept(vis)).evaluateStatement((State) (state));
 			((StateOperation)state.accept(vis)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(res);
-		result = tmp;
+		result = ((ObjectRefValue) (tmp));
 		return result;
 	}
 }

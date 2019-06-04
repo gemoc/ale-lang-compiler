@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Integer;
 import miniJava.Block;
 import miniJava.Frame;
 import miniJava.State;
@@ -25,7 +26,7 @@ public class BlockOperation extends StatementOperation {
 		int i = ((int) (0));
 		while ((((i) < (lgt)) && (EqualService.equals((currentFrame.getReturnValue()), (null))))) {
 			((StatementOperation) emfswitch.doSwitch(CollectionService.get(this.it.getStatements(), i))).evaluateStatement((State) (state));
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
 	}
 

@@ -25,7 +25,7 @@ public class ArrayAccessOperation extends ExpressionOperation {
 		IntegerValue indexVal = ((IntegerValue) (((IntegerValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getIndex())).evaluateExpression((State) (state))))));
 		int v = ((int) (indexVal.getValue()));
 		Value vtmp = ((Value) (CollectionService.get(arrayVal.getInstance().getValue(), v)));
-		result = ((ValueOperation) emfswitch.doSwitch(vtmp)).copyj();
+		result = ((Value) (((ValueOperation) emfswitch.doSwitch(vtmp)).copyj()));
 		return result;
 	}
 }

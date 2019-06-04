@@ -23,7 +23,7 @@ public class BoolConstantOperation extends ExpressionOperation {
 		Value result;
 		BooleanValue ret = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		ret.setValue(EqualService.equals((this.it.getValue()), ("true")));
-		result = ret;
+		result = ((BooleanValue) (ret));
 		return result;
 	}
 }

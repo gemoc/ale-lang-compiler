@@ -22,10 +22,10 @@ public class NotOperationImpl extends ExpressionOperationImpl implements NotOper
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		BooleanValue left = ((BooleanValue) (((ExpressionOperation)this.it.getExpression().accept(vis)).evaluateExpression((State) (state))));
+		BooleanValue left = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getExpression().accept(vis)).evaluateExpression((State) (state))))));
 		BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmp.setValue(!(left.isValue()));
-		result = tmp;
+		result = ((BooleanValue) (tmp));
 		return result;
 	}
 }

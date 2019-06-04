@@ -26,7 +26,7 @@ public class ThisOperationImpl extends ExpressionOperationImpl implements ThisOp
 		ObjectInstance currentInstance = ((ObjectInstance) (((StateOperation)state.accept(vis)).findCurrentFrame().getInstance()));
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(currentInstance);
-		result = tmp;
+		result = ((ObjectRefValue) (tmp));
 		return result;
 	}
 }

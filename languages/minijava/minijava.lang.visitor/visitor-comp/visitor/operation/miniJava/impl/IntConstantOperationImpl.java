@@ -23,7 +23,7 @@ public class IntConstantOperationImpl extends ExpressionOperationImpl implements
 		Value result;
 		IntegerValue ret = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		ret.setValue(this.it.getValue());
-		result = ret;
+		result = ((IntegerValue) (ret));
 		return result;
 	}
 }

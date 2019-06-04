@@ -20,7 +20,7 @@ public class BooleanValueOperationImpl extends ValueOperationImpl implements Boo
 
 	public String customToString() {
 		String result;
-		result = (this.it.isValue()) + ("");
+		result = ((String) ((this.it.isValue()) + ("")));
 		return result;
 	}
 
@@ -28,7 +28,7 @@ public class BooleanValueOperationImpl extends ValueOperationImpl implements Boo
 		Value result;
 		BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmp.setValue(this.it.isValue());
-		result = tmp;
+		result = ((BooleanValue) (tmp));
 		return result;
 	}
 }

@@ -24,7 +24,7 @@ public class ThisOperation extends ExpressionOperation {
 		ObjectInstance currentInstance = ((ObjectInstance) (((StateOperation) emfswitch.doSwitch(state)).findCurrentFrame().getInstance()));
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(currentInstance);
-		result = tmp;
+		result = ((ObjectRefValue) (tmp));
 		return result;
 	}
 }

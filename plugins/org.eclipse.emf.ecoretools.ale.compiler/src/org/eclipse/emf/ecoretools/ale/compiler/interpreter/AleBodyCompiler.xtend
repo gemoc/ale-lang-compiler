@@ -109,7 +109,7 @@ class AleBodyCompiler {
 		val t = if (body.name == 'result') {
 				EcoreUtil2.getContainerOfType(body, MethodImpl).operationRef.EType.resolveType2
 			} else
-				null
+				body.value.resolveType2
 
 		builderSeed.addStatement(
 			CodeBlock.builder.addNamed('''$name:N = «IF t !== null»($exprtype:T) ($expr:L) «ELSE»$expr:L«ENDIF»''',

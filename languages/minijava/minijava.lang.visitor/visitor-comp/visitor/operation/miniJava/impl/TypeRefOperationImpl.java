@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Boolean;
 import miniJava.visitor.miniJava.TypeRef;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import visitor.VisitorInterface;
@@ -17,7 +18,7 @@ public class TypeRefOperationImpl implements TypeRefOperation {
 
 	public boolean compare(TypeRef other) {
 		boolean result;
-		result = EqualService.equals((this.it.eClass()), (other.eClass()));
+		result = ((Boolean) (EqualService.equals((this.it.eClass()), (other.eClass()))));
 		return result;
 	}
 }

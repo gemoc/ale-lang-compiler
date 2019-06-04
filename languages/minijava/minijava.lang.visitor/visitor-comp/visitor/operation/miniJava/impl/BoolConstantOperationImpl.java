@@ -24,7 +24,7 @@ public class BoolConstantOperationImpl extends ExpressionOperationImpl implement
 		Value result;
 		BooleanValue ret = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		ret.setValue(EqualService.equals((this.it.getValue()), ("true")));
-		result = ret;
+		result = ((BooleanValue) (ret));
 		return result;
 	}
 }

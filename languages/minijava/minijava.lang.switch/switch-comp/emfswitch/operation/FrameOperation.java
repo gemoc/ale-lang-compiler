@@ -18,14 +18,14 @@ public class FrameOperation {
 	public Context findCurrentContext() {
 		Context result;
 		if(!EqualService.equals((this.it.getChildFrame()), (null))) {
-			result = ((FrameOperation) emfswitch.doSwitch(this.it.getChildFrame())).findCurrentContext();
+			result = ((Context) (((FrameOperation) emfswitch.doSwitch(this.it.getChildFrame())).findCurrentContext()));
 		}
 		else {
 			if(!EqualService.equals((this.it.getRootContext()), (null))) {
-				result = ((ContextOperation) emfswitch.doSwitch(this.it.getRootContext())).findCurrentContext();
+				result = ((Context) (((ContextOperation) emfswitch.doSwitch(this.it.getRootContext())).findCurrentContext()));
 			}
 			else {
-				result = null;
+				result = ((Context) (null));
 			}
 		}
 		return result;
@@ -34,10 +34,10 @@ public class FrameOperation {
 	public Frame findCurrentFrame() {
 		Frame result;
 		if(!EqualService.equals((this.it.getChildFrame()), (null))) {
-			result = ((FrameOperation) emfswitch.doSwitch(this.it.getChildFrame())).findCurrentFrame();
+			result = ((Frame) (((FrameOperation) emfswitch.doSwitch(this.it.getChildFrame())).findCurrentFrame()));
 		}
 		else {
-			result = this.it;
+			result = ((Frame) (this.it));
 		}
 		return result;
 	}

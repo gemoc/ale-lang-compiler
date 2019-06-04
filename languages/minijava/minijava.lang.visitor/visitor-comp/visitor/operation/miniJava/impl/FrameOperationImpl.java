@@ -20,14 +20,14 @@ public class FrameOperationImpl implements FrameOperation {
 	public Context findCurrentContext() {
 		Context result;
 		if(!EqualService.equals((this.it.getChildFrame()), (null))) {
-			result = ((FrameOperation)this.it.getChildFrame().accept(vis)).findCurrentContext();
+			result = ((Context) (((FrameOperation)this.it.getChildFrame().accept(vis)).findCurrentContext()));
 		}
 		else {
 			if(!EqualService.equals((this.it.getRootContext()), (null))) {
-				result = ((ContextOperation)this.it.getRootContext().accept(vis)).findCurrentContext();
+				result = ((Context) (((ContextOperation)this.it.getRootContext().accept(vis)).findCurrentContext()));
 			}
 			else {
-				result = null;
+				result = ((Context) (null));
 			}
 		}
 		return result;
@@ -36,10 +36,10 @@ public class FrameOperationImpl implements FrameOperation {
 	public Frame findCurrentFrame() {
 		Frame result;
 		if(!EqualService.equals((this.it.getChildFrame()), (null))) {
-			result = ((FrameOperation)this.it.getChildFrame().accept(vis)).findCurrentFrame();
+			result = ((Frame) (((FrameOperation)this.it.getChildFrame().accept(vis)).findCurrentFrame()));
 		}
 		else {
-			result = this.it;
+			result = ((Frame) (this.it));
 		}
 		return result;
 	}

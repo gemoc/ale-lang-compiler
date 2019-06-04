@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Integer;
 import miniJava.visitor.miniJava.ArrayInstance;
 import miniJava.visitor.miniJava.ArrayRefValue;
 import miniJava.visitor.miniJava.BooleanTypeRef;
@@ -16,6 +17,7 @@ import miniJava.visitor.miniJava.Value;
 import visitor.VisitorInterface;
 import visitor.operation.miniJava.ExpressionOperation;
 import visitor.operation.miniJava.NewArrayOperation;
+import visitor.operation.miniJava.ValueOperation;
 
 public class NewArrayOperationImpl extends ExpressionOperationImpl implements NewArrayOperation {
 	private final NewArray it;
@@ -34,27 +36,27 @@ public class NewArrayOperationImpl extends ExpressionOperationImpl implements Ne
 		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((ExpressionOperation)this.it.getSize().accept(vis)).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
-		Value defaultValue = ((Value) (null));
+		Value defaultValue = null;
 		if(this.it.getType() instanceof IntegerTypeRef) {
 			IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 			idv.setValue(0);
-			defaultValue = idv;
+			defaultValue = ((IntegerValue) (idv));
 		}
 		else {
 			if(this.it.getType() instanceof BooleanTypeRef) {
 				BooleanValue idv = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 				idv.setValue(false);
-				defaultValue = idv;
+				defaultValue = ((BooleanValue) (idv));
 			}
 			else {
 				if(this.it.getType() instanceof StringTypeRef) {
 					NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
-					defaultValue = idv;
+					defaultValue = ((NullValue) (idv));
 				}
 				else {
 					if(this.it.getType() instanceof ClassRef) {
 						NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
-						defaultValue = idv;
+						defaultValue = ((NullValue) (idv));
 					}
 				}
 			}
@@ -62,12 +64,12 @@ public class NewArrayOperationImpl extends ExpressionOperationImpl implements Ne
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			res.getValue().add(defaultValue.copyj());
-			i = (i) + (1);
+			res.getValue().add(((ValueOperation)defaultValue.accept(vis)).copyj());
+			i = ((Integer) ((i) + (1)));
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
 		ret.setInstance(res);
-		result = ret;
+		result = ((ArrayRefValue) (ret));
 		return result;
 	}
 }

@@ -19,7 +19,7 @@ public class BooleanValueOperation extends ValueOperation {
 
 	public String customToString() {
 		String result;
-		result = (this.it.isValue()) + ("");
+		result = ((String) ((this.it.isValue()) + ("")));
 		return result;
 	}
 
@@ -27,7 +27,7 @@ public class BooleanValueOperation extends ValueOperation {
 		Value result;
 		BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmp.setValue(this.it.isValue());
-		result = tmp;
+		result = ((BooleanValue) (tmp));
 		return result;
 	}
 }

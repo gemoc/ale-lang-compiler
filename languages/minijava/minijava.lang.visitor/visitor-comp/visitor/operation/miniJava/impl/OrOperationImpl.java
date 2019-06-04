@@ -22,11 +22,11 @@ public class OrOperationImpl extends ExpressionOperationImpl implements OrOperat
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		BooleanValue left = ((BooleanValue) (((ExpressionOperation)this.it.getLeft().accept(vis)).evaluateExpression((State) (state))));
-		BooleanValue right = ((BooleanValue) (((ExpressionOperation)this.it.getRight().accept(vis)).evaluateExpression((State) (state))));
+		BooleanValue left = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getLeft().accept(vis)).evaluateExpression((State) (state))))));
+		BooleanValue right = ((BooleanValue) (((BooleanValue) (((ExpressionOperation)this.it.getRight().accept(vis)).evaluateExpression((State) (state))))));
 		BooleanValue res = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		res.setValue(((left.isValue()) || (right.isValue())));
-		result = res;
+		result = ((BooleanValue) (res));
 		return result;
 	}
 }

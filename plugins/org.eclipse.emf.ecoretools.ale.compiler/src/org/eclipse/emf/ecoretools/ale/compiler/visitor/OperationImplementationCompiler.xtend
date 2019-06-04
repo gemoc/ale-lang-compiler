@@ -167,7 +167,11 @@ class OperationImplementationCompiler {
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableAssignment body, CompilerExpressionCtx ctx) {
-		builderSeed.addStatement('''$L = $L''', body.name, body.value.compileExpression(ctx))
+		val t = body.value.infereType.head?.type?.resolveType2.solveNothing(body)
+		if(t === null)
+			builderSeed.addStatement('''$L = $L''', body.name, body.value.compileExpression(ctx))
+		else
+			builderSeed.addStatement('''$L = (($T) ($L))''', body.name, t, body.value.compileExpression(ctx))
 	}
 
 	def dispatch MethodSpec.Builder compileBody(MethodSpec.Builder builderSeed, VariableDeclaration body, CompilerExpressionCtx ctx) {
@@ -178,7 +182,7 @@ class OperationImplementationCompiler {
 				ClassName.get(inft.collectionType.type as Class<?>))
 			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t, body.initialValue.compileExpression(ctx))
 		} else {
-			val t = body.type.solveType
+			val t = body.type.resolveType2.solveNothing(body.initialValue)
 			if(body.initialValue === null) {
 				builderSeed.addStatement('''$T $L = null''', t, body.name)
 			} else {

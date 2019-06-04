@@ -1,9 +1,9 @@
 package org.eclipse.emf.ecoretools.ale.compiler.common
 
 import com.squareup.javapoet.TypeName
+import java.util.List
 import java.util.Map
 import org.eclipse.acceleo.query.ast.Call
-import org.eclipse.acceleo.query.ast.Expression
 import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.validation.type.IType
 import org.eclipse.acceleo.query.validation.type.SequenceType
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
 import org.eclipse.xtext.EcoreUtil2
-import java.util.List
+import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 
 abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 
@@ -47,13 +47,16 @@ abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 
 	abstract def TypeName resolveType2(Object type)
 
-	override TypeName solveNothing(TypeName pt, Expression expr) {
+	override TypeName solveNothing(TypeName pt, EObject expr) {
 		if (pt === null || pt.toString == "org.eclipse.acceleo.query.runtime.impl.Nothing") {
 			
 			if(expr instanceof VarRef && (expr as VarRef).variableName == 'result') {
 				val method = EcoreUtil2.getContainerOfType(expr, MethodImpl)
 				method.operationRef.EType.resolveType2
-			 } else {
+			 } else if(expr instanceof VariableAssignment && (expr as VariableAssignment).name == 'result') {
+			 	val method = EcoreUtil2.getContainerOfType(expr, MethodImpl)
+				method.operationRef.EType.resolveType2
+			 }else {
 				var EObject blk = expr
 	
 				while (true) {
@@ -73,7 +76,7 @@ abstract class CommonTypeSystemUtils implements AbstractTypeSystem {
 						}
 	
 						val idx = blk.statements.indexOf(stmt)
-						if (idx > 0) {
+						if (idx >= 0) {
 							for (var i = idx - 1; i >= 0; i--) {
 								val crt = blk.statements.get(i)
 								if (crt instanceof VariableDeclaration) {

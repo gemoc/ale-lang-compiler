@@ -1,5 +1,6 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Integer;
 import miniJava.visitor.miniJava.Clazz;
 import miniJava.visitor.miniJava.Context;
 import miniJava.visitor.miniJava.Expression;
@@ -46,7 +47,7 @@ public class MethodCallOperationImpl extends ExpressionOperationImpl implements 
 			binding.setSymbol(param);
 			binding.setValue(((ExpressionOperation)arg.accept(vis)).evaluateExpression((State) (state)));
 			newContext.getBindings().add(binding);
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
 		MethodCall2 call = ((MethodCall2) (MiniJavaFactory.eINSTANCE.createMethodCall2()));
 		call.setMethodcall(this.it);
@@ -54,7 +55,7 @@ public class MethodCallOperationImpl extends ExpressionOperationImpl implements 
 		((MethodCallOperation)this.it.accept(vis)).call((Method) (realMethod), (State) (state));
 		Value returnValue = ((Value) (((StateOperation)state.accept(vis)).findCurrentFrame().getReturnValue()));
 		((StateOperation)state.accept(vis)).popCurrentFrame();
-		result = returnValue;
+		result = ((Value) (returnValue));
 		return result;
 	}
 

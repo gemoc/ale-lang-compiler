@@ -1,5 +1,7 @@
 package visitor.operation.miniJava.impl;
 
+import java.lang.Boolean;
+import java.lang.Integer;
 import miniJava.visitor.miniJava.Clazz;
 import miniJava.visitor.miniJava.Member;
 import miniJava.visitor.miniJava.Method;
@@ -36,7 +38,7 @@ public class MethodOperationImpl extends MemberOperationImpl implements MethodOp
 		if(!(MapService.containsKey((EMap) (this.it.getCache()), (Clazz) (c)))) {
 			Method that = ((Method) (this.it));
 			if(CollectionService.exists(c.getMembers(), (x) -> EqualService.equals((x), (that)))) {
-				result = this.it;
+				result = ((Method) (this.it));
 			}
 			else {
 				int i = ((int) (0));
@@ -53,32 +55,32 @@ public class MethodOperationImpl extends MemberOperationImpl implements MethodOp
 							while ((((j) < (paramlgt)) && (alltrue))) {
 								Parameter p1 = ((Parameter) (CollectionService.get(m.getParams(), j)));
 								Parameter tmpp = ((Parameter) (CollectionService.head(CollectionService.select(this.it.getParams(), (p2) -> ((ParameterOperation)p1.accept(vis)).compare((Parameter) (p2))))));
-								alltrue = !EqualService.equals((tmpp), (null));
-								j = (j) + (1);
+								alltrue = ((Boolean) (!EqualService.equals((tmpp), (null))));
+								j = ((Integer) ((j) + (1)));
 							}
 							if(alltrue) {
-								found = m;
+								found = ((Method) (m));
 							}
 						}
 					}
-					i = (i) + (1);
+					i = ((Integer) ((i) + (1)));
 				}
 				if(!EqualService.equals((found), (null))) {
-					result = found;
+					result = ((Method) (found));
 				}
 				else {
 					if(!EqualService.equals((c.getSuperClass()), (null))) {
-						result = ((MethodOperation)this.it.accept(vis)).findOverride((Clazz) (c.getSuperClass()));
+						result = ((Method) (((MethodOperation)this.it.accept(vis)).findOverride((Clazz) (c.getSuperClass()))));
 					}
 					else {
-						result = null;
+						result = ((Method) (null));
 					}
 				}
 			}
 			MapService.put((EMap) (this.it.getCache()), (Clazz) (c), (Method) (result));
 		}
 		else {
-			result = MapService.getFromMap((EMap) (this.it.getCache()), (Clazz) (c));
+			result = ((Method) (MapService.getFromMap((EMap) (this.it.getCache()), (Clazz) (c))));
 		}
 		return result;
 	}

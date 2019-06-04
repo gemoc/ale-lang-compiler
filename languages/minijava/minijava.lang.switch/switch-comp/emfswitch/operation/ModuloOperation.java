@@ -29,14 +29,14 @@ public class ModuloOperation extends ExpressionOperation {
 				IntegerValue bright = ((IntegerValue) (right));
 				IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 				tmp.setValue(MathService.mod((Modulo) (this.it), (int) (bleft.getValue()), (int) (bright.getValue())));
-				result = tmp;
+				result = ((IntegerValue) (tmp));
 			}
 			else {
-				result = null;
+				result = ((Value) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((Value) (null));
 		}
 		return result;
 	}

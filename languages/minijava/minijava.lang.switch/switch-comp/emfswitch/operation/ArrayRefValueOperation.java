@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Integer;
 import java.lang.String;
 import miniJava.ArrayRefValue;
 import miniJava.MiniJavaFactory;
@@ -22,7 +23,7 @@ public class ArrayRefValueOperation extends ValueOperation {
 		Value result;
 		ArrayRefValue tmp = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
 		tmp.setInstance(this.it.getInstance());
-		result = tmp;
+		result = ((ArrayRefValue) (tmp));
 		return result;
 	}
 
@@ -33,14 +34,14 @@ public class ArrayRefValueOperation extends ValueOperation {
 		int lgt = ((int) (CollectionService.size(this.it.getInstance().getValue())));
 		while ((i) < (lgt)) {
 			Value tmpv = ((Value) (CollectionService.get(this.it.getInstance().getValue(), i)));
-			res = (res) + (((ValueOperation) emfswitch.doSwitch(tmpv)).customToString());
+			res = ((String) ((res) + (((ValueOperation) emfswitch.doSwitch(tmpv)).customToString())));
 			if((i) < ((lgt) - (1))) {
-				res = (res) + (", ");
+				res = ((String) ((res) + (", ")));
 			}
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
-		res = (res) + ("]");
-		result = res;
+		res = ((String) ((res) + ("]")));
+		result = ((String) (res));
 		return result;
 	}
 }
