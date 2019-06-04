@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imp:Assign
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:imp="http://www.example.org/imp"
+    xsi:schemaLocation="http://www.example.org/imp ../../imp.model/model/imp.ecore"
+    name="a">
+  <exp xsi:type="imp:IntConst"
+      value="1"/>
+</imp:Assign>

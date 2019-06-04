@@ -2,26 +2,26 @@ behavior imp_exec;
 
 use execimp.MapService;
 
-open class Stmt {
+open class imp.Stmt {
 	def Store execute(Store s) {
 		result := s;
 	}
 }
 
-open class Skip {
+open class imp.Skip {
 	def Store execute(Store s) {
 		result := s;
 	}
 }
 
-open class Assign {
+open class imp.Assign {
 	def Store execute(Store s) {
 		s.values.put(self.name, self.exp.evaluate(s));
 		result := s;
 	}
 }
 
-open class Block {
+open class imp.Block {
 	def Store execute(Store s) {
 		result := s;
 		for(e in self.stmts) {
@@ -30,7 +30,7 @@ open class Block {
 	}
 }
 
-open class If {
+open class imp.If {
 	def Store execute(Store s) {
 		Value conde := self.cond.evaluate(s);
 		
@@ -47,7 +47,7 @@ open class If {
 	}
 }
 
-open class While {
+open class imp.While {
 	def Store execute(Store s) {
 		boolean stop := false;
 		Store tmp := s;
@@ -69,13 +69,13 @@ open class While {
 }
 
 
-open class Expr {
+open class imp.Expr {
 	def Value evaluate(Store s) {
 		result := imp::IntValue.create();
 	}
 }
 
-open class IntConst {
+open class imp.IntConst {
  	def Value evaluate(Store s) {
  		IntValue tmp := imp::IntValue.create();
 		tmp.value := self.value;
@@ -83,13 +83,29 @@ open class IntConst {
  	}
 }
 
-open class Var {
+open class imp.Var {
 	def Value evaluate(Store s) {
 		result := s.values.get(self.name);		
 	}
 }
 
-//open class Unary {
+open class imp.Binary {
+	def Value evaluate(Store s) {
+		imp::Value lv := self.lhs.evaluate(s);
+		imp::Value rv := self.rhs.evaluate(s);
+		if(self.op.getValue() == 4) { // LEQ
+			imp::IntValue ilv := lv.oclAsType(imp::IntValue);
+			imp::IntValue irv := rv.oclAsType(imp::IntValue);
+			imp::BoolValue res := imp::BoolValue.create();
+			res.value := ilv.value <= irv.value;
+			result := res;
+		} else {
+			result := null;
+		}
+	}
+}
+
+//open class imp.Unary {
 //	def Value evaluate(Store s) {
 //		//Value ev := self.expr.evaluate(s);
 ////		if(self.op == imp::UnaryOp.Negate) {

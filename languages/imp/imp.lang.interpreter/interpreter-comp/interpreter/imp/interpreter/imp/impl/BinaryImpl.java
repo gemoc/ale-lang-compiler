@@ -2,8 +2,13 @@ package interpreter.imp.interpreter.imp.impl;
 
 import interpreter.imp.interpreter.imp.Binary;
 import interpreter.imp.interpreter.imp.BinaryOp;
+import interpreter.imp.interpreter.imp.BoolValue;
 import interpreter.imp.interpreter.imp.Expr;
+import interpreter.imp.interpreter.imp.ImpFactory;
 import interpreter.imp.interpreter.imp.ImpPackage;
+import interpreter.imp.interpreter.imp.IntValue;
+import interpreter.imp.interpreter.imp.Store;
+import interpreter.imp.interpreter.imp.Value;
 import java.lang.Object;
 import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
@@ -11,6 +16,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class BinaryImpl extends ExprImpl implements Binary {
 	protected static final BinaryOp OP_EDEFAULT = BinaryOp.ADD;
@@ -171,5 +177,22 @@ public class BinaryImpl extends ExprImpl implements Binary {
 				return op != OP_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	public Value evaluate(Store s) {
+		Value result;
+		Value lv = ((Value) (((Expr) (this.getLhs())).evaluate((Store) (s))));
+		Value rv = ((Value) (((Expr) (this.getRhs())).evaluate((Store) (s))));
+		if (EqualService.equals((this.op.getValue()), (4))) {
+			IntValue ilv = ((IntValue) (((IntValue) (lv))));
+			IntValue irv = ((IntValue) (((IntValue) (rv))));
+			BoolValue res = ((BoolValue) (ImpFactory.eINSTANCE.createBoolValue()));
+			res.setValue((ilv.getValue()) <= (irv.getValue()));
+			result = (Value) (res) ;
+		}
+		else {
+			result = (Value) (null) ;
+		}
+		return result;
 	}
 }

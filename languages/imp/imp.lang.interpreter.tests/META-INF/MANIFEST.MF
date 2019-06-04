@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: imp.lang.interpreter.tests
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: imp.lang.interpreter.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ org.junit.jupiter.api;bundle-version="5.1.0",
+ org.eclipse.emf.ecore;bundle-version="2.14.0",
+ imp.lang.interpreter;bundle-version="1.0.0",
+ imp.lang.tests;bundle-version="1.0.0"
+

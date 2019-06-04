@@ -15,7 +15,7 @@ import static org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.*
 abstract class AbstractFsmTest {
 	def Iterable<DynamicTest> test0() {
 
-		val root = new File('/home/manuel/dev/java/ale-lang/languages/fsm/fsm.lang.tests/programs/')
+		val root = new File('../fsm.lang.tests/programs/')
 
 		root.listFiles
 			.filter[it.isFile]
