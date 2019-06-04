@@ -66,14 +66,14 @@ public class IfOpImpl extends ExprOpImpl implements IfOp {
     if(vcond instanceof EvalBoolRes) {
       EvalBoolRes bvcond = ((EvalBoolRes) (vcond));
       if(bvcond.isValue()) {
-        result = rev.$((Expr)this.obj.getThn()).eval(((Ctx) (ctx)));
+        result = ((EvalRes) (rev.$((Expr)this.obj.getThn()).eval(((Ctx) (ctx)))));
       }
       else {
-        result = rev.$((Expr)this.obj.getEls()).eval(((Ctx) (ctx)));
+        result = ((EvalRes) (rev.$((Expr)this.obj.getEls()).eval(((Ctx) (ctx)))));
       }
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }

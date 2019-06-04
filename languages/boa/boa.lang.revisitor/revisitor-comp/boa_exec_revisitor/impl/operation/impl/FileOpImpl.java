@@ -46,7 +46,6 @@ import boa_exec_revisitor.impl.operation.ThisOp;
 import boa_exec_revisitor.impl.operation.TopLevelCmdOp;
 import boa_exec_revisitor.impl.operation.VarOp;
 import boa_exec_revisitor.impl.operation.WithOp;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
 public class FileOpImpl implements FileOp {
   private BoaRevisitor<AppOp, ArithOpOp, ArithOpDivideOp, ArithOpMinusOp, ArithOpPlusOp, ArithOpRemainderOp, ArithOpTimesOp, AssignOp, BObjectOp, BoolOp, BoolOpOp, BoolOpAndOp, BoolOpOrOp, CmpOpOp, CmpOpEqualOp, CmpOpLessOp, CmpOpUnequalOp, CopyOp, CtxOp, DefOp, EvalBoolResOp, EvalBoundFunResOp, EvalFunResOp, EvalIntResOp, EvalMapResOp, EvalResOp, ExprOp, FieldOp, FileOp, FunOp, IfOp, IntOp, LetOp, NotOp, ProjectOp, SeqOp, SkipOp, ThisOp, TopLevelCmdOp, VarOp, WithOp> rev;
@@ -60,7 +59,6 @@ public class FileOpImpl implements FileOp {
   }
 
   public void eval() {
-    LogService.log("v2");
     Ctx ctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
     for(TopLevelCmd it: this.obj.getCommands()) {
       rev.$((TopLevelCmd)it).nextLine(((Ctx) (ctx)));

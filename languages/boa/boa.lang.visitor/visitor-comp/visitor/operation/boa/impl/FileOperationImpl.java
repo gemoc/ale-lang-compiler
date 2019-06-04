@@ -4,7 +4,6 @@ import boa.visitor.boa.BoaFactory;
 import boa.visitor.boa.Ctx;
 import boa.visitor.boa.File;
 import boa.visitor.boa.TopLevelCmd;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import visitor.VisitorInterface;
 import visitor.operation.boa.FileOperation;
 import visitor.operation.boa.TopLevelCmdOperation;
@@ -20,7 +19,6 @@ public class FileOperationImpl implements FileOperation {
 	}
 
 	public void eval() {
-		LogService.log("v2");
 		Ctx ctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
 		for(TopLevelCmd it: this.it.getCommands()) {
 			((TopLevelCmdOperation)it.accept(vis)).nextLine((Ctx) (ctx));

@@ -25,14 +25,14 @@ public class IfOperationImpl extends ExprOperationImpl implements IfOperation {
 		if(vcond instanceof EvalBoolRes) {
 			EvalBoolRes bvcond = ((EvalBoolRes) (vcond));
 			if(bvcond.isValue()) {
-				result = ((ExprOperation)this.it.getThn().accept(vis)).eval((Ctx) (ctx));
+				result = ((EvalRes) (((ExprOperation)this.it.getThn().accept(vis)).eval((Ctx) (ctx))));
 			}
 			else {
-				result = ((ExprOperation)this.it.getEls().accept(vis)).eval((Ctx) (ctx));
+				result = ((EvalRes) (((ExprOperation)this.it.getEls().accept(vis)).eval((Ctx) (ctx))));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

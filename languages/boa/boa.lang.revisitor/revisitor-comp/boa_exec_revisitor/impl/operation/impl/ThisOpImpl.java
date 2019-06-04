@@ -66,7 +66,7 @@ public class ThisOpImpl extends ExprOpImpl implements ThisOp {
     EvalRes result;
     EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
     MapService.putAll((EMap) (ret.getValues()), (EMap) (ctx.getTh()));
-    result = ret;
+    result = ((EvalMapRes) (ret));
     return result;
   }
 }

@@ -71,14 +71,14 @@ public class BoolOpAndOpImpl extends BoolOpOpImpl implements BoolOpAndOp {
         EvalBoolRes ivrhs = ((EvalBoolRes) (vrhs));
         EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
         ret.setValue(((ivlhs.isValue()) && (ivrhs.isValue())));
-        result = ret;
+        result = ((EvalBoolRes) (ret));
       }
       else {
-        result = null;
+        result = ((EvalRes) (null));
       }
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }

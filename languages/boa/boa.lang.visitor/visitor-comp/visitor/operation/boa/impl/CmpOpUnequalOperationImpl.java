@@ -32,14 +32,14 @@ public class CmpOpUnequalOperationImpl extends CmpOpOperationImpl implements Cmp
 				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
 				EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 				ret.setValue(!EqualService.equals((ivlhs.getValue()), (ivrhs.getValue())));
-				result = ret;
+				result = ((EvalBoolRes) (ret));
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

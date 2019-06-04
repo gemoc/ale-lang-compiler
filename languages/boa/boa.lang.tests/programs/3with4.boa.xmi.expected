@@ -1,0 +1,66 @@
+rec = <fun>
+<fun>
+{a=4, b=5}
+p = {x=7, y=8}
+7
+10
+{}
+57
+p = {x=7, y=8}
+7
+10
+{x=10, y=8}
+0
+f = <fun>
+12
+{x=7, y=8}
+fib = {app=<fun>}
+10946
+17711
+28657
+46368
+75025
+121393
+196418
+317811
+514229
+832040
+1346269
+2178309
+3524578
+5702887
+9227465
+f = <fun>
+57
+6
+list = {nil=<fun>, iterator=<fun>, getTail=<fun>, getHead=<fun>, get=<fun>, isEmpty=<fun>, map=<fun>, cons=<fun>}
+a = {nil=<fun>, head=1000, iterator=<fun>, getTail=<fun>, getHead=<fun>, tail={nil=<fun>, head=2000, iterator=<fun>, getTail=<fun>, getHead=<fun>, tail={nil=<fun>, head=3000, iterator=<fun>, getTail=<fun>, getHead=<fun>, tail={nil=<fun>, iterator=<fun>, getTail=<fun>, getHead=<fun>, get=<fun>, isEmpty=<fun>, map=<fun>, cons=<fun>, empty=true}, get=<fun>, isEmpty=<fun>, map=<fun>, cons=<fun>, empty=false}, get=<fun>, isEmpty=<fun>, map=<fun>, cons=<fun>, empty=false}, get=<fun>, isEmpty=<fun>, map=<fun>, cons=<fun>, empty=false}
+{nil=<fun>, iterator=<fun>, getTail=<fun>, getHead=<fun>, get=<fun>, isEmpty=<fun>, map=<fun>, cons=<fun>, empty=true}
+{nil=<fun>, head=42, iterator=<fun>, getTail=<fun>, getHead=<fun>, tail={nil=<fun>, iterator=<fun>, getTail=<fun>, getHead=<fun>, get=<fun>, isEmpty=<fun>, map=<fun>, cons=<fun>, empty=true}, get=<fun>, isEmpty=<fun>, map=<fun>, cons=<fun>, empty=false}
+x = 1000
+x = 2000
+x = 3000
+true
+fib = {app=<fun>}
+55
+4
+p = {x=7, y=8}
+fib = {app=<fun>}
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+144
+233
+377
+610
+p = {x=7, y=8}
+7
+{a=3, b=4}

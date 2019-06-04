@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
 public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	protected EList<TopLevelCmd> commands;
@@ -86,7 +85,6 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	}
 
 	public void eval() {
-		LogService.log("v2");
 		Ctx ctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
 		for (TopLevelCmd it : this.getCommands()) {
 			((TopLevelCmd) (it)).nextLine((Ctx) (ctx));

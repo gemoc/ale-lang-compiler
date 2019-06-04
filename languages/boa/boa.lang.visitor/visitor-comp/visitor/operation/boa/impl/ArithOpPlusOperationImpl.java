@@ -30,14 +30,14 @@ public class ArithOpPlusOperationImpl extends ArithOpOperationImpl implements Ar
 				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
 				EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
 				ret.setValue((ivlhs.getValue()) + (ivrhs.getValue()));
-				result = ret;
+				result = ((EvalIntRes) (ret));
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

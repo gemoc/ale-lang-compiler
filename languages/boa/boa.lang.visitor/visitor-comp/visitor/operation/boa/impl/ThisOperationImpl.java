@@ -25,7 +25,7 @@ public class ThisOperationImpl extends ExprOperationImpl implements ThisOperatio
 		EvalRes result;
 		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 		MapService.putAll((EMap) (ret.getValues()), (EMap) (ctx.getTh()));
-		result = ret;
+		result = ((EvalMapRes) (ret));
 		return result;
 	}
 }

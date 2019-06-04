@@ -33,14 +33,14 @@ public class WithOperationImpl extends ExprOperationImpl implements WithOperatio
 				EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 				MapService.putAll((EMap) (ret.getValues()), (EMap) (mvlhs.getValues()));
 				MapService.putAll((EMap) (ret.getValues()), (EMap) (mvrhs.getValues()));
-				result = ret;
+				result = ((EvalMapRes) (ret));
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

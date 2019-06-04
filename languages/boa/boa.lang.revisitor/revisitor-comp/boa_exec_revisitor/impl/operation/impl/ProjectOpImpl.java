@@ -75,18 +75,18 @@ public class ProjectOpImpl extends ExprOpImpl implements ProjectOp {
         EvalRes x = ((EvalRes) (mvexp.getValues().get((String) (this.obj.getName()))));
         if(x instanceof EvalFunRes) {
           EvalFunRes func = ((EvalFunRes) (x));
-          result = rev.$((Project)this.obj).project(((EvalFunRes) (func)), ((EvalMapRes) (mvexp)));
+          result = ((EvalRes) (rev.$((Project)this.obj).project(((EvalFunRes) (func)), ((EvalMapRes) (mvexp)))));
         }
         else {
-          result = x;
+          result = ((EvalRes) (x));
         }
       }
       else {
-        result = null;
+        result = ((EvalRes) (null));
       }
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }
@@ -98,7 +98,7 @@ public class ProjectOpImpl extends ExprOpImpl implements ProjectOp {
     ret.setCtx(func.getCtx());
     ret.setName(func.getName());
     MapService.replaceWith((EMap) (ret.getTh()), (EMap) (mvexp.getValues()));
-    result = ret;
+    result = ((EvalBoundFunRes) (ret));
     return result;
   }
 }

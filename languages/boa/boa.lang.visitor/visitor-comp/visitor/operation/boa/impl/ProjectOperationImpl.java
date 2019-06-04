@@ -34,18 +34,18 @@ public class ProjectOperationImpl extends ExprOperationImpl implements ProjectOp
 				EvalRes x = ((EvalRes) (mvexp.getValues().get((String) (this.it.getName()))));
 				if(x instanceof EvalFunRes) {
 					EvalFunRes func = ((EvalFunRes) (x));
-					result = ((ProjectOperation)this.it.accept(vis)).project((EvalFunRes) (func), (EvalMapRes) (mvexp));
+					result = ((EvalRes) (((ProjectOperation)this.it.accept(vis)).project((EvalFunRes) (func), (EvalMapRes) (mvexp))));
 				}
 				else {
-					result = x;
+					result = ((EvalRes) (x));
 				}
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}
@@ -57,7 +57,7 @@ public class ProjectOperationImpl extends ExprOperationImpl implements ProjectOp
 		ret.setCtx(func.getCtx());
 		ret.setName(func.getName());
 		MapService.replaceWith((EMap) (ret.getTh()), (EMap) (mvexp.getValues()));
-		result = ret;
+		result = ((EvalBoundFunRes) (ret));
 		return result;
 	}
 }

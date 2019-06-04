@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<boa:File xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:boa="http://www.example.org/boa">
+  <commands xsi:type="boa:Def" name="rec">
+    <expr xsi:type="boa:Fun" name="f">
+      <body xsi:type="boa:Project" name="self">
+        <exp xsi:type="boa:BObject">
+          <fields name="self">
+            <value xsi:type="boa:Fun" name="x">
+              <body xsi:type="boa:App">
+                <lhs xsi:type="boa:Var" name="f"/>
+                <rhs xsi:type="boa:App">
+                  <lhs xsi:type="boa:Project" name="self">
+                    <exp xsi:type="boa:This"/>
+                  </lhs>
+                  <rhs xsi:type="boa:Var" name="x"/>
+                </rhs>
+              </body>
+            </value>
+          </fields>
+        </exp>
+      </body>
+    </expr>
+  </commands>
+</boa:File>

@@ -21,7 +21,7 @@ public abstract class ExprOperationImpl extends TopLevelCmdOperationImpl impleme
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		result = null;
+		result = ((EvalRes) (null));
 		return result;
 	}
 

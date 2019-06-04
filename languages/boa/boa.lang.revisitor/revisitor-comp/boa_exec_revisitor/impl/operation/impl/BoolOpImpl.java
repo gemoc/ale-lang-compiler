@@ -64,7 +64,7 @@ public class BoolOpImpl extends ExprOpImpl implements BoolOp {
     EvalRes result;
     EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
     ret.setValue(this.obj.isValue());
-    result = ret;
+    result = ((EvalBoolRes) (ret));
     return result;
   }
 }

@@ -62,7 +62,7 @@ public class ExprOpImpl extends TopLevelCmdOpImpl implements ExprOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    result = null;
+    result = ((EvalRes) (null));
     return result;
   }
 

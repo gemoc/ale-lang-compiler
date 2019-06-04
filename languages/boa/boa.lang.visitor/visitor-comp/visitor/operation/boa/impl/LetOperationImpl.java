@@ -30,7 +30,7 @@ public class LetOperationImpl extends ExprOperationImpl implements LetOperation 
 		Ctx nctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
 		MapService.putAll((EMap) (nctx.getEnv()), (EMap) (ctx.getEnv()));
 		MapService.put((EMap) (nctx.getEnv()), (String) (this.it.getName()), (EvalRes) (vlhs));
-		result = ((ExprOperation)this.it.getRhs().accept(vis)).eval((Ctx) (nctx));
+		result = ((EvalRes) (((ExprOperation)this.it.getRhs().accept(vis)).eval((Ctx) (nctx))));
 		return result;
 	}
 }

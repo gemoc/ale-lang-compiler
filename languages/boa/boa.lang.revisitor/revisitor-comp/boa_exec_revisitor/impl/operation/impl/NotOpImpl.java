@@ -68,10 +68,10 @@ public class NotOpImpl extends ExprOpImpl implements NotOp {
       EvalBoolRes bvvalue = ((EvalBoolRes) (vvalue));
       EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
       ret.setValue(!(bvvalue.isValue()));
-      result = ret;
+      result = ((EvalBoolRes) (ret));
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }

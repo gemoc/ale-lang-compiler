@@ -2,6 +2,7 @@ package boa_exec_revisitor.impl.operation.impl;
 
 import boa.BoaFactory;
 import boa.Ctx;
+import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.Skip;
 import boa.revisitor.BoaRevisitor;
@@ -61,7 +62,7 @@ public class SkipOpImpl extends ExprOpImpl implements SkipOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    result = BoaFactory.eINSTANCE.createEvalMapRes();
+    result = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
     return result;
   }
 }

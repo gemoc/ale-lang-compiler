@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<boa:File xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:boa="http://www.example.org/boa">
+  <commands xsi:type="boa:Def" name="cow">
+    <expr xsi:type="boa:BObject">
+      <fields name="horn">
+        <value xsi:type="boa:Int" value="7"/>
+      </fields>
+      <fields name="tail">
+        <value xsi:type="boa:BObject">
+          <fields name="a">
+            <value xsi:type="boa:Int" value="5"/>
+          </fields>
+          <fields name="b">
+            <value xsi:type="boa:Int" value="6"/>
+          </fields>
+        </value>
+      </fields>
+    </expr>
+  </commands>
+  <commands xsi:type="boa:Def" name="bull">
+    <expr xsi:type="boa:Copy">
+      <copy xsi:type="boa:Var" name="cow"/>
+    </expr>
+  </commands>
+  <commands xsi:type="boa:Assign" name="horn">
+    <lhs xsi:type="boa:Var" name="bull"/>
+    <rhs xsi:type="boa:Int" value="8"/>
+  </commands>
+  <commands xsi:type="boa:Var" name="bull"/>
+  <commands xsi:type="boa:Var" name="cow"/>
+  <commands xsi:type="boa:Assign" name="a">
+    <lhs xsi:type="boa:Project" name="tail">
+      <exp xsi:type="boa:Var" name="bull"/>
+    </lhs>
+    <rhs xsi:type="boa:Int" value="100"/>
+  </commands>
+  <commands xsi:type="boa:Var" name="bull"/>
+  <commands xsi:type="boa:Var" name="cow"/>
+</boa:File>

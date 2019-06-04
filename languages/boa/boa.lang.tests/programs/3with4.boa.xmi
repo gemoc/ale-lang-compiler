@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<boa:File xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:boa="http://www.example.org/boa">
+  <commands xsi:type="boa:With">
+    <lhs xsi:type="boa:BObject">
+      <fields name="a">
+        <value xsi:type="boa:Int" value="3"/>
+      </fields>
+    </lhs>
+    <rhs xsi:type="boa:BObject">
+      <fields name="b">
+        <value xsi:type="boa:Int" value="4"/>
+      </fields>
+    </rhs>
+  </commands>
+</boa:File>

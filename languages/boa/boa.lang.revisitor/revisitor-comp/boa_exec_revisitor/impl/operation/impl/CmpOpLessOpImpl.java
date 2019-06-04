@@ -72,14 +72,14 @@ public class CmpOpLessOpImpl extends CmpOpOpImpl implements CmpOpLessOp {
         EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
         EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
         ret.setValue((ivlhs.getValue()) < (ivrhs.getValue()));
-        result = ret;
+        result = ((EvalBoolRes) (ret));
       }
       else {
-        result = null;
+        result = ((EvalRes) (null));
       }
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }
