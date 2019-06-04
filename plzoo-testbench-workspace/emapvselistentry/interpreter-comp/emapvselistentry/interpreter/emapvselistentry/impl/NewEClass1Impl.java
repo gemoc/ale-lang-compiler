@@ -2,14 +2,12 @@ package emapvselistentry.interpreter.emapvselistentry.impl;
 
 import emapvselistentry.interpreter.emapvselistentry.EmapvselistentryPackage;
 import emapvselistentry.interpreter.emapvselistentry.NewEClass1;
-import emapvselistentry.interpreter.emapvselistentry.NewEClass2;
-import emapvselistentry.interpreter.emapvselistentry.NewEClass4;
-import emapvselistentry.interpreter.emapvselistentry.NewEClass5;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Map.Entry;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -43,9 +41,9 @@ public class NewEClass1Impl extends MinimalEObjectImpl.Container implements NewE
 		return EmapvselistentryPackage.Literals.NEW_ECLASS1;
 	}
 
-	public EMap<Integer, Boolean> getNeweclass2() {
+	public EList<Entry<Integer, Boolean>> getNeweclass2() {
 		if (neweclass2 == null) {
-			neweclass2 = new EObjectResolvingEList<NewEClass2>(NewEClass2.class, this, EmapvselistentryPackage.NEW_ECLASS1__NEWECLASS2);
+			neweclass2 = new EObjectResolvingEList<Entry<Integer, Boolean>>(Entry.class, this, EmapvselistentryPackage.NEW_ECLASS1__NEWECLASS2);
 		}
 		return neweclass2;
 	}
@@ -57,14 +55,13 @@ public class NewEClass1Impl extends MinimalEObjectImpl.Container implements NewE
 		return neweclass3;
 	}
 
-	public NewEClass4 getNeweclass4() {
+	public Entry<Integer, Boolean> getNeweclass4() {
 		if (neweclass4 != null && ((EObject) neweclass4).eIsProxy()) {
 			InternalEObject oldNeweclass4 = (InternalEObject) neweclass4;
-			neweclass4 = (NewEClass4) eResolveProxy(oldNeweclass4);
+			neweclass4 = (Entry<Integer, Boolean>) eResolveProxy(oldNeweclass4);
 			if (neweclass4 != oldNeweclass4) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EmapvselistentryPackage.NEW_ECLASS1__NEWECLASS4,
-							oldNeweclass4, neweclass4));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EmapvselistentryPackage.NEW_ECLASS1__NEWECLASS4, oldNeweclass4, neweclass4));
 			}
 		}
 		return neweclass4;
@@ -74,8 +71,8 @@ public class NewEClass1Impl extends MinimalEObjectImpl.Container implements NewE
 		return neweclass4;
 	}
 
-	public void setNeweclass4(NewEClass4 newNeweclass4) {
-		NewEClass4 oldNeweclass4 = neweclass4;
+	public void setNeweclass4(Entry<Integer, Boolean> newNeweclass4) {
+		Entry<Integer, Boolean> oldNeweclass4 = neweclass4;
 		neweclass4 = newNeweclass4;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, EmapvselistentryPackage.NEW_ECLASS1__NEWECLASS4, oldNeweclass4, neweclass4));
@@ -99,7 +96,7 @@ public class NewEClass1Impl extends MinimalEObjectImpl.Container implements NewE
 		return msgs;
 	}
 
-	public void setNeweclass5(NewEClass5 newNeweclass5) {
+	public void setNeweclass5(Entry<Integer, Boolean> newNeweclass5) {
 		if (newNeweclass5 != neweclass5) {
 			NotificationChain msgs = null;
 			if (neweclass5 != null)
@@ -148,7 +145,7 @@ public class NewEClass1Impl extends MinimalEObjectImpl.Container implements NewE
 		switch (featureID) {
 			case EmapvselistentryPackage.NEW_ECLASS1__NEWECLASS2 :
 				getNeweclass2().clear();
-				getNeweclass2().addAll((Collection<? extends Entry<Integer, Boolean>>)newValue);
+				getNeweclass2().addAll((Collection<? extends Entry<Integer, Boolean>>) newValue);
 				return;
 			case EmapvselistentryPackage.NEW_ECLASS1__NEWECLASS3 :
 				((Setting)getNeweclass3()).set(newValue);
