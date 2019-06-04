@@ -2,7 +2,10 @@ package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
 import fsm.model.fsm.Buffer;
+import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.String;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class BufferOperation {
@@ -26,7 +29,7 @@ public class BufferOperation {
 
 	public boolean bisEmpty() {
 		boolean result;
-		result = ((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.it.getCurrentValues())), (0))) || (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.it.getCurrentValues()), ("'empty'"))));
+		result = ((Boolean) (((EqualService.equals((CollectionService.size(this.it.getCurrentValues())), (0))) || (EqualService.equals((this.it.getCurrentValues()), ("'empty'"))))));
 		return result;
 	}
 
@@ -42,16 +45,16 @@ public class BufferOperation {
 	public String dequeue() {
 		String result;
 		String res = ((String) (""));
-		int firstComma = ((int) (this.it.getCurrentValues().indexOf(",")));
+		int firstComma = ((int) (this.it.getCurrentValues().indexOf((String) (","))));
 		if((firstComma) < (0)) {
-			res = this.it.getCurrentValues();
+			res = ((String) (this.it.getCurrentValues()));
 			this.it.setCurrentValues("'empty'");
-			result = res;
+			result = ((String) (res));
 		}
 		else {
-			res = this.it.getCurrentValues().substring(0, firstComma);
-			this.it.setCurrentValues(this.it.getCurrentValues().substring((firstComma) + (1), org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.it.getCurrentValues())));
-			result = res;
+			res = this.it.getCurrentValues().substring((Integer) (0), (int) (firstComma));
+			this.it.setCurrentValues(this.it.getCurrentValues().substring(((firstComma) + (1)), (Integer) (CollectionService.size(this.it.getCurrentValues()))));
+			result = ((String) (res));
 		}
 		return result;
 	}

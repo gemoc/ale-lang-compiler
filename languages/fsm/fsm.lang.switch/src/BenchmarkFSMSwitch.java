@@ -68,7 +68,7 @@ public class BenchmarkFSMSwitch {
 			final fsm.model.fsm.System result = (fsm.model.fsm.System) resource.getContents().get(0);
 
 			final long start = System.currentTimeMillis();
-			((SystemOperation) emfswitch.doSwitch(result)).main();
+			((SystemOperation) emfswitch.doSwitch(result)).main(30000000);
 			times[i] = System.currentTimeMillis() - start;
 
 		}

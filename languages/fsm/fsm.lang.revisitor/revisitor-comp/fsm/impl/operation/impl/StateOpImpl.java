@@ -5,6 +5,7 @@ import fsm.impl.operation.FSMOp;
 import fsm.impl.operation.StateOp;
 import fsm.impl.operation.SystemOp;
 import fsm.impl.operation.TransitionOp;
+import fsm.model.fsm.Buffer;
 import fsm.model.fsm.State;
 import fsm.model.fsm.Transition;
 import fsm.model.revisitor.FsmRevisitor;
@@ -26,7 +27,7 @@ public class StateOpImpl implements StateOp {
   public void step(String inputString) {
     Transition validTransition = ((Transition) (CollectionService.head(CollectionService.select(this.obj.getOutgoing(), (t) -> EqualService.equals((inputString), (t.getTrigger()))))));
     if(EqualService.equals((validTransition), (null))) {
-      rev.$(this.obj.getFsm().getOutputBuffer()).enqueue(inputString);
+      rev.$((Buffer)this.obj.getFsm().getOutputBuffer()).enqueue(((String) (inputString)));
     }
     else {
       rev.$((Transition)validTransition).fire();

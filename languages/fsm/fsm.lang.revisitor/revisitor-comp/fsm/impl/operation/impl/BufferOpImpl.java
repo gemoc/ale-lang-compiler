@@ -1,5 +1,6 @@
 package fsm.impl.operation.impl;
 
+import fsm.FsmService;
 import fsm.impl.operation.BufferOp;
 import fsm.impl.operation.FSMOp;
 import fsm.impl.operation.StateOp;
@@ -7,6 +8,8 @@ import fsm.impl.operation.SystemOp;
 import fsm.impl.operation.TransitionOp;
 import fsm.model.fsm.Buffer;
 import fsm.model.revisitor.FsmRevisitor;
+import java.lang.Boolean;
+import java.lang.Integer;
 import java.lang.String;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -33,7 +36,7 @@ public class BufferOpImpl implements BufferOp {
 
   public boolean bisEmpty() {
     boolean result;
-    result = ((org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.size(this.obj.getCurrentValues())), (0))) || (org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((this.obj.getCurrentValues()), ("'empty'"))));
+    result = ((Boolean) (((EqualService.equals((CollectionService.size(this.obj.getCurrentValues())), (0))) || (EqualService.equals((this.obj.getCurrentValues()), ("'empty'"))))));
     return result;
   }
 
@@ -49,16 +52,16 @@ public class BufferOpImpl implements BufferOp {
   public String dequeue() {
     String result;
     String res = ((String) (""));
-    int firstComma = ((int) (fsm.FsmService.indexOf(this.obj.getCurrentValues(), ",")));
+    int firstComma = ((int) (FsmService.indexOf((String) (this.obj.getCurrentValues()), (String) (","))));
     if((firstComma) < (0)) {
-      res = this.obj.getCurrentValues();
+      res = ((String) (this.obj.getCurrentValues()));
       this.obj.setCurrentValues("'empty'");
-      result = res;
+      result = ((String) (res));
     }
     else {
-      res = fsm.FsmService.substring(this.obj.getCurrentValues(), 0, firstComma);
-      this.obj.setCurrentValues(fsm.FsmService.substring(this.obj.getCurrentValues(), (firstComma) + (1), CollectionService.size(this.obj.getCurrentValues())));
-      result = res;
+      res = FsmService.substring((String) (this.obj.getCurrentValues()), (Integer) (0), (int) (firstComma));
+      this.obj.setCurrentValues(FsmService.substring((String) (this.obj.getCurrentValues()), ((firstComma) + (1)), (Integer) (CollectionService.size(this.obj.getCurrentValues()))));
+      result = ((String) (res));
     }
     return result;
   }

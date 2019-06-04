@@ -12,11 +12,11 @@ open class System {
 		}
 	}
 	
-	def void main() {
+	def void main(Integer limit) {
 		self.intialize();
 		boolean anFSMRan := true;
 		int cptr := 0;
-		while(anFSMRan and cptr < 50000000) {
+		while(anFSMRan and cptr < limit) {
 			anFSMRan := false;
 			for(fsm in self.ownedFsms) {
 				if(not fsm.inputBuffer.bisEmpty()) {

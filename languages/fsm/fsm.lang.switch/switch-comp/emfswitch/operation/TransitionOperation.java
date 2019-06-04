@@ -20,7 +20,7 @@ public class TransitionOperation {
 		LogService.log(((("Firing ") + (this.it.getName())) + (" and entering ")) + (this.it.getTgt().getName()));
 		FSM fsm = ((FSM) (this.it.getSrc().getFsm()));
 		fsm.setCurrentState(this.it.getTgt());
-		((BufferOperation) emfswitch.doSwitch(fsm.getOutputBuffer())).enqueue((String) this.it.getAction());
+		((BufferOperation) emfswitch.doSwitch(fsm.getOutputBuffer())).enqueue((String) (this.it.getAction()));
 		fsm.setConsummedString((fsm.getConsummedString()) + (fsm.getUnderProcessTrigger()));
 	}
 }

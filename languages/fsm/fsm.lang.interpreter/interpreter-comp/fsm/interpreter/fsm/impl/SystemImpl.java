@@ -114,11 +114,11 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements System {
 		}
 	}
 
-	public void main() {
+	public void main(int limit) {
 		((System) (this)).intialize();
 		boolean anFSMRan = ((boolean) (true));
 		int cptr = ((int) (0));
-		while (((anFSMRan) && ((cptr) < (50000000)))) {
+		while (((anFSMRan) && ((cptr) < (limit)))) {
 			anFSMRan = false;
 			for (FSM fsm : this.getOwnedFsms()) {
 				if (!(((Buffer) (fsm.getInputBuffer())).bisEmpty())) {

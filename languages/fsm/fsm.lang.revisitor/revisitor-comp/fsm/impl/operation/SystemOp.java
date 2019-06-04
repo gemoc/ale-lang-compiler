@@ -3,5 +3,5 @@ package fsm.impl.operation;
 public interface SystemOp {
 	void intialize();
 
-	void main();
+	void main(int limit);
 }

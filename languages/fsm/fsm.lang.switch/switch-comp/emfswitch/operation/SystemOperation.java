@@ -4,6 +4,8 @@ import emfswitch.SwitchImplementation;
 import fsm.model.fsm.Buffer;
 import fsm.model.fsm.FSM;
 import fsm.model.fsm.System;
+import java.lang.Boolean;
+import java.lang.Integer;
 
 public class SystemOperation {
 	private final System it;
@@ -24,18 +26,18 @@ public class SystemOperation {
 		}
 	}
 
-	public void main() {
+	public void main(int limit) {
 		((SystemOperation) emfswitch.doSwitch(this.it)).intialize();
 		boolean anFSMRan = ((boolean) (true));
 		int cptr = ((int) (0));
-		while (((anFSMRan) && ((cptr) < (50000000)))) {
-			anFSMRan = false;
+		while (((anFSMRan) && ((cptr) < (limit)))) {
+			anFSMRan = ((Boolean) (false));
 			for (FSM fsm: this.it.getOwnedFsms()) {
 				if(!(((BufferOperation) emfswitch.doSwitch(fsm.getInputBuffer())).bisEmpty())) {
 					((FSMOperation) emfswitch.doSwitch(fsm)).run();
-					anFSMRan = true;
+					anFSMRan = ((Boolean) (true));
 				}
-				cptr = (cptr) + (1);
+				cptr = ((Integer) ((cptr) + (1)));
 			}
 		}
 	}

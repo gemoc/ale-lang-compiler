@@ -3,6 +3,8 @@ package visitor.operation.fsm.impl;
 import fsm.visitor.fsm.Buffer;
 import fsm.visitor.fsm.FSM;
 import fsm.visitor.fsm.System;
+import java.lang.Boolean;
+import java.lang.Integer;
 import visitor.VisitorInterface;
 import visitor.operation.fsm.BufferOperation;
 import visitor.operation.fsm.FSMOperation;
@@ -27,18 +29,18 @@ public class SystemOperationImpl implements SystemOperation {
 		}
 	}
 
-	public void main() {
+	public void main(int limit) {
 		((SystemOperation)this.it.accept(vis)).intialize();
 		boolean anFSMRan = ((boolean) (true));
 		int cptr = ((int) (0));
-		while (((anFSMRan) && ((cptr) < (50000000)))) {
-			anFSMRan = false;
+		while (((anFSMRan) && ((cptr) < (limit)))) {
+			anFSMRan = ((Boolean) (false));
 			for(FSM fsm: this.it.getOwnedFsms()) {
 				if(!(((BufferOperation)fsm.getInputBuffer().accept(vis)).bisEmpty())) {
 					((FSMOperation)fsm.accept(vis)).run();
-					anFSMRan = true;
+					anFSMRan = ((Boolean) (true));
 				}
-				cptr = (cptr) + (1);
+				cptr = ((Integer) ((cptr) + (1)));
 			}
 		}
 	}

@@ -10,5 +10,5 @@ public interface System extends EObject {
 
 	void intialize();
 
-	void main();
+	void main(int limit);
 }

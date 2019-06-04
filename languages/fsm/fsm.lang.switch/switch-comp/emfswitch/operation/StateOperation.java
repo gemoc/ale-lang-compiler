@@ -20,7 +20,7 @@ public class StateOperation {
 	public void step(String inputString) {
 		Transition validTransition = ((Transition) (CollectionService.head(CollectionService.select(this.it.getOutgoing(), (t) -> EqualService.equals((inputString), (t.getTrigger()))))));
 		if(EqualService.equals((validTransition), (null))) {
-			((BufferOperation) emfswitch.doSwitch(it.getFsm().getOutputBuffer())).enqueue(inputString);
+			((BufferOperation) emfswitch.doSwitch(this.it.getFsm().getOutputBuffer())).enqueue((String) (inputString));
 		}
 		else {
 			((TransitionOperation) emfswitch.doSwitch(validTransition)).fire();

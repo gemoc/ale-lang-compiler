@@ -24,7 +24,7 @@ public class FSMOperation {
 	public void run() {
 		this.it.setUnderProcessTrigger(((BufferOperation) emfswitch.doSwitch(this.it.getInputBuffer())).dequeue());
 		LogService.log(((("run SM") + (this.it.getName())) + (" step on ")) + (this.it.getUnderProcessTrigger()));
-		((StateOperation) emfswitch.doSwitch(this.it.getCurrentState())).step((String) this.it.getUnderProcessTrigger());
+		((StateOperation) emfswitch.doSwitch(this.it.getCurrentState())).step((String) (this.it.getUnderProcessTrigger()));
 		this.it.setUnderProcessTrigger("");
 	}
 }

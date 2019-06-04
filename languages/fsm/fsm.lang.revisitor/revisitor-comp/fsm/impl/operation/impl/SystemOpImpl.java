@@ -9,6 +9,8 @@ import fsm.model.fsm.Buffer;
 import fsm.model.fsm.FSM;
 import fsm.model.fsm.System;
 import fsm.model.revisitor.FsmRevisitor;
+import java.lang.Boolean;
+import java.lang.Integer;
 
 public class SystemOpImpl implements SystemOp {
   private FsmRevisitor<BufferOp, FSMOp, StateOp, SystemOp, TransitionOp> rev;
@@ -30,18 +32,18 @@ public class SystemOpImpl implements SystemOp {
     }
   }
 
-  public void main() {
+  public void main(int limit) {
     rev.$((System)this.obj).intialize();
     boolean anFSMRan = ((boolean) (true));
     int cptr = ((int) (0));
-    while (((anFSMRan) && ((cptr) < (50000000)))) {
-      anFSMRan = false;
+    while (((anFSMRan) && ((cptr) < (limit)))) {
+      anFSMRan = ((Boolean) (false));
       for(FSM fsm: this.obj.getOwnedFsms()) {
         if(!(rev.$((Buffer)fsm.getInputBuffer()).bisEmpty())) {
           rev.$((FSM)fsm).run();
-          anFSMRan = true;
+          anFSMRan = ((Boolean) (true));
         }
-        cptr = (cptr) + (1);
+        cptr = ((Integer) ((cptr) + (1)));
       }
     }
   }

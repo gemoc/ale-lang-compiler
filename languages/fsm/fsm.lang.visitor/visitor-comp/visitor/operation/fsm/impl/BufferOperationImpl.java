@@ -2,6 +2,7 @@ package visitor.operation.fsm.impl;
 
 import fsm.FsmService;
 import fsm.visitor.fsm.Buffer;
+import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
@@ -30,7 +31,7 @@ public class BufferOperationImpl implements BufferOperation {
 
 	public boolean bisEmpty() {
 		boolean result;
-		result = ((EqualService.equals((CollectionService.size(this.it.getCurrentValues())), (0))) || (EqualService.equals((this.it.getCurrentValues()), ("'empty'"))));
+		result = ((Boolean) (((EqualService.equals((CollectionService.size(this.it.getCurrentValues())), (0))) || (EqualService.equals((this.it.getCurrentValues()), ("'empty'"))))));
 		return result;
 	}
 
@@ -48,14 +49,14 @@ public class BufferOperationImpl implements BufferOperation {
 		String res = ((String) (""));
 		int firstComma = ((int) (FsmService.indexOf((String) (this.it.getCurrentValues()), (String) (","))));
 		if((firstComma) < (0)) {
-			res = this.it.getCurrentValues();
+			res = ((String) (this.it.getCurrentValues()));
 			this.it.setCurrentValues("'empty'");
-			result = res;
+			result = ((String) (res));
 		}
 		else {
 			res = FsmService.substring((String) (this.it.getCurrentValues()), (Integer) (0), (int) (firstComma));
 			this.it.setCurrentValues(FsmService.substring((String) (this.it.getCurrentValues()), ((firstComma) + (1)), (Integer) (CollectionService.size(this.it.getCurrentValues()))));
-			result = res;
+			result = ((String) (res));
 		}
 		return result;
 	}
