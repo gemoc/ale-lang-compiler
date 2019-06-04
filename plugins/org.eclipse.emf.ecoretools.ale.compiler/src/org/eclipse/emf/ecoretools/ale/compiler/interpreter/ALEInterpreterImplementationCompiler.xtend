@@ -3,103 +3,43 @@ package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 import java.io.File
 import java.nio.file.Files
 import java.util.Comparator
-import java.util.List
 import java.util.Map
-import org.eclipse.acceleo.query.ast.AstPackage
-import org.eclipse.acceleo.query.runtime.IQueryEnvironment
-import org.eclipse.core.runtime.IStatus
-import org.eclipse.core.runtime.Status
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenmodelCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
-import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
+import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
-import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
-import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
-	extension EcoreUtils = new EcoreUtils
-
-	var List<ParseResult<ModelUnit>> parsedSemantics
-	val IQueryEnvironment queryEnvironment
-	var Map<String, Pair<EPackage, GenModel>> syntaxes
-	var Dsl dsl
-	var List<ResolvedClass> resolved
-
-	new() {
-		this(newHashMap)
+	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu) {
+		this(projectName, projectRoot, dsl, newHashMap, eu)
 	}
 
-	new(Map<String, Class<?>> services) {
-		super(services)
-		this.queryEnvironment = createQueryEnvironment(false, null)
-		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
-		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
+	new(String projectName, File projectRoot, Dsl dsl,Map<String, Class<?>> services, EcoreUtils eu) {
+		super(projectName, projectRoot, dsl, services, eu)
+		
 	}
 
-	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
-		val IQueryEnvironment newEnv = new ExtensionEnvironment()
-		newEnv.registerEPackage(EcorePackage.eINSTANCE)
-		newEnv.registerCustomClassMapping(EcorePackage.eINSTANCE.getEStringToStringMapEntry(),
-			EStringToStringMapEntryImpl)
-		newEnv
-	}
-
-	def IStatus compile(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services) {
-		this.dsl = dsl
-		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
-
-		if (services !== null && !services.empty) {
-			this.registeredServices.putAll(services)
-		} else {
-			registerServices(projectName, parsedSemantics)
-		}
-
-		// must be last !
-		compile(projectRoot, projectName)
-
-		Status.OK_STATUS
-	}
-
-	def private void compile(File projectRoot, String projectName) {
+	override void compile(File projectRoot, String projectName) {
 		val compilationDirectory = "interpreter-comp"
 		val compileDirectory = new File(projectRoot, compilationDirectory)
 
 		// clean previous compilation
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
-
-		val aleClasses = newArrayList
-		for (ParseResult<ModelUnit> pr : parsedSemantics) {
-			var root = pr.root
-			aleClasses += root.classExtensions
-		}
-
-		// load all syntaxes in a cache
-		syntaxes = dsl.allSyntaxes.toMap([it], [(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)])
-		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-		resolved = resolve(aleClasses, syntax, syntaxes)
 
 		val String packageRoot = dsl.dslProp.get("rootPackage") as String
 

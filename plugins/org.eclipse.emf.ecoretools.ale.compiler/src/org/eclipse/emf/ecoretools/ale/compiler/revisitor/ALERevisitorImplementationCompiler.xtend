@@ -10,32 +10,21 @@ import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.nio.file.Files
 import java.util.Comparator
-import java.util.List
 import java.util.Map
 import java.util.function.Function
 import javax.lang.model.element.Modifier
-import org.eclipse.acceleo.query.ast.AstPackage
-import org.eclipse.acceleo.query.runtime.IQueryEnvironment
 import org.eclipse.acceleo.query.validation.type.SequenceType
-import org.eclipse.core.runtime.IStatus
-import org.eclipse.core.runtime.Status
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
+import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
@@ -47,63 +36,30 @@ import org.eclipse.emf.ecoretools.ale.implementation.FeaturePut
 import org.eclipse.emf.ecoretools.ale.implementation.FeatureRemove
 import org.eclipse.emf.ecoretools.ale.implementation.ForEach
 import org.eclipse.emf.ecoretools.ale.implementation.If
-import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
-import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.xbase.lib.Functions.Function0
-import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 
 class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
 	extension RevisitorNamingUtils rnu
-	extension EcoreUtils eu = new EcoreUtils
-	extension JavaPoetUtils = new JavaPoetUtils
+	extension JavaPoetUtils jpu
 	extension RevisitorExpressionCompiler rec
 	extension RevisitorTypeSystemUtils tsu
 	extension CommonTypeInferer cti
 
-	var List<ParseResult<ModelUnit>> parsedSemantics
-	val IQueryEnvironment queryEnvironment
-	var Map<String, Pair<EPackage, GenModel>> syntaxes
-	var Dsl dsl
-	var List<ResolvedClass> resolved
-	var BaseValidator base
-
-	new() {
-		this(newHashMap)
+	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, JavaPoetUtils jpu) {
+		this(projectName, projectRoot, dsl, newHashMap, eu, jpu)
 	}
 
-	new(Map<String, Class<?>> services) {
-		super(services)
-		this.queryEnvironment = createQueryEnvironment(false, null)
-		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
-		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		this.rnu = new RevisitorNamingUtils(this.resolved.head.genCls.genPackage)
+	new(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services, EcoreUtils eu, JavaPoetUtils jpu) {
+		super(projectName, projectRoot, dsl, services, eu)
+		this.jpu = jpu
+		
 	}
 
-	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
-		this.dsl = dsl
-		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
-		registerServices(projectName, parsedSemantics)
-
-
-		// must be last !
-		compile(projectRoot)
-
-		Status.OK_STATUS
-	}
-
-	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
-		val IQueryEnvironment newEnv = new ExtensionEnvironment()
-		newEnv.registerEPackage(EcorePackage.eINSTANCE)
-		newEnv.registerCustomClassMapping(EcorePackage.eINSTANCE.getEStringToStringMapEntry(),
-			EStringToStringMapEntryImpl)
-		newEnv
-	}
-
-	def private void compile(File projectRoot) {
+	override compile(File projectRoot, String projectName) {
 
 		val compileDirectory = new File(projectRoot, "revisitor-comp")
 
@@ -111,22 +67,12 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
 
-		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
-
-		val aleClasses = newArrayList
-		for (ParseResult<ModelUnit> pr : parsedSemantics) {
-			var root = pr.root
-			aleClasses += root.classExtensions
-		}
-
-		syntaxes = dsl.allSyntaxes.toMap([it], [
-			(loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
-		])
 
 		val tmp = syntaxes.get(dsl.allSyntaxes.head)
 		val syntax = tmp.key
-		resolved = resolve(aleClasses, syntax, syntaxes)
+		this.rnu = new RevisitorNamingUtils(this.resolved.head.genCls.genPackage)
 		this.tsu = new RevisitorTypeSystemUtils(syntaxes, eu, resolved)
 		this.cti = new CommonTypeInferer(base)
 		// FIXME: make the invalid assumption that the metamodel contains a single package

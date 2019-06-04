@@ -3,76 +3,26 @@ package org.eclipse.emf.ecoretools.ale.compiler.emfswitch
 import java.io.File
 import java.nio.file.Files
 import java.util.Comparator
-import java.util.List
 import java.util.Map
-import org.eclipse.acceleo.query.ast.AstPackage
-import org.eclipse.acceleo.query.runtime.IQueryEnvironment
-import org.eclipse.core.runtime.IStatus
-import org.eclipse.core.runtime.Status
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel
-import org.eclipse.emf.ecore.EPackage
-import org.eclipse.emf.ecore.EcorePackage
-import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
+import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
-import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
-import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 
 class ALESwitchImplementationCompiler extends AbstractALECompiler {
-		var Dsl dsl
-	var List<ParseResult<ModelUnit>> parsedSemantics
-	val IQueryEnvironment queryEnvironment
-	var Map<String, Pair<EPackage, GenModel>> syntaxes
-	var List<ResolvedClass> resolved
 
-	new() {
-		this(newHashMap)
+	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu) {
+		this(projectName, projectRoot, dsl, newHashMap, eu)
 	}
 
-	new(Map<String, Class<?>> services) {
-		super(services)
-		this.queryEnvironment = createQueryEnvironment(false, null)
-		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
-		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
+	new(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services, EcoreUtils eu) {
+		super(projectName, projectRoot, dsl, services, eu)
+		
 	}
 
-	def private IQueryEnvironment createQueryEnvironment(boolean b, Object object) {
-		val IQueryEnvironment newEnv = new ExtensionEnvironment()
-		newEnv.registerEPackage(EcorePackage.eINSTANCE)
-		newEnv.registerCustomClassMapping(EcorePackage.eINSTANCE.getEStringToStringMapEntry(),
-			EStringToStringMapEntryImpl)
-		newEnv
-	}
-
-	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
-		this.dsl = dsl
-		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
-		registerServices(projectName, parsedSemantics)
-		val aleClasses = newArrayList
-		for (ParseResult<ModelUnit> pr : parsedSemantics) {
-			var root = pr.root
-			aleClasses += root.classExtensions
-		}
-
-		syntaxes = dsl.allSyntaxes.toMap([it], [
-			return (loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
-		])
-		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
-		resolved = resolve(aleClasses, syntax, syntaxes)
-
-
-		// must be last !
-		compile(projectRoot, projectName)
-
-		Status.OK_STATUS
-	}
-
-	def private void compile(File projectRoot, String projectName) {
+	override compile(File projectRoot, String projectName) {
 		val compileDirectory = new File(projectRoot, "switch-comp")
+		
+		// clean previous compilation
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
 
@@ -92,7 +42,4 @@ class ALESwitchImplementationCompiler extends AbstractALECompiler {
 		]
 
 	}
-
-	
-
 }

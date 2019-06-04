@@ -26,19 +26,21 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 
 import static spoon.testing.Assert.assertThat
+import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class InterpreterTestAll {
 
 	static Map<String, Map<File, File>> compilations = newHashMap
 
 	static val compilers = newHashMap(
-//		"interpreter" -> [f|compileProjectInterpreter(f)],
-//		"revisitor" -> [f|compileProjectRevisitor(f)],
-		"switch" -> [f|compileProjectSwitch(f)] //,
-//		"visitor" -> [f|compileProjectVisitor(f)]
+		"interpreter" -> [f|compileProjectInterpreter(f)],
+		"revisitor" -> [f|compileProjectRevisitor(f)],
+		"switch" -> [f|compileProjectSwitch(f)] ,
+		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
-	private static final boolean DEBUG = true
+	private static final boolean DEBUG = false
 
 	def static void log(String txt) {
 		if(DEBUG) println(txt)
@@ -52,7 +54,7 @@ class InterpreterTestAll {
 
 		compilers.forEach [ k, v |
 			new File("assets").listFiles.filter[it.isDirectory]
-				.filter[it.path == "assets/minijava"]
+//				.filter[it.path == "assets/minijava"]
 				.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))
@@ -162,13 +164,13 @@ class InterpreterTestAll {
 
 //		if(directory.path == "assets/testmap1") {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALEInterpreterImplementationCompiler(directory.path.services)
+		val compiler = new ALEInterpreterImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
 
-		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), newHashMap)
+		compiler.compile()
 		tmpDir
 //		}
 	}
@@ -176,37 +178,37 @@ class InterpreterTestAll {
 	def static compileProjectRevisitor(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 
-		val compiler = new ALERevisitorImplementationCompiler(directory.path.services)
+		val compiler = new ALERevisitorImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils, new JavaPoetUtils)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
 
-		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''))
+		compiler.compile()
 		tmpDir
 	}
 
 	def static compileProjectSwitch(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALESwitchImplementationCompiler(directory.path.services)
+		val compiler = new ALESwitchImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
 
-		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''))
+		compiler.compile()
 		tmpDir
 	}
 
 	def static compileProjectVisitor(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALEVisitorImplementationCompiler(directory.path.services)
+		val compiler = new ALEVisitorImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
 
-		compiler.compile(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), newHashMap)
+		compiler.compile()
 		tmpDir
 	}
 }
