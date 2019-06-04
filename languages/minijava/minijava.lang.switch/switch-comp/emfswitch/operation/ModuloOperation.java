@@ -6,6 +6,7 @@ import miniJava.MiniJavaFactory;
 import miniJava.Modulo;
 import miniJava.State;
 import miniJava.Value;
+import minijava.MathService;
 
 public class ModuloOperation extends ExpressionOperation {
 	private final Modulo it;
@@ -27,7 +28,7 @@ public class ModuloOperation extends ExpressionOperation {
 				IntegerValue bleft = ((IntegerValue) (left));
 				IntegerValue bright = ((IntegerValue) (right));
 				IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
-				tmp.setValue(this.it.mod((int) (bleft.getValue()), (int) (bright.getValue())));
+				tmp.setValue(MathService.mod((Modulo) (this.it), (int) (bleft.getValue()), (int) (bright.getValue())));
 				result = tmp;
 			}
 			else {

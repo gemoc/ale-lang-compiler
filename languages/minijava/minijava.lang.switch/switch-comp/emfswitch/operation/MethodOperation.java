@@ -7,6 +7,8 @@ import miniJava.Method;
 import miniJava.Parameter;
 import miniJava.State;
 import miniJava.TypeRef;
+import minijava.MapService;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
@@ -27,7 +29,7 @@ public class MethodOperation extends MemberOperation {
 
 	public Method findOverride(Clazz c) {
 		Method result;
-		if(!(this.it.getCache().containsKey((Clazz) (c)))) {
+		if(!(MapService.containsKey((EMap) (this.it.getCache()), (Clazz) (c)))) {
 			Method that = ((Method) (this.it));
 			if(CollectionService.exists(c.getMembers(), (x) -> EqualService.equals((x), (that)))) {
 				result = this.it;
@@ -69,10 +71,10 @@ public class MethodOperation extends MemberOperation {
 					}
 				}
 			}
-			this.it.getCache().put((Clazz) (c), (Method) (result));
+			MapService.put((EMap) (this.it.getCache()), (Clazz) (c), (Method) (result));
 		}
 		else {
-			result = this.it.getCache().getFromMap((Clazz) (c));
+			result = MapService.getFromMap((EMap) (this.it.getCache()), (Clazz) (c));
 		}
 		return result;
 	}

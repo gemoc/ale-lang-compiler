@@ -1,11 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Visitor
-Bundle-SymbolicName: minijava.lang.visitor
+Bundle-Name: Switch
+Bundle-SymbolicName: minijava.lang.switch
 Bundle-Version: 1.0.0.qualifier
-Automatic-Module-Name: minijava.lang.visitor
+Automatic-Module-Name: minijava.lang.switch
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.tetrabox.minijava.lang.services;bundle-version="1.0.0",
- org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0",
- org.eclipse.emf.ecore,
- org.tetrabox.minijava.xtext
+ org.eclipse.emf.common;bundle-version="2.14.0",
+ org.eclipse.emf.ecoretools.ale.core;bundle-version="0.0.1"
