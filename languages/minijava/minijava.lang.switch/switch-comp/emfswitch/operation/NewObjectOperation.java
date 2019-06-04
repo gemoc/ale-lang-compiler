@@ -1,36 +1,33 @@
-package visitor.operation.miniJava.impl;
+package emfswitch.operation;
 
-import miniJava.visitor.miniJava.Context;
-import miniJava.visitor.miniJava.Expression;
-import miniJava.visitor.miniJava.Field;
-import miniJava.visitor.miniJava.FieldBinding;
-import miniJava.visitor.miniJava.Member;
-import miniJava.visitor.miniJava.Method;
-import miniJava.visitor.miniJava.MiniJavaFactory;
-import miniJava.visitor.miniJava.NewCall;
-import miniJava.visitor.miniJava.NewObject;
-import miniJava.visitor.miniJava.ObjectInstance;
-import miniJava.visitor.miniJava.ObjectRefValue;
-import miniJava.visitor.miniJava.Parameter;
-import miniJava.visitor.miniJava.State;
-import miniJava.visitor.miniJava.SymbolBinding;
-import miniJava.visitor.miniJava.Value;
+import emfswitch.SwitchImplementation;
+import miniJava.Context;
+import miniJava.Expression;
+import miniJava.Field;
+import miniJava.FieldBinding;
+import miniJava.Member;
+import miniJava.Method;
+import miniJava.MiniJavaFactory;
+import miniJava.NewCall;
+import miniJava.NewObject;
+import miniJava.ObjectInstance;
+import miniJava.ObjectRefValue;
+import miniJava.Parameter;
+import miniJava.State;
+import miniJava.SymbolBinding;
+import miniJava.Value;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
-import visitor.VisitorInterface;
-import visitor.operation.miniJava.ExpressionOperation;
-import visitor.operation.miniJava.NewObjectOperation;
-import visitor.operation.miniJava.StateOperation;
 
-public class NewObjectOperationImpl extends ExpressionOperationImpl implements NewObjectOperation {
+public class NewObjectOperation extends ExpressionOperation {
 	private final NewObject it;
 
-	private final VisitorInterface vis;
+	private final SwitchImplementation emfswitch;
 
-	public NewObjectOperationImpl(NewObject it, VisitorInterface vis) {
-		super(it, vis);
+	public NewObjectOperation(NewObject it, SwitchImplementation emfswitch) {
+		super(it, emfswitch);
 		this.it = it;
-		this.vis = vis;
+		this.emfswitch = emfswitch;
 	}
 
 	public Value evaluateExpression(State state) {
@@ -45,7 +42,7 @@ public class NewObjectOperationImpl extends ExpressionOperationImpl implements N
 			if(m instanceof Field) {
 				Field f = ((Field) (m));
 				if(!EqualService.equals((f.getDefaultValue()), (null))) {
-					Value v = ((Value) (((ExpressionOperation)f.getDefaultValue().accept(vis)).evaluateExpression((State) (state))));
+					Value v = ((Value) (((ExpressionOperation) emfswitch.doSwitch(f.getDefaultValue())).evaluateExpression((State) (state))));
 					FieldBinding fb = ((FieldBinding) (MiniJavaFactory.eINSTANCE.createFieldBinding()));
 					fb.setField(f);
 					fb.setValue(v);
@@ -75,15 +72,15 @@ public class NewObjectOperationImpl extends ExpressionOperationImpl implements N
 				Parameter param = ((Parameter) (CollectionService.get(constructor.getParams(), i)));
 				SymbolBinding binding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
 				binding.setSymbol(param);
-				binding.setValue(((ExpressionOperation)arg.accept(vis)).evaluateExpression((State) (state)));
+				binding.setValue(((ExpressionOperation) emfswitch.doSwitch(arg)).evaluateExpression((State) (state)));
 				i = (i) + (1);
 				newContext.getBindings().add(binding);
 			}
 			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this.it);
-			((StateOperation)state.accept(vis)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
+			((StateOperation) emfswitch.doSwitch(state)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
 			constructor.getBody().evaluateStatement((State) (state));
-			((StateOperation)state.accept(vis)).popCurrentFrame();
+			((StateOperation) emfswitch.doSwitch(state)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(res);

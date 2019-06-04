@@ -86,8 +86,8 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
-
 		registerServices(projectName, parsedSemantics)
+
 
 		// must be last !
 		compile(projectRoot)

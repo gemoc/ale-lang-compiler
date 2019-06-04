@@ -30,7 +30,7 @@ public class ContextOperationImpl implements ContextOperation {
 			}
 			else {
 				if(!EqualService.equals((this.it.getParentContext()), (null))) {
-					SymbolBinding binding2 = ((SymbolBinding) (this.it.getParentContext().findBinding((Symbol) (symbol))));
+					SymbolBinding binding2 = ((SymbolBinding) (((ContextOperation)this.it.getParentContext().accept(vis)).findBinding((Symbol) (symbol))));
 					MapService.put((EMap) (this.it.getCache()), (Symbol) (symbol), (SymbolBinding) (binding2));
 				}
 				else {

@@ -26,7 +26,7 @@ abstract class AbstractALECompiler {
 			}
 
 			override notFound(String arg0) {
-				throw new RuntimeException('''«arg0» not found during services registration''')
+				System.err.println('''«arg0» not found during services registration''')
 			}
 
 			override unloaded(String arg0, Class<?> arg1) {

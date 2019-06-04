@@ -179,7 +179,7 @@ open class miniJava.Method {
 	}
 	
 	def miniJava::Method findOverride(Clazz c) {
-		if(not self.cache.containsKey(c)) {
+		if(not (self.cache.containsKey(c))) {
 			miniJava::Method that := self;
 			if(c.members->exists(x | x == that)) {
 				result := self;
@@ -698,7 +698,7 @@ open class miniJava.NewArray {
 		res.size := sizeArray.value;
 		state.arraysHeap += res;
 		
-		miniJava::Value defaultValue := miniJava::Value.create(); // FIXME it is supposed to be null here
+		miniJava::Value defaultValue := null;
 		if(self.type.oclIsKindOf(miniJava::IntegerTypeRef)) {
 			miniJava::IntegerValue idv := miniJava::IntegerValue.create();
 			idv.value := 0;
@@ -758,7 +758,7 @@ open class miniJava.NewObject {
 		}			
 
 		i:=0;
-		miniJava::Method constructor := miniJava::Method.create(); // FIXME supposed to be null
+		miniJava::Method constructor := null;
 		while(i<z and constructor == null) {
 			miniJava::Member m := res.type.members->at(i);
 			if(m.oclIsKindOf(miniJava::Method)) {
@@ -770,7 +770,7 @@ open class miniJava.NewObject {
 			i:=i+1;
 		}
 		
-		if(constructor != null and constructor.body != null) {
+		if(constructor != null) {
 			
 //
 //		// If any, call it
@@ -918,8 +918,8 @@ open class miniJava.Context {
 			if (binding != null) {
 				self.cache.put(symbol, binding);
 			} else {
-				if (self.getParentContext() != null) {
-					miniJava::SymbolBinding binding2 := self.getParentContext().findBinding(symbol);
+				if (self.parentContext != null) {
+					miniJava::SymbolBinding binding2 := self.parentContext.findBinding(symbol);
 					self.cache.put(symbol, binding2);
 				} else {
 					('No binding for symbol ' + symbol).log();

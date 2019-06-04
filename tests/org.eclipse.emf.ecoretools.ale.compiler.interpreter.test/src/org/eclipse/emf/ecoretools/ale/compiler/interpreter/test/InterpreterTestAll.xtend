@@ -52,7 +52,7 @@ class InterpreterTestAll {
 
 		compilers.forEach [ k, v |
 			new File("assets").listFiles.filter[it.isDirectory]
-//				.filter[it.path == "assets/testaccessors"]
+				.filter[it.path == "assets/minijava"]
 				.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))

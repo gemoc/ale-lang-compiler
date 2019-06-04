@@ -1,37 +1,35 @@
-package visitor.operation.miniJava.impl;
+package emfswitch.operation;
 
-import miniJava.visitor.miniJava.ArrayInstance;
-import miniJava.visitor.miniJava.ArrayRefValue;
-import miniJava.visitor.miniJava.BooleanTypeRef;
-import miniJava.visitor.miniJava.BooleanValue;
-import miniJava.visitor.miniJava.ClassRef;
-import miniJava.visitor.miniJava.IntegerTypeRef;
-import miniJava.visitor.miniJava.IntegerValue;
-import miniJava.visitor.miniJava.MiniJavaFactory;
-import miniJava.visitor.miniJava.NewArray;
-import miniJava.visitor.miniJava.NullValue;
-import miniJava.visitor.miniJava.State;
-import miniJava.visitor.miniJava.StringTypeRef;
-import miniJava.visitor.miniJava.Value;
-import visitor.VisitorInterface;
-import visitor.operation.miniJava.ExpressionOperation;
-import visitor.operation.miniJava.NewArrayOperation;
+import emfswitch.SwitchImplementation;
+import miniJava.ArrayInstance;
+import miniJava.ArrayRefValue;
+import miniJava.BooleanTypeRef;
+import miniJava.BooleanValue;
+import miniJava.ClassRef;
+import miniJava.IntegerTypeRef;
+import miniJava.IntegerValue;
+import miniJava.MiniJavaFactory;
+import miniJava.NewArray;
+import miniJava.NullValue;
+import miniJava.State;
+import miniJava.StringTypeRef;
+import miniJava.Value;
 
-public class NewArrayOperationImpl extends ExpressionOperationImpl implements NewArrayOperation {
+public class NewArrayOperation extends ExpressionOperation {
 	private final NewArray it;
 
-	private final VisitorInterface vis;
+	private final SwitchImplementation emfswitch;
 
-	public NewArrayOperationImpl(NewArray it, VisitorInterface vis) {
-		super(it, vis);
+	public NewArrayOperation(NewArray it, SwitchImplementation emfswitch) {
+		super(it, emfswitch);
 		this.it = it;
-		this.vis = vis;
+		this.emfswitch = emfswitch;
 	}
 
 	public Value evaluateExpression(State state) {
 		Value result;
 		ArrayInstance res = ((ArrayInstance) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
-		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((ExpressionOperation)this.it.getSize().accept(vis)).evaluateExpression((State) (state))))));
+		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getSize())).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
 		Value defaultValue = ((Value) (null));

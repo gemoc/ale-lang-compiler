@@ -358,6 +358,7 @@ abstract class AbstractExpressionCompiler {
 		} else {
 			
 			// primitive operation
+			println('''unhandled call: «call»''')
 			val Map<String, Object> hm = newHashMap
 			hm.put("leftExpr", call.arguments.head.compileExpression(ctx))
 			hm.put("serviceName", call.serviceName)
@@ -372,7 +373,7 @@ abstract class AbstractExpressionCompiler {
 	
 	def defaultCall(Call call, CompilerExpressionCtx ctx) {
 		val eCls = ctx.EClass
-		println('''EClass = «eCls.name»''')
+//		println('''EClass = «eCls.name»''')
 		if (call.type == CallType.CALLORAPPLY) {
 			if (call.serviceName == 'aqlFeatureAccess') {
 				val t = infereType(call).head

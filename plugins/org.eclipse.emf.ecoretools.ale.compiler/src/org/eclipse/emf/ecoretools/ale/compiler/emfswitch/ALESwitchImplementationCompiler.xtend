@@ -51,6 +51,7 @@ class ALESwitchImplementationCompiler extends AbstractALECompiler {
 	def IStatus compile(String projectName, File projectRoot, Dsl dsl) {
 		this.dsl = dsl
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
+		registerServices(projectName, parsedSemantics)
 		val aleClasses = newArrayList
 		for (ParseResult<ModelUnit> pr : parsedSemantics) {
 			var root = pr.root
@@ -63,7 +64,6 @@ class ALESwitchImplementationCompiler extends AbstractALECompiler {
 		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
 		resolved = resolve(aleClasses, syntax, syntaxes)
 
-		registerServices(projectName, parsedSemantics)
 
 		// must be last !
 		compile(projectRoot, projectName)
