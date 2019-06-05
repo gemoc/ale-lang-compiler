@@ -1,6 +1,7 @@
 package emfswitch.emfswitch.operation;
 
 import emfswitch.emfswitch.EmfswitchSwitchImplementation;
+import java.lang.Double;
 import kmLogo.Instruction;
 import kmLogo.Turtle;
 
@@ -16,7 +17,7 @@ public class InstructionOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

@@ -39,6 +39,7 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
 import kmLogo.Expression;
 import kmLogo.Forward;
 import kmLogo.Turtle;
@@ -60,7 +61,7 @@ public class ForwardOpImpl extends PrimitiveOpImpl implements ForwardOp {
     double result;
     double move = ((double) (rev.$((Expression)this.obj.getSteps()).eval(((Turtle) (turtle)))));
     rev.$((Turtle)turtle).forward(((double) (move)));
-    result = 0.0;
+    result = ((Double) (0.0));
     return result;
   }
 }

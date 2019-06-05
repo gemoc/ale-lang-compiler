@@ -153,11 +153,11 @@ public class IfImpl extends ControlStructureImpl implements If {
 	public double eval(Turtle turtle) {
 		double result;
 		if (!EqualService.equals((((Expression) (this.condition)).eval((Turtle) (turtle))), (0.0))) {
-			result = (double) (((Block) (this.thenPart)).eval((Turtle) (turtle))) ;
+			result = (double) (((Block) (this.getThenPart())).eval((Turtle) (turtle))) ;
 		}
 		else {
-			if (!EqualService.equals((this.elsePart), (null))) {
-				result = (double) (((Block) (this.elsePart)).eval((Turtle) (turtle))) ;
+			if (!EqualService.equals((this.getElsePart()), (null))) {
+				result = (double) (((Block) (this.getElsePart())).eval((Turtle) (turtle))) ;
 			}
 			else {
 				result = (double) (0.0) ;

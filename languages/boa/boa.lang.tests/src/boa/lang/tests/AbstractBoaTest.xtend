@@ -14,13 +14,15 @@ import static org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.*
 
 abstract class AbstractBoaTest {
 
+	val langname = 'boa'
+
 	def Iterable<DynamicTest> test0() {
 
-		val root = new File('../boa.lang.tests/programs/')
+		val root = new File('''../«langname».lang.tests/programs/''')
 
 		root.listFiles
 			.filter[it.isFile]
-			.filter[it.name.endsWith('.boa.xmi')]
+			.filter[it.name.endsWith('''.«langname».xmi''')]
 			.map [
 				DynamicTest.dynamicTest(it.name, [
 					genericTest(it.absolutePath, FileUtils.readFileToString(new File(it.absolutePath + '.expected')))

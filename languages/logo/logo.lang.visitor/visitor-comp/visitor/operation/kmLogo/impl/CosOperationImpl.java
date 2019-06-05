@@ -2,8 +2,10 @@ package visitor.operation.kmLogo.impl;
 
 import kmLogo.visitor.kmLogo.Cos;
 import kmLogo.visitor.kmLogo.Turtle;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 import visitor.VisitorInterface;
 import visitor.operation.kmLogo.CosOperation;
+import visitor.operation.kmLogo.ExpressionOperation;
 
 public class CosOperationImpl extends UnaryExpressionOperationImpl implements CosOperation {
 	private final Cos it;
@@ -18,7 +20,7 @@ public class CosOperationImpl extends UnaryExpressionOperationImpl implements Co
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(((visitor.operation.kmLogo.ExpressionOperation)this.it.getExpression().accept(vis)).eval((kmLogo.visitor.kmLogo.Turtle) (turtle)));
+		result = ((double) (TrigoServices.cosinus((double) (((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle))))));
 		return result;
 	}
 }

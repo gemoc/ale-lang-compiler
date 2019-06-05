@@ -108,7 +108,7 @@ public class RepeatImpl extends ControlStructureImpl implements Repeat {
 		double result;
 		double time = ((double) (((Expression) (this.condition)).eval((Turtle) (turtle))));
 		while ((time) > (0.0)) {
-			((Block) (this.block)).eval((Turtle) (turtle));
+			((Block) (this.getBlock())).eval((Turtle) (turtle));
 			time = (time) - (1.0);
 		}
 		result = (double) (0.0) ;

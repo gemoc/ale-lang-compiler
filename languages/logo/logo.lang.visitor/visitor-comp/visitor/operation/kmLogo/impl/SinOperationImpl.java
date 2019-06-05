@@ -2,7 +2,9 @@ package visitor.operation.kmLogo.impl;
 
 import kmLogo.visitor.kmLogo.Sin;
 import kmLogo.visitor.kmLogo.Turtle;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 import visitor.VisitorInterface;
+import visitor.operation.kmLogo.ExpressionOperation;
 import visitor.operation.kmLogo.SinOperation;
 
 public class SinOperationImpl extends UnaryExpressionOperationImpl implements SinOperation {
@@ -18,7 +20,7 @@ public class SinOperationImpl extends UnaryExpressionOperationImpl implements Si
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(((visitor.operation.kmLogo.ExpressionOperation)this.it.getExpression().accept(vis)).eval((kmLogo.visitor.kmLogo.Turtle) (turtle)));
+		result = ((double) (TrigoServices.sinus((double) (((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle))))));
 		return result;
 	}
 }

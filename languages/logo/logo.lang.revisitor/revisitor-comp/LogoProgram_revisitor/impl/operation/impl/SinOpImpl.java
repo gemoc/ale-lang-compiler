@@ -59,7 +59,7 @@ public class SinOpImpl extends UnaryExpressionOpImpl implements SinOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = TrigoServices.sinus((double) (rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle)))));
+    result = ((double) (TrigoServices.sinus((double) (rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle)))))));
     return result;
   }
 }

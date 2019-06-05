@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.Turtle;
 import kmLogo.visitor.kmLogo.While;
 import visitor.VisitorInterface;
@@ -23,7 +24,7 @@ public class WhileOperationImpl extends ControlStructureOperationImpl implements
 		while ((((ExpressionOperation)this.it.getCondition().accept(vis)).eval((Turtle) (turtle))) > (0.0)) {
 			((BlockOperation)this.it.getBlock().accept(vis)).eval((Turtle) (turtle));
 		}
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

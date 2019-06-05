@@ -18,7 +18,7 @@ public class SinOperation extends UnaryExpressionOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = TrigoServices.sinus((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).eval((Turtle) (turtle))));
+		result = ((double) (TrigoServices.sinus((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).eval((Turtle) (turtle))))));
 		return result;
 	}
 }

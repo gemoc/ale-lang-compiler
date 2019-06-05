@@ -5,6 +5,7 @@ import kmLogo.visitor.kmLogo.KmLogoFactory;
 import kmLogo.visitor.kmLogo.Point;
 import kmLogo.visitor.kmLogo.Segment;
 import kmLogo.visitor.kmLogo.Turtle;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 import visitor.VisitorInterface;
 import visitor.operation.kmLogo.TurtleOperation;
 
@@ -37,18 +38,18 @@ public class TurtleOperationImpl implements TurtleOperation {
 	}
 
 	public void forward(double steps) {
-		((TurtleOperation)this.it.accept(vis)).move((Double) ((steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.cosinus(this.it.getHeading()))), (Double) ((steps) * (org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.sinus(this.it.getHeading()))));
+		((TurtleOperation)this.it.accept(vis)).move((Double) ((steps) * (TrigoServices.cosinus((double) (this.it.getHeading())))), (Double) ((steps) * (TrigoServices.sinus((double) (this.it.getHeading())))));
 	}
 
 	public void rotate(double angle) {
 		double newAngle = ((double) ((this.it.getHeading()) + (angle)));
 		if((newAngle) > (360.0)) {
-			newAngle = (newAngle) - (360.0);
+			newAngle = ((Double) ((newAngle) - (360.0)));
 			this.it.setHeading(newAngle);
 		}
 		else {
 			if((newAngle) < (0.0)) {
-				newAngle = (360.0) + (newAngle);
+				newAngle = ((Double) ((360.0) + (newAngle)));
 				this.it.setHeading(newAngle);
 			}
 			else {

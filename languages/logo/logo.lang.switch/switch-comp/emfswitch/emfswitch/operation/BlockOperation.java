@@ -1,6 +1,7 @@
 package emfswitch.emfswitch.operation;
 
 import emfswitch.emfswitch.EmfswitchSwitchImplementation;
+import java.lang.Double;
 import kmLogo.Block;
 import kmLogo.Instruction;
 import kmLogo.Turtle;
@@ -21,7 +22,7 @@ public class BlockOperation extends InstructionOperation {
 		for (Instruction inst: this.it.getInstructions()) {
 			((InstructionOperation) emfswitch.doSwitch(inst)).eval((Turtle) (turtle));
 		}
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

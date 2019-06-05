@@ -39,6 +39,7 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
 import kmLogo.PenDown;
 import kmLogo.Turtle;
 import kmLogo.revisitor.KmLogoRevisitor;
@@ -58,7 +59,7 @@ public class PenDownOpImpl extends PrimitiveOpImpl implements PenDownOp {
   public double eval(Turtle turtle) {
     double result;
     turtle.setPenUp(false);
-    result = 0.0;
+    result = ((Double) (0.0));
     return result;
   }
 }

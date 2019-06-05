@@ -94,7 +94,7 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
 		result = (double) (0.0) ;
 		for (StackFrame frame : turtle.getCallStack().getFrames()) {
 			for (Variable var : frame.getVariables()) {
-				if (EqualService.equals((var.getName()), (this.parameter.getName()))) {
+				if (EqualService.equals((var.getName()), (this.getParameter().getName()))) {
 					result = (double) (var.getValue()) ;
 				}
 			}

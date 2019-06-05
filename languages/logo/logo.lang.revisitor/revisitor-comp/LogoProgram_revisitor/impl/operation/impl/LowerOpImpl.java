@@ -39,6 +39,7 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
 import kmLogo.Expression;
 import kmLogo.Lower;
 import kmLogo.Turtle;
@@ -59,10 +60,10 @@ public class LowerOpImpl extends BinaryExpOpImpl implements LowerOp {
   public double eval(Turtle turtle) {
     double result;
     if((rev.$((Expression)this.obj.getLhs()).eval(((Turtle) (turtle)))) < (rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle))))) {
-      result = 1.0;
+      result = ((Double) (1.0));
     }
     else {
-      result = 0.0;
+      result = ((Double) (0.0));
     }
     return result;
   }

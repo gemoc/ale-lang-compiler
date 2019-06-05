@@ -39,6 +39,7 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
 import kmLogo.Div;
 import kmLogo.Expression;
 import kmLogo.Turtle;
@@ -60,10 +61,10 @@ public class DivOpImpl extends BinaryExpOpImpl implements DivOp {
   public double eval(Turtle turtle) {
     double result;
     if(!EqualService.equals((rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle)))), (0.0))) {
-      result = (rev.$((Expression)this.obj.getLhs()).eval(((Turtle) (turtle)))) / (rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle))));
+      result = ((Double) ((rev.$((Expression)this.obj.getLhs()).eval(((Turtle) (turtle)))) / (rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle))))));
     }
     else {
-      result = 0.0;
+      result = ((Double) (0.0));
     }
     return result;
   }

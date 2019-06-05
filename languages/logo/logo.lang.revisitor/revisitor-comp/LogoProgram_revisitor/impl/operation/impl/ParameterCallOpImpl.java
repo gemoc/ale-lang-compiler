@@ -39,6 +39,7 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
 import kmLogo.ParameterCall;
 import kmLogo.StackFrame;
 import kmLogo.Turtle;
@@ -60,11 +61,11 @@ public class ParameterCallOpImpl extends ExpressionOpImpl implements ParameterCa
 
   public double eval(Turtle turtle) {
     double result;
-    result = 0.0;
+    result = ((Double) (0.0));
     for(StackFrame frame: turtle.getCallStack().getFrames()) {
       for(Variable var: frame.getVariables()) {
         if(EqualService.equals((var.getName()), (this.obj.getParameter().getName()))) {
-          result = var.getValue();
+          result = ((double) (var.getValue()));
         }
       }
     }

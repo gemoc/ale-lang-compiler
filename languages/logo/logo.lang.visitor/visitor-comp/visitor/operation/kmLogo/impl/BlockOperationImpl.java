@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.Block;
 import kmLogo.visitor.kmLogo.Instruction;
 import kmLogo.visitor.kmLogo.Turtle;
@@ -23,7 +24,7 @@ public class BlockOperationImpl extends InstructionOperationImpl implements Bloc
 		for(Instruction inst: this.it.getInstructions()) {
 			((InstructionOperation)inst.accept(vis)).eval((Turtle) (turtle));
 		}
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

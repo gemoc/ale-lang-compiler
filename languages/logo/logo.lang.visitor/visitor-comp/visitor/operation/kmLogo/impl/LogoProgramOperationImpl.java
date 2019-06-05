@@ -21,23 +21,23 @@ public class LogoProgramOperationImpl implements LogoProgramOperation {
 	public Turtle eval() {
 		Turtle result;
 		Turtle turtle = ((Turtle) (((LogoProgramOperation)this.it.accept(vis)).createTurtle()));
-		result = turtle;
+		result = ((Turtle) (turtle));
 		for(Instruction it: this.it.getInstructions()) {
 			((InstructionOperation)it.accept(vis)).eval((Turtle) (turtle));
 		}
-		result = turtle;
+		result = ((Turtle) (turtle));
 		return result;
 	}
 
 	public Turtle createTurtle() {
 		Turtle result;
 		Turtle turtle = ((Turtle) (KmLogoFactory.eINSTANCE.createTurtle()));
-		turtle.setPosition(kmLogo.visitor.kmLogo.KmLogoFactory.eINSTANCE.createPoint());
+		turtle.setPosition(KmLogoFactory.eINSTANCE.createPoint());
 		turtle.getPosition().setX(0.0);
 		turtle.getPosition().setY(0.0);
-		turtle.setCallStack(kmLogo.visitor.kmLogo.KmLogoFactory.eINSTANCE.createCallStack());
-		turtle.getCallStack().getFrames().add(kmLogo.visitor.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
-		result = turtle;
+		turtle.setCallStack(KmLogoFactory.eINSTANCE.createCallStack());
+		turtle.getCallStack().getFrames().add(KmLogoFactory.eINSTANCE.createStackFrame());
+		result = ((Turtle) (turtle));
 		return result;
 	}
 }

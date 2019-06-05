@@ -61,7 +61,7 @@ public class BackOpImpl extends PrimitiveOpImpl implements BackOp {
     double result;
     double move = ((double) (rev.$((Expression)this.obj.getSteps()).eval(((Turtle) (turtle)))));
     rev.$((Turtle)turtle).forward(((Double) (-(move))));
-    result = 0.0;
+    result = ((Double) (0.0));
     return result;
   }
 }

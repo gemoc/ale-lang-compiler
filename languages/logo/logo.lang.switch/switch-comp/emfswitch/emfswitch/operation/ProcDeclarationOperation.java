@@ -1,6 +1,7 @@
 package emfswitch.emfswitch.operation;
 
 import emfswitch.emfswitch.EmfswitchSwitchImplementation;
+import java.lang.Double;
 import kmLogo.Instruction;
 import kmLogo.ProcDeclaration;
 import kmLogo.Turtle;
@@ -18,16 +19,16 @@ public class ProcDeclarationOperation extends InstructionOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = 0.0;
+		result = ((Double) (0.0));
 		for (Instruction instr: this.it.getInstructions()) {
-			result = ((InstructionOperation) emfswitch.doSwitch(instr)).eval((Turtle) (turtle));
+			result = ((double) (((InstructionOperation) emfswitch.doSwitch(instr)).eval((Turtle) (turtle))));
 		}
 		return result;
 	}
 
 	public double deval(Turtle turtle) {
 		double result;
-		result = ((ProcDeclarationOperation) emfswitch.doSwitch(this.it)).eval((Turtle) (turtle));
+		result = ((double) (((ProcDeclarationOperation) emfswitch.doSwitch(this.it)).eval((Turtle) (turtle))));
 		return result;
 	}
 }

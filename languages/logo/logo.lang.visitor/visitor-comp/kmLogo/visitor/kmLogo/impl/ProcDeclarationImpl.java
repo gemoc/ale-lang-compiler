@@ -119,15 +119,15 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
 				return;
 			case KmLogoPackage.PROC_DECLARATION__ARGS :
 				getArgs().clear();
-				getArgs().addAll((Collection<? extends Parameter>)newValue);
+				getArgs().addAll((Collection<? extends Parameter>) newValue);
 				return;
 			case KmLogoPackage.PROC_DECLARATION__PROC_CALL :
 				getProcCall().clear();
-				getProcCall().addAll((Collection<? extends ProcCall>)newValue);
+				getProcCall().addAll((Collection<? extends ProcCall>) newValue);
 				return;
 			case KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends Instruction>)newValue);
+				getInstructions().addAll((Collection<? extends Instruction>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

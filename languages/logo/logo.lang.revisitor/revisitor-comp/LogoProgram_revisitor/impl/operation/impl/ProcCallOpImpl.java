@@ -39,6 +39,8 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
+import java.lang.Integer;
 import kmLogo.Expression;
 import kmLogo.KmLogoFactory;
 import kmLogo.ProcCall;
@@ -72,10 +74,10 @@ public class ProcCallOpImpl extends ExpressionOpImpl implements ProcCallOp {
       newVar.setName(CollectionService.get(this.obj.getDeclaration().getArgs(), i).getName());
       newVar.setValue(rev.$((Expression)exp).eval(((Turtle) (turtle))));
       newFrame.getVariables().add(newVar);
-      i = (i) + (1);
+      i = ((Integer) ((i) + (1)));
     }
     turtle.getCallStack().getFrames().add(newFrame);
-    result = 0.0;
+    result = ((Double) (0.0));
     if(this.obj.getDeclaration() instanceof ProcDeclaration) {
       ProcDeclaration decl = ((ProcDeclaration) (this.obj.getDeclaration()));
       rev.$((ProcDeclaration)decl).deval(((Turtle) (turtle)));

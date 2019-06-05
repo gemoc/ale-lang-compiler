@@ -83,12 +83,12 @@ public class TurtleOpImpl implements TurtleOp {
   public void rotate(double angle) {
     double newAngle = ((double) ((this.obj.getHeading()) + (angle)));
     if((newAngle) > (360.0)) {
-      newAngle = (newAngle) - (360.0);
+      newAngle = ((Double) ((newAngle) - (360.0)));
       this.obj.setHeading(newAngle);
     }
     else {
       if((newAngle) < (0.0)) {
-        newAngle = (360.0) + (newAngle);
+        newAngle = ((Double) ((360.0) + (newAngle)));
         this.obj.setHeading(newAngle);
       }
       else {

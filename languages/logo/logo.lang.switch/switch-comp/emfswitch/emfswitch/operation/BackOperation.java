@@ -20,7 +20,7 @@ public class BackOperation extends PrimitiveOperation {
 		double result;
 		double move = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getSteps())).eval((Turtle) (turtle))));
 		((TurtleOperation) emfswitch.doSwitch(turtle)).forward((Double) (-(move)));
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

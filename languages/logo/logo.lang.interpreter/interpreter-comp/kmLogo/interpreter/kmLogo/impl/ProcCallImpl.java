@@ -164,20 +164,20 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 
 	public double eval(Turtle turtle) {
 		double result;
-		LogService.log(("Calling ") + (this.declaration.getName()));
+		LogService.log(("Calling ") + (this.getDeclaration().getName()));
 		StackFrame newFrame = ((StackFrame) (KmLogoFactory.eINSTANCE.createStackFrame()));
 		int i = ((int) (0));
 		for (Expression exp : this.getActualArgs()) {
 			Variable newVar = ((Variable) (KmLogoFactory.eINSTANCE.createVariable()));
-			newVar.setName(CollectionService.get(this.declaration.getArgs(), i).getName());
+			newVar.setName(CollectionService.get(this.getDeclaration().getArgs(), i).getName());
 			newVar.setValue(((Expression) (exp)).eval((Turtle) (turtle)));
 			newFrame.getVariables().add(newVar);
 			i = (i) + (1);
 		}
 		turtle.getCallStack().getFrames().add(newFrame);
 		result = (double) (0.0) ;
-		if (this.declaration instanceof ProcDeclaration) {
-			ProcDeclaration decl = ((ProcDeclaration) (this.declaration));
+		if (this.getDeclaration() instanceof ProcDeclaration) {
+			ProcDeclaration decl = ((ProcDeclaration) (this.getDeclaration()));
 			((ProcDeclaration) (decl)).deval((Turtle) (turtle));
 		}
 		turtle.getCallStack().getFrames().remove(newFrame);

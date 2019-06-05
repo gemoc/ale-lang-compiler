@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.PenUp;
 import kmLogo.visitor.kmLogo.Turtle;
 import visitor.VisitorInterface;
@@ -19,7 +20,7 @@ public class PenUpOperationImpl extends PrimitiveOperationImpl implements PenUpO
 	public double eval(Turtle turtle) {
 		double result;
 		turtle.setPenUp(true);
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

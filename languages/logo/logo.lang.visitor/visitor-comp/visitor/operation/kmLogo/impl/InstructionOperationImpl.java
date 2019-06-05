@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.Instruction;
 import kmLogo.visitor.kmLogo.Turtle;
 import visitor.VisitorInterface;
@@ -17,7 +18,7 @@ public abstract class InstructionOperationImpl implements InstructionOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

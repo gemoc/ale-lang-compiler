@@ -20,7 +20,7 @@ public class RightOperation extends PrimitiveOperation {
 		double result;
 		double angle = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getAngle())).eval((Turtle) (turtle))));
 		((TurtleOperation) emfswitch.doSwitch(turtle)).rotate((Double) (-(angle)));
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

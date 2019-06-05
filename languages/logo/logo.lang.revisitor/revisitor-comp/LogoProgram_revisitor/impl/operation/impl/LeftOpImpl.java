@@ -39,6 +39,7 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
 import kmLogo.Expression;
 import kmLogo.Left;
 import kmLogo.Turtle;
@@ -60,7 +61,7 @@ public class LeftOpImpl extends PrimitiveOpImpl implements LeftOp {
     double result;
     double angle = ((double) (rev.$((Expression)this.obj.getAngle()).eval(((Turtle) (turtle)))));
     rev.$((Turtle)turtle).rotate(((double) (angle)));
-    result = 0.0;
+    result = ((Double) (0.0));
     return result;
   }
 }

@@ -2,7 +2,9 @@ package visitor.operation.kmLogo.impl;
 
 import kmLogo.visitor.kmLogo.Tan;
 import kmLogo.visitor.kmLogo.Turtle;
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 import visitor.VisitorInterface;
+import visitor.operation.kmLogo.ExpressionOperation;
 import visitor.operation.kmLogo.TanOperation;
 
 public class TanOperationImpl extends UnaryExpressionOperationImpl implements TanOperation {
@@ -18,7 +20,7 @@ public class TanOperationImpl extends UnaryExpressionOperationImpl implements Ta
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices.tan(((visitor.operation.kmLogo.ExpressionOperation)this.it.getExpression().accept(vis)).eval((kmLogo.visitor.kmLogo.Turtle) (turtle)));
+		result = ((double) (TrigoServices.tan((double) (((ExpressionOperation)this.it.getExpression().accept(vis)).eval((Turtle) (turtle))))));
 		return result;
 	}
 }

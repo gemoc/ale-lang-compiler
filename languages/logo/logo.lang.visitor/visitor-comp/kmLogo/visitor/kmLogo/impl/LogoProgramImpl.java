@@ -58,7 +58,7 @@ public class LogoProgramImpl extends MinimalEObjectImpl.Container implements Log
 		switch (featureID) {
 			case KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends Instruction>)newValue);
+				getInstructions().addAll((Collection<? extends Instruction>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

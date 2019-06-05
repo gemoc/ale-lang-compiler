@@ -57,7 +57,7 @@ public class BlockImpl extends InstructionImpl implements Block {
 		switch (featureID) {
 			case KmLogoPackage.BLOCK__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends Instruction>)newValue);
+				getInstructions().addAll((Collection<? extends Instruction>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

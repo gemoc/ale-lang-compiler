@@ -105,7 +105,7 @@ public class LeftImpl extends PrimitiveImpl implements Left {
 
 	public double eval(Turtle turtle) {
 		double result;
-		double angle = ((double) (((Expression) (this.angle)).eval((Turtle) (turtle))));
+		double angle = ((double) (((Expression) (this.getAngle())).eval((Turtle) (turtle))));
 		((Turtle) (turtle)).rotate((double) (angle));
 		result = (double) (0.0) ;
 		return result;

@@ -39,6 +39,7 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
 import kmLogo.Block;
 import kmLogo.Expression;
 import kmLogo.Repeat;
@@ -62,9 +63,9 @@ public class RepeatOpImpl extends ControlStructureOpImpl implements RepeatOp {
     double time = ((double) (rev.$((Expression)this.obj.getCondition()).eval(((Turtle) (turtle)))));
     while ((time) > (0.0)) {
       rev.$((Block)this.obj.getBlock()).eval(((Turtle) (turtle)));
-      time = (time) - (1.0);
+      time = ((Double) ((time) - (1.0)));
     }
-    result = 0.0;
+    result = ((Double) (0.0));
     return result;
   }
 }

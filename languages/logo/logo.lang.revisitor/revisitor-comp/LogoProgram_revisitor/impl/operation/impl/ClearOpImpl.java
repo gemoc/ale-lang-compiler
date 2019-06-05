@@ -39,6 +39,7 @@ import LogoProgram_revisitor.impl.operation.TurtleOp;
 import LogoProgram_revisitor.impl.operation.UnaryExpressionOp;
 import LogoProgram_revisitor.impl.operation.VariableOp;
 import LogoProgram_revisitor.impl.operation.WhileOp;
+import java.lang.Double;
 import kmLogo.Clear;
 import kmLogo.Turtle;
 import kmLogo.revisitor.KmLogoRevisitor;
@@ -57,7 +58,7 @@ public class ClearOpImpl extends PrimitiveOpImpl implements ClearOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = 0.0;
+    result = ((Double) (0.0));
     return result;
   }
 }

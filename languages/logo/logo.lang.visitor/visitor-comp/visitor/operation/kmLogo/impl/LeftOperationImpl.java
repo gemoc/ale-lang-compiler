@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.Left;
 import kmLogo.visitor.kmLogo.Turtle;
 import visitor.VisitorInterface;
@@ -22,7 +23,7 @@ public class LeftOperationImpl extends PrimitiveOperationImpl implements LeftOpe
 		double result;
 		double angle = ((double) (((ExpressionOperation)this.it.getAngle().accept(vis)).eval((Turtle) (turtle))));
 		((TurtleOperation)turtle.accept(vis)).rotate((double) (angle));
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

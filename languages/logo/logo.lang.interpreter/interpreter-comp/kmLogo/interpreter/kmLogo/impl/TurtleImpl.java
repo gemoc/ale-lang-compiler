@@ -232,13 +232,13 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 
 	public void move(double dx, double dy) {
 		Point newPos = ((Point) (KmLogoFactory.eINSTANCE.createPoint()));
-		newPos.setX((this.position.getX()) + (dx));
-		newPos.setY((this.position.getY()) + (dy));
+		newPos.setX((this.getPosition().getX()) + (dx));
+		newPos.setY((this.getPosition().getY()) + (dy));
 		if (this.penUp) {
 		}
 		else {
 			Segment newSegment = ((Segment) (KmLogoFactory.eINSTANCE.createSegment()));
-			newSegment.setBegin(this.position);
+			newSegment.setBegin(this.getPosition());
 			newSegment.setEnd(newPos);
 			this.getDrawings().add(newSegment);
 		}

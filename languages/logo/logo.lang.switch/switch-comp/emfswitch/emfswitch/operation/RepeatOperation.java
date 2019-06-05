@@ -1,6 +1,7 @@
 package emfswitch.emfswitch.operation;
 
 import emfswitch.emfswitch.EmfswitchSwitchImplementation;
+import java.lang.Double;
 import kmLogo.Repeat;
 import kmLogo.Turtle;
 
@@ -20,9 +21,9 @@ public class RepeatOperation extends ControlStructureOperation {
 		double time = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).eval((Turtle) (turtle))));
 		while ((time) > (0.0)) {
 			((BlockOperation) emfswitch.doSwitch(this.it.getBlock())).eval((Turtle) (turtle));
-			time = (time) - (1.0);
+			time = ((Double) ((time) - (1.0)));
 		}
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

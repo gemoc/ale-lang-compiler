@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.Repeat;
 import kmLogo.visitor.kmLogo.Turtle;
 import visitor.VisitorInterface;
@@ -23,9 +24,9 @@ public class RepeatOperationImpl extends ControlStructureOperationImpl implement
 		double time = ((double) (((ExpressionOperation)this.it.getCondition().accept(vis)).eval((Turtle) (turtle))));
 		while ((time) > (0.0)) {
 			((BlockOperation)this.it.getBlock().accept(vis)).eval((Turtle) (turtle));
-			time = (time) - (1.0);
+			time = ((Double) ((time) - (1.0)));
 		}
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

@@ -18,7 +18,7 @@ public class CosOperation extends UnaryExpressionOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = TrigoServices.cosinus((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).eval((Turtle) (turtle))));
+		result = ((double) (TrigoServices.cosinus((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).eval((Turtle) (turtle))))));
 		return result;
 	}
 }

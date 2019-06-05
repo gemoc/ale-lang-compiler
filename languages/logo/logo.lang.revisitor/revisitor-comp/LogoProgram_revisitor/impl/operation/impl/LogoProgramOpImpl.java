@@ -59,11 +59,11 @@ public class LogoProgramOpImpl implements LogoProgramOp {
   public Turtle eval() {
     Turtle result;
     Turtle turtle = ((Turtle) (rev.$((LogoProgram)this.obj).createTurtle()));
-    result = turtle;
+    result = ((Turtle) (turtle));
     for(Instruction it: this.obj.getInstructions()) {
       rev.$((Instruction)it).eval(((Turtle) (turtle)));
     }
-    result = turtle;
+    result = ((Turtle) (turtle));
     return result;
   }
 
@@ -75,7 +75,7 @@ public class LogoProgramOpImpl implements LogoProgramOp {
     turtle.getPosition().setY(0.0);
     turtle.setCallStack(KmLogoFactory.eINSTANCE.createCallStack());
     turtle.getCallStack().getFrames().add(KmLogoFactory.eINSTANCE.createStackFrame());
-    result = turtle;
+    result = ((Turtle) (turtle));
     return result;
   }
 }

@@ -106,7 +106,7 @@ public class BackImpl extends PrimitiveImpl implements Back {
 
 	public double eval(Turtle turtle) {
 		double result;
-		double move = ((double) (((Expression) (this.steps)).eval((Turtle) (turtle))));
+		double move = ((double) (((Expression) (this.getSteps())).eval((Turtle) (turtle))));
 		((Turtle) (turtle)).forward((Double) (-(move)));
 		result = (double) (0.0) ;
 		return result;

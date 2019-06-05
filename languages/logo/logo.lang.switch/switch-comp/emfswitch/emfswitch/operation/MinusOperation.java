@@ -1,6 +1,7 @@
 package emfswitch.emfswitch.operation;
 
 import emfswitch.emfswitch.EmfswitchSwitchImplementation;
+import java.lang.Double;
 import kmLogo.Minus;
 import kmLogo.Turtle;
 
@@ -17,7 +18,7 @@ public class MinusOperation extends BinaryExpOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = (((ExpressionOperation) emfswitch.doSwitch(this.it.getLhs())).eval((Turtle) (turtle))) - (((ExpressionOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Turtle) (turtle)));
+		result = ((Double) ((((ExpressionOperation) emfswitch.doSwitch(this.it.getLhs())).eval((Turtle) (turtle))) - (((ExpressionOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Turtle) (turtle)))));
 		return result;
 	}
 }
