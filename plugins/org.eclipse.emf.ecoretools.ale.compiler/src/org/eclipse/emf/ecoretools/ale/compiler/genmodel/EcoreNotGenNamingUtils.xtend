@@ -13,6 +13,6 @@ abstract class EcoreNotGenNamingUtils extends AbstractNamingUtils {
 	}
 	
 	override packageInterfacePackageName(EPackage epkg, String packageRoot) {
-		genPackage.packageName
+		genPackage.interfacePackageName
 	}
 }

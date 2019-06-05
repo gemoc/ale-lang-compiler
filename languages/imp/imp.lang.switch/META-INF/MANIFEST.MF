@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Switch
+Bundle-SymbolicName: imp.lang.switch
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: imp.lang.switch
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: imp.model,
+ org.eclipse.emf.ecoretools.ale.compiler.lib
+Export-Package: emfswitch,
+ emfswitch.operation

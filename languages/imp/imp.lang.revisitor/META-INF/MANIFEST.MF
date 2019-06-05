@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Revisitor
+Bundle-SymbolicName: imp.lang.revisitor
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: imp.lang.revisitor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: imp.model,
+ org.eclipse.emf.ecoretools.ale.compiler.lib
+Export-Package: imp_revisitor.impl,
+ imp_revisitor.impl.operation,
+ imp_revisitor.impl.operation.impl

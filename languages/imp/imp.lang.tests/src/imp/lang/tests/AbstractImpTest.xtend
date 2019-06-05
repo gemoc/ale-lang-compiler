@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DynamicTest
 
 import static org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.*
+import org.eclipse.emf.ecore.EPackage
 
 abstract class AbstractImpTest {
 
@@ -40,6 +41,12 @@ abstract class AbstractImpTest {
 		val res = this.execute(resource)
 		val baou = new ByteArrayOutputStream
 		val er = new XMIResourceImpl
+		
+//		er.URI = URI.createURI('http://imp.imp.imp/')
+		
+		val ep = res.eClass.eContainer as EPackage
+		ep.setNsURI('http://imp.imp.imp/')
+		
 		er.contents += res
 		er.save(baou, null)
 
