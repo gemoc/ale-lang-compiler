@@ -580,7 +580,7 @@ public interface MiniJavaPackage extends EPackage {
 	int METHOD__BODY = MEMBER_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Cache</b></em>' reference list.
+	 * The feature id for the '<em><b>Cache</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -3767,10 +3767,10 @@ public interface MiniJavaPackage extends EPackage {
 	EReference getMethod_Body();
 
 	/**
-	 * Returns the meta object for the reference list '{@link miniJava.Method#getCache <em>Cache</em>}'.
+	 * Returns the meta object for the map '{@link miniJava.Method#getCache <em>Cache</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Cache</em>'.
+	 * @return the meta object for the map '<em>Cache</em>'.
 	 * @see miniJava.Method#getCache()
 	 * @see #getMethod()
 	 * @generated
@@ -5814,7 +5814,7 @@ public interface MiniJavaPackage extends EPackage {
 		EReference METHOD__BODY = eINSTANCE.getMethod_Body();
 
 		/**
-		 * The meta object literal for the '<em><b>Cache</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Cache</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

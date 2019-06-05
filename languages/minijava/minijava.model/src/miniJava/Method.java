@@ -2,9 +2,8 @@
  */
 package miniJava;
 
-import java.util.Map;
-
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 
 /**
  * <!-- begin-user-doc -->
@@ -122,19 +121,20 @@ public interface Method extends Member {
 	void setBody(Block value);
 
 	/**
-	 * Returns the value of the '<em><b>Cache</b></em>' reference list.
-	 * The list contents are of type {@link java.util.Map.Entry}<code>&lt;miniJava.Clazz, miniJava.Method&gt;</code>.
+	 * Returns the value of the '<em><b>Cache</b></em>' map.
+	 * The key is of type {@link miniJava.Clazz},
+	 * and the value is of type {@link miniJava.Method},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Cache</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Cache</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Cache</em>' reference list.
+	 * @return the value of the '<em>Cache</em>' map.
 	 * @see miniJava.MiniJavaPackage#getMethod_Cache()
 	 * @model mapType="miniJava.ClazzToMethodMap&lt;miniJava.Clazz, miniJava.Method&gt;"
 	 * @generated
 	 */
-	EList<Map.Entry<Clazz, Method>> getCache();
+	EMap<Clazz, Method> getCache();
 
 } // Method

@@ -64,10 +64,10 @@ public class VarOpImpl extends ExprOpImpl implements VarOp {
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
     if(MapService.containsKey((EMap) (ctx.getEnv()), (String) (this.obj.getName()))) {
-      result = MapService.getFromMap((EMap) (ctx.getEnv()), (String) (this.obj.getName()));
+      result = ((EvalRes) (MapService.getFromMap((EMap) (ctx.getEnv()), (String) (this.obj.getName()))));
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }

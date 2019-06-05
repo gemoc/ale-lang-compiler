@@ -70,7 +70,7 @@ public class LetOpImpl extends ExprOpImpl implements LetOp {
     Ctx nctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
     MapService.putAll((EMap) (nctx.getEnv()), (EMap) (ctx.getEnv()));
     MapService.put((EMap) (nctx.getEnv()), (String) (this.obj.getName()), (EvalRes) (vlhs));
-    result = rev.$((Expr)this.obj.getRhs()).eval(((Ctx) (nctx)));
+    result = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) (nctx)))));
     return result;
   }
 }

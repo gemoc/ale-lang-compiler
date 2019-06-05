@@ -66,7 +66,7 @@ public class FunOpImpl extends ExprOpImpl implements FunOp {
     ret.setExp(this.obj.getBody());
     ret.setCtx(ctx);
     ret.setName(this.obj.getName());
-    result = ret;
+    result = ((EvalFunRes) (ret));
     return result;
   }
 }

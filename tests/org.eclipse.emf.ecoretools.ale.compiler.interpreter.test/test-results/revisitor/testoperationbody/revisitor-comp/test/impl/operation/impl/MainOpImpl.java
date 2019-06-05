@@ -93,7 +93,7 @@ public class MainOpImpl implements MainOp {
     }
     int cptr = ((int) (1));
     while ((cptr) < (rev.$((Main)this.obj).ma())) {
-      cptr = (cptr) + (1);
+      cptr = ((Integer) ((cptr) + (1)));
     }
     boolean truz = ((boolean) (!(false)));
     boolean gt = ((boolean) ((1) > (2)));
@@ -109,7 +109,7 @@ public class MainOpImpl implements MainOp {
 
   public int ma() {
     int result;
-    result = 452;
+    result = ((Integer) (452));
     return result;
   }
 }

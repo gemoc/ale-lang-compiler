@@ -233,21 +233,229 @@ import minijava_exec.impl.operation.impl.VariableDeclarationOpImpl;
 import minijava_exec.impl.operation.impl.VoidTypeRefOpImpl;
 import minijava_exec.impl.operation.impl.WhileStatementOpImpl;
 
-public interface Minijava_execImplementation extends MiniJavaRevisitor<AndOp, ArrayAccessOp, ArrayInstanceOp, ArrayLengthOp, ArrayRefValueOp, ArrayTypeRefOp, AssigneeOp, AssignmentOp, BlockOp, BoolConstantOp, BooleanTypeRefOp, BooleanValueOp, CallOp, ClassRefOp, ClazzOp, ContextOp, DivisionOp, EqualityOp, ExpressionOp, FieldOp, FieldAccessOp, FieldBindingOp, ForStatementOp, FrameOp, IfStatementOp, ImportOp, InequalityOp, InferiorOp, InferiorOrEqualOp, IntConstantOp, IntegerTypeRefOp, IntegerValueOp, InterfaceOp, MemberOp, MethodOp, MethodCallOp, MethodCall2Op, MinusOp, ModuloOp, MultiplicationOp, NamedElementOp, NegOp, NewArrayOp, NewCallOp, NewObjectOp, NotOp, NullOp, NullValueOp, ObjectInstanceOp, ObjectRefValueOp, OrOp, OutputStreamOp, ParameterOp, PlusOp, PrintStatementOp, ProgramOp, ReturnOp, SingleTypeRefOp, StateOp, StatementOp, StringConstantOp, StringTypeRefOp, StringValueOp, SuperOp, SuperiorOp, SuperiorOrEqualOp, SymbolOp, SymbolBindingOp, SymbolRefOp, ThisOp, TypeDeclarationOp, TypeRefOp, TypedDeclarationOp, ValueOp, VariableDeclarationOp, VoidTypeRefOp, WhileStatementOp> {
-	default ProgramOp miniJava__Program(Program it) {
-		return new ProgramOpImpl(it, this);
+public interface Minijava_execImplementation extends MiniJavaRevisitor<AndOp, AndOp, AndOp, ArrayAccessOp, ArrayAccessOp, ArrayAccessOp, ArrayInstanceOp, ArrayLengthOp, ArrayLengthOp, ArrayLengthOp, ArrayRefValueOp, ArrayTypeRefOp, AssigneeOp, AssignmentOp, BlockOp, BoolConstantOp, BoolConstantOp, BoolConstantOp, BooleanTypeRefOp, BooleanValueOp, CallOp, ClassRefOp, ClazzOp, ContextOp, DivisionOp, DivisionOp, DivisionOp, EqualityOp, EqualityOp, EqualityOp, ExpressionOp, ExpressionOp, ExpressionOp, FieldOp, FieldAccessOp, FieldAccessOp, FieldAccessOp, FieldBindingOp, ForStatementOp, FrameOp, IfStatementOp, ImportOp, InequalityOp, InequalityOp, InequalityOp, InferiorOp, InferiorOp, InferiorOp, InferiorOrEqualOp, InferiorOrEqualOp, InferiorOrEqualOp, IntConstantOp, IntConstantOp, IntConstantOp, IntegerTypeRefOp, IntegerValueOp, InterfaceOp, MemberOp, MethodOp, MethodCallOp, MethodCallOp, MethodCallOp, MethodCall2Op, MinusOp, MinusOp, MinusOp, ModuloOp, ModuloOp, ModuloOp, MultiplicationOp, MultiplicationOp, MultiplicationOp, NamedElementOp, NegOp, NegOp, NegOp, NewArrayOp, NewArrayOp, NewArrayOp, NewCallOp, NewObjectOp, NewObjectOp, NewObjectOp, NotOp, NotOp, NotOp, NullOp, NullOp, NullOp, NullValueOp, ObjectInstanceOp, ObjectRefValueOp, OrOp, OrOp, OrOp, OutputStreamOp, ParameterOp, PlusOp, PlusOp, PlusOp, PrintStatementOp, ProgramOp, ReturnOp, SingleTypeRefOp, StateOp, StatementOp, StringConstantOp, StringConstantOp, StringConstantOp, StringTypeRefOp, StringValueOp, SuperOp, SuperOp, SuperOp, SuperiorOp, SuperiorOp, SuperiorOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SymbolOp, SymbolBindingOp, SymbolRefOp, SymbolRefOp, SymbolRefOp, ThisOp, ThisOp, ThisOp, TypeDeclarationOp, TypeRefOp, TypedDeclarationOp, ValueOp, VariableDeclarationOp, VariableDeclarationOp, VariableDeclarationOp, VoidTypeRefOp, WhileStatementOp> {
+	default AndOp miniJava__And(And it) {
+		return new AndOpImpl(it, this);
+	}
+
+	default AndOp miniJava__And__AS__miniJava__Assignee(And it) {
+		return new AndOpImpl(it, this);
+	}
+
+	default AndOp miniJava__And__AS__miniJava__Statement(And it) {
+		return new AndOpImpl(it, this);
+	}
+
+	default ArrayAccessOp miniJava__ArrayAccess(ArrayAccess it) {
+		return new ArrayAccessOpImpl(it, this);
+	}
+
+	default ArrayAccessOp miniJava__ArrayAccess__AS__miniJava__Assignee(ArrayAccess it) {
+		return new ArrayAccessOpImpl(it, this);
+	}
+
+	default ArrayAccessOp miniJava__ArrayAccess__AS__miniJava__Statement(ArrayAccess it) {
+		return new ArrayAccessOpImpl(it, this);
+	}
+
+	default ArrayInstanceOp miniJava__ArrayInstance(ArrayInstance it) {
+		return new ArrayInstanceOpImpl(it, this);
+	}
+
+	default ArrayLengthOp miniJava__ArrayLength(ArrayLength it) {
+		return new ArrayLengthOpImpl(it, this);
+	}
+
+	default ArrayLengthOp miniJava__ArrayLength__AS__miniJava__Assignee(ArrayLength it) {
+		return new ArrayLengthOpImpl(it, this);
+	}
+
+	default ArrayLengthOp miniJava__ArrayLength__AS__miniJava__Statement(ArrayLength it) {
+		return new ArrayLengthOpImpl(it, this);
+	}
+
+	default ArrayRefValueOp miniJava__ArrayRefValue(ArrayRefValue it) {
+		return new ArrayRefValueOpImpl(it, this);
+	}
+
+	default ArrayTypeRefOp miniJava__ArrayTypeRef(ArrayTypeRef it) {
+		return new ArrayTypeRefOpImpl(it, this);
+	}
+
+	default AssigneeOp miniJava__Assignee(Assignee it) {
+		return new AssigneeOpImpl(it, this);
+	}
+
+	default AssignmentOp miniJava__Assignment(Assignment it) {
+		return new AssignmentOpImpl(it, this);
+	}
+
+	default BlockOp miniJava__Block(Block it) {
+		return new BlockOpImpl(it, this);
+	}
+
+	default BoolConstantOp miniJava__BoolConstant(BoolConstant it) {
+		return new BoolConstantOpImpl(it, this);
+	}
+
+	default BoolConstantOp miniJava__BoolConstant__AS__miniJava__Assignee(BoolConstant it) {
+		return new BoolConstantOpImpl(it, this);
+	}
+
+	default BoolConstantOp miniJava__BoolConstant__AS__miniJava__Statement(BoolConstant it) {
+		return new BoolConstantOpImpl(it, this);
+	}
+
+	default BooleanTypeRefOp miniJava__BooleanTypeRef(BooleanTypeRef it) {
+		return new BooleanTypeRefOpImpl(it, this);
+	}
+
+	default BooleanValueOp miniJava__BooleanValue(BooleanValue it) {
+		return new BooleanValueOpImpl(it, this);
+	}
+
+	default CallOp miniJava__Call(Call it) {
+		return new CallOpImpl(it, this);
+	}
+
+	default ClassRefOp miniJava__ClassRef(ClassRef it) {
+		return new ClassRefOpImpl(it, this);
+	}
+
+	default ClazzOp miniJava__Clazz(Clazz it) {
+		return new ClazzOpImpl(it, this);
+	}
+
+	default ContextOp miniJava__Context(Context it) {
+		return new ContextOpImpl(it, this);
+	}
+
+	default DivisionOp miniJava__Division(Division it) {
+		return new DivisionOpImpl(it, this);
+	}
+
+	default DivisionOp miniJava__Division__AS__miniJava__Assignee(Division it) {
+		return new DivisionOpImpl(it, this);
+	}
+
+	default DivisionOp miniJava__Division__AS__miniJava__Statement(Division it) {
+		return new DivisionOpImpl(it, this);
+	}
+
+	default EqualityOp miniJava__Equality(Equality it) {
+		return new EqualityOpImpl(it, this);
+	}
+
+	default EqualityOp miniJava__Equality__AS__miniJava__Assignee(Equality it) {
+		return new EqualityOpImpl(it, this);
+	}
+
+	default EqualityOp miniJava__Equality__AS__miniJava__Statement(Equality it) {
+		return new EqualityOpImpl(it, this);
+	}
+
+	default ExpressionOp miniJava__Expression(Expression it) {
+		return new ExpressionOpImpl(it, this);
+	}
+
+	default ExpressionOp miniJava__Expression__AS__miniJava__Assignee(Expression it) {
+		return new ExpressionOpImpl(it, this);
+	}
+
+	default ExpressionOp miniJava__Expression__AS__miniJava__Statement(Expression it) {
+		return new ExpressionOpImpl(it, this);
+	}
+
+	default FieldOp miniJava__Field(Field it) {
+		return new FieldOpImpl(it, this);
+	}
+
+	default FieldAccessOp miniJava__FieldAccess(FieldAccess it) {
+		return new FieldAccessOpImpl(it, this);
+	}
+
+	default FieldAccessOp miniJava__FieldAccess__AS__miniJava__Assignee(FieldAccess it) {
+		return new FieldAccessOpImpl(it, this);
+	}
+
+	default FieldAccessOp miniJava__FieldAccess__AS__miniJava__Statement(FieldAccess it) {
+		return new FieldAccessOpImpl(it, this);
+	}
+
+	default FieldBindingOp miniJava__FieldBinding(FieldBinding it) {
+		return new FieldBindingOpImpl(it, this);
+	}
+
+	default ForStatementOp miniJava__ForStatement(ForStatement it) {
+		return new ForStatementOpImpl(it, this);
+	}
+
+	default FrameOp miniJava__Frame(Frame it) {
+		return new FrameOpImpl(it, this);
+	}
+
+	default IfStatementOp miniJava__IfStatement(IfStatement it) {
+		return new IfStatementOpImpl(it, this);
 	}
 
 	default ImportOp miniJava__Import(Import it) {
 		return new ImportOpImpl(it, this);
 	}
 
-	default TypeDeclarationOp miniJava__TypeDeclaration(TypeDeclaration it) {
-		return new TypeDeclarationOpImpl(it, this);
+	default InequalityOp miniJava__Inequality(Inequality it) {
+		return new InequalityOpImpl(it, this);
 	}
 
-	default ClazzOp miniJava__Clazz(Clazz it) {
-		return new ClazzOpImpl(it, this);
+	default InequalityOp miniJava__Inequality__AS__miniJava__Assignee(Inequality it) {
+		return new InequalityOpImpl(it, this);
+	}
+
+	default InequalityOp miniJava__Inequality__AS__miniJava__Statement(Inequality it) {
+		return new InequalityOpImpl(it, this);
+	}
+
+	default InferiorOp miniJava__Inferior(Inferior it) {
+		return new InferiorOpImpl(it, this);
+	}
+
+	default InferiorOp miniJava__Inferior__AS__miniJava__Assignee(Inferior it) {
+		return new InferiorOpImpl(it, this);
+	}
+
+	default InferiorOp miniJava__Inferior__AS__miniJava__Statement(Inferior it) {
+		return new InferiorOpImpl(it, this);
+	}
+
+	default InferiorOrEqualOp miniJava__InferiorOrEqual(InferiorOrEqual it) {
+		return new InferiorOrEqualOpImpl(it, this);
+	}
+
+	default InferiorOrEqualOp miniJava__InferiorOrEqual__AS__miniJava__Assignee(InferiorOrEqual it) {
+		return new InferiorOrEqualOpImpl(it, this);
+	}
+
+	default InferiorOrEqualOp miniJava__InferiorOrEqual__AS__miniJava__Statement(InferiorOrEqual it) {
+		return new InferiorOrEqualOpImpl(it, this);
+	}
+
+	default IntConstantOp miniJava__IntConstant(IntConstant it) {
+		return new IntConstantOpImpl(it, this);
+	}
+
+	default IntConstantOp miniJava__IntConstant__AS__miniJava__Assignee(IntConstant it) {
+		return new IntConstantOpImpl(it, this);
+	}
+
+	default IntConstantOp miniJava__IntConstant__AS__miniJava__Statement(IntConstant it) {
+		return new IntConstantOpImpl(it, this);
+	}
+
+	default IntegerTypeRefOp miniJava__IntegerTypeRef(IntegerTypeRef it) {
+		return new IntegerTypeRefOpImpl(it, this);
+	}
+
+	default IntegerValueOp miniJava__IntegerValue(IntegerValue it) {
+		return new IntegerValueOpImpl(it, this);
 	}
 
 	default InterfaceOp miniJava__Interface(Interface it) {
@@ -262,283 +470,317 @@ public interface Minijava_execImplementation extends MiniJavaRevisitor<AndOp, Ar
 		return new MethodOpImpl(it, this);
 	}
 
-	default ParameterOp miniJava__Parameter(Parameter it) {
-		return new ParameterOpImpl(it, this);
-	}
-
-	default FieldOp miniJava__Field(Field it) {
-		return new FieldOpImpl(it, this);
-	}
-
-	default BlockOp miniJava__Block(Block it) {
-		return new BlockOpImpl(it, this);
-	}
-
-	default StatementOp miniJava__Statement(Statement it) {
-		return new StatementOpImpl(it, this);
-	}
-
-	default PrintStatementOp miniJava__PrintStatement(PrintStatement it) {
-		return new PrintStatementOpImpl(it, this);
-	}
-
-	default ReturnOp miniJava__Return(Return it) {
-		return new ReturnOpImpl(it, this);
-	}
-
-	default IfStatementOp miniJava__IfStatement(IfStatement it) {
-		return new IfStatementOpImpl(it, this);
-	}
-
-	default WhileStatementOp miniJava__WhileStatement(WhileStatement it) {
-		return new WhileStatementOpImpl(it, this);
-	}
-
-	default ForStatementOp miniJava__ForStatement(ForStatement it) {
-		return new ForStatementOpImpl(it, this);
-	}
-
-	default TypeRefOp miniJava__TypeRef(TypeRef it) {
-		return new TypeRefOpImpl(it, this);
-	}
-
-	default SingleTypeRefOp miniJava__SingleTypeRef(SingleTypeRef it) {
-		return new SingleTypeRefOpImpl(it, this);
-	}
-
-	default ClassRefOp miniJava__ClassRef(ClassRef it) {
-		return new ClassRefOpImpl(it, this);
-	}
-
-	default NamedElementOp miniJava__NamedElement(NamedElement it) {
-		return new NamedElementOpImpl(it, this);
-	}
-
-	default TypedDeclarationOp miniJava__TypedDeclaration(TypedDeclaration it) {
-		return new TypedDeclarationOpImpl(it, this);
-	}
-
-	default SymbolOp miniJava__Symbol(Symbol it) {
-		return new SymbolOpImpl(it, this);
-	}
-
-	default VariableDeclarationOp miniJava__VariableDeclaration(VariableDeclaration it) {
-		return new VariableDeclarationOpImpl(it, this);
-	}
-
-	default AssignmentOp miniJava__Assignment(Assignment it) {
-		return new AssignmentOpImpl(it, this);
-	}
-
-	default AssigneeOp miniJava__Assignee(Assignee it) {
-		return new AssigneeOpImpl(it, this);
-	}
-
-	default ExpressionOp miniJava__Expression(Expression it) {
-		return new ExpressionOpImpl(it, this);
-	}
-
-	default ArrayTypeRefOp miniJava__ArrayTypeRef(ArrayTypeRef it) {
-		return new ArrayTypeRefOpImpl(it, this);
-	}
-
-	default IntegerTypeRefOp miniJava__IntegerTypeRef(IntegerTypeRef it) {
-		return new IntegerTypeRefOpImpl(it, this);
-	}
-
-	default BooleanTypeRefOp miniJava__BooleanTypeRef(BooleanTypeRef it) {
-		return new BooleanTypeRefOpImpl(it, this);
-	}
-
-	default StringTypeRefOp miniJava__StringTypeRef(StringTypeRef it) {
-		return new StringTypeRefOpImpl(it, this);
-	}
-
-	default VoidTypeRefOp miniJava__VoidTypeRef(VoidTypeRef it) {
-		return new VoidTypeRefOpImpl(it, this);
-	}
-
-	default OrOp miniJava__Or(Or it) {
-		return new OrOpImpl(it, this);
-	}
-
-	default AndOp miniJava__And(And it) {
-		return new AndOpImpl(it, this);
-	}
-
-	default EqualityOp miniJava__Equality(Equality it) {
-		return new EqualityOpImpl(it, this);
-	}
-
-	default InequalityOp miniJava__Inequality(Inequality it) {
-		return new InequalityOpImpl(it, this);
-	}
-
-	default SuperiorOrEqualOp miniJava__SuperiorOrEqual(SuperiorOrEqual it) {
-		return new SuperiorOrEqualOpImpl(it, this);
-	}
-
-	default InferiorOrEqualOp miniJava__InferiorOrEqual(InferiorOrEqual it) {
-		return new InferiorOrEqualOpImpl(it, this);
-	}
-
-	default SuperiorOp miniJava__Superior(Superior it) {
-		return new SuperiorOpImpl(it, this);
-	}
-
-	default InferiorOp miniJava__Inferior(Inferior it) {
-		return new InferiorOpImpl(it, this);
-	}
-
-	default PlusOp miniJava__Plus(Plus it) {
-		return new PlusOpImpl(it, this);
-	}
-
-	default MinusOp miniJava__Minus(Minus it) {
-		return new MinusOpImpl(it, this);
-	}
-
-	default MultiplicationOp miniJava__Multiplication(Multiplication it) {
-		return new MultiplicationOpImpl(it, this);
-	}
-
-	default DivisionOp miniJava__Division(Division it) {
-		return new DivisionOpImpl(it, this);
-	}
-
-	default ArrayAccessOp miniJava__ArrayAccess(ArrayAccess it) {
-		return new ArrayAccessOpImpl(it, this);
-	}
-
-	default ArrayLengthOp miniJava__ArrayLength(ArrayLength it) {
-		return new ArrayLengthOpImpl(it, this);
-	}
-
-	default NotOp miniJava__Not(Not it) {
-		return new NotOpImpl(it, this);
-	}
-
-	default NegOp miniJava__Neg(Neg it) {
-		return new NegOpImpl(it, this);
-	}
-
-	default FieldAccessOp miniJava__FieldAccess(FieldAccess it) {
-		return new FieldAccessOpImpl(it, this);
-	}
-
 	default MethodCallOp miniJava__MethodCall(MethodCall it) {
 		return new MethodCallOpImpl(it, this);
 	}
 
-	default StringConstantOp miniJava__StringConstant(StringConstant it) {
-		return new StringConstantOpImpl(it, this);
+	default MethodCallOp miniJava__MethodCall__AS__miniJava__Assignee(MethodCall it) {
+		return new MethodCallOpImpl(it, this);
 	}
 
-	default IntConstantOp miniJava__IntConstant(IntConstant it) {
-		return new IntConstantOpImpl(it, this);
-	}
-
-	default BoolConstantOp miniJava__BoolConstant(BoolConstant it) {
-		return new BoolConstantOpImpl(it, this);
-	}
-
-	default ThisOp miniJava__This(This it) {
-		return new ThisOpImpl(it, this);
-	}
-
-	default SuperOp miniJava__Super(Super it) {
-		return new SuperOpImpl(it, this);
-	}
-
-	default NullOp miniJava__Null(Null it) {
-		return new NullOpImpl(it, this);
-	}
-
-	default NewObjectOp miniJava__NewObject(NewObject it) {
-		return new NewObjectOpImpl(it, this);
-	}
-
-	default NewArrayOp miniJava__NewArray(NewArray it) {
-		return new NewArrayOpImpl(it, this);
-	}
-
-	default SymbolRefOp miniJava__SymbolRef(SymbolRef it) {
-		return new SymbolRefOpImpl(it, this);
-	}
-
-	default ContextOp miniJava__Context(Context it) {
-		return new ContextOpImpl(it, this);
-	}
-
-	default ValueOp miniJava__Value(Value it) {
-		return new ValueOpImpl(it, this);
-	}
-
-	default IntegerValueOp miniJava__IntegerValue(IntegerValue it) {
-		return new IntegerValueOpImpl(it, this);
-	}
-
-	default SymbolBindingOp miniJava__SymbolBinding(SymbolBinding it) {
-		return new SymbolBindingOpImpl(it, this);
-	}
-
-	default FieldBindingOp miniJava__FieldBinding(FieldBinding it) {
-		return new FieldBindingOpImpl(it, this);
-	}
-
-	default StringValueOp miniJava__StringValue(StringValue it) {
-		return new StringValueOpImpl(it, this);
-	}
-
-	default BooleanValueOp miniJava__BooleanValue(BooleanValue it) {
-		return new BooleanValueOpImpl(it, this);
-	}
-
-	default OutputStreamOp miniJava__OutputStream(OutputStream it) {
-		return new OutputStreamOpImpl(it, this);
-	}
-
-	default StateOp miniJava__State(State it) {
-		return new StateOpImpl(it, this);
-	}
-
-	default FrameOp miniJava__Frame(Frame it) {
-		return new FrameOpImpl(it, this);
-	}
-
-	default NullValueOp miniJava__NullValue(NullValue it) {
-		return new NullValueOpImpl(it, this);
-	}
-
-	default CallOp miniJava__Call(Call it) {
-		return new CallOpImpl(it, this);
-	}
-
-	default NewCallOp miniJava__NewCall(NewCall it) {
-		return new NewCallOpImpl(it, this);
+	default MethodCallOp miniJava__MethodCall__AS__miniJava__Statement(MethodCall it) {
+		return new MethodCallOpImpl(it, this);
 	}
 
 	default MethodCall2Op miniJava__MethodCall2(MethodCall2 it) {
 		return new MethodCall2OpImpl(it, this);
 	}
 
-	default ObjectInstanceOp miniJava__ObjectInstance(ObjectInstance it) {
-		return new ObjectInstanceOpImpl(it, this);
+	default MinusOp miniJava__Minus(Minus it) {
+		return new MinusOpImpl(it, this);
 	}
 
-	default ArrayInstanceOp miniJava__ArrayInstance(ArrayInstance it) {
-		return new ArrayInstanceOpImpl(it, this);
+	default MinusOp miniJava__Minus__AS__miniJava__Assignee(Minus it) {
+		return new MinusOpImpl(it, this);
+	}
+
+	default MinusOp miniJava__Minus__AS__miniJava__Statement(Minus it) {
+		return new MinusOpImpl(it, this);
+	}
+
+	default ModuloOp miniJava__Modulo(Modulo it) {
+		return new ModuloOpImpl(it, this);
+	}
+
+	default ModuloOp miniJava__Modulo__AS__miniJava__Assignee(Modulo it) {
+		return new ModuloOpImpl(it, this);
+	}
+
+	default ModuloOp miniJava__Modulo__AS__miniJava__Statement(Modulo it) {
+		return new ModuloOpImpl(it, this);
+	}
+
+	default MultiplicationOp miniJava__Multiplication(Multiplication it) {
+		return new MultiplicationOpImpl(it, this);
+	}
+
+	default MultiplicationOp miniJava__Multiplication__AS__miniJava__Assignee(Multiplication it) {
+		return new MultiplicationOpImpl(it, this);
+	}
+
+	default MultiplicationOp miniJava__Multiplication__AS__miniJava__Statement(Multiplication it) {
+		return new MultiplicationOpImpl(it, this);
+	}
+
+	default NamedElementOp miniJava__NamedElement(NamedElement it) {
+		return new NamedElementOpImpl(it, this);
+	}
+
+	default NegOp miniJava__Neg(Neg it) {
+		return new NegOpImpl(it, this);
+	}
+
+	default NegOp miniJava__Neg__AS__miniJava__Assignee(Neg it) {
+		return new NegOpImpl(it, this);
+	}
+
+	default NegOp miniJava__Neg__AS__miniJava__Statement(Neg it) {
+		return new NegOpImpl(it, this);
+	}
+
+	default NewArrayOp miniJava__NewArray(NewArray it) {
+		return new NewArrayOpImpl(it, this);
+	}
+
+	default NewArrayOp miniJava__NewArray__AS__miniJava__Assignee(NewArray it) {
+		return new NewArrayOpImpl(it, this);
+	}
+
+	default NewArrayOp miniJava__NewArray__AS__miniJava__Statement(NewArray it) {
+		return new NewArrayOpImpl(it, this);
+	}
+
+	default NewCallOp miniJava__NewCall(NewCall it) {
+		return new NewCallOpImpl(it, this);
+	}
+
+	default NewObjectOp miniJava__NewObject(NewObject it) {
+		return new NewObjectOpImpl(it, this);
+	}
+
+	default NewObjectOp miniJava__NewObject__AS__miniJava__Assignee(NewObject it) {
+		return new NewObjectOpImpl(it, this);
+	}
+
+	default NewObjectOp miniJava__NewObject__AS__miniJava__Statement(NewObject it) {
+		return new NewObjectOpImpl(it, this);
+	}
+
+	default NotOp miniJava__Not(Not it) {
+		return new NotOpImpl(it, this);
+	}
+
+	default NotOp miniJava__Not__AS__miniJava__Assignee(Not it) {
+		return new NotOpImpl(it, this);
+	}
+
+	default NotOp miniJava__Not__AS__miniJava__Statement(Not it) {
+		return new NotOpImpl(it, this);
+	}
+
+	default NullOp miniJava__Null(Null it) {
+		return new NullOpImpl(it, this);
+	}
+
+	default NullOp miniJava__Null__AS__miniJava__Assignee(Null it) {
+		return new NullOpImpl(it, this);
+	}
+
+	default NullOp miniJava__Null__AS__miniJava__Statement(Null it) {
+		return new NullOpImpl(it, this);
+	}
+
+	default NullValueOp miniJava__NullValue(NullValue it) {
+		return new NullValueOpImpl(it, this);
+	}
+
+	default ObjectInstanceOp miniJava__ObjectInstance(ObjectInstance it) {
+		return new ObjectInstanceOpImpl(it, this);
 	}
 
 	default ObjectRefValueOp miniJava__ObjectRefValue(ObjectRefValue it) {
 		return new ObjectRefValueOpImpl(it, this);
 	}
 
-	default ArrayRefValueOp miniJava__ArrayRefValue(ArrayRefValue it) {
-		return new ArrayRefValueOpImpl(it, this);
+	default OrOp miniJava__Or(Or it) {
+		return new OrOpImpl(it, this);
 	}
 
-	default ModuloOp miniJava__Modulo(Modulo it) {
-		return new ModuloOpImpl(it, this);
+	default OrOp miniJava__Or__AS__miniJava__Assignee(Or it) {
+		return new OrOpImpl(it, this);
+	}
+
+	default OrOp miniJava__Or__AS__miniJava__Statement(Or it) {
+		return new OrOpImpl(it, this);
+	}
+
+	default OutputStreamOp miniJava__OutputStream(OutputStream it) {
+		return new OutputStreamOpImpl(it, this);
+	}
+
+	default ParameterOp miniJava__Parameter(Parameter it) {
+		return new ParameterOpImpl(it, this);
+	}
+
+	default PlusOp miniJava__Plus(Plus it) {
+		return new PlusOpImpl(it, this);
+	}
+
+	default PlusOp miniJava__Plus__AS__miniJava__Assignee(Plus it) {
+		return new PlusOpImpl(it, this);
+	}
+
+	default PlusOp miniJava__Plus__AS__miniJava__Statement(Plus it) {
+		return new PlusOpImpl(it, this);
+	}
+
+	default PrintStatementOp miniJava__PrintStatement(PrintStatement it) {
+		return new PrintStatementOpImpl(it, this);
+	}
+
+	default ProgramOp miniJava__Program(Program it) {
+		return new ProgramOpImpl(it, this);
+	}
+
+	default ReturnOp miniJava__Return(Return it) {
+		return new ReturnOpImpl(it, this);
+	}
+
+	default SingleTypeRefOp miniJava__SingleTypeRef(SingleTypeRef it) {
+		return new SingleTypeRefOpImpl(it, this);
+	}
+
+	default StateOp miniJava__State(State it) {
+		return new StateOpImpl(it, this);
+	}
+
+	default StatementOp miniJava__Statement(Statement it) {
+		return new StatementOpImpl(it, this);
+	}
+
+	default StringConstantOp miniJava__StringConstant(StringConstant it) {
+		return new StringConstantOpImpl(it, this);
+	}
+
+	default StringConstantOp miniJava__StringConstant__AS__miniJava__Assignee(StringConstant it) {
+		return new StringConstantOpImpl(it, this);
+	}
+
+	default StringConstantOp miniJava__StringConstant__AS__miniJava__Statement(StringConstant it) {
+		return new StringConstantOpImpl(it, this);
+	}
+
+	default StringTypeRefOp miniJava__StringTypeRef(StringTypeRef it) {
+		return new StringTypeRefOpImpl(it, this);
+	}
+
+	default StringValueOp miniJava__StringValue(StringValue it) {
+		return new StringValueOpImpl(it, this);
+	}
+
+	default SuperOp miniJava__Super(Super it) {
+		return new SuperOpImpl(it, this);
+	}
+
+	default SuperOp miniJava__Super__AS__miniJava__Assignee(Super it) {
+		return new SuperOpImpl(it, this);
+	}
+
+	default SuperOp miniJava__Super__AS__miniJava__Statement(Super it) {
+		return new SuperOpImpl(it, this);
+	}
+
+	default SuperiorOp miniJava__Superior(Superior it) {
+		return new SuperiorOpImpl(it, this);
+	}
+
+	default SuperiorOp miniJava__Superior__AS__miniJava__Assignee(Superior it) {
+		return new SuperiorOpImpl(it, this);
+	}
+
+	default SuperiorOp miniJava__Superior__AS__miniJava__Statement(Superior it) {
+		return new SuperiorOpImpl(it, this);
+	}
+
+	default SuperiorOrEqualOp miniJava__SuperiorOrEqual(SuperiorOrEqual it) {
+		return new SuperiorOrEqualOpImpl(it, this);
+	}
+
+	default SuperiorOrEqualOp miniJava__SuperiorOrEqual__AS__miniJava__Assignee(SuperiorOrEqual it) {
+		return new SuperiorOrEqualOpImpl(it, this);
+	}
+
+	default SuperiorOrEqualOp miniJava__SuperiorOrEqual__AS__miniJava__Statement(SuperiorOrEqual it) {
+		return new SuperiorOrEqualOpImpl(it, this);
+	}
+
+	default SymbolOp miniJava__Symbol(Symbol it) {
+		return new SymbolOpImpl(it, this);
+	}
+
+	default SymbolBindingOp miniJava__SymbolBinding(SymbolBinding it) {
+		return new SymbolBindingOpImpl(it, this);
+	}
+
+	default SymbolRefOp miniJava__SymbolRef(SymbolRef it) {
+		return new SymbolRefOpImpl(it, this);
+	}
+
+	default SymbolRefOp miniJava__SymbolRef__AS__miniJava__Assignee(SymbolRef it) {
+		return new SymbolRefOpImpl(it, this);
+	}
+
+	default SymbolRefOp miniJava__SymbolRef__AS__miniJava__Statement(SymbolRef it) {
+		return new SymbolRefOpImpl(it, this);
+	}
+
+	default ThisOp miniJava__This(This it) {
+		return new ThisOpImpl(it, this);
+	}
+
+	default ThisOp miniJava__This__AS__miniJava__Assignee(This it) {
+		return new ThisOpImpl(it, this);
+	}
+
+	default ThisOp miniJava__This__AS__miniJava__Statement(This it) {
+		return new ThisOpImpl(it, this);
+	}
+
+	default TypeDeclarationOp miniJava__TypeDeclaration(TypeDeclaration it) {
+		return new TypeDeclarationOpImpl(it, this);
+	}
+
+	default TypeRefOp miniJava__TypeRef(TypeRef it) {
+		return new TypeRefOpImpl(it, this);
+	}
+
+	default TypedDeclarationOp miniJava__TypedDeclaration(TypedDeclaration it) {
+		return new TypedDeclarationOpImpl(it, this);
+	}
+
+	default ValueOp miniJava__Value(Value it) {
+		return new ValueOpImpl(it, this);
+	}
+
+	default VariableDeclarationOp miniJava__VariableDeclaration(VariableDeclaration it) {
+		return new VariableDeclarationOpImpl(it, this);
+	}
+
+	default VariableDeclarationOp miniJava__VariableDeclaration__AS__miniJava__Assignee(
+			VariableDeclaration it) {
+		return new VariableDeclarationOpImpl(it, this);
+	}
+
+	default VariableDeclarationOp miniJava__VariableDeclaration__AS__miniJava__Symbol(
+			VariableDeclaration it) {
+		return new VariableDeclarationOpImpl(it, this);
+	}
+
+	default VoidTypeRefOp miniJava__VoidTypeRef(VoidTypeRef it) {
+		return new VoidTypeRefOpImpl(it, this);
+	}
+
+	default WhileStatementOp miniJava__WhileStatement(WhileStatement it) {
+		return new WhileStatementOpImpl(it, this);
 	}
 }

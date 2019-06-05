@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Boolean;
 import test.impl.operation.ChildAOp;
 import test.impl.operation.ChildBOp;
 import test.impl.operation.ConceptAOp;
@@ -21,7 +22,7 @@ public class ConceptAOpImpl implements ConceptAOp {
 
   public boolean op() {
     boolean result;
-    result = false;
+    result = ((Boolean) (false));
     return result;
   }
 }

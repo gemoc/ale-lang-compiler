@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.tetrabox.minijava.xtext/src" editDirectory="/org.tetrabox.minijava.xtext.edit/src-gen"
-    modelPluginID="org.tetrabox.minijava.xtext" modelName="MiniJava" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/minijava.model/src" modelPluginID="minijava.model"
+    modelName="MiniJava" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    operationReflection="true" importOrganizing="true"
-    forceOverwrite="true"
-    updateClasspath="false">
+    operationReflection="true" importOrganizing="true">
   <foreignModel>MiniJava.ecore</foreignModel>
   <genPackages prefix="MiniJava" disposableProviderFactory="true" ecorePackage="MiniJava.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="MiniJava.ecore#//AccessLevel">
@@ -40,7 +38,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MiniJava.ecore#//Method/isstatic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Method/params"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Method/body"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Method/cache"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Method/cache"/>
     </genClasses>
     <genClasses ecoreClass="MiniJava.ecore#//Parameter"/>
     <genClasses ecoreClass="MiniJava.ecore#//Field">
@@ -194,7 +192,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Context/bindings"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference MiniJava.ecore#//Context/parentContext"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Context/childContext"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Context/cache"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MiniJava.ecore#//Context/cache"/>
     </genClasses>
     <genClasses ecoreClass="MiniJava.ecore#//Value"/>
     <genClasses ecoreClass="MiniJava.ecore#//IntegerValue">

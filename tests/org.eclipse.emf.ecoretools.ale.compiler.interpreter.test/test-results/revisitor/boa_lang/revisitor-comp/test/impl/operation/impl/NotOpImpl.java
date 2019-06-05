@@ -63,15 +63,15 @@ public class NotOpImpl extends ExprOpImpl implements NotOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalRes vvalue = ((EvalRes) (rev.$((Expr)this.obj.getValue()).eval(((Ctx) ctx))));
+    EvalRes vvalue = ((EvalRes) (rev.$((Expr)this.obj.getValue()).eval(((Ctx) (ctx)))));
     if(vvalue instanceof EvalBoolRes) {
       EvalBoolRes bvvalue = ((EvalBoolRes) (vvalue));
       EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
       ret.setValue(!(bvvalue.isValue()));
-      result = ret;
+      result = ((EvalBoolRes) (ret));
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }

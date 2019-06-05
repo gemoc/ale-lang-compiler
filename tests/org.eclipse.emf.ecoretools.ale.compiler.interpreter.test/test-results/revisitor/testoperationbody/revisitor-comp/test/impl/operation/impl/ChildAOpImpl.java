@@ -26,7 +26,7 @@ public class ChildAOpImpl extends ParentOpImpl implements ChildAOp {
 
   public EnumA onlyA() {
     EnumA result;
-    result = this.obj.getValue();
+    result = ((EnumA) (this.obj.getValue()));
     return result;
   }
 }

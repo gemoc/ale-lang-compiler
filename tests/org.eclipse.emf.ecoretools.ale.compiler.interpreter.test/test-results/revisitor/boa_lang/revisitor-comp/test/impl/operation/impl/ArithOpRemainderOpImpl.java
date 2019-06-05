@@ -72,14 +72,14 @@ public class ArithOpRemainderOpImpl extends ArithOpOpImpl implements ArithOpRema
         EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
         EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
         ret.setValue(MathService.mod((ArithOpRemainder) (this.obj), (int) (ivlhs.getValue()), (int) (ivrhs.getValue())));
-        result = ret;
+        result = ((EvalIntRes) (ret));
       }
       else {
-        result = null;
+        result = ((EvalRes) (null));
       }
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }

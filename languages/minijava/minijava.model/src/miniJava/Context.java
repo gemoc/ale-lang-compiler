@@ -3,8 +3,8 @@
 package miniJava;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.common.util.EMap;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -105,7 +105,7 @@ public interface Context extends EObject {
 	 * and the value is of type {@link miniJava.SymbolBinding},
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Cache</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Cache</em>' map isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

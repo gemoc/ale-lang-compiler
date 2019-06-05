@@ -10,6 +10,7 @@ import miniJava.Program
 import miniJava.State
 import miniJava.SymbolBinding
 import miniJava.Value
+import minijava_exec.impl.Minijava_execImplementation
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.testing.InjectWith
@@ -17,9 +18,6 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.junit.Assert
 import org.tetrabox.minijava.xtext.tests.MiniJavaInjectorProvider
-import emfswitch.SwitchImplementation
-import emfswitch.operation.ProgramOperation
-import emfswitch.operation.StateOperation
 
 @InjectWith(MiniJavaInjectorProvider)
 class MiniJavaTestUtil {
@@ -27,7 +25,7 @@ class MiniJavaTestUtil {
 	@Inject
 	ParseHelper<Program> parseHelper
 	
-	val si = new SwitchImplementation();
+	val si = new Minijava_execImplementation() {};
 
 	public static val String intTypeName = "int"
 	public static val String booleanTypeName = "boolean"
@@ -132,7 +130,7 @@ class MiniJavaTestUtil {
 		Assert.assertNotNull(result)
 		helper.assertNoErrors(result)
 		
-		val po = si.doSwitch(result) as ProgramOperation
+		val po = si.$(result)
 		po.initialize(args)
 		val state = po.execute()
 		oracle.accept(state)
@@ -145,7 +143,7 @@ class MiniJavaTestUtil {
 	public def void genericExpressionTest(EList<String> args, String preStatements,  String type, String expression, Object expectedValue) {
 		val program = prepareTestProgram('''  «preStatements» «type» x = «expression»; ''')
 		genericTest(program, args, [ s |
-			val so = si.doSwitch(s) as StateOperation
+			val so = si.$(s)
 			val result = so.findCurrentContext.get("x")
 			Assert::assertTrue('''«expectedValue» is different from «result»''', MiniJavaValueEquals::equals(
 				result,
@@ -177,7 +175,7 @@ class MiniJavaTestUtil {
 
 	public def void genericStatementBindingsTest(String statement, Map<String, Object> expectedBindings) {
 		genericStatementTest(statement, [ State s |
-			val so = si.doSwitch(s) as StateOperation
+			val so = si.$(s)
 			Assert::assertEquals(expectedBindings.size,
 				so.findCurrentFrame.rootContext.childContext.allSymbolBindings.size)
 			for (symbol : expectedBindings.keySet) {

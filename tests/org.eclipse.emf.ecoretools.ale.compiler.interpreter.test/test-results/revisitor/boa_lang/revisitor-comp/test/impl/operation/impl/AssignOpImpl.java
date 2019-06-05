@@ -71,14 +71,14 @@ public class AssignOpImpl extends ExprOpImpl implements AssignOp {
       EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
       if(MapService.containsKey((EMap) (mvlhs.getValues()), (String) (this.obj.getName()))) {
         MapService.put((EMap) (mvlhs.getValues()), (String) (this.obj.getName()), (EvalRes) (vrhs));
-        result = vrhs;
+        result = ((EvalRes) (vrhs));
       }
       else {
-        result = null;
+        result = ((EvalRes) (null));
       }
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }

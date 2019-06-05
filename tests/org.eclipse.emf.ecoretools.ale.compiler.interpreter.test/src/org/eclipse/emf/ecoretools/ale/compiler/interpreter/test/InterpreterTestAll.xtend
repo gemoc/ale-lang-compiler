@@ -34,10 +34,10 @@ class InterpreterTestAll {
 	static Map<String, Map<File, File>> compilations = newHashMap
 
 	static val compilers = newHashMap(
-		"interpreter" -> [f|compileProjectInterpreter(f)],
-		"revisitor" -> [f|compileProjectRevisitor(f)],
-		"switch" -> [f|compileProjectSwitch(f)] ,
-		"visitor" -> [f|compileProjectVisitor(f)]
+//		"interpreter" -> [f|compileProjectInterpreter(f)],
+		"revisitor" -> [f|compileProjectRevisitor(f)]//,
+//		"switch" -> [f|compileProjectSwitch(f)] ,
+//		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
 	private static final boolean DEBUG = false
@@ -54,7 +54,7 @@ class InterpreterTestAll {
 
 		compilers.forEach [ k, v |
 			new File("assets").listFiles.filter[it.isDirectory]
-//				.filter[it.path == "assets/minijava"]
+//				.filter[it.path == "assets/factorydeclorder"]
 				.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))
@@ -91,13 +91,13 @@ class InterpreterTestAll {
 
 	@TestFactory
 	def Iterable<DynamicContainer> testInterpreters() {
-		compilers.entrySet.map [ en |
+		compilers.entrySet.sortBy[it.key].map [ en |
 			val k = en.key
-			DynamicContainer.dynamicContainer(k, compilations.get(k).entrySet.map [ e |
+			DynamicContainer.dynamicContainer(k, compilations.get(k).entrySet.sortBy[it.key.absolutePath].map [ e |
 				val d = e.key
 				val tmpDir = e.value
 				val expectedDir = new File('''test-results/«k»/«d.name»''')
-				val files = FileUtils.listFiles(expectedDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+				val files = FileUtils.listFiles(expectedDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE).sortBy[it.absolutePath]
 				val tmpfiles = FileUtils.listFiles(tmpDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 				DynamicContainer.dynamicContainer(d.name, files.map [ f |
 					val relative = expectedDir.toPath().relativize(f.toPath());

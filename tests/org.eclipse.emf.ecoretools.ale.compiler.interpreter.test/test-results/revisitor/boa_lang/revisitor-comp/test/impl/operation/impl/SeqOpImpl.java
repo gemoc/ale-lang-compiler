@@ -61,9 +61,9 @@ public class SeqOpImpl extends ExprOpImpl implements SeqOp {
 
   public EvalRes eval(Ctx ctx) {
     EvalRes result;
-    EvalRes vlhs = ((EvalRes) (rev.$((Expr)this.obj.getLhs()).eval(((Ctx) ctx))));
-    EvalRes vrhs = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) ctx))));
-    result = vrhs;
+    EvalRes vlhs = ((EvalRes) (rev.$((Expr)this.obj.getLhs()).eval(((Ctx) (ctx)))));
+    EvalRes vrhs = ((EvalRes) (rev.$((Expr)this.obj.getRhs()).eval(((Ctx) (ctx)))));
+    result = ((EvalRes) (vrhs));
     return result;
   }
 }

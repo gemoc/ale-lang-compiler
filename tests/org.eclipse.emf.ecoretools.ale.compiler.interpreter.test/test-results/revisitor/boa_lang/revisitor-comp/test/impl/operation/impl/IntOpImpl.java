@@ -64,7 +64,7 @@ public class IntOpImpl extends ExprOpImpl implements IntOp {
     EvalRes result;
     EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
     ret.setValue(this.obj.getValue());
-    result = ret;
+    result = ((EvalIntRes) (ret));
     return result;
   }
 }

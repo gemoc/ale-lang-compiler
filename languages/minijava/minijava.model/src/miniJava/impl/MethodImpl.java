@@ -3,9 +3,6 @@
 package miniJava.impl;
 
 import java.util.Collection;
-import java.util.Map;
-
-import java.util.Map.Entry;
 
 import miniJava.Block;
 import miniJava.Clazz;
@@ -17,14 +14,16 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -106,14 +105,14 @@ public class MethodImpl extends MemberImpl implements Method {
 	protected Block body;
 
 	/**
-	 * The cached value of the '{@link #getCache() <em>Cache</em>}' reference list.
+	 * The cached value of the '{@link #getCache() <em>Cache</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getCache()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Map.Entry<Clazz, Method>> cache;
+	protected EMap<Clazz, Method> cache;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -236,9 +235,9 @@ public class MethodImpl extends MemberImpl implements Method {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Map.Entry<Clazz, Method>> getCache() {
+	public EMap<Clazz, Method> getCache() {
 		if (cache == null) {
-			cache = new EObjectResolvingEList<Map.Entry<Clazz, Method>>(Entry.class, this, MiniJavaPackage.METHOD__CACHE);
+			cache = new EcoreEMap<Clazz,Method>(MiniJavaPackage.Literals.CLAZZ_TO_METHOD_MAP, ClazzToMethodMapImpl.class, this, MiniJavaPackage.METHOD__CACHE);
 		}
 		return cache;
 	}
@@ -255,6 +254,8 @@ public class MethodImpl extends MemberImpl implements Method {
 				return ((InternalEList<?>)getParams()).basicRemove(otherEnd, msgs);
 			case MiniJavaPackage.METHOD__BODY:
 				return basicSetBody(null, msgs);
+			case MiniJavaPackage.METHOD__CACHE:
+				return ((InternalEList<?>)getCache()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -276,7 +277,8 @@ public class MethodImpl extends MemberImpl implements Method {
 			case MiniJavaPackage.METHOD__BODY:
 				return getBody();
 			case MiniJavaPackage.METHOD__CACHE:
-				return getCache();
+				if (coreType) return getCache();
+				else return getCache().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -304,8 +306,7 @@ public class MethodImpl extends MemberImpl implements Method {
 				setBody((Block)newValue);
 				return;
 			case MiniJavaPackage.METHOD__CACHE:
-				getCache().clear();
-				getCache().addAll((Collection<? extends Map.Entry<Clazz, Method>>)newValue);
+				((EStructuralFeature.Setting)getCache()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

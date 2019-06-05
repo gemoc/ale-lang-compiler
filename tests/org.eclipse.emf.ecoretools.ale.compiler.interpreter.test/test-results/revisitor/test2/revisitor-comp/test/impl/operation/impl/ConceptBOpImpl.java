@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Integer;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.ConceptAOp;
 import test.impl.operation.ConceptBOp;
@@ -23,7 +24,7 @@ public class ConceptBOpImpl extends ConceptAOpImpl implements ConceptBOp {
 
   public int execB() {
     int result;
-    result = 1;
+    result = ((Integer) (1));
     return result;
   }
 }

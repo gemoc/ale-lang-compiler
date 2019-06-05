@@ -70,10 +70,10 @@ public class CopyOpImpl extends ExprOpImpl implements CopyOp {
       EvalMapRes mvcopy = ((EvalMapRes) (vcopy));
       EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
       MapService.putAll((EMap) (ret.getValues()), (EMap) (mvcopy.getValues()));
-      result = ret;
+      result = ((EvalMapRes) (ret));
     }
     else {
-      result = null;
+      result = ((EvalRes) (null));
     }
     return result;
   }

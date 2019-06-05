@@ -10,19 +10,21 @@ import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.nio.file.Files
 import java.util.Comparator
+import java.util.List
 import java.util.Map
+import java.util.Set
 import java.util.function.Function
 import javax.lang.model.element.Modifier
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
-import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -70,48 +72,30 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
 
-		val tmp = syntaxes.get(dsl.allSyntaxes.head)
-		val syntax = tmp.key
+		
 		this.rnu = new RevisitorNamingUtils(this.resolved.head.genCls.genPackage)
 		this.tsu = new RevisitorTypeSystemUtils(syntaxes, eu, resolved)
 		this.cti = new CommonTypeInferer(base)
 		// FIXME: make the invalid assumption that the metamodel contains a single package
-		val genSyntax = tmp.value.genPackages.head
+		
 		val packageRoot = 'TODO REVISITOR PACKAGE ROOT'
 		this.rec = new RevisitorExpressionCompiler(tsu, resolved, registeredServices, new CommonTypeInferer(base),
 			new EnumeratorService, rnu, packageRoot)
 
-		val interfaceName = dsl.revisitorImplementationClass
 
-		val comparator = Comparator.comparing(new Function<ResolvedClass, String>() {
-			override apply(ResolvedClass arg0) {
-				arg0.eCls.name
+		val comparator = Comparator.comparing(new Function<Pair<EClass, EClass>, String>() {
+			override apply(Pair<EClass, EClass> arg0) {
+				arg0.key.EPackage.name + '.'+ arg0.key.name
 			}
-		}).thenComparing(new Function<ResolvedClass, String>() {
-			override apply(ResolvedClass arg0) {
-				arg0.eCls.EPackage.name
+		}).thenComparing(new Function<Pair<EClass, EClass>, String>() {
+			override apply(Pair<EClass, EClass> arg0) {
+				if(arg0.value !==null) arg0.value.EPackage.name + '.'+ arg0.value.name
+				else ''
 			}
 		})
-		val typeParams = resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"].filter [
-			it.eCls instanceof EClass
-		].sortWith(comparator).map[dsl.getRevisitorOperationInterfaceClassName(it.eCls as EClass)]
-		val fullInterfaceType = ParameterizedTypeName.get(
-			ClassName.get(genSyntax.revisitorPackageFqn, genSyntax.revisitorInterfaceName), typeParams)
-
-		val revisitorInterface = TypeSpec.interfaceBuilder(interfaceName).addSuperinterface(fullInterfaceType).
-			addModifiers(Modifier.PUBLIC).addMethods(syntax.allClasses.filter [
-				it.instanceClassName != "java.util.Map$Entry"
-			].map [
-				MethodSpec.methodBuilder(it.denotationName).returns(dsl.getRevisitorOperationInterfaceClassName(it)).
-					addParameter(it.solveType, "it").addCode('''
-						return new $T(it, this);
-					''', dsl.getRevisitorOperationImplementationClassName(it)).addModifiers(Modifier.DEFAULT,
-						Modifier.PUBLIC).build
-			]).build
-
-		val javaFile = JavaFile.builder(dsl.revisitorImplementationPackage, revisitorInterface).indent('\t').build
-
-		javaFile.writeTo(compileDirectory)
+		val pairs = computeEClassPairs.sortWith(comparator)
+		val fullInterfaceType = computeFullInterfaceType(pairs)
+		buildSpecializedInterface(compileDirectory, fullInterfaceType, pairs)
 
 		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry" && it.eCls instanceof EClass].forEach [
 			val aleClass = it.aleCls
@@ -303,5 +287,94 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	def getEcoreInterfacesPackage() {
 		val gm = syntaxes.get(dsl.allSyntaxes.head).value
 		gm.genPackages.head.qualifiedPackageName
+	}
+	
+	
+	/**
+	 * FIXME: duplicated from RevisitorInterfaceGenerator
+	 */
+	def allClassesCompl(EPackage pkg) {
+		(pkg.allClasses + pkg.getComplementaryFromEPackage [ Map.Entry<String, String> z |
+			z.key.loadEPackage.allClasses
+		]).toMap(['''«it.EPackage.name».«it.name»'''], [it]).values.sortByName
+	}
+	
+	def computeFullInterfaceType(List<Pair<EClass, EClass>> pairs) {
+		val tmp = syntaxes.get(dsl.allSyntaxes.head)
+//		val syntax = tmp.key
+		val genSyntax = tmp.value.genPackages.head
+		val allClasses = pairs
+			.map[dsl.getRevisitorOperationInterfaceClassName(it.key as EClass)]
+		
+//		val typeParams = #[TypeName.get(Object)]
+		/*resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry"]
+			.filter [
+				it.eCls instanceof EClass
+			].sortWith(comparator).map[dsl.getRevisitorOperationInterfaceClassName(it.eCls as EClass)]*/
+		ParameterizedTypeName.get(
+			ClassName.get(genSyntax.revisitorPackageFqn, genSyntax.revisitorInterfaceName), allClasses)
+	}
+	
+	def buildSpecializedInterface(File compileDirectory, ParameterizedTypeName fullInterfaceType, List<Pair<EClass, EClass>> pairs) {
+		val interfaceName = dsl.revisitorImplementationClass
+//		val tmp = syntaxes.get(dsl.allSyntaxes.head)
+//		val syntax = tmp.key
+		
+
+		val revisitorInterface = TypeSpec.interfaceBuilder(interfaceName)
+			.addSuperinterface(fullInterfaceType)
+			.addModifiers(Modifier.PUBLIC)
+//			.addMethods(syntax.allClasses.filter [
+//				it.instanceClassName != "java.util.Map$Entry"
+//			].map [
+//				MethodSpec.methodBuilder(it.denotationName)
+//.returns(dsl.getRevisitorOperationInterfaceClassName(it))
+// .addParameter(it.solveType, "it").addCode('''
+//						return new $T(it, this);
+//					''', dsl.getRevisitorOperationImplementationClassName(it)).addModifiers(Modifier.DEFAULT,
+//						Modifier.PUBLIC).build
+//			])
+			.addMethods(pairs.map[
+				val methodName = if(it.value === null) {
+					'''«it.key.EPackage.name»__«it.key.name»'''
+				} else {
+					'''«it.key.EPackage.name»__«it.key.name»__AS__«it.value.EPackage.name»__«it.value.name»'''
+				}
+				
+				MethodSpec.methodBuilder(methodName)
+					.returns(dsl.getRevisitorOperationInterfaceClassName(it.key))
+					.addParameter(it.key.solveType, "it")
+					.addCode('''
+						return new $T(it, this);
+					''', dsl.getRevisitorOperationImplementationClassName(it.key)).addModifiers(Modifier.DEFAULT,
+						Modifier.PUBLIC).build
+			])
+				
+			.build
+
+		val javaFile = JavaFile.builder(dsl.revisitorImplementationPackage, revisitorInterface).indent('\t').build
+
+		javaFile.writeTo(compileDirectory)
+	}
+	
+	def Set<Pair<EClass, EClass>> computeEClassPairs() {
+		val tmp = syntaxes.get(dsl.allSyntaxes.head)
+//		val syntax = tmp.key
+//		val genSyntax = tmp.value.genPackages.head
+//		val interfaceName = dsl.revisitorImplementationClass
+//		val comparator = Comparator.comparing(new Function<ResolvedClass, String>() {
+//			override apply(ResolvedClass arg0) {
+//				arg0.eCls.name
+//			}
+//		}).thenComparing(new Function<ResolvedClass, String>() {
+//			override apply(ResolvedClass arg0) {
+//				arg0.eCls.EPackage.name
+//			}
+//		})
+		
+		val pkg = tmp.key
+		
+		pkg.allClassesCompl.filter[it.instanceClassName != "java.util.Map$Entry"].toSet.toList.buildExtendedFactoryNames
+		.toSet
 	}
 }
