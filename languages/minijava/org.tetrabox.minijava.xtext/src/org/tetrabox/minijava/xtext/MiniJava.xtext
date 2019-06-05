@@ -1,6 +1,6 @@
 grammar org.tetrabox.minijava.xtext.MiniJava with org.eclipse.xtext.common.Terminals
 
-generate miniJava "http://www.example.org/minijava/MiniJava"
+import "http://www.example.org/minijava/MiniJava" 
 
 Program:
 	('package' name=QualifiedName ';')?
@@ -17,16 +17,17 @@ QualifiedNameWithWildcard:
 	QualifiedName '.*'?;
 
 TypeDeclaration:
-	Class | Interface
-;
+	Clazz | Interface;
 
-Class:
-	accessLevel=AccessLevel? abstract?='abstract'? 'class' name=ID ('extends' superClass=[Class|QualifiedName])? ('implements' implements+=[Interface|QualifiedName] (',' implements+=[Interface|QualifiedName])* )? '{'
+Clazz:
+	accessLevel=AccessLevel? isabstract?='abstract'? 'class' name=ID ('extends' superClass=[Clazz|QualifiedName])?
+	('implements' implementz+=[Interface|QualifiedName] (',' implementz+=[Interface|QualifiedName])*)? '{'
 	members+=Member*
 	'}';
 
 Interface:
-	accessLevel=AccessLevel? 'interface' name=ID ('extends' implements+=[Interface|QualifiedName] (',' implements+=[Interface|QualifiedName])* )? '{'
+	accessLevel=AccessLevel? 'interface' name=ID ('extends' implementz+=[Interface|QualifiedName] (','
+	implementz+=[Interface|QualifiedName])*)? '{'
 	members+=Member*
 	'}';
 
@@ -34,7 +35,7 @@ Member:
 	Field | Method;
 
 Method:
-	access=AccessLevel? abstract?='abstract'? static?='static'? typeRef=TypeRef name=ID?
+	access=AccessLevel? isabstract?='abstract'? isstatic?='static'? typeRef=TypeRef name=ID?
 	'(' (params+=Parameter (',' params+=Parameter)*)? ')'
 	(body=Block | ';');
 
@@ -99,7 +100,7 @@ TypedDeclaration:
 	// here we need to set up an artificial priority with =>
 Symbol:
 	=> Parameter | VariableDeclaration;
-	
+
 VariableDeclaration:
 	typeRef=TypeRef name=ID;
 
@@ -136,14 +137,12 @@ PlusOrMinus returns Expression:
 MulOrDiv returns Expression:
 	ArrayAccess (({Multiplication.left=current} '*' | {Division.left=current} '/')
 	right=ArrayAccess)*;
-	
+
 ArrayAccess returns Expression:
-	ArrayLength ( {ArrayAccess.object=current}'[' index=Expression ']')?
-;
+	ArrayLength ({ArrayAccess.object=current} '[' index=Expression ']')?;
 
 ArrayLength returns Expression:
-	Primary ({ArrayLength.array=current}'.' 'length')?
-;
+	Primary ({ArrayLength.array=current} '.' 'length')?;
 
 Primary returns Expression:
 	'(' Expression ')' |
@@ -165,8 +164,8 @@ TerminalExpression returns Expression:
 	{This} 'this' |
 	{Super} 'super' |
 	{Null} 'null' |
-	{NewObject} 'new' type=[Class] =>'(' (args+=Expression (',' args+=Expression)*)? ')' |
-	{NewArray}  'new' type=TypeRef =>'[' size=Expression ']' |
+	{NewObject} 'new' type=[Clazz] => '(' (args+=Expression (',' args+=Expression)*)? ')' |
+	{NewArray} 'new' type=TypeRef => '[' size=Expression ']' |
 	{SymbolRef} symbol=[Symbol|ID];
 	
 

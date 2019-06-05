@@ -5,7 +5,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionStrategy
 import org.eclipse.xtext.util.IAcceptor
-import org.tetrabox.minijava.xtext.miniJava.Block
+import miniJava.Block
 
 @Singleton
 class MiniJavaResourceDescriptionsStrategy extends DefaultResourceDescriptionStrategy {

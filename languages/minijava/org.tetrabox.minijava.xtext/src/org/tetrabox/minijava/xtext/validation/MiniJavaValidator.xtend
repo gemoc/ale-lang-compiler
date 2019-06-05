@@ -9,30 +9,30 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
 import org.tetrabox.minijava.xtext.MiniJavaModelUtil
-import org.tetrabox.minijava.xtext.miniJava.Block
-import org.tetrabox.minijava.xtext.miniJava.Class
-import org.tetrabox.minijava.xtext.miniJava.Expression
-import org.tetrabox.minijava.xtext.miniJava.FieldAccess
-import org.tetrabox.minijava.xtext.miniJava.Method
-import org.tetrabox.minijava.xtext.miniJava.MethodCall
-import org.tetrabox.minijava.xtext.miniJava.MiniJavaPackage
-import org.tetrabox.minijava.xtext.miniJava.NamedElement
-import org.tetrabox.minijava.xtext.miniJava.Program
-import org.tetrabox.minijava.xtext.miniJava.Return
-import org.tetrabox.minijava.xtext.miniJava.Super
-import org.tetrabox.minijava.xtext.miniJava.VariableDeclaration
+import miniJava.Block
+import miniJava.Clazz
+import miniJava.Expression
+import miniJava.FieldAccess
+import miniJava.Method
+import miniJava.MethodCall
+import miniJava.MiniJavaPackage
+import miniJava.NamedElement
+import miniJava.Program
+import miniJava.Return
+import miniJava.Super
+import miniJava.VariableDeclaration
 import org.tetrabox.minijava.xtext.scoping.MiniJavaIndex
 import org.tetrabox.minijava.xtext.typing.MiniJavaTypeComputer
 import org.tetrabox.minijava.xtext.typing.MiniJavaTypeConformance
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.tetrabox.minijava.xtext.miniJava.ClassRef
-import org.tetrabox.minijava.xtext.miniJava.Interface
-import org.tetrabox.minijava.xtext.miniJava.Field
-import org.tetrabox.minijava.xtext.miniJava.TypeDeclaration
+import miniJava.ClassRef
+import miniJava.Interface
+import miniJava.Field
+import miniJava.TypeDeclaration
 import java.util.HashSet
 import java.util.Set
-import org.tetrabox.minijava.xtext.miniJava.NewObject
+import miniJava.NewObject
 
 /**
  * This class contains custom validation rules. 
@@ -80,7 +80,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 	}
 
 	def boolean isAnImplementionOf(Method m1, Method m2) {
-		val c = m1.eContainer as Class
+		val c = m1.eContainer as Clazz
 		val t = m2.eContainer as TypeDeclaration
 		val conforms = c.isConformant(t)
 		val returnConforms = m1.typeRef.type.isConformant(m2.typeRef.type)
@@ -91,11 +91,11 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 	}
 
 	// TODO improve localization of error highlighting
-	@Check def checkAllMethodsImplemented(Class c) {
-		if (! c.abstract) {
+	@Check def checkAllMethodsImplemented(Clazz c) {
+		if (! c.isIsabstract) {
 			// store implemented methods
 			val nonAbstract = new HashSet<Method>
-			nonAbstract.addAll(c.methods.filter[!it.abstract])
+			nonAbstract.addAll(c.methods.filter[!it.isIsabstract])
 			val abstract = new HashSet<Method>
 
 			val Set<TypeDeclaration> visited = newLinkedHashSet()
@@ -104,7 +104,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 			while (! current.isEmpty) {
 				// Analyze super types
 				val superTypesMethods = current.map[members].flatten.filter(Method).toSet
-				val sorting = superTypesMethods.groupBy[it.abstract || it.eContainer instanceof Interface]
+				val sorting = superTypesMethods.groupBy[it.isIsabstract || it.eContainer instanceof Interface]
 				val Set<Method> superTypeAbstractMethods = if (sorting.containsKey(true))
 						sorting.get(true).toSet
 					else
@@ -127,7 +127,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 
 			if (abstract.exists[a|!nonAbstract.exists[na|na.isAnImplementionOf(a)]]) {
 				error('''All abstract methods must be implemented, or the class must be made abstract.''', c,
-					MiniJavaPackage.eINSTANCE.class_SuperClass, ABSTRACT_METHOD_CLASS);
+					MiniJavaPackage.eINSTANCE.clazz_SuperClass, ABSTRACT_METHOD_CLASS);
 			}
 
 		}
@@ -173,7 +173,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 		checkNoDuplicateElements(p.classes, "class")
 	}
 
-	@Check def void checkNoDuplicateMembers(Class c) {
+	@Check def void checkNoDuplicateMembers(Clazz c) {
 		checkNoDuplicateElements(c.fields, "field")
 		checkNoDuplicateElements(c.methods.filter[it.name !== null], "method")
 	}
@@ -203,13 +203,13 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 	}
 
 	@Check def void checkConstructorAbstractClass(NewObject n) {
-		if (n.type.abstract) {
+		if (n.type.isIsabstract) {
 			error("Cannot construct an instance of an abstract class.", MiniJavaPackage.eINSTANCE.newObject_Type,
 				CONSTRUCTOR_ABSTRACT)
 		}
 	}
 
-	@Check def void checkMethodOverride(Class c) {
+	@Check def void checkMethodOverride(Clazz c) {
 		val hierarchyMethods = c.classHierarchyMethods
 
 		for (m : c.methods) {
@@ -227,8 +227,8 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 	}
 
 	static def boolean isAbstractOrInterface(TypeDeclaration t) {
-		if (t instanceof Class) {
-			return t.abstract
+		if (t instanceof Clazz) {
+			return t.isIsabstract
 		} else if (t instanceof Interface) {
 			return true
 		}
@@ -237,14 +237,14 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 
 	@Check
 	def void checkMethodAbstract(Method method) {
-		if (method.abstract && method.body !== null) {
+		if (method.isIsabstract && method.body !== null) {
 			error('''The abstract method «method.name» cannot have a body.''', method,
 				MiniJavaPackage.eINSTANCE.method_Body, ABSTRACT_METHOD_BODY)
 		}
 
-		if (method.abstract && !(method.eContainer as TypeDeclaration).isAbstractOrInterface) {
+		if (method.isIsabstract && !(method.eContainer as TypeDeclaration).isAbstractOrInterface) {
 			error('''The abstract method «method.name» must be contained in an abstract class or in an interface.''',
-				method, MiniJavaPackage.eINSTANCE.method_Abstract, ABSTRACT_METHOD_CLASS)
+				method, MiniJavaPackage.eINSTANCE.method_Isabstract, ABSTRACT_METHOD_CLASS)
 		}
 	}
 
@@ -260,7 +260,7 @@ class MiniJavaValidator extends AbstractMiniJavaValidator {
 	@Check
 	def void checkConstructor(Method constructor) {
 		if (constructor.name === null) {
-			val parentClass = (constructor.eContainer as Class)
+			val parentClass = (constructor.eContainer as Clazz)
 			if ((constructor.typeRef as ClassRef).referencedClass !== parentClass) {
 				error("A constructor must be in the same class as its name.", constructor,
 					MiniJavaPackage.eINSTANCE.typedDeclaration_TypeRef, CONSTRUCTOR_CLASS)

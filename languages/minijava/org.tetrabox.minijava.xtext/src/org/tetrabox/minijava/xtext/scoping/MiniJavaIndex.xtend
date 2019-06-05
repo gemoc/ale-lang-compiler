@@ -5,8 +5,8 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IContainer
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
-import org.tetrabox.minijava.xtext.miniJava.MiniJavaPackage
-import org.tetrabox.minijava.xtext.miniJava.Class
+import miniJava.MiniJavaPackage
+import miniJava.Clazz
 
 class MiniJavaIndex {
 	@Inject ResourceDescriptionsProvider rdp
@@ -23,7 +23,7 @@ class MiniJavaIndex {
 	}
 
 	def getVisibleClassesDescriptions(EObject o) {
-		o.getVisibleEObjectDescriptions(MiniJavaPackage.eINSTANCE.class_)
+		o.getVisibleEObjectDescriptions(MiniJavaPackage.eINSTANCE.clazz)
 	}
 
 	def getVisibleEObjectDescriptions(EObject o, EClass type) {
@@ -48,7 +48,7 @@ class MiniJavaIndex {
 	}
 
 	def getExportedClassesEObjectDescriptions(EObject o) {
-		o.getResourceDescription.getExportedObjectsByType(MiniJavaPackage.eINSTANCE.class_)
+		o.getResourceDescription.getExportedObjectsByType(MiniJavaPackage.eINSTANCE.clazz)
 	}
 
 }

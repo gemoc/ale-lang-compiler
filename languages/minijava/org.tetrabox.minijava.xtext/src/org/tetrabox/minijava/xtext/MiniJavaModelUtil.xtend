@@ -1,24 +1,24 @@
 package org.tetrabox.minijava.xtext
 
-import org.tetrabox.minijava.xtext.miniJava.Block
-import org.tetrabox.minijava.xtext.miniJava.BooleanTypeRef
-import org.tetrabox.minijava.xtext.miniJava.Class
-import org.tetrabox.minijava.xtext.miniJava.ClassRef
-import org.tetrabox.minijava.xtext.miniJava.Field
-import org.tetrabox.minijava.xtext.miniJava.IntegerTypeRef
-import org.tetrabox.minijava.xtext.miniJava.Member
-import org.tetrabox.minijava.xtext.miniJava.Method
-import org.tetrabox.minijava.xtext.miniJava.Return
-import org.tetrabox.minijava.xtext.miniJava.StringTypeRef
-import org.tetrabox.minijava.xtext.miniJava.TypeRef
-import org.tetrabox.minijava.xtext.miniJava.TypeDeclaration
-import org.tetrabox.minijava.xtext.miniJava.Interface
+import miniJava.Block
+import miniJava.BooleanTypeRef
+import miniJava.ClassRef
+import miniJava.Field
+import miniJava.IntegerTypeRef
+import miniJava.Member
+import miniJava.Method
+import miniJava.Return
+import miniJava.StringTypeRef
+import miniJava.TypeRef
+import miniJava.TypeDeclaration
+import miniJava.Interface
 import java.util.Set
-import org.tetrabox.minijava.xtext.miniJava.TypedDeclaration
+import miniJava.TypedDeclaration
+import miniJava.Clazz
 
 class MiniJavaModelUtil {
 
-	def dispatch fields(Class c) {
+	def dispatch fields(Clazz c) {
 		c.members.filter(Field)
 	}
 
@@ -40,12 +40,12 @@ class MiniJavaModelUtil {
 
 	def Set<TypeDeclaration> getSuperTypes(TypeDeclaration c) {
 		val Set<TypeDeclaration> current = newLinkedHashSet()
-		if (c instanceof Class) {
+		if (c instanceof Clazz) {
 			if (c.superClass !== null) {
 				current.add(c.superClass)
 			}
 		}
-		current.addAll(c.implements)
+		current.addAll(c.implementz)
 		return current
 	}
 
