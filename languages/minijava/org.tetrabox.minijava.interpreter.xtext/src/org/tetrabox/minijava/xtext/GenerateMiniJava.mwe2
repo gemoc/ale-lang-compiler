@@ -10,13 +10,13 @@ Workflow {
 	component = XtextGenerator {
 		configuration = {
 			project = StandardProjectConfig {
-				baseName = "org.tetrabox.minijava.xtext"
+				baseName = "org.tetrabox.minijava.interpreter.xtext"
 				rootPath = rootPath
 				runtimeTest = {
 					enabled = true
 				}
 				eclipsePlugin = {
-					enabled = true
+					enabled = false
 				}
 				eclipsePluginTest = {
 					enabled = false
@@ -25,6 +25,10 @@ Workflow {
 					enabled = false
 				}
 				createEclipseMetaData = true
+				genericIde = {
+					enabled = false
+				}
+				
 			}
 			code = {
 				encoding = "UTF-8"
@@ -43,7 +47,7 @@ Workflow {
 			formatter = {
 				generateStub = true
 			}
-			referencedResource = "platform:/resource/minijava.model/model/MiniJava.genmodel"
+			referencedResource = "platform:/resource/minijava.lang.interpreter/interpreter-comp/miniJava.genmodel"
 		}
 	}
 }

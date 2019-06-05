@@ -17,6 +17,8 @@ import org.eclipse.xtext.testing.util.ParseHelper
 import org.eclipse.xtext.testing.validation.ValidationTestHelper
 import org.junit.Assert
 import org.tetrabox.minijava.xtext.tests.MiniJavaInjectorProvider
+import miniJava.interpreter.miniJava.MiniJavaPackage
+import org.eclipse.emf.ecore.EPackage
 
 @InjectWith(MiniJavaInjectorProvider)
 class MiniJavaTestUtil {
@@ -122,6 +124,7 @@ class MiniJavaTestUtil {
 	public static val factory = MiniJavaFactory::eINSTANCE
 
 	public def void genericTest(String program, EList<String> args, Consumer<State> oracle) {
+		EPackage.Registry.INSTANCE.put(MiniJavaPackage.eNS_URI, MiniJavaPackage.eINSTANCE)
 		val helper = new ValidationTestHelper();
 		val Program result = parseHelper.parse(program)
 		Assert.assertNotNull(result)
