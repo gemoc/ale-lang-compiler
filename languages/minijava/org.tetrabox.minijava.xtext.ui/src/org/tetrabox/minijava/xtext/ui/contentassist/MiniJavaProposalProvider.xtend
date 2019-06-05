@@ -11,11 +11,11 @@ import org.eclipse.xtext.CrossReference
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import org.tetrabox.minijava.xtext.MiniJavaModelUtil
-import org.tetrabox.minijava.xtext.miniJava.Clazz
-import org.tetrabox.minijava.xtext.miniJava.Field
+import org.tetrabox.minijava.xtext.miniJava.Class
 import org.tetrabox.minijava.xtext.miniJava.Member
-import org.tetrabox.minijava.xtext.miniJava.Method
 import org.tetrabox.minijava.xtext.validation.MiniJavaAccessibility
+import org.tetrabox.minijava.xtext.miniJava.Method
+import org.tetrabox.minijava.xtext.miniJava.Field
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
@@ -28,7 +28,7 @@ class MiniJavaProposalProvider extends AbstractMiniJavaProposalProvider {
 	override getStyledDisplayString(EObject element, String qualifiedNameAsString, String shortName) {
 		if (element instanceof Member) {
 			new StyledString(element.memberAsStringWithType).append(
-				new StyledString(" - " + (element.eContainer as Clazz).name, StyledString.QUALIFIER_STYLER))
+				new StyledString(" - " + (element.eContainer as Class).name, StyledString.QUALIFIER_STYLER))
 		} else
 			super.getStyledDisplayString(element, qualifiedNameAsString, shortName)
 	}

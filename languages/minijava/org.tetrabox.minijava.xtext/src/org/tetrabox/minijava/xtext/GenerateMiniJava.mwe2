@@ -43,7 +43,6 @@ Workflow {
 			formatter = {
 				generateStub = true
 			}
-			referencedResource = "platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.genmodel"
 		}
 	}
 }

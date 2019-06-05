@@ -9,14 +9,14 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.tetrabox.minijava.xtext.MiniJavaModelUtil
-import miniJava.Assignment
-import miniJava.Block
-import miniJava.FieldAccess
-import miniJava.ForStatement
-import miniJava.Method
-import miniJava.MethodCall
-import miniJava.MiniJavaPackage
-import miniJava.VariableDeclaration
+import org.tetrabox.minijava.xtext.miniJava.Assignment
+import org.tetrabox.minijava.xtext.miniJava.Block
+import org.tetrabox.minijava.xtext.miniJava.FieldAccess
+import org.tetrabox.minijava.xtext.miniJava.ForStatement
+import org.tetrabox.minijava.xtext.miniJava.Method
+import org.tetrabox.minijava.xtext.miniJava.MethodCall
+import org.tetrabox.minijava.xtext.miniJava.MiniJavaPackage
+import org.tetrabox.minijava.xtext.miniJava.VariableDeclaration
 import org.tetrabox.minijava.xtext.typing.MiniJavaTypeComputer
 
 /**

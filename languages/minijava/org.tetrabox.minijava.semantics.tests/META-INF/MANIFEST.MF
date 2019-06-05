@@ -8,7 +8,9 @@ Require-Bundle: org.eclipse.xtext.testing,
  org.eclipse.xtext.xbase.testing,
  org.eclipse.xtext.xbase.lib,
  org.tetrabox.minijava.xtext;bundle-version="1.0.0",
- org.tetrabox.minijava.xtext.tests;bundle-version="1.0.0"
+ org.tetrabox.minijava.semantics;bundle-version="1.0.0",
+ org.tetrabox.minijava.xtext.tests;bundle-version="1.0.0",
+ org.tetrabox.minijava.semantics.modelstate;bundle-version="0.1.0"
 Export-Package: org.tetrabox.minijava.semantics.tests
 Import-Package: org.hamcrest.core,
  org.junit;version="4.5.0",

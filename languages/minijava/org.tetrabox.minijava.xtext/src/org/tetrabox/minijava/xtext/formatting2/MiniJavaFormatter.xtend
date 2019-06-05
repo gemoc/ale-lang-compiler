@@ -6,25 +6,25 @@ package org.tetrabox.minijava.xtext.formatting2
 import com.google.inject.Inject
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import miniJava.Block
-import miniJava.FieldAccess
-import miniJava.Member
-import miniJava.Method
-import miniJava.MethodCall
-import miniJava.MiniJavaPackage
-import miniJava.NewObject
-import miniJava.Program
-import miniJava.TypeDeclaration
-import miniJava.TypedDeclaration
+import org.tetrabox.minijava.xtext.miniJava.Block
+import org.tetrabox.minijava.xtext.miniJava.FieldAccess
+import org.tetrabox.minijava.xtext.miniJava.Member
+import org.tetrabox.minijava.xtext.miniJava.Method
+import org.tetrabox.minijava.xtext.miniJava.MethodCall
+import org.tetrabox.minijava.xtext.miniJava.MiniJavaPackage
+import org.tetrabox.minijava.xtext.miniJava.NewObject
+import org.tetrabox.minijava.xtext.miniJava.Program
+import org.tetrabox.minijava.xtext.miniJava.TypeDeclaration
+import org.tetrabox.minijava.xtext.miniJava.TypedDeclaration
 import org.tetrabox.minijava.xtext.services.MiniJavaGrammarAccess
-import miniJava.Field
-import miniJava.IfStatement
-import miniJava.ForStatement
-import miniJava.Assignment
-import miniJava.Parameter
-import miniJava.ArrayTypeRef
-import miniJava.ArrayLength
-import miniJava.ArrayAccess
+import org.tetrabox.minijava.xtext.miniJava.Field
+import org.tetrabox.minijava.xtext.miniJava.IfStatement
+import org.tetrabox.minijava.xtext.miniJava.ForStatement
+import org.tetrabox.minijava.xtext.miniJava.Assignment
+import org.tetrabox.minijava.xtext.miniJava.Parameter
+import org.tetrabox.minijava.xtext.miniJava.ArrayTypeRef
+import org.tetrabox.minijava.xtext.miniJava.ArrayLength
+import org.tetrabox.minijava.xtext.miniJava.ArrayAccess
 
 class MiniJavaFormatter extends AbstractFormatter2 {
 
