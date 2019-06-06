@@ -12,13 +12,36 @@ open class miniJava.Program {
 	
 	def void initialize(Sequence(String) args) { // dispatch
 		// possibly useless if we assume a main is available
+		miniJava::Method main := self.findMain();
+		if(main != null) {
+			miniJava::Context rootCont := miniJava::Context.create();
+			miniJava::State state := miniJava::State.create();
+			
+			miniJava::ArrayInstance argsArray := miniJava::ArrayInstance.create();
+			argsArray.size := args.size(); 
+			state.arraysHeap += argsArray;
+			for(arg in args) {
+				miniJava::StringValue stringVal := miniJava::StringValue.create();
+				String tmp := arg;
+				stringVal.value := tmp;
+				argsArray.value += stringVal;
+			}
+			
+			miniJava::SymbolBinding argsBinding := miniJava::SymbolBinding.create();
+		 	argsBinding.symbol := main.params->at(0);
+		 	miniJava::ArrayRefValue value := miniJava::ArrayRefValue.create();
+		 	value.instance := argsArray;
+		 	
+//		 	miniJava::Context rootCont := miniJava::Context.create();
+	 	 	rootCont.bindings += argsBinding;
+			
+			state.outputStream := miniJava::OutputStream.create();
+			state.rootFrame := miniJava::Frame.create();
+			state.rootFrame.rootContext := rootCont;
+			state.arraysHeap += argsArray;
+			self.state := state;
 		
-		miniJava::Context rootCont := miniJava::Context.create();
-		miniJava::State state := miniJava::State.create();
-		state.outputStream := miniJava::OutputStream.create();
-		state.rootFrame := miniJava::Frame.create();
-		state.rootFrame.rootContext := rootCont;
-		self.state := state;
+		}
 	}
 	
 	def miniJava::State execute() {
@@ -586,24 +609,15 @@ open class miniJava.Plus {
 				tmp.value := bleft.value + bright.value;
 				result := tmp;
 			} else { 
-				if(right.oclIsKindOf(miniJava::StringValue)) {
-					miniJava::StringValue tmp := miniJava::StringValue.create();
-					tmp.value := left.customToString() + right.customToString();
-					result := tmp;
-					
-				} else {
-					result := null;
-				}
-			}
-		} else {
-			if(left.oclIsKindOf(miniJava::StringValue) or right.oclIsKindOf(miniJava::StringValue)) {
 				miniJava::StringValue tmp := miniJava::StringValue.create();
 				tmp.value := left.customToString() + right.customToString();
 				result := tmp;
-				
-			} else {
 				result := null;
 			}
+		} else {
+			miniJava::StringValue tmp := miniJava::StringValue.create();
+			tmp.value := left.customToString() + right.customToString();
+			result := tmp;
 		}
 	}
 }

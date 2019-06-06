@@ -4,6 +4,8 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.ArrayInstance;
+import miniJava.interpreter.miniJava.ArrayRefValue;
 import miniJava.interpreter.miniJava.Block;
 import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.Import;
@@ -13,6 +15,8 @@ import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Program;
 import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.StringValue;
+import miniJava.interpreter.miniJava.SymbolBinding;
 import miniJava.interpreter.miniJava.TypeDeclaration;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -23,6 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class ProgramImpl extends MinimalEObjectImpl.Container implements Program {
@@ -183,12 +188,30 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
 	}
 
 	public void initialize(EList args) {
-		Context rootCont = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
-		State state = ((State) (MiniJavaFactory.eINSTANCE.createState()));
-		state.setOutputStream(MiniJavaFactory.eINSTANCE.createOutputStream());
-		state.setRootFrame(MiniJavaFactory.eINSTANCE.createFrame());
-		state.getRootFrame().setRootContext(rootCont);
-		this.setState(state);
+		Method main = ((Method) (((Program) (this)).findMain()));
+		if (!EqualService.equals((main), (null))) {
+			Context rootCont = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
+			State state = ((State) (MiniJavaFactory.eINSTANCE.createState()));
+			ArrayInstance argsArray = ((ArrayInstance) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
+			argsArray.setSize(CollectionService.size(args));
+			state.getArraysHeap().add(argsArray);
+			for (Object arg: args) {
+				StringValue stringVal = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+				String tmp = ((String) (arg));
+				stringVal.setValue(tmp);
+				argsArray.getValue().add(stringVal);
+			}
+			SymbolBinding argsBinding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
+			argsBinding.setSymbol(CollectionService.get(main.getParams(), 0));
+			ArrayRefValue value = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
+			value.setInstance(argsArray);
+			rootCont.getBindings().add(argsBinding);
+			state.setOutputStream(MiniJavaFactory.eINSTANCE.createOutputStream());
+			state.setRootFrame(MiniJavaFactory.eINSTANCE.createFrame());
+			state.getRootFrame().setRootContext(rootCont);
+			state.getArraysHeap().add(argsArray);
+			this.setState(state);
+		}
 	}
 
 	public State execute() {

@@ -31,6 +31,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
 import org.eclipse.xtext.EcoreUtil2
+import com.squareup.javapoet.TypeName
 
 class AleBodyCompiler {
 
@@ -164,18 +165,25 @@ class AleBodyCompiler {
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, ForEach body, CompilerExpressionCtx ctx) {
-		val lt = infereType(body.collectionExpression).head as SequenceType
-
-		if (lt.collectionType.type instanceof EClass) {
-			builderSeed.beginControlFlow('''for ($T $L : «body.collectionExpression.compileExpression(ctx)»)''',
-				(lt.collectionType.type as EClass).solveType, body.variable).compileBody(body.body, ctx).endControlFlow
+		val its = infereType(body.collectionExpression)
+		val iteratorVariable = body.variable
+		if(its.head instanceof SequenceType) {
+			val lt = its.head as SequenceType // here typing problem!
+			if (lt.collectionType.type instanceof EClass) {
+				builderSeed.beginControlFlow('''for ($T $L : $L)''',
+					(lt.collectionType.type as EClass).solveType, iteratorVariable, body.collectionExpression.compileExpression(ctx)).compileBody(body.body, ctx).endControlFlow
+			} else {
+	
+				val iteratorType = lt.collectionType.type.resolveType2
+				val iterable = body.collectionExpression.compileExpression(ctx)
+				builderSeed.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable).
+					compileBody(body.body, ctx).endControlFlow
+			}
 		} else {
-
-			val iteratorType = lt.collectionType.type.resolveType2
-			val iteratorVariable = body.variable
-			val iterable = body.collectionExpression.compileExpression(ctx)
+			val iteratorType = TypeName.get(Object) // FIXME: joker, did not find a way to identify the collection generic type so far
+			val iterable = body.collectionExpression.compileExpression(ctx)			
 			builderSeed.beginControlFlow('''for ($T $L: $L)''', iteratorType, iteratorVariable, iterable).
-				compileBody(body.body, ctx).endControlFlow
+					compileBody(body.body, ctx).endControlFlow
 		}
 	}
 
