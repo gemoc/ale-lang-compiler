@@ -17,7 +17,7 @@ abstract class EcoreGenNamingUtils extends AbstractNamingUtils {
 	}
 
 	override String packageInterfacePackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name»'''
+		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name»'''
 	}
 
 	def String packageInterfaceClassName(EPackage ePackage) {
@@ -33,7 +33,7 @@ abstract class EcoreGenNamingUtils extends AbstractNamingUtils {
 	}
 
 	def String packageImplementationPackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name».impl'''
+		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name».impl'''
 	}
 
 	def String packageImplementationClassName(EPackage ePackage) {
@@ -41,7 +41,7 @@ abstract class EcoreGenNamingUtils extends AbstractNamingUtils {
 	}
 
 	def String factoryImplementationPackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name».impl'''
+		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name».impl'''
 	}
 
 	def String factoryImplementationClassName(EPackage ePackage) {

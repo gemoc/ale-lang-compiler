@@ -27,6 +27,10 @@ public class Dsl {
 	String sourceFile;
 	List<String> allSyntaxes = new ArrayList<String>();
 	List<String> allSemantics = new ArrayList<String>();
+	boolean isTruffle;
+	String rootPackage;
+	String compilationType;
+	
 	private final Properties dslProp;
 
 	public Dsl(List<String> syntaxes, List<String> semantics) {
@@ -44,15 +48,18 @@ public class Dsl {
 
 		this.dslProp = new Properties();
 		try {
-			getDslProp().load(input);
+			dslProp.load(input);
 			input.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		String allSyntaxes = (String) getDslProp().get("syntax");
-		String allBehaviors = (String) getDslProp().get("behavior");
-
+		String allSyntaxes = (String) dslProp.get("syntax");
+		String allBehaviors = (String) dslProp.get("behavior");
+		this.isTruffle = dslProp.getOrDefault("truffle", "false").equals("true");
+		this.rootPackage = (String) dslProp.getOrDefault("rootPackage", "");
+		this.compilationType = (String) dslProp.getOrDefault("compilationType", "");
+		
 		if (allSyntaxes != null && allBehaviors != null) {
 			String[] syntaxes = allSyntaxes.split(",");
 			String[] behaviors = allBehaviors.split(",");
@@ -102,7 +109,21 @@ public class Dsl {
 
 	}
 
-	public Properties getDslProp() {
-		return dslProp;
+	public boolean isTruffle() {
+		return isTruffle;
 	}
+	
+	public String getRootPackage() {
+		return rootPackage;
+	}
+
+	public String getCompilationType() {
+		return compilationType;
+	}
+
+	public void setTruffle(boolean isTruffle) {
+		this.isTruffle = isTruffle;
+	}
+	
+	
 }

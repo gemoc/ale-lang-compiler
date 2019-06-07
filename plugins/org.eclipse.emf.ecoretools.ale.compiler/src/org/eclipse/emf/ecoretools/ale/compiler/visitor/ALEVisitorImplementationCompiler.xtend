@@ -39,7 +39,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
 
-		val String packageRoot = dsl.dslProp.get("rootPackage") as String
+		val String packageRoot = dsl.rootPackage
 
 		val egc = new EcoreGenmodelCompiler(compilationDirectory, "interpreter")
 

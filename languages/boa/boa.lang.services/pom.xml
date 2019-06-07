@@ -6,7 +6,7 @@
 	<artifactId>boa.lang.services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<graalvm.version>1.0.0-rc7</graalvm.version>
+		<graalvm.version>19.0.0</graalvm.version>
 	</properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -38,7 +38,7 @@
 			<version>2.15.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle.truffle</groupId>
+			<groupId>org.graalvm.truffle</groupId>
 			<artifactId>truffle-api</artifactId>
 			<version>${graalvm.version}</version>
 		</dependency>

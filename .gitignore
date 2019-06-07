@@ -6,3 +6,8 @@
 bin/
 target/
 xtend-gen/
+
+.attach_pid*
+
+graal_dumps/
+dumps/

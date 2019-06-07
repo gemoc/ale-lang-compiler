@@ -101,7 +101,7 @@ class EClassImplementationCompiler {
 					value.resolveFieldType(packageRoot).box))
 		])
 		.applyIfTrue(!hasSuperType, [
-			if (dsl.dslProp.getOrDefault("truffle", "false") == 'true') {
+			if (dsl.isTruffle) {
 				if (!eClass.EAnnotations.exists[it.source == 'RuntimeData']) {
 					superclass(ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.truffle", "MinimalTruffleEObjectImpl", "TruffleContainer"))
 				} else {
@@ -203,16 +203,17 @@ class EClassImplementationCompiler {
 			.build
 			val eMapRt = ParameterizedTypeName.get(ClassName.get(EMap), krt.box, vrt.box)
 			val eMapGetter = MethodSpec.methodBuilder('''getEMap''')
-			.returns(eMapRt)
-			.addModifiers(PUBLIC)
-			.addNamedCode('''
-			$eo:T container = eContainer();
-			return container == null ? null : ($rt:T)container.eGet(eContainmentFeature());
-			''', newHashMap(
-				"eo" -> ClassName.get(EObject),
-				"rt" ->eMapRt 			
-			))
-			.build
+				.addTruffleBoundaryAnnotation(dsl)
+				.returns(eMapRt)
+				.addModifiers(PUBLIC)
+				.addNamedCode('''
+				$eo:T container = eContainer();
+				return container == null ? null : ($rt:T)container.eGet(eContainmentFeature());
+				''', newHashMap(
+					"eo" -> ClassName.get(EObject),
+					"rt" ->eMapRt 			
+				))
+				.build
 			#[getHash, setHash, keyGetter, keySetter, valueGetter, valueSetter, eMapGetter]
 		}
 	}

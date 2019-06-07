@@ -49,8 +49,7 @@ class AleBodyCompiler {
 		this.cti = cti
 	}
 
-	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, FeatureAssignment body,
-		CompilerExpressionCtx ctx) {
+	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, FeatureAssignment body, CompilerExpressionCtx ctx) {
 		val t = infereType(body.target).head
 		val lhs = body.target.compileExpression(ctx)
 		if (lhs == 'this') {
@@ -76,9 +75,7 @@ class AleBodyCompiler {
 				builderSeed.addStatement('''$L.$L = ($T) ($L)''', lhs, body.targetFeature, tb,
 					body.value.compileExpression(ctx))
 			}
-
 		}
-
 	}
 
 	def dispatch CodeBlock.Builder compileBody(CodeBlock.Builder builderSeed, FeatureInsert body,

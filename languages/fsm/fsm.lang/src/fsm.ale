@@ -3,7 +3,7 @@ behavior fsm_exec;
 use fsm.FsmService;
 
 open class System {
-	def  /*dispatch*/  void intialize() {
+	def void intialize() {
 		for(fsm in self.ownedFsms) {
 			fsm.initialize();
 		}
@@ -30,7 +30,7 @@ open class System {
 }
 
 open class FSM {
-	def  /*dispatch*/  void initialize() {
+	def void initialize() {
 		self.currentState := self.initialState;
 		self.underProcessTrigger := '';
 		self.consummedString := '';
@@ -45,7 +45,7 @@ open class FSM {
 }
 
 open class State {
-	def dispatch void step(String inputString) { // 
+	def void step(String inputString) { // 
 		Transition validTransition := self.outgoing->select(t | inputString == t.trigger)->first();
 		
 		if(validTransition == null) {
@@ -58,7 +58,7 @@ open class State {
 }
 
 open class Transition {
-	def void fire() { // /*dispatch*/ 
+	def void fire() { 
 		('Firing ' + self.name + ' and entering ' + self.tgt.name).log();
 		FSM fsm := self.src.fsm;
 		fsm.currentState := self.tgt;
@@ -68,7 +68,7 @@ open class Transition {
 }
 
 open class Buffer {
-	def  /*dispatch*/ void initialize() {
+	def void initialize() {
 		if(self.initialValue != null) {
 			self.currentValues := self.initialValue;
 		} else {
@@ -76,11 +76,11 @@ open class Buffer {
 		}
 	}
 	
-	def /*dispatch*/ boolean bisEmpty() {
+	def boolean bisEmpty() {
 		result := self.currentValues->size() == 0 or self.currentValues == '\'empty\'';
 	}
 	
-	def /*dispatch*/ void enqueue(String v) {
+	def void enqueue(String v) {
 		if(self.bisEmpty()) {
 			self.currentValues := v;
 		} else {
@@ -88,7 +88,7 @@ open class Buffer {
 		}
 	}
 	
-	def String dequeue() { // /*dispatch*/ <- avoid at all cost
+	def String dequeue() {
 		String res := '';
 		int firstComma := self.currentValues.indexOf(',');
 		if(firstComma < 0) {

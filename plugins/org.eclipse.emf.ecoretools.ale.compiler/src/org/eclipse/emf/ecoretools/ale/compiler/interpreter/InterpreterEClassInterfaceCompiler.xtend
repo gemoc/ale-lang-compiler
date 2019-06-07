@@ -52,7 +52,7 @@ class InterpreterEClassInterfaceCompiler {
 		val cached = getCached(aleClass, dsl, packageRoot)
 
 		val factory = TypeSpec.interfaceBuilder(eClass.classInterfaceClassName).addSuperinterface(EObject).applyIfTrue(
-			dsl.dslProp.getProperty("truffle", "false") == "true" && !eClass.EAnnotations.exists [
+			dsl.isTruffle && !eClass.EAnnotations.exists [
 				it.source == 'RuntimeData'
 			], [
 				addSuperinterface(ClassName.get("com.oracle.truffle.api.nodes", "NodeInterface"))
@@ -69,7 +69,7 @@ class InterpreterEClassInterfaceCompiler {
 	def getCached(ExtendedClass aleClass, Dsl dsl, String packageRoot) {
 		if (aleClass !== null) {
 			aleClass.methods.filter [
-				it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
+				it.dispatch && dsl.isTruffle
 			].map [
 				MethodSpec.methodBuilder('''getCached«it.operationRef.name.toFirstUpper»''').returns(
 					ClassName.get(eClass.classImplementationPackageName(

@@ -25,7 +25,7 @@ class ALEImplementationCompiler {
 		val Job a = Job.create('''ALE Compilation''', [ monitor |
 			val dsl = new WorkbenchDsl(dslStr)
 			val eu = new EcoreUtils
-			val compilationType = dsl.dslProp.getProperty("compilationType")?.toLowerCase
+			val compilationType = dsl.compilationType.toLowerCase
 			if (compilationType !== null) {
 				switch compilationType {
 					case "revisitor":

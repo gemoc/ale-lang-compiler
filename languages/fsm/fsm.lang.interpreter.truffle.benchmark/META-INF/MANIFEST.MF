@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Truffle
+Bundle-SymbolicName: boa.benchmark.truffle
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: boa.benchmark.truffle
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.emf.ecore.xmi,
+ fsm.lang.interpreter.truffle;bundle-version="1.0.0"

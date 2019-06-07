@@ -14,7 +14,7 @@ class TruffleHelper {
 	}
 	
 	def addTruffleBoundaryAnnotation(MethodSpec.Builder builder, Dsl dsl) {
-		builder.addTruffleBoundaryAnnotation(dsl !== null && dsl.dslProp.getProperty('truffle', "false") == "true")
+		builder.addTruffleBoundaryAnnotation(dsl !== null && dsl.isTruffle)
 	}
 	
 	def addTruffleBoundaryAnnotation(MethodSpec.Builder builder, boolean isTruffle) {

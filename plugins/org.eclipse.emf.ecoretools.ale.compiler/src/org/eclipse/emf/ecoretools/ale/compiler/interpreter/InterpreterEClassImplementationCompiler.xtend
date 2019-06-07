@@ -11,6 +11,7 @@ import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.Comparator
+import java.util.HashMap
 import java.util.List
 import java.util.Map
 import java.util.Set
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -38,7 +40,6 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 
 class InterpreterEClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils
@@ -47,6 +48,7 @@ class InterpreterEClassImplementationCompiler {
 	extension AleBodyCompiler abc
 	extension EClassImplementationCompiler ecic
 	extension TruffleHelper th
+	extension EnumeratorService es
 
 	var Dsl dsl
 	val String packageRoot
@@ -54,13 +56,15 @@ class InterpreterEClassImplementationCompiler {
 	var Set<String> registreredArrays = newHashSet
 	val List<ResolvedClass> resolved
 
-	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es, TruffleHelper th) {
+	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es, TruffleHelper th, Dsl dsl) {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 		this.namingUtils = new InterpreterNamingUtils
 		this.ecic = new EClassImplementationCompiler(ccu, namingUtils,
 			new EClassGetterCompiler(namingUtils, ccu, resolved, dsl, th), jpu, resolved, es, th)
-			this.th = th
+		this.th = th
+		this.es = es
+		this.dsl = dsl
 	}
 	
 
@@ -73,7 +77,7 @@ class InterpreterEClassImplementationCompiler {
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
 		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
 		this.dsl = dsl
-		val isTruffle = dsl.dslProp.getOrDefault("truffle", "false") == "true"
+		val isTruffle = dsl.isTruffle
 		this.tsu = tsu
 		abc = new AleBodyCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registreredArrays,
 			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService, inu)
@@ -98,7 +102,7 @@ class InterpreterEClassImplementationCompiler {
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
 			builderTmp.applyIfTrue(
-				dsl.dslProp.getOrDefault("child", "false").equals("true") && !isMultiple && !isMutable &&
+				dsl.isTruffle && !isMultiple && !isMutable &&
 					field.containment && !field.EType.EAnnotations.exists[it.source == 'RuntimeData'], [
 					addAnnotation(ClassName.get("com.oracle.truffle.api.nodes.Node", "Child"))
 				])
@@ -116,14 +120,15 @@ class InterpreterEClassImplementationCompiler {
 						addAnnotation(ClassName.get('com.oracle.truffle.api.nodes.Node', 'Children'))
 					]).build
 				])
-			]).applyIfTrue(isTruffle && !eClass.EAnnotations.exists[it.source == 'RuntimeData'], [
+			])
+			.applyIfTrue(isTruffle && !eClass.EAnnotations.exists[it.source == 'RuntimeData'], [
 				addAnnotation(
 					AnnotationSpec.builder(ClassName.get("com.oracle.truffle.api.nodes", "NodeInfo")).addMember(
 						"description", '$S', eClass.name).build
 				)
 			]).applyIfTrue(aleClass !== null, [
 				addFields(aleClass.methods.filter [
-					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
+					it.dispatch && dsl.isTruffle
 				].map [
 					FieldSpec.builder(
 						ClassName.get(
@@ -135,7 +140,7 @@ class InterpreterEClassImplementationCompiler {
 				])
 			]).applyIfTrue(aleClass !== null, [
 				addMethods(aleClass.methods.filter [
-					it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'
+					it.dispatch && dsl.isTruffle
 				].map [
 					MethodSpec.methodBuilder('''getCached«it.operationRef.name.toFirstUpper»''').returns(
 						ClassName.get(
@@ -157,11 +162,11 @@ class InterpreterEClassImplementationCompiler {
 				MethodSpec.constructorBuilder.addCode('''
 					super();
 					«IF aleClass !== null»
-						«FOR method: aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true']»
+						«FOR method: aleClass.methods.filter[it.dispatch && dsl.isTruffle]»
 							this.cached«method.operationRef.name.toFirstUpper» = new «eClass.classImplementationPackageName(packageRoot)».«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»(this);
 						«ENDFOR»
-						«FOR w:whileOps»
-						«ENDFOR»
+«««						«FOR w:whileOps»
+«««						«ENDFOR»
 					«ENDIF»
 					«IF isTruffle»
 						«FOR method: registreredDispatch.toList»
@@ -185,7 +190,7 @@ class InterpreterEClassImplementationCompiler {
 	def generateRootNodes(ExtendedClass aleClass, File directory, EClass eClass) {
 		if (aleClass !== null) {
 			// Generation of the dispatch classes
-			aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'].forEach [ method |
+			aleClass.methods.filter[it.dispatch && dsl.isTruffle].forEach [ method |
 
 				val packageFQN = eClass.classImplementationPackageName(packageRoot)
 				val rootNodeName = '''«eClass.name»«method.operationRef.name.toFirstUpper»RootNode'''
@@ -220,7 +225,7 @@ class InterpreterEClassImplementationCompiler {
 	def generateDispatchWrapperClasses(ExtendedClass aleClass, File directory, EClass eClass) {
 		if (aleClass !== null) {
 			// Generation of the dispatch classes
-			aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'].forEach [ method |
+			aleClass.methods.filter[it.dispatch && dsl.isTruffle].forEach [ method |
 
 				val packageFQN = eClass.classImplementationPackageName(packageRoot)
 				val cyclicAssumptionType = ClassName.get('com.oracle.truffle.api.utilities', 'CyclicAssumption')
@@ -290,7 +295,7 @@ class InterpreterEClassImplementationCompiler {
 	def generateDispatchClasses(ExtendedClass aleClass, File directory, EClass eClass) {
 		if (aleClass !== null) {
 			// Generation of the dispatch classes
-			aleClass.methods.filter[it.dispatch && dsl.dslProp.getOrDefault('dispatch', 'false') == 'true'].forEach [ method |
+			aleClass.methods.filter[it.dispatch && dsl.isTruffle].forEach [ method |
 
 				val specializationType = ClassName.get('com.oracle.truffle.api.dsl', 'Specialization')
 				val cachedType = ClassName.get('com.oracle.truffle.api.dsl', 'Cached')
@@ -363,7 +368,7 @@ class InterpreterEClassImplementationCompiler {
 		MethodSpec.methodBuilder(method.operationRef.name).addModifiers(PUBLIC).applyIfTrue(retType !== null, [
 			returns(retType)
 		])
-		.addTruffleBoundaryAnnotation(aClass.EAnnotations.exists[it.source == 'RuntimeData'] && dsl.dslProp.getProperty('truffle', "false") == "true")
+		.addTruffleBoundaryAnnotation(aClass.EAnnotations.exists[it.source == 'RuntimeData'] && dsl.isTruffle)
 		.addParameters(method.operationRef.EParameters.map [
 			if (it.EType.instanceClass !== null) {
 				if (it.EType instanceof EClass && !(it.EType.EPackage == EcorePackage.eINSTANCE)) {
@@ -385,18 +390,39 @@ class InterpreterEClassImplementationCompiler {
 	def MethodSpec.Builder compileBodyAndPrefix(MethodSpec.Builder builder, Statement body, CompilerExpressionCtx ctx,
 		boolean isTruffle) {
 		val cbb = compileBody(CodeBlock.builder, body, ctx)
-		if (isTruffle) {
-			registreredArrays.fold(builder, [ b, array |
-				val x = ctx.EClass.EAllReferences.filter[it.name == array].head.EType.resolveType
-				b.addStatement(CodeBlock.builder.addNamed('''
-					if (this.«array»Arr == null) {
-						$cd:T.transferToInterpreterAndInvalidate();
-						if (this.«array» != null) this.«array»Arr = this.«array».toArray(new «x»[0]);
-						else this.«array»Arr = new «x»[] {};
-						
-					}
-				''', newHashMap("cd" -> ClassName.get("com.oracle.truffle.api", "CompilerDirectives"))).build)
-			]).addStatement(cbb.build)
+		if (isTruffle && !registreredArrays.empty) {
+//			registreredArrays.fold(builder, [ b, array |
+//				val x = ctx.EClass.EAllReferences.filter[it.name == array].head.EType.resolveType
+//				b.addStatement(CodeBlock.builder.addNamed('''
+//					if (this.«array»Arr == null) {
+//						$cd:T.transferToInterpreterAndInvalidate();
+//						if (this.«array» != null) this.«array»Arr = this.«array».toArray(new «x»[0]);
+//						else this.«array»Arr = new «x»[] {};
+//						
+//					}
+//				''', newHashMap("cd" -> ClassName.get("com.oracle.truffle.api", "CompilerDirectives"))).build)
+//			]).addStatement(cbb.build)
+
+			val HashMap<String, Object> hm = newHashMap
+			hm.put('cbb', cbb.build)
+			for(array: registreredArrays.enumerate) {
+				val ref = ctx.EClass.EAllReferences.filter[it.name == array.key]
+				val rt = ref.head.EType.resolveType
+				hm.put('arrType' + array.value, rt)
+				hm.put('arrName' + array.value, array.key)
+			}
+			hm.put("cd", ClassName.get("com.oracle.truffle.api", "CompilerDirectives"))
+
+			builder.addCode(CodeBlock.builder.addNamed('''
+			«FOR array: registreredArrays.enumerate»
+			if (this.$arrName«array.value»:LArr == null) {
+				$cd:T.transferToInterpreterAndInvalidate();
+				if (this.$arrName«array.value»:L != null) this.$arrName«array.value»:LArr = this.$arrName«array.value»:L.toArray(new $arrType«array.value»:T[0]);
+				else this.$arrName«array.value»:LArr = new $arrType«array.value»:T[] {};
+			}
+			«ENDFOR»
+			$cbb:L
+			''', hm).build)		
 
 		} else {
 			builder.addCode(cbb.build)

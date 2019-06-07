@@ -22,7 +22,7 @@ open class LogoProgram {
 		
 	}
 	
-	def /*dispatch*/ Turtle createTurtle() {
+	def Turtle createTurtle() {
 		Turtle turtle := kmLogo::Turtle.create();
 		turtle.position := kmLogo::Point.create();
 		turtle.position.x := 0.0;
@@ -150,7 +150,7 @@ open class Plus {
 
 
 open class Expression {
-	def /*dispatch*/ double eval(Turtle turtle) {
+	def double eval(Turtle turtle) {
 		result := 0.0;
 	}
 }
@@ -264,7 +264,7 @@ open class ProcDeclaration {
 		}
 	}
 	
-	def dispatch double deval(Turtle turtle) {
+	def double deval(Turtle turtle) {
 		result := self.eval(turtle);
 	}
 }

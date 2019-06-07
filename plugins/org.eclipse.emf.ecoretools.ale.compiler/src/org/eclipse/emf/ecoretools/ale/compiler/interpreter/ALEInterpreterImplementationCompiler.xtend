@@ -41,7 +41,7 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
 
-		val String packageRoot = dsl.dslProp.get("rootPackage") as String
+		val String packageRoot = dsl.rootPackage
 
 		val egc = new EcoreGenmodelCompiler(compilationDirectory, "interpreter")
 
@@ -57,13 +57,13 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 		val eic = new InterpreterEClassInterfaceCompiler(namingUtils, ccu)
 		val es = new EnumeratorService
-		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved, ccu, es, th)
+		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved, ccu, es, th, dsl)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
 		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
 		base.validate(parsedSemantics)
-		val isTruffle = dsl.dslProp.getProperty('truffle', "false") == "true"
+		val isTruffle = dsl.isTruffle
 		
 		val tsu =  new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, namingUtils)
 		

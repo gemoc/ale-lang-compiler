@@ -42,7 +42,7 @@ public class FsmInterpreterBenchmark {
 			final fsm.interpreter.fsm.System result = (fsm.interpreter.fsm.System) resource.getContents().get(0);
 
 			final long start = System.currentTimeMillis();
-			result.main();
+			result.main(3000000);
 			times[i] = System.currentTimeMillis() - start;
 
 		}

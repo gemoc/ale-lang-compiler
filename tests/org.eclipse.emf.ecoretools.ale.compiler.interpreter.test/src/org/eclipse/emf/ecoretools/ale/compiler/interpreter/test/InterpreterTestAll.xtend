@@ -35,7 +35,8 @@ class InterpreterTestAll {
 
 	static val compilers = newHashMap(
 //		"interpreter" -> [f|compileProjectInterpreter(f)],
-		"revisitor" -> [f|compileProjectRevisitor(f)]//,
+		"interpreter.truffle" -> [f|compileProjectInterpreterTruffle(f)]
+//		"revisitor" -> [f|compileProjectRevisitor(f)]//,
 //		"switch" -> [f|compileProjectSwitch(f)] ,
 //		"visitor" -> [f|compileProjectVisitor(f)]
 	)
@@ -54,7 +55,7 @@ class InterpreterTestAll {
 
 		compilers.forEach [ k, v |
 			new File("assets").listFiles.filter[it.isDirectory]
-//				.filter[it.path == "assets/factorydeclorder"]
+//				.filter[it.path == "assets/autocast"]
 				.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))
@@ -162,7 +163,6 @@ class InterpreterTestAll {
 
 	def static compileProjectInterpreter(File directory) {
 
-//		if(directory.path == "assets/testmap1") {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 		val compiler = new ALEInterpreterImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils)
 
@@ -172,7 +172,21 @@ class InterpreterTestAll {
 
 		compiler.compile()
 		tmpDir
-//		}
+	}
+	
+	def static compileProjectInterpreterTruffle(File directory) {
+
+		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
+		val dsl = new Dsl('''«directory.path»/test.dsl''')
+		dsl.truffle = true
+		val compiler = new ALEInterpreterImplementationCompiler(directory.name, tmpDir, dsl, directory.path.services, new EcoreUtils)
+
+		GenModelPackage.eINSTANCE.eClass
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
+
+		compiler.compile()
+		tmpDir
 	}
 
 	def static compileProjectRevisitor(File directory) {

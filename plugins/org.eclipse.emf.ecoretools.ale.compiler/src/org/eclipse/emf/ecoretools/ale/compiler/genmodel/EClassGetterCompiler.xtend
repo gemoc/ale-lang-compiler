@@ -69,8 +69,8 @@ class EClassGetterCompiler {
 
 	private def buildSimpleGetter(EStructuralFeature field, TypeName fieldType,  boolean isTyped) {
 		MethodSpec.methodBuilder(field.getGetterMethodName(isTyped))
-			.returns(fieldType)
 			.addTruffleBoundaryAnnotation(dsl)
+			.returns(fieldType)
 			.addCode('''
 				return «field.name.normalizeVarName»;
 			''')
@@ -91,6 +91,7 @@ class EClassGetterCompiler {
 		)
 		MethodSpec
 			.methodBuilder(field.getGetterMethodName(isTyped))
+			.addTruffleBoundaryAnnotation(dsl)
 			.returns(rt)
 			.addNamedCode('''
 				if («field.name.normalizeVarName» != null && «IF field.isObjectExtensionType»(($eobj:T) «field.name.normalizeVarName»)«ELSE»«field.name.normalizeVarName»«ENDIF».eIsProxy()) {
@@ -166,8 +167,10 @@ class EClassGetterCompiler {
 
 	private def buildWithOppositedWithOppositeContainmentGetter(EStructuralFeature field, TypeName rt,
 		TypeName ePackageInterfaceType, boolean isTyped) {
-		MethodSpec.methodBuilder(field.getGetterMethodName(isTyped)).returns(rt).
-			addNamedCode('''
+		MethodSpec.methodBuilder(field.getGetterMethodName(isTyped))
+			.addTruffleBoundaryAnnotation(dsl)
+			.returns(rt)
+			.addNamedCode('''
 				if (eContainerFeatureID() != $epit:T.«field.normalizeUpperField»)
 					return null;
 				return ($fieldType:T) eInternalContainer();
@@ -187,8 +190,10 @@ class EClassGetterCompiler {
 
 	private def buildWithContainmentSetter(EStructuralFeature field, TypeName rt, TypeName ePackageInterfaceType,
 		boolean isTyped) {
-		MethodSpec.methodBuilder('''basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''').returns(
-			NotificationChain).addParameter(rt, '''«field.name.normalizeVarNewName»''').addParameter(NotificationChain,
+		MethodSpec.methodBuilder('''basicSet«IF isTyped»Typed«ENDIF»«field.name.toFirstUpper»''')
+			.addTruffleBoundaryAnnotation(dsl)
+			.returns(NotificationChain)
+			.addParameter(rt, '''«field.name.normalizeVarNewName»''').addParameter(NotificationChain,
 			'msgs').addModifiers(PUBLIC).addNamedCode('''
 			$fieldType:T «field.name.normalizeVarOldName» = «field.name.normalizeVarName»;
 			«field.name.normalizeVarName» = «field.name.normalizeVarNewName»;
@@ -211,6 +216,7 @@ class EClassGetterCompiler {
 	private def buildWithOppositeWithOppositeContainementSetter(EReference field, TypeName rt, TypeName ePackageInterfaceType,
 		boolean isTyped) {
 		MethodSpec.methodBuilder(field.getSetterMethodName(isTyped))
+			.addTruffleBoundaryAnnotation(dsl)
 			.addParameter(rt, field.name.normalizeVarNewName)
 			.addNamedCode('''
 				if («field.name.normalizeVarNewName» != eInternalContainer() || (eContainerFeatureID() != $epit:T.«field.normalizeUpperField» && «field.name.normalizeVarNewName» != null)) {
@@ -347,6 +353,7 @@ class EClassGetterCompiler {
 			"notif" -> ClassName.get(Notification)
 		)
 		MethodSpec.methodBuilder(field.getSetterMethodName(isTyped))
+			.addTruffleBoundaryAnnotation(dsl)
 			.addParameter(rt, '''«field.name.normalizeVarNewName»''')
 			.addNamedCode('''
 				if («field.name.normalizeVarNewName» != «field.name.normalizeVarName») {
@@ -390,6 +397,7 @@ class EClassGetterCompiler {
 			"epit" -> ePackageInterfaceType
 		)
 		MethodSpec.methodBuilder(field.getGetterMethodName(isTyped))
+			.addTruffleBoundaryAnnotation(dsl)
 			.returns(rt)
 			.addNamedCode('''
 				if («field.name.normalizeVarName» == null) {
@@ -410,8 +418,8 @@ class EClassGetterCompiler {
 			val value = field.EType.eContents.filter(EStructuralFeature).filter[it.name == "value"].head
 			MethodSpec
 				.methodBuilder(field.getGetterMethodName(isTyped))
-				.returns(fieldType)
 				.addTruffleBoundaryAnnotation(dsl)
+				.returns(fieldType)
 				.addModifiers(PUBLIC).addCode('''
 					if («field.name.normalizeVarName» == null) {
 						«field.name.normalizeVarName» = new $1T($2T.Literals.«(field.EType as EClass).name.normalizeUpperField», $3T.class, this, $2T.«field.normalizeUpperField»);

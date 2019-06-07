@@ -3,3 +3,4 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.ecoretools.ale.compiler.truffle.lib
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: org.eclipse.emf.ecoretools.ale.compiler.truffle.lib
+Export-Package: org.eclipse.emf.ecoretools.ale.compiler.truffle

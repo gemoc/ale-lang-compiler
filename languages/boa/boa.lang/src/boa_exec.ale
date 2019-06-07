@@ -15,11 +15,11 @@ open class boa.File {
 }
 
 open class boa.TopLevelCmd {
-	def dispatch void nextLine(Ctx ctx) {}
+	def  void nextLine(Ctx ctx) {}
 }
 
 open class boa.Def {
-	def dispatch void nextLine(Ctx ctx) {
+	def  void nextLine(Ctx ctx) {
 		boa::EvalRes e := self.expr.eval(ctx);
 		(self.name +  ' = ' + e.serialize()).log();
 		ctx.env.put(self.name, e);
@@ -27,11 +27,11 @@ open class boa.Def {
 }
 
 open class boa.Expr {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		result := null;
 	}
 	
-	def dispatch void nextLine(Ctx ctx) {
+	def  void nextLine(Ctx ctx) {
 		self.eval(ctx).serialize().log();
 	}
 	
@@ -39,7 +39,7 @@ open class boa.Expr {
 }
 
 open class boa.Var {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		if(ctx.env.containsKey(self.name)) {
 			result := ctx.env.getFromMap(self.name);
 		} else {
@@ -50,7 +50,7 @@ open class boa.Var {
 
 
 open class boa.BObject {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		EvalMapRes ret := boa::EvalMapRes.create();
 		for(x in self.fields) {
 			EvalRes v := x.value.eval(ctx);
@@ -61,7 +61,7 @@ open class boa.BObject {
 }
 
 open class boa.App {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		 
@@ -108,7 +108,7 @@ open class boa.App {
 		}
 	}
 	
-	def dispatch boa::EvalRes callFunc(boa::EvalFunRes fct, Ctx callCtx) { 
+	def  boa::EvalRes callFunc(boa::EvalFunRes fct, Ctx callCtx) { 
 		result := fct.exp.eval(callCtx);
 	}
 }
@@ -117,7 +117,7 @@ open class boa.EvalFunRes {}
 
 
 open class boa.ArithOpDivide {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalIntRes)) {
@@ -137,7 +137,7 @@ open class boa.ArithOpDivide {
 }
 
 open class boa.ArithOpMinus {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalIntRes)) {
@@ -157,7 +157,7 @@ open class boa.ArithOpMinus {
 }
 
 open class boa.ArithOpPlus {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalIntRes)) {
@@ -177,7 +177,7 @@ open class boa.ArithOpPlus {
 }
 
 open class boa.ArithOpRemainder {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalIntRes)) {
@@ -197,7 +197,7 @@ open class boa.ArithOpRemainder {
 }
 
 open class boa.ArithOpTimes {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalIntRes)) {
@@ -217,7 +217,7 @@ open class boa.ArithOpTimes {
 }
 
 open class boa.Assign {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		
@@ -236,7 +236,7 @@ open class boa.Assign {
 }
 
 open class boa.Bool {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalBoolRes ret := boa::EvalBoolRes.create();
 		ret.value := self.value;
 		result := ret;
@@ -244,7 +244,7 @@ open class boa.Bool {
 }
 
 open class boa.BoolOpAnd {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalBoolRes)) {
@@ -264,7 +264,7 @@ open class boa.BoolOpAnd {
 }
 
 open class boa.BoolOpOr {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalBoolRes)) {
@@ -284,7 +284,7 @@ open class boa.BoolOpOr {
 }
 
 open class boa.CmpOpEqual {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalIntRes)) {
@@ -304,7 +304,7 @@ open class boa.CmpOpEqual {
 }
 
 open class boa.CmpOpUnequal {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalIntRes)) {
@@ -324,7 +324,7 @@ open class boa.CmpOpUnequal {
 }
 
 open class boa.CmpOpLess {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		if(vlhs.oclIsKindOf(boa::EvalIntRes)) {
@@ -344,7 +344,7 @@ open class boa.CmpOpLess {
 }
 
 open class boa.Copy {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vcopy := self.copy.eval(ctx);
 		if(vcopy.oclIsKindOf(boa::EvalMapRes)) {
 			boa::EvalMapRes mvcopy := vcopy;
@@ -358,7 +358,7 @@ open class boa.Copy {
 }
 
 open class boa.Fun {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalFunRes ret := boa::EvalFunRes.create();
 		ret.exp := self.body;
 		ret.ctx := ctx;
@@ -368,7 +368,7 @@ open class boa.Fun {
 }
 
 open class boa.If {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		EvalRes vcond := self.cond.eval(ctx);
 		
 		if(vcond.oclIsKindOf(boa::EvalBoolRes)) {
@@ -386,7 +386,7 @@ open class boa.If {
 
 
 open class boa.Int {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalIntRes ret := boa::EvalIntRes.create();
 		ret.value := self.value;   
 		result := ret;
@@ -394,7 +394,7 @@ open class boa.Int {
 }
 
 open class boa.Let {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::Expr lhs := self.lhs;
 		boa::EvalRes vlhs := lhs.eval(ctx);
 		boa::Ctx nctx := boa::Ctx.create();
@@ -405,7 +405,7 @@ open class boa.Let {
 }
 
 open class boa.Not {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vvalue := self.value.eval(ctx);
 		if(vvalue.oclIsKindOf(boa::EvalBoolRes)) {
 			boa::EvalBoolRes bvvalue := vvalue;
@@ -419,7 +419,7 @@ open class boa.Not {
 }
 
 open class boa.Project {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vexp := self.exp.eval(ctx);
 		if(vexp.oclIsKindOf(boa::EvalMapRes)) {
 			boa::EvalMapRes mvexp := vexp;
@@ -440,7 +440,7 @@ open class boa.Project {
 		}
 	}
 	
-	def dispatch boa::EvalRes project(boa::EvalFunRes func, boa::EvalMapRes mvexp) {			
+	def  boa::EvalRes project(boa::EvalFunRes func, boa::EvalMapRes mvexp) {			
 		boa::EvalBoundFunRes ret := boa::EvalBoundFunRes.create();
 		ret.exp := func.exp;
 		ret.ctx := func.ctx;
@@ -451,7 +451,7 @@ open class boa.Project {
 }
 
 open class boa.Seq {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		result := vrhs;
@@ -459,14 +459,14 @@ open class boa.Seq {
 }
 
 open class boa.Skip {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def boa::EvalRes eval(Ctx ctx) {
 		result := boa::EvalMapRes.create();
 	}
 }
 
 
 open class boa.This {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def  boa::EvalRes eval(Ctx ctx) {
 		boa::EvalMapRes ret := boa::EvalMapRes.create();
 		ret.values.putAll(ctx.th);
 		result := ret;
@@ -474,7 +474,7 @@ open class boa.This {
 }
 
 open class boa.With {
-	def dispatch boa::EvalRes eval(Ctx ctx) {
+	def boa::EvalRes eval(Ctx ctx) {
 		boa::EvalRes vlhs := self.lhs.eval(ctx);
 		boa::EvalRes vrhs := self.rhs.eval(ctx);
 		

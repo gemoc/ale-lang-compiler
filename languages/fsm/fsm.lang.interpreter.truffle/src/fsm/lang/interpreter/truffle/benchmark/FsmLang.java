@@ -20,6 +20,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.RootNode;
 
 import fsm.interpreter.fsm.FsmPackage;
+import fsm.interpreter.fsm.impl.SystemImpl;
 
 @TruffleLanguage.Registration(id = "fsm", name = "fsm", mimeType = "application/fsm", contextPolicy = ContextPolicy.SHARED)
 public class FsmLang extends com.oracle.truffle.api.TruffleLanguage<Void> {
@@ -45,20 +46,20 @@ public class FsmLang extends com.oracle.truffle.api.TruffleLanguage<Void> {
 	@Override
 	public CallTarget parse(final TruffleLanguage.ParsingRequest request) throws Exception {
 
-		fsm.interpreter.fsm.System model = init();
+		SystemImpl model = init();
 		return Truffle.getRuntime().createCallTarget(new RootNode(FsmLang.this) {
 
 			@Override
 			public Object execute(final VirtualFrame frame) {
 				final long start = System.currentTimeMillis();
-				model.main();
+				model.main(30);
 				return System.currentTimeMillis() - start;
 			}
 		});
 	}
 
 	@TruffleBoundary
-	private fsm.interpreter.fsm.System init() {
+	private SystemImpl init() {
 		EPackage.Registry.INSTANCE.put("http://www.example.org/fsm", FsmPackage.eINSTANCE);
 		EPackage.Registry.INSTANCE.put("http://www.gemoc.org/fsm", FsmPackage.eINSTANCE);
 
@@ -72,6 +73,6 @@ public class FsmLang extends com.oracle.truffle.api.TruffleLanguage<Void> {
 		URI createPlatformResourceURI = URI.createFileURI(FsmBenchmark.file);
 		final Resource resource = resSet.getResource(createPlatformResourceURI, true);
 
-		return (fsm.interpreter.fsm.System) resource.getContents().get(0);
+		return (SystemImpl) resource.getContents().get(0);
 	}
 }
