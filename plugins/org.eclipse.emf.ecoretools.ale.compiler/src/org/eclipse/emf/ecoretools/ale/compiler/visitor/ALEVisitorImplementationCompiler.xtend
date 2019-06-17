@@ -45,13 +45,13 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val namingUtils = new VisitorNamingUtils
 		val fic = new FactoryInterfaceCompiler(namingUtils)
-		val ccu = new CommonCompilerUtils(namingUtils, resolved)
+		val ccu = new CommonCompilerUtils(namingUtils, resolved, dsl)
 		val jpu = new JavaPoetUtils
 		val th = new TruffleHelper(jpu)
-		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu, th)
+		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu, th, dsl)
 
 		val pic = new PackageInterfaceCompiler(namingUtils)
-		val pimplc = new PackageImplementationCompiler(namingUtils)
+		val pimplc = new PackageImplementationCompiler(namingUtils, dsl)
 
 		val acceptInterfaceCompiler = new AcceptInterfaceCompiler(compileDirectory, packageRoot)
 		acceptInterfaceCompiler.compile
@@ -74,7 +74,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			try {
-				fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot, dsl)
 				fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
 				pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)

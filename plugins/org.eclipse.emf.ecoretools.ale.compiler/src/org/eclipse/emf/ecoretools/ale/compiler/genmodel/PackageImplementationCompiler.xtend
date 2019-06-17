@@ -7,23 +7,26 @@ import com.squareup.javapoet.MethodSpec
 import com.squareup.javapoet.TypeSpec
 import java.io.File
 import java.util.List
+import java.util.Locale
 import java.util.Map
+import org.eclipse.emf.codegen.util.CodeGenUtil
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.impl.EPackageImpl
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
-import java.util.Locale
-import org.eclipse.emf.codegen.util.CodeGenUtil
 
 class PackageImplementationCompiler {
 	protected extension EcoreGenNamingUtils namingUtils
+	val Dsl dsl
 
-	new(EcoreGenNamingUtils namingUtils) {
+	new(EcoreGenNamingUtils namingUtils, Dsl dsl) {
 		this.namingUtils = namingUtils
+		this.dsl = dsl
 	}
 	
 	def boolean isResolveProxiesFlag(EReference ref) {
@@ -115,12 +118,21 @@ class PackageImplementationCompiler {
 		val hm = newHashMap()
 		
 		for(eClass: allClasses) {
-			val t =  if(eClass.instanceClassName != "java.util.Map$Entry") ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.name) else ClassName.get("java.util.Map", "Entry")
+			val t =  if(eClass.instanceClassName != "java.util.Map$Entry")
+			(if (dsl.truffle) 
+					ClassName.get(eClass.classImplementationPackageName(packageRoot), eClass.name+'Impl') 
+				else 
+					ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.name)
+			)
+				 
+				else ClassName.get("java.util.Map", "Entry")
 			hm.put('''type«eClass.name»'''.toString, t)
 		}
 		
 		for(eEnum: allEnums) {
-			hm.put('''type«eEnum.name»'''.toString, ClassName.get(eEnum.classInterfacePackageName(packageRoot), eEnum.name))
+			hm.put('''type«eEnum.name»'''.toString, 
+				ClassName.get(eEnum.classInterfacePackageName(packageRoot), eEnum.name)
+			)
 		}
 
 		val initializePackageContentsMethod = MethodSpec.methodBuilder('initializePackageContents').

@@ -47,13 +47,13 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 		val namingUtils = new InterpreterNamingUtils
 		val fic = new FactoryInterfaceCompiler(namingUtils)
-		val ccu = new CommonCompilerUtils(namingUtils, resolved)
+		val ccu = new CommonCompilerUtils(namingUtils, resolved, dsl)
 		val jpu = new JavaPoetUtils
 		val th = new TruffleHelper(jpu)
-		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu, th)
+		val fimplc = new FactoryImplementationCompiler(namingUtils, ccu, th, dsl)
 
 		val pic = new PackageInterfaceCompiler(namingUtils)
-		val pimplc = new PackageImplementationCompiler(namingUtils)
+		val pimplc = new PackageImplementationCompiler(namingUtils, dsl)
 
 		val eic = new InterpreterEClassInterfaceCompiler(namingUtils, ccu)
 		val es = new EnumeratorService
@@ -65,11 +65,11 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 		base.validate(parsedSemantics)
 		val isTruffle = dsl.isTruffle
 		
-		val tsu =  new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, namingUtils)
+		val tsu =  new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, namingUtils, dsl)
 		
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			try {
-				fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot, dsl)
 				fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot, isTruffle)
 
 				pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
@@ -81,7 +81,7 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 						val rc = resolved.filter [
 							it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name
 						].head
-						if(eclazz.instanceClassName != "java.util.Map$Entry")
+						if(eclazz.instanceClassName != "java.util.Map$Entry" && ! dsl.isTruffle)
 							eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
 						eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
 							registeredServices, dsl, base, tsu, namingUtils)

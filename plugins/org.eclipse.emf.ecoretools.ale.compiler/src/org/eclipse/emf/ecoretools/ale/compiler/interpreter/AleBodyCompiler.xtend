@@ -3,6 +3,7 @@ package org.eclipse.emf.ecoretools.ale.compiler.interpreter
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
 import com.squareup.javapoet.ParameterizedTypeName
+import com.squareup.javapoet.TypeName
 import java.util.List
 import java.util.Map
 import java.util.Set
@@ -15,6 +16,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ConditionalBlock
@@ -31,7 +33,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
 import org.eclipse.xtext.EcoreUtil2
-import com.squareup.javapoet.TypeName
 
 class AleBodyCompiler {
 
@@ -42,8 +43,8 @@ class AleBodyCompiler {
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
 		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
-		InterpreterNamingUtils inu) {
-		tsu = new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, inu)
+		InterpreterNamingUtils inu, Dsl dsl) {
+		tsu = new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, inu, dsl)
 		aec = new InterpreterExpressionCompiler(packageRoot, resolved, registreredDispatch, registeredArray,
 			registeredServices, isTruffle, cti, es, tsu, inu)
 		this.cti = cti

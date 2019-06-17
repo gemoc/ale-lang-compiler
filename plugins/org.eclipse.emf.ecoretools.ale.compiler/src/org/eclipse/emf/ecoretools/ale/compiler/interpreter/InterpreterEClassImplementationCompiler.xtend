@@ -35,8 +35,6 @@ import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Statement
-import org.eclipse.emf.ecoretools.ale.implementation.While
-import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
@@ -80,7 +78,7 @@ class InterpreterEClassImplementationCompiler {
 		val isTruffle = dsl.isTruffle
 		this.tsu = tsu
 		abc = new AleBodyCompiler(syntaxes, packageRoot, base, resolved, registreredDispatch, registreredArrays,
-			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService, inu)
+			registeredServices, isTruffle, new CommonTypeInferer(base), new EnumeratorService, inu, dsl)
 
 		val implPackage = eClass.classImplementationPackageName(packageRoot)
 
@@ -93,11 +91,6 @@ class InterpreterEClassImplementationCompiler {
 			} else
 				#[]
 
-		val whileOps = if (aleClass !== null) {
-				EcoreUtil2.getAllContentsOfType(aleClass, While)
-			} else
-				#[]
-				
 		val Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2 = [ builderTmp, field |
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
@@ -165,8 +158,6 @@ class InterpreterEClassImplementationCompiler {
 						«FOR method: aleClass.methods.filter[it.dispatch && dsl.isTruffle]»
 							this.cached«method.operationRef.name.toFirstUpper» = new «eClass.classImplementationPackageName(packageRoot)».«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»(this);
 						«ENDFOR»
-«««						«FOR w:whileOps»
-«««						«ENDFOR»
 					«ENDIF»
 					«IF isTruffle»
 						«FOR method: registreredDispatch.toList»
@@ -194,8 +185,11 @@ class InterpreterEClassImplementationCompiler {
 
 				val packageFQN = eClass.classImplementationPackageName(packageRoot)
 				val rootNodeName = '''«eClass.name»«method.operationRef.name.toFirstUpper»RootNode'''
-				val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot),
-					eClass.classInterfaceClassName)
+				val eClassInterfaceType = 
+					if(dsl.truffle)
+						ClassName.get(eClass.classImplementationPackageName(packageRoot), eClass.classImplementationClassName)
+					else
+						ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 				val virtualFrameType = ClassName.get('com.oracle.truffle.api.frame', 'VirtualFrame')
 
 				val factoryDispatch = TypeSpec.classBuilder(rootNodeName).superclass(
@@ -234,8 +228,11 @@ class InterpreterEClassImplementationCompiler {
 				val truffleType = ClassName.get('com.oracle.truffle.api', 'Truffle')
 				val rootNodeName = '''«eClass.name»«method.operationRef.name.toFirstUpper»RootNode'''
 				val rootNodeType = ClassName.get(packageFQN, rootNodeName)
-				val eClassInterfaceType = ClassName.get(eClass.classInterfacePackageName(packageRoot),
-					eClass.classInterfaceClassName)
+				val eClassInterfaceType = 
+					if(dsl.truffle)
+						ClassName.get(eClass.classImplementationPackageName(packageRoot), eClass.classImplementationClassName)
+					else
+						ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 
 				val name = '''«eClass.name»DispatchWrapper«method.operationRef.name.toFirstUpper»_«Math.random * 99999999»'''
 

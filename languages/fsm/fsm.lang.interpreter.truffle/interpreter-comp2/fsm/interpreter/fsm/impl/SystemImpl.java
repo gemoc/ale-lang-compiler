@@ -2,7 +2,6 @@ package fsm.interpreter.fsm.impl;
 
 import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.interpreter.fsm.FsmPackage;
@@ -31,12 +30,8 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	@Children
 	private FSMImpl[] ownedFsmsArr;
 
-	@Child
-	private FSMDispatchRun dispatchFSMRun;
-
 	protected SystemImpl() {
 		super();
-		this.dispatchFSMRun = fsm.interpreter.fsm.impl.FSMDispatchRunNodeGen.create(); 
 	}
 
 	@Override
@@ -166,7 +161,7 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 			anFSMRan = false;
 			for (FSMImpl fsm : this.ownedFsmsArr) {
 				if (!(((BufferImpl) (fsm.getInputBuffer())).bisEmpty())) {
-					dispatchFSMRun.executeDispatch(fsm.getCachedRun(), new Object[] {});
+					((FSMImpl) (fsm)).run();
 					anFSMRan = true;
 				}
 				cptr = (cptr) + (1);

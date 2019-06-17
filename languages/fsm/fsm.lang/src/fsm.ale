@@ -36,7 +36,7 @@ open class FSM {
 		self.consummedString := '';
 	}
 	
-	def void run() { // 
+	def dispatch void run() { // 
 		self.underProcessTrigger := self.inputBuffer.dequeue();
 		('run SM'+self.name+' step on '+self.underProcessTrigger).log();
 		self.currentState.step(self.underProcessTrigger);
@@ -58,7 +58,7 @@ open class State {
 }
 
 open class Transition {
-	def void fire() { 
+	def dispatch void fire() { 
 		('Firing ' + self.name + ' and entering ' + self.tgt.name).log();
 		FSM fsm := self.src.fsm;
 		fsm.currentState := self.tgt;

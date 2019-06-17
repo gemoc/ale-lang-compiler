@@ -7,7 +7,9 @@ import com.squareup.javapoet.ParameterSpec
 import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeSpec
 import java.io.File
+import java.util.Locale
 import java.util.Map
+import org.eclipse.emf.codegen.util.CodeGenUtil
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EObject
@@ -16,23 +18,22 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.impl.EFactoryImpl
 import org.eclipse.emf.ecore.plugin.EcorePlugin
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
-import java.util.Locale
-import org.eclipse.emf.codegen.util.CodeGenUtil
 
 class FactoryImplementationCompiler {
 
 	extension EcoreGenNamingUtils namingUtils
 	extension CommonCompilerUtils ccu
-	extension JavaPoetUtils = new JavaPoetUtils
 	extension TruffleHelper th
+	Dsl dsl
 	
-	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, TruffleHelper th) {
+	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, TruffleHelper th, Dsl dsl) {
 		this.namingUtils = namingUtils
 		this.ccu = ccu
 		this.th = th
+		this.dsl = dsl
 	}
 
 	def compileFactoryImplementation(EPackage abstractSyntax, File directory, String packageRoot) {
@@ -183,7 +184,10 @@ class FactoryImplementationCompiler {
 					ParameterizedTypeName.get(ClassName.get(Map.Entry), key.resolveFieldType(packageRoot),
 						value.resolveFieldType(packageRoot))
 				} else {
-					ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
+					if(dsl.truffle)
+						ClassName.get(eClass.classImplementationPackageName(packageRoot), eClass.classImplementationClassName)
+					else
+						ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName)
 				}
 			val classImplType = ClassName.get(eClass.classImplementationPackageName(packageRoot),
 				eClass.classImplementationClassName)

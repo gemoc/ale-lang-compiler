@@ -29,6 +29,10 @@ abstract class AbstractNamingUtils {
 	def String classInterfacePackageName(EClass eClass, String packageRoot) {
 		eClass.EPackage.factoryInterfacePackageName(packageRoot)
 	}
+	
+	def String classImplementationPackageName(EClass eClass, String packageRoot) {
+		eClass.EPackage.factoryImplementationPackageName(packageRoot)
+	}
 
 	def String classInterfacePackageName(EEnum eEnum, String packageRoot) {
 		eEnum.EPackage.factoryInterfacePackageName(packageRoot)
@@ -38,6 +42,10 @@ abstract class AbstractNamingUtils {
 	
 	def String factoryInterfacePackageName(EPackage ePackage, String packageRoot) {
 		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name»'''
+	}
+	
+	def String factoryImplementationPackageName(EPackage ePackage, String packageRoot) {
+		'''«factoryInterfacePackageName(ePackage, packageRoot)».impl'''
 	}
 
 	def String normalizeVarName(String name) {

@@ -10,6 +10,7 @@ import java.util.Map
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EFactory
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
 
@@ -20,7 +21,7 @@ class FactoryInterfaceCompiler {
 		this.namingUtils = namingUtils
 	}
 
-	def compileFactoryInterface(EPackage abstractSyntax, File directory, String packageRoot) {
+	def compileFactoryInterface(EPackage abstractSyntax, File directory, String packageRoot, Dsl dsl) {
 		val factoryInterfaceType = abstractSyntax.factoryIntClassName(packageRoot) 
 		val packageInterfaceType = abstractSyntax.packageIntClassName(packageRoot) 
 		
@@ -33,6 +34,9 @@ class FactoryInterfaceCompiler {
 				!abstract && !(it.instanceClass !== null && it.instanceClass == Map.Entry)
 			].map [
 				MethodSpec.methodBuilder('''create«it.name.toFirstUpper»''').returns(
+					if(dsl.truffle)
+					ClassName.get(it.classImplementationPackageName(packageRoot), it.classImplementationClassName)
+					else
 					ClassName.get(it.classInterfacePackageName(packageRoot), it.classInterfaceClassName)).
 					addModifiers(ABSTRACT, PUBLIC).build
 			]).addMethod(

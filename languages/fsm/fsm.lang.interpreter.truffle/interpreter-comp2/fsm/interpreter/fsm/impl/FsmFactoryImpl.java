@@ -1,16 +1,15 @@
 package fsm.interpreter.fsm.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import fsm.interpreter.fsm.FsmFactory;
-import fsm.interpreter.fsm.FsmPackage;
-import java.lang.Deprecated;
-import java.lang.IllegalArgumentException;
-import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+
+import fsm.interpreter.fsm.FsmFactory;
+import fsm.interpreter.fsm.FsmPackage;
 
 public class FsmFactoryImpl extends EFactoryImpl implements FsmFactory {
 	public FsmFactoryImpl() {

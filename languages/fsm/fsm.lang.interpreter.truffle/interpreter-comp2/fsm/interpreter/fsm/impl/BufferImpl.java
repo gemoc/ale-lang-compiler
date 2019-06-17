@@ -1,12 +1,5 @@
 package fsm.interpreter.fsm.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
-import fsm.interpreter.fsm.FsmPackage;
-import java.lang.Integer;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,6 +8,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
+import com.oracle.truffle.api.nodes.NodeInfo;
+
+import fsm.interpreter.fsm.FsmPackage;
 
 @NodeInfo(
 		description = "Buffer"
@@ -125,7 +123,7 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	@TruffleBoundary
 	public NotificationChain basicSetIncomingFSM(FSMImpl newIncomingFSM, NotificationChain msgs) {
 		FSMImpl oldIncomingFSM = incomingFSM;
-		incomingFSM = newIncomingFSM;
+		incomingFSM = (FSMImpl) newIncomingFSM;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FsmPackage.BUFFER__INCOMING_FSM, oldIncomingFSM, newIncomingFSM);
 			if (msgs == null)

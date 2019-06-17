@@ -111,7 +111,7 @@ class EClassImplementationCompiler {
 				superclass(ClassName.get(MinimalEObjectImpl.Container))
 			}
 		])
-		.applyIfTrue(!isMapElement, [
+		.applyIfTrue(!isMapElement && !dsl.truffle, [
 			addSuperinterface(
 				ClassName.get(eClass.classInterfacePackageName(packageRoot), eClass.classInterfaceClassName))
 		])

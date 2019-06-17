@@ -5,26 +5,28 @@ import com.squareup.javapoet.ParameterizedTypeName
 import com.squareup.javapoet.TypeName
 import java.util.List
 import java.util.Map
+import java.util.Map.Entry
 import org.eclipse.emf.codegen.ecore.genmodel.impl.GenTypedElementImpl
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.EMap
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.xtext.xbase.lib.Functions.Function1
-import java.lang.reflect.Type
 import org.eclipse.emf.ecore.EReference
-import java.util.Map.Entry
+import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 class CommonCompilerUtils {
 	extension EcoreGenNamingUtils anu
 	val List<ResolvedClass> resolved
+	val Dsl dsl
 
-	new(EcoreGenNamingUtils anu, List<ResolvedClass> resolved) {
+	new(EcoreGenNamingUtils anu, List<ResolvedClass> resolved, Dsl dsl) {
 		this.anu = anu
 		this.resolved = resolved
+		this.dsl = dsl
 	}
 
 	def dispatch scopedTypeRef(EDataType edt, String packageRoot) {
@@ -44,7 +46,10 @@ class CommonCompilerUtils {
 	}
 
 	def dispatch scopedInterfaceTypeRef(EClass clazz, String packageRoot) {
-		ClassName.get(clazz.classInterfacePackageName(packageRoot), clazz.classInterfaceClassName)
+		if(dsl.truffle)
+			ClassName.get(clazz.classImplementationPackageName(packageRoot), clazz.classImplementationClassName)
+		else
+			ClassName.get(clazz.classInterfacePackageName(packageRoot), clazz.classInterfaceClassName)
 	}
 
 	def dispatch scopedInterfaceTypeRef(EEnum eEnum, String packageRoot) {

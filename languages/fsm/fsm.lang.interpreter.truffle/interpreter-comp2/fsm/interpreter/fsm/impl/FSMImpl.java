@@ -1,6 +1,5 @@
 package fsm.interpreter.fsm.impl;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.interpreter.fsm.FsmPackage;
@@ -47,12 +46,8 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 
 	protected StateImpl currentState;
 
-	@CompilationFinal
-	private FSMDispatchWrapperRun cachedRun;
-
 	protected FSMImpl() {
 		super();
-		this.cachedRun = new fsm.interpreter.fsm.impl.FSMDispatchWrapperRun(this);
 	}
 
 	@Override
@@ -110,7 +105,7 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	@TruffleBoundary
 	public NotificationChain basicSetInputBuffer(BufferImpl newInputBuffer, NotificationChain msgs) {
 		BufferImpl oldInputBuffer = inputBuffer;
-		inputBuffer = newInputBuffer;
+		inputBuffer = (BufferImpl) newInputBuffer;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FsmPackage.FSM__INPUT_BUFFER, oldInputBuffer, newInputBuffer);
 			if (msgs == null)
@@ -439,9 +434,5 @@ public class FSMImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		LogService.log(((("run SM") + (this.name)) + (" step on ")) + (this.underProcessTrigger));
 		((StateImpl) (this.getCurrentState())).step((String) (this.underProcessTrigger));
 		this.setUnderProcessTrigger("");
-	}
-
-	public FSMDispatchWrapperRun getCachedRun() {
-		return this.cachedRun;
 	}
 }

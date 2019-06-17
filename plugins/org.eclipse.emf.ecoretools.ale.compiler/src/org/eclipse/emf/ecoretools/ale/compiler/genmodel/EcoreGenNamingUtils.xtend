@@ -40,9 +40,9 @@ abstract class EcoreGenNamingUtils extends AbstractNamingUtils {
 		'''«ePackage.name.toFirstUpper»PackageImpl'''
 	}
 
-	def String factoryImplementationPackageName(EPackage ePackage, String packageRoot) {
-		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name».impl'''
-	}
+//	def String factoryImplementationPackageName(EPackage ePackage, String packageRoot) {
+//		'''«IF packageRoot !== null && packageRoot != ''»«packageRoot».«ENDIF»«ePackage.name».«identifier».«ePackage.name».impl'''
+//	}
 
 	def String factoryImplementationClassName(EPackage ePackage) {
 		'''«ePackage.name.toFirstUpper»FactoryImpl'''
@@ -56,9 +56,9 @@ abstract class EcoreGenNamingUtils extends AbstractNamingUtils {
 		eEnum.name.toFirstUpper
 	}
 
-	def String classImplementationPackageName(EClass eClass, String packageRoot) {
-		eClass.EPackage.factoryImplementationPackageName(packageRoot)
-	}
+//	def String classImplementationPackageName(EClass eClass, String packageRoot) {
+//		eClass.EPackage.factoryImplementationPackageName(packageRoot)
+//	}
 
 	def String classImplementationClassName(EClass eClass) {
 		'''«eClass.name.toFirstUpper»Impl'''

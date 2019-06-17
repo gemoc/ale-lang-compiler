@@ -17,18 +17,21 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 class InterpreterTypeSystemUtils extends CommonTypeSystemUtils {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension AbstractNamingUtils namingUtils
 	val String packageRoot
+	val Dsl dsl
 	
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved,
-		AbstractNamingUtils nu) {
+		AbstractNamingUtils nu, Dsl dsl) {
 		super(syntaxes, resolved)
 		this.packageRoot = packageRoot
 		this.namingUtils = nu
+		this.dsl = dsl
 	}
 
 	override resolveType(EClassifier e) {
@@ -43,6 +46,9 @@ class InterpreterTypeSystemUtils extends CommonTypeSystemUtils {
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
+				if(dsl.truffle)
+				ClassName.get(e.classImplementationPackageName(packageRoot), e.name+'Impl')
+				else
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
 			} else if (e instanceof EEnum) {
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
