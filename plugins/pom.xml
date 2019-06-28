@@ -16,6 +16,7 @@
 	<modules>
 <!-- 		<module>org.eclipse.emf.ecoretools.ale</module> -->
 		<module>org.eclipse.emf.ecoretools.ale.core</module>
+		<module>org.eclipse.emf.ecoretools.ale.compiler.lib</module>
 <!-- 		<module>org.eclipse.emf.ecoretools.ale.ide</module> -->
 <!-- 		<module>org.eclipse.emf.ecoretools.ale.ide.ui</module> -->
 <!-- 		<module>org.eclipse.emf.ecoretools.ale.examples</module> -->
