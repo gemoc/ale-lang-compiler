@@ -98,7 +98,11 @@ public class ALEInvocationDelegateFactory implements Factory {
 		}
 		else {
 			List<EPackage> pkgs = new ArrayList<EPackage>();
-	    	pkgs.addAll((Collection<? extends EPackage>) EPackageRegistryImpl.createGlobalRegistry().values());
+			for(Object x: EPackageRegistryImpl.createGlobalRegistry().values()) {
+				if(x instanceof EPackage)
+					pkgs.add((EPackage) x);
+			}
+	    	
 	    	return pkgs;
 		}
 	}

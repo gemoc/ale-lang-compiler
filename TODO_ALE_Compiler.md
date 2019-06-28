@@ -17,5 +17,4 @@ Mergin the `*Operation*.xtend` classes, most of the code is badly duplicated.
 
 # Evolutions
 - modular definition (important bug huge)
-- mutability analysis
 
