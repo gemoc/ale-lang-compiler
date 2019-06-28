@@ -1,0 +1,10 @@
+<factorypath>
+    <factorypathentry kind="VARJAR" id="M2_REPO/fr/mleduc/fsm-revisitor/1.0.0-SNAPSHOT/fsm-revisitor-1.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/fr/mleduc/fsm-interpreter/1.0.0-SNAPSHOT/fsm-interpreter-1.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/fr/mleduc/fsm-visitor/1.0.0-SNAPSHOT/fsm-visitor-1.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/fr/mleduc/fsm-switch/1.0.0-SNAPSHOT/fsm-switch-1.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/openjdk/jmh/jmh-core/1.21/jmh-core-1.21.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/net/sf/jopt-simple/jopt-simple/4.6/jopt-simple-4.6.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/openjdk/jmh/jmh-generator-annprocess/1.21/jmh-generator-annprocess-1.21.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>
