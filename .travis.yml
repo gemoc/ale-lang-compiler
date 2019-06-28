@@ -2,3 +2,7 @@ language: java
 sudo: false # faster builds
 
 script: "mvn clean package"
+
+branches:
+  only:
+  - master
