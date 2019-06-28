@@ -63,11 +63,9 @@ public class Dsl {
 		if (allSyntaxes != null && allBehaviors != null) {
 			String[] syntaxes = allSyntaxes.split(",");
 			String[] behaviors = allBehaviors.split(",");
-
-			this.allSyntaxes.addAll(Arrays.asList(syntaxes));
-			this.allSemantics.addAll(Arrays.asList(behaviors));
-		} else {
-			// TODO: Malformed file error
+			
+			this.allSyntaxes.addAll(trim(syntaxes));
+			this.allSemantics.addAll(trim(behaviors));
 		}
 
 	}
@@ -98,32 +96,8 @@ public class Dsl {
 			}
 		}
 	}
-
-	public String getSourceFileName() {
-		final String[] sections = new File(sourceFile).getName().split("\\.");
-		final List<String> s = new ArrayList<>();
-		for (int i = 0; i < sections.length - 1; i++) {
-			s.add(sections[i]);
-		}
-		return s.stream().collect(Collectors.joining("."));
-
-	}
-
-	public boolean isTruffle() {
-		return isTruffle;
-	}
 	
-	public String getRootPackage() {
-		return rootPackage;
+	protected List<String> trim(String[] uris) {
+		return Arrays.asList(uris).stream().map(s->s.trim()).collect(Collectors.toList());
 	}
-
-	public String getCompilationType() {
-		return compilationType;
-	}
-
-	public void setTruffle(boolean isTruffle) {
-		this.isTruffle = isTruffle;
-	}
-	
-	
 }
