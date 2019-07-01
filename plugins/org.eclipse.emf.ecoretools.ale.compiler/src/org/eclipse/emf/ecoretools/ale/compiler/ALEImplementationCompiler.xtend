@@ -10,7 +10,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementation
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl
+import org.eclipse.emf.ecoretools.ale.compiler.WorkbenchDsl
 
 class ALEImplementationCompiler {
 
@@ -44,7 +44,7 @@ class ALEImplementationCompiler {
 			}
 		])
 		// FIXME: currently locking the whole workspace during compilation
-		a.rule = ResourcesPlugin.workspace.root
+		//a.rule = ResourcesPlugin.workspace.root
 		a.schedule
 	}
 

@@ -7,6 +7,24 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>interpreter-comp</sourceDirectory>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
+					<artifactId>alecompiler-maven-plugin</artifactId>
+					<version>0.0.1-SNAPSHOT</version>
+					<executions>
+						<execution>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>ale-dsl-compile</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<dslFile>/home/ale-lang/languages/boa/boa.lang.interpreter/src/boa_exec_interpreter.dsl</dslFile>
+					</configuration>
+				</plugin>
+			</plugins>
 	</build>
 
 	<properties>
@@ -16,6 +34,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
+			<artifactId>alecompiler-maven-plugin</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>boa.lang.services</groupId>
 			<artifactId>boa.lang.services</artifactId>
