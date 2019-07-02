@@ -39,26 +39,27 @@ public class ALEMavenCompiler extends AbstractMojo {
 				fileContent += line.replace("platform:/resource/", platformLocation) + "\n";
 			}
 			reader.close();
-			
+
 			getLog().info(fileContent);
 			File dslFileAbsolutePath = new File(location.substring(0, location.length() - 4) + "-Maven.dsl");
 			BufferedWriter writer = new BufferedWriter(new FileWriter(dslFileAbsolutePath));
-		    writer.write(fileContent);
-		    writer.close();
+			writer.write(fileContent);
+			writer.close();
 
-		    File project = getProject(dslFileAbsolutePath);
-			new ALEImplementationCompiler().compile(location, project, project.getName());
-		} catch (
-
-		FileNotFoundException e) {
+			File project = getProject(dslFileAbsolutePath);
+			new ALEImplementationCompiler().mavenCompile(dslFileAbsolutePath.getAbsolutePath(), project, project.getName());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private File getProject(File dslFile) {
-		if(dslFile.getName().equals("src")) return dslFile.getParentFile();
+		if (dslFile.getName().equals("src"))
+			return dslFile.getParentFile();
 		return getProject(dslFile.getParentFile());
 	}
 

@@ -106,7 +106,10 @@ class AleBodyCompiler {
 		CompilerExpressionCtx ctx) {
 
 		val t = if (body.name == 'result') {
-				EcoreUtil2.getContainerOfType(body, MethodImpl).operationRef.EType.resolveType2
+				val a = EcoreUtil2.getContainerOfType(body, MethodImpl)
+				val b = a.operationRef
+				val c = b.EType
+				c.resolveType2
 			} else
 				body.value.resolveType2
 

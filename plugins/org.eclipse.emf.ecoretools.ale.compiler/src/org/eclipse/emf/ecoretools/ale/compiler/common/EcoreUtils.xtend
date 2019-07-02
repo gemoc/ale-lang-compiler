@@ -6,6 +6,7 @@ import java.util.List
 import java.util.Map
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel
+import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EClass
@@ -13,12 +14,13 @@ import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.emf.ecoretools.ale.compiler.AlexException
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 class EcoreUtils {
 	var ResourceSetImpl rs = null
@@ -263,6 +265,7 @@ class EcoreUtils {
 			rs = new ResourceSetImpl
 		}
 		rs.resourceFactoryRegistry.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl)
+		EPackage.Registry.INSTANCE.put("http://www.eclipse.org/emf/2002/Ecore", EcorePackage.eINSTANCE);
 		try {
 
 //			if (rs.resources.exists[URI.toString == path]) {
@@ -272,14 +275,15 @@ class EcoreUtils {
 
 			val resource = if (path.startsWith("platform:/"))
 					rs.getResource(URI.createURI(path), true)
-				else if (path.startsWith("/"))
-					rs.getResource(URI::createPlatformResourceURI(path, true), true)
+//				else if (path.startsWith("/"))
+//					rs.getResource(URI::createPlatformResourceURI(path, true), true)
 				else
 					rs.getResource(URI::createURI(path), true)
 
 			rs.URIConverter.URIMap.put(URI.createURI(resource.URI.lastSegment), resource.URI)
 			return resource.contents.head as EPackage
 		} catch (Exception e) {
+			e.printStackTrace
 			return null
 		}
 	}
@@ -288,7 +292,12 @@ class EcoreUtils {
 		if (rs === null) {
 			rs = new ResourceSetImpl
 		}
+		
+//		GenModelPackage.eINSTANCE.eClass
 		rs.resourceFactoryRegistry.extensionToFactoryMap.put("genmodel", new XMIResourceFactoryImpl)
+		EPackage.Registry.INSTANCE.put("http://www.eclipse.org/emf/2002/GenModel", GenModelPackage.eINSTANCE);
+		
+//		println('''>>>>>>> «path»  ''')
 		try {
 
 //			if (rs.resources.exists[URI.toString == path]) {
@@ -298,13 +307,14 @@ class EcoreUtils {
 
 			val resource = if (path.startsWith("platform:/"))
 					rs.getResource(URI.createURI(path), true)
-				else if (path.startsWith("/"))
-					rs.getResource(URI::createPlatformResourceURI(path, true), true)
+//				else if (path.startsWith("/"))
+//					rs.getResource(URI::createPlatformResourceURI(path, true), true)
 				else
 					rs.getResource(URI::createURI(path), true)
 
 			resource.contents.head as GenModel
 		} catch (Exception e) {
+			e.printStackTrace
 			return null
 		}
 	}

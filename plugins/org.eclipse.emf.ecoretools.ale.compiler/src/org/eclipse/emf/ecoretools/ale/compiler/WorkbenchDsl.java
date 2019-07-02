@@ -11,6 +11,7 @@
 package org.eclipse.emf.ecoretools.ale.compiler;
 
 import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -34,7 +35,7 @@ public class WorkbenchDsl extends Dsl {
 	}
 	
 	public WorkbenchDsl(String dslFile) throws FileNotFoundException {
-		super(convertToFile(dslFile));
+		super(dslFile);
 		resolveUris();
 	}
 	
@@ -47,7 +48,7 @@ public class WorkbenchDsl extends Dsl {
 		ArrayList<String> newSemantics = new ArrayList<String>();
 		getAllSemantics()
 			.stream()
-			.forEach(elem -> newSemantics.add(URI.createFileURI(convertToFile(elem)).toFileString()));//expect system file path
+			.forEach(elem -> newSemantics.add(URI.createFileURI(elem).toFileString()));//expect system file path
 		getAllSemantics().clear();
 		getAllSemantics().addAll(newSemantics);
 	}

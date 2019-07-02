@@ -82,6 +82,16 @@
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.antlr</groupId>
+					<artifactId>antlr-runtime</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.acceleo</groupId>
+					<artifactId>org.eclipse.core.runtime</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.platform</groupId>
