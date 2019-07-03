@@ -7,10 +7,11 @@ import java.util.Map
 
 abstract class ServicesRegistrationManager {
 	
-	protected val Map<String, Class<?>> registeredServices
+	protected var Map<String, Pair<String, String>> registeredServices = newHashMap
 	
-	new(Map<String, Class<?>> rs) {
-		registeredServices = rs
-	}
 	abstract def void registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics)
+	
+	def Map<String, Pair<String, String>> getRegisteredServices(){
+		return registeredServices
+	}
 }

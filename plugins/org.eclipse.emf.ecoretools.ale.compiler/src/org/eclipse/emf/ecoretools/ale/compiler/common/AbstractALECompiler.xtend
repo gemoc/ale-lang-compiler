@@ -24,9 +24,7 @@ import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 
 abstract class AbstractALECompiler {
-	val JavaExtensionsManager javaExtensions
-	val ServicesRegistrationManager srm
-	val Map<String, Class<?>> registeredServices = newHashMap
+	protected val ServicesRegistrationManager srm
 	protected extension EcoreUtils eu
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	val Dsl dsl
@@ -53,74 +51,33 @@ abstract class AbstractALECompiler {
 	}
 
 	protected def getRegisteredServices() {
-		registeredServices
+		srm.registeredServices
 	}
 
 	protected def getResolved() {
 		resolved
-	}
-
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu) {
-		this.queryEnvironment = createQueryEnvironment(false, null)
-		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
-		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		srm = null
-		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
-		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
-
-			override loaded(String arg0, Class<?> arg1) {
-				System.err.println('''service registration: «arg0» -> «arg1» ''')
-				registeredServices.put(arg0, arg1)
-			}
-
-			override notFound(String arg0) {
-				System.err.println('''«arg0» not found during services registration''')
-			}
-
-			override unloaded(String arg0, Class<?> arg1) {
-				registeredServices.remove(arg0);
-			}
-
-		});
-		this.eu = eu
-		this.projectName = projectName
-		this.projectRoot = projectRoot
-		this.dsl = dsl
 	}
 	
 	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		javaExtensions = null
 		this.srm = srm
+		this.srm.registeredServices = this.registeredServices
 		this.eu = eu
 		this.projectName = projectName
 		this.projectRoot = projectRoot
 		this.dsl = dsl
 	}
-
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services, EcoreUtils eu) {
-		this(projectName, projectRoot, dsl, eu);
+	
+	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+		this(projectName, projectRoot, dsl, eu, srm);
 
 		registeredServices.putAll(services)
 	}
 
 	def registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
-		if (javaExtensions !== null) {
-			javaExtensions.updateScope(newHashSet(), #{projectName})
-
-			val services = parsedSemantics.map[root].filter[it !== null].map[services].flatten + #[TrigoServices.name]
-			registerServices(services.toList)
-
-		}
-	}
-
-	def registerServices(List<String> services) {
-		if (javaExtensions !== null) {
-			services.forEach[javaExtensions.addImport(it)]
-			javaExtensions.reloadIfNeeded()
-		}
+		srm.registerServices(projectName, parsedSemantics)
 	}
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax,

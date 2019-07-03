@@ -24,7 +24,7 @@ class RevisitorExpressionCompiler extends AbstractExpressionCompiler {
 	extension CommonTypeInferer cti
 	extension EnumeratorService es
 
-	new(RevisitorTypeSystemUtils tsu, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices,
+	new(RevisitorTypeSystemUtils tsu, List<ResolvedClass> resolved, Map<String, Pair<String, String>> registeredServices,
 		CommonTypeInferer cti, EnumeratorService es, AbstractNamingUtils anu, String packageRoot) {
 		super(cti, es, tsu, anu, registeredServices, resolved, packageRoot, false, newHashSet())
 		this.tsu = tsu

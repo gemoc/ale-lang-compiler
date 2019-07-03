@@ -8,20 +8,26 @@ import java.util.Map
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
+import java.lang.reflect.Modifier
 
 class EclipseServiceRegistrationManager extends ServicesRegistrationManager {
 	
 	val JavaExtensionsManager javaExtensions
 	
-	new(Map<String, Class<?>> rs) {
-		super(rs)
-		
+	new() {
 		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
 		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
 
 			override loaded(String arg0, Class<?> arg1) {
 				System.err.println('''service registration: «arg0» -> «arg1» ''')
-				registeredServices.put(arg0, arg1)
+				val classname = arg1.name
+				val packagename = arg1.package.name
+				val pair = packagename -> classname
+				for(method : arg1.declaredMethods){
+					if(Modifier.isStatic(method.modifiers)){
+						registeredServices.put(method.name, pair)
+					}
+				}
 			}
 
 			override notFound(String arg0) {
@@ -29,7 +35,7 @@ class EclipseServiceRegistrationManager extends ServicesRegistrationManager {
 			}
 
 			override unloaded(String arg0, Class<?> arg1) {
-				registeredServices.remove(arg0);
+				registeredServices = registeredServices.filter[k, v| v.value != arg1.name || v.key != arg1.package.name]
 			}
 
 		});

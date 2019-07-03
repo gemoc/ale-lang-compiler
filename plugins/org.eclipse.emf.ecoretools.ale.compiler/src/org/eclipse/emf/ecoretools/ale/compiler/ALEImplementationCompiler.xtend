@@ -11,6 +11,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImpleme
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.WorkbenchDsl
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
+import org.eclipse.emf.ecoretools.ale.compiler.common.EclipseServiceRegistrationManager
 
 class ALEImplementationCompiler {
 
@@ -21,9 +23,9 @@ class ALEImplementationCompiler {
 	 * @param projectName project name
 	 */
 	def void compile(String dslStr, File projectRoot, String projectName) throws FileNotFoundException {
-
+		val srm = new EclipseServiceRegistrationManager
 		val Job a = Job.create('''ALE Compilation''', [ monitor |
-			mavenCompile(dslStr, projectRoot, projectName);
+			mavenCompile(dslStr, projectRoot, projectName, srm);
 		])
 		// FIXME: currently locking the whole workspace during compilation
 		a.rule = ResourcesPlugin.workspace.root
@@ -36,22 +38,21 @@ class ALEImplementationCompiler {
 	 * @param projectRoot absolute path to the project root
 	 * @param projectName project name
 	 */
-	def void mavenCompile(String dslStr, File projectRoot, String projectName) throws FileNotFoundException, RuntimeException {
-
+	def void mavenCompile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm) throws FileNotFoundException, RuntimeException {
 		val dsl = new WorkbenchDsl(dslStr)
 		val eu = new EcoreUtils
 		val compilationType = dsl.compilationType.toLowerCase
 		if (compilationType !== null) {
 			switch compilationType {
 				case "revisitor":
-					new ALERevisitorImplementationCompiler(projectName, projectRoot, dsl, eu, new JavaPoetUtils).
+					new ALERevisitorImplementationCompiler(projectName, projectRoot, dsl, eu, new JavaPoetUtils, srm).
 						compile()
 				case "interpreter":
-					new ALEInterpreterImplementationCompiler(projectName, projectRoot, dsl, eu).compile()
+					new ALEInterpreterImplementationCompiler(projectName, projectRoot, dsl, eu, srm).compile()
 				case "visitor":
-					new ALEVisitorImplementationCompiler(projectName, projectRoot, dsl, eu).compile()
+					new ALEVisitorImplementationCompiler(projectName, projectRoot, dsl, eu, srm).compile()
 				case "switch":
-					new ALESwitchImplementationCompiler(projectName, projectRoot, dsl, eu).compile()
+					new ALESwitchImplementationCompiler(projectName, projectRoot, dsl, eu, srm).compile()
 				default:
 					throw new RuntimeException('''value «compilationType» unknown for "compilationType" key in «dsl.sourceFileName».''')
 			}

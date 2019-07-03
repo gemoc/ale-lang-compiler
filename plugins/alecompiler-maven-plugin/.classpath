@@ -30,5 +30,15 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="/org.eclipse.emf.ecoretools.ale.compiler"/>
+	<classpathentry kind="lib" path="/home/.m2/repository/org/apache/maven/maven-compat/3.3.9/maven-compat-3.3.9.jar" sourcepath="/home/.m2/repository/org/apache/maven/maven-compat/3.3.9/maven-compat-3.3.9-sources.jar">
+		<attributes>
+			<attribute name="test" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.apache.maven"/>
+			<attribute name="maven.artifactId" value="maven-compat"/>
+			<attribute name="maven.version" value="3.3.9"/>
+			<attribute name="maven.scope" value="test"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

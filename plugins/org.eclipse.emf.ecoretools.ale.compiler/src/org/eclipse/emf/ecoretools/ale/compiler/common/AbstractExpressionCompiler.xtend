@@ -46,7 +46,7 @@ abstract class AbstractExpressionCompiler {
 	val collectionServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService")
 	val equalServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "EqualService")
 	val logServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService")
-	val Map<String, Class<?>> registeredServices
+	val Map<String, Pair<String, String>> registeredServices
 	val List<ResolvedClass> resolved
 	
 	protected def getResolved() {
@@ -79,7 +79,7 @@ abstract class AbstractExpressionCompiler {
 		this.registeredArray
 	}
 
-	new(CommonTypeInferer cti, EnumeratorService es, CommonTypeSystemUtils ats, AbstractNamingUtils anu, Map<String, Class<?>> registeredServices, List<ResolvedClass> resolved, String packageRoot, boolean isTruffle, Set<String> registeredArray) {
+	new(CommonTypeInferer cti, EnumeratorService es, CommonTypeSystemUtils ats, AbstractNamingUtils anu, Map<String, Pair<String, String>> registeredServices, List<ResolvedClass> resolved, String packageRoot, boolean isTruffle, Set<String> registeredArray) {
 		this.cti = cti
 		this.es = es
 		this.ats = ats
@@ -327,21 +327,16 @@ abstract class AbstractExpressionCompiler {
 		CodeBlock.builder.addNamed('''$factory:T.eINSTANCE.create«ecls.name»()''', hm).build
 	}
 	
-	def CodeBlock callService(Call call, CompilerExpressionCtx ctx) {
-		val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten.toList
-
-		val candidate = methods.filter[Modifier.isStatic(it.value.modifiers)].filter [
-			it.value.name == call.serviceName
-		].head
-	
+	def CodeBlock callService(Call call, CompilerExpressionCtx ctx) {		
+		val candidate = registeredServices.get(call.serviceName)
+		
 		if (candidate !== null) {
 			
-			val splied = candidate.key.split('\\.').reverse
-			val cn = ClassName.get(splied.tail.toList.reverse.join('.'), splied.head)
+			val cn = candidate.value
 			
 			val Map<String, Object> hm = newHashMap(
 				"serviceType" -> cn,
-				"serviceMethodName" -> candidate.value.name
+				"serviceMethodName" -> call.serviceName
 			)
 			
 			for(p: call.arguments.enumerate) {

@@ -5,17 +5,26 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.ecoretools.ale.compiler.common.MavenServiceRegistrationManager;
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager;
+import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 
 @Mojo(name = "ale-dsl-compile", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class ALEMavenCompiler extends AbstractMojo {
@@ -24,6 +33,22 @@ public class ALEMavenCompiler extends AbstractMojo {
 	 */
 	@Parameter(property = "dslFile", required = true)
 	private File dslFile;
+	
+	@Parameter(defaultValue = "${project}")
+    private MavenProject mvnProject;
+
+	@Parameter(defaultValue = "${localRepository}")
+    private ArtifactRepository
+        localRepository;
+
+    @Parameter(defaultValue="${project.remoteArtifactRepositories}")
+    private List remoteRepositories;
+
+    @Component
+    private ArtifactFactory artifactFactory;
+
+    @Component
+    private ArtifactResolver resolver;
 
 	public void execute() throws MojoExecutionException {
 		try {
@@ -47,7 +72,25 @@ public class ALEMavenCompiler extends AbstractMojo {
 			writer.close();
 
 			File project = getProject(dslFileAbsolutePath);
-			new ALEImplementationCompiler().mavenCompile(dslFileAbsolutePath.getAbsolutePath(), project, project.getName());
+			
+			
+			URLClassLoader cl = null;
+			try {
+				cl = initClassLoader();
+			} catch (DependencyResolutionRequiredException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			ServicesRegistrationManager srm = new MavenServiceRegistrationManager(
+					//cl,
+					mvnProject.getDependencies(), 
+					localRepository, 
+					remoteRepositories, 
+					artifactFactory, 
+					resolver);
+			
+			new ALEImplementationCompiler().mavenCompile(dslFileAbsolutePath.getAbsolutePath(), project, project.getName(), srm);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (RuntimeException e) {
@@ -55,6 +98,20 @@ public class ALEMavenCompiler extends AbstractMojo {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private URLClassLoader initClassLoader() throws DependencyResolutionRequiredException, MalformedURLException {
+		List runtimeClasspathElements = mvnProject.getRuntimeClasspathElements();
+		URL[] runtimeUrls = new URL[runtimeClasspathElements.size()];
+		for (int i = 0; i < runtimeClasspathElements.size(); i++) {
+		  String element = (String) runtimeClasspathElements.get(i);
+		  runtimeUrls[i] = new File(element).toURI().toURL();
+		}
+		System.out.println(runtimeClasspathElements);
+		URLClassLoader newLoader = new URLClassLoader(runtimeUrls,
+		  Thread.currentThread().getContextClassLoader());
+		return newLoader;
+		
 	}
 
 	private File getProject(File dslFile) {

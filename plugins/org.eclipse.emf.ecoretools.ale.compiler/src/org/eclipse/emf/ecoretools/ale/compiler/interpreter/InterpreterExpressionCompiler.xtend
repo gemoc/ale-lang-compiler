@@ -26,7 +26,7 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 	val Set<Method> registreredDispatch
 
 	new(String packageRoot, List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
-		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
+		Map<String, Pair<String, String>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
 		InterpreterTypeSystemUtils tsu, InterpreterNamingUtils namingUtils) {
 		super(cti, es, tsu, namingUtils, registeredServices, resolved, packageRoot, isTruffle, registeredArray)
 		

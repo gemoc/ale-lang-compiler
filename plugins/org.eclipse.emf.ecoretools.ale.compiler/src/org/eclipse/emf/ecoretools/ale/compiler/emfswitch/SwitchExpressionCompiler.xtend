@@ -23,7 +23,7 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 	extension EnumeratorService es
 
 	new(SwitchTypeSystemUtils tsu, List<ResolvedClass> resolved, SwitchNamingUtils snu, String packageRoot,
-		Map<String, Class<?>> registeredServices, CommonTypeInferer cti, EnumeratorService es) {
+		Map<String, Pair<String, String>> registeredServices, CommonTypeInferer cti, EnumeratorService es) {
 		super(cti, es, tsu, snu, registeredServices, resolved, packageRoot, false, newHashSet)
 		this.tsu = tsu
 		this.snu = snu

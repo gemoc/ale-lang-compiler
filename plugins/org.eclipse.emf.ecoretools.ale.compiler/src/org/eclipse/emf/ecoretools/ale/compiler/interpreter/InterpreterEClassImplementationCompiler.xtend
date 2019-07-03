@@ -68,12 +68,12 @@ class InterpreterEClassImplementationCompiler {
 
 	def dispatch compileEClassImplementation(EClassifier eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
+		Map<String, Pair<String, String>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
 	}
 
 	def dispatch compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
+		Map<String, Pair<String, String>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
 		this.dsl = dsl
 		val isTruffle = dsl.isTruffle
 		this.tsu = tsu

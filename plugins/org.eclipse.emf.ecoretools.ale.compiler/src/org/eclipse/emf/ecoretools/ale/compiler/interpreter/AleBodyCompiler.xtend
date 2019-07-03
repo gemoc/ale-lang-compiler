@@ -42,7 +42,7 @@ class AleBodyCompiler {
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
-		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
+		Map<String, Pair<String, String>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
 		InterpreterNamingUtils inu, Dsl dsl) {
 		tsu = new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, inu, dsl)
 		aec = new InterpreterExpressionCompiler(packageRoot, resolved, registreredDispatch, registeredArray,
