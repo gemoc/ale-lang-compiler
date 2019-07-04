@@ -35,7 +35,6 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 	}
 
 	override void compile(File projectRoot, String projectName) {
-		println("\n########  COMPILE INTERPRETER  ########\n")
 		val compilationDirectory = "interpreter-comp"
 		val compileDirectory = new File(projectRoot, compilationDirectory)
 

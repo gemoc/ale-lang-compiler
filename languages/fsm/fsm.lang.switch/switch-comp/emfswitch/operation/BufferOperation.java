@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import fsm.FsmService;
 import fsm.model.fsm.Buffer;
 import java.lang.Boolean;
 import java.lang.Integer;
@@ -45,15 +46,15 @@ public class BufferOperation {
 	public String dequeue() {
 		String result;
 		String res = ((String) (""));
-		int firstComma = ((int) (this.it.getCurrentValues().indexOf((String) (","))));
+		int firstComma = ((int) (FsmService.indexOf((String) (this.it.getCurrentValues()), (String) (","))));
 		if((firstComma) < (0)) {
 			res = ((String) (this.it.getCurrentValues()));
 			this.it.setCurrentValues("'empty'");
 			result = ((String) (res));
 		}
 		else {
-			res = this.it.getCurrentValues().substring((Integer) (0), (int) (firstComma));
-			this.it.setCurrentValues(this.it.getCurrentValues().substring(((firstComma) + (1)), (Integer) (CollectionService.size(this.it.getCurrentValues()))));
+			res = FsmService.substring((String) (this.it.getCurrentValues()), (Integer) (0), (int) (firstComma));
+			this.it.setCurrentValues(FsmService.substring((String) (this.it.getCurrentValues()), ((firstComma) + (1)), (Integer) (CollectionService.size(this.it.getCurrentValues()))));
 			result = ((String) (res));
 		}
 		return result;

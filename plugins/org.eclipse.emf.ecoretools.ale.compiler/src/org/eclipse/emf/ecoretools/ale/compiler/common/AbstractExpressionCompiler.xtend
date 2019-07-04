@@ -332,10 +332,8 @@ abstract class AbstractExpressionCompiler {
 		
 		if (candidate !== null) {
 			
-			val cn = candidate.value
-			
 			val Map<String, Object> hm = newHashMap(
-				"serviceType" -> cn,
+				"serviceType" -> ClassName.get(candidate.key, candidate.value),
 				"serviceMethodName" -> call.serviceName
 			)
 			
@@ -351,7 +349,6 @@ abstract class AbstractExpressionCompiler {
 	
 			CodeBlock.builder.addNamed('''$serviceType:T.$serviceMethodName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»«IF hm.get("paramType" + p.value) !== null»($paramType«p.value»:T) «ENDIF»($paramValue«p.value»:L)«ENDFOR»)''', hm).build
 		} else {
-			
 			// primitive operation
 			println('''unhandled call: «call»''')
 			val Map<String, Object> hm = newHashMap

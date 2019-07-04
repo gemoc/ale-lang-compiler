@@ -97,7 +97,6 @@ abstract class AbstractALECompiler {
 	}
 
 	def IStatus compile() {
-		println("\n########  COMPILE  ########\n")
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
 //		if (services !== null && !services.empty) {

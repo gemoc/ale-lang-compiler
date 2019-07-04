@@ -44,8 +44,6 @@ class MavenServiceRegistrationManager extends ServicesRegistrationManager {
 	}
 
 	def registerServices(List<String> services) {
-		println("\n\nServices to register :")
-		println(services)
 
 		val urls = newArrayList
 
@@ -65,9 +63,9 @@ class MavenServiceRegistrationManager extends ServicesRegistrationManager {
 		val ucl = URLClassLoader.newInstance(urls, Thread.currentThread().getContextClassLoader());
 		for (service : services) {
 			try {
-				val clazz = Class.forName(service, false, ucl)
+				val clazz = Class.forName(service, true, ucl)
 				println("INFO: " + service + " was successfully instantiate")
-				val classname = clazz.name
+				val classname = clazz.simpleName
 				val packagename = clazz.package.name
 				val pair = packagename -> classname
 				for(method : clazz.declaredMethods){

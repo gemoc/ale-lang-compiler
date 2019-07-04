@@ -7,26 +7,55 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>switch-comp</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
+				<artifactId>alecompiler-maven-plugin</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>ale-dsl-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<dslFile>/home/ale-lang/languages/boa/boa.lang.switch/src/boa_exec_switch.dsl</dslFile>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
-	
+
 	<properties>
 		<graalvm.version>19.0.0</graalvm.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
+			<artifactId>alecompiler-maven-plugin</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.acceleo</groupId>
+					<artifactId>org.eclipse.core.runtime</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>boa.lang.services</groupId>
 			<artifactId>boa.lang.services</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		 <dependency>
-        	<groupId>boa.model</groupId>
+		<dependency>
+			<groupId>boa.model</groupId>
 			<artifactId>boa.model</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-        </dependency>
-		
+		</dependency>
+
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore</artifactId>

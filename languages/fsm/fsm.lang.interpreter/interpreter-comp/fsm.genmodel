@@ -1,45 +1,100 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fsm.lang.interpreter/interpreter-comp" complianceLevel="8.0"
-    copyrightFields="false">
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/fsm.lang.interpreter/interpreter-comp" complianceLevel="8.0" copyrightFields="false">
   <foreignModel>fsm.ecore</foreignModel>
-  <genPackages prefix="Fsm" basePackage="fsm.interpreter" disposableProviderFactory="true"
-      ecorePackage="platform:/resource/fsm.model/model/fsm.ecore#/">
-    <genClasses ecoreClass="platform:/resource/fsm.model/model/fsm.ecore#//FSM">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//FSM/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//FSM/ownedStates"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//FSM/ownedTransitions"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//FSM/inputBuffer"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//FSM/outputBuffer"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//FSM/initialState"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//FSM/currentState"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//FSM/underProcessTrigger"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//FSM/consummedString"/>
+  <genPackages prefix="Fsm" basePackage="fsm.interpreter" disposableProviderFactory="true">
+    <ecorePackage href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#/"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/name"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/ownedStates"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/ownedTransitions"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/inputBuffer"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/outputBuffer"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/initialState"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/currentState"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/underProcessTrigger"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//FSM/consummedString"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/fsm.model/model/fsm.ecore#//State">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//State/incoming"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//State/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//State/outgoing"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//State/fsm"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//State"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//State/incoming"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//State/name"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//State/outgoing"/>
+      </genFeatures>
+      <genFeatures property="None" notify="false" createChild="false">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//State/fsm"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/fsm.model/model/fsm.ecore#//Buffer">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//Buffer/initialValue"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//Buffer/outgoingFSM"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//Buffer/incomingFSM"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//Buffer/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//Buffer/currentValues"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Buffer"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Buffer/initialValue"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Buffer/outgoingFSM"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Buffer/incomingFSM"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Buffer/name"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Buffer/currentValues"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/fsm.model/model/fsm.ecore#//Transition">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//Transition/tgt"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//Transition/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//Transition/src"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//Transition/fsm"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//Transition/trigger"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/fsm.model/model/fsm.ecore#//Transition/action"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Transition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Transition/tgt"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Transition/name"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Transition/src"/>
+      </genFeatures>
+      <genFeatures property="None" notify="false" createChild="false">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Transition/fsm"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Transition/trigger"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//Transition/action"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/fsm.model/model/fsm.ecore#//System">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//System/ownedFsms"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/fsm.model/model/fsm.ecore#//System/ownedBuffers"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//System"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//System/ownedFsms"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/fsm/fsm.model/model/fsm.ecore#//System/ownedBuffers"/>
+      </genFeatures>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

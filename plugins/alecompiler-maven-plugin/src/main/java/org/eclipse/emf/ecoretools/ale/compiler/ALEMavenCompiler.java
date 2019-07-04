@@ -54,43 +54,17 @@ public class ALEMavenCompiler extends AbstractMojo {
 		try {
 			String location = this.dslFile.getAbsolutePath();
 			String platformLocation = getProject(this.dslFile).getParent() + "/";
-			getLog().info(platformLocation);
 
-			BufferedReader reader = new BufferedReader(new FileReader(this.dslFile));
-
-			String line = "";
-			String fileContent = "";
-			while ((line = reader.readLine()) != null) {
-				fileContent += line.replace("platform:/resource/", platformLocation) + "\n";
-			}
-			reader.close();
-
-			getLog().info(fileContent);
-			File dslFileAbsolutePath = new File(location.substring(0, location.length() - 4) + "-Maven.dsl");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(dslFileAbsolutePath));
-			writer.write(fileContent);
-			writer.close();
-
-			File project = getProject(dslFileAbsolutePath);
-			
-			
-			URLClassLoader cl = null;
-			try {
-				cl = initClassLoader();
-			} catch (DependencyResolutionRequiredException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			File project = getProject(dslFile);
 			
 			ServicesRegistrationManager srm = new MavenServiceRegistrationManager(
-					//cl,
 					mvnProject.getDependencies(), 
 					localRepository, 
 					remoteRepositories, 
 					artifactFactory, 
 					resolver);
 			
-			new ALEImplementationCompiler().mavenCompile(dslFileAbsolutePath.getAbsolutePath(), project, project.getName(), srm);
+			new ALEImplementationCompiler().mavenCompile(location, project, project.getName(), srm, platformLocation);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (RuntimeException e) {
@@ -98,20 +72,6 @@ public class ALEMavenCompiler extends AbstractMojo {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private URLClassLoader initClassLoader() throws DependencyResolutionRequiredException, MalformedURLException {
-		List runtimeClasspathElements = mvnProject.getRuntimeClasspathElements();
-		URL[] runtimeUrls = new URL[runtimeClasspathElements.size()];
-		for (int i = 0; i < runtimeClasspathElements.size(); i++) {
-		  String element = (String) runtimeClasspathElements.get(i);
-		  runtimeUrls[i] = new File(element).toURI().toURL();
-		}
-		System.out.println(runtimeClasspathElements);
-		URLClassLoader newLoader = new URLClassLoader(runtimeUrls,
-		  Thread.currentThread().getContextClassLoader());
-		return newLoader;
-		
 	}
 
 	private File getProject(File dslFile) {

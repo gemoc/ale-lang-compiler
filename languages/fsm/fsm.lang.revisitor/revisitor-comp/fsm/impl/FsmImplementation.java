@@ -18,6 +18,10 @@ import fsm.model.fsm.Transition;
 import fsm.model.revisitor.FsmRevisitor;
 
 public interface FsmImplementation extends FsmRevisitor<BufferOp, FSMOp, StateOp, SystemOp, TransitionOp> {
+	default BufferOp fsm__Buffer(Buffer it) {
+		return new BufferOpImpl(it, this);
+	}
+
 	default FSMOp fsm__FSM(FSM it) {
 		return new FSMOpImpl(it, this);
 	}
@@ -26,15 +30,11 @@ public interface FsmImplementation extends FsmRevisitor<BufferOp, FSMOp, StateOp
 		return new StateOpImpl(it, this);
 	}
 
-	default BufferOp fsm__Buffer(Buffer it) {
-		return new BufferOpImpl(it, this);
+	default SystemOp fsm__System(System it) {
+		return new SystemOpImpl(it, this);
 	}
 
 	default TransitionOp fsm__Transition(Transition it) {
 		return new TransitionOpImpl(it, this);
-	}
-
-	default SystemOp fsm__System(System it) {
-		return new SystemOpImpl(it, this);
 	}
 }

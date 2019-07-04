@@ -29,28 +29,35 @@ import org.osgi.framework.Bundle;
 
 public class WorkbenchDsl extends Dsl {
 
-	public WorkbenchDsl(List<String> syntaxes, List<String> semantics) {
+	public WorkbenchDsl(List<String> syntaxes, List<String> semantics, String platformLocation) {
 		super(syntaxes,semantics);
-		resolveUris();
+		resolveUris(platformLocation);
 	}
 	
-	public WorkbenchDsl(String dslFile) throws FileNotFoundException {
+	public WorkbenchDsl(String dslFile, String platformLocation) throws FileNotFoundException {
 		super(dslFile);
-		resolveUris();
+		resolveUris(platformLocation);
 	}
 	
-	public WorkbenchDsl(InputStream input) {
+	public WorkbenchDsl(InputStream input, String platformLocation) {
 		super(input);
-		resolveUris();
+		resolveUris(platformLocation);
 }
 	
-	private void resolveUris() {
+	private void resolveUris(String platformLocation) {
 		ArrayList<String> newSemantics = new ArrayList<String>();
 		getAllSemantics()
 			.stream()
-			.forEach(elem -> newSemantics.add(URI.createFileURI(elem).toFileString()));//expect system file path
+			.forEach(elem -> newSemantics.add(URI.createFileURI(elem.replace("platform:/resource/", platformLocation)).toFileString()));//expect system file path
 		getAllSemantics().clear();
 		getAllSemantics().addAll(newSemantics);
+		
+		ArrayList<String> newSyntaxes = new ArrayList<String>();
+		getAllSyntaxes()
+			.stream()
+			.forEach(elem -> newSyntaxes.add(URI.createFileURI(elem.replace("platform:/resource/", platformLocation)).toFileString()));//expect system file path
+		getAllSyntaxes().clear();
+		getAllSyntaxes().addAll(newSyntaxes);
 	}
 	
 	/**

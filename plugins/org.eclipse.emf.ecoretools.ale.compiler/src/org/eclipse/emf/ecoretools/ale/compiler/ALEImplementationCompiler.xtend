@@ -25,7 +25,7 @@ class ALEImplementationCompiler {
 	def void compile(String dslStr, File projectRoot, String projectName) throws FileNotFoundException {
 		val srm = new EclipseServiceRegistrationManager
 		val Job a = Job.create('''ALE Compilation''', [ monitor |
-			mavenCompile(dslStr, projectRoot, projectName, srm);
+			mavenCompile(dslStr, projectRoot, projectName, srm, "platform:/resource/");
 		])
 		// FIXME: currently locking the whole workspace during compilation
 		a.rule = ResourcesPlugin.workspace.root
@@ -38,8 +38,8 @@ class ALEImplementationCompiler {
 	 * @param projectRoot absolute path to the project root
 	 * @param projectName project name
 	 */
-	def void mavenCompile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm) throws FileNotFoundException, RuntimeException {
-		val dsl = new WorkbenchDsl(dslStr)
+	def void mavenCompile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm, String platformLocation) throws FileNotFoundException, RuntimeException {
+		val dsl = new WorkbenchDsl(dslStr, platformLocation)
 		val eu = new EcoreUtils
 		val compilationType = dsl.compilationType.toLowerCase
 		if (compilationType !== null) {
