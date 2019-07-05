@@ -12,7 +12,6 @@ import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementat
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.WorkbenchDsl
 import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
-import org.eclipse.emf.ecoretools.ale.compiler.common.EclipseServiceRegistrationManager
 
 class ALEImplementationCompiler {
 
@@ -22,8 +21,8 @@ class ALEImplementationCompiler {
 	 * @param projectRoot absolute path to the project root
 	 * @param projectName project name
 	 */
-	def void compile(String dslStr, File projectRoot, String projectName) throws FileNotFoundException {
-		val srm = new EclipseServiceRegistrationManager
+	def void compile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm) throws FileNotFoundException {
+		
 		val Job a = Job.create('''ALE Compilation''', [ monitor |
 			mavenCompile(dslStr, projectRoot, projectName, srm, "platform:/resource/");
 		])

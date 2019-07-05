@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecoretools.ale.compiler.ALEImplementationCompiler;
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -27,8 +28,9 @@ public class GenerateAleImplementation implements IObjectActionDelegate {
 	public void run(final IAction action) {
 		try {
 			IPath location = this.selectedIFile.getLocation();
+			ServicesRegistrationManager srm = new EclipseServiceRegistrationManager();
 			new ALEImplementationCompiler().compile(location.toOSString(),
-					selectedIFile.getProject().getLocation().toFile(), selectedIFile.getProject().getName());
+					selectedIFile.getProject().getLocation().toFile(), selectedIFile.getProject().getName(), srm);
 			selectedIFile.getProject().refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

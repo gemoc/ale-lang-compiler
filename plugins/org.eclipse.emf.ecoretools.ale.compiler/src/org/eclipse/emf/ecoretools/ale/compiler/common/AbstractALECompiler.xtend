@@ -13,15 +13,12 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
-import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 
 abstract class AbstractALECompiler {
 	protected val ServicesRegistrationManager srm

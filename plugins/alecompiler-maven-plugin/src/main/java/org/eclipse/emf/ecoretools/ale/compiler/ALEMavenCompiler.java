@@ -12,7 +12,6 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
-import org.eclipse.emf.ecoretools.ale.compiler.common.MavenServiceRegistrationManager;
 import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.artifact.factory.ArtifactFactory;
@@ -57,7 +56,8 @@ public class ALEMavenCompiler extends AbstractMojo {
 
 			File project = getProject(dslFile);
 			
-			ServicesRegistrationManager srm = new MavenServiceRegistrationManager(
+			ServicesRegistrationManager srm =
+					new MavenServiceRegistrationManager(
 					mvnProject.getDependencies(), 
 					localRepository, 
 					remoteRepositories, 
@@ -78,42 +78,5 @@ public class ALEMavenCompiler extends AbstractMojo {
 		if (dslFile.getName().equals("src"))
 			return dslFile.getParentFile();
 		return getProject(dslFile.getParentFile());
-	}
-
-	private void generateRevisitor() {
-//    	String gmPath = dslFile.fullPath.toString;
-//		val gm = loadGenmodel(gmPath);
-//		val pkg = gm.getEPackage();
-//		val gpkg = gm.genPackage();
-//		rnu  = new RevisitorNamingUtils(gpkg);
-//		this.generator = new RevisitorInterfaceGenerator(gpkg);
-//
-//		if (gm == null) {
-//			MessageDialog.openError(shell, "Error", "Cannot find GenModel for " + gmPath);
-//			return;
-//		}
-//
-//		if (pkg == null) {
-//			MessageDialog.openError(shell, "Error", "Cannot find EPackage for " + gmPath);
-//			return;
-//		}
-//
-//		val project = dslFile.getProject()
-//		val path = project.location.append(new Path(gpkg.revisitorInterfacePath))
-//		path.toFile().mkdirs()
-//		val file = path.append(new Path(gpkg.revisitorInterfaceName)).addFileExtension("java")
-//
-//		try {
-//			val content = generator.generateInterface(pkg, gm, gpkg)
-//			val fileWriter = new FileWriter(file.toFile())
-//			fileWriter.write(content)
-//			fileWriter.close()
-//			project.refreshLocal(IResource::DEPTH_INFINITE, new NullProgressMonitor())
-//		} catch (AlexException | IOException | CoreException e) {
-//			MessageDialog.openError(shell, "Error",
-//				"Couldn't generate Revisitor interface. Check Error Log for details.");
-//			val logger = PlatformUI.getWorkbench().getService(typeof(Logger));
-//			logger.error(e, e.message)
-//		}
 	}
 }

@@ -1,14 +1,13 @@
-package org.eclipse.emf.ecoretools.ale.compiler.common
+package org.eclipse.emf.ecoretools.ale.compiler.ui
 
-import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
+import java.lang.reflect.Modifier
 import java.util.List
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
+import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import java.util.Map
-import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
-import java.lang.reflect.Modifier
+import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 
 class EclipseServiceRegistrationManager extends ServicesRegistrationManager {
 	
