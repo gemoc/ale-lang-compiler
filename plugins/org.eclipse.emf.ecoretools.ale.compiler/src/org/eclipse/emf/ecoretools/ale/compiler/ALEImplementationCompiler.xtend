@@ -10,7 +10,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementation
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl
+import org.eclipse.emf.ecoretools.ale.compiler.WorkbenchDsl
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 
 class ALEImplementationCompiler {
 
@@ -20,32 +21,43 @@ class ALEImplementationCompiler {
 	 * @param projectRoot absolute path to the project root
 	 * @param projectName project name
 	 */
-	def void compile(String dslStr, File projectRoot, String projectName) throws FileNotFoundException {
-
+	def void compile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm) throws FileNotFoundException {
+		
 		val Job a = Job.create('''ALE Compilation''', [ monitor |
-			val dsl = new WorkbenchDsl(dslStr)
-			val eu = new EcoreUtils
-			val compilationType = dsl.compilationType.toLowerCase
-			if (compilationType !== null) {
-				switch compilationType {
-					case "revisitor":
-						new ALERevisitorImplementationCompiler(projectName, projectRoot, dsl, eu, new JavaPoetUtils).compile()
-					case "interpreter":
-						new ALEInterpreterImplementationCompiler(projectName, projectRoot, dsl, eu).compile()
-					case "visitor":
-						new ALEVisitorImplementationCompiler(projectName, projectRoot, dsl, eu).compile()
-					case "switch":
-						new ALESwitchImplementationCompiler(projectName, projectRoot, dsl, eu).compile()
-					default:
-						throw new RuntimeException('''value «compilationType» unknown for "compilationType" key in «dsl.sourceFileName».''')
-				}
-			} else {
-				throw new RuntimeException('''"compilationType" key not defined in «dsl.sourceFileName».''')
-			}
+			mavenCompile(dslStr, projectRoot, projectName, srm, "platform:/resource/");
 		])
 		// FIXME: currently locking the whole workspace during compilation
 		a.rule = ResourcesPlugin.workspace.root
 		a.schedule
+	}
+
+	/**
+	 * 
+	 * @param dslStr absolute path to the dsl file
+	 * @param projectRoot absolute path to the project root
+	 * @param projectName project name
+	 */
+	def void mavenCompile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm, String platformLocation) throws FileNotFoundException, RuntimeException {
+		val dsl = new WorkbenchDsl(dslStr, platformLocation)
+		val eu = new EcoreUtils
+		val compilationType = dsl.compilationType.toLowerCase
+		if (compilationType !== null) {
+			switch compilationType {
+				case "revisitor":
+					new ALERevisitorImplementationCompiler(projectName, projectRoot, dsl, eu, new JavaPoetUtils, srm).
+						compile()
+				case "interpreter":
+					new ALEInterpreterImplementationCompiler(projectName, projectRoot, dsl, eu, srm).compile()
+				case "visitor":
+					new ALEVisitorImplementationCompiler(projectName, projectRoot, dsl, eu, srm).compile()
+				case "switch":
+					new ALESwitchImplementationCompiler(projectName, projectRoot, dsl, eu, srm).compile()
+				default:
+					throw new RuntimeException('''value «compilationType» unknown for "compilationType" key in «dsl.sourceFileName».''')
+			}
+		} else {
+			throw new RuntimeException('''"compilationType" key not defined in «dsl.sourceFileName».''')
+		}
 	}
 
 }

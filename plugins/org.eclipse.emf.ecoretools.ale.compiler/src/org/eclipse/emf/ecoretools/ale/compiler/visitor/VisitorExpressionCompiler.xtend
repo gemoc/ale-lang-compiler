@@ -21,7 +21,7 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 	extension EnumeratorService es
 	extension CommonTypeInferer cti
 
-	new(VisitorTypeSystemUtil vtsu, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices,
+	new(VisitorTypeSystemUtil vtsu, List<ResolvedClass> resolved, Map<String, Pair<String, String>> registeredServices,
 		VisitorNamingUtils vnu, String packageRoot, CommonTypeInferer cti, EnumeratorService es) {
 		super(cti, es, vtsu, vnu, registeredServices, resolved, packageRoot, false, newHashSet)
 		this.vtsu = vtsu

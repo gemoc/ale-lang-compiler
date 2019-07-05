@@ -1,5 +1,6 @@
 package fsm.interpreter.fsm.impl;
 
+import fsm.FsmService;
 import fsm.interpreter.fsm.Buffer;
 import fsm.interpreter.fsm.FSM;
 import fsm.interpreter.fsm.FsmPackage;
@@ -298,15 +299,15 @@ public class BufferImpl extends MinimalEObjectImpl.Container implements Buffer {
 	public String dequeue() {
 		String result;
 		String res = ((String) (""));
-		int firstComma = ((int) (this.currentValues.indexOf((String) (","))));
+		int firstComma = ((int) (FsmService.indexOf((String) (this.currentValues), (String) (","))));
 		if ((firstComma) < (0)) {
 			res = this.currentValues;
 			this.setCurrentValues("'empty'");
 			result = (String) (res) ;
 		}
 		else {
-			res = this.currentValues.substring((Integer) (0), (int) (firstComma));
-			this.setCurrentValues(this.currentValues.substring(((firstComma) + (1)), (Integer) (CollectionService.size(this.currentValues))));
+			res = FsmService.substring((String) (this.currentValues), (Integer) (0), (int) (firstComma));
+			this.setCurrentValues(FsmService.substring((String) (this.currentValues), ((firstComma) + (1)), (Integer) (CollectionService.size(this.currentValues))));
 			result = (String) (res) ;
 		}
 		return result;

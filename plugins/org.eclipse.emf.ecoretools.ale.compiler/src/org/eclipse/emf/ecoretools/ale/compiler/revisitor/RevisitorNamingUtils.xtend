@@ -31,7 +31,10 @@ class RevisitorNamingUtils extends EcoreNotGenNamingUtils {
 		} else {
 			pkg.getEcorePackage.name
 		}
-		'''src/«FOR fragment: pn.split("\\.") SEPARATOR '/'»«fragment»«ENDFOR»/revisitor'''
+		val modelDir = pkg.genModel.modelDirectory
+		val i = modelDir.indexOf("/",1)
+		
+		'''«modelDir.substring(i+1)»/«FOR fragment: pn.split("\\.") SEPARATOR '/'»«fragment»«ENDFOR»/revisitor'''
 	
 	}
 

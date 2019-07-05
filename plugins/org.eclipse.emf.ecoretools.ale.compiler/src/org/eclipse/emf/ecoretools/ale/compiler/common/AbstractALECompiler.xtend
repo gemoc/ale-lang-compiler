@@ -13,19 +13,15 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
 import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
-import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
-import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
 
 abstract class AbstractALECompiler {
-	val JavaExtensionsManager javaExtensions
-	val Map<String, Class<?>> registeredServices = newHashMap
+	protected val ServicesRegistrationManager srm
 	protected extension EcoreUtils eu
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
 	val Dsl dsl
@@ -33,7 +29,7 @@ abstract class AbstractALECompiler {
 	val IQueryEnvironment queryEnvironment
 	var List<ResolvedClass> resolved
 	protected val String projectName
-	protected val File projectRoot 
+	protected val File projectRoot
 
 	protected def getParsedSemantics() {
 		parsedSemantics
@@ -42,67 +38,43 @@ abstract class AbstractALECompiler {
 	protected def getSyntaxes() {
 		syntaxes
 	}
-	
+
 	protected def getQueryEnvironment() {
 		queryEnvironment
 	}
-	
+
 	protected def getDsl() {
 		dsl
 	}
-	
+
 	protected def getRegisteredServices() {
-		registeredServices
+		srm.registeredServices
 	}
-	
+
 	protected def getResolved() {
 		resolved
 	}
 	
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu) {
+	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
-		javaExtensions = JavaExtensionsManager.createManagerWithOverride();
-		javaExtensions.addClassLoadingCallBack(new ClassLoadingCallback() {
-
-			override loaded(String arg0, Class<?> arg1) {
-				System.err.println('''service registration: «arg0» -> «arg1» ''')
-				registeredServices.put(arg0, arg1)
-			}
-
-			override notFound(String arg0) {
-				System.err.println('''«arg0» not found during services registration''')
-			}
-
-			override unloaded(String arg0, Class<?> arg1) {
-				registeredServices.remove(arg0);
-			}
-
-		});
+		this.srm = srm
+		this.srm.registeredServices = this.registeredServices
 		this.eu = eu
 		this.projectName = projectName
 		this.projectRoot = projectRoot
 		this.dsl = dsl
 	}
 	
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services, EcoreUtils eu) {
-		this(projectName, projectRoot, dsl, eu);
+	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+		this(projectName, projectRoot, dsl, eu, srm);
 
 		registeredServices.putAll(services)
 	}
 
 	def registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
-
-		javaExtensions.updateScope(newHashSet(), #{projectName})
-
-		val services = parsedSemantics.map[root].filter[it !== null].map[services].flatten + #[TrigoServices.name]
-		registerServices(services.toList)
-	}
-
-	def registerServices(List<String> services) {
-		services.forEach[javaExtensions.addImport(it)]
-		javaExtensions.reloadIfNeeded()
+		srm.registerServices(projectName, parsedSemantics)
 	}
 
 	def List<ResolvedClass> resolve(List<ExtendedClass> aleClasses, EPackage syntax,
@@ -112,7 +84,7 @@ abstract class AbstractALECompiler {
 				it.name == eClass.name || it.name == eClass.EPackage.name + '.' + eClass.name
 			].head
 			val GenClass gl = syntaxes.filter[k, v|v.key.allClasses.contains(eClass)].values.map[value].map [
-				it.genPackages.map[
+				it.genPackages.map [
 					it.genClasses
 				].flatten
 			].flatten.filter[it.ecoreClass == eClass].head
@@ -120,7 +92,7 @@ abstract class AbstractALECompiler {
 			new ResolvedClass(aleClass, eClass, gl)
 		]
 	}
-	
+
 	def IStatus compile() {
 		parsedSemantics = new DslBuilder(queryEnvironment).parse(dsl)
 
@@ -128,8 +100,7 @@ abstract class AbstractALECompiler {
 //			this.registeredServices.putAll(services)
 //		} 
 		registerServices(projectName, parsedSemantics)
-		
-		
+
 		val aleClasses = newArrayList
 		for (ParseResult<ModelUnit> pr : parsedSemantics) {
 			var root = pr.root
@@ -157,5 +128,5 @@ abstract class AbstractALECompiler {
 	}
 
 	abstract def void compile(File projectRoot, String projectName)
-	
+
 }

@@ -54,14 +54,14 @@ class OperationImplementationCompiler {
 	val IQueryEnvironment queryEnvironment
 	val List<ParseResult<ModelUnit>> parsedSemantics
 	val List<ResolvedClass> resolved
-	val Map<String, Class<?>> registeredServices
+	val Map<String, Pair<String, String>> registeredServices
 	var BaseValidator base
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	val EnumeratorService es
 
 	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes,
 		IQueryEnvironment queryEnvironment, List<ParseResult<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices, EnumeratorService es) {
+		Map<String, Pair<String, String>> registeredServices, EnumeratorService es) {
 		this.directory = directory
 		this.packageRoot = packageRoot
 		this.queryEnvironment = queryEnvironment

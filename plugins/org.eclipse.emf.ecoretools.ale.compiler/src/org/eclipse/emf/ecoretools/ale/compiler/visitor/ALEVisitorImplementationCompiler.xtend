@@ -20,15 +20,16 @@ import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 
 class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu) {
-		this(projectName, projectRoot, dsl, newHashMap, eu)
+	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
+		this(projectName, projectRoot, dsl, newHashMap, eu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services, EcoreUtils eu) {
-		super(projectName, projectRoot, dsl, services, eu)
+	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+		super(projectName, projectRoot, dsl, services, eu, srm)
 	}
 
 	override compile(File projectRoot, String projectName) {

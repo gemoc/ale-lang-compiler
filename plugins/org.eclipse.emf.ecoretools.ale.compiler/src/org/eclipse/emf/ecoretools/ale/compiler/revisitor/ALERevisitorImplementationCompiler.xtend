@@ -42,6 +42,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.xbase.lib.Functions.Function0
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 
 class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
@@ -51,12 +52,12 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	extension RevisitorTypeSystemUtils tsu
 	extension CommonTypeInferer cti
 
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, JavaPoetUtils jpu) {
-		this(projectName, projectRoot, dsl, newHashMap, eu, jpu)
+	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, JavaPoetUtils jpu, ServicesRegistrationManager srm) {
+		this(projectName, projectRoot, dsl, newHashMap, eu, jpu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services, EcoreUtils eu, JavaPoetUtils jpu) {
-		super(projectName, projectRoot, dsl, services, eu)
+	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, JavaPoetUtils jpu, ServicesRegistrationManager srm) {
+		super(projectName, projectRoot, dsl, services, eu, srm)
 		this.jpu = jpu
 		
 	}
