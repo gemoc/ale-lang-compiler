@@ -1,4 +1,5 @@
 language: java
 sudo: false # faster builds
 
+install: true
 script: "mvn -q clean package"
