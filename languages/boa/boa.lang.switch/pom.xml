@@ -21,7 +21,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<dslFile>/home/ale-lang/languages/boa/boa.lang.switch/src/boa_exec_switch.dsl</dslFile>
+					<dslFile>${project.basedir}/src/boa_exec_switch.dsl</dslFile>
 				</configuration>
 			</plugin>
 		</plugins>

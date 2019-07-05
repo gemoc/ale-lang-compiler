@@ -21,7 +21,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<dslFile>/home/ale-lang/languages/boa/boa.lang.revisitor/src/boa_exec_revisitor.dsl</dslFile>
+					<dslFile>${project.basedir}/src/boa_exec_revisitor.dsl</dslFile>
 				</configuration>
 			</plugin>
 		</plugins>
