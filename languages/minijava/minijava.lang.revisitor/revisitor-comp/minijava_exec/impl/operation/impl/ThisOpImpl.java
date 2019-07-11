@@ -1,11 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import miniJava.MiniJavaFactory;
-import miniJava.ObjectInstance;
-import miniJava.ObjectRefValue;
-import miniJava.State;
 import miniJava.This;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -95,14 +90,5 @@ public class ThisOpImpl extends ExpressionOpImpl implements ThisOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public Value evaluateExpression(State state) {
-    Value result;
-    ObjectInstance currentInstance = ((ObjectInstance) (rev.$((State)state).findCurrentFrame().getInstance()));
-    ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
-    tmp.setInstance(currentInstance);
-    result = ((ObjectRefValue) (tmp));
-    return result;
   }
 }

@@ -3,7 +3,6 @@ package miniJava.interpreter.miniJava.impl;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
-import miniJava.interpreter.miniJava.Block;
 import miniJava.interpreter.miniJava.Clazz;
 import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.Expression;
@@ -186,7 +185,7 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
 			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this);
 			((State) (state)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
-			((Block) (constructor.getBody())).evaluateStatement((State) (state));
+			constructor.getBody().evaluateStatement((State) (state));
 			((State) (state)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));

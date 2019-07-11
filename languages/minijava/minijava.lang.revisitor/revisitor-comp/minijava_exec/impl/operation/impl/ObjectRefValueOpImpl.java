@@ -1,9 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import java.lang.String;
-import miniJava.MiniJavaFactory;
 import miniJava.ObjectRefValue;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -93,19 +90,5 @@ public class ObjectRefValueOpImpl extends ValueOpImpl implements ObjectRefValueO
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public String customToString() {
-    String result;
-    result = ((String) (this.obj.getInstance().toString()));
-    return result;
-  }
-
-  public Value copyj() {
-    Value result;
-    ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
-    tmp.setInstance(this.obj.getInstance());
-    result = ((ObjectRefValue) (tmp));
-    return result;
   }
 }

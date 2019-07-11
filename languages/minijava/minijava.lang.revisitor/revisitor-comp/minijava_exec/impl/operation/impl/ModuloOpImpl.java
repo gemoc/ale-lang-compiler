@@ -1,13 +1,7 @@
 package minijava_exec.impl.operation.impl;
 
-import miniJava.Expression;
-import miniJava.IntegerValue;
-import miniJava.MiniJavaFactory;
 import miniJava.Modulo;
-import miniJava.State;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
-import minijava.MathService;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
 import minijava_exec.impl.operation.ArrayInstanceOp;
@@ -96,27 +90,5 @@ public class ModuloOpImpl extends ExpressionOpImpl implements ModuloOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public Value evaluateExpression(State state) {
-    Value result;
-    Value left = ((Value) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))));
-    Value right = ((Value) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))));
-    if(left instanceof IntegerValue) {
-      if(right instanceof IntegerValue) {
-        IntegerValue bleft = ((IntegerValue) (left));
-        IntegerValue bright = ((IntegerValue) (right));
-        IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
-        tmp.setValue(MathService.mod((Modulo) (this.obj), (int) (bleft.getValue()), (int) (bright.getValue())));
-        result = ((IntegerValue) (tmp));
-      }
-      else {
-        result = ((Value) (null));
-      }
-    }
-    else {
-      result = ((Value) (null));
-    }
-    return result;
   }
 }

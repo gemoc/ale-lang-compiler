@@ -1,9 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import java.lang.String;
 import miniJava.BooleanValue;
-import miniJava.MiniJavaFactory;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -93,19 +90,5 @@ public class BooleanValueOpImpl extends ValueOpImpl implements BooleanValueOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public String customToString() {
-    String result;
-    result = ((String) ((this.obj.isValue()) + ("")));
-    return result;
-  }
-
-  public Value copyj() {
-    Value result;
-    BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
-    tmp.setValue(this.obj.isValue());
-    result = ((BooleanValue) (tmp));
-    return result;
   }
 }

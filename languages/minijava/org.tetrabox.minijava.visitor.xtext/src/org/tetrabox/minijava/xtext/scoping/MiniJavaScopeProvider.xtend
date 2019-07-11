@@ -8,7 +8,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import org.tetrabox.minijava.xtext.MiniJavaModelUtil
+import miniJava.util.MiniJavaModelUtil
 import miniJava.visitor.miniJava.*;
 
 import org.tetrabox.minijava.xtext.typing.MiniJavaTypeComputer

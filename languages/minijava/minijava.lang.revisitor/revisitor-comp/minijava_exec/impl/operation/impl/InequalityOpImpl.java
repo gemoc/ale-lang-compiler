@@ -1,16 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import java.lang.Boolean;
-import miniJava.BooleanValue;
-import miniJava.Expression;
 import miniJava.Inequality;
-import miniJava.IntegerValue;
-import miniJava.MiniJavaFactory;
-import miniJava.NullValue;
-import miniJava.ObjectRefValue;
-import miniJava.State;
-import miniJava.StringValue;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -89,7 +79,6 @@ import minijava_exec.impl.operation.ValueOp;
 import minijava_exec.impl.operation.VariableDeclarationOp;
 import minijava_exec.impl.operation.VoidTypeRefOp;
 import minijava_exec.impl.operation.WhileStatementOp;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class InequalityOpImpl extends ExpressionOpImpl implements InequalityOp {
   private MiniJavaRevisitor<AndOp, AndOp, AndOp, ArrayAccessOp, ArrayAccessOp, ArrayAccessOp, ArrayInstanceOp, ArrayLengthOp, ArrayLengthOp, ArrayLengthOp, ArrayRefValueOp, ArrayTypeRefOp, AssigneeOp, AssignmentOp, BlockOp, BoolConstantOp, BoolConstantOp, BoolConstantOp, BooleanTypeRefOp, BooleanValueOp, CallOp, ClassRefOp, ClazzOp, ContextOp, DivisionOp, DivisionOp, DivisionOp, EqualityOp, EqualityOp, EqualityOp, ExpressionOp, ExpressionOp, ExpressionOp, FieldOp, FieldAccessOp, FieldAccessOp, FieldAccessOp, FieldBindingOp, ForStatementOp, FrameOp, IfStatementOp, ImportOp, InequalityOp, InequalityOp, InequalityOp, InferiorOp, InferiorOp, InferiorOp, InferiorOrEqualOp, InferiorOrEqualOp, InferiorOrEqualOp, IntConstantOp, IntConstantOp, IntConstantOp, IntegerTypeRefOp, IntegerValueOp, InterfaceOp, MemberOp, MethodOp, MethodCallOp, MethodCallOp, MethodCallOp, MethodCall2Op, MinusOp, MinusOp, MinusOp, ModuloOp, ModuloOp, ModuloOp, MultiplicationOp, MultiplicationOp, MultiplicationOp, NamedElementOp, NegOp, NegOp, NegOp, NewArrayOp, NewArrayOp, NewArrayOp, NewCallOp, NewObjectOp, NewObjectOp, NewObjectOp, NotOp, NotOp, NotOp, NullOp, NullOp, NullOp, NullValueOp, ObjectInstanceOp, ObjectRefValueOp, OrOp, OrOp, OrOp, OutputStreamOp, ParameterOp, PlusOp, PlusOp, PlusOp, PrintStatementOp, ProgramOp, ReturnOp, SingleTypeRefOp, StateOp, StatementOp, StringConstantOp, StringConstantOp, StringConstantOp, StringTypeRefOp, StringValueOp, SuperOp, SuperOp, SuperOp, SuperiorOp, SuperiorOp, SuperiorOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SymbolOp, SymbolBindingOp, SymbolRefOp, SymbolRefOp, SymbolRefOp, ThisOp, ThisOp, ThisOp, TypeDeclarationOp, TypeRefOp, TypedDeclarationOp, ValueOp, VariableDeclarationOp, VariableDeclarationOp, VariableDeclarationOp, VoidTypeRefOp, WhileStatementOp> rev;
@@ -101,57 +90,5 @@ public class InequalityOpImpl extends ExpressionOpImpl implements InequalityOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public Value evaluateExpression(State state) {
-    Value result;
-    Value left = ((Value) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))));
-    Value right = ((Value) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))));
-    boolean tmp = ((boolean) (false));
-    if(left instanceof IntegerValue) {
-      if(right instanceof IntegerValue) {
-        IntegerValue ileft = ((IntegerValue) (left));
-        IntegerValue iright = ((IntegerValue) (right));
-        tmp = ((Boolean) (EqualService.equals((ileft.getValue()), (iright.getValue()))));
-      }
-    }
-    else {
-      if(left instanceof StringValue) {
-        if(right instanceof StringValue) {
-          StringValue ileft = ((StringValue) (left));
-          StringValue iright = ((StringValue) (right));
-          tmp = ((Boolean) (EqualService.equals((ileft.getValue()), (iright.getValue()))));
-        }
-      }
-      else {
-        if(left instanceof BooleanValue) {
-          if(right instanceof BooleanValue) {
-            BooleanValue ileft = ((BooleanValue) (left));
-            BooleanValue iright = ((BooleanValue) (right));
-            tmp = ((Boolean) (EqualService.equals((ileft.isValue()), (iright.isValue()))));
-          }
-        }
-        else {
-          if(left instanceof NullValue) {
-            if(right instanceof NullValue) {
-              tmp = ((Boolean) (true));
-            }
-          }
-          else {
-            if(left instanceof ObjectRefValue) {
-              if(right instanceof ObjectRefValue) {
-                ObjectRefValue ileft = ((ObjectRefValue) (left));
-                ObjectRefValue iright = ((ObjectRefValue) (right));
-                tmp = ((Boolean) (EqualService.equals((ileft.getInstance()), (iright.getInstance()))));
-              }
-            }
-          }
-        }
-      }
-    }
-    BooleanValue tmpo = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
-    tmpo.setValue(!(tmp));
-    result = ((BooleanValue) (tmpo));
-    return result;
   }
 }

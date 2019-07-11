@@ -1,12 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import miniJava.Expression;
-import miniJava.IntegerValue;
-import miniJava.MiniJavaFactory;
 import miniJava.Plus;
-import miniJava.State;
-import miniJava.StringValue;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -96,41 +90,5 @@ public class PlusOpImpl extends ExpressionOpImpl implements PlusOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public Value evaluateExpression(State state) {
-    Value result;
-    Value left = ((Value) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))));
-    Value right = ((Value) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))));
-    if(left instanceof IntegerValue) {
-      if(right instanceof IntegerValue) {
-        IntegerValue bleft = ((IntegerValue) (left));
-        IntegerValue bright = ((IntegerValue) (right));
-        IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
-        tmp.setValue((bleft.getValue()) + (bright.getValue()));
-        result = ((IntegerValue) (tmp));
-      }
-      else {
-        if(right instanceof StringValue) {
-          StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-          tmp.setValue((rev.$((IntegerValue)left).customToString()) + (rev.$((StringValue)right).customToString()));
-          result = ((StringValue) (tmp));
-        }
-        else {
-          result = ((Value) (null));
-        }
-      }
-    }
-    else {
-      if(((left instanceof StringValue) || (right instanceof StringValue))) {
-        StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-        tmp.setValue((rev.$((StringValue)left).customToString()) + (rev.$((StringValue)right).customToString()));
-        result = ((StringValue) (tmp));
-      }
-      else {
-        result = ((Value) (null));
-      }
-    }
-    return result;
   }
 }

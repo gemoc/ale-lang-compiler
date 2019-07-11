@@ -1,9 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import java.lang.String;
-import miniJava.MiniJavaFactory;
 import miniJava.StringValue;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -93,19 +90,5 @@ public class StringValueOpImpl extends ValueOpImpl implements StringValueOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public String customToString() {
-    String result;
-    result = ((String) (this.obj.getValue().toString()));
-    return result;
-  }
-
-  public Value copyj() {
-    Value result;
-    StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-    tmp.setValue(this.obj.getValue());
-    result = ((StringValue) (tmp));
-    return result;
   }
 }

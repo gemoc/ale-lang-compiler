@@ -10,38 +10,15 @@ open class miniJava.Program {
 		self.execute();
 	}
 	
-	def void initialize(Sequence(String) args) { // dispatch
+	def void initialize(Sequence(String) args) {
 		// possibly useless if we assume a main is available
-		miniJava::Method main := self.findMain();
-		if(main != null) {
-			miniJava::Context rootCont := miniJava::Context.create();
-			miniJava::State state := miniJava::State.create();
-			
-			miniJava::ArrayInstance argsArray := miniJava::ArrayInstance.create();
-			argsArray.size := args.size(); 
-			state.arraysHeap += argsArray;
-			for(arg in args) {
-				miniJava::StringValue stringVal := miniJava::StringValue.create();
-				String tmp := arg;
-				stringVal.value := tmp;
-				argsArray.value += stringVal;
-			}
-			
-			miniJava::SymbolBinding argsBinding := miniJava::SymbolBinding.create();
-		 	argsBinding.symbol := main.params->at(0);
-		 	miniJava::ArrayRefValue value := miniJava::ArrayRefValue.create();
-		 	value.instance := argsArray;
-		 	
-//		 	miniJava::Context rootCont := miniJava::Context.create();
-	 	 	rootCont.bindings += argsBinding;
-			
-			state.outputStream := miniJava::OutputStream.create();
-			state.rootFrame := miniJava::Frame.create();
-			state.rootFrame.rootContext := rootCont;
-			state.arraysHeap += argsArray;
-			self.state := state;
 		
-		}
+		miniJava::Context rootCont := miniJava::Context.create();
+		miniJava::State state := miniJava::State.create();
+		state.outputStream := miniJava::OutputStream.create();
+		state.rootFrame := miniJava::Frame.create();
+		state.rootFrame.rootContext := rootCont;
+		self.state := state;
 	}
 	
 	def miniJava::State execute() {
@@ -93,7 +70,7 @@ open class miniJava.Block {
 }
 
 open class miniJava.Assignment {
-	def void evaluateStatement(miniJava::State state) { //  dispatch 
+	def void evaluateStatement(miniJava::State state) {
 		miniJava::Context context := state.findCurrentContext();
 		miniJava::Value right := self.value.evaluateExpression(state);
 		miniJava::Assignee assignee := self.assignee;
@@ -144,14 +121,14 @@ open class miniJava.Assignment {
 }
 
 open class miniJava.PrintStatement {
-	def void evaluateStatement(miniJava::State state) {  // dispatch 
+	def void evaluateStatement(miniJava::State state) {   
 		String res := self.expression.evaluateExpression(state).customToString();
 		state.println(res);
 	}
 }
 
 open class miniJava.ForStatement {
-	def void evaluateStatement(miniJava::State state) { //  dispatch 
+	def void evaluateStatement(miniJava::State state) {  
 		state.pushNewContext();
 		self.declaration.evaluateStatement(state);
 		miniJava::BooleanValue continueFor := self.condition.evaluateExpression(state).oclAsType(miniJava::BooleanValue); 
@@ -166,7 +143,7 @@ open class miniJava.ForStatement {
 }
 
 open class miniJava.IfStatement {
-	def void evaluateStatement(miniJava::State state) { //  dispatch 
+	def void evaluateStatement(miniJava::State state) {  
 		miniJava::BooleanValue booleanValue := self.expression.evaluateExpression(state).oclAsType(miniJava::BooleanValue);
 		if(booleanValue.value) {
 			self.thenBlock.evaluateStatement(state);
@@ -179,7 +156,7 @@ open class miniJava.IfStatement {
 }
 
 open class miniJava.WhileStatement {
-	def void evaluateStatement(miniJava::State state) { //  dispatch 
+	def void evaluateStatement(miniJava::State state) {  
 		miniJava::BooleanValue continueWhile := self.condition.evaluateExpression(state).oclAsType(miniJava::BooleanValue);
 		while(continueWhile.value) {
 			self.block.evaluateStatement(state);
@@ -190,14 +167,14 @@ open class miniJava.WhileStatement {
 }
 
 open class miniJava.Return {
-	def void evaluateStatement(miniJava::State state) { // dispatch
+	def void evaluateStatement(miniJava::State state) { 
 		miniJava::Value value := self.expression.evaluateExpression(state);
 		state.findCurrentFrame().returnValue := value;
 	}
 }
 
 open class miniJava.Method {
-	def  void evaluateStatement(miniJava::State state) { // dispatch
+	def  void evaluateStatement(miniJava::State state) { 
 		self.body.evaluateStatement(state);
 	}
 	
@@ -247,7 +224,7 @@ open class miniJava.Method {
 		}
 	}
 	
-	def /*dispatch*/ void call(State state) { 
+	def void call(State state) { 
 		self.body.evaluateStatement(state);
 	}
 }
@@ -275,7 +252,7 @@ open class miniJava.This {
 }
 
 open class miniJava.BoolConstant {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::BooleanValue ret := miniJava::BooleanValue.create();
 		ret.value := self.value == 'true';
 		result := ret;
@@ -299,7 +276,7 @@ open class miniJava.StringConstant {
 }
 
 open class miniJava.And {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::Value left := self.left.evaluateExpression(state);
 		miniJava::Value right := self.right.evaluateExpression(state);
 		if(left.oclIsKindOf(miniJava::BooleanValue)) {
@@ -307,7 +284,7 @@ open class miniJava.And {
 				miniJava::BooleanValue bleft := left;
 				miniJava::BooleanValue bright := right;
 				miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
-				tmp.value := bleft.value and bright.value;
+				tmp.value := bleft.isValue() and bright.isValue();
 				result := tmp;
 			} else {
 				result := null;
@@ -320,16 +297,16 @@ open class miniJava.And {
 
 open class miniJava.Or {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
-		miniJava::BooleanValue left := self.left.evaluateExpression(state).oclAsType(miniJava::BooleanValue);
-		miniJava::BooleanValue right := self.right.evaluateExpression(state).oclAsType(miniJava::BooleanValue);
+		miniJava::BooleanValue left := self.left.evaluateExpression(state);
+		miniJava::BooleanValue right := self.right.evaluateExpression(state);
 		miniJava::BooleanValue res := miniJava::BooleanValue.create();
-		res.value := left.value or right.value;
+		res.value := left.isValue() or right.isValue();
 		result := res;
 	}
 }
 
 open class miniJava.ArrayAccess {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::ArrayRefValue arrayVal := self.object.evaluateExpression(state).oclAsType(miniJava::ArrayRefValue);
 		miniJava::IntegerValue indexVal := self.index.evaluateExpression(state).oclAsType(miniJava::IntegerValue);
 		Integer v := indexVal.value;
@@ -389,7 +366,7 @@ open class miniJava.Minus {
 }
 
 open class miniJava.Multiplication {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::Value left := self.left.evaluateExpression(state);
 		miniJava::Value right := self.right.evaluateExpression(state);
 		if(left.oclIsKindOf(miniJava::IntegerValue)) {
@@ -429,7 +406,7 @@ open class miniJava.Modulo {
 }
 
 open class miniJava.Equality {
-	def miniJava::Value evaluateExpression(miniJava::State state) { // dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::Value left := self.left.evaluateExpression(state);
 		miniJava::Value right := self.right.evaluateExpression(state);
 		boolean tmp := false;
@@ -451,7 +428,7 @@ open class miniJava.Equality {
 					if(right.oclIsKindOf(miniJava::BooleanValue)) {
 						miniJava::BooleanValue ileft := left;
 						miniJava::BooleanValue iright := right;
-						tmp := ileft.value == iright.value;
+						tmp := ileft.isValue() == iright.isValue();
 					}
 				} else {
 					if(left.oclIsKindOf(miniJava::NullValue)) {
@@ -478,7 +455,7 @@ open class miniJava.Equality {
 }
 
 open class miniJava.FieldAccess {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::ObjectRefValue tmp0 := self.receiver.evaluateExpression(state);
 		miniJava::ObjectInstance realReceiver := tmp0.instance;
 		miniJava::Field fld := self.field;
@@ -488,7 +465,7 @@ open class miniJava.FieldAccess {
 }
 
 open class miniJava.Inequality {
-	def miniJava::Value evaluateExpression(miniJava::State state) { // dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::Value left := self.left.evaluateExpression(state);
 		miniJava::Value right := self.right.evaluateExpression(state);
 		boolean tmp := false;
@@ -510,7 +487,7 @@ open class miniJava.Inequality {
 					if(right.oclIsKindOf(miniJava::BooleanValue)) {
 						miniJava::BooleanValue ileft := left;
 						miniJava::BooleanValue iright := right;
-						tmp := ileft.value == iright.value;
+						tmp := ileft.isValue() == iright.isValue();
 					}
 				} else {
 					if(left.oclIsKindOf(miniJava::NullValue)) {
@@ -537,7 +514,7 @@ open class miniJava.Inequality {
 }
 
 open class miniJava.Inferior {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::Value left := self.left.evaluateExpression(state);
 		miniJava::Value right := self.right.evaluateExpression(state);
 		if(left.oclIsKindOf(miniJava::IntegerValue)) {
@@ -557,7 +534,7 @@ open class miniJava.Inferior {
 }
 
 open class miniJava.SuperiorOrEqual {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::Value left := self.left.evaluateExpression(state);
 		miniJava::Value right := self.right.evaluateExpression(state);
 		if(left.oclIsKindOf(miniJava::IntegerValue)) {
@@ -609,15 +586,24 @@ open class miniJava.Plus {
 				tmp.value := bleft.value + bright.value;
 				result := tmp;
 			} else { 
+				if(right.oclIsKindOf(miniJava::StringValue)) {
+					miniJava::StringValue tmp := miniJava::StringValue.create();
+					tmp.value := left.customToString() + right.customToString();
+					result := tmp;
+					
+				} else {
+					result := null;
+				}
+			}
+		} else {
+			if(left.oclIsKindOf(miniJava::StringValue) or right.oclIsKindOf(miniJava::StringValue)) {
 				miniJava::StringValue tmp := miniJava::StringValue.create();
 				tmp.value := left.customToString() + right.customToString();
 				result := tmp;
+				
+			} else {
 				result := null;
 			}
-		} else {
-			miniJava::StringValue tmp := miniJava::StringValue.create();
-			tmp.value := left.customToString() + right.customToString();
-			result := tmp;
 		}
 	}
 }
@@ -630,7 +616,7 @@ open class miniJava.Null {
 
 open class miniJava.Neg {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
-		miniJava::IntegerValue left := self.expression.evaluateExpression(state).oclAsType(miniJava::IntegerValue);
+		miniJava::IntegerValue left := self.expression.evaluateExpression(state);
 		miniJava::IntegerValue tmp := miniJava::IntegerValue.create();
 		tmp.value := -left.value;
 		result := tmp;
@@ -638,16 +624,16 @@ open class miniJava.Neg {
 }
 
 open class miniJava.Not {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
-		miniJava::BooleanValue left := self.expression.evaluateExpression(state).oclAsType(miniJava::BooleanValue);
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
+		miniJava::BooleanValue left := self.expression.evaluateExpression(state);
 		miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
-		tmp.value := not left.value;
+		tmp.value := not left.isValue();
 		result := tmp;
 	}
 }
 
 open class miniJava.InferiorOrEqual {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::Value left := self.left.evaluateExpression(state);
 		miniJava::Value right := self.right.evaluateExpression(state);
 		if(left.oclIsKindOf(miniJava::IntegerValue)) {
@@ -668,7 +654,7 @@ open class miniJava.InferiorOrEqual {
 
 
 open class miniJava.MethodCall {
-	def miniJava::Value evaluateExpression(miniJava::State state) { //  dispatch
+	def miniJava::Value evaluateExpression(miniJava::State state) { 
 		miniJava::ObjectRefValue realReceiver0 := self.receiver.evaluateExpression(state).oclAsType(miniJava::ObjectRefValue);
 		miniJava::ObjectInstance realReceiver := realReceiver0.instance;
 		miniJava::Method realMethod := self.method.findOverride(realReceiver.type).oclAsType(miniJava::Method);
@@ -712,7 +698,7 @@ open class miniJava.NewArray {
 		res.size := sizeArray.value;
 		state.arraysHeap += res;
 		
-		miniJava::Value defaultValue;
+		miniJava::Value defaultValue := null;
 		if(self.type.oclIsKindOf(miniJava::IntegerTypeRef)) {
 			miniJava::IntegerValue idv := miniJava::IntegerValue.create();
 			idv.value := 0;
@@ -752,7 +738,7 @@ open class miniJava.NewObject {
 	def miniJava::Value evaluateExpression(miniJava::State state) {
 	// Creating instance with default bindings
 		miniJava::ObjectInstance res := miniJava::ObjectInstance.create();
-		res.type := self.type;
+		res.type := self.getType();
 		state.objectsHeap += res;
 		Integer i := 0;
 		Integer z := res.type.members->size();
@@ -772,7 +758,7 @@ open class miniJava.NewObject {
 		}			
 
 		i:=0;
-		miniJava::Method constructor;
+		miniJava::Method constructor := null;
 		while(i<z and constructor == null) {
 			miniJava::Member m := res.type.members->at(i);
 			if(m.oclIsKindOf(miniJava::Method)) {
@@ -819,6 +805,7 @@ open class miniJava.NewObject {
 			call.newz := self;
 			state.pushNewFrame(res, call, newContext);
 //			state.pushNewFrame(res, call, newContext)
+//			constructor.body.evaluateStatement(state)
 			constructor.body.evaluateStatement(state);
 //			state.popCurrentFrame
 			state.popCurrentFrame();
@@ -851,7 +838,7 @@ open class miniJava.State {
 		result := self.contextCache;
 	}
 	
-	def void pushNewContext() { //  dispatch
+	def void pushNewContext() { 
 		miniJava::Context newContext := miniJava::Context.create();
 		miniJava::Context currCtx := self.findCurrentContext();
 		if(currCtx != null) {
@@ -875,7 +862,7 @@ open class miniJava.State {
 		self.outputStream.stream += str;
 	}
 	
-	def void pushNewFrame(miniJava::ObjectInstance receiver, miniJava::Call c, miniJava::Context newContext) { //  dispatch
+	def void pushNewFrame(miniJava::ObjectInstance receiver, miniJava::Call c, miniJava::Context newContext) { 
 		miniJava::Frame newFrame := miniJava::Frame.create();
 		newFrame.instance := receiver;
 		newFrame.call := c;
@@ -896,7 +883,7 @@ open class miniJava.State {
 }
 
 open class miniJava.Frame {
-	[ mutable childFrame ]
+//	[ mutable childFrame ]
 	
 	def  miniJava::Context findCurrentContext() {
 		if (self.childFrame != null) {
@@ -923,7 +910,7 @@ open class miniJava.SymbolBinding {}
 
 open class miniJava.Context {
 	
-	[ mutable bindings ] 
+//	[ mutable bindings ] 
 	
 	def miniJava::SymbolBinding findBinding(miniJava::Symbol symbol) {
 		if (not self.cache.containsKey(symbol)) {
@@ -939,7 +926,7 @@ open class miniJava.Context {
 				}
 			}
 		}
-		result := self.cache.getFromMap(symbol);
+		result := self.cache.get(symbol);
 	}
 	
 	def miniJava::Context findCurrentContext() {
@@ -953,7 +940,7 @@ open class miniJava.Context {
 
 
 open class miniJava.Value {
-	def String customToString() { //  dispatch
+	def String customToString() { 
 		result := 'ERROR customToString not overloaded';
 	}
 	
@@ -983,11 +970,11 @@ open class miniJava.ArrayRefValue {
 		result := tmp; 
 	}
 	
-	def String customToString() { //  dispatch
+	def String customToString() { 
 		
 		String res := '[';
 		int i := 0;
-		int lgt := self.instance.value->size(); 
+		int lgt := self.getInstance().getValue()->size(); 
 		while(i<lgt) {
 			miniJava::Value tmpv := self.instance.value->at(i);
 			res := res + tmpv.customToString();
@@ -1015,11 +1002,11 @@ open class miniJava.IntegerValue {
 }
 
 open class miniJava.BooleanValue {
-	def String customToString() { //  dispatch
+	def String customToString() { 
 		result := self.value + '';
 	}
 	
-	def miniJava::Value copyj() { //  dispatch
+	def miniJava::Value copyj() { 
 		miniJava::BooleanValue tmp := miniJava::BooleanValue.create();
 		tmp.value := self.value;
 		result := tmp; 
@@ -1027,11 +1014,11 @@ open class miniJava.BooleanValue {
 }
 
 open class miniJava.StringValue {
-	def String customToString() { //  dispatch
+	def String customToString() { 
 		result := self.value.toString();
 	}
 	
-	def miniJava::Value copyj() { //  dispatch
+	def miniJava::Value copyj() { 
 		miniJava::StringValue tmp := miniJava::StringValue.create();
 		tmp.value := self.value;
 		result := tmp; 
@@ -1048,13 +1035,13 @@ open class miniJava.NullValue {
 //// TYPES 
 
 open class miniJava.TypeRef {
-	def boolean compare(miniJava::TypeRef other) { //  dispatch
+	def boolean compare(miniJava::TypeRef other) { 
 		result := self.eClass() == other.eClass();
 	}
 }
 
 open class miniJava.ClassRef {
-	def boolean compare(miniJava::TypeRef other) { //  dispatch
+	def boolean compare(miniJava::TypeRef other) { 
 		if(other.oclIsKindOf(miniJava::ClassRef)) {
 			miniJava::ClassRef ocr := other;
 			result := self.referencedClass == ocr.referencedClass;
@@ -1066,7 +1053,7 @@ open class miniJava.ClassRef {
 
 
 open class miniJava.Parameter {
-	def boolean compare(miniJava::Parameter other) { //  dispatch
+	def boolean compare(miniJava::Parameter other) { 
 		result := self.name == other.name and self.typeRef.compare(other.typeRef);
 	}
 }

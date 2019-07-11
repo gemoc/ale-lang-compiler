@@ -1,8 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
 import miniJava.Expression;
-import miniJava.State;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -92,15 +90,5 @@ public class ExpressionOpImpl extends StatementOpImpl implements ExpressionOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public void evaluateStatement(State state) {
-    rev.$((Expression)this.obj).evaluateExpression(((State) (state)));
-  }
-
-  public Value evaluateExpression(State state) {
-    Value result;
-    result = ((Value) (null));
-    return result;
   }
 }

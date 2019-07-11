@@ -1,16 +1,7 @@
 package minijava_exec.impl.operation.impl;
 
-import java.lang.Boolean;
-import java.lang.Integer;
-import miniJava.Block;
-import miniJava.Clazz;
-import miniJava.Member;
 import miniJava.Method;
-import miniJava.Parameter;
-import miniJava.State;
-import miniJava.TypeRef;
 import miniJava.revisitor.MiniJavaRevisitor;
-import minijava.MapService;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
 import minijava_exec.impl.operation.ArrayInstanceOp;
@@ -88,9 +79,6 @@ import minijava_exec.impl.operation.ValueOp;
 import minijava_exec.impl.operation.VariableDeclarationOp;
 import minijava_exec.impl.operation.VoidTypeRefOp;
 import minijava_exec.impl.operation.WhileStatementOp;
-import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class MethodOpImpl extends MemberOpImpl implements MethodOp {
   private MiniJavaRevisitor<AndOp, AndOp, AndOp, ArrayAccessOp, ArrayAccessOp, ArrayAccessOp, ArrayInstanceOp, ArrayLengthOp, ArrayLengthOp, ArrayLengthOp, ArrayRefValueOp, ArrayTypeRefOp, AssigneeOp, AssignmentOp, BlockOp, BoolConstantOp, BoolConstantOp, BoolConstantOp, BooleanTypeRefOp, BooleanValueOp, CallOp, ClassRefOp, ClazzOp, ContextOp, DivisionOp, DivisionOp, DivisionOp, EqualityOp, EqualityOp, EqualityOp, ExpressionOp, ExpressionOp, ExpressionOp, FieldOp, FieldAccessOp, FieldAccessOp, FieldAccessOp, FieldBindingOp, ForStatementOp, FrameOp, IfStatementOp, ImportOp, InequalityOp, InequalityOp, InequalityOp, InferiorOp, InferiorOp, InferiorOp, InferiorOrEqualOp, InferiorOrEqualOp, InferiorOrEqualOp, IntConstantOp, IntConstantOp, IntConstantOp, IntegerTypeRefOp, IntegerValueOp, InterfaceOp, MemberOp, MethodOp, MethodCallOp, MethodCallOp, MethodCallOp, MethodCall2Op, MinusOp, MinusOp, MinusOp, ModuloOp, ModuloOp, ModuloOp, MultiplicationOp, MultiplicationOp, MultiplicationOp, NamedElementOp, NegOp, NegOp, NegOp, NewArrayOp, NewArrayOp, NewArrayOp, NewCallOp, NewObjectOp, NewObjectOp, NewObjectOp, NotOp, NotOp, NotOp, NullOp, NullOp, NullOp, NullValueOp, ObjectInstanceOp, ObjectRefValueOp, OrOp, OrOp, OrOp, OutputStreamOp, ParameterOp, PlusOp, PlusOp, PlusOp, PrintStatementOp, ProgramOp, ReturnOp, SingleTypeRefOp, StateOp, StatementOp, StringConstantOp, StringConstantOp, StringConstantOp, StringTypeRefOp, StringValueOp, SuperOp, SuperOp, SuperOp, SuperiorOp, SuperiorOp, SuperiorOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SymbolOp, SymbolBindingOp, SymbolRefOp, SymbolRefOp, SymbolRefOp, ThisOp, ThisOp, ThisOp, TypeDeclarationOp, TypeRefOp, TypedDeclarationOp, ValueOp, VariableDeclarationOp, VariableDeclarationOp, VariableDeclarationOp, VoidTypeRefOp, WhileStatementOp> rev;
@@ -102,65 +90,5 @@ public class MethodOpImpl extends MemberOpImpl implements MethodOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public void evaluateStatement(State state) {
-    rev.$((Block)this.obj.getBody()).evaluateStatement(((State) (state)));
-  }
-
-  public Method findOverride(Clazz c) {
-    Method result;
-    if(!(MapService.containsKey((EMap) (this.obj.getCache()), (Clazz) (c)))) {
-      Method that = ((Method) (this.obj));
-      if(CollectionService.exists(c.getMembers(), (x) -> EqualService.equals((x), (that)))) {
-        result = ((Method) (this.obj));
-      }
-      else {
-        int i = ((int) (0));
-        Method found = ((Method) (null));
-        while ((((i) < (CollectionService.size(c.getMembers()))) && (EqualService.equals((found), (null))))) {
-          Member tmpm = ((Member) (CollectionService.get(c.getMembers(), i)));
-          if(tmpm instanceof Method) {
-            Method m = ((Method) (tmpm));
-            if(((EqualService.equals((m.getName()), (this.obj.getName()))) && (EqualService.equals((CollectionService.size(m.getParams())), (CollectionService.size(this.obj.getParams())))))) {
-              boolean compared = ((boolean) (rev.$((TypeRef)m.getTypeRef()).compare(((TypeRef) (this.obj.getTypeRef())))));
-              int j = ((int) (0));
-              int paramlgt = ((int) (CollectionService.size(m.getParams())));
-              boolean alltrue = ((boolean) (compared));
-              while ((((j) < (paramlgt)) && (alltrue))) {
-                Parameter p1 = ((Parameter) (CollectionService.get(m.getParams(), j)));
-                Parameter tmpp = ((Parameter) (CollectionService.head(CollectionService.select(this.obj.getParams(), (p2) -> rev.$((Parameter)p1).compare(((Parameter) (p2)))))));
-                alltrue = ((Boolean) (!EqualService.equals((tmpp), (null))));
-                j = ((Integer) ((j) + (1)));
-              }
-              if(alltrue) {
-                found = ((Method) (m));
-              }
-            }
-          }
-          i = ((Integer) ((i) + (1)));
-        }
-        if(!EqualService.equals((found), (null))) {
-          result = ((Method) (found));
-        }
-        else {
-          if(!EqualService.equals((c.getSuperClass()), (null))) {
-            result = ((Method) (rev.$((Method)this.obj).findOverride(((Clazz) (c.getSuperClass())))));
-          }
-          else {
-            result = ((Method) (null));
-          }
-        }
-      }
-      MapService.put((EMap) (this.obj.getCache()), (Clazz) (c), (Method) (result));
-    }
-    else {
-      result = ((Method) (MapService.getFromMap((EMap) (this.obj.getCache()), (Clazz) (c))));
-    }
-    return result;
-  }
-
-  public void call(State state) {
-    rev.$((Block)this.obj.getBody()).evaluateStatement(((State) (state)));
   }
 }

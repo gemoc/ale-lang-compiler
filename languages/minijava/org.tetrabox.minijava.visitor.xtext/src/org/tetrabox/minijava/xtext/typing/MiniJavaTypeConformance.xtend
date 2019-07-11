@@ -1,7 +1,7 @@
 package org.tetrabox.minijava.xtext.typing
 
 import com.google.inject.Inject
-import org.tetrabox.minijava.xtext.MiniJavaModelUtil
+import miniJava.util.MiniJavaModelUtil
 import miniJava.visitor.miniJava.*;
 
 

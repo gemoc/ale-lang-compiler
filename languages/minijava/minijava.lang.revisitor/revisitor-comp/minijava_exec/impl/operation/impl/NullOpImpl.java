@@ -1,10 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import miniJava.MiniJavaFactory;
 import miniJava.Null;
-import miniJava.NullValue;
-import miniJava.State;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -94,11 +90,5 @@ public class NullOpImpl extends ExpressionOpImpl implements NullOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public Value evaluateExpression(State state) {
-    Value result;
-    result = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
-    return result;
   }
 }

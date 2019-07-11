@@ -1,23 +1,25 @@
 package org.eclipse.emf.ecoretools.ale.compiler.interpreter.test
 
-import execboa.MapService
-import execboa.MathService
-import execboa.SerializeService
 import java.io.File
 import java.nio.charset.Charset
 import java.nio.file.Files
+import java.util.List
 import java.util.Map
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.filefilter.TrueFileFilter
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
+import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeAll
@@ -26,8 +28,6 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 
 import static spoon.testing.Assert.assertThat
-import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 
 class InterpreterTestAll {
 
@@ -35,13 +35,13 @@ class InterpreterTestAll {
 
 	static val compilers = newHashMap(
 //		"interpreter" -> [f|compileProjectInterpreter(f)],
-		"interpreter.truffle" -> [f|compileProjectInterpreterTruffle(f)]
-//		"revisitor" -> [f|compileProjectRevisitor(f)]//,
+//		"interpreter.truffle" -> [f|compileProjectInterpreterTruffle(f)]
+		"revisitor" -> [f|compileProjectRevisitor(f)]//,
 //		"switch" -> [f|compileProjectSwitch(f)] ,
 //		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
-	private static final boolean DEBUG = false
+	private static final boolean DEBUG = true
 
 	def static void log(String txt) {
 		if(DEBUG) println(txt)
@@ -54,9 +54,8 @@ class InterpreterTestAll {
 		]
 
 		compilers.forEach [ k, v |
-			new File("assets").listFiles.filter[it.isDirectory]
-//				.filter[it.path == "assets/autocast"]
-				.forEach [
+			new File("assets").listFiles.filter[it.isDirectory] // .filter[it.path == "assets/autocast"]
+			.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))
 				} catch (Exception e) {
@@ -98,7 +97,9 @@ class InterpreterTestAll {
 				val d = e.key
 				val tmpDir = e.value
 				val expectedDir = new File('''test-results/«k»/«d.name»''')
-				val files = FileUtils.listFiles(expectedDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE).sortBy[it.absolutePath]
+				if(!expectedDir.exists) println('''«expectedDir» does not exist.''')
+				val files = FileUtils.listFiles(expectedDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)
+					.sortBy [it.absolutePath]
 				val tmpfiles = FileUtils.listFiles(tmpDir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
 				DynamicContainer.dynamicContainer(d.name, files.map [ f |
 					val relative = expectedDir.toPath().relativize(f.toPath());
@@ -135,36 +136,82 @@ class InterpreterTestAll {
 		]
 	}
 
-	def static Map<String, Class<?>> getServices(String pts) {
+	def static ServicesRegistrationManager getServices(String pts) {
 		switch (pts) {
 			case "assets/boa_lang":
-				newHashMap(
-					"execboa.MapService" -> MapService,
-					"execboa.MathService" -> MathService,
-					"execboa.SerializeService" -> SerializeService
-				)
+//				newHashMap(
+//					"execboa.MapService" -> MapService,
+//					"execboa.MathService" -> MathService,
+//					"execboa.SerializeService" -> SerializeService
+//				)
+				new ServicesRegistrationManager() {
+					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+						this.registeredServices.put("put", "execboa" -> "MapService")
+						this.registeredServices.put("putAll", "execboa" -> "MapService")
+						this.registeredServices.put("replaceWith", "execboa" -> "MapService")
+						this.registeredServices.put("getFromMap", "execboa" -> "MapService")
+						this.registeredServices.put("mapToString", "execboa" -> "MapService")
+						this.registeredServices.put("containsKey", "execboa" -> "MapService")
+						this.registeredServices.put("newMap", "execboa" -> "MapService")
+					// TODO: math + serialize
+					}
+
+				}
 			case "assets/minijava":
-				newHashMap(
-					"execboa.MapService" -> MapService,
-					"execboa.MathService" -> MathService
-				)
+//				newHashMap(
+//					"execboa.MapService" -> MapService,
+//					"execboa.MathService" -> MathService
+//				)
+				new ServicesRegistrationManager() {
+					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+						this.registeredServices.put("put", "execboa" -> "MapService")
+						this.registeredServices.put("putAll", "execboa" -> "MapService")
+						this.registeredServices.put("replaceWith", "execboa" -> "MapService")
+						this.registeredServices.put("getFromMap", "execboa" -> "MapService")
+						this.registeredServices.put("mapToString", "execboa" -> "MapService")
+						this.registeredServices.put("containsKey", "execboa" -> "MapService")
+						this.registeredServices.put("newMap", "execboa" -> "MapService")
+						
+						this.registeredServices.put("mod", "execboa" -> "MathService")
+						
+						
+					}
+
+				}
 			case "assets/logo_lang":
-				newHashMap(
-					"org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices" -> TrigoServices
-				)
+//				newHashMap(
+//					"org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices" -> TrigoServices
+//				)
+				new ServicesRegistrationManager() {
+					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+					}
+
+				}
 			case "assets/testmap1":
-				newHashMap(
-					"execboa.MapService" -> MapService
-				)
+//				newHashMap(
+//					"execboa.MapService" -> MapService
+//				)
+				new ServicesRegistrationManager() {
+					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+					}
+
+				}
 			default:
-				newHashMap
+				new ServicesRegistrationManager() {
+					
+					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+				//		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+					}
+					
+					}
 		}
 	}
 
 	def static compileProjectInterpreter(File directory) {
 
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALEInterpreterImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils)
+		val compiler = new ALEInterpreterImplementationCompiler(directory.name, tmpDir,
+			new Dsl('''«directory.path»/test.dsl'''), new EcoreUtils, directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
@@ -173,13 +220,15 @@ class InterpreterTestAll {
 		compiler.compile()
 		tmpDir
 	}
-	
+
 	def static compileProjectInterpreterTruffle(File directory) {
 
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 		val dsl = new Dsl('''«directory.path»/test.dsl''')
 		dsl.truffle = true
-		val compiler = new ALEInterpreterImplementationCompiler(directory.name, tmpDir, dsl, directory.path.services, new EcoreUtils)
+
+		val compiler = new ALEInterpreterImplementationCompiler(directory.name, tmpDir, dsl, new EcoreUtils,
+			directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
@@ -192,7 +241,8 @@ class InterpreterTestAll {
 	def static compileProjectRevisitor(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 
-		val compiler = new ALERevisitorImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils, new JavaPoetUtils)
+		val compiler = new ALERevisitorImplementationCompiler(directory.name, tmpDir,
+			new Dsl('''«directory.path»/test.dsl'''), new EcoreUtils, new JavaPoetUtils, directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
@@ -204,7 +254,8 @@ class InterpreterTestAll {
 
 	def static compileProjectSwitch(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALESwitchImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils)
+		val compiler = new ALESwitchImplementationCompiler(directory.name, tmpDir,
+			new Dsl('''«directory.path»/test.dsl'''), new EcoreUtils, directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)
@@ -216,7 +267,8 @@ class InterpreterTestAll {
 
 	def static compileProjectVisitor(File directory) {
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
-		val compiler = new ALEVisitorImplementationCompiler(directory.name, tmpDir, new Dsl('''«directory.path»/test.dsl'''), directory.path.services, new EcoreUtils)
+		val compiler = new ALEVisitorImplementationCompiler(directory.name, tmpDir,
+			new Dsl('''«directory.path»/test.dsl'''), new EcoreUtils, directory.path.services)
 
 		GenModelPackage.eINSTANCE.eClass
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new XMIResourceFactoryImpl)

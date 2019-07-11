@@ -1,22 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import java.lang.Integer;
-import miniJava.Block;
-import miniJava.Context;
-import miniJava.Expression;
-import miniJava.Field;
-import miniJava.FieldBinding;
-import miniJava.Member;
-import miniJava.Method;
-import miniJava.MiniJavaFactory;
-import miniJava.NewCall;
 import miniJava.NewObject;
-import miniJava.ObjectInstance;
-import miniJava.ObjectRefValue;
-import miniJava.Parameter;
-import miniJava.State;
-import miniJava.SymbolBinding;
-import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -95,8 +79,6 @@ import minijava_exec.impl.operation.ValueOp;
 import minijava_exec.impl.operation.VariableDeclarationOp;
 import minijava_exec.impl.operation.VoidTypeRefOp;
 import minijava_exec.impl.operation.WhileStatementOp;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class NewObjectOpImpl extends ExpressionOpImpl implements NewObjectOp {
   private MiniJavaRevisitor<AndOp, AndOp, AndOp, ArrayAccessOp, ArrayAccessOp, ArrayAccessOp, ArrayInstanceOp, ArrayLengthOp, ArrayLengthOp, ArrayLengthOp, ArrayRefValueOp, ArrayTypeRefOp, AssigneeOp, AssignmentOp, BlockOp, BoolConstantOp, BoolConstantOp, BoolConstantOp, BooleanTypeRefOp, BooleanValueOp, CallOp, ClassRefOp, ClazzOp, ContextOp, DivisionOp, DivisionOp, DivisionOp, EqualityOp, EqualityOp, EqualityOp, ExpressionOp, ExpressionOp, ExpressionOp, FieldOp, FieldAccessOp, FieldAccessOp, FieldAccessOp, FieldBindingOp, ForStatementOp, FrameOp, IfStatementOp, ImportOp, InequalityOp, InequalityOp, InequalityOp, InferiorOp, InferiorOp, InferiorOp, InferiorOrEqualOp, InferiorOrEqualOp, InferiorOrEqualOp, IntConstantOp, IntConstantOp, IntConstantOp, IntegerTypeRefOp, IntegerValueOp, InterfaceOp, MemberOp, MethodOp, MethodCallOp, MethodCallOp, MethodCallOp, MethodCall2Op, MinusOp, MinusOp, MinusOp, ModuloOp, ModuloOp, ModuloOp, MultiplicationOp, MultiplicationOp, MultiplicationOp, NamedElementOp, NegOp, NegOp, NegOp, NewArrayOp, NewArrayOp, NewArrayOp, NewCallOp, NewObjectOp, NewObjectOp, NewObjectOp, NotOp, NotOp, NotOp, NullOp, NullOp, NullOp, NullValueOp, ObjectInstanceOp, ObjectRefValueOp, OrOp, OrOp, OrOp, OutputStreamOp, ParameterOp, PlusOp, PlusOp, PlusOp, PrintStatementOp, ProgramOp, ReturnOp, SingleTypeRefOp, StateOp, StatementOp, StringConstantOp, StringConstantOp, StringConstantOp, StringTypeRefOp, StringValueOp, SuperOp, SuperOp, SuperOp, SuperiorOp, SuperiorOp, SuperiorOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SymbolOp, SymbolBindingOp, SymbolRefOp, SymbolRefOp, SymbolRefOp, ThisOp, ThisOp, ThisOp, TypeDeclarationOp, TypeRefOp, TypedDeclarationOp, ValueOp, VariableDeclarationOp, VariableDeclarationOp, VariableDeclarationOp, VoidTypeRefOp, WhileStatementOp> rev;
@@ -108,63 +90,5 @@ public class NewObjectOpImpl extends ExpressionOpImpl implements NewObjectOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public Value evaluateExpression(State state) {
-    Value result;
-    ObjectInstance res = ((ObjectInstance) (MiniJavaFactory.eINSTANCE.createObjectInstance()));
-    res.setType(this.obj.getType());
-    state.getObjectsHeap().add(res);
-    int i = ((int) (0));
-    int z = ((int) (CollectionService.size(res.getType().getMembers())));
-    while ((i) < (z)) {
-      Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
-      if(m instanceof Field) {
-        Field f = ((Field) (m));
-        if(!EqualService.equals((f.getDefaultValue()), (null))) {
-          Value v = ((Value) (rev.$((Expression)f.getDefaultValue()).evaluateExpression(((State) (state)))));
-          FieldBinding fb = ((FieldBinding) (MiniJavaFactory.eINSTANCE.createFieldBinding()));
-          fb.setField(f);
-          fb.setValue(v);
-          res.getFieldbindings().add(fb);
-        }
-      }
-      i = ((Integer) ((i) + (1)));
-    }
-    i = ((Integer) (0));
-    Method constructor = null;
-    while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
-      Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
-      if(m instanceof Method) {
-        Method mtd = ((Method) (m));
-        if(((EqualService.equals((mtd.getName()), (null))) && (EqualService.equals((CollectionService.size(mtd.getParams())), (CollectionService.size(this.obj.getArgs())))))) {
-          constructor = ((Method) (mtd));
-        }
-      }
-      i = ((Integer) ((i) + (1)));
-    }
-    if(!EqualService.equals((constructor), (null))) {
-      Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
-      i = ((Integer) (0));
-      z = ((Integer) (CollectionService.size(this.obj.getArgs())));
-      while ((i) < (z)) {
-        Expression arg = ((Expression) (CollectionService.get(this.obj.getArgs(), i)));
-        Parameter param = ((Parameter) (CollectionService.get(constructor.getParams(), i)));
-        SymbolBinding binding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
-        binding.setSymbol(param);
-        binding.setValue(rev.$((Expression)arg).evaluateExpression(((State) (state))));
-        i = ((Integer) ((i) + (1)));
-        newContext.getBindings().add(binding);
-      }
-      NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
-      call.setNewz(this.obj);
-      rev.$((State)state).pushNewFrame(((ObjectInstance) (res)), ((NewCall) (call)), ((Context) (newContext)));
-      rev.$((Block)constructor.getBody()).evaluateStatement(((State) (state)));
-      rev.$((State)state).popCurrentFrame();
-    }
-    ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
-    tmp.setInstance(res);
-    result = ((ObjectRefValue) (tmp));
-    return result;
   }
 }

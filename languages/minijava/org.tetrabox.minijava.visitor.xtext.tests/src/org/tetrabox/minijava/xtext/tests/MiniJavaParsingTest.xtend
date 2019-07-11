@@ -6,13 +6,13 @@ package org.tetrabox.minijava.xtext.tests
 import com.google.inject.Inject
 import miniJava.visitor.miniJava.Program
 import org.eclipse.xtext.testing.InjectWith
-import org.eclipse.xtext.testing.extensions.InjectionExtension
+import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.testing.util.ParseHelper
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.^extension.ExtendWith
+import org.junit.Assert
+import org.junit.Test
+import org.junit.runner.RunWith
 
-@ExtendWith(InjectionExtension)
+@RunWith(XtextRunner)
 @InjectWith(MiniJavaInjectorProvider)
 class MiniJavaParsingTest {
 	@Inject
@@ -23,8 +23,7 @@ class MiniJavaParsingTest {
 		val result = parseHelper.parse('''
 			Hello Xtext!
 		''')
-		Assertions.assertNotNull(result)
-		val errors = result.eResource.errors
-		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		Assert.assertNotNull(result)
+		Assert.assertTrue(result.eResource.errors.isEmpty)
 	}
 }

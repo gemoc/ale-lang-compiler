@@ -1,20 +1,20 @@
-package org.tetrabox.minijava.xtext
+package miniJava.util
 
-import miniJava.Block
-import miniJava.BooleanTypeRef
-import miniJava.ClassRef
-import miniJava.Field
-import miniJava.IntegerTypeRef
-import miniJava.Member
-import miniJava.Method
-import miniJava.Return
-import miniJava.StringTypeRef
-import miniJava.TypeRef
-import miniJava.TypeDeclaration
-import miniJava.Interface
+import miniJava.visitor.miniJava.Block
+import miniJava.visitor.miniJava.BooleanTypeRef
+import miniJava.visitor.miniJava.ClassRef
+import miniJava.visitor.miniJava.Field
+import miniJava.visitor.miniJava.IntegerTypeRef
+import miniJava.visitor.miniJava.Member
+import miniJava.visitor.miniJava.Method
+import miniJava.visitor.miniJava.Return
+import miniJava.visitor.miniJava.StringTypeRef
+import miniJava.visitor.miniJava.TypeRef
+import miniJava.visitor.miniJava.TypeDeclaration
+import miniJava.visitor.miniJava.Interface
 import java.util.Set
-import miniJava.TypedDeclaration
-import miniJava.Clazz
+import miniJava.visitor.miniJava.TypedDeclaration
+import miniJava.visitor.miniJava.Clazz
 
 class MiniJavaModelUtil {
 

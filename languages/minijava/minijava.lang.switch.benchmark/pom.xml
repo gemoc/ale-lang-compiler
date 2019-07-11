@@ -16,7 +16,7 @@
         <dependency>
             <groupId>minijava.lang.switch</groupId>
             <artifactId>minijava.lang.switch</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version> 
         </dependency>
     </dependencies>
 </project>

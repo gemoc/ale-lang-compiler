@@ -1,11 +1,6 @@
 package minijava_exec.impl.operation.impl;
 
-import miniJava.Assignment;
-import miniJava.Block;
-import miniJava.BooleanValue;
-import miniJava.Expression;
 import miniJava.ForStatement;
-import miniJava.State;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -95,18 +90,5 @@ public class ForStatementOpImpl extends StatementOpImpl implements ForStatementO
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
-  }
-
-  public void evaluateStatement(State state) {
-    rev.$((State)state).pushNewContext();
-    rev.$((Assignment)this.obj.getDeclaration()).evaluateStatement(((State) (state)));
-    BooleanValue continueFor = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))))));
-    while (continueFor.isValue()) {
-      rev.$((Block)this.obj.getBlock()).evaluateStatement(((State) (state)));
-      rev.$((Assignment)this.obj.getProgression()).evaluateStatement(((State) (state)));
-      BooleanValue continueFor2 = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))))));
-      continueFor = ((BooleanValue) (continueFor2));
-    }
-    rev.$((State)state).popCurrentContext();
   }
 }
