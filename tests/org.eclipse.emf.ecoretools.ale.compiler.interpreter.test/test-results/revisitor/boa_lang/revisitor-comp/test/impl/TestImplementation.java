@@ -125,116 +125,48 @@ import test.impl.operation.impl.VarOpImpl;
 import test.impl.operation.impl.WithOpImpl;
 
 public interface TestImplementation extends BoaRevisitor<AppOp, ArithOpOp, ArithOpDivideOp, ArithOpMinusOp, ArithOpPlusOp, ArithOpRemainderOp, ArithOpTimesOp, AssignOp, BObjectOp, BoolOp, BoolOpOp, BoolOpAndOp, BoolOpOrOp, CmpOpOp, CmpOpEqualOp, CmpOpLessOp, CmpOpUnequalOp, CopyOp, CtxOp, DefOp, EvalBoolResOp, EvalBoundFunResOp, EvalFunResOp, EvalIntResOp, EvalMapResOp, EvalResOp, ExprOp, FieldOp, FileOp, FunOp, IfOp, IntOp, LetOp, NotOp, ProjectOp, SeqOp, SkipOp, ThisOp, TopLevelCmdOp, VarOp, WithOp> {
-	default FileOp boa__File(File it) {
-		return new FileOpImpl(it, this);
-	}
-
-	default TopLevelCmdOp boa__TopLevelCmd(TopLevelCmd it) {
-		return new TopLevelCmdOpImpl(it, this);
-	}
-
-	default ExprOp boa__Expr(Expr it) {
-		return new ExprOpImpl(it, this);
-	}
-
-	default DefOp boa__Def(Def it) {
-		return new DefOpImpl(it, this);
-	}
-
 	default AppOp boa__App(App it) {
 		return new AppOpImpl(it, this);
-	}
-
-	default VarOp boa__Var(Var it) {
-		return new VarOpImpl(it, this);
-	}
-
-	default ThisOp boa__This(This it) {
-		return new ThisOpImpl(it, this);
-	}
-
-	default BoolOp boa__Bool(Bool it) {
-		return new BoolOpImpl(it, this);
-	}
-
-	default IntOp boa__Int(Int it) {
-		return new IntOpImpl(it, this);
-	}
-
-	default SkipOp boa__Skip(Skip it) {
-		return new SkipOpImpl(it, this);
-	}
-
-	default ProjectOp boa__Project(Project it) {
-		return new ProjectOpImpl(it, this);
-	}
-
-	default BObjectOp boa__BObject(BObject it) {
-		return new BObjectOpImpl(it, this);
-	}
-
-	default FieldOp boa__Field(Field it) {
-		return new FieldOpImpl(it, this);
-	}
-
-	default CopyOp boa__Copy(Copy it) {
-		return new CopyOpImpl(it, this);
-	}
-
-	default WithOp boa__With(With it) {
-		return new WithOpImpl(it, this);
 	}
 
 	default ArithOpOp boa__ArithOp(ArithOp it) {
 		return new ArithOpOpImpl(it, this);
 	}
 
-	default NotOp boa__Not(Not it) {
-		return new NotOpImpl(it, this);
-	}
-
-	default CmpOpOp boa__CmpOp(CmpOp it) {
-		return new CmpOpOpImpl(it, this);
-	}
-
-	default BoolOpOp boa__BoolOp(boa.BoolOp it) {
-		return new BoolOpOpImpl(it, this);
-	}
-
-	default IfOp boa__If(If it) {
-		return new IfOpImpl(it, this);
-	}
-
-	default LetOp boa__Let(Let it) {
-		return new LetOpImpl(it, this);
-	}
-
-	default FunOp boa__Fun(Fun it) {
-		return new FunOpImpl(it, this);
-	}
-
-	default AssignOp boa__Assign(Assign it) {
-		return new AssignOpImpl(it, this);
-	}
-
-	default ArithOpPlusOp boa__ArithOpPlus(ArithOpPlus it) {
-		return new ArithOpPlusOpImpl(it, this);
+	default ArithOpDivideOp boa__ArithOpDivide(ArithOpDivide it) {
+		return new ArithOpDivideOpImpl(it, this);
 	}
 
 	default ArithOpMinusOp boa__ArithOpMinus(ArithOpMinus it) {
 		return new ArithOpMinusOpImpl(it, this);
 	}
 
-	default ArithOpTimesOp boa__ArithOpTimes(ArithOpTimes it) {
-		return new ArithOpTimesOpImpl(it, this);
-	}
-
-	default ArithOpDivideOp boa__ArithOpDivide(ArithOpDivide it) {
-		return new ArithOpDivideOpImpl(it, this);
+	default ArithOpPlusOp boa__ArithOpPlus(ArithOpPlus it) {
+		return new ArithOpPlusOpImpl(it, this);
 	}
 
 	default ArithOpRemainderOp boa__ArithOpRemainder(ArithOpRemainder it) {
 		return new ArithOpRemainderOpImpl(it, this);
+	}
+
+	default ArithOpTimesOp boa__ArithOpTimes(ArithOpTimes it) {
+		return new ArithOpTimesOpImpl(it, this);
+	}
+
+	default AssignOp boa__Assign(Assign it) {
+		return new AssignOpImpl(it, this);
+	}
+
+	default BObjectOp boa__BObject(BObject it) {
+		return new BObjectOpImpl(it, this);
+	}
+
+	default BoolOp boa__Bool(Bool it) {
+		return new BoolOpImpl(it, this);
+	}
+
+	default BoolOpOp boa__BoolOp(boa.BoolOp it) {
+		return new BoolOpOpImpl(it, this);
 	}
 
 	default BoolOpAndOp boa__BoolOpAnd(BoolOpAnd it) {
@@ -245,47 +177,115 @@ public interface TestImplementation extends BoaRevisitor<AppOp, ArithOpOp, Arith
 		return new BoolOpOrOpImpl(it, this);
 	}
 
-	default SeqOp boa__Seq(Seq it) {
-		return new SeqOpImpl(it, this);
+	default CmpOpOp boa__CmpOp(CmpOp it) {
+		return new CmpOpOpImpl(it, this);
 	}
 
 	default CmpOpEqualOp boa__CmpOpEqual(CmpOpEqual it) {
 		return new CmpOpEqualOpImpl(it, this);
 	}
 
+	default CmpOpLessOp boa__CmpOpLess(CmpOpLess it) {
+		return new CmpOpLessOpImpl(it, this);
+	}
+
 	default CmpOpUnequalOp boa__CmpOpUnequal(CmpOpUnequal it) {
 		return new CmpOpUnequalOpImpl(it, this);
 	}
 
-	default CmpOpLessOp boa__CmpOpLess(CmpOpLess it) {
-		return new CmpOpLessOpImpl(it, this);
+	default CopyOp boa__Copy(Copy it) {
+		return new CopyOpImpl(it, this);
 	}
 
 	default CtxOp boa__Ctx(Ctx it) {
 		return new CtxOpImpl(it, this);
 	}
 
-	default EvalResOp boa__EvalRes(EvalRes it) {
-		return new EvalResOpImpl(it, this);
+	default DefOp boa__Def(Def it) {
+		return new DefOpImpl(it, this);
 	}
 
-	default EvalMapResOp boa__EvalMapRes(EvalMapRes it) {
-		return new EvalMapResOpImpl(it, this);
-	}
-
-	default EvalFunResOp boa__EvalFunRes(EvalFunRes it) {
-		return new EvalFunResOpImpl(it, this);
+	default EvalBoolResOp boa__EvalBoolRes(EvalBoolRes it) {
+		return new EvalBoolResOpImpl(it, this);
 	}
 
 	default EvalBoundFunResOp boa__EvalBoundFunRes(EvalBoundFunRes it) {
 		return new EvalBoundFunResOpImpl(it, this);
 	}
 
+	default EvalFunResOp boa__EvalFunRes(EvalFunRes it) {
+		return new EvalFunResOpImpl(it, this);
+	}
+
 	default EvalIntResOp boa__EvalIntRes(EvalIntRes it) {
 		return new EvalIntResOpImpl(it, this);
 	}
 
-	default EvalBoolResOp boa__EvalBoolRes(EvalBoolRes it) {
-		return new EvalBoolResOpImpl(it, this);
+	default EvalMapResOp boa__EvalMapRes(EvalMapRes it) {
+		return new EvalMapResOpImpl(it, this);
+	}
+
+	default EvalResOp boa__EvalRes(EvalRes it) {
+		return new EvalResOpImpl(it, this);
+	}
+
+	default ExprOp boa__Expr(Expr it) {
+		return new ExprOpImpl(it, this);
+	}
+
+	default FieldOp boa__Field(Field it) {
+		return new FieldOpImpl(it, this);
+	}
+
+	default FileOp boa__File(File it) {
+		return new FileOpImpl(it, this);
+	}
+
+	default FunOp boa__Fun(Fun it) {
+		return new FunOpImpl(it, this);
+	}
+
+	default IfOp boa__If(If it) {
+		return new IfOpImpl(it, this);
+	}
+
+	default IntOp boa__Int(Int it) {
+		return new IntOpImpl(it, this);
+	}
+
+	default LetOp boa__Let(Let it) {
+		return new LetOpImpl(it, this);
+	}
+
+	default NotOp boa__Not(Not it) {
+		return new NotOpImpl(it, this);
+	}
+
+	default ProjectOp boa__Project(Project it) {
+		return new ProjectOpImpl(it, this);
+	}
+
+	default SeqOp boa__Seq(Seq it) {
+		return new SeqOpImpl(it, this);
+	}
+
+	default SkipOp boa__Skip(Skip it) {
+		return new SkipOpImpl(it, this);
+	}
+
+	default ThisOp boa__This(This it) {
+		return new ThisOpImpl(it, this);
+	}
+
+	default TopLevelCmdOp boa__TopLevelCmd(TopLevelCmd it) {
+		return new TopLevelCmdOpImpl(it, this);
+	}
+
+	default VarOp boa__Var(Var it) {
+		return new VarOpImpl(it, this);
+	}
+
+	default WithOp boa__With(With it) {
+		return new WithOpImpl(it, this);
 	}
 }

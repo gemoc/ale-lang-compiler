@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Instruction;
 import kmLogo.ProcDeclaration;
 import kmLogo.Turtle;
@@ -58,16 +59,16 @@ public class ProcDeclarationOpImpl extends InstructionOpImpl implements ProcDecl
 
   public double eval(Turtle turtle) {
     double result;
-    result = 0.0;
+    result = ((Double) (0.0));
     for(Instruction instr: this.obj.getInstructions()) {
-      result = rev.$((Instruction)instr).eval(((Turtle) (turtle)));
+      result = ((double) (rev.$((Instruction)instr).eval(((Turtle) (turtle)))));
     }
     return result;
   }
 
   public double deval(Turtle turtle) {
     double result;
-    result = rev.$((ProcDeclaration)this.obj).eval(((Turtle) (turtle)));
+    result = ((double) (rev.$((ProcDeclaration)this.obj).eval(((Turtle) (turtle)))));
     return result;
   }
 }

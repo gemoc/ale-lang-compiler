@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Equals;
 import kmLogo.Expression;
 import kmLogo.Turtle;
@@ -60,10 +61,10 @@ public class EqualsOpImpl extends BinaryExpOpImpl implements EqualsOp {
   public double eval(Turtle turtle) {
     double result;
     if(EqualService.equals((rev.$((Expression)this.obj.getLhs()).eval(((Turtle) (turtle)))), (rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle)))))) {
-      result = 1.0;
+      result = ((Double) 1.0);
     }
     else {
-      result = 0.0;
+      result = ((Double) 0.0);
     }
     return result;
   }
