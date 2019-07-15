@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import emfswitch.emfswitch.operation.LogoProgramOperation
 
-class LogoTest extends AbstractLogoTest {
+class LogoTest extends AbstractLogoTest { 
 
 	static EmfswitchSwitchImplementation rev
 

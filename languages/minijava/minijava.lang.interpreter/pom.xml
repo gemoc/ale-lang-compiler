@@ -1,6 +1,11 @@
 ﻿<project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>minijava</groupId>
+		<artifactId>minijava</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>minijava.lang.interpreter</groupId>
 	<artifactId>minijava.lang.interpreter</artifactId>
@@ -76,10 +81,10 @@
 			<artifactId>org.eclipse.emf.ecoretools.ale.core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</groupId>
-			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</groupId> -->
+<!-- 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
 	</dependencies>
 </project>

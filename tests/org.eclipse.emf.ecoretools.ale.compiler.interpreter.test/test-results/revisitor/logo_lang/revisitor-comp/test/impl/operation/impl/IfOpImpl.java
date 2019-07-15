@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Block;
 import kmLogo.Expression;
 import kmLogo.If;
@@ -61,14 +62,14 @@ public class IfOpImpl extends ControlStructureOpImpl implements IfOp {
   public double eval(Turtle turtle) {
     double result;
     if(!EqualService.equals((rev.$((Expression)this.obj.getCondition()).eval(((Turtle) (turtle)))), (0.0))) {
-      result = rev.$((Block)this.obj.getThenPart()).eval(((Turtle) (turtle)));
+      result = ((double) (rev.$((Block)this.obj.getThenPart()).eval(((Turtle) (turtle)))));
     }
     else {
       if(!EqualService.equals((this.obj.getElsePart()), (null))) {
-        result = rev.$((Block)this.obj.getElsePart()).eval(((Turtle) (turtle)));
+        result = ((double) (rev.$((Block)this.obj.getElsePart()).eval(((Turtle) (turtle)))));
       }
       else {
-        result = 0.0;
+        result = ((Double) (0.0));
       }
     }
     return result;

@@ -19,7 +19,7 @@ class EclipseServiceRegistrationManager extends ServicesRegistrationManager {
 
 			override loaded(String arg0, Class<?> arg1) {
 				System.err.println('''service registration: «arg0» -> «arg1» ''')
-				val classname = arg1.name
+				val classname = arg1.simpleName
 				val packagename = arg1.package.name
 				val pair = packagename -> classname
 				for(method : arg1.declaredMethods){

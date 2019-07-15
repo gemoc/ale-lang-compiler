@@ -10,8 +10,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementation
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.WorkbenchDsl
 import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 class ALEImplementationCompiler {
 
@@ -21,14 +21,21 @@ class ALEImplementationCompiler {
 	 * @param projectRoot absolute path to the project root
 	 * @param projectName project name
 	 */
-	def void compile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm) throws FileNotFoundException {
-		
+	def void compile(String dslStr, File projectRoot, String projectName,
+		ServicesRegistrationManager srm) throws FileNotFoundException {
+
 		val Job a = Job.create('''ALE Compilation''', [ monitor |
-			mavenCompile(dslStr, projectRoot, projectName, srm, "platform:/resource/");
+			mavenCompile(projectRoot, projectName, srm, new EclipseWorkbenchDsl(dslStr));
 		])
 		// FIXME: currently locking the whole workspace during compilation
 		a.rule = ResourcesPlugin.workspace.root
 		a.schedule
+	}
+
+	def void mavenCompile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm,
+		String platformLocation) throws FileNotFoundException, RuntimeException {
+		val dsl = new MavenWorkbenchDsl(dslStr, platformLocation)
+		mavenCompile(projectRoot, projectName, srm, dsl);
 	}
 
 	/**
@@ -37,8 +44,9 @@ class ALEImplementationCompiler {
 	 * @param projectRoot absolute path to the project root
 	 * @param projectName project name
 	 */
-	def void mavenCompile(String dslStr, File projectRoot, String projectName, ServicesRegistrationManager srm, String platformLocation) throws FileNotFoundException, RuntimeException {
-		val dsl = new WorkbenchDsl(dslStr, platformLocation)
+	def void mavenCompile(File projectRoot, String projectName, ServicesRegistrationManager srm,
+		Dsl dsl) throws FileNotFoundException, RuntimeException {
+
 		val eu = new EcoreUtils
 		val compilationType = dsl.compilationType.toLowerCase
 		if (compilationType !== null) {

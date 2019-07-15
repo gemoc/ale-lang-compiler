@@ -36,7 +36,7 @@ public class NewArrayOperationImpl extends ExpressionOperationImpl implements Ne
 		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((ExpressionOperation)this.it.getSize().accept(vis)).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
-		Value defaultValue = null;
+		Value defaultValue = ((Value) (null));
 		if(this.it.getType() instanceof IntegerTypeRef) {
 			IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 			idv.setValue(0);
@@ -64,7 +64,9 @@ public class NewArrayOperationImpl extends ExpressionOperationImpl implements Ne
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			res.getValue().add(((ValueOperation)defaultValue.accept(vis)).copyj());
+			Value dv = ((Value) (defaultValue));
+			Value v = ((Value) (((ValueOperation)dv.accept(vis)).copyj()));
+			res.getValue().add(v);
 			i = ((Integer) ((i) + (1)));
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));

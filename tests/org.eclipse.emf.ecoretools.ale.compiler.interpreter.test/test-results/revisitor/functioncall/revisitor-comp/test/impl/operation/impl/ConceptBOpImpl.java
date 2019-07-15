@@ -21,7 +21,7 @@ public class ConceptBOpImpl extends ConceptAOpImpl implements ConceptBOp {
 
   public ConceptB fct2() {
     ConceptB result;
-    result = FunctioncallFactory.eINSTANCE.createConceptB();
+    result = ((ConceptB) (FunctioncallFactory.eINSTANCE.createConceptB()));
     return result;
   }
 }

@@ -1,8 +1,7 @@
 package test.impl.operation.impl;
 
-import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
-import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
-
+import java.lang.Double;
+import java.lang.Integer;
 import kmLogo.Expression;
 import kmLogo.KmLogoFactory;
 import kmLogo.ProcCall;
@@ -11,6 +10,8 @@ import kmLogo.StackFrame;
 import kmLogo.Turtle;
 import kmLogo.Variable;
 import kmLogo.revisitor.KmLogoRevisitor;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test.impl.operation.BackOp;
 import test.impl.operation.BinaryExpOp;
 import test.impl.operation.BlockOp;
@@ -73,10 +74,10 @@ public class ProcCallOpImpl extends ExpressionOpImpl implements ProcCallOp {
       newVar.setName(CollectionService.get(this.obj.getDeclaration().getArgs(), i).getName());
       newVar.setValue(rev.$((Expression)exp).eval(((Turtle) (turtle))));
       newFrame.getVariables().add(newVar);
-      i = (i) + (1);
+      i = ((Integer) ((i) + (1)));
     }
     turtle.getCallStack().getFrames().add(newFrame);
-    result = 0.0;
+    result = ((Double) (0.0));
     if(this.obj.getDeclaration() instanceof ProcDeclaration) {
       ProcDeclaration decl = ((ProcDeclaration) (this.obj.getDeclaration()));
       rev.$((ProcDeclaration)decl).deval(((Turtle) (turtle)));

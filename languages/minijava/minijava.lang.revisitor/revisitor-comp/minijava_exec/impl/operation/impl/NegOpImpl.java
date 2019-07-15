@@ -99,7 +99,7 @@ public class NegOpImpl extends ExpressionOpImpl implements NegOp {
 
   public Value evaluateExpression(State state) {
     Value result;
-    IntegerValue left = ((IntegerValue) (((IntegerValue) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))))));
+    IntegerValue left = ((IntegerValue) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))));
     IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
     tmp.setValue(-(left.getValue()));
     result = ((IntegerValue) (tmp));

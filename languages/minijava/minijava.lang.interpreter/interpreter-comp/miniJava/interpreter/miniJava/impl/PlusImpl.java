@@ -165,16 +165,25 @@ public class PlusImpl extends ExpressionImpl implements Plus {
 				result = (Value) (tmp) ;
 			}
 			else {
-				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-				tmp.setValue((((IntegerValue) (left)).customToString()) + (((Value) (right)).customToString()));
-				result = (Value) (tmp) ;
-				result = (Value) (null) ;
+				if (right instanceof StringValue) {
+					StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+					tmp.setValue((((IntegerValue) (left)).customToString()) + (((StringValue) (right)).customToString()));
+					result = (Value) (tmp) ;
+				}
+				else {
+					result = (Value) (null) ;
+				}
 			}
 		}
 		else {
-			StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-			tmp.setValue((((Value) (left)).customToString()) + (((Value) (right)).customToString()));
-			result = (Value) (tmp) ;
+			if (((left instanceof StringValue) || (right instanceof StringValue))) {
+				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+				tmp.setValue((((StringValue) (left)).customToString()) + (((StringValue) (right)).customToString()));
+				result = (Value) (tmp) ;
+			}
+			else {
+				result = (Value) (null) ;
+			}
 		}
 		return result;
 	}

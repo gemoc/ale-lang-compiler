@@ -63,16 +63,8 @@ import testmaprelations.CB9;
 import testmaprelations.revisitor.TestmaprelationsRevisitor;
 
 public interface TestImplementation extends TestmaprelationsRevisitor<CA0Op, CA1Op, CA2Op, CA3Op, CA4Op, CA5Op, CA6Op, CA7Op, CA8Op, CA9Op, CB0Op, CB1Op, CB2Op, CB3Op, CB4Op, CB5Op, CB6Op, CB7Op, CB8Op, CB9Op> {
-	default CA0Op testmaprelations__CA0(CA0 it) {
+		default CA0Op testmaprelations__CA0(CA0 it) {
 		return new CA0OpImpl(it, this);
-	}
-
-	default CB0Op testmaprelations__CB0(CB0 it) {
-		return new CB0OpImpl(it, this);
-	}
-
-	default CB1Op testmaprelations__CB1(CB1 it) {
-		return new CB1OpImpl(it, this);
 	}
 
 	default CA1Op testmaprelations__CA1(CA1 it) {
@@ -83,14 +75,6 @@ public interface TestImplementation extends TestmaprelationsRevisitor<CA0Op, CA1
 		return new CA2OpImpl(it, this);
 	}
 
-	default CB2Op testmaprelations__CB2(CB2 it) {
-		return new CB2OpImpl(it, this);
-	}
-
-	default CB3Op testmaprelations__CB3(CB3 it) {
-		return new CB3OpImpl(it, this);
-	}
-
 	default CA3Op testmaprelations__CA3(CA3 it) {
 		return new CA3OpImpl(it, this);
 	}
@@ -99,36 +83,56 @@ public interface TestImplementation extends TestmaprelationsRevisitor<CA0Op, CA1
 		return new CA4OpImpl(it, this);
 	}
 
-	default CB4Op testmaprelations__CB4(CB4 it) {
-		return new CB4OpImpl(it, this);
-	}
-
 	default CA5Op testmaprelations__CA5(CA5 it) {
 		return new CA5OpImpl(it, this);
-	}
-
-	default CB5Op testmaprelations__CB5(CB5 it) {
-		return new CB5OpImpl(it, this);
 	}
 
 	default CA6Op testmaprelations__CA6(CA6 it) {
 		return new CA6OpImpl(it, this);
 	}
 
-	default CB6Op testmaprelations__CB6(CB6 it) {
-		return new CB6OpImpl(it, this);
-	}
-
 	default CA7Op testmaprelations__CA7(CA7 it) {
 		return new CA7OpImpl(it, this);
 	}
 
-	default CB7Op testmaprelations__CB7(CB7 it) {
-		return new CB7OpImpl(it, this);
-	}
-
 	default CA8Op testmaprelations__CA8(CA8 it) {
 		return new CA8OpImpl(it, this);
+	}
+
+	default CA9Op testmaprelations__CA9(CA9 it) {
+		return new CA9OpImpl(it, this);
+	}
+
+	default CB0Op testmaprelations__CB0(CB0 it) {
+		return new CB0OpImpl(it, this);
+	}
+
+	default CB1Op testmaprelations__CB1(CB1 it) {
+		return new CB1OpImpl(it, this);
+	}
+
+	default CB2Op testmaprelations__CB2(CB2 it) {
+		return new CB2OpImpl(it, this);
+	}
+
+	default CB3Op testmaprelations__CB3(CB3 it) {
+		return new CB3OpImpl(it, this);
+	}
+
+	default CB4Op testmaprelations__CB4(CB4 it) {
+		return new CB4OpImpl(it, this);
+	}
+
+	default CB5Op testmaprelations__CB5(CB5 it) {
+		return new CB5OpImpl(it, this);
+	}
+
+	default CB6Op testmaprelations__CB6(CB6 it) {
+		return new CB6OpImpl(it, this);
+	}
+
+	default CB7Op testmaprelations__CB7(CB7 it) {
+		return new CB7OpImpl(it, this);
 	}
 
 	default CB8Op testmaprelations__CB8(CB8 it) {
@@ -137,9 +141,5 @@ public interface TestImplementation extends TestmaprelationsRevisitor<CA0Op, CA1
 
 	default CB9Op testmaprelations__CB9(CB9 it) {
 		return new CB9OpImpl(it, this);
-	}
-
-	default CA9Op testmaprelations__CA9(CA9 it) {
-		return new CA9OpImpl(it, this);
 	}
 }

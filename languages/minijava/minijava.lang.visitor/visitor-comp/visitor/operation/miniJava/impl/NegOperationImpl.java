@@ -22,7 +22,7 @@ public class NegOperationImpl extends ExpressionOperationImpl implements NegOper
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		IntegerValue left = ((IntegerValue) (((IntegerValue) (((ExpressionOperation)this.it.getExpression().accept(vis)).evaluateExpression((State) (state))))));
+		IntegerValue left = ((IntegerValue) (((ExpressionOperation)this.it.getExpression().accept(vis)).evaluateExpression((State) (state))));
 		IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		tmp.setValue(-(left.getValue()));
 		result = ((IntegerValue) (tmp));

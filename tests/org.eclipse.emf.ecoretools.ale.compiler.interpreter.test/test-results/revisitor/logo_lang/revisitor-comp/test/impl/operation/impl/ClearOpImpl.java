@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Clear;
 import kmLogo.Turtle;
 import kmLogo.revisitor.KmLogoRevisitor;
@@ -57,7 +58,7 @@ public class ClearOpImpl extends PrimitiveOpImpl implements ClearOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = 0.0;
+    result = ((Double) 0.0);
     return result;
   }
 }

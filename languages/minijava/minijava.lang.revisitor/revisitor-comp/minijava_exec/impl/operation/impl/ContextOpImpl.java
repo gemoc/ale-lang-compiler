@@ -115,7 +115,7 @@ public class ContextOpImpl implements ContextOp {
         }
       }
     }
-    result = ((SymbolBinding) (MapService.getFromMap((EMap) (this.obj.getCache()), (Symbol) (symbol))));
+    result = ((SymbolBinding) (this.obj.getCache().get((Symbol) (symbol))));
     return result;
   }
 

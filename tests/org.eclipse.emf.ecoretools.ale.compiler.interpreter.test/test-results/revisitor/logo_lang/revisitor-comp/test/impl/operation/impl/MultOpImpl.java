@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Expression;
 import kmLogo.Mult;
 import kmLogo.Turtle;
@@ -58,7 +59,7 @@ public class MultOpImpl extends BinaryExpOpImpl implements MultOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = (rev.$((Expression)this.obj.getLhs()).eval(((Turtle) (turtle)))) * (rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle))));
+    result = ((Double) ((rev.$((Expression)this.obj.getLhs()).eval(((Turtle) (turtle)))) * (rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle))))));
     return result;
   }
 }

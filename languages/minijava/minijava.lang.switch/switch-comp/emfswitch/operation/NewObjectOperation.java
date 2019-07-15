@@ -2,6 +2,7 @@ package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
 import java.lang.Integer;
+import miniJava.Block;
 import miniJava.Context;
 import miniJava.Expression;
 import miniJava.Field;
@@ -53,7 +54,7 @@ public class NewObjectOperation extends ExpressionOperation {
 			i = ((Integer) ((i) + (1)));
 		}
 		i = ((Integer) (0));
-		Method constructor = null;
+		Method constructor = ((Method) (null));
 		while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
 			Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
 			if(m instanceof Method) {
@@ -80,7 +81,8 @@ public class NewObjectOperation extends ExpressionOperation {
 			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this.it);
 			((StateOperation) emfswitch.doSwitch(state)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
-			((BlockOperation) emfswitch.doSwitch(constructor.getBody())).evaluateStatement((State) (state));
+			Block bd = ((Block) (constructor.getBody()));
+			((BlockOperation) emfswitch.doSwitch(bd)).evaluateStatement((State) (state));
 			((StateOperation) emfswitch.doSwitch(state)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));

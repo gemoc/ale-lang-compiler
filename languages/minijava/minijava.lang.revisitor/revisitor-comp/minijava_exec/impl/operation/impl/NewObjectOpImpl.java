@@ -132,7 +132,7 @@ public class NewObjectOpImpl extends ExpressionOpImpl implements NewObjectOp {
       i = ((Integer) ((i) + (1)));
     }
     i = ((Integer) (0));
-    Method constructor = null;
+    Method constructor = ((Method) (null));
     while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
       Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
       if(m instanceof Method) {
@@ -159,7 +159,8 @@ public class NewObjectOpImpl extends ExpressionOpImpl implements NewObjectOp {
       NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
       call.setNewz(this.obj);
       rev.$((State)state).pushNewFrame(((ObjectInstance) (res)), ((NewCall) (call)), ((Context) (newContext)));
-      rev.$((Block)constructor.getBody()).evaluateStatement(((State) (state)));
+      Block bd = ((Block) (constructor.getBody()));
+      rev.$((Block)bd).evaluateStatement(((State) (state)));
       rev.$((State)state).popCurrentFrame();
     }
     ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));

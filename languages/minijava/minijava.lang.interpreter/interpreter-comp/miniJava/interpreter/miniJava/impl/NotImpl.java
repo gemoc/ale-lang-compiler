@@ -108,7 +108,7 @@ public class NotImpl extends ExpressionImpl implements Not {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		BooleanValue left = ((BooleanValue) (((BooleanValue) (((Expression) (this.getExpression())).evaluateExpression((State) (state))))));
+		BooleanValue left = ((BooleanValue) (((Expression) (this.getExpression())).evaluateExpression((State) (state))));
 		BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmp.setValue(!(left.isValue()));
 		result = (Value) (tmp) ;

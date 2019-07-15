@@ -249,15 +249,6 @@
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
 	</extension>
-	<extension point="org.eclipse.ui.preferencePages">
-		<page
-			category="org.tetrabox.minijava.xtext.MiniJava"
-			class="org.tetrabox.minijava.xtext.ui.MiniJavaExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
-			id="org.tetrabox.minijava.xtext.MiniJava.validator.preferencePage"
-			name="Errors/Warnings">
-			<keywordReference id="org.tetrabox.minijava.xtext.ui.keyword_MiniJava"/>
-		</page>
-	</extension>
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
 			class="org.tetrabox.minijava.xtext.ui.MiniJavaExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"

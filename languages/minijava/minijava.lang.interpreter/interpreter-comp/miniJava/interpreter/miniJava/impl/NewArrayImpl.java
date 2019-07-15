@@ -194,7 +194,9 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			res.getValue().add(((Value) (defaultValue)).copyj());
+			Value dv = ((Value) (defaultValue));
+			Value v = ((Value) (((Value) (dv)).copyj()));
+			res.getValue().add(v);
 			i = (i) + (1);
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));

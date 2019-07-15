@@ -46,31 +46,31 @@ import java.util.Map;
 @State(Scope.Benchmark)
 public class BoaInterpreterBenchmark {
 
-    @Param({"programs/boa_fibonacci.xmi", "programs/boa_sort.xmi"})
-    public String program;
-    private File logoProgram;
+	@Param({ "programs/boa_fibonacci.xmi", "programs/boa_sort.xmi" })
+	public String program;
+	private File logoProgram;
 
-    @Setup(Level.Iteration)
-    public void loadXMI() {
-        LogService.MUTE = true;
-        EPackage.Registry.INSTANCE.put("http://www.example.org/boa", BoaPackage.eINSTANCE);
-        final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-        final Map<String, Object> m = reg.getExtensionToFactoryMap();
-        m.put("xmi", new XMIResourceFactoryImpl());
+	@Setup(Level.Iteration)
+	public void loadXMI() {
+		LogService.MUTE = true;
+		EPackage.Registry.INSTANCE.put("http://www.example.org/boa", BoaPackage.eINSTANCE);
+		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+		final Map<String, Object> m = reg.getExtensionToFactoryMap();
+		m.put("xmi", new XMIResourceFactoryImpl());
 
-        final ResourceSetImpl resSet = new ResourceSetImpl();
-        final URI createFileURI = URI.createFileURI(program);
-        final Resource resource = resSet.getResource(createFileURI, true);
-        this.logoProgram = (File) resource.getContents().get(0);
-    }
+		final ResourceSetImpl resSet = new ResourceSetImpl();
+		final URI createFileURI = URI.createFileURI(program);
+		final Resource resource = resSet.getResource(createFileURI, true);
+		this.logoProgram = (File) resource.getContents().get(0);
+	}
 
-    @Benchmark
-    @BenchmarkMode(Mode.SingleShotTime)
-    @Measurement(iterations = 1, time = 1)
-    @Fork(value = 1)
-    @Warmup(iterations = 1)
-    public void boaInterpreter() {
-        logoProgram.eval();
-    }
+	@Benchmark
+	@BenchmarkMode(Mode.SingleShotTime)
+	@Measurement(iterations = 1, time = 1)
+	@Fork(value = 1)
+	@Warmup(iterations = 1)
+	public void boaInterpreter() {
+		logoProgram.eval();
+	}
 
 }

@@ -23,7 +23,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecoretools.ale.ALEInterpreter;
-import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl;
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl;
+import org.eclipse.emf.ecoretools.ale.ide.ui.EclipseWorkbenchDsl;
 import org.eclipse.sirius.common.tools.api.interpreter.IInterpreterWithDiagnostic.IEvaluationResult;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.console.ConsolePlugin;
@@ -90,7 +91,8 @@ public class RunModelAction {
 					@Override
 					public void run() {
 						try {
-							IEvaluationResult result = interpreter.eval(modelLocation, new ArrayList(), new WorkbenchDsl(dslFile.getLocationURI().getPath().toString()));
+							Dsl dsl = new EclipseWorkbenchDsl(dslFile.getLocationURI().getPath().toString());
+							IEvaluationResult result = interpreter.eval(modelLocation, new ArrayList<Object>(), dsl);
 							interpreter.getLogger().diagnosticForHuman();
 							
 							if(result.getDiagnostic().getMessage() != null) {

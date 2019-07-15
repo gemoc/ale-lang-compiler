@@ -1,3 +1,3 @@
-syntax=platform:/resource/org.tetrabox.minijava.xtext/model/MiniJava.ecore
-behavior=platform:/resource/org.tetrabox.minijava.lang/src/minijava_exec.ale
+syntax=platform:/resource/minijava.model/model/MiniJava.ecore
+behavior=platform:/resource/minijava.lang/src/minijava_exec.ale
 compilationType=visitor

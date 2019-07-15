@@ -8,9 +8,10 @@
  * Contributors:
  *     Inria - initial API and implementation
  *******************************************************************************/
-package org.eclipse.emf.ecoretools.ale.ide;
+package org.eclipse.emf.ecoretools.ale.compiler;
 
 import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -26,30 +27,37 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl;
 import org.osgi.framework.Bundle;
 
-public class WorkbenchDsl extends Dsl {
+public class MavenWorkbenchDsl extends Dsl {
 
-	public WorkbenchDsl(List<String> syntaxes, List<String> semantics) {
+	public MavenWorkbenchDsl(List<String> syntaxes, List<String> semantics, String platformLocation) {
 		super(syntaxes,semantics);
-		resolveUris();
+		resolveUris(platformLocation);
 	}
 	
-	public WorkbenchDsl(String dslFile) throws FileNotFoundException {
-		super(convertToFile(dslFile));
-		resolveUris();
+	public MavenWorkbenchDsl(String dslFile, String platformLocation) throws FileNotFoundException {
+		super(dslFile);
+		resolveUris(platformLocation);
 	}
 	
-	public WorkbenchDsl(InputStream input) {
+	public MavenWorkbenchDsl(InputStream input, String platformLocation) {
 		super(input);
-		resolveUris();
+		resolveUris(platformLocation);
 }
 	
-	private void resolveUris() {
+	private void resolveUris(String platformLocation) {
 		ArrayList<String> newSemantics = new ArrayList<String>();
 		getAllSemantics()
 			.stream()
-			.forEach(elem -> newSemantics.add(URI.createFileURI(convertToFile(elem)).toFileString()));//expect system file path
+			.forEach(elem -> newSemantics.add(URI.createFileURI(elem.replace("platform:/resource/", platformLocation)).toFileString()));//expect system file path
 		getAllSemantics().clear();
 		getAllSemantics().addAll(newSemantics);
+		
+		ArrayList<String> newSyntaxes = new ArrayList<String>();
+		getAllSyntaxes()
+			.stream()
+			.forEach(elem -> newSyntaxes.add(URI.createFileURI(elem.replace("platform:/resource/", platformLocation)).toFileString()));//expect system file path
+		getAllSyntaxes().clear();
+		getAllSyntaxes().addAll(newSyntaxes);
 	}
 	
 	/**

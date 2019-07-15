@@ -61,7 +61,7 @@ public class RightOpImpl extends PrimitiveOpImpl implements RightOp {
     double result;
     double angle = ((double) (rev.$((Expression)this.obj.getAngle()).eval(((Turtle) (turtle)))));
     rev.$((Turtle)turtle).rotate(((Double) (-(angle))));
-    result = 0.0;
+    result = ((Double) 0.0);
     return result;
   }
 }
