@@ -59,7 +59,7 @@ public class TanOpImpl extends UnaryExpressionOpImpl implements TanOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = TrigoServices.tan((double) (rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle)))));
+    result = ((double) (TrigoServices.tan((double) (rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle))))));
     return result;
   }
 }

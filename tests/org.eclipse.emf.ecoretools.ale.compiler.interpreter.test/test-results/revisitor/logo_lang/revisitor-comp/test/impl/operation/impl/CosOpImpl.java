@@ -59,7 +59,7 @@ public class CosOpImpl extends UnaryExpressionOpImpl implements CosOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = TrigoServices.cosinus((double) (rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle)))));
+    result = ((double) (TrigoServices.cosinus((double) (rev.$((Expression)this.obj.getExpression()).eval(((Turtle) (turtle))))));
     return result;
   }
 }
