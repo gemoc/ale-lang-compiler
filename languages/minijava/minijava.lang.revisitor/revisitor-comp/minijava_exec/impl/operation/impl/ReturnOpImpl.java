@@ -1,6 +1,9 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.Expression;
 import miniJava.Return;
+import miniJava.State;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +93,10 @@ public class ReturnOpImpl extends StatementOpImpl implements ReturnOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public void evaluateStatement(State state) {
+    Value value = ((Value) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))));
+    rev.$((State)state).findCurrentFrame().setReturnValue(value);
   }
 }

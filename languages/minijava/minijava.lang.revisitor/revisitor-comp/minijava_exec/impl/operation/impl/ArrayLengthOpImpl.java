@@ -1,6 +1,12 @@
 package minijava_exec.impl.operation.impl;
 
 import miniJava.ArrayLength;
+import miniJava.ArrayRefValue;
+import miniJava.Expression;
+import miniJava.IntegerValue;
+import miniJava.MiniJavaFactory;
+import miniJava.State;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +96,15 @@ public class ArrayLengthOpImpl extends ExpressionOpImpl implements ArrayLengthOp
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    ArrayRefValue arrayRef = ((ArrayRefValue) (rev.$((Expression)this.obj.getArray()).evaluateExpression(((State) (state)))));
+    int size = ((int) (arrayRef.getInstance().getSize()));
+    IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
+    tmp.setValue(size);
+    result = ((IntegerValue) (tmp));
+    return result;
   }
 }

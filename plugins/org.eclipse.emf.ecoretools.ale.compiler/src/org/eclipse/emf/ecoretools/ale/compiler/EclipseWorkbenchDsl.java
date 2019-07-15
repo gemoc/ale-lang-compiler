@@ -11,7 +11,6 @@
 package org.eclipse.emf.ecoretools.ale.compiler;
 
 import java.io.FileNotFoundException;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -27,37 +26,30 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl;
 import org.osgi.framework.Bundle;
 
-public class WorkbenchDsl extends Dsl {
+public class EclipseWorkbenchDsl extends Dsl {
 
-	public WorkbenchDsl(List<String> syntaxes, List<String> semantics, String platformLocation) {
+	public EclipseWorkbenchDsl(List<String> syntaxes, List<String> semantics) {
 		super(syntaxes,semantics);
-		resolveUris(platformLocation);
+		resolveUris();
 	}
 	
-	public WorkbenchDsl(String dslFile, String platformLocation) throws FileNotFoundException {
-		super(dslFile);
-		resolveUris(platformLocation);
+	public EclipseWorkbenchDsl(String dslFile) throws FileNotFoundException {
+		super(convertToFile(dslFile));
+		resolveUris();
 	}
 	
-	public WorkbenchDsl(InputStream input, String platformLocation) {
+	public EclipseWorkbenchDsl(InputStream input) {
 		super(input);
-		resolveUris(platformLocation);
+		resolveUris();
 }
 	
-	private void resolveUris(String platformLocation) {
+	private void resolveUris() {
 		ArrayList<String> newSemantics = new ArrayList<String>();
 		getAllSemantics()
 			.stream()
-			.forEach(elem -> newSemantics.add(URI.createFileURI(elem.replace("platform:/resource/", platformLocation)).toFileString()));//expect system file path
+			.forEach(elem -> newSemantics.add(URI.createFileURI(convertToFile(elem)).toFileString()));//expect system file path
 		getAllSemantics().clear();
 		getAllSemantics().addAll(newSemantics);
-		
-		ArrayList<String> newSyntaxes = new ArrayList<String>();
-		getAllSyntaxes()
-			.stream()
-			.forEach(elem -> newSyntaxes.add(URI.createFileURI(elem.replace("platform:/resource/", platformLocation)).toFileString()));//expect system file path
-		getAllSyntaxes().clear();
-		getAllSyntaxes().addAll(newSyntaxes);
 	}
 	
 	/**

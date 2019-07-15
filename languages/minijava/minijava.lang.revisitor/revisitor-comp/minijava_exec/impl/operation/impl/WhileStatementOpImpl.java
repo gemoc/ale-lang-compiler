@@ -1,5 +1,9 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.Block;
+import miniJava.BooleanValue;
+import miniJava.Expression;
+import miniJava.State;
 import miniJava.WhileStatement;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
@@ -90,5 +94,14 @@ public class WhileStatementOpImpl extends StatementOpImpl implements WhileStatem
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public void evaluateStatement(State state) {
+    BooleanValue continueWhile = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))))));
+    while (continueWhile.isValue()) {
+      rev.$((Block)this.obj.getBlock()).evaluateStatement(((State) (state)));
+      BooleanValue continueWhile2 = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getCondition()).evaluateExpression(((State) (state)))))));
+      continueWhile = ((BooleanValue) (continueWhile2));
+    }
   }
 }

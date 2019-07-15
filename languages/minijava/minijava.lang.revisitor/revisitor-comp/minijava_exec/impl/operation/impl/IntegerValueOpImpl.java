@@ -1,6 +1,9 @@
 package minijava_exec.impl.operation.impl;
 
+import java.lang.String;
 import miniJava.IntegerValue;
+import miniJava.MiniJavaFactory;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +93,19 @@ public class IntegerValueOpImpl extends ValueOpImpl implements IntegerValueOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public String customToString() {
+    String result;
+    result = ((String) ((this.obj.getValue()) + ("")));
+    return result;
+  }
+
+  public Value copyj() {
+    Value result;
+    IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
+    tmp.setValue(this.obj.getValue());
+    result = ((IntegerValue) (tmp));
+    return result;
   }
 }

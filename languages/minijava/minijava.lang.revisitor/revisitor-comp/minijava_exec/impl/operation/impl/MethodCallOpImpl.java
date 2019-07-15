@@ -1,6 +1,19 @@
 package minijava_exec.impl.operation.impl;
 
+import java.lang.Integer;
+import miniJava.Clazz;
+import miniJava.Context;
+import miniJava.Expression;
+import miniJava.Method;
 import miniJava.MethodCall;
+import miniJava.MethodCall2;
+import miniJava.MiniJavaFactory;
+import miniJava.ObjectInstance;
+import miniJava.ObjectRefValue;
+import miniJava.Parameter;
+import miniJava.State;
+import miniJava.SymbolBinding;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -79,6 +92,7 @@ import minijava_exec.impl.operation.ValueOp;
 import minijava_exec.impl.operation.VariableDeclarationOp;
 import minijava_exec.impl.operation.VoidTypeRefOp;
 import minijava_exec.impl.operation.WhileStatementOp;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 
 public class MethodCallOpImpl extends ExpressionOpImpl implements MethodCallOp {
   private MiniJavaRevisitor<AndOp, AndOp, AndOp, ArrayAccessOp, ArrayAccessOp, ArrayAccessOp, ArrayInstanceOp, ArrayLengthOp, ArrayLengthOp, ArrayLengthOp, ArrayRefValueOp, ArrayTypeRefOp, AssigneeOp, AssignmentOp, BlockOp, BoolConstantOp, BoolConstantOp, BoolConstantOp, BooleanTypeRefOp, BooleanValueOp, CallOp, ClassRefOp, ClazzOp, ContextOp, DivisionOp, DivisionOp, DivisionOp, EqualityOp, EqualityOp, EqualityOp, ExpressionOp, ExpressionOp, ExpressionOp, FieldOp, FieldAccessOp, FieldAccessOp, FieldAccessOp, FieldBindingOp, ForStatementOp, FrameOp, IfStatementOp, ImportOp, InequalityOp, InequalityOp, InequalityOp, InferiorOp, InferiorOp, InferiorOp, InferiorOrEqualOp, InferiorOrEqualOp, InferiorOrEqualOp, IntConstantOp, IntConstantOp, IntConstantOp, IntegerTypeRefOp, IntegerValueOp, InterfaceOp, MemberOp, MethodOp, MethodCallOp, MethodCallOp, MethodCallOp, MethodCall2Op, MinusOp, MinusOp, MinusOp, ModuloOp, ModuloOp, ModuloOp, MultiplicationOp, MultiplicationOp, MultiplicationOp, NamedElementOp, NegOp, NegOp, NegOp, NewArrayOp, NewArrayOp, NewArrayOp, NewCallOp, NewObjectOp, NewObjectOp, NewObjectOp, NotOp, NotOp, NotOp, NullOp, NullOp, NullOp, NullValueOp, ObjectInstanceOp, ObjectRefValueOp, OrOp, OrOp, OrOp, OutputStreamOp, ParameterOp, PlusOp, PlusOp, PlusOp, PrintStatementOp, ProgramOp, ReturnOp, SingleTypeRefOp, StateOp, StatementOp, StringConstantOp, StringConstantOp, StringConstantOp, StringTypeRefOp, StringValueOp, SuperOp, SuperOp, SuperOp, SuperiorOp, SuperiorOp, SuperiorOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SymbolOp, SymbolBindingOp, SymbolRefOp, SymbolRefOp, SymbolRefOp, ThisOp, ThisOp, ThisOp, TypeDeclarationOp, TypeRefOp, TypedDeclarationOp, ValueOp, VariableDeclarationOp, VariableDeclarationOp, VariableDeclarationOp, VoidTypeRefOp, WhileStatementOp> rev;
@@ -90,5 +104,36 @@ public class MethodCallOpImpl extends ExpressionOpImpl implements MethodCallOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    ObjectRefValue realReceiver0 = ((ObjectRefValue) (((ObjectRefValue) (rev.$((Expression)this.obj.getReceiver()).evaluateExpression(((State) (state)))))));
+    ObjectInstance realReceiver = ((ObjectInstance) (realReceiver0.getInstance()));
+    Method realMethod = ((Method) (((Method) (rev.$((Method)this.obj.getMethod()).findOverride(((Clazz) (realReceiver.getType())))))));
+    Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
+    int argsLength = ((int) (CollectionService.size(this.obj.getArgs())));
+    int i = ((int) (0));
+    while ((i) < (argsLength)) {
+      Expression arg = ((Expression) (CollectionService.get(this.obj.getArgs(), i)));
+      Parameter param = ((Parameter) (CollectionService.get(realMethod.getParams(), i)));
+      SymbolBinding binding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
+      binding.setSymbol(param);
+      binding.setValue(rev.$((Expression)arg).evaluateExpression(((State) (state))));
+      newContext.getBindings().add(binding);
+      i = ((Integer) ((i) + (1)));
+    }
+    MethodCall2 call = ((MethodCall2) (MiniJavaFactory.eINSTANCE.createMethodCall2()));
+    call.setMethodcall(this.obj);
+    rev.$((State)state).pushNewFrame(((ObjectInstance) (realReceiver)), ((MethodCall2) (call)), ((Context) (newContext)));
+    rev.$((MethodCall)this.obj).call(((Method) (realMethod)), ((State) (state)));
+    Value returnValue = ((Value) (rev.$((State)state).findCurrentFrame().getReturnValue()));
+    rev.$((State)state).popCurrentFrame();
+    result = ((Value) (returnValue));
+    return result;
+  }
+
+  public void call(Method realMethod, State state) {
+    rev.$((Method)realMethod).call(((State) (state)));
   }
 }

@@ -1,6 +1,8 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.MiniJavaFactory;
 import miniJava.NullValue;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +92,12 @@ public class NullValueOpImpl extends ValueOpImpl implements NullValueOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value copyj() {
+    Value result;
+    NullValue tmp = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
+    result = ((NullValue) (tmp));
+    return result;
   }
 }

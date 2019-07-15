@@ -1,6 +1,12 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.BooleanValue;
+import miniJava.Expression;
+import miniJava.IntegerValue;
+import miniJava.MiniJavaFactory;
+import miniJava.State;
 import miniJava.Superior;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +96,27 @@ public class SuperiorOpImpl extends ExpressionOpImpl implements SuperiorOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    Value left = ((Value) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))));
+    Value right = ((Value) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))));
+    if(left instanceof IntegerValue) {
+      if(right instanceof IntegerValue) {
+        IntegerValue bleft = ((IntegerValue) (left));
+        IntegerValue bright = ((IntegerValue) (right));
+        BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+        tmp.setValue((bleft.getValue()) > (bright.getValue()));
+        result = ((BooleanValue) (tmp));
+      }
+      else {
+        result = ((Value) (null));
+      }
+    }
+    else {
+      result = ((Value) (null));
+    }
+    return result;
   }
 }

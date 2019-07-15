@@ -17,6 +17,7 @@ import miniJava.visitor.miniJava.Value;
 import visitor.VisitorInterface;
 import visitor.operation.miniJava.ExpressionOperation;
 import visitor.operation.miniJava.NewArrayOperation;
+import visitor.operation.miniJava.ValueOperation;
 
 public class NewArrayOperationImpl extends ExpressionOperationImpl implements NewArrayOperation {
 	private final NewArray it;
@@ -63,7 +64,9 @@ public class NewArrayOperationImpl extends ExpressionOperationImpl implements Ne
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			res.getValue().add(defaultValue.copyj());
+			Value dv = ((Value) (defaultValue));
+			Value v = ((Value) (((ValueOperation)dv.accept(vis)).copyj()));
+			res.getValue().add(v);
 			i = ((Integer) ((i) + (1)));
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));

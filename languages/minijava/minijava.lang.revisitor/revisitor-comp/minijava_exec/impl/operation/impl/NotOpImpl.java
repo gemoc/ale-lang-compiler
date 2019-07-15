@@ -1,6 +1,11 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.BooleanValue;
+import miniJava.Expression;
+import miniJava.MiniJavaFactory;
 import miniJava.Not;
+import miniJava.State;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +95,14 @@ public class NotOpImpl extends ExpressionOpImpl implements NotOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    BooleanValue left = ((BooleanValue) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))));
+    BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+    tmp.setValue(!(left.isValue()));
+    result = ((BooleanValue) (tmp));
+    return result;
   }
 }

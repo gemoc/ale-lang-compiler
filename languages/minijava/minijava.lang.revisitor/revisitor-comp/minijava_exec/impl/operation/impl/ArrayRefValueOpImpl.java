@@ -1,6 +1,10 @@
 package minijava_exec.impl.operation.impl;
 
+import java.lang.Integer;
+import java.lang.String;
 import miniJava.ArrayRefValue;
+import miniJava.MiniJavaFactory;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -79,6 +83,7 @@ import minijava_exec.impl.operation.ValueOp;
 import minijava_exec.impl.operation.VariableDeclarationOp;
 import minijava_exec.impl.operation.VoidTypeRefOp;
 import minijava_exec.impl.operation.WhileStatementOp;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 
 public class ArrayRefValueOpImpl extends ValueOpImpl implements ArrayRefValueOp {
   private MiniJavaRevisitor<AndOp, AndOp, AndOp, ArrayAccessOp, ArrayAccessOp, ArrayAccessOp, ArrayInstanceOp, ArrayLengthOp, ArrayLengthOp, ArrayLengthOp, ArrayRefValueOp, ArrayTypeRefOp, AssigneeOp, AssignmentOp, BlockOp, BoolConstantOp, BoolConstantOp, BoolConstantOp, BooleanTypeRefOp, BooleanValueOp, CallOp, ClassRefOp, ClazzOp, ContextOp, DivisionOp, DivisionOp, DivisionOp, EqualityOp, EqualityOp, EqualityOp, ExpressionOp, ExpressionOp, ExpressionOp, FieldOp, FieldAccessOp, FieldAccessOp, FieldAccessOp, FieldBindingOp, ForStatementOp, FrameOp, IfStatementOp, ImportOp, InequalityOp, InequalityOp, InequalityOp, InferiorOp, InferiorOp, InferiorOp, InferiorOrEqualOp, InferiorOrEqualOp, InferiorOrEqualOp, IntConstantOp, IntConstantOp, IntConstantOp, IntegerTypeRefOp, IntegerValueOp, InterfaceOp, MemberOp, MethodOp, MethodCallOp, MethodCallOp, MethodCallOp, MethodCall2Op, MinusOp, MinusOp, MinusOp, ModuloOp, ModuloOp, ModuloOp, MultiplicationOp, MultiplicationOp, MultiplicationOp, NamedElementOp, NegOp, NegOp, NegOp, NewArrayOp, NewArrayOp, NewArrayOp, NewCallOp, NewObjectOp, NewObjectOp, NewObjectOp, NotOp, NotOp, NotOp, NullOp, NullOp, NullOp, NullValueOp, ObjectInstanceOp, ObjectRefValueOp, OrOp, OrOp, OrOp, OutputStreamOp, ParameterOp, PlusOp, PlusOp, PlusOp, PrintStatementOp, ProgramOp, ReturnOp, SingleTypeRefOp, StateOp, StatementOp, StringConstantOp, StringConstantOp, StringConstantOp, StringTypeRefOp, StringValueOp, SuperOp, SuperOp, SuperOp, SuperiorOp, SuperiorOp, SuperiorOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SymbolOp, SymbolBindingOp, SymbolRefOp, SymbolRefOp, SymbolRefOp, ThisOp, ThisOp, ThisOp, TypeDeclarationOp, TypeRefOp, TypedDeclarationOp, ValueOp, VariableDeclarationOp, VariableDeclarationOp, VariableDeclarationOp, VoidTypeRefOp, WhileStatementOp> rev;
@@ -90,5 +95,31 @@ public class ArrayRefValueOpImpl extends ValueOpImpl implements ArrayRefValueOp 
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value copyj() {
+    Value result;
+    ArrayRefValue tmp = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
+    tmp.setInstance(this.obj.getInstance());
+    result = ((ArrayRefValue) (tmp));
+    return result;
+  }
+
+  public String customToString() {
+    String result;
+    String res = ((String) ("["));
+    int i = ((int) (0));
+    int lgt = ((int) (CollectionService.size(this.obj.getInstance().getValue())));
+    while ((i) < (lgt)) {
+      Value tmpv = ((Value) (CollectionService.get(this.obj.getInstance().getValue(), i)));
+      res = ((String) ((res) + (rev.$((Value)tmpv).customToString())));
+      if((i) < ((lgt) - (1))) {
+        res = ((String) ((res) + (", ")));
+      }
+      i = ((Integer) ((i) + (1)));
+    }
+    res = ((String) ((res) + ("]")));
+    result = ((String) (res));
+    return result;
   }
 }
