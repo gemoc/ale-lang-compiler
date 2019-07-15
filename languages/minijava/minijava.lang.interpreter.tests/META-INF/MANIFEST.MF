@@ -7,9 +7,14 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.xtext.testing,
  org.eclipse.xtext.xbase.testing,
  org.eclipse.xtext.xbase.lib,
+ org.eclipse.emf.ecore;bundle-version="2.14.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.14.0",
+ org.eclipse.emf.ecoretools.ale.compiler.lib;bundle-version="1.0.0",
+ minijava.lang.tests;bundle-version="1.0.0",
+ minijava.lang.interpreter;bundle-version="1.0.0",
  org.tetrabox.minijava.interpreter.xtext;bundle-version="1.0.0",
  org.tetrabox.minijava.interpreter.xtext.tests;bundle-version="1.0.0",
- minijava.lang.interpreter;bundle-version="1.0.0"
+ org.junit.jupiter.api;bundle-version="5.1.0"
 Export-Package: org.tetrabox.minijava.semantics.tests
 Import-Package: org.hamcrest.core,
  org.junit;version="4.5.0",
