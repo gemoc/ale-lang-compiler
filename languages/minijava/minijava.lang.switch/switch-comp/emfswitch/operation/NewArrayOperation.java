@@ -33,7 +33,7 @@ public class NewArrayOperation extends ExpressionOperation {
 		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getSize())).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
-		Value defaultValue = null;
+		Value defaultValue = ((Value) (null));
 		if(this.it.getType() instanceof IntegerTypeRef) {
 			IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 			idv.setValue(0);
@@ -61,7 +61,9 @@ public class NewArrayOperation extends ExpressionOperation {
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			res.getValue().add(((ValueOperation) emfswitch.doSwitch(defaultValue)).copyj());
+			Value dv = ((Value) (defaultValue));
+			Value v = ((Value) (((ValueOperation) emfswitch.doSwitch(dv)).copyj()));
+			res.getValue().add(v);
 			i = ((Integer) ((i) + (1)));
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));

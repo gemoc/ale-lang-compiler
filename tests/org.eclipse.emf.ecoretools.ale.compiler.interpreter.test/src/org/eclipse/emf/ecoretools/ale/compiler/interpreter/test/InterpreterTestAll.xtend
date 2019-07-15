@@ -34,11 +34,11 @@ class InterpreterTestAll {
 	static Map<String, Map<File, File>> compilations = newHashMap
 
 	static val compilers = newHashMap(
-//		"interpreter" -> [f|compileProjectInterpreter(f)],
+		"interpreter" -> [f|compileProjectInterpreter(f)],
 //		"interpreter.truffle" -> [f|compileProjectInterpreterTruffle(f)]
-		"revisitor" -> [f|compileProjectRevisitor(f)]//,
-//		"switch" -> [f|compileProjectSwitch(f)] ,
-//		"visitor" -> [f|compileProjectVisitor(f)]
+		"revisitor" -> [f|compileProjectRevisitor(f)],
+		"switch" -> [f|compileProjectSwitch(f)],
+		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
 	private static final boolean DEBUG = true
@@ -54,7 +54,8 @@ class InterpreterTestAll {
 		]
 
 		compilers.forEach [ k, v |
-			new File("assets").listFiles.filter[it.isDirectory] // .filter[it.path == "assets/autocast"]
+			new File("assets").listFiles.filter[it.isDirectory]
+			//.filter[it.path == "assets/minijava"]
 			.forEach [
 				try {
 					compilations.get(k).put(it, v.apply(it))
@@ -146,6 +147,8 @@ class InterpreterTestAll {
 //				)
 				new ServicesRegistrationManager() {
 					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+						
+						// MapService
 						this.registeredServices.put("put", "execboa" -> "MapService")
 						this.registeredServices.put("putAll", "execboa" -> "MapService")
 						this.registeredServices.put("replaceWith", "execboa" -> "MapService")
@@ -153,7 +156,12 @@ class InterpreterTestAll {
 						this.registeredServices.put("mapToString", "execboa" -> "MapService")
 						this.registeredServices.put("containsKey", "execboa" -> "MapService")
 						this.registeredServices.put("newMap", "execboa" -> "MapService")
-					// TODO: math + serialize
+						
+						// MathService
+						this.registeredServices.put("mod", "execboa" -> "MathService")
+					
+						// SerializeService
+						this.registeredServices.put("serialize", "execboa" -> "SerializeService")
 					}
 
 				}
@@ -184,6 +192,9 @@ class InterpreterTestAll {
 //				)
 				new ServicesRegistrationManager() {
 					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+						this.registeredServices.put("cosinus", "org.eclipse.emf.ecoretools.ale.core.interpreter.services" -> "TrigoServices")
+						this.registeredServices.put("sinus", "org.eclipse.emf.ecoretools.ale.core.interpreter.services" -> "TrigoServices")
+						this.registeredServices.put("tan", "org.eclipse.emf.ecoretools.ale.core.interpreter.services" -> "TrigoServices")
 					}
 
 				}
@@ -193,17 +204,20 @@ class InterpreterTestAll {
 //				)
 				new ServicesRegistrationManager() {
 					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+						this.registeredServices.put("put", "execboa" -> "MapService")
+						this.registeredServices.put("putAll", "execboa" -> "MapService")
+						this.registeredServices.put("replaceWith", "execboa" -> "MapService")
+						this.registeredServices.put("getFromMap", "execboa" -> "MapService")
+						this.registeredServices.put("mapToString", "execboa" -> "MapService")
+						this.registeredServices.put("containsKey", "execboa" -> "MapService")
+						this.registeredServices.put("newMap", "execboa" -> "MapService")
 					}
 
 				}
 			default:
 				new ServicesRegistrationManager() {
-					
-					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
-				//		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-					}
-					
-					}
+					override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {}	
+				}
 		}
 	}
 

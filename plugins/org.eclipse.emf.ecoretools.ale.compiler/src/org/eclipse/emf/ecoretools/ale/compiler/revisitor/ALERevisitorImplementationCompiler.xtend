@@ -100,6 +100,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
 		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry" && it.eCls instanceof EClass].forEach [
 			val aleClass = it.aleCls
+			val eclscls = it.eCls
 			try {
 				val operationInterface = TypeSpec.interfaceBuilder(
 					(it.eCls as EClass).revisitorOperationInterfaceClassName).addSuperinterfaces((eCls as EClass).
@@ -142,7 +143,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 						}
 					]
 					MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(type).
-						addParameters(parameters).openMethod(typeResolved).compileBody(it.body, new CompilerExpressionCtx('''???REVISITOR???''', aleClass, eClass)).closeMethod(type).build
+						addParameters(parameters).openMethod(typeResolved).compileBody(it.body, new CompilerExpressionCtx('''???REVISITOR???''', aleClass, eclscls as EClass)).closeMethod(type).build
 				] ?: newArrayList).build
 				val operationImplementationFile = JavaFile.builder('''«dsl.revisitorOperationImplementationPackage»''',
 					operationImplementation).build

@@ -1,6 +1,10 @@
 package minijava_exec.impl.operation.impl;
 
+import java.lang.String;
+import miniJava.Expression;
 import miniJava.PrintStatement;
+import miniJava.State;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +94,10 @@ public class PrintStatementOpImpl extends StatementOpImpl implements PrintStatem
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public void evaluateStatement(State state) {
+    String res = ((String) (rev.$((Value)rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))).customToString()));
+    rev.$((State)state).println(((String) (res)));
   }
 }

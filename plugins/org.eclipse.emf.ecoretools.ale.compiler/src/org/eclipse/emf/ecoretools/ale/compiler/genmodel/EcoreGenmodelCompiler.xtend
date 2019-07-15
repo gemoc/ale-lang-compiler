@@ -37,7 +37,7 @@ class EcoreGenmodelCompiler {
 				tmpf.mkdirs
 			}
 			val uri = '''«path»/«ePackage.name».ecore'''
-			val ecoreRes = resSet.createResource(URI.createURI(uri))
+			val ecoreRes = resSet.createResource(URI.createFileURI(uri))
 			ecoreRes.contents += EcoreUtil2.copy(ePackage) => [
 				it.nsURI = '''http://«ePackage.name».«ePackage.name».«ePackage.name»/'''
 			]

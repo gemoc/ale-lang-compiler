@@ -1,6 +1,13 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.Expression;
+import miniJava.Field;
 import miniJava.FieldAccess;
+import miniJava.FieldBinding;
+import miniJava.ObjectInstance;
+import miniJava.ObjectRefValue;
+import miniJava.State;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -79,6 +86,8 @@ import minijava_exec.impl.operation.ValueOp;
 import minijava_exec.impl.operation.VariableDeclarationOp;
 import minijava_exec.impl.operation.VoidTypeRefOp;
 import minijava_exec.impl.operation.WhileStatementOp;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class FieldAccessOpImpl extends ExpressionOpImpl implements FieldAccessOp {
   private MiniJavaRevisitor<AndOp, AndOp, AndOp, ArrayAccessOp, ArrayAccessOp, ArrayAccessOp, ArrayInstanceOp, ArrayLengthOp, ArrayLengthOp, ArrayLengthOp, ArrayRefValueOp, ArrayTypeRefOp, AssigneeOp, AssignmentOp, BlockOp, BoolConstantOp, BoolConstantOp, BoolConstantOp, BooleanTypeRefOp, BooleanValueOp, CallOp, ClassRefOp, ClazzOp, ContextOp, DivisionOp, DivisionOp, DivisionOp, EqualityOp, EqualityOp, EqualityOp, ExpressionOp, ExpressionOp, ExpressionOp, FieldOp, FieldAccessOp, FieldAccessOp, FieldAccessOp, FieldBindingOp, ForStatementOp, FrameOp, IfStatementOp, ImportOp, InequalityOp, InequalityOp, InequalityOp, InferiorOp, InferiorOp, InferiorOp, InferiorOrEqualOp, InferiorOrEqualOp, InferiorOrEqualOp, IntConstantOp, IntConstantOp, IntConstantOp, IntegerTypeRefOp, IntegerValueOp, InterfaceOp, MemberOp, MethodOp, MethodCallOp, MethodCallOp, MethodCallOp, MethodCall2Op, MinusOp, MinusOp, MinusOp, ModuloOp, ModuloOp, ModuloOp, MultiplicationOp, MultiplicationOp, MultiplicationOp, NamedElementOp, NegOp, NegOp, NegOp, NewArrayOp, NewArrayOp, NewArrayOp, NewCallOp, NewObjectOp, NewObjectOp, NewObjectOp, NotOp, NotOp, NotOp, NullOp, NullOp, NullOp, NullValueOp, ObjectInstanceOp, ObjectRefValueOp, OrOp, OrOp, OrOp, OutputStreamOp, ParameterOp, PlusOp, PlusOp, PlusOp, PrintStatementOp, ProgramOp, ReturnOp, SingleTypeRefOp, StateOp, StatementOp, StringConstantOp, StringConstantOp, StringConstantOp, StringTypeRefOp, StringValueOp, SuperOp, SuperOp, SuperOp, SuperiorOp, SuperiorOp, SuperiorOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SuperiorOrEqualOp, SymbolOp, SymbolBindingOp, SymbolRefOp, SymbolRefOp, SymbolRefOp, ThisOp, ThisOp, ThisOp, TypeDeclarationOp, TypeRefOp, TypedDeclarationOp, ValueOp, VariableDeclarationOp, VariableDeclarationOp, VariableDeclarationOp, VoidTypeRefOp, WhileStatementOp> rev;
@@ -90,5 +99,15 @@ public class FieldAccessOpImpl extends ExpressionOpImpl implements FieldAccessOp
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    ObjectRefValue tmp0 = ((ObjectRefValue) (rev.$((Expression)this.obj.getReceiver()).evaluateExpression(((State) (state)))));
+    ObjectInstance realReceiver = ((ObjectInstance) (tmp0.getInstance()));
+    Field fld = ((Field) (this.obj.getField()));
+    FieldBinding fb = ((FieldBinding) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (fld))))));
+    result = ((Value) (fb.getValue()));
+    return result;
   }
 }

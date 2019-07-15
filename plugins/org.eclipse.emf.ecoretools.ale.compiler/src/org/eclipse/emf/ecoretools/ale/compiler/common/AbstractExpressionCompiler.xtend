@@ -2,7 +2,6 @@ package org.eclipse.emf.ecoretools.ale.compiler.common
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
-import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
 import java.util.Set
@@ -31,7 +30,6 @@ import org.eclipse.acceleo.query.ast.StringLiteral
 import org.eclipse.acceleo.query.ast.TypeLiteral
 import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.validation.type.EClassifierType
-import org.eclipse.acceleo.query.validation.type.IType
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
@@ -327,7 +325,7 @@ abstract class AbstractExpressionCompiler {
 		CodeBlock.builder.addNamed('''$factory:T.eINSTANCE.create«ecls.name»()''', hm).build
 	}
 	
-	def CodeBlock callService(Call call, CompilerExpressionCtx ctx) {		
+	def CodeBlock callService(Call call, CompilerExpressionCtx ctx) {
 		val candidate = registeredServices.get(call.serviceName)
 		
 		if (candidate !== null) {
@@ -364,8 +362,6 @@ abstract class AbstractExpressionCompiler {
 	}
 	
 	def defaultCall(Call call, CompilerExpressionCtx ctx) {
-		val eCls = ctx.EClass
-//		println('''EClass = «eCls.name»''')
 		if (call.type == CallType.CALLORAPPLY) {
 			if (call.serviceName == 'aqlFeatureAccess') {
 				val t = infereType(call).head
@@ -421,7 +417,7 @@ abstract class AbstractExpressionCompiler {
 				val argumentsh = call.arguments.head
 				val ts = argumentsh.infereType
 				val t = ts.head
-				val re = resolved.filter [
+				var re = resolved.filter [
 					if (t !== null && t.type instanceof EClass) {
 						val tecls = t.type as EClass
 						it.ECls.name == tecls.name && it.ECls.EPackage.name == tecls.EPackage.name
@@ -429,13 +425,21 @@ abstract class AbstractExpressionCompiler {
 						false
 					}
 				].head
+				if(re === null) {
+					// defensive code in case of type system issues.
+					val tmp = solveNothing(null, argumentsh) as ClassName
+					if(tmp !== null)
+						re = resolved.filter [
+							it.ECls.name == tmp.simpleName // && it.ECls.EPackage.name == tmp.packageName
+						].head
+				}
 				if (re !== null) {
 					val allMethods = re.getAleCls.allMethods
 					val methodExist = allMethods.exists [
 						it.operationRef.name == call.serviceName
 					]
 					if (methodExist) {
-						this.implementationSpecificCall(call, ctx, t, allMethods, re)
+						this.implementationSpecificCall(call, ctx, allMethods, re)
 					} else {
 						call.callService(ctx)
 					}
@@ -449,6 +453,6 @@ abstract class AbstractExpressionCompiler {
 		}
 	}
 	
-	def CodeBlock implementationSpecificCall(Call call, CompilerExpressionCtx ctx, IType iType, Iterable<Method> allMethods, ResolvedClass re)
+	def CodeBlock implementationSpecificCall(Call call, CompilerExpressionCtx ctx, Iterable<Method> allMethods, ResolvedClass re)
 
 }

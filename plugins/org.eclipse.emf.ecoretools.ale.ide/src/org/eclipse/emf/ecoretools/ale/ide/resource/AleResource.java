@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl;
 import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder;
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult;
-import org.eclipse.emf.ecoretools.ale.ide.WorkbenchDsl;
+import org.eclipse.emf.ecoretools.ale.ide.EclipseWorkbenchDsl;
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit;
 
 public class AleResource extends ResourceImpl {
@@ -39,7 +39,7 @@ public class AleResource extends ResourceImpl {
 	
 	@Override
 	protected void doLoad(InputStream inputStream, Map<?, ?> options) throws IOException {
-		Dsl dslFile = new WorkbenchDsl(inputStream);
+		Dsl dslFile = new EclipseWorkbenchDsl(inputStream);
 		List<ParseResult<ModelUnit>> newParseResult = parser.parse(dslFile);
 		
 		if(newParseResult != null) { //TODO: check no parse error

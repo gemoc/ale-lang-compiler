@@ -1,6 +1,20 @@
 package minijava_exec.impl.operation.impl;
 
+import java.lang.Integer;
+import miniJava.ArrayInstance;
+import miniJava.ArrayRefValue;
+import miniJava.BooleanTypeRef;
+import miniJava.BooleanValue;
+import miniJava.ClassRef;
+import miniJava.Expression;
+import miniJava.IntegerTypeRef;
+import miniJava.IntegerValue;
+import miniJava.MiniJavaFactory;
 import miniJava.NewArray;
+import miniJava.NullValue;
+import miniJava.State;
+import miniJava.StringTypeRef;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +104,50 @@ public class NewArrayOpImpl extends ExpressionOpImpl implements NewArrayOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    ArrayInstance res = ((ArrayInstance) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
+    IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (rev.$((Expression)this.obj.getSize()).evaluateExpression(((State) (state)))))));
+    res.setSize(sizeArray.getValue());
+    state.getArraysHeap().add(res);
+    Value defaultValue = ((Value) (null));
+    if(this.obj.getType() instanceof IntegerTypeRef) {
+      IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
+      idv.setValue(0);
+      defaultValue = ((IntegerValue) (idv));
+    }
+    else {
+      if(this.obj.getType() instanceof BooleanTypeRef) {
+        BooleanValue idv = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+        idv.setValue(false);
+        defaultValue = ((BooleanValue) (idv));
+      }
+      else {
+        if(this.obj.getType() instanceof StringTypeRef) {
+          NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
+          defaultValue = ((NullValue) (idv));
+        }
+        else {
+          if(this.obj.getType() instanceof ClassRef) {
+            NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
+            defaultValue = ((NullValue) (idv));
+          }
+        }
+      }
+    }
+    int i = ((int) (0));
+    int sz = ((int) (res.getSize()));
+    while ((i) < (sz)) {
+      Value dv = ((Value) (defaultValue));
+      Value v = ((Value) (rev.$((Value)dv).copyj()));
+      res.getValue().add(v);
+      i = ((Integer) ((i) + (1)));
+    }
+    ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
+    ret.setInstance(res);
+    result = ((ArrayRefValue) (ret));
+    return result;
   }
 }

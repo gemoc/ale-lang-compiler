@@ -1,6 +1,10 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.MiniJavaFactory;
+import miniJava.State;
 import miniJava.StringConstant;
+import miniJava.StringValue;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +94,13 @@ public class StringConstantOpImpl extends ExpressionOpImpl implements StringCons
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    StringValue ret = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+    ret.setValue(this.obj.getValue());
+    result = ((StringValue) (ret));
+    return result;
   }
 }

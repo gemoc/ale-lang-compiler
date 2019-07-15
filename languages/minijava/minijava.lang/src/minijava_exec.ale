@@ -724,7 +724,9 @@ open class miniJava.NewArray {
 		int i := 0;
 		int sz := res.size;
 		while(i < sz) {
-			res.value += defaultValue.copyj();
+			miniJava::Value dv := defaultValue;
+			miniJava::Value v := dv.copyj();
+			res.value += v;
 			i:=i+1;
 		}
 		
@@ -806,7 +808,8 @@ open class miniJava.NewObject {
 			state.pushNewFrame(res, call, newContext);
 //			state.pushNewFrame(res, call, newContext)
 //			constructor.body.evaluateStatement(state)
-			constructor.body.evaluateStatement(state);
+			miniJava::Block bd := constructor.body;
+			bd.evaluateStatement(state);
 //			state.popCurrentFrame
 			state.popCurrentFrame();
 //

@@ -35,7 +35,8 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 		'this.it'
 	}
 	
-	override implementationSpecificCall(Call call, CompilerExpressionCtx ctx, IType iType, Iterable<Method> allMethods, ResolvedClass re) {
+	override implementationSpecificCall(Call call, CompilerExpressionCtx ctx, Iterable<Method> allMethods, ResolvedClass re) {
+		val iType = re.ECls as EClass
 		val methods = allMethods.filter[it.operationRef.name == call.serviceName].toList
 
 		/* Look for the most specific method that matches the resolved class by walking up the hierarchy */
@@ -65,9 +66,9 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 				revc.eCls instanceof EClass && (revc.eCls as EClass).ESuperTypes.contains(it.eCls)
 			].head
 		}
-	
+		
 		val hm = newHashMap(
-			"operationType" -> ClassName.get(packageRoot.operationPackageName, (iType.type as EClassifier).solveType.operationClassName),
+			"operationType" -> ClassName.get(packageRoot.operationPackageName, iType.solveType.operationClassName),
 			"switched" -> call.arguments.head.compileExpression(ctx),
 			"callService" -> call.serviceName
 		)

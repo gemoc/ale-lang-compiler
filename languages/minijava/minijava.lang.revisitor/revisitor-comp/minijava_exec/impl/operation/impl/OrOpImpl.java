@@ -1,6 +1,11 @@
 package minijava_exec.impl.operation.impl;
 
+import miniJava.BooleanValue;
+import miniJava.Expression;
+import miniJava.MiniJavaFactory;
 import miniJava.Or;
+import miniJava.State;
+import miniJava.Value;
 import miniJava.revisitor.MiniJavaRevisitor;
 import minijava_exec.impl.operation.AndOp;
 import minijava_exec.impl.operation.ArrayAccessOp;
@@ -90,5 +95,15 @@ public class OrOpImpl extends ExpressionOpImpl implements OrOp {
     super(obj, rev);
     this.obj = obj;
     this.rev = rev;
+  }
+
+  public Value evaluateExpression(State state) {
+    Value result;
+    BooleanValue left = ((BooleanValue) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))));
+    BooleanValue right = ((BooleanValue) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))));
+    BooleanValue res = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+    res.setValue(((left.isValue()) || (right.isValue())));
+    result = ((BooleanValue) (res));
+    return result;
   }
 }

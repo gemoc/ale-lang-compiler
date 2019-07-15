@@ -37,7 +37,7 @@ public class ContextOperation {
 				}
 			}
 		}
-		result = ((SymbolBinding) (MapService.getFromMap((EMap) (this.it.getCache()), (Symbol) (symbol))));
+		result = ((SymbolBinding) (this.it.getCache().get((Symbol) (symbol))));
 		return result;
 	}
 
