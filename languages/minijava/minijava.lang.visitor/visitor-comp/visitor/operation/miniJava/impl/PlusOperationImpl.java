@@ -47,10 +47,22 @@ public class PlusOperationImpl extends ExpressionOperationImpl implements PlusOp
 			}
 		}
 		else {
-			if(((left instanceof StringValue) || (right instanceof StringValue))) {
-				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-				tmp.setValue((((StringValueOperation)left.accept(vis)).customToString()) + (((StringValueOperation)right.accept(vis)).customToString()));
-				result = ((StringValue) (tmp));
+			if(left instanceof StringValue) {
+				if(right instanceof IntegerValue) {
+					StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+					tmp.setValue((((StringValueOperation)left.accept(vis)).customToString()) + (((IntegerValueOperation)right.accept(vis)).customToString()));
+					result = ((StringValue) (tmp));
+				}
+				else {
+					if(right instanceof StringValue) {
+						StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+						tmp.setValue((((StringValueOperation)left.accept(vis)).customToString()) + (((StringValueOperation)right.accept(vis)).customToString()));
+						result = ((StringValue) (tmp));
+					}
+					else {
+						result = ((Value) (null));
+					}
+				}
 			}
 			else {
 				result = ((Value) (null));
