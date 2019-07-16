@@ -596,11 +596,20 @@ open class miniJava.Plus {
 				}
 			}
 		} else {
-			if(left.oclIsKindOf(miniJava::StringValue) or right.oclIsKindOf(miniJava::StringValue)) {
-				miniJava::StringValue tmp := miniJava::StringValue.create();
-				tmp.value := left.customToString() + right.customToString();
-				result := tmp;
-				
+			if(left.oclIsKindOf(miniJava::StringValue)) {
+				if(right.oclIsKindOf(miniJava::IntegerValue)){
+					miniJava::StringValue tmp := miniJava::StringValue.create();
+					tmp.value := left.customToString() + right.customToString();
+					result := tmp;
+				} else {
+					if(right.oclIsKindOf(miniJava::StringValue)){
+						miniJava::StringValue tmp := miniJava::StringValue.create();
+						tmp.value := left.customToString() + right.customToString();
+						result := tmp;
+					} else {
+						result := null;
+					}
+				}				
 			} else {
 				result := null;
 			}

@@ -4,6 +4,7 @@
 package org.tetrabox.minijava.semantics.tests
 
 import com.google.inject.Inject
+import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.xtext.testing.InjectWith
 import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
@@ -11,7 +12,6 @@ import org.junit.runner.RunWith
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ArrayTemplate
 import org.tetrabox.minijava.xtext.tests.MiniJavaInjectorProvider
-import org.eclipse.emf.common.util.BasicEList
 
 @RunWith(XtextRunner)
 @InjectWith(MiniJavaInjectorProvider)

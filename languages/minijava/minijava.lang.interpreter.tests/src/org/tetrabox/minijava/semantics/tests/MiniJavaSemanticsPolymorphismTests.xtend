@@ -11,10 +11,6 @@ import org.junit.runner.RunWith
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil
 import org.tetrabox.minijava.xtext.tests.MiniJavaInjectorProvider
 
-import static org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil.*
-import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ObjectTemplate
-import java.util.HashMap
-
 @RunWith(XtextRunner)
 @InjectWith(MiniJavaInjectorProvider)
 class MiniJavaSemanticsPolymorphismTests {

@@ -9,10 +9,9 @@ import org.eclipse.xtext.testing.XtextRunner
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaTestUtil
-import org.tetrabox.minijava.xtext.tests.MiniJavaInjectorProvider
-
-import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ObjectTemplate
 import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ArrayTemplate
+import org.tetrabox.minijava.semantics.tests.util.MiniJavaValueEquals.ObjectTemplate
+import org.tetrabox.minijava.xtext.tests.MiniJavaInjectorProvider
 
 @RunWith(XtextRunner)
 @InjectWith(MiniJavaInjectorProvider)
