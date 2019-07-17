@@ -43,10 +43,22 @@ public class PlusOperation extends ExpressionOperation {
 			}
 		}
 		else {
-			if(((left instanceof StringValue) || (right instanceof StringValue))) {
-				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-				tmp.setValue((((StringValueOperation) emfswitch.doSwitch(left)).customToString()) + (((StringValueOperation) emfswitch.doSwitch(right)).customToString()));
-				result = ((StringValue) (tmp));
+			if(left instanceof StringValue) {
+				if(right instanceof IntegerValue) {
+					StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+					tmp.setValue((((StringValueOperation) emfswitch.doSwitch(left)).customToString()) + (((IntegerValueOperation) emfswitch.doSwitch(right)).customToString()));
+					result = ((StringValue) (tmp));
+				}
+				else {
+					if(right instanceof StringValue) {
+						StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
+						tmp.setValue((((StringValueOperation) emfswitch.doSwitch(left)).customToString()) + (((StringValueOperation) emfswitch.doSwitch(right)).customToString()));
+						result = ((StringValue) (tmp));
+					}
+					else {
+						result = ((Value) (null));
+					}
+				}
 			}
 			else {
 				result = ((Value) (null));

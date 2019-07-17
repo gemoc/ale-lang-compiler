@@ -25,23 +25,23 @@ class MiniJavaSemanticsXMITests {
 	
 	@Test
 	def void minijava_sort() {
-		genericXMITest("programs/minijava_sort.xmi")
+		genericXMITest("../../../programs/minijava_sort.xmi")
 	}
 	@Test
 	def void minijava_fibonacci() {
-		genericXMITest("programs/minijava_fibonacci.xmi")
+		genericXMITest("../../../programs/minijava_fibonacci.xmi")
 	}
 	@Test
 	def void minijava_binarytree() {
-		genericXMITest("programs/minijava_binarytree.xmi")
+		genericXMITest("../../../programs/minijava_binarytree.xmi")
 	}
 	@Test
 	def void minijava_fannkuchredux() {
-		genericXMITest("programs/minijava_fannkuchredux.xmi")
+		genericXMITest("../../../programs/minijava_fannkuchredux.xmi")
 	}
 	
 	def void genericXMITest(String path){
-		EPackage.Registry.INSTANCE.put("http://www.example.org/MiniJava", MiniJavaPackage.eINSTANCE)
+		EPackage.Registry.INSTANCE.put("http://miniJava.miniJava.miniJava/", MiniJavaPackage.eINSTANCE)
 
 		val result = loadFromXMI(path) as Program;
 		val expected = new String(Files.readAllBytes(Paths.get(path+".expected")))
