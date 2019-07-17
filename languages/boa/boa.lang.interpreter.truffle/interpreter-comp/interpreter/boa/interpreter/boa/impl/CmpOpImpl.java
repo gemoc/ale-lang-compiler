@@ -4,8 +4,6 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.CmpOp;
-import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Object;
 import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
@@ -17,12 +15,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "CmpOp"
 )
-public abstract class CmpOpImpl extends ExprImpl implements CmpOp {
+public abstract class CmpOpImpl extends ExprImpl {
 	@Child
-	protected Expr lhs;
+	protected ExprImpl lhs;
 
 	@Child
-	protected Expr rhs;
+	protected ExprImpl rhs;
 
 	protected CmpOpImpl() {
 		super();
@@ -34,12 +32,14 @@ public abstract class CmpOpImpl extends ExprImpl implements CmpOp {
 		return BoaPackage.Literals.CMP_OP;
 	}
 
-	public Expr getLhs() {
+	@TruffleBoundary
+	public ExprImpl getLhs() {
 		return lhs;
 	}
 
-	public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
-		Expr oldLhs = lhs;
+	@TruffleBoundary
+	public NotificationChain basicSetLhs(ExprImpl newLhs, NotificationChain msgs) {
+		ExprImpl oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.CMP_OP__LHS, oldLhs, newLhs);
@@ -51,7 +51,8 @@ public abstract class CmpOpImpl extends ExprImpl implements CmpOp {
 		return msgs;
 	}
 
-	public void setLhs(Expr newLhs) {
+	@TruffleBoundary
+	public void setLhs(ExprImpl newLhs) {
 		if (newLhs != lhs) {
 			NotificationChain msgs = null;
 			if (lhs != null)
@@ -65,12 +66,14 @@ public abstract class CmpOpImpl extends ExprImpl implements CmpOp {
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.CMP_OP__LHS, newLhs, newLhs));
 	}
 
-	public Expr getRhs() {
+	@TruffleBoundary
+	public ExprImpl getRhs() {
 		return rhs;
 	}
 
-	public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
-		Expr oldRhs = rhs;
+	@TruffleBoundary
+	public NotificationChain basicSetRhs(ExprImpl newRhs, NotificationChain msgs) {
+		ExprImpl oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.CMP_OP__RHS, oldRhs, newRhs);
@@ -82,7 +85,8 @@ public abstract class CmpOpImpl extends ExprImpl implements CmpOp {
 		return msgs;
 	}
 
-	public void setRhs(Expr newRhs) {
+	@TruffleBoundary
+	public void setRhs(ExprImpl newRhs) {
 		if (newRhs != rhs) {
 			NotificationChain msgs = null;
 			if (rhs != null)
@@ -126,10 +130,10 @@ public abstract class CmpOpImpl extends ExprImpl implements CmpOp {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.CMP_OP__LHS :
-				setLhs((Expr) newValue);
+				setLhs((ExprImpl) newValue);
 				return;
 			case BoaPackage.CMP_OP__RHS :
-				setRhs((Expr) newValue);
+				setRhs((ExprImpl) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -140,10 +144,10 @@ public abstract class CmpOpImpl extends ExprImpl implements CmpOp {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.CMP_OP__LHS :
-				setLhs((Expr) null);
+				setLhs((ExprImpl) null);
 				return;
 			case BoaPackage.CMP_OP__RHS :
-				setRhs((Expr) null);
+				setRhs((ExprImpl) null);
 				return;
 		}
 		super.eUnset(featureID);

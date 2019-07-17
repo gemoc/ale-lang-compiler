@@ -6,13 +6,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.Ctx;
-import interpreter.boa.interpreter.boa.EvalBoundFunRes;
-import interpreter.boa.interpreter.boa.EvalFunRes;
-import interpreter.boa.interpreter.boa.EvalMapRes;
-import interpreter.boa.interpreter.boa.EvalRes;
-import interpreter.boa.interpreter.boa.Expr;
-import interpreter.boa.interpreter.boa.Project;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -26,13 +19,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Project"
 )
-public class ProjectImpl extends ExprImpl implements Project {
+public class ProjectImpl extends ExprImpl {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
 	@Child
-	protected Expr exp;
+	protected ExprImpl exp;
 
 	protected ProjectImpl() {
 		super();
@@ -44,12 +37,14 @@ public class ProjectImpl extends ExprImpl implements Project {
 		return BoaPackage.Literals.PROJECT;
 	}
 
-	public Expr getExp() {
+	@TruffleBoundary
+	public ExprImpl getExp() {
 		return exp;
 	}
 
-	public NotificationChain basicSetExp(Expr newExp, NotificationChain msgs) {
-		Expr oldExp = exp;
+	@TruffleBoundary
+	public NotificationChain basicSetExp(ExprImpl newExp, NotificationChain msgs) {
+		ExprImpl oldExp = exp;
 		exp = newExp;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.PROJECT__EXP, oldExp, newExp);
@@ -61,7 +56,8 @@ public class ProjectImpl extends ExprImpl implements Project {
 		return msgs;
 	}
 
-	public void setExp(Expr newExp) {
+	@TruffleBoundary
+	public void setExp(ExprImpl newExp) {
 		if (newExp != exp) {
 			NotificationChain msgs = null;
 			if (exp != null)
@@ -75,10 +71,12 @@ public class ProjectImpl extends ExprImpl implements Project {
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.PROJECT__EXP, newExp, newExp));
 	}
 
+	@TruffleBoundary
 	public String getName() {
 		return name;
 	}
 
+	@TruffleBoundary
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -114,7 +112,7 @@ public class ProjectImpl extends ExprImpl implements Project {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.PROJECT__EXP :
-				setExp((Expr) newValue);
+				setExp((ExprImpl) newValue);
 				return;
 			case BoaPackage.PROJECT__NAME :
 				setName((String) newValue);
@@ -128,7 +126,7 @@ public class ProjectImpl extends ExprImpl implements Project {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.PROJECT__EXP :
-				setExp((Expr) null);
+				setExp((ExprImpl) null);
 				return;
 			case BoaPackage.PROJECT__NAME :
 				setName(NAME_EDEFAULT);
@@ -149,39 +147,39 @@ public class ProjectImpl extends ExprImpl implements Project {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalRes eval(Ctx ctx) {
-		EvalRes result;
-		EvalRes vexp = ((EvalRes) (((Expr) (this.getExp())).eval((Ctx) (ctx))));
-		if (vexp instanceof EvalMapRes) {
-			EvalMapRes mvexp = ((EvalMapRes) (vexp));
+	public EvalResImpl eval(CtxImpl ctx) {
+		EvalResImpl result;
+		EvalResImpl vexp = ((EvalResImpl) (((ExprImpl) (this.getExp())).eval((CtxImpl) (ctx))));
+		if (vexp instanceof EvalMapResImpl) {
+			EvalMapResImpl mvexp = ((EvalMapResImpl) (vexp));
 			if (MapService.containsKey((EMap) (mvexp.getValues()), (String) (this.name))) {
-				EvalRes x = ((EvalRes) (mvexp.getValues().get((String) (this.name))));
-				if (x instanceof EvalFunRes) {
-					EvalFunRes func = ((EvalFunRes) (x));
-					result = (EvalRes) (((Project) (this)).project((EvalFunRes) (func), (EvalMapRes) (mvexp))) ;
+				EvalResImpl x = ((EvalResImpl) (mvexp.getValues().get((String) (this.name))));
+				if (x instanceof EvalFunResImpl) {
+					EvalFunResImpl func = ((EvalFunResImpl) (x));
+					result = (EvalResImpl) (((ProjectImpl) (this)).project((EvalFunResImpl) (func), (EvalMapResImpl) (mvexp))) ;
 				}
 				else {
-					result = (EvalRes) (x) ;
+					result = (EvalResImpl) (x) ;
 				}
 			}
 			else {
-				result = (EvalRes) (null) ;
+				result = (EvalResImpl) (null) ;
 			}
 		}
 		else {
-			result = (EvalRes) (null) ;
+			result = (EvalResImpl) (null) ;
 		}
 		return result;
 	}
 
-	public EvalRes project(EvalFunRes func, EvalMapRes mvexp) {
-		EvalRes result;
-		EvalBoundFunRes ret = ((EvalBoundFunRes) (BoaFactory.eINSTANCE.createEvalBoundFunRes()));
+	public EvalResImpl project(EvalFunResImpl func, EvalMapResImpl mvexp) {
+		EvalResImpl result;
+		EvalBoundFunResImpl ret = ((EvalBoundFunResImpl) (BoaFactory.eINSTANCE.createEvalBoundFunRes()));
 		ret.setExp(func.getExp());
 		ret.setCtx(func.getCtx());
 		ret.setName(func.getName());
 		MapService.replaceWith((EMap) (ret.getTh()), (EMap) (mvexp.getValues()));
-		result = (EvalRes) (ret) ;
+		result = (EvalResImpl) (ret) ;
 		return result;
 	}
 }

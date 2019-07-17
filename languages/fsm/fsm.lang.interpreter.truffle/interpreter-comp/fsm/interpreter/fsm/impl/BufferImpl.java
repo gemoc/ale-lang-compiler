@@ -2,6 +2,7 @@ package fsm.interpreter.fsm.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import fsm.FsmService;
 import fsm.interpreter.fsm.FsmPackage;
 import java.lang.Integer;
 import java.lang.Object;
@@ -320,15 +321,15 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public String dequeue() {
 		String result;
 		String res = ((String) (""));
-		int firstComma = ((int) (this.currentValues.indexOf((String) (","))));
+		int firstComma = ((int) (FsmService.indexOf((String) (this.currentValues), (String) (","))));
 		if ((firstComma) < (0)) {
 			res = this.currentValues;
 			this.setCurrentValues("'empty'");
 			result = (String) (res) ;
 		}
 		else {
-			res = this.currentValues.substring((Integer) (0), (int) (firstComma));
-			this.setCurrentValues(this.currentValues.substring(((firstComma) + (1)), (Integer) (CollectionService.size(this.currentValues))));
+			res = FsmService.substring((String) (this.currentValues), (Integer) (0), (int) (firstComma));
+			this.setCurrentValues(FsmService.substring((String) (this.currentValues), ((firstComma) + (1)), (Integer) (CollectionService.size(this.currentValues))));
 			result = (String) (res) ;
 		}
 		return result;

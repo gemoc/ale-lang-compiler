@@ -1,78 +1,112 @@
 package kmLogo.interpreter.kmLogo;
 
+import kmLogo.interpreter.kmLogo.impl.BackImpl;
+import kmLogo.interpreter.kmLogo.impl.BlockImpl;
+import kmLogo.interpreter.kmLogo.impl.CallStackImpl;
+import kmLogo.interpreter.kmLogo.impl.ClearImpl;
+import kmLogo.interpreter.kmLogo.impl.ConstantImpl;
+import kmLogo.interpreter.kmLogo.impl.ControlStructureImpl;
+import kmLogo.interpreter.kmLogo.impl.CosImpl;
+import kmLogo.interpreter.kmLogo.impl.DivImpl;
+import kmLogo.interpreter.kmLogo.impl.EqualsImpl;
+import kmLogo.interpreter.kmLogo.impl.ForwardImpl;
+import kmLogo.interpreter.kmLogo.impl.GreaterImpl;
+import kmLogo.interpreter.kmLogo.impl.IfImpl;
 import kmLogo.interpreter.kmLogo.impl.KmLogoFactoryImpl;
+import kmLogo.interpreter.kmLogo.impl.LeftImpl;
+import kmLogo.interpreter.kmLogo.impl.LogoProgramImpl;
+import kmLogo.interpreter.kmLogo.impl.LowerImpl;
+import kmLogo.interpreter.kmLogo.impl.MinusImpl;
+import kmLogo.interpreter.kmLogo.impl.MultImpl;
+import kmLogo.interpreter.kmLogo.impl.ParameterCallImpl;
+import kmLogo.interpreter.kmLogo.impl.ParameterImpl;
+import kmLogo.interpreter.kmLogo.impl.PenDownImpl;
+import kmLogo.interpreter.kmLogo.impl.PenUpImpl;
+import kmLogo.interpreter.kmLogo.impl.PlusImpl;
+import kmLogo.interpreter.kmLogo.impl.PointImpl;
+import kmLogo.interpreter.kmLogo.impl.ProcCallImpl;
+import kmLogo.interpreter.kmLogo.impl.ProcDeclarationImpl;
+import kmLogo.interpreter.kmLogo.impl.RepeatImpl;
+import kmLogo.interpreter.kmLogo.impl.RightImpl;
+import kmLogo.interpreter.kmLogo.impl.SegmentImpl;
+import kmLogo.interpreter.kmLogo.impl.SinImpl;
+import kmLogo.interpreter.kmLogo.impl.StackFrameImpl;
+import kmLogo.interpreter.kmLogo.impl.TanImpl;
+import kmLogo.interpreter.kmLogo.impl.TurtleImpl;
+import kmLogo.interpreter.kmLogo.impl.VariableImpl;
+import kmLogo.interpreter.kmLogo.impl.WhileImpl;
 import org.eclipse.emf.ecore.EFactory;
 
 public interface KmLogoFactory extends EFactory {
-  KmLogoFactory eINSTANCE = KmLogoFactoryImpl.init();
+	KmLogoFactory eINSTANCE = KmLogoFactoryImpl.init();
 
-  Back createBack();
+	BackImpl createBack();
 
-  Forward createForward();
+	ForwardImpl createForward();
 
-  Left createLeft();
+	LeftImpl createLeft();
 
-  Right createRight();
+	RightImpl createRight();
 
-  PenDown createPenDown();
+	PenDownImpl createPenDown();
 
-  PenUp createPenUp();
+	PenUpImpl createPenUp();
 
-  Clear createClear();
+	ClearImpl createClear();
 
-  Constant createConstant();
+	ConstantImpl createConstant();
 
-  ProcCall createProcCall();
+	ProcCallImpl createProcCall();
 
-  ProcDeclaration createProcDeclaration();
+	ProcDeclarationImpl createProcDeclaration();
 
-  Block createBlock();
+	BlockImpl createBlock();
 
-  If createIf();
+	IfImpl createIf();
 
-  ControlStructure createControlStructure();
+	ControlStructureImpl createControlStructure();
 
-  Repeat createRepeat();
+	RepeatImpl createRepeat();
 
-  While createWhile();
+	WhileImpl createWhile();
 
-  Parameter createParameter();
+	ParameterImpl createParameter();
 
-  ParameterCall createParameterCall();
+	ParameterCallImpl createParameterCall();
 
-  Plus createPlus();
+	PlusImpl createPlus();
 
-  Minus createMinus();
+	MinusImpl createMinus();
 
-  Mult createMult();
+	MultImpl createMult();
 
-  Div createDiv();
+	DivImpl createDiv();
 
-  Equals createEquals();
+	EqualsImpl createEquals();
 
-  Greater createGreater();
+	GreaterImpl createGreater();
 
-  Lower createLower();
+	LowerImpl createLower();
 
-  Cos createCos();
+	CosImpl createCos();
 
-  Sin createSin();
+	SinImpl createSin();
 
-  Tan createTan();
+	TanImpl createTan();
 
-  LogoProgram createLogoProgram();
+	LogoProgramImpl createLogoProgram();
 
-  Turtle createTurtle();
+	TurtleImpl createTurtle();
 
-  Point createPoint();
+	PointImpl createPoint();
 
-  Segment createSegment();
+	SegmentImpl createSegment();
 
-  CallStack createCallStack();
+	CallStackImpl createCallStack();
 
-  StackFrame createStackFrame();
+	StackFrameImpl createStackFrame();
 
-  Variable createVariable();
+	VariableImpl createVariable();
 
-  KmLogoPackage getKmLogoPackage();
+	KmLogoPackage getKmLogoPackage();
 }

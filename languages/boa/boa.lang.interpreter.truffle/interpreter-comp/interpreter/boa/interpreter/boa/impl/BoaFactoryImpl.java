@@ -1,44 +1,8 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import interpreter.boa.interpreter.boa.App;
-import interpreter.boa.interpreter.boa.ArithOpDivide;
-import interpreter.boa.interpreter.boa.ArithOpMinus;
-import interpreter.boa.interpreter.boa.ArithOpPlus;
-import interpreter.boa.interpreter.boa.ArithOpRemainder;
-import interpreter.boa.interpreter.boa.ArithOpTimes;
-import interpreter.boa.interpreter.boa.Assign;
-import interpreter.boa.interpreter.boa.BObject;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.Bool;
-import interpreter.boa.interpreter.boa.BoolOpAnd;
-import interpreter.boa.interpreter.boa.BoolOpOr;
-import interpreter.boa.interpreter.boa.CmpOpEqual;
-import interpreter.boa.interpreter.boa.CmpOpLess;
-import interpreter.boa.interpreter.boa.CmpOpUnequal;
-import interpreter.boa.interpreter.boa.Copy;
-import interpreter.boa.interpreter.boa.Ctx;
-import interpreter.boa.interpreter.boa.Def;
-import interpreter.boa.interpreter.boa.EvalBoolRes;
-import interpreter.boa.interpreter.boa.EvalBoundFunRes;
-import interpreter.boa.interpreter.boa.EvalFunRes;
-import interpreter.boa.interpreter.boa.EvalIntRes;
-import interpreter.boa.interpreter.boa.EvalMapRes;
-import interpreter.boa.interpreter.boa.EvalRes;
-import interpreter.boa.interpreter.boa.Field;
-import interpreter.boa.interpreter.boa.File;
-import interpreter.boa.interpreter.boa.Fun;
-import interpreter.boa.interpreter.boa.If;
-import interpreter.boa.interpreter.boa.Int;
-import interpreter.boa.interpreter.boa.Let;
-import interpreter.boa.interpreter.boa.Not;
-import interpreter.boa.interpreter.boa.Project;
-import interpreter.boa.interpreter.boa.Seq;
-import interpreter.boa.interpreter.boa.Skip;
-import interpreter.boa.interpreter.boa.This;
-import interpreter.boa.interpreter.boa.Var;
-import interpreter.boa.interpreter.boa.With;
 import java.lang.Deprecated;
 import java.lang.IllegalArgumentException;
 import java.lang.Override;
@@ -149,217 +113,217 @@ public class BoaFactoryImpl extends EFactoryImpl implements BoaFactory {
 	}
 
 	@TruffleBoundary
-	public File createFile() {
+	public FileImpl createFile() {
 		FileImpl file = new FileImpl();
 		return file;
 	}
 
 	@TruffleBoundary
-	public Def createDef() {
+	public DefImpl createDef() {
 		DefImpl def = new DefImpl();
 		return def;
 	}
 
 	@TruffleBoundary
-	public App createApp() {
+	public AppImpl createApp() {
 		AppImpl app = new AppImpl();
 		return app;
 	}
 
 	@TruffleBoundary
-	public Var createVar() {
+	public VarImpl createVar() {
 		VarImpl var = new VarImpl();
 		return var;
 	}
 
 	@TruffleBoundary
-	public This createThis() {
+	public ThisImpl createThis() {
 		ThisImpl this_ = new ThisImpl();
 		return this_;
 	}
 
 	@TruffleBoundary
-	public Bool createBool() {
+	public BoolImpl createBool() {
 		BoolImpl bool = new BoolImpl();
 		return bool;
 	}
 
 	@TruffleBoundary
-	public Int createInt() {
+	public IntImpl createInt() {
 		IntImpl int_ = new IntImpl();
 		return int_;
 	}
 
 	@TruffleBoundary
-	public Skip createSkip() {
+	public SkipImpl createSkip() {
 		SkipImpl skip = new SkipImpl();
 		return skip;
 	}
 
 	@TruffleBoundary
-	public Project createProject() {
+	public ProjectImpl createProject() {
 		ProjectImpl project = new ProjectImpl();
 		return project;
 	}
 
 	@TruffleBoundary
-	public BObject createBObject() {
+	public BObjectImpl createBObject() {
 		BObjectImpl bObject = new BObjectImpl();
 		return bObject;
 	}
 
 	@TruffleBoundary
-	public Field createField() {
+	public FieldImpl createField() {
 		FieldImpl field = new FieldImpl();
 		return field;
 	}
 
 	@TruffleBoundary
-	public Copy createCopy() {
+	public CopyImpl createCopy() {
 		CopyImpl copy = new CopyImpl();
 		return copy;
 	}
 
 	@TruffleBoundary
-	public With createWith() {
+	public WithImpl createWith() {
 		WithImpl with = new WithImpl();
 		return with;
 	}
 
 	@TruffleBoundary
-	public Not createNot() {
+	public NotImpl createNot() {
 		NotImpl not = new NotImpl();
 		return not;
 	}
 
 	@TruffleBoundary
-	public If createIf() {
+	public IfImpl createIf() {
 		IfImpl if_ = new IfImpl();
 		return if_;
 	}
 
 	@TruffleBoundary
-	public Let createLet() {
+	public LetImpl createLet() {
 		LetImpl let = new LetImpl();
 		return let;
 	}
 
 	@TruffleBoundary
-	public Fun createFun() {
+	public FunImpl createFun() {
 		FunImpl fun = new FunImpl();
 		return fun;
 	}
 
 	@TruffleBoundary
-	public Assign createAssign() {
+	public AssignImpl createAssign() {
 		AssignImpl assign = new AssignImpl();
 		return assign;
 	}
 
 	@TruffleBoundary
-	public ArithOpPlus createArithOpPlus() {
+	public ArithOpPlusImpl createArithOpPlus() {
 		ArithOpPlusImpl arithOpPlus = new ArithOpPlusImpl();
 		return arithOpPlus;
 	}
 
 	@TruffleBoundary
-	public ArithOpMinus createArithOpMinus() {
+	public ArithOpMinusImpl createArithOpMinus() {
 		ArithOpMinusImpl arithOpMinus = new ArithOpMinusImpl();
 		return arithOpMinus;
 	}
 
 	@TruffleBoundary
-	public ArithOpTimes createArithOpTimes() {
+	public ArithOpTimesImpl createArithOpTimes() {
 		ArithOpTimesImpl arithOpTimes = new ArithOpTimesImpl();
 		return arithOpTimes;
 	}
 
 	@TruffleBoundary
-	public ArithOpDivide createArithOpDivide() {
+	public ArithOpDivideImpl createArithOpDivide() {
 		ArithOpDivideImpl arithOpDivide = new ArithOpDivideImpl();
 		return arithOpDivide;
 	}
 
 	@TruffleBoundary
-	public ArithOpRemainder createArithOpRemainder() {
+	public ArithOpRemainderImpl createArithOpRemainder() {
 		ArithOpRemainderImpl arithOpRemainder = new ArithOpRemainderImpl();
 		return arithOpRemainder;
 	}
 
 	@TruffleBoundary
-	public BoolOpAnd createBoolOpAnd() {
+	public BoolOpAndImpl createBoolOpAnd() {
 		BoolOpAndImpl boolOpAnd = new BoolOpAndImpl();
 		return boolOpAnd;
 	}
 
 	@TruffleBoundary
-	public BoolOpOr createBoolOpOr() {
+	public BoolOpOrImpl createBoolOpOr() {
 		BoolOpOrImpl boolOpOr = new BoolOpOrImpl();
 		return boolOpOr;
 	}
 
 	@TruffleBoundary
-	public Seq createSeq() {
+	public SeqImpl createSeq() {
 		SeqImpl seq = new SeqImpl();
 		return seq;
 	}
 
 	@TruffleBoundary
-	public CmpOpEqual createCmpOpEqual() {
+	public CmpOpEqualImpl createCmpOpEqual() {
 		CmpOpEqualImpl cmpOpEqual = new CmpOpEqualImpl();
 		return cmpOpEqual;
 	}
 
 	@TruffleBoundary
-	public CmpOpUnequal createCmpOpUnequal() {
+	public CmpOpUnequalImpl createCmpOpUnequal() {
 		CmpOpUnequalImpl cmpOpUnequal = new CmpOpUnequalImpl();
 		return cmpOpUnequal;
 	}
 
 	@TruffleBoundary
-	public CmpOpLess createCmpOpLess() {
+	public CmpOpLessImpl createCmpOpLess() {
 		CmpOpLessImpl cmpOpLess = new CmpOpLessImpl();
 		return cmpOpLess;
 	}
 
 	@TruffleBoundary
-	public Ctx createCtx() {
+	public CtxImpl createCtx() {
 		CtxImpl ctx = new CtxImpl();
 		return ctx;
 	}
 
 	@TruffleBoundary
-	public Map.Entry<String, EvalRes> createStringToEvalResMap() {
+	public Map.Entry<String, EvalResImpl> createStringToEvalResMap() {
 		StringToEvalResMapImpl stringToEvalResMap = new StringToEvalResMapImpl();
 		return stringToEvalResMap;
 	}
 
 	@TruffleBoundary
-	public EvalMapRes createEvalMapRes() {
+	public EvalMapResImpl createEvalMapRes() {
 		EvalMapResImpl evalMapRes = new EvalMapResImpl();
 		return evalMapRes;
 	}
 
 	@TruffleBoundary
-	public EvalFunRes createEvalFunRes() {
+	public EvalFunResImpl createEvalFunRes() {
 		EvalFunResImpl evalFunRes = new EvalFunResImpl();
 		return evalFunRes;
 	}
 
 	@TruffleBoundary
-	public EvalBoundFunRes createEvalBoundFunRes() {
+	public EvalBoundFunResImpl createEvalBoundFunRes() {
 		EvalBoundFunResImpl evalBoundFunRes = new EvalBoundFunResImpl();
 		return evalBoundFunRes;
 	}
 
 	@TruffleBoundary
-	public EvalIntRes createEvalIntRes() {
+	public EvalIntResImpl createEvalIntRes() {
 		EvalIntResImpl evalIntRes = new EvalIntResImpl();
 		return evalIntRes;
 	}
 
 	@TruffleBoundary
-	public EvalBoolRes createEvalBoolRes() {
+	public EvalBoolResImpl createEvalBoolRes() {
 		EvalBoolResImpl evalBoolRes = new EvalBoolResImpl();
 		return evalBoolRes;
 	}

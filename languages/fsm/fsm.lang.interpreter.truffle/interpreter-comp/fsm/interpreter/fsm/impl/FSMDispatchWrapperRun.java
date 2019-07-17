@@ -11,7 +11,7 @@ public class FSMDispatchWrapperRun {
 	private final CyclicAssumption callTargetStable;
 
 	protected FSMDispatchWrapperRun(FSMImpl it) {
-		this.callTargetStable = new CyclicAssumption("FSMDispatchWrapperRun_6.82601463196435E7");
+		this.callTargetStable = new CyclicAssumption("FSMDispatchWrapperRun_2.509400332130639E7");
 		this.callTarget = Truffle.getRuntime().createCallTarget(new FSMRunRootNode(it));
 	}
 

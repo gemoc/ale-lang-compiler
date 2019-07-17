@@ -1,15 +1,15 @@
 package kmLogo.interpreter.kmLogo.impl;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
-import kmLogo.interpreter.kmLogo.Expression;
+import java.lang.Override;
+import java.util.Collection;
+import kmLogo.interpreter.kmLogo.KmLogoFactory;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
-import kmLogo.interpreter.kmLogo.ProcCall;
-import kmLogo.interpreter.kmLogo.ProcDeclaration;
-import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -17,187 +17,196 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
 @NodeInfo(
-    description = "ProcCall"
+		description = "ProcCall"
 )
-public class ProcCallImpl extends ExpressionImpl implements ProcCall {
-  protected EList<Expression> actualArgs;
+public class ProcCallImpl extends ExpressionImpl {
+	protected EList<ExpressionImpl> actualArgs;
 
-  protected ProcDeclaration declaration;
+	protected ProcDeclarationImpl declaration;
 
-  @Children
-  private Expression[] actualArgsArr;
+	@Children
+	private ExpressionImpl[] actualArgsArr;
 
-  @Child
-  private ProcDeclarationDispatchDeval dispatchProcDeclarationDeval;
+	@Child
+	private ProcDeclarationDispatchDeval dispatchProcDeclarationDeval;
 
-  protected ProcCallImpl() {
-    super();
-    this.dispatchProcDeclarationDeval = kmLogo.interpreter.kmLogo.impl.ProcDeclarationDispatchDevalNodeGen.create(); 
-  }
+	protected ProcCallImpl() {
+		super();
+		this.dispatchProcDeclarationDeval = kmLogo.interpreter.kmLogo.impl.ProcDeclarationDispatchDevalNodeGen.create(); 
+	}
 
-  @TruffleBoundary
-  public EList<Expression> getActualArgs() {
-    if(actualArgs == null) {
-    	actualArgs = new EObjectContainmentEList<Expression>(kmLogo.interpreter.kmLogo.Expression.class, this, KmLogoPackage.PROC_CALL__ACTUAL_ARGS);
-    }
-    return actualArgs;
-  }
+	@Override
+	@TruffleBoundary
+	protected EClass eStaticClass() {
+		return KmLogoPackage.Literals.PROC_CALL;
+	}
 
-  @TruffleBoundary
-  public void setDeclaration(ProcDeclaration newDeclaration) {
-    if (newDeclaration != declaration) {
-    	NotificationChain msgs = null;
-    	if (declaration != null)
-    		msgs = ((InternalEObject) declaration).eInverseRemove(this, KmLogoPackage.PROC_DECLARATION__PROC_CALL, kmLogo.interpreter.kmLogo.ProcDeclaration.class, msgs);
-    	if (newDeclaration != null)
-    		msgs = ((InternalEObject) newDeclaration).eInverseAdd(this, KmLogoPackage.PROC_DECLARATION__PROC_CALL, kmLogo.interpreter.kmLogo.ProcDeclaration.class,
-    				msgs);
-    	msgs = basicSetDeclaration(newDeclaration, msgs);
-    	if (msgs != null)
-    		msgs.dispatch();
-    } else if (eNotificationRequired())
-    	eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.PROC_CALL__DECLARATION, newDeclaration, newDeclaration));
-  }
+	@TruffleBoundary
+	public EList<ExpressionImpl> getActualArgs() {
+		if (actualArgs == null) {
+			actualArgs = new EObjectContainmentEList<ExpressionImpl>(ExpressionImpl.class, this, KmLogoPackage.PROC_CALL__ACTUAL_ARGS);
+		}
+		return actualArgs;
+	}
 
-  @TruffleBoundary
-  private NotificationChain basicSetDeclaration(ProcDeclaration newDeclaration,
-      NotificationChain msgsp) {
-    NotificationChain msgs = msgsp;
-    ProcDeclaration oldDeclaration = declaration;
-    declaration = newDeclaration;
-    if (eNotificationRequired()) {
-    	ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.PROC_CALL__DECLARATION,
-    			oldDeclaration, newDeclaration);
-    	if (msgs == null)
-    		msgs = notification;
-    	else
-    		msgs.add(notification);
-    }
-    return msgs;
-  }
+	@TruffleBoundary
+	public ProcDeclarationImpl getDeclaration() {
+		if (declaration != null && declaration.eIsProxy()) {
+			InternalEObject oldDeclaration = (InternalEObject) declaration;
+			declaration = (ProcDeclarationImpl) eResolveProxy(oldDeclaration);
+			if (declaration != oldDeclaration) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PROC_CALL__DECLARATION, oldDeclaration, declaration));
+			}
+		}
+		return declaration;
+	}
 
-  @TruffleBoundary
-  public ProcDeclaration getDeclaration() {
-    if (declaration != null && declaration.eIsProxy()) {
-    	InternalEObject olddeclaration = (InternalEObject) declaration;
-    	declaration = (ProcDeclaration) eResolveProxy(olddeclaration);
-    	if (declaration != olddeclaration) {
-    		if (eNotificationRequired())
-    			eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PROC_CALL__DECLARATION,
-    					olddeclaration, declaration));
-    	}
-    }
-    return declaration;
-  }
+	public ProcDeclarationImpl basicGetDeclaration() {
+		return declaration;
+	}
 
-  @TruffleBoundary
-  protected EClass eStaticClass() {
-    return KmLogoPackage.Literals.PROC_CALL;}
+	@TruffleBoundary
+	public NotificationChain basicSetDeclaration(ProcDeclarationImpl newDeclaration,
+			NotificationChain msgs) {
+		ProcDeclarationImpl oldDeclaration = declaration;
+		declaration = newDeclaration;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.PROC_CALL__DECLARATION, oldDeclaration, newDeclaration);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
+		}
+		return msgs;
+	}
 
-  @TruffleBoundary
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
-    	getActualArgs().clear();
-    	getActualArgs().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.Expression>) newValue);
-    return;
-    case KmLogoPackage.PROC_CALL__DECLARATION:
-    	setDeclaration((kmLogo.interpreter.kmLogo.ProcDeclaration) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	@TruffleBoundary
+	public void setDeclaration(ProcDeclarationImpl newDeclaration) {
+		if (newDeclaration != declaration) {
+			NotificationChain msgs = null;
+			if (declaration != null)
+				msgs = ((InternalEObject) declaration).eInverseRemove(this, KmLogoPackage.PROC_DECLARATION__PROC_CALL, ProcDeclarationImpl.class, msgs);
+			if (newDeclaration != null)
+				msgs = ((InternalEObject) newDeclaration).eInverseAdd(this, KmLogoPackage.PROC_DECLARATION__PROC_CALL, ProcDeclarationImpl.class, msgs);
+			msgs = basicSetDeclaration(newDeclaration, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.PROC_CALL__DECLARATION, newDeclaration, newDeclaration));
+	}
 
-  @TruffleBoundary
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
-    	getActualArgs().clear();
-    return;
-    case KmLogoPackage.PROC_CALL__DECLARATION:
-    	setDeclaration((kmLogo.interpreter.kmLogo.ProcDeclaration) null);
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	@Override
+	@TruffleBoundary
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
+		switch (featureID) {
+			case KmLogoPackage.PROC_CALL__DECLARATION :
+				if (declaration != null)
+					msgs = ((InternalEObject) declaration).eInverseRemove(this, KmLogoPackage.PROC_DECLARATION__PROC_CALL, ProcDeclarationImpl.class, msgs);
+				return basicSetDeclaration((ProcDeclarationImpl) otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
 
-  @TruffleBoundary
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
-    return getActualArgs();
-    case KmLogoPackage.PROC_CALL__DECLARATION:
-    return getDeclaration();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@Override
+	@TruffleBoundary
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
+		switch (featureID) {
+			case KmLogoPackage.PROC_CALL__ACTUAL_ARGS :
+				return ((InternalEList<?>) getActualArgs()).basicRemove(otherEnd, msgs);
+			case KmLogoPackage.PROC_CALL__DECLARATION :
+				return basicSetDeclaration(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
-  @TruffleBoundary
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
-    	return actualArgs != null && !actualArgs.isEmpty();
-    case KmLogoPackage.PROC_CALL__DECLARATION:
-    	return declaration != null;
-    }
-    return super.eIsSet(featureID);
-  }
+	@Override
+	@TruffleBoundary
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case KmLogoPackage.PROC_CALL__ACTUAL_ARGS :
+				return getActualArgs();
+			case KmLogoPackage.PROC_CALL__DECLARATION :
+				if (resolve)
+					return getDeclaration();
+				return basicGetDeclaration();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
-  @TruffleBoundary
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_CALL__ACTUAL_ARGS:
-    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getActualArgs()).basicRemove(otherEnd, msgs);
-    case kmLogo.interpreter.kmLogo.KmLogoPackage.PROC_CALL__DECLARATION:
-    	return basicSetDeclaration(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+	@Override
+	@TruffleBoundary
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case KmLogoPackage.PROC_CALL__ACTUAL_ARGS :
+				getActualArgs().clear();
+				getActualArgs().addAll((Collection<? extends ExpressionImpl>) newValue);
+				return;
+			case KmLogoPackage.PROC_CALL__DECLARATION :
+				setDeclaration((ProcDeclarationImpl) newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  @TruffleBoundary
-  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs2) {
-    NotificationChain msgs = msgs2;
-    switch (featureID) {
+	@Override
+	@TruffleBoundary
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case KmLogoPackage.PROC_CALL__ACTUAL_ARGS :
+				getActualArgs().clear();
+				return;
+			case KmLogoPackage.PROC_CALL__DECLARATION :
+				setDeclaration((ProcDeclarationImpl) null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
-    case KmLogoPackage.PROC_CALL__DECLARATION:
-    	if (declaration != null)
-    		msgs = ((org.eclipse.emf.ecore.InternalEObject) declaration).eInverseRemove(this, KmLogoPackage.PROC_DECLARATION__PROC_CALL, ProcDeclaration.class,
-    				msgs);
-    	return basicSetDeclaration((kmLogo.interpreter.kmLogo.ProcDeclaration) otherEnd, msgs);
-    }
-    return super.eInverseAdd(otherEnd, featureID, msgs);
-  }
+	@Override
+	@TruffleBoundary
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case KmLogoPackage.PROC_CALL__ACTUAL_ARGS :
+				return actualArgs != null && !actualArgs.isEmpty();
+			case KmLogoPackage.PROC_CALL__DECLARATION :
+				return declaration != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
-  public double eval(Turtle turtle) {
-    double result;
-    if(this.actualArgsArr == null) {
-        				com.oracle.truffle.api.CompilerDirectives.transferToInterpreterAndInvalidate();
-        				if(this.actualArgs != null) this.actualArgsArr = this.actualArgs.toArray(new kmLogo.interpreter.kmLogo.Expression[0]);
-        				else this.actualArgsArr = new kmLogo.interpreter.kmLogo.Expression[] {};
-        				
-        			};
-    org.eclipse.emf.ecoretools.ale.compiler.lib.LogService.log(("Calling ") + (this.declaration.getName()));
-        kmLogo.interpreter.kmLogo.StackFrame newFrame = ((kmLogo.interpreter.kmLogo.StackFrame)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createStackFrame());
-        int i = ((int)0);
-        for(kmLogo.interpreter.kmLogo.Expression exp: this.actualArgsArr) {
-          kmLogo.interpreter.kmLogo.Variable newVar = ((kmLogo.interpreter.kmLogo.Variable)kmLogo.interpreter.kmLogo.KmLogoFactory.eINSTANCE.createVariable());
-          newVar.setName(org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService.get(this.declaration.getArgs(), i).getName());
-          newVar.setValue(exp.eval(turtle));
-          newFrame.getVariables().add(newVar);
-          i = (i) + (1);
-        }
-        turtle.getCallStack().getFrames().add(newFrame);
-        result = 0.0;
-        if(this.declaration instanceof kmLogo.interpreter.kmLogo.ProcDeclaration) {
-          kmLogo.interpreter.kmLogo.ProcDeclaration decl = ((kmLogo.interpreter.kmLogo.ProcDeclaration)this.declaration);
-          dispatchProcDeclarationDeval.executeDispatch(decl.getCachedDeval(), new Object[] {turtle});
-        }
-        turtle.getCallStack().getFrames().remove(newFrame);
-        ;
-    return result;
-  }
+	public double eval(TurtleImpl turtle) {
+		double result;
+		if (this.actualArgsArr == null) {
+			CompilerDirectives.transferToInterpreterAndInvalidate();
+			if (this.actualArgs != null) this.actualArgsArr = this.actualArgs.toArray(new ExpressionImpl[0]);
+			else this.actualArgsArr = new ExpressionImpl[] {};
+		}
+		LogService.log(("Calling ") + (this.getDeclaration().getName()));
+		StackFrameImpl newFrame = ((StackFrameImpl) (KmLogoFactory.eINSTANCE.createStackFrame()));
+		int i = ((int) (0));
+		for (ExpressionImpl exp : this.actualArgsArr) {
+			VariableImpl newVar = ((VariableImpl) (KmLogoFactory.eINSTANCE.createVariable()));
+			newVar.setName(CollectionService.get(this.getDeclaration().getArgs(), i).getName());
+			newVar.setValue(((ExpressionImpl) (exp)).eval((TurtleImpl) (turtle)));
+			newFrame.getVariables().add(newVar);
+			i = (i) + (1);
+		}
+		turtle.getCallStack().getFrames().add(newFrame);
+		result = (double) (0.0) ;
+		if (this.getDeclaration() instanceof ProcDeclarationImpl) {
+			ProcDeclarationImpl decl = ((ProcDeclarationImpl) (this.getDeclaration()));
+			dispatchProcDeclarationDeval.executeDispatch(decl.getCachedDeval(), new Object[] {turtle});
+		}
+		turtle.getCallStack().getFrames().remove(newFrame);
+
+		return result;
+	}
 }

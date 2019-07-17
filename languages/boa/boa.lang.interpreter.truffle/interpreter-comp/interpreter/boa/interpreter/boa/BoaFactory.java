@@ -1,80 +1,115 @@
 package interpreter.boa.interpreter.boa;
 
+import interpreter.boa.interpreter.boa.impl.AppImpl;
+import interpreter.boa.interpreter.boa.impl.ArithOpDivideImpl;
+import interpreter.boa.interpreter.boa.impl.ArithOpMinusImpl;
+import interpreter.boa.interpreter.boa.impl.ArithOpPlusImpl;
+import interpreter.boa.interpreter.boa.impl.ArithOpRemainderImpl;
+import interpreter.boa.interpreter.boa.impl.ArithOpTimesImpl;
+import interpreter.boa.interpreter.boa.impl.AssignImpl;
+import interpreter.boa.interpreter.boa.impl.BObjectImpl;
 import interpreter.boa.interpreter.boa.impl.BoaFactoryImpl;
+import interpreter.boa.interpreter.boa.impl.BoolImpl;
+import interpreter.boa.interpreter.boa.impl.BoolOpAndImpl;
+import interpreter.boa.interpreter.boa.impl.BoolOpOrImpl;
+import interpreter.boa.interpreter.boa.impl.CmpOpEqualImpl;
+import interpreter.boa.interpreter.boa.impl.CmpOpLessImpl;
+import interpreter.boa.interpreter.boa.impl.CmpOpUnequalImpl;
+import interpreter.boa.interpreter.boa.impl.CopyImpl;
+import interpreter.boa.interpreter.boa.impl.CtxImpl;
+import interpreter.boa.interpreter.boa.impl.DefImpl;
+import interpreter.boa.interpreter.boa.impl.EvalBoolResImpl;
+import interpreter.boa.interpreter.boa.impl.EvalBoundFunResImpl;
+import interpreter.boa.interpreter.boa.impl.EvalFunResImpl;
+import interpreter.boa.interpreter.boa.impl.EvalIntResImpl;
+import interpreter.boa.interpreter.boa.impl.EvalMapResImpl;
+import interpreter.boa.interpreter.boa.impl.FieldImpl;
+import interpreter.boa.interpreter.boa.impl.FileImpl;
+import interpreter.boa.interpreter.boa.impl.FunImpl;
+import interpreter.boa.interpreter.boa.impl.IfImpl;
+import interpreter.boa.interpreter.boa.impl.IntImpl;
+import interpreter.boa.interpreter.boa.impl.LetImpl;
+import interpreter.boa.interpreter.boa.impl.NotImpl;
+import interpreter.boa.interpreter.boa.impl.ProjectImpl;
+import interpreter.boa.interpreter.boa.impl.SeqImpl;
+import interpreter.boa.interpreter.boa.impl.SkipImpl;
+import interpreter.boa.interpreter.boa.impl.ThisImpl;
+import interpreter.boa.interpreter.boa.impl.VarImpl;
+import interpreter.boa.interpreter.boa.impl.WithImpl;
 import org.eclipse.emf.ecore.EFactory;
 
 public interface BoaFactory extends EFactory {
 	BoaFactory eINSTANCE = BoaFactoryImpl.init();
 
-	File createFile();
+	FileImpl createFile();
 
-	Def createDef();
+	DefImpl createDef();
 
-	App createApp();
+	AppImpl createApp();
 
-	Var createVar();
+	VarImpl createVar();
 
-	This createThis();
+	ThisImpl createThis();
 
-	Bool createBool();
+	BoolImpl createBool();
 
-	Int createInt();
+	IntImpl createInt();
 
-	Skip createSkip();
+	SkipImpl createSkip();
 
-	Project createProject();
+	ProjectImpl createProject();
 
-	BObject createBObject();
+	BObjectImpl createBObject();
 
-	Field createField();
+	FieldImpl createField();
 
-	Copy createCopy();
+	CopyImpl createCopy();
 
-	With createWith();
+	WithImpl createWith();
 
-	Not createNot();
+	NotImpl createNot();
 
-	If createIf();
+	IfImpl createIf();
 
-	Let createLet();
+	LetImpl createLet();
 
-	Fun createFun();
+	FunImpl createFun();
 
-	Assign createAssign();
+	AssignImpl createAssign();
 
-	ArithOpPlus createArithOpPlus();
+	ArithOpPlusImpl createArithOpPlus();
 
-	ArithOpMinus createArithOpMinus();
+	ArithOpMinusImpl createArithOpMinus();
 
-	ArithOpTimes createArithOpTimes();
+	ArithOpTimesImpl createArithOpTimes();
 
-	ArithOpDivide createArithOpDivide();
+	ArithOpDivideImpl createArithOpDivide();
 
-	ArithOpRemainder createArithOpRemainder();
+	ArithOpRemainderImpl createArithOpRemainder();
 
-	BoolOpAnd createBoolOpAnd();
+	BoolOpAndImpl createBoolOpAnd();
 
-	BoolOpOr createBoolOpOr();
+	BoolOpOrImpl createBoolOpOr();
 
-	Seq createSeq();
+	SeqImpl createSeq();
 
-	CmpOpEqual createCmpOpEqual();
+	CmpOpEqualImpl createCmpOpEqual();
 
-	CmpOpUnequal createCmpOpUnequal();
+	CmpOpUnequalImpl createCmpOpUnequal();
 
-	CmpOpLess createCmpOpLess();
+	CmpOpLessImpl createCmpOpLess();
 
-	Ctx createCtx();
+	CtxImpl createCtx();
 
-	EvalMapRes createEvalMapRes();
+	EvalMapResImpl createEvalMapRes();
 
-	EvalFunRes createEvalFunRes();
+	EvalFunResImpl createEvalFunRes();
 
-	EvalBoundFunRes createEvalBoundFunRes();
+	EvalBoundFunResImpl createEvalBoundFunRes();
 
-	EvalIntRes createEvalIntRes();
+	EvalIntResImpl createEvalIntRes();
 
-	EvalBoolRes createEvalBoolRes();
+	EvalBoolResImpl createEvalBoolRes();
 
 	BoaPackage getBoaPackage();
 }

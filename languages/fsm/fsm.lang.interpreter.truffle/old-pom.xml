@@ -9,45 +9,70 @@
 		<sourceDirectory>interpreter-comp</sourceDirectory>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
-				<artifactId>alecompiler-maven-plugin</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
 						<goals>
-							<goal>ale-dsl-compile</goal>
+							<goal>add-source</goal>
 						</goals>
+						<configuration>
+							<sources>
+								<source>src</source>
+							</sources>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<dslFile>${project.basedir}/src/fsm.dsl</dslFile>
-				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<finalName>${artifactId}</finalName>
+							<artifactSet>
+								<excludes>
+									<exclude>junit:junit</exclude>
+									<exclude>org.graalvm.truffle:truffle-api</exclude>
+									<exclude>org.graalvm.truffle:truffle-dsl-processor</exclude>
+									<exclude>org.graalvm.truffle:truffle-tck</exclude>
+									<exclude>org.graalvm:graal-sdk</exclude>
+								</excludes>
+							</artifactSet>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
 	<properties>
-		<graalvm.version>19.1.0</graalvm.version>
+		<graalvm.version>19.0.0</graalvm.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
-			<artifactId>alecompiler-maven-plugin</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.eclipse.acceleo</groupId>
-					<artifactId>org.eclipse.core.runtime</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>fsm.service</groupId>
-			<artifactId>fsm.service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.tetrabox.minijava.lang.services</groupId> -->
+<!-- 			<artifactId>org.tetrabox.minijava.lang.services</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.graalvm.truffle</groupId>
 			<artifactId>truffle-api</artifactId>
@@ -79,11 +104,6 @@
 			<groupId>org.eclipse.emf</groupId>
 			<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
 			<version>2.15.0</version>
-		</dependency>
-		<dependency>
-			<groupId>boa.lang.services</groupId>
-			<artifactId>boa.lang.services</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.lib</groupId>

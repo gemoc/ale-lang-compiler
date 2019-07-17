@@ -9,23 +9,45 @@
 		<sourceDirectory>interpreter-comp</sourceDirectory>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
+				<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
+				<artifactId>alecompiler-maven-plugin</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>ale-dsl-compile</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<dslFile>${project.basedir}/src/LogoProgram_interpreter.dsl</dslFile>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 	<properties>
-		<graalvm.version>1.0.0-rc9</graalvm.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
+		<graalvm.version>19.1.0</graalvm.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
+			<artifactId>alecompiler-maven-plugin</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.acceleo</groupId>
+					<artifactId>org.eclipse.core.runtime</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>boa.lang.services</groupId>
+			<artifactId>boa.lang.services</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.graalvm.truffle</groupId>
 			<artifactId>truffle-api</artifactId>
@@ -59,6 +81,11 @@
 			<version>2.15.0</version>
 		</dependency>
 		<dependency>
+			<groupId>boa.lang.services</groupId>
+			<artifactId>boa.lang.services</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.lib</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.lib</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -66,11 +93,6 @@
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.core</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>logo.lang.services</groupId>
-			<artifactId>logo.lang.services</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

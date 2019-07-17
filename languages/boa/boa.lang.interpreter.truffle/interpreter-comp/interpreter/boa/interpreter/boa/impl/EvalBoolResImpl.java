@@ -3,7 +3,6 @@ package interpreter.boa.interpreter.boa.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.EvalBoolRes;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
@@ -14,7 +13,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "EvalBoolRes"
 )
-public class EvalBoolResImpl extends EvalResImpl implements EvalBoolRes {
+public class EvalBoolResImpl extends EvalResImpl {
 	protected static final boolean VALUE_EDEFAULT = false;
 
 	protected boolean value = VALUE_EDEFAULT;
@@ -29,10 +28,12 @@ public class EvalBoolResImpl extends EvalResImpl implements EvalBoolRes {
 		return BoaPackage.Literals.EVAL_BOOL_RES;
 	}
 
+	@TruffleBoundary
 	public boolean isValue() {
 		return value;
 	}
 
+	@TruffleBoundary
 	public void setValue(boolean newValue) {
 		boolean oldValue = value;
 		value = newValue;

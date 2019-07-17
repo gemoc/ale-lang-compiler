@@ -2,8 +2,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>fsm.lang.interpreter.truffle</groupId>
-	<artifactId>fsm.lang.interpreter.truffle</artifactId>
+	<groupId>boa.lang.interpreter.truffle</groupId>
+	<artifactId>boa.lang.interpreter.truffle</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>interpreter-comp</sourceDirectory>
@@ -21,7 +21,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<dslFile>${project.basedir}/src/fsm.dsl</dslFile>
+					<dslFile>${project.basedir}/src/boa_exec_interpreter.dsl</dslFile>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -44,8 +44,8 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>fsm.service</groupId>
-			<artifactId>fsm.service</artifactId>
+			<groupId>boa.lang.services</groupId>
+			<artifactId>boa.lang.services</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

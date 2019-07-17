@@ -4,10 +4,6 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.Bool;
-import interpreter.boa.interpreter.boa.Ctx;
-import interpreter.boa.interpreter.boa.EvalBoolRes;
-import interpreter.boa.interpreter.boa.EvalRes;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
@@ -18,7 +14,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Bool"
 )
-public class BoolImpl extends ExprImpl implements Bool {
+public class BoolImpl extends ExprImpl {
 	protected static final boolean VALUE_EDEFAULT = false;
 
 	protected boolean value = VALUE_EDEFAULT;
@@ -33,10 +29,12 @@ public class BoolImpl extends ExprImpl implements Bool {
 		return BoaPackage.Literals.BOOL;
 	}
 
+	@TruffleBoundary
 	public boolean isValue() {
 		return value;
 	}
 
+	@TruffleBoundary
 	public void setValue(boolean newValue) {
 		boolean oldValue = value;
 		value = newValue;
@@ -86,11 +84,11 @@ public class BoolImpl extends ExprImpl implements Bool {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalRes eval(Ctx ctx) {
-		EvalRes result;
-		EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
+	public EvalResImpl eval(CtxImpl ctx) {
+		EvalResImpl result;
+		EvalBoolResImpl ret = ((EvalBoolResImpl) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 		ret.setValue(this.value);
-		result = (EvalRes) (ret) ;
+		result = (EvalResImpl) (ret) ;
 		return result;
 	}
 }
