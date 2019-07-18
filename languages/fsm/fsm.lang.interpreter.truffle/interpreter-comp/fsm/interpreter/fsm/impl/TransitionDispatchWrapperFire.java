@@ -11,7 +11,7 @@ public class TransitionDispatchWrapperFire {
 	private final CyclicAssumption callTargetStable;
 
 	protected TransitionDispatchWrapperFire(TransitionImpl it) {
-		this.callTargetStable = new CyclicAssumption("TransitionDispatchWrapperFire_5.176466007196115E7");
+		this.callTargetStable = new CyclicAssumption("TransitionDispatchWrapperFire_8.23190560390509E7");
 		this.callTarget = Truffle.getRuntime().createCallTarget(new TransitionFireRootNode(it));
 	}
 
