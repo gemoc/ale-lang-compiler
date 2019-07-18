@@ -29,7 +29,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package boa;
+package lang.truffle.benchmark;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
@@ -41,15 +41,16 @@ import java.io.IOException;
 @State(Scope.Benchmark)
 public class MyBenchmark {
 
+    public static final String TRUFFLEBENCH = "trufflebench";
     private Value mainMeth;
 
     @Setup(Level.Iteration)
     public void loadProgram() throws IOException {
         String src = "";
-        Source source = Source.newBuilder("boa", src, "eval").build();
+        Source source = Source.newBuilder("trufflebench", src, "eval").build();
         Context context = Context.newBuilder().build();
         context.eval(source);
-        final Value fnc = context.getBindings("boa");
+        final Value fnc = context.getBindings("trufflebench");
         mainMeth = fnc.getMember("main");
     }
 
@@ -62,10 +63,10 @@ public class MyBenchmark {
 
     public static void main(String[] args) throws IOException {
         String src = "";
-        Source source = Source.newBuilder("boa", src, "eval").build();
+        Source source = Source.newBuilder(TRUFFLEBENCH, src, "eval").build();
         Context context = Context.newBuilder().build();
         context.eval(source);
-        final Value fnc = context.getBindings("boa");
+        final Value fnc = context.getBindings("trufflebench");
         Value a = fnc.getMember("main");
         final Value execute = a.execute();
         System.out.println(execute);

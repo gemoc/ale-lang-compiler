@@ -11,8 +11,8 @@ import com.oracle.truffle.api.nodes.RootNode;
 
 import java.util.Collections;
 
-@TruffleLanguage.Registration(id = "boa", name = "Boa")
-public class BoaLanguage extends TruffleLanguage<Ctx> {
+@TruffleLanguage.Registration(id = "trufflebench", name = "TruffleBench")
+public class TrufflebenchLanguage extends TruffleLanguage<Ctx> {
     @Override
     protected Ctx createContext(Env env) {
         return new Ctx();
