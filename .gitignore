@@ -11,3 +11,5 @@ xtend-gen/
 
 graal_dumps/
 dumps/
+
+*.iml

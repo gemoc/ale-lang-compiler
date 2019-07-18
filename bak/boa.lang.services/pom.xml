@@ -5,9 +5,6 @@
 	<groupId>boa.lang.services</groupId>
 	<artifactId>boa.lang.services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<properties>
-		<graalvm.version>19.0.0</graalvm.version>
-	</properties>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
