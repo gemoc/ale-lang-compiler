@@ -24,6 +24,7 @@
 		<module>minijava.lang.revisitor.benchmark</module>
 		<module>minijava.lang.switch.benchmark</module>
 		<module>minijava.lang.visitor.benchmark</module>
+		<module>minijava.lang.interpreter.truffle</module>
 	</modules>
 
 </project>
