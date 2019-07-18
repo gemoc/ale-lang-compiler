@@ -1,10 +1,6 @@
 language: java
 sudo: false # faster builds
 
-env:
-  global:
-    - JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
-
 install: true
 script: "mvn -q clean package"
 
