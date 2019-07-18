@@ -5,7 +5,6 @@ import java.util.List
 import java.util.Map
 import java.util.Set
 import org.eclipse.acceleo.query.ast.Call
-import org.eclipse.acceleo.query.validation.type.IType
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractExpressionCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
@@ -26,10 +25,10 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 	val Set<Method> registreredDispatch
 
 	new(String packageRoot, List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
-		Map<String, Class<?>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
-		InterpreterTypeSystemUtils tsu, InterpreterNamingUtils namingUtils) {
+		Map<String, Pair<String, String>> registeredServices, boolean isTruffle, CommonTypeInferer cti,
+		EnumeratorService es, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils namingUtils) {
 		super(cti, es, tsu, namingUtils, registeredServices, resolved, packageRoot, isTruffle, registeredArray)
-		
+
 		this.tsu = tsu
 		this.registreredDispatch = registreredDispatch
 		this.namingUtils = namingUtils
@@ -41,9 +40,8 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 		ctx.thisCtxName
 	}
 
-	
-
-	override implementationSpecificCall(Call call, CompilerExpressionCtx ctx, IType iType, Iterable<Method> allMethods, ResolvedClass re) {
+	override implementationSpecificCall(Call call, CompilerExpressionCtx ctx, Iterable<Method> allMethods,
+		ResolvedClass re) {
 		val methods = allMethods.filter[it.operationRef.name == call.serviceName].toList
 
 		/* Look for the most specific method that matches the resolved class by walking up the hierarchy */
@@ -81,9 +79,9 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 				of('''«IF effectFull && method.operationRef.EType !==null»((«method.operationRef.EType.resolveType2»)«ENDIF»dispatch«(method.eContainer as ExtendedClass).normalizeExtendedClassName»«method.operationRef.name.toFirstUpper».executeDispatch(«call.arguments.head.compileExpression(ctx)».getCached«call.serviceName.toFirstUpper»(), new Object[] {«FOR param : call.arguments.tail SEPARATOR ', '»«param.compileExpression(ctx)»«ENDFOR»})«IF effectFull && method.operationRef.EType !==null»)«ENDIF»''')
 		} else {
 			val hm = newHashMap()
-			val itt = call.arguments.head.infereType
-			val lt = itt.head.type
-			hm.put("typecaller", lt.resolveType2)
+//			val itt = call.arguments.head.infereType
+//			val lt = itt.head.type
+			hm.put("typecaller", re.ECls.resolveType)
 			hm.put("lhs", call.arguments.head.compileExpression(ctx))
 			for (param : call.arguments.tail.enumerate) {
 				val tmp = param.key.infereType.head

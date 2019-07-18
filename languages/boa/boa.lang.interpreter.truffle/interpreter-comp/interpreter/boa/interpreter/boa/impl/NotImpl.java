@@ -5,11 +5,6 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.Ctx;
-import interpreter.boa.interpreter.boa.EvalBoolRes;
-import interpreter.boa.interpreter.boa.EvalRes;
-import interpreter.boa.interpreter.boa.Expr;
-import interpreter.boa.interpreter.boa.Not;
 import java.lang.Object;
 import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
@@ -21,9 +16,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Not"
 )
-public class NotImpl extends ExprImpl implements Not {
+public class NotImpl extends ExprImpl {
 	@Child
-	protected Expr value;
+	protected ExprImpl value;
 
 	protected NotImpl() {
 		super();
@@ -35,12 +30,14 @@ public class NotImpl extends ExprImpl implements Not {
 		return BoaPackage.Literals.NOT;
 	}
 
-	public Expr getValue() {
+	@TruffleBoundary
+	public ExprImpl getValue() {
 		return value;
 	}
 
-	public NotificationChain basicSetValue(Expr newValue, NotificationChain msgs) {
-		Expr oldValue = value;
+	@TruffleBoundary
+	public NotificationChain basicSetValue(ExprImpl newValue, NotificationChain msgs) {
+		ExprImpl oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.NOT__VALUE, oldValue, newValue);
@@ -52,7 +49,8 @@ public class NotImpl extends ExprImpl implements Not {
 		return msgs;
 	}
 
-	public void setValue(Expr newValue) {
+	@TruffleBoundary
+	public void setValue(ExprImpl newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
@@ -92,7 +90,7 @@ public class NotImpl extends ExprImpl implements Not {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.NOT__VALUE :
-				setValue((Expr) newValue);
+				setValue((ExprImpl) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -103,7 +101,7 @@ public class NotImpl extends ExprImpl implements Not {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.NOT__VALUE :
-				setValue((Expr) null);
+				setValue((ExprImpl) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -119,17 +117,17 @@ public class NotImpl extends ExprImpl implements Not {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalRes eval(Ctx ctx) {
-		EvalRes result;
-		EvalRes vvalue = ((EvalRes) (((Expr) (this.getValue())).eval((Ctx) (ctx))));
-		if (vvalue instanceof EvalBoolRes) {
-			EvalBoolRes bvvalue = ((EvalBoolRes) (vvalue));
-			EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
+	public EvalResImpl eval(CtxImpl ctx) {
+		EvalResImpl result;
+		EvalResImpl vvalue = ((EvalResImpl) (((ExprImpl) (this.getValue())).eval((CtxImpl) (ctx))));
+		if (vvalue instanceof EvalBoolResImpl) {
+			EvalBoolResImpl bvvalue = ((EvalBoolResImpl) (vvalue));
+			EvalBoolResImpl ret = ((EvalBoolResImpl) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 			ret.setValue(!(bvvalue.isValue()));
-			result = (EvalRes) (ret) ;
+			result = (EvalResImpl) (ret) ;
 		}
 		else {
-			result = (EvalRes) (null) ;
+			result = (EvalResImpl) (null) ;
 		}
 		return result;
 	}

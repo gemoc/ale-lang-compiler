@@ -18,11 +18,11 @@ class SwitchNamingUtils extends EcoreNotGenNamingUtils {
 		'''«pkg.toFirstUpper»SwitchImplementation'''
 	}
 	def String switchImplementationPackageName(String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«identifier»'''
+		'''«IF packageRoot !== null && packageRoot !== ''»«packageRoot».«ENDIF»«identifier»'''
 	}
 	
 	def String operationPackageName(String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«identifier».operation'''
+		'''«IF packageRoot !== null && packageRoot !== ''»«packageRoot».«ENDIF»«identifier».operation'''
 	}
 	
 	def dispatch String operationClassName(EClass eCls) {

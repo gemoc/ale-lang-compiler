@@ -5,20 +5,19 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.RootNode;
 import java.lang.Object;
 import java.lang.Override;
-import kmLogo.interpreter.kmLogo.ProcDeclaration;
 
 public class ProcDeclarationDevalRootNode extends RootNode {
-  @Child
-  private ProcDeclaration it;
+	@Child
+	private ProcDeclarationImpl it;
 
-  public ProcDeclarationDevalRootNode(ProcDeclaration it) {
-    super(null);
-    this.it = it;
-  }
+	public ProcDeclarationDevalRootNode(ProcDeclarationImpl it) {
+		super(null);
+		this.it = it;
+	}
 
-  @Override
-  public Object execute(VirtualFrame frame) {
-    kmLogo.interpreter.kmLogo.Turtle turtle = (kmLogo.interpreter.kmLogo.Turtle) frame.getArguments()[0];
-    return it.deval(turtle);
-  }
+	@Override
+	public Object execute(VirtualFrame frame) {
+		kmLogo.interpreter.kmLogo.impl.TurtleImpl turtle = (kmLogo.interpreter.kmLogo.impl.TurtleImpl) frame.getArguments()[0];
+		return it.deval(turtle);
+	}
 }

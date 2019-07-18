@@ -5,11 +5,6 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.Ctx;
-import interpreter.boa.interpreter.boa.EvalFunRes;
-import interpreter.boa.interpreter.boa.EvalRes;
-import interpreter.boa.interpreter.boa.Expr;
-import interpreter.boa.interpreter.boa.Fun;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -22,13 +17,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Fun"
 )
-public class FunImpl extends ExprImpl implements Fun {
+public class FunImpl extends ExprImpl {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
 	@Child
-	protected Expr body;
+	protected ExprImpl body;
 
 	protected FunImpl() {
 		super();
@@ -40,10 +35,12 @@ public class FunImpl extends ExprImpl implements Fun {
 		return BoaPackage.Literals.FUN;
 	}
 
+	@TruffleBoundary
 	public String getName() {
 		return name;
 	}
 
+	@TruffleBoundary
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -51,12 +48,14 @@ public class FunImpl extends ExprImpl implements Fun {
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.FUN__NAME, oldName, name));
 	}
 
-	public Expr getBody() {
+	@TruffleBoundary
+	public ExprImpl getBody() {
 		return body;
 	}
 
-	public NotificationChain basicSetBody(Expr newBody, NotificationChain msgs) {
-		Expr oldBody = body;
+	@TruffleBoundary
+	public NotificationChain basicSetBody(ExprImpl newBody, NotificationChain msgs) {
+		ExprImpl oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.FUN__BODY, oldBody, newBody);
@@ -68,7 +67,8 @@ public class FunImpl extends ExprImpl implements Fun {
 		return msgs;
 	}
 
-	public void setBody(Expr newBody) {
+	@TruffleBoundary
+	public void setBody(ExprImpl newBody) {
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
@@ -113,7 +113,7 @@ public class FunImpl extends ExprImpl implements Fun {
 				setName((String) newValue);
 				return;
 			case BoaPackage.FUN__BODY :
-				setBody((Expr) newValue);
+				setBody((ExprImpl) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,7 +127,7 @@ public class FunImpl extends ExprImpl implements Fun {
 				setName(NAME_EDEFAULT);
 				return;
 			case BoaPackage.FUN__BODY :
-				setBody((Expr) null);
+				setBody((ExprImpl) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -145,13 +145,13 @@ public class FunImpl extends ExprImpl implements Fun {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalRes eval(Ctx ctx) {
-		EvalRes result;
-		EvalFunRes ret = ((EvalFunRes) (BoaFactory.eINSTANCE.createEvalFunRes()));
+	public EvalResImpl eval(CtxImpl ctx) {
+		EvalResImpl result;
+		EvalFunResImpl ret = ((EvalFunResImpl) (BoaFactory.eINSTANCE.createEvalFunRes()));
 		ret.setExp(this.getBody());
 		ret.setCtx(ctx);
 		ret.setName(this.name);
-		result = (EvalRes) (ret) ;
+		result = (EvalResImpl) (ret) ;
 		return result;
 	}
 }

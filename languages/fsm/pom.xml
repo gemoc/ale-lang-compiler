@@ -24,6 +24,7 @@
     <module>fsm.lang.revisitor.benchmark</module>
     <module>fsm.lang.switch.benchmark</module>
     <module>fsm.lang.visitor.benchmark</module>
+    <module>fsm.lang.interpreter.truffle</module>
   </modules>
 	
 </project>

@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Expression;
 import kmLogo.Left;
 import kmLogo.Turtle;
@@ -60,7 +61,7 @@ public class LeftOpImpl extends PrimitiveOpImpl implements LeftOp {
     double result;
     double angle = ((double) (rev.$((Expression)this.obj.getAngle()).eval(((Turtle) (turtle)))));
     rev.$((Turtle)turtle).rotate(((double) (angle)));
-    result = 0.0;
+    result = ((Double) 0.0);
     return result;
   }
 }

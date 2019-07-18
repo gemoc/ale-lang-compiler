@@ -4,14 +4,8 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
-import interpreter.boa.interpreter.boa.App;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.Ctx;
-import interpreter.boa.interpreter.boa.EvalBoundFunRes;
-import interpreter.boa.interpreter.boa.EvalFunRes;
-import interpreter.boa.interpreter.boa.EvalRes;
-import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -25,12 +19,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "App"
 )
-public class AppImpl extends ExprImpl implements App {
+public class AppImpl extends ExprImpl {
 	@Child
-	protected Expr lhs;
+	protected ExprImpl lhs;
 
 	@Child
-	protected Expr rhs;
+	protected ExprImpl rhs;
 
 	protected AppImpl() {
 		super();
@@ -42,12 +36,14 @@ public class AppImpl extends ExprImpl implements App {
 		return BoaPackage.Literals.APP;
 	}
 
-	public Expr getLhs() {
+	@TruffleBoundary
+	public ExprImpl getLhs() {
 		return lhs;
 	}
 
-	public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
-		Expr oldLhs = lhs;
+	@TruffleBoundary
+	public NotificationChain basicSetLhs(ExprImpl newLhs, NotificationChain msgs) {
+		ExprImpl oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.APP__LHS, oldLhs, newLhs);
@@ -59,7 +55,8 @@ public class AppImpl extends ExprImpl implements App {
 		return msgs;
 	}
 
-	public void setLhs(Expr newLhs) {
+	@TruffleBoundary
+	public void setLhs(ExprImpl newLhs) {
 		if (newLhs != lhs) {
 			NotificationChain msgs = null;
 			if (lhs != null)
@@ -73,12 +70,14 @@ public class AppImpl extends ExprImpl implements App {
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.APP__LHS, newLhs, newLhs));
 	}
 
-	public Expr getRhs() {
+	@TruffleBoundary
+	public ExprImpl getRhs() {
 		return rhs;
 	}
 
-	public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
-		Expr oldRhs = rhs;
+	@TruffleBoundary
+	public NotificationChain basicSetRhs(ExprImpl newRhs, NotificationChain msgs) {
+		ExprImpl oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.APP__RHS, oldRhs, newRhs);
@@ -90,7 +89,8 @@ public class AppImpl extends ExprImpl implements App {
 		return msgs;
 	}
 
-	public void setRhs(Expr newRhs) {
+	@TruffleBoundary
+	public void setRhs(ExprImpl newRhs) {
 		if (newRhs != rhs) {
 			NotificationChain msgs = null;
 			if (rhs != null)
@@ -134,10 +134,10 @@ public class AppImpl extends ExprImpl implements App {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.APP__LHS :
-				setLhs((Expr) newValue);
+				setLhs((ExprImpl) newValue);
 				return;
 			case BoaPackage.APP__RHS :
-				setRhs((Expr) newValue);
+				setRhs((ExprImpl) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -148,10 +148,10 @@ public class AppImpl extends ExprImpl implements App {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.APP__LHS :
-				setLhs((Expr) null);
+				setLhs((ExprImpl) null);
 				return;
 			case BoaPackage.APP__RHS :
-				setRhs((Expr) null);
+				setRhs((ExprImpl) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -169,61 +169,61 @@ public class AppImpl extends ExprImpl implements App {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalRes eval(Ctx ctx) {
-		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((Expr) (this.getLhs())).eval((Ctx) (ctx))));
-		EvalRes vrhs = ((EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (ctx))));
-		if (vlhs instanceof EvalFunRes) {
-			if (vlhs instanceof EvalBoundFunRes) {
-				EvalBoundFunRes fct = ((EvalBoundFunRes) (vlhs));
-				Ctx callCtx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
+	public EvalResImpl eval(CtxImpl ctx) {
+		EvalResImpl result;
+		EvalResImpl vlhs = ((EvalResImpl) (((ExprImpl) (this.getLhs())).eval((CtxImpl) (ctx))));
+		EvalResImpl vrhs = ((EvalResImpl) (((ExprImpl) (this.getRhs())).eval((CtxImpl) (ctx))));
+		if (vlhs instanceof EvalFunResImpl) {
+			if (vlhs instanceof EvalBoundFunResImpl) {
+				EvalBoundFunResImpl fct = ((EvalBoundFunResImpl) (vlhs));
+				CtxImpl callCtx = ((CtxImpl) (BoaFactory.eINSTANCE.createCtx()));
 				MapService.putAll((EMap) (callCtx.getEnv()), (EMap) (fct.getCtx().getEnv()));
-				MapService.put((EMap) (callCtx.getEnv()), (String) (fct.getName()), (EvalRes) (vrhs));
+				MapService.put((EMap) (callCtx.getEnv()), (String) (fct.getName()), (EvalResImpl) (vrhs));
 				MapService.replaceWith((EMap) (callCtx.getTh()), (EMap) (fct.getTh()));
-				EvalRes fe = ((EvalRes) (((App) (this)).callFunc((EvalBoundFunRes) (fct), (Ctx) (callCtx))));
-				if (fe instanceof EvalFunRes) {
-					EvalFunRes fun = ((EvalFunRes) (fe));
-					EvalBoundFunRes tmp = ((EvalBoundFunRes) (BoaFactory.eINSTANCE.createEvalBoundFunRes()));
+				EvalResImpl fe = ((EvalResImpl) (((AppImpl) (this)).callFunc((EvalBoundFunResImpl) (fct), (CtxImpl) (callCtx))));
+				if (fe instanceof EvalFunResImpl) {
+					EvalFunResImpl fun = ((EvalFunResImpl) (fe));
+					EvalBoundFunResImpl tmp = ((EvalBoundFunResImpl) (BoaFactory.eINSTANCE.createEvalBoundFunRes()));
 					tmp.setExp(fun.getExp());
 					tmp.setCtx(fun.getCtx());
 					tmp.setName(fun.getName());
 					MapService.replaceWith((EMap) (tmp.getTh()), (EMap) (fct.getTh()));
-					result = (EvalRes) (tmp) ;
+					result = (EvalResImpl) (tmp) ;
 				}
 				else {
-					result = (EvalRes) (fe) ;
+					result = (EvalResImpl) (fe) ;
 				}
 			}
 			else {
-				EvalFunRes fct = ((EvalFunRes) (vlhs));
-				Ctx callCtx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
+				EvalFunResImpl fct = ((EvalFunResImpl) (vlhs));
+				CtxImpl callCtx = ((CtxImpl) (BoaFactory.eINSTANCE.createCtx()));
 				MapService.putAll((EMap) (callCtx.getEnv()), (EMap) (fct.getCtx().getEnv()));
-				MapService.put((EMap) (callCtx.getEnv()), (String) (fct.getName()), (EvalRes) (vrhs));
+				MapService.put((EMap) (callCtx.getEnv()), (String) (fct.getName()), (EvalResImpl) (vrhs));
 				MapService.replaceWith((EMap) (callCtx.getTh()), (EMap) (ctx.getTh()));
-				EvalRes fe = ((EvalRes) (((App) (this)).callFunc((EvalFunRes) (fct), (Ctx) (callCtx))));
-				if (fe instanceof EvalFunRes) {
-					EvalFunRes fun = ((EvalFunRes) (fe));
-					EvalBoundFunRes tmp = ((EvalBoundFunRes) (BoaFactory.eINSTANCE.createEvalBoundFunRes()));
+				EvalResImpl fe = ((EvalResImpl) (((AppImpl) (this)).callFunc((EvalFunResImpl) (fct), (CtxImpl) (callCtx))));
+				if (fe instanceof EvalFunResImpl) {
+					EvalFunResImpl fun = ((EvalFunResImpl) (fe));
+					EvalBoundFunResImpl tmp = ((EvalBoundFunResImpl) (BoaFactory.eINSTANCE.createEvalBoundFunRes()));
 					tmp.setExp(fun.getExp());
 					tmp.setCtx(fun.getCtx());
 					tmp.setName(fun.getName());
 					MapService.replaceWith((EMap) (tmp.getTh()), (EMap) (ctx.getTh()));
-					result = (EvalRes) (tmp) ;
+					result = (EvalResImpl) (tmp) ;
 				}
 				else {
-					result = (EvalRes) (fe) ;
+					result = (EvalResImpl) (fe) ;
 				}
 			}
 		}
 		else {
-			result = (EvalRes) (null) ;
+			result = (EvalResImpl) (null) ;
 		}
 		return result;
 	}
 
-	public EvalRes callFunc(EvalFunRes fct, Ctx callCtx) {
-		EvalRes result;
-		result = (EvalRes) (((Expr) (fct.getExp())).eval((Ctx) (callCtx))) ;
+	public EvalResImpl callFunc(EvalFunResImpl fct, CtxImpl callCtx) {
+		EvalResImpl result;
+		result = (EvalResImpl) (((ExprImpl) (fct.getExp())).eval((CtxImpl) (callCtx))) ;
 		return result;
 	}
 }

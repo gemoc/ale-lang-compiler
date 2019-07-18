@@ -1,86 +1,90 @@
 package kmLogo.interpreter.kmLogo.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
-import kmLogo.interpreter.kmLogo.CallStack;
+import java.lang.Override;
+import java.util.Collection;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
-import kmLogo.interpreter.kmLogo.StackFrame;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecore.util.InternalEList;
 
-@NodeInfo(
-    description = "CallStack"
-)
-public class CallStackImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements CallStack {
-  protected EList<StackFrame> frames;
+public class CallStackImpl extends MinimalEObjectImpl.Container {
+	protected EList<StackFrameImpl> frames;
 
-  protected CallStackImpl() {
-    super();
-  }
+	protected CallStackImpl() {
+		super();
+	}
 
-  @TruffleBoundary
-  public EList<StackFrame> getFrames() {
-    if(frames == null) {
-    	frames = new EObjectContainmentEList<StackFrame>(kmLogo.interpreter.kmLogo.StackFrame.class, this, KmLogoPackage.CALL_STACK__FRAMES);
-    }
-    return frames;
-  }
+	@Override
+	@TruffleBoundary
+	protected EClass eStaticClass() {
+		return KmLogoPackage.Literals.CALL_STACK;
+	}
 
-  @TruffleBoundary
-  protected EClass eStaticClass() {
-    return KmLogoPackage.Literals.CALL_STACK;}
+	@TruffleBoundary
+	public EList<StackFrameImpl> getFrames() {
+		if (frames == null) {
+			frames = new EObjectContainmentEList<StackFrameImpl>(StackFrameImpl.class, this, KmLogoPackage.CALL_STACK__FRAMES);
+		}
+		return frames;
+	}
 
-  @TruffleBoundary
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case KmLogoPackage.CALL_STACK__FRAMES:
-    	getFrames().clear();
-    	getFrames().addAll((java.util.Collection<? extends kmLogo.interpreter.kmLogo.StackFrame>) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	@Override
+	@TruffleBoundary
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
+			NotificationChain msgs) {
+		switch (featureID) {
+			case KmLogoPackage.CALL_STACK__FRAMES :
+				return ((InternalEList<?>) getFrames()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
-  @TruffleBoundary
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case KmLogoPackage.CALL_STACK__FRAMES:
-    	getFrames().clear();
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	@Override
+	@TruffleBoundary
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case KmLogoPackage.CALL_STACK__FRAMES :
+				return getFrames();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
-  @TruffleBoundary
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case KmLogoPackage.CALL_STACK__FRAMES:
-    return getFrames();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@Override
+	@TruffleBoundary
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case KmLogoPackage.CALL_STACK__FRAMES :
+				getFrames().clear();
+				getFrames().addAll((Collection<? extends StackFrameImpl>) newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  @TruffleBoundary
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case KmLogoPackage.CALL_STACK__FRAMES:
-    	return frames != null && !frames.isEmpty();
-    }
-    return super.eIsSet(featureID);
-  }
+	@Override
+	@TruffleBoundary
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case KmLogoPackage.CALL_STACK__FRAMES :
+				getFrames().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
-  @TruffleBoundary
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    case kmLogo.interpreter.kmLogo.KmLogoPackage.CALL_STACK__FRAMES:
-    	return ((org.eclipse.emf.ecore.util.InternalEList<?>) getFrames()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+	@Override
+	@TruffleBoundary
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case KmLogoPackage.CALL_STACK__FRAMES :
+				return frames != null && !frames.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 }

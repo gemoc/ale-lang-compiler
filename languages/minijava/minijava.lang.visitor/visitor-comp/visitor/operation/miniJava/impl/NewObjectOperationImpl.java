@@ -1,6 +1,7 @@
 package visitor.operation.miniJava.impl;
 
 import java.lang.Integer;
+import miniJava.visitor.miniJava.Block;
 import miniJava.visitor.miniJava.Context;
 import miniJava.visitor.miniJava.Expression;
 import miniJava.visitor.miniJava.Field;
@@ -57,7 +58,7 @@ public class NewObjectOperationImpl extends ExpressionOperationImpl implements N
 			i = ((Integer) ((i) + (1)));
 		}
 		i = ((Integer) (0));
-		Method constructor = null;
+		Method constructor = ((Method) (null));
 		while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
 			Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
 			if(m instanceof Method) {
@@ -84,7 +85,8 @@ public class NewObjectOperationImpl extends ExpressionOperationImpl implements N
 			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this.it);
 			((StateOperation)state.accept(vis)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
-			((BlockOperation)constructor.getBody().accept(vis)).evaluateStatement((State) (state));
+			Block bd = ((Block) (constructor.getBody()));
+			((BlockOperation)bd.accept(vis)).evaluateStatement((State) (state));
 			((StateOperation)state.accept(vis)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));

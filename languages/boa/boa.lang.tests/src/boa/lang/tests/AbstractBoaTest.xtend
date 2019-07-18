@@ -32,6 +32,7 @@ abstract class AbstractBoaTest {
 
 	def genericTest(String file, String expectedResult) {
 		LogService.TOSDTOUT = false
+		LogService.sb.length = 0
 
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("xmi", new XMIResourceFactoryImpl)
 		val resSet = new ResourceSetImpl

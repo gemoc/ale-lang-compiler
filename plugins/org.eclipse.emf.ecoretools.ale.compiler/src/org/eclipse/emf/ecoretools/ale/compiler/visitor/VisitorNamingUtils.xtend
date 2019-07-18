@@ -8,7 +8,7 @@ class VisitorNamingUtils extends EcoreGenNamingUtils {
 	override getIdentifier() { "visitor" }
 
 	def String operationInterfacePackageName(String packageRoot, EClass eClass) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«identifier».operation.«eClass.EPackage.name»'''
+		'''«IF packageRoot !== null && packageRoot !== ''»«packageRoot».«ENDIF»«identifier».operation.«eClass.EPackage.name»'''
 	}
 
 	def String operationInterfaceClassName(EClass eClass) {
@@ -16,7 +16,7 @@ class VisitorNamingUtils extends EcoreGenNamingUtils {
 	}
 
 	def String operationImplementationPackageName(String packageRoot, EClass eClass) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«identifier».operation.«eClass.EPackage.name».impl'''
+		'''«IF packageRoot !== null && packageRoot !== ''»«packageRoot».«ENDIF»«identifier».operation.«eClass.EPackage.name».impl'''
 	}
 
 	def String operationImplementationClassName(EClass eClass) {
@@ -24,7 +24,7 @@ class VisitorNamingUtils extends EcoreGenNamingUtils {
 	}
 
 	def String visitorInterfacePackageName(String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«identifier»'''
+		'''«IF packageRoot !== null && packageRoot !== ''»«packageRoot».«ENDIF»«identifier»'''
 	}
 
 	def String visitorInterfaceClassName() {
@@ -32,7 +32,7 @@ class VisitorNamingUtils extends EcoreGenNamingUtils {
 	}
 
 	def String visitorImplementationPackageName(String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«identifier»'''
+		'''«IF packageRoot !== null && packageRoot !== ''»«packageRoot».«ENDIF»«identifier»'''
 	}
 
 	def String visitorImplementationClassName() {
@@ -40,7 +40,7 @@ class VisitorNamingUtils extends EcoreGenNamingUtils {
 	}
 
 	def String acceptInterfacePackageName(String packageRoot) {
-		'''«IF packageRoot !== null»«packageRoot».«ENDIF»«identifier»'''
+		'''«IF packageRoot !== null && packageRoot !== ''»«packageRoot».«ENDIF»«identifier»'''
 	}
 
 	def String acceptInterfaceClassName() {

@@ -186,7 +186,8 @@ public class NewObjectImpl extends ExpressionImpl implements NewObject {
 			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this);
 			((State) (state)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
-			((Block) (constructor.getBody())).evaluateStatement((State) (state));
+			Block bd = ((Block) (constructor.getBody()));
+			((Block) (bd)).evaluateStatement((State) (state));
 			((State) (state)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));

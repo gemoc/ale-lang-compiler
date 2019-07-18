@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Expression;
 import kmLogo.Turtle;
 import kmLogo.revisitor.KmLogoRevisitor;
@@ -57,7 +58,7 @@ public class ExpressionOpImpl extends InstructionOpImpl implements ExpressionOp 
 
   public double eval(Turtle turtle) {
     double result;
-    result = 0.0;
+    result = ((Double) 0.0);
     return result;
   }
 }

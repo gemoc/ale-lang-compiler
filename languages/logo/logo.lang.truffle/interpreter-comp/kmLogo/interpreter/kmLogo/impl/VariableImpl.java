@@ -1,101 +1,110 @@
 package kmLogo.interpreter.kmLogo.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.NodeInfo;
+import java.lang.Double;
 import java.lang.Object;
+import java.lang.Override;
 import java.lang.String;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
-import kmLogo.interpreter.kmLogo.Variable;
-import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-@NodeInfo(
-    description = "Variable"
-)
-public class VariableImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Variable {
-  protected static final String NAME_EDEFAULT = null;
+public class VariableImpl extends MinimalEObjectImpl.Container {
+	protected static final String NAME_EDEFAULT = null;
 
-  protected static final double VALUE_EDEFAULT = 0.0;
+	protected static final double VALUE_EDEFAULT = 0.0;
 
-  protected String name = NAME_EDEFAULT;
+	protected String name = NAME_EDEFAULT;
 
-  protected double value = VALUE_EDEFAULT;
+	protected double value = VALUE_EDEFAULT;
 
-  protected VariableImpl() {
-    super();
-  }
+	protected VariableImpl() {
+		super();
+	}
 
-  public String getName() {
-    return name;}
+	@Override
+	@TruffleBoundary
+	protected EClass eStaticClass() {
+		return KmLogoPackage.Literals.VARIABLE;
+	}
 
-  public void setName(String name) {
-    this.name = name;}
+	@TruffleBoundary
+	public String getName() {
+		return name;
+	}
 
-  public double getValue() {
-    return value;}
+	@TruffleBoundary
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.VARIABLE__NAME, oldName, name));
+	}
 
-  public void setValue(double value) {
-    this.value = value;}
+	@TruffleBoundary
+	public double getValue() {
+		return value;
+	}
 
-  @TruffleBoundary
-  protected EClass eStaticClass() {
-    return KmLogoPackage.Literals.VARIABLE;}
+	@TruffleBoundary
+	public void setValue(double newValue) {
+		double oldValue = value;
+		value = newValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.VARIABLE__VALUE, oldValue, value));
+	}
 
-  @TruffleBoundary
-  public void eSet(int featureID, Object newValue) {
-    switch (featureID) {
-    case KmLogoPackage.VARIABLE__NAME:
-    	setName((java.lang.String) newValue);
-    return;
-    case KmLogoPackage.VARIABLE__VALUE:
-    	setValue((double) newValue);
-    return;
-    }
-    super.eSet(featureID, newValue);
-  }
+	@Override
+	@TruffleBoundary
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+			case KmLogoPackage.VARIABLE__NAME :
+				return getName();
+			case KmLogoPackage.VARIABLE__VALUE :
+				return getValue();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
-  @TruffleBoundary
-  public void eUnset(int featureID) {
-    switch (featureID) {
-    case KmLogoPackage.VARIABLE__NAME:
-    	setName(NAME_EDEFAULT);
-    return;
-    case KmLogoPackage.VARIABLE__VALUE:
-    	setValue(VALUE_EDEFAULT);
-    return;
-    }
-    super.eUnset(featureID);
-  }
+	@Override
+	@TruffleBoundary
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+			case KmLogoPackage.VARIABLE__NAME :
+				setName((String) newValue);
+				return;
+			case KmLogoPackage.VARIABLE__VALUE :
+				setValue((Double) newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
-  @TruffleBoundary
-  public Object eGet(int featureID, boolean resolve, boolean coreType) {
-    switch (featureID) {
-    case KmLogoPackage.VARIABLE__NAME:
-    return getName();
-    case KmLogoPackage.VARIABLE__VALUE:
-    return getValue();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+	@Override
+	@TruffleBoundary
+	public void eUnset(int featureID) {
+		switch (featureID) {
+			case KmLogoPackage.VARIABLE__NAME :
+				setName(NAME_EDEFAULT);
+				return;
+			case KmLogoPackage.VARIABLE__VALUE :
+				setValue(VALUE_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
-  @TruffleBoundary
-  public boolean eIsSet(int featureID) {
-    switch (featureID) {
-    case KmLogoPackage.VARIABLE__NAME:
-    	return name != NAME_EDEFAULT;
-    case KmLogoPackage.VARIABLE__VALUE:
-    	return value != VALUE_EDEFAULT;
-    }
-    return super.eIsSet(featureID);
-  }
-
-  @TruffleBoundary
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID,
-      NotificationChain msgs) {
-    switch(featureID) {
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+	@Override
+	@TruffleBoundary
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+			case KmLogoPackage.VARIABLE__NAME :
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case KmLogoPackage.VARIABLE__VALUE :
+				return value != VALUE_EDEFAULT;
+		}
+		return super.eIsSet(featureID);
+	}
 }

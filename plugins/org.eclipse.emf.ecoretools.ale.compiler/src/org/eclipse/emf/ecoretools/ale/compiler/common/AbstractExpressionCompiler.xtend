@@ -2,7 +2,6 @@ package org.eclipse.emf.ecoretools.ale.compiler.common
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
-import java.lang.reflect.Modifier
 import java.util.List
 import java.util.Map
 import java.util.Set
@@ -31,7 +30,6 @@ import org.eclipse.acceleo.query.ast.StringLiteral
 import org.eclipse.acceleo.query.ast.TypeLiteral
 import org.eclipse.acceleo.query.ast.VarRef
 import org.eclipse.acceleo.query.validation.type.EClassifierType
-import org.eclipse.acceleo.query.validation.type.IType
 import org.eclipse.acceleo.query.validation.type.SequenceType
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EDataType
@@ -46,7 +44,7 @@ abstract class AbstractExpressionCompiler {
 	val collectionServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "CollectionService")
 	val equalServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "EqualService")
 	val logServiceClassName = ClassName.get("org.eclipse.emf.ecoretools.ale.compiler.lib", "LogService")
-	val Map<String, Class<?>> registeredServices
+	val Map<String, Pair<String, String>> registeredServices
 	val List<ResolvedClass> resolved
 	
 	protected def getResolved() {
@@ -79,7 +77,7 @@ abstract class AbstractExpressionCompiler {
 		this.registeredArray
 	}
 
-	new(CommonTypeInferer cti, EnumeratorService es, CommonTypeSystemUtils ats, AbstractNamingUtils anu, Map<String, Class<?>> registeredServices, List<ResolvedClass> resolved, String packageRoot, boolean isTruffle, Set<String> registeredArray) {
+	new(CommonTypeInferer cti, EnumeratorService es, CommonTypeSystemUtils ats, AbstractNamingUtils anu, Map<String, Pair<String, String>> registeredServices, List<ResolvedClass> resolved, String packageRoot, boolean isTruffle, Set<String> registeredArray) {
 		this.cti = cti
 		this.es = es
 		this.ats = ats
@@ -328,20 +326,13 @@ abstract class AbstractExpressionCompiler {
 	}
 	
 	def CodeBlock callService(Call call, CompilerExpressionCtx ctx) {
-		val methods = registeredServices.entrySet.map[e|e.value.methods.map[e.key -> it]].flatten.toList
-
-		val candidate = methods.filter[Modifier.isStatic(it.value.modifiers)].filter [
-			it.value.name == call.serviceName
-		].head
-	
+		val candidate = registeredServices.get(call.serviceName)
+		
 		if (candidate !== null) {
 			
-			val splied = candidate.key.split('\\.').reverse
-			val cn = ClassName.get(splied.tail.toList.reverse.join('.'), splied.head)
-			
 			val Map<String, Object> hm = newHashMap(
-				"serviceType" -> cn,
-				"serviceMethodName" -> candidate.value.name
+				"serviceType" -> ClassName.get(candidate.key, candidate.value),
+				"serviceMethodName" -> call.serviceName
 			)
 			
 			for(p: call.arguments.enumerate) {
@@ -356,7 +347,6 @@ abstract class AbstractExpressionCompiler {
 	
 			CodeBlock.builder.addNamed('''$serviceType:T.$serviceMethodName:L(«FOR p : call.arguments.enumerate SEPARATOR ', '»«IF hm.get("paramType" + p.value) !== null»($paramType«p.value»:T) «ENDIF»($paramValue«p.value»:L)«ENDFOR»)''', hm).build
 		} else {
-			
 			// primitive operation
 			println('''unhandled call: «call»''')
 			val Map<String, Object> hm = newHashMap
@@ -372,8 +362,6 @@ abstract class AbstractExpressionCompiler {
 	}
 	
 	def defaultCall(Call call, CompilerExpressionCtx ctx) {
-		val eCls = ctx.EClass
-//		println('''EClass = «eCls.name»''')
 		if (call.type == CallType.CALLORAPPLY) {
 			if (call.serviceName == 'aqlFeatureAccess') {
 				val t = infereType(call).head
@@ -429,7 +417,7 @@ abstract class AbstractExpressionCompiler {
 				val argumentsh = call.arguments.head
 				val ts = argumentsh.infereType
 				val t = ts.head
-				val re = resolved.filter [
+				var re = resolved.filter [
 					if (t !== null && t.type instanceof EClass) {
 						val tecls = t.type as EClass
 						it.ECls.name == tecls.name && it.ECls.EPackage.name == tecls.EPackage.name
@@ -437,13 +425,21 @@ abstract class AbstractExpressionCompiler {
 						false
 					}
 				].head
+				if(re === null) {
+					// defensive code in case of type system issues.
+					val tmp = solveNothing(null, argumentsh) as ClassName
+					if(tmp !== null)
+						re = resolved.filter [
+							it.ECls.name == tmp.simpleName // && it.ECls.EPackage.name == tmp.packageName
+						].head
+				}
 				if (re !== null) {
 					val allMethods = re.getAleCls.allMethods
 					val methodExist = allMethods.exists [
 						it.operationRef.name == call.serviceName
 					]
 					if (methodExist) {
-						this.implementationSpecificCall(call, ctx, t, allMethods, re)
+						this.implementationSpecificCall(call, ctx, allMethods, re)
 					} else {
 						call.callService(ctx)
 					}
@@ -457,6 +453,6 @@ abstract class AbstractExpressionCompiler {
 		}
 	}
 	
-	def CodeBlock implementationSpecificCall(Call call, CompilerExpressionCtx ctx, IType iType, Iterable<Method> allMethods, ResolvedClass re)
+	def CodeBlock implementationSpecificCall(Call call, CompilerExpressionCtx ctx, Iterable<Method> allMethods, ResolvedClass re)
 
 }

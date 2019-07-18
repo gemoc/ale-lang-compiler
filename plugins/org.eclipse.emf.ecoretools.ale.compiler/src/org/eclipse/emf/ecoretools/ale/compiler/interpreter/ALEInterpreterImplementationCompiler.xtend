@@ -21,15 +21,16 @@ import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 
 class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu) {
-		this(projectName, projectRoot, dsl, newHashMap, eu)
+	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
+		this(projectName, projectRoot, dsl, newHashMap, eu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl,Map<String, Class<?>> services, EcoreUtils eu) {
-		super(projectName, projectRoot, dsl, services, eu)
+	new(String projectName, File projectRoot, Dsl dsl,Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+		super(projectName, projectRoot, dsl, services, eu, srm)
 		
 	}
 
@@ -84,7 +85,7 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 						if(eclazz.instanceClassName != "java.util.Map$Entry" && ! dsl.isTruffle)
 							eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
 						eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
-							registeredServices, dsl, base, tsu, namingUtils)
+							srm.registeredServices, dsl, base, tsu, namingUtils)
 
 					} catch (Exception e) {
 						e.printStackTrace

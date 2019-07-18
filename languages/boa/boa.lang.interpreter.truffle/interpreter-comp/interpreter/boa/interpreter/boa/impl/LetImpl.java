@@ -6,10 +6,6 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.Ctx;
-import interpreter.boa.interpreter.boa.EvalRes;
-import interpreter.boa.interpreter.boa.Expr;
-import interpreter.boa.interpreter.boa.Let;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -23,16 +19,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Let"
 )
-public class LetImpl extends ExprImpl implements Let {
+public class LetImpl extends ExprImpl {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
 	@Child
-	protected Expr lhs;
+	protected ExprImpl lhs;
 
 	@Child
-	protected Expr rhs;
+	protected ExprImpl rhs;
 
 	protected LetImpl() {
 		super();
@@ -44,10 +40,12 @@ public class LetImpl extends ExprImpl implements Let {
 		return BoaPackage.Literals.LET;
 	}
 
+	@TruffleBoundary
 	public String getName() {
 		return name;
 	}
 
+	@TruffleBoundary
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -55,12 +53,14 @@ public class LetImpl extends ExprImpl implements Let {
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.LET__NAME, oldName, name));
 	}
 
-	public Expr getLhs() {
+	@TruffleBoundary
+	public ExprImpl getLhs() {
 		return lhs;
 	}
 
-	public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
-		Expr oldLhs = lhs;
+	@TruffleBoundary
+	public NotificationChain basicSetLhs(ExprImpl newLhs, NotificationChain msgs) {
+		ExprImpl oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.LET__LHS, oldLhs, newLhs);
@@ -72,7 +72,8 @@ public class LetImpl extends ExprImpl implements Let {
 		return msgs;
 	}
 
-	public void setLhs(Expr newLhs) {
+	@TruffleBoundary
+	public void setLhs(ExprImpl newLhs) {
 		if (newLhs != lhs) {
 			NotificationChain msgs = null;
 			if (lhs != null)
@@ -86,12 +87,14 @@ public class LetImpl extends ExprImpl implements Let {
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.LET__LHS, newLhs, newLhs));
 	}
 
-	public Expr getRhs() {
+	@TruffleBoundary
+	public ExprImpl getRhs() {
 		return rhs;
 	}
 
-	public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
-		Expr oldRhs = rhs;
+	@TruffleBoundary
+	public NotificationChain basicSetRhs(ExprImpl newRhs, NotificationChain msgs) {
+		ExprImpl oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.LET__RHS, oldRhs, newRhs);
@@ -103,7 +106,8 @@ public class LetImpl extends ExprImpl implements Let {
 		return msgs;
 	}
 
-	public void setRhs(Expr newRhs) {
+	@TruffleBoundary
+	public void setRhs(ExprImpl newRhs) {
 		if (newRhs != rhs) {
 			NotificationChain msgs = null;
 			if (rhs != null)
@@ -152,10 +156,10 @@ public class LetImpl extends ExprImpl implements Let {
 				setName((String) newValue);
 				return;
 			case BoaPackage.LET__LHS :
-				setLhs((Expr) newValue);
+				setLhs((ExprImpl) newValue);
 				return;
 			case BoaPackage.LET__RHS :
-				setRhs((Expr) newValue);
+				setRhs((ExprImpl) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -169,10 +173,10 @@ public class LetImpl extends ExprImpl implements Let {
 				setName(NAME_EDEFAULT);
 				return;
 			case BoaPackage.LET__LHS :
-				setLhs((Expr) null);
+				setLhs((ExprImpl) null);
 				return;
 			case BoaPackage.LET__RHS :
-				setRhs((Expr) null);
+				setRhs((ExprImpl) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -192,14 +196,14 @@ public class LetImpl extends ExprImpl implements Let {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalRes eval(Ctx ctx) {
-		EvalRes result;
-		Expr lhs = ((Expr) (this.getLhs()));
-		EvalRes vlhs = ((EvalRes) (((Expr) (lhs)).eval((Ctx) (ctx))));
-		Ctx nctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
+	public EvalResImpl eval(CtxImpl ctx) {
+		EvalResImpl result;
+		ExprImpl lhs = ((ExprImpl) (this.getLhs()));
+		EvalResImpl vlhs = ((EvalResImpl) (((ExprImpl) (lhs)).eval((CtxImpl) (ctx))));
+		CtxImpl nctx = ((CtxImpl) (BoaFactory.eINSTANCE.createCtx()));
 		MapService.putAll((EMap) (nctx.getEnv()), (EMap) (ctx.getEnv()));
-		MapService.put((EMap) (nctx.getEnv()), (String) (this.name), (EvalRes) (vlhs));
-		result = (EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (nctx))) ;
+		MapService.put((EMap) (nctx.getEnv()), (String) (this.name), (EvalResImpl) (vlhs));
+		result = (EvalResImpl) (((ExprImpl) (this.getRhs())).eval((CtxImpl) (nctx))) ;
 		return result;
 	}
 }

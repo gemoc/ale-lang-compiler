@@ -128,7 +128,7 @@ public class EqualityOpImpl extends ExpressionOpImpl implements EqualityOp {
           if(right instanceof BooleanValue) {
             BooleanValue ileft = ((BooleanValue) (left));
             BooleanValue iright = ((BooleanValue) (right));
-            tmp = ((Boolean) (EqualService.equals((ileft.isValue()), (iright.isValue()))));
+            tmp = EqualService.equals((ileft.isValue()), (iright.isValue()));
           }
         }
         else {

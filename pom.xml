@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -14,34 +15,35 @@
 		<tycho.version>0.26.0</tycho.version>
 		<xtend.version>2.10.0</xtend.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-repo.url>http://download.eclipse.org/releases/neon</eclipse-repo.url>
+		<!--<eclipse-repo.url>http://download.eclipse.org/releases/neon</eclipse-repo.url>-->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<tycho.scmUrl>scm:git:https://github.com/gemoc/ale-lang.git</tycho.scmUrl>
 	</properties>
 
 	<repositories>
-		<repository>
+		<!--<repository>
 			<id>eclipse-repo</id>
 			<url>${eclipse-repo.url}</url>
 			<layout>p2</layout>
-		</repository>
-		<repository>
+		</repository>-->
+		<!--<repository>
 			<id>acceleo</id>
 			<url>http://download.eclipse.org/acceleo/updates/releases/</url>
 			<layout>p2</layout>
-		</repository>
+		</repository>-->
 	</repositories>
 
 	<modules>
-	<!-- BENCHMARK Modules -->
-    <module>languages</module>
-	
+		<!-- BENCHMARK Modules -->
+		<module>languages</module>
+
 		<module>plugins</module>
 		<module>releng</module>
 		<module>tests</module>
 
 	</modules>
+
 	<build>
 		<plugins>
 			<!-- enable xtend compilation -->
@@ -128,7 +130,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- required in order to embed feature and bundle sources in the update site -->
+			<!-- required in order to embed feature and bundle sources in the update 
+				site -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-plugin</artifactId>
@@ -144,55 +147,55 @@
 				</executions>
 			</plugin>
 			<!-- enable plugin tests -->
-			 <plugin>
-              <groupId>org.eclipse.tycho</groupId>
-              <artifactId>tycho-surefire-plugin</artifactId>
-              <version>${tycho.version}</version>
-              <configuration>
-                <useUIHarness>true</useUIHarness>
-                <useUIThread>false</useUIThread>
-                <product>org.eclipse.platform.ide</product>
-                <application>org.eclipse.ui.ide.workbench</application>
-              </configuration>
-          </plugin>
- 
-<plugin>
-   <groupId>org.eclipse.tycho</groupId>
-   <artifactId>target-platform-configuration</artifactId>
-   <version>${tycho.version}</version>
-   <configuration>
-      <dependency-resolution>
-         <extraRequirements>
- 
-<requirement>
-                        <type>eclipse-feature</type>
-                        <id>org.eclipse.rcp</id>
-                        <versionRange>0.0.0</versionRange>
-</requirement>
- 
-<requirement>
-                        <type>eclipse-feature</type>
-                        <id>org.eclipse.xtext.sdk</id>
-                        <versionRange>0.0.0</versionRange>
-</requirement>
- 
-<requirement>
-                        <type>eclipse-feature</type>
-                        <id>org.eclipse.emf.ecoretools.sdk</id>
-                        <versionRange>0.0.0</versionRange>
-</requirement>
- 
-         </extraRequirements>
-      </dependency-resolution>
-      <target>
-                     <artifact>
-                         <groupId>org.eclipse.emf.ecoretools.ale</groupId>
-                         <artifactId>org.eclipse.emf.ecoretools.ale.target-platform</artifactId>
-                         <version>0.0.1-SNAPSHOT</version>
-                     </artifact>
-                 </target>
-   </configuration>
-</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>false</useUIThread>
+					<product>org.eclipse.platform.ide</product>
+					<application>org.eclipse.ui.ide.workbench</application>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<dependency-resolution>
+						<extraRequirements>
+
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.rcp</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.xtext.sdk</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecoretools.sdk</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+
+						</extraRequirements>
+					</dependency-resolution>
+					<target>
+						<artifact>
+							<groupId>org.eclipse.emf.ecoretools.ale</groupId>
+							<artifactId>org.eclipse.emf.ecoretools.ale.target-platform</artifactId>
+							<version>0.0.1-SNAPSHOT</version>
+						</artifact>
+					</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

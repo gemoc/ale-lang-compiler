@@ -51,7 +51,7 @@ public class EqualityOperationImpl extends ExpressionOperationImpl implements Eq
 					if(right instanceof BooleanValue) {
 						BooleanValue ileft = ((BooleanValue) (left));
 						BooleanValue iright = ((BooleanValue) (right));
-						tmp = ((Boolean) (EqualService.equals((ileft.isValue()), (iright.isValue()))));
+						tmp = EqualService.equals((ileft.isValue()), (iright.isValue()));
 					}
 				}
 				else {

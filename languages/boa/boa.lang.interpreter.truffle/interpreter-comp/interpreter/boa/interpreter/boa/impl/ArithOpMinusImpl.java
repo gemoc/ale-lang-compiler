@@ -2,20 +2,15 @@ package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
-import interpreter.boa.interpreter.boa.ArithOpMinus;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.Ctx;
-import interpreter.boa.interpreter.boa.EvalIntRes;
-import interpreter.boa.interpreter.boa.EvalRes;
-import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Override;
 import org.eclipse.emf.ecore.EClass;
 
 @NodeInfo(
 		description = "ArithOpMinus"
 )
-public class ArithOpMinusImpl extends ArithOpImpl implements ArithOpMinus {
+public class ArithOpMinusImpl extends ArithOpImpl {
 	protected ArithOpMinusImpl() {
 		super();
 	}
@@ -26,24 +21,24 @@ public class ArithOpMinusImpl extends ArithOpImpl implements ArithOpMinus {
 		return BoaPackage.Literals.ARITH_OP_MINUS;
 	}
 
-	public EvalRes eval(Ctx ctx) {
-		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((Expr) (this.lhs)).eval((Ctx) (ctx))));
-		EvalRes vrhs = ((EvalRes) (((Expr) (this.rhs)).eval((Ctx) (ctx))));
-		if (vlhs instanceof EvalIntRes) {
-			if (vrhs instanceof EvalIntRes) {
-				EvalIntRes ivlhs = ((EvalIntRes) (vlhs));
-				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
-				EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
+	public EvalResImpl eval(CtxImpl ctx) {
+		EvalResImpl result;
+		EvalResImpl vlhs = ((EvalResImpl) (((ExprImpl) (this.lhs)).eval((CtxImpl) (ctx))));
+		EvalResImpl vrhs = ((EvalResImpl) (((ExprImpl) (this.rhs)).eval((CtxImpl) (ctx))));
+		if (vlhs instanceof EvalIntResImpl) {
+			if (vrhs instanceof EvalIntResImpl) {
+				EvalIntResImpl ivlhs = ((EvalIntResImpl) (vlhs));
+				EvalIntResImpl ivrhs = ((EvalIntResImpl) (vrhs));
+				EvalIntResImpl ret = ((EvalIntResImpl) (BoaFactory.eINSTANCE.createEvalIntRes()));
 				ret.setValue((ivlhs.getValue()) - (ivrhs.getValue()));
-				result = (EvalRes) (ret) ;
+				result = (EvalResImpl) (ret) ;
 			}
 			else {
-				result = (EvalRes) (null) ;
+				result = (EvalResImpl) (null) ;
 			}
 		}
 		else {
-			result = (EvalRes) (null) ;
+			result = (EvalResImpl) (null) ;
 		}
 		return result;
 	}

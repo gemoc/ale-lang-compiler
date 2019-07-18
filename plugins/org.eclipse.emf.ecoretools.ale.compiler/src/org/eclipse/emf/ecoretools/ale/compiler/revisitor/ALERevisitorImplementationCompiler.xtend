@@ -42,6 +42,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.xbase.lib.Functions.Function0
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 
 class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
@@ -51,12 +52,12 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	extension RevisitorTypeSystemUtils tsu
 	extension CommonTypeInferer cti
 
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, JavaPoetUtils jpu) {
-		this(projectName, projectRoot, dsl, newHashMap, eu, jpu)
+	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, JavaPoetUtils jpu, ServicesRegistrationManager srm) {
+		this(projectName, projectRoot, dsl, newHashMap, eu, jpu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Class<?>> services, EcoreUtils eu, JavaPoetUtils jpu) {
-		super(projectName, projectRoot, dsl, services, eu)
+	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, JavaPoetUtils jpu, ServicesRegistrationManager srm) {
+		super(projectName, projectRoot, dsl, services, eu, srm)
 		this.jpu = jpu
 		
 	}
@@ -99,6 +100,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
 		resolved.filter[it.eCls.instanceClassName != "java.util.Map$Entry" && it.eCls instanceof EClass].forEach [
 			val aleClass = it.aleCls
+			val eclscls = it.eCls
 			try {
 				val operationInterface = TypeSpec.interfaceBuilder(
 					(it.eCls as EClass).revisitorOperationInterfaceClassName).addSuperinterfaces((eCls as EClass).
@@ -141,7 +143,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 						}
 					]
 					MethodSpec.methodBuilder(it.operationRef.name).addModifiers(Modifier.PUBLIC).returnType(type).
-						addParameters(parameters).openMethod(typeResolved).compileBody(it.body, new CompilerExpressionCtx('''???REVISITOR???''', aleClass, eClass)).closeMethod(type).build
+						addParameters(parameters).openMethod(typeResolved).compileBody(it.body, new CompilerExpressionCtx('''???REVISITOR???''', aleClass, eclscls as EClass)).closeMethod(type).build
 				] ?: newArrayList).build
 				val operationImplementationFile = JavaFile.builder('''«dsl.revisitorOperationImplementationPackage»''',
 					operationImplementation).build

@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Block;
 import kmLogo.Expression;
 import kmLogo.Turtle;
@@ -62,7 +63,7 @@ public class WhileOpImpl extends ControlStructureOpImpl implements WhileOp {
     while ((rev.$((Expression)this.obj.getCondition()).eval(((Turtle) (turtle)))) > (0.0)) {
       rev.$((Block)this.obj.getBlock()).eval(((Turtle) (turtle)));
     }
-    result = 0.0;
+    result = ((Double) 0.0);
     return result;
   }
 }

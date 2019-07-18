@@ -18,23 +18,23 @@ import testoperationbody.Parent;
 import testoperationbody.revisitor.TestoperationbodyRevisitor;
 
 public interface TestImplementation extends TestoperationbodyRevisitor<ChildAOp, ChildBOp, ConceptAOp, MainOp, ParentOp> {
-	default MainOp testoperationbody__Main(Main it) {
-		return new MainOpImpl(it, this);
+		default ChildAOp testoperationbody__ChildA(ChildA it) {
+		return new ChildAOpImpl(it, this);
+	}
+
+	default ChildBOp testoperationbody__ChildB(ChildB it) {
+		return new ChildBOpImpl(it, this);
 	}
 
 	default ConceptAOp testoperationbody__ConceptA(ConceptA it) {
 		return new ConceptAOpImpl(it, this);
 	}
 
+	default MainOp testoperationbody__Main(Main it) {
+		return new MainOpImpl(it, this);
+	}
+
 	default ParentOp testoperationbody__Parent(Parent it) {
 		return new ParentOpImpl(it, this);
-	}
-
-	default ChildAOp testoperationbody__ChildA(ChildA it) {
-		return new ChildAOpImpl(it, this);
-	}
-
-	default ChildBOp testoperationbody__ChildB(ChildB it) {
-		return new ChildBOpImpl(it, this);
 	}
 }

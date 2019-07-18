@@ -242,7 +242,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 				}
 			}
 		}
-		result = (SymbolBinding) (MapService.getFromMap((EMap) (this.getCache()), (Symbol) (symbol))) ;
+		result = (SymbolBinding) (this.getCache().get((Symbol) (symbol))) ;
 		return result;
 	}
 

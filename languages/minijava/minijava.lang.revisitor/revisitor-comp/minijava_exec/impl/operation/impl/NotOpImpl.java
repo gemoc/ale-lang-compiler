@@ -99,7 +99,7 @@ public class NotOpImpl extends ExpressionOpImpl implements NotOp {
 
   public Value evaluateExpression(State state) {
     Value result;
-    BooleanValue left = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))))));
+    BooleanValue left = ((BooleanValue) (rev.$((Expression)this.obj.getExpression()).evaluateExpression(((State) (state)))));
     BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
     tmp.setValue(!(left.isValue()));
     result = ((BooleanValue) (tmp));

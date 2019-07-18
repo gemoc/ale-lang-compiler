@@ -5,7 +5,6 @@ import com.squareup.javapoet.CodeBlock
 import java.util.List
 import java.util.Map
 import org.eclipse.acceleo.query.ast.Call
-import org.eclipse.acceleo.query.validation.type.IType
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractExpressionCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
@@ -21,7 +20,7 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 	extension EnumeratorService es
 	extension CommonTypeInferer cti
 
-	new(VisitorTypeSystemUtil vtsu, List<ResolvedClass> resolved, Map<String, Class<?>> registeredServices,
+	new(VisitorTypeSystemUtil vtsu, List<ResolvedClass> resolved, Map<String, Pair<String, String>> registeredServices,
 		VisitorNamingUtils vnu, String packageRoot, CommonTypeInferer cti, EnumeratorService es) {
 		super(cti, es, vtsu, vnu, registeredServices, resolved, packageRoot, false, newHashSet)
 		this.vtsu = vtsu
@@ -34,12 +33,13 @@ class VisitorExpressionCompiler extends AbstractExpressionCompiler {
 		'this.it'
 	}
 
-	override implementationSpecificCall(Call call, CompilerExpressionCtx ctx, IType iType, Iterable<Method> allMethods, ResolvedClass re) {
+	override implementationSpecificCall(Call call, CompilerExpressionCtx ctx, Iterable<Method> allMethods,
+		ResolvedClass re) {
 		val hm = newHashMap()
-		hm.put("typecaller", (call.arguments.head.infereType.head.type as EClass).solveType)
+		val iType = re.ECls as EClass
+		hm.put("typecaller", iType)
 		hm.put("typeoperation",
-			ClassName.get(packageRoot.operationInterfacePackageName(iType.type as EClass),
-				(iType.type as EClass).operationInterfaceClassName))
+			ClassName.get(packageRoot.operationInterfacePackageName(iType), (iType).operationInterfaceClassName))
 		for (param : call.arguments.tail.enumerate) {
 			hm.put("typeparam" + param.value, param.key.infereType?.head?.type?.resolveType2.solveNothing(param.key))
 			hm.put("expression" + param.value, param.key.compileExpression(ctx))

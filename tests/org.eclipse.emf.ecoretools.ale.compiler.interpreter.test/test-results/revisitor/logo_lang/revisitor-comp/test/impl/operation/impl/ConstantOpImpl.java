@@ -57,7 +57,7 @@ public class ConstantOpImpl extends ExpressionOpImpl implements ConstantOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = this.obj.getValue();
+    result = ((double) this.obj.getValue());
     return result;
   }
 }

@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Block;
 import kmLogo.Instruction;
 import kmLogo.Turtle;
@@ -61,7 +62,7 @@ public class BlockOpImpl extends InstructionOpImpl implements BlockOp {
     for(Instruction inst: this.obj.getInstructions()) {
       rev.$((Instruction)inst).eval(((Turtle) (turtle)));
     }
-    result = 0.0;
+    result = ((Double) 0.0);
     return result;
   }
 }

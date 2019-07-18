@@ -24,6 +24,7 @@
     <module>logo.lang.revisitor.benchmark</module>
     <module>logo.lang.switch.benchmark</module>
     <module>logo.lang.visitor.benchmark</module>
+    <module>logo.lang.truffle</module>
   </modules>
 	
 </project>

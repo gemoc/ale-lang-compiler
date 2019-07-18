@@ -120,104 +120,36 @@ import kmLogo.While;
 import kmLogo.revisitor.KmLogoRevisitor;
 
 public interface LogoProgram_revisitorImplementation extends KmLogoRevisitor<BackOp, BinaryExpOp, BlockOp, CallStackOp, ClearOp, ConstantOp, ControlStructureOp, CosOp, DivOp, EqualsOp, ExpressionOp, ForwardOp, GreaterOp, IfOp, InstructionOp, LeftOp, LogoProgramOp, LowerOp, MinusOp, MultOp, ParameterOp, ParameterCallOp, PenDownOp, PenUpOp, PlusOp, PointOp, PrimitiveOp, ProcCallOp, ProcDeclarationOp, RepeatOp, RightOp, SegmentOp, SinOp, StackFrameOp, TanOp, TurtleOp, UnaryExpressionOp, VariableOp, WhileOp> {
-	default InstructionOp kmLogo__Instruction(Instruction it) {
-		return new InstructionOpImpl(it, this);
-	}
-
-	default PrimitiveOp kmLogo__Primitive(Primitive it) {
-		return new PrimitiveOpImpl(it, this);
-	}
-
 	default BackOp kmLogo__Back(Back it) {
 		return new BackOpImpl(it, this);
-	}
-
-	default ForwardOp kmLogo__Forward(Forward it) {
-		return new ForwardOpImpl(it, this);
-	}
-
-	default LeftOp kmLogo__Left(Left it) {
-		return new LeftOpImpl(it, this);
-	}
-
-	default RightOp kmLogo__Right(Right it) {
-		return new RightOpImpl(it, this);
-	}
-
-	default PenDownOp kmLogo__PenDown(PenDown it) {
-		return new PenDownOpImpl(it, this);
-	}
-
-	default PenUpOp kmLogo__PenUp(PenUp it) {
-		return new PenUpOpImpl(it, this);
-	}
-
-	default ClearOp kmLogo__Clear(Clear it) {
-		return new ClearOpImpl(it, this);
-	}
-
-	default ExpressionOp kmLogo__Expression(Expression it) {
-		return new ExpressionOpImpl(it, this);
 	}
 
 	default BinaryExpOp kmLogo__BinaryExp(BinaryExp it) {
 		return new BinaryExpOpImpl(it, this);
 	}
 
-	default UnaryExpressionOp kmLogo__UnaryExpression(UnaryExpression it) {
-		return new UnaryExpressionOpImpl(it, this);
+	default BlockOp kmLogo__Block(Block it) {
+		return new BlockOpImpl(it, this);
+	}
+
+	default CallStackOp kmLogo__CallStack(CallStack it) {
+		return new CallStackOpImpl(it, this);
+	}
+
+	default ClearOp kmLogo__Clear(Clear it) {
+		return new ClearOpImpl(it, this);
 	}
 
 	default ConstantOp kmLogo__Constant(Constant it) {
 		return new ConstantOpImpl(it, this);
 	}
 
-	default ProcCallOp kmLogo__ProcCall(ProcCall it) {
-		return new ProcCallOpImpl(it, this);
-	}
-
-	default ProcDeclarationOp kmLogo__ProcDeclaration(ProcDeclaration it) {
-		return new ProcDeclarationOpImpl(it, this);
-	}
-
-	default BlockOp kmLogo__Block(Block it) {
-		return new BlockOpImpl(it, this);
-	}
-
-	default IfOp kmLogo__If(If it) {
-		return new IfOpImpl(it, this);
-	}
-
 	default ControlStructureOp kmLogo__ControlStructure(ControlStructure it) {
 		return new ControlStructureOpImpl(it, this);
 	}
 
-	default RepeatOp kmLogo__Repeat(Repeat it) {
-		return new RepeatOpImpl(it, this);
-	}
-
-	default WhileOp kmLogo__While(While it) {
-		return new WhileOpImpl(it, this);
-	}
-
-	default ParameterOp kmLogo__Parameter(Parameter it) {
-		return new ParameterOpImpl(it, this);
-	}
-
-	default ParameterCallOp kmLogo__ParameterCall(ParameterCall it) {
-		return new ParameterCallOpImpl(it, this);
-	}
-
-	default PlusOp kmLogo__Plus(Plus it) {
-		return new PlusOpImpl(it, this);
-	}
-
-	default MinusOp kmLogo__Minus(Minus it) {
-		return new MinusOpImpl(it, this);
-	}
-
-	default MultOp kmLogo__Mult(Mult it) {
-		return new MultOpImpl(it, this);
+	default CosOp kmLogo__Cos(Cos it) {
+		return new CosOpImpl(it, this);
 	}
 
 	default DivOp kmLogo__Div(Div it) {
@@ -228,51 +160,119 @@ public interface LogoProgram_revisitorImplementation extends KmLogoRevisitor<Bac
 		return new EqualsOpImpl(it, this);
 	}
 
+	default ExpressionOp kmLogo__Expression(Expression it) {
+		return new ExpressionOpImpl(it, this);
+	}
+
+	default ForwardOp kmLogo__Forward(Forward it) {
+		return new ForwardOpImpl(it, this);
+	}
+
 	default GreaterOp kmLogo__Greater(Greater it) {
 		return new GreaterOpImpl(it, this);
 	}
 
-	default LowerOp kmLogo__Lower(Lower it) {
-		return new LowerOpImpl(it, this);
+	default IfOp kmLogo__If(If it) {
+		return new IfOpImpl(it, this);
 	}
 
-	default CosOp kmLogo__Cos(Cos it) {
-		return new CosOpImpl(it, this);
+	default InstructionOp kmLogo__Instruction(Instruction it) {
+		return new InstructionOpImpl(it, this);
 	}
 
-	default SinOp kmLogo__Sin(Sin it) {
-		return new SinOpImpl(it, this);
-	}
-
-	default TanOp kmLogo__Tan(Tan it) {
-		return new TanOpImpl(it, this);
+	default LeftOp kmLogo__Left(Left it) {
+		return new LeftOpImpl(it, this);
 	}
 
 	default LogoProgramOp kmLogo__LogoProgram(LogoProgram it) {
 		return new LogoProgramOpImpl(it, this);
 	}
 
-	default TurtleOp kmLogo__Turtle(Turtle it) {
-		return new TurtleOpImpl(it, this);
+	default LowerOp kmLogo__Lower(Lower it) {
+		return new LowerOpImpl(it, this);
+	}
+
+	default MinusOp kmLogo__Minus(Minus it) {
+		return new MinusOpImpl(it, this);
+	}
+
+	default MultOp kmLogo__Mult(Mult it) {
+		return new MultOpImpl(it, this);
+	}
+
+	default ParameterOp kmLogo__Parameter(Parameter it) {
+		return new ParameterOpImpl(it, this);
+	}
+
+	default ParameterCallOp kmLogo__ParameterCall(ParameterCall it) {
+		return new ParameterCallOpImpl(it, this);
+	}
+
+	default PenDownOp kmLogo__PenDown(PenDown it) {
+		return new PenDownOpImpl(it, this);
+	}
+
+	default PenUpOp kmLogo__PenUp(PenUp it) {
+		return new PenUpOpImpl(it, this);
+	}
+
+	default PlusOp kmLogo__Plus(Plus it) {
+		return new PlusOpImpl(it, this);
 	}
 
 	default PointOp kmLogo__Point(Point it) {
 		return new PointOpImpl(it, this);
 	}
 
+	default PrimitiveOp kmLogo__Primitive(Primitive it) {
+		return new PrimitiveOpImpl(it, this);
+	}
+
+	default ProcCallOp kmLogo__ProcCall(ProcCall it) {
+		return new ProcCallOpImpl(it, this);
+	}
+
+	default ProcDeclarationOp kmLogo__ProcDeclaration(ProcDeclaration it) {
+		return new ProcDeclarationOpImpl(it, this);
+	}
+
+	default RepeatOp kmLogo__Repeat(Repeat it) {
+		return new RepeatOpImpl(it, this);
+	}
+
+	default RightOp kmLogo__Right(Right it) {
+		return new RightOpImpl(it, this);
+	}
+
 	default SegmentOp kmLogo__Segment(Segment it) {
 		return new SegmentOpImpl(it, this);
 	}
 
-	default CallStackOp kmLogo__CallStack(CallStack it) {
-		return new CallStackOpImpl(it, this);
+	default SinOp kmLogo__Sin(Sin it) {
+		return new SinOpImpl(it, this);
 	}
 
 	default StackFrameOp kmLogo__StackFrame(StackFrame it) {
 		return new StackFrameOpImpl(it, this);
 	}
 
+	default TanOp kmLogo__Tan(Tan it) {
+		return new TanOpImpl(it, this);
+	}
+
+	default TurtleOp kmLogo__Turtle(Turtle it) {
+		return new TurtleOpImpl(it, this);
+	}
+
+	default UnaryExpressionOp kmLogo__UnaryExpression(UnaryExpression it) {
+		return new UnaryExpressionOpImpl(it, this);
+	}
+
 	default VariableOp kmLogo__Variable(Variable it) {
 		return new VariableOpImpl(it, this);
+	}
+
+	default WhileOp kmLogo__While(While it) {
+		return new WhileOpImpl(it, this);
 	}
 }

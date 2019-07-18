@@ -2,27 +2,28 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-		<packaging>pom</packaging>
+	<packaging>pom</packaging>
 	<groupId>minijava</groupId>
 	<artifactId>minijava</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<parent>
-    <groupId>languages</groupId>
-    <artifactId>languages</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-	
-  <modules>
-    <module>minijava.lang.services</module>
-    <module>minijava.lang.interpreter</module>
-    <!--<module>minijava.lang.revisitor</module>
-    <module>minijava.lang.switch</module>
-    <module>minijava.lang.visitor</module>-->
-    <module>minijava.lang.interpreter.benchmark</module>
-    <!-- <module>minijava.lang.revisitor.benchmark</module>
-    <module>minijava.lang.switch.benchmark</module>                       TODO
-    <module>minijava.lang.visitor.benchmark</module> -->
-  </modules>
-	
+		<groupId>languages</groupId>
+		<artifactId>languages</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>minijava.model</module>
+		<module>minijava.lang.services</module>
+		<module>minijava.lang.interpreter</module>
+		<module>minijava.lang.revisitor</module>
+		<module>minijava.lang.switch</module>
+		<module>minijava.lang.visitor</module>
+		<module>minijava.lang.interpreter.benchmark</module>
+		<module>minijava.lang.revisitor.benchmark</module>
+		<module>minijava.lang.switch.benchmark</module>
+		<module>minijava.lang.visitor.benchmark</module>
+	</modules>
+
 </project>

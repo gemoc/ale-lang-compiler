@@ -8,465 +8,661 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 public interface KmLogoPackage extends EPackage {
-  KmLogoPackage eINSTANCE = KmLogoPackageImpl.init();
+	String eNAME = "kmLogo";
 
-  String eNS_URI = "http://kmLogo.kmLogo.kmLogo/";
+	String eNS_URI = "http://kmLogo.kmLogo.kmLogo/";
 
-  String eNAME = "kmLogo";
+	String eNS_PREFIX = "kmLogo";
 
-  String eNS_PREFIX = "kmLogo";
+	KmLogoPackage eINSTANCE = KmLogoPackageImpl.init();
 
-  int INSTRUCTION = 0;
+	int INSTRUCTION = 0;
 
-  int PRIMITIVE = 1;
+	int INSTRUCTION_FEATURE_COUNT = 0;
 
-  int BACK = 2;
+	int INSTRUCTION_OPERATION_COUNT = 0;
 
-  int FORWARD = 3;
+	int PRIMITIVE = 1;
 
-  int LEFT = 4;
+	int PRIMITIVE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
 
-  int RIGHT = 5;
+	int PRIMITIVE_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
-  int PEN_DOWN = 6;
+	int BACK = 2;
 
-  int PEN_UP = 7;
+	int BACK__STEPS = 0;
 
-  int CLEAR = 8;
+	int BACK_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 1;
 
-  int EXPRESSION = 9;
+	int BACK_OPERATION_COUNT = PRIMITIVE_OPERATION_COUNT + 0;
 
-  int BINARY_EXP = 10;
+	int FORWARD = 3;
 
-  int UNARY_EXPRESSION = 11;
+	int FORWARD__STEPS = 0;
 
-  int CONSTANT = 12;
+	int FORWARD_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 1;
 
-  int PROC_CALL = 13;
+	int FORWARD_OPERATION_COUNT = PRIMITIVE_OPERATION_COUNT + 0;
 
-  int PROC_DECLARATION = 14;
+	int LEFT = 4;
 
-  int BLOCK = 15;
+	int LEFT__ANGLE = 0;
 
-  int IF = 16;
+	int LEFT_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 1;
 
-  int CONTROL_STRUCTURE = 17;
+	int LEFT_OPERATION_COUNT = PRIMITIVE_OPERATION_COUNT + 0;
 
-  int REPEAT = 18;
+	int RIGHT = 5;
 
-  int WHILE = 19;
+	int RIGHT__ANGLE = 0;
 
-  int PARAMETER = 20;
+	int RIGHT_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 1;
 
-  int PARAMETER_CALL = 21;
+	int RIGHT_OPERATION_COUNT = PRIMITIVE_OPERATION_COUNT + 0;
 
-  int PLUS = 22;
+	int PEN_DOWN = 6;
 
-  int MINUS = 23;
+	int PEN_DOWN_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 0;
 
-  int MULT = 24;
+	int PEN_DOWN_OPERATION_COUNT = PRIMITIVE_OPERATION_COUNT + 0;
 
-  int DIV = 25;
+	int PEN_UP = 7;
 
-  int EQUALS = 26;
+	int PEN_UP_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 0;
 
-  int GREATER = 27;
+	int PEN_UP_OPERATION_COUNT = PRIMITIVE_OPERATION_COUNT + 0;
 
-  int LOWER = 28;
+	int CLEAR = 8;
 
-  int COS = 29;
+	int CLEAR_FEATURE_COUNT = PRIMITIVE_FEATURE_COUNT + 0;
 
-  int SIN = 30;
+	int CLEAR_OPERATION_COUNT = PRIMITIVE_OPERATION_COUNT + 0;
 
-  int TAN = 31;
+	int EXPRESSION = 9;
 
-  int LOGO_PROGRAM = 32;
+	int EXPRESSION_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
 
-  int TURTLE = 33;
+	int EXPRESSION_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
-  int POINT = 34;
+	int BINARY_EXP = 10;
 
-  int SEGMENT = 35;
+	int BINARY_EXP__LHS = 0;
 
-  int CALL_STACK = 36;
+	int BINARY_EXP__RHS = 1;
 
-  int STACK_FRAME = 37;
+	int BINARY_EXP_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int VARIABLE = 38;
+	int BINARY_EXP_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int BACK__STEPS = 0;
+	int UNARY_EXPRESSION = 11;
 
-  int FORWARD__STEPS = 0;
+	int UNARY_EXPRESSION__EXPRESSION = 0;
 
-  int LEFT__ANGLE = 0;
+	int UNARY_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  int RIGHT__ANGLE = 0;
+	int UNARY_EXPRESSION_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int BINARY_EXP__LHS = 0;
+	int CONSTANT = 12;
 
-  int BINARY_EXP__RHS = 1;
+	int CONSTANT__VALUE = 0;
 
-  int UNARY_EXPRESSION__EXPRESSION = 0;
+	int CONSTANT_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  int CONSTANT__VALUE = 0;
+	int CONSTANT_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int PROC_CALL__ACTUAL_ARGS = 0;
+	int PROC_CALL = 13;
 
-  int PROC_CALL__DECLARATION = 1;
+	int PROC_CALL__ACTUAL_ARGS = 0;
 
-  int PROC_DECLARATION__NAME = 0;
+	int PROC_CALL__DECLARATION = 1;
 
-  int PROC_DECLARATION__ARGS = 1;
+	int PROC_CALL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
-  int PROC_DECLARATION__PROC_CALL = 2;
+	int PROC_CALL_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  int PROC_DECLARATION__INSTRUCTIONS = 3;
+	int PROC_DECLARATION = 14;
 
-  int BLOCK__INSTRUCTIONS = 0;
+	int PROC_DECLARATION__NAME = 0;
 
-  int IF__THEN_PART = 1;
+	int PROC_DECLARATION__ARGS = 1;
 
-  int IF__ELSE_PART = 2;
+	int PROC_DECLARATION__PROC_CALL = 2;
 
-  int CONTROL_STRUCTURE__CONDITION = 0;
+	int PROC_DECLARATION__INSTRUCTIONS = 3;
 
-  int REPEAT__BLOCK = 1;
+	int PROC_DECLARATION_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 4;
 
-  int WHILE__BLOCK = 1;
+	int PROC_DECLARATION_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
-  int PARAMETER__NAME = 0;
+	int BLOCK = 15;
 
-  int PARAMETER_CALL__PARAMETER = 0;
+	int BLOCK__INSTRUCTIONS = 0;
 
-  int LOGO_PROGRAM__INSTRUCTIONS = 0;
+	int BLOCK_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
-  int TURTLE__POSITION = 0;
+	int BLOCK_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
-  int TURTLE__HEADING = 1;
+	int CONTROL_STRUCTURE = 16;
 
-  int TURTLE__PEN_UP = 2;
+	int CONTROL_STRUCTURE__CONDITION = 0;
 
-  int TURTLE__DRAWINGS = 3;
+	int CONTROL_STRUCTURE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
-  int TURTLE__CALL_STACK = 4;
+	int CONTROL_STRUCTURE_OPERATION_COUNT = INSTRUCTION_OPERATION_COUNT + 0;
 
-  int POINT__X = 0;
+	int IF = 17;
 
-  int POINT__Y = 1;
+	int IF__CONDITION = CONTROL_STRUCTURE__CONDITION;
 
-  int SEGMENT__BEGIN = 0;
+	int IF__THEN_PART = 1;
 
-  int SEGMENT__END = 1;
+	int IF__ELSE_PART = 2;
 
-  int CALL_STACK__FRAMES = 0;
+	int IF_FEATURE_COUNT = CONTROL_STRUCTURE_FEATURE_COUNT + 2;
 
-  int STACK_FRAME__VARIABLES = 0;
+	int IF_OPERATION_COUNT = CONTROL_STRUCTURE_OPERATION_COUNT + 0;
 
-  int VARIABLE__NAME = 0;
+	int REPEAT = 18;
 
-  int VARIABLE__VALUE = 1;
+	int REPEAT__CONDITION = CONTROL_STRUCTURE__CONDITION;
 
-  EClass getInstruction();
+	int REPEAT__BLOCK = 1;
 
-  EClass getPrimitive();
+	int REPEAT_FEATURE_COUNT = CONTROL_STRUCTURE_FEATURE_COUNT + 1;
 
-  EClass getBack();
+	int REPEAT_OPERATION_COUNT = CONTROL_STRUCTURE_OPERATION_COUNT + 0;
 
-  EClass getForward();
+	int WHILE = 19;
 
-  EClass getLeft();
+	int WHILE__CONDITION = CONTROL_STRUCTURE__CONDITION;
 
-  EClass getRight();
+	int WHILE__BLOCK = 1;
 
-  EClass getPenDown();
+	int WHILE_FEATURE_COUNT = CONTROL_STRUCTURE_FEATURE_COUNT + 1;
 
-  EClass getPenUp();
+	int WHILE_OPERATION_COUNT = CONTROL_STRUCTURE_OPERATION_COUNT + 0;
 
-  EClass getClear();
+	int PARAMETER = 20;
 
-  EClass getExpression();
+	int PARAMETER__NAME = 0;
 
-  EClass getBinaryExp();
+	int PARAMETER_FEATURE_COUNT = 1;
 
-  EClass getUnaryExpression();
+	int PARAMETER_OPERATION_COUNT = 0;
 
-  EClass getConstant();
+	int PARAMETER_CALL = 21;
 
-  EClass getProcCall();
+	int PARAMETER_CALL__PARAMETER = 0;
 
-  EClass getProcDeclaration();
+	int PARAMETER_CALL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
-  EClass getBlock();
+	int PARAMETER_CALL_OPERATION_COUNT = EXPRESSION_OPERATION_COUNT + 0;
 
-  EClass getIf();
+	int PLUS = 22;
 
-  EClass getControlStructure();
+	int PLUS__LHS = BINARY_EXP__LHS;
 
-  EClass getRepeat();
+	int PLUS__RHS = BINARY_EXP__RHS;
 
-  EClass getWhile();
+	int PLUS_FEATURE_COUNT = BINARY_EXP_FEATURE_COUNT + 0;
 
-  EClass getParameter();
+	int PLUS_OPERATION_COUNT = BINARY_EXP_OPERATION_COUNT + 0;
 
-  EClass getParameterCall();
+	int MINUS = 23;
 
-  EClass getPlus();
+	int MINUS__LHS = BINARY_EXP__LHS;
 
-  EClass getMinus();
+	int MINUS__RHS = BINARY_EXP__RHS;
 
-  EClass getMult();
+	int MINUS_FEATURE_COUNT = BINARY_EXP_FEATURE_COUNT + 0;
 
-  EClass getDiv();
+	int MINUS_OPERATION_COUNT = BINARY_EXP_OPERATION_COUNT + 0;
 
-  EClass getEquals();
+	int MULT = 24;
 
-  EClass getGreater();
+	int MULT__LHS = BINARY_EXP__LHS;
 
-  EClass getLower();
+	int MULT__RHS = BINARY_EXP__RHS;
 
-  EClass getCos();
+	int MULT_FEATURE_COUNT = BINARY_EXP_FEATURE_COUNT + 0;
 
-  EClass getSin();
+	int MULT_OPERATION_COUNT = BINARY_EXP_OPERATION_COUNT + 0;
 
-  EClass getTan();
+	int DIV = 25;
 
-  EClass getLogoProgram();
+	int DIV__LHS = BINARY_EXP__LHS;
 
-  EClass getTurtle();
+	int DIV__RHS = BINARY_EXP__RHS;
 
-  EClass getPoint();
+	int DIV_FEATURE_COUNT = BINARY_EXP_FEATURE_COUNT + 0;
 
-  EClass getSegment();
+	int DIV_OPERATION_COUNT = BINARY_EXP_OPERATION_COUNT + 0;
 
-  EClass getCallStack();
+	int EQUALS = 26;
 
-  EClass getStackFrame();
+	int EQUALS__LHS = BINARY_EXP__LHS;
 
-  EClass getVariable();
+	int EQUALS__RHS = BINARY_EXP__RHS;
 
-  EReference getBack_Steps();
+	int EQUALS_FEATURE_COUNT = BINARY_EXP_FEATURE_COUNT + 0;
 
-  EReference getForward_Steps();
+	int EQUALS_OPERATION_COUNT = BINARY_EXP_OPERATION_COUNT + 0;
 
-  EReference getLeft_Angle();
+	int GREATER = 27;
 
-  EReference getRight_Angle();
+	int GREATER__LHS = BINARY_EXP__LHS;
 
-  EReference getBinaryExp_Lhs();
+	int GREATER__RHS = BINARY_EXP__RHS;
 
-  EReference getBinaryExp_Rhs();
+	int GREATER_FEATURE_COUNT = BINARY_EXP_FEATURE_COUNT + 0;
 
-  EReference getUnaryExpression_Expression();
+	int GREATER_OPERATION_COUNT = BINARY_EXP_OPERATION_COUNT + 0;
 
-  EReference getProcCall_ActualArgs();
+	int LOWER = 28;
 
-  EReference getProcCall_Declaration();
+	int LOWER__LHS = BINARY_EXP__LHS;
 
-  EReference getProcDeclaration_Args();
+	int LOWER__RHS = BINARY_EXP__RHS;
 
-  EReference getProcDeclaration_ProcCall();
+	int LOWER_FEATURE_COUNT = BINARY_EXP_FEATURE_COUNT + 0;
 
-  EReference getProcDeclaration_Instructions();
+	int LOWER_OPERATION_COUNT = BINARY_EXP_OPERATION_COUNT + 0;
 
-  EReference getBlock_Instructions();
+	int COS = 29;
 
-  EReference getIf_ThenPart();
+	int COS__EXPRESSION = UNARY_EXPRESSION__EXPRESSION;
 
-  EReference getIf_ElsePart();
+	int COS_FEATURE_COUNT = UNARY_EXPRESSION_FEATURE_COUNT + 0;
 
-  EReference getControlStructure_Condition();
+	int COS_OPERATION_COUNT = UNARY_EXPRESSION_OPERATION_COUNT + 0;
 
-  EReference getRepeat_Block();
+	int SIN = 30;
 
-  EReference getWhile_Block();
+	int SIN__EXPRESSION = UNARY_EXPRESSION__EXPRESSION;
 
-  EReference getParameterCall_Parameter();
+	int SIN_FEATURE_COUNT = UNARY_EXPRESSION_FEATURE_COUNT + 0;
 
-  EReference getLogoProgram_Instructions();
+	int SIN_OPERATION_COUNT = UNARY_EXPRESSION_OPERATION_COUNT + 0;
 
-  EReference getTurtle_Position();
+	int TAN = 31;
 
-  EReference getTurtle_Drawings();
+	int TAN__EXPRESSION = UNARY_EXPRESSION__EXPRESSION;
 
-  EReference getTurtle_CallStack();
+	int TAN_FEATURE_COUNT = UNARY_EXPRESSION_FEATURE_COUNT + 0;
 
-  EReference getSegment_Begin();
+	int TAN_OPERATION_COUNT = UNARY_EXPRESSION_OPERATION_COUNT + 0;
 
-  EReference getSegment_End();
+	int LOGO_PROGRAM = 32;
 
-  EReference getCallStack_Frames();
+	int LOGO_PROGRAM__INSTRUCTIONS = 0;
 
-  EReference getStackFrame_Variables();
+	int LOGO_PROGRAM_FEATURE_COUNT = 1;
 
-  EAttribute getConstant_Value();
+	int LOGO_PROGRAM_OPERATION_COUNT = 0;
 
-  EAttribute getProcDeclaration_Name();
+	int TURTLE = 33;
 
-  EAttribute getParameter_Name();
+	int TURTLE__POSITION = 0;
 
-  EAttribute getTurtle_Heading();
+	int TURTLE__HEADING = 1;
 
-  EAttribute getTurtle_PenUp();
+	int TURTLE__PEN_UP = 2;
 
-  EAttribute getPoint_X();
+	int TURTLE__DRAWINGS = 3;
 
-  EAttribute getPoint_Y();
+	int TURTLE__CALL_STACK = 4;
 
-  EAttribute getVariable_Name();
+	int TURTLE_FEATURE_COUNT = 5;
 
-  EAttribute getVariable_Value();
+	int TURTLE_OPERATION_COUNT = 0;
 
-  KmLogoFactory getKmLogoFactory();
+	int POINT = 34;
 
-  interface Literals {
-    EClass INSTRUCTION = eINSTANCE.getInstruction();
+	int POINT__X = 0;
 
-    EClass PRIMITIVE = eINSTANCE.getPrimitive();
+	int POINT__Y = 1;
 
-    EClass BACK = eINSTANCE.getBack();
+	int POINT_FEATURE_COUNT = 2;
 
-    EClass FORWARD = eINSTANCE.getForward();
+	int POINT_OPERATION_COUNT = 0;
 
-    EClass LEFT = eINSTANCE.getLeft();
+	int SEGMENT = 35;
 
-    EClass RIGHT = eINSTANCE.getRight();
+	int SEGMENT__BEGIN = 0;
 
-    EClass PEN_DOWN = eINSTANCE.getPenDown();
+	int SEGMENT__END = 1;
 
-    EClass PEN_UP = eINSTANCE.getPenUp();
+	int SEGMENT_FEATURE_COUNT = 2;
 
-    EClass CLEAR = eINSTANCE.getClear();
+	int SEGMENT_OPERATION_COUNT = 0;
 
-    EClass EXPRESSION = eINSTANCE.getExpression();
+	int CALL_STACK = 36;
 
-    EClass BINARY_EXP = eINSTANCE.getBinaryExp();
+	int CALL_STACK__FRAMES = 0;
 
-    EClass UNARY_EXPRESSION = eINSTANCE.getUnaryExpression();
+	int CALL_STACK_FEATURE_COUNT = 1;
 
-    EClass CONSTANT = eINSTANCE.getConstant();
+	int CALL_STACK_OPERATION_COUNT = 0;
 
-    EClass PROC_CALL = eINSTANCE.getProcCall();
+	int STACK_FRAME = 37;
 
-    EClass PROC_DECLARATION = eINSTANCE.getProcDeclaration();
+	int STACK_FRAME__VARIABLES = 0;
 
-    EClass BLOCK = eINSTANCE.getBlock();
+	int STACK_FRAME_FEATURE_COUNT = 1;
 
-    EClass IF = eINSTANCE.getIf();
+	int STACK_FRAME_OPERATION_COUNT = 0;
 
-    EClass CONTROL_STRUCTURE = eINSTANCE.getControlStructure();
+	int VARIABLE = 38;
 
-    EClass REPEAT = eINSTANCE.getRepeat();
+	int VARIABLE__NAME = 0;
 
-    EClass WHILE = eINSTANCE.getWhile();
+	int VARIABLE__VALUE = 1;
 
-    EClass PARAMETER = eINSTANCE.getParameter();
+	int VARIABLE_FEATURE_COUNT = 2;
 
-    EClass PARAMETER_CALL = eINSTANCE.getParameterCall();
+	int VARIABLE_OPERATION_COUNT = 0;
 
-    EClass PLUS = eINSTANCE.getPlus();
+	EClass getInstruction();
 
-    EClass MINUS = eINSTANCE.getMinus();
+	EClass getPrimitive();
 
-    EClass MULT = eINSTANCE.getMult();
+	EClass getBack();
 
-    EClass DIV = eINSTANCE.getDiv();
+	EReference getBack_Steps();
 
-    EClass EQUALS = eINSTANCE.getEquals();
+	EClass getForward();
 
-    EClass GREATER = eINSTANCE.getGreater();
+	EReference getForward_Steps();
 
-    EClass LOWER = eINSTANCE.getLower();
+	EClass getLeft();
 
-    EClass COS = eINSTANCE.getCos();
+	EReference getLeft_Angle();
 
-    EClass SIN = eINSTANCE.getSin();
+	EClass getRight();
 
-    EClass TAN = eINSTANCE.getTan();
+	EReference getRight_Angle();
 
-    EClass LOGO_PROGRAM = eINSTANCE.getLogoProgram();
+	EClass getPenDown();
 
-    EClass TURTLE = eINSTANCE.getTurtle();
+	EClass getPenUp();
 
-    EClass POINT = eINSTANCE.getPoint();
+	EClass getClear();
 
-    EClass SEGMENT = eINSTANCE.getSegment();
+	EClass getExpression();
 
-    EClass CALL_STACK = eINSTANCE.getCallStack();
+	EClass getBinaryExp();
 
-    EClass STACK_FRAME = eINSTANCE.getStackFrame();
+	EReference getBinaryExp_Lhs();
 
-    EClass VARIABLE = eINSTANCE.getVariable();
+	EReference getBinaryExp_Rhs();
 
-    EReference BACK__STEPS = eINSTANCE.getBack_Steps();
+	EClass getUnaryExpression();
 
-    EReference FORWARD__STEPS = eINSTANCE.getForward_Steps();
+	EReference getUnaryExpression_Expression();
 
-    EReference LEFT__ANGLE = eINSTANCE.getLeft_Angle();
+	EClass getConstant();
 
-    EReference RIGHT__ANGLE = eINSTANCE.getRight_Angle();
+	EAttribute getConstant_Value();
 
-    EReference BINARY_EXP__LHS = eINSTANCE.getBinaryExp_Lhs();
+	EClass getProcCall();
 
-    EReference BINARY_EXP__RHS = eINSTANCE.getBinaryExp_Rhs();
+	EReference getProcCall_ActualArgs();
 
-    EReference UNARY_EXPRESSION__EXPRESSION = eINSTANCE.getUnaryExpression_Expression();
+	EReference getProcCall_Declaration();
 
-    EReference PROC_CALL__ACTUAL_ARGS = eINSTANCE.getProcCall_ActualArgs();
+	EClass getProcDeclaration();
 
-    EReference PROC_CALL__DECLARATION = eINSTANCE.getProcCall_Declaration();
+	EAttribute getProcDeclaration_Name();
 
-    EReference PROC_DECLARATION__ARGS = eINSTANCE.getProcDeclaration_Args();
+	EReference getProcDeclaration_Args();
 
-    EReference PROC_DECLARATION__PROC_CALL = eINSTANCE.getProcDeclaration_ProcCall();
+	EReference getProcDeclaration_ProcCall();
 
-    EReference PROC_DECLARATION__INSTRUCTIONS = eINSTANCE.getProcDeclaration_Instructions();
+	EReference getProcDeclaration_Instructions();
 
-    EReference BLOCK__INSTRUCTIONS = eINSTANCE.getBlock_Instructions();
+	EClass getBlock();
 
-    EReference IF__THEN_PART = eINSTANCE.getIf_ThenPart();
+	EReference getBlock_Instructions();
 
-    EReference IF__ELSE_PART = eINSTANCE.getIf_ElsePart();
+	EClass getIf();
 
-    EReference CONTROL_STRUCTURE__CONDITION = eINSTANCE.getControlStructure_Condition();
+	EReference getIf_ThenPart();
 
-    EReference REPEAT__BLOCK = eINSTANCE.getRepeat_Block();
+	EReference getIf_ElsePart();
 
-    EReference WHILE__BLOCK = eINSTANCE.getWhile_Block();
+	EClass getControlStructure();
 
-    EReference PARAMETER_CALL__PARAMETER = eINSTANCE.getParameterCall_Parameter();
+	EReference getControlStructure_Condition();
 
-    EReference LOGO_PROGRAM__INSTRUCTIONS = eINSTANCE.getLogoProgram_Instructions();
+	EClass getRepeat();
 
-    EReference TURTLE__POSITION = eINSTANCE.getTurtle_Position();
+	EReference getRepeat_Block();
 
-    EReference TURTLE__DRAWINGS = eINSTANCE.getTurtle_Drawings();
+	EClass getWhile();
 
-    EReference TURTLE__CALL_STACK = eINSTANCE.getTurtle_CallStack();
+	EReference getWhile_Block();
 
-    EReference SEGMENT__BEGIN = eINSTANCE.getSegment_Begin();
+	EClass getParameter();
 
-    EReference SEGMENT__END = eINSTANCE.getSegment_End();
+	EAttribute getParameter_Name();
 
-    EReference CALL_STACK__FRAMES = eINSTANCE.getCallStack_Frames();
+	EClass getParameterCall();
 
-    EReference STACK_FRAME__VARIABLES = eINSTANCE.getStackFrame_Variables();
+	EReference getParameterCall_Parameter();
 
-    EAttribute CONSTANT__VALUE = eINSTANCE.getConstant_Value();
+	EClass getPlus();
 
-    EAttribute PROC_DECLARATION__NAME = eINSTANCE.getProcDeclaration_Name();
+	EClass getMinus();
 
-    EAttribute PARAMETER__NAME = eINSTANCE.getParameter_Name();
+	EClass getMult();
 
-    EAttribute TURTLE__HEADING = eINSTANCE.getTurtle_Heading();
+	EClass getDiv();
 
-    EAttribute TURTLE__PEN_UP = eINSTANCE.getTurtle_PenUp();
+	EClass getEquals();
 
-    EAttribute POINT__X = eINSTANCE.getPoint_X();
+	EClass getGreater();
 
-    EAttribute POINT__Y = eINSTANCE.getPoint_Y();
+	EClass getLower();
 
-    EAttribute VARIABLE__NAME = eINSTANCE.getVariable_Name();
+	EClass getCos();
 
-    EAttribute VARIABLE__VALUE = eINSTANCE.getVariable_Value();
-  }
+	EClass getSin();
+
+	EClass getTan();
+
+	EClass getLogoProgram();
+
+	EReference getLogoProgram_Instructions();
+
+	EClass getTurtle();
+
+	EReference getTurtle_Position();
+
+	EAttribute getTurtle_Heading();
+
+	EAttribute getTurtle_PenUp();
+
+	EReference getTurtle_Drawings();
+
+	EReference getTurtle_CallStack();
+
+	EClass getPoint();
+
+	EAttribute getPoint_X();
+
+	EAttribute getPoint_Y();
+
+	EClass getSegment();
+
+	EReference getSegment_Begin();
+
+	EReference getSegment_End();
+
+	EClass getCallStack();
+
+	EReference getCallStack_Frames();
+
+	EClass getStackFrame();
+
+	EReference getStackFrame_Variables();
+
+	EClass getVariable();
+
+	EAttribute getVariable_Name();
+
+	EAttribute getVariable_Value();
+
+	KmLogoFactory getKmLogoFactory();
+
+	interface Literals {
+		EClass INSTRUCTION = eINSTANCE.getInstruction();
+
+		EClass PRIMITIVE = eINSTANCE.getPrimitive();
+
+		EClass BACK = eINSTANCE.getBack();
+
+		EReference BACK__STEPS = eINSTANCE.getBack_Steps();
+
+		EClass FORWARD = eINSTANCE.getForward();
+
+		EReference FORWARD__STEPS = eINSTANCE.getForward_Steps();
+
+		EClass LEFT = eINSTANCE.getLeft();
+
+		EReference LEFT__ANGLE = eINSTANCE.getLeft_Angle();
+
+		EClass RIGHT = eINSTANCE.getRight();
+
+		EReference RIGHT__ANGLE = eINSTANCE.getRight_Angle();
+
+		EClass PEN_DOWN = eINSTANCE.getPenDown();
+
+		EClass PEN_UP = eINSTANCE.getPenUp();
+
+		EClass CLEAR = eINSTANCE.getClear();
+
+		EClass EXPRESSION = eINSTANCE.getExpression();
+
+		EClass BINARY_EXP = eINSTANCE.getBinaryExp();
+
+		EReference BINARY_EXP__LHS = eINSTANCE.getBinaryExp_Lhs();
+
+		EReference BINARY_EXP__RHS = eINSTANCE.getBinaryExp_Rhs();
+
+		EClass UNARY_EXPRESSION = eINSTANCE.getUnaryExpression();
+
+		EReference UNARY_EXPRESSION__EXPRESSION = eINSTANCE.getUnaryExpression_Expression();
+
+		EClass CONSTANT = eINSTANCE.getConstant();
+
+		EAttribute CONSTANT__VALUE = eINSTANCE.getConstant_Value();
+
+		EClass PROC_CALL = eINSTANCE.getProcCall();
+
+		EReference PROC_CALL__ACTUAL_ARGS = eINSTANCE.getProcCall_ActualArgs();
+
+		EReference PROC_CALL__DECLARATION = eINSTANCE.getProcCall_Declaration();
+
+		EClass PROC_DECLARATION = eINSTANCE.getProcDeclaration();
+
+		EAttribute PROC_DECLARATION__NAME = eINSTANCE.getProcDeclaration_Name();
+
+		EReference PROC_DECLARATION__ARGS = eINSTANCE.getProcDeclaration_Args();
+
+		EReference PROC_DECLARATION__PROC_CALL = eINSTANCE.getProcDeclaration_ProcCall();
+
+		EReference PROC_DECLARATION__INSTRUCTIONS = eINSTANCE.getProcDeclaration_Instructions();
+
+		EClass BLOCK = eINSTANCE.getBlock();
+
+		EReference BLOCK__INSTRUCTIONS = eINSTANCE.getBlock_Instructions();
+
+		EClass CONTROL_STRUCTURE = eINSTANCE.getControlStructure();
+
+		EReference CONTROL_STRUCTURE__CONDITION = eINSTANCE.getControlStructure_Condition();
+
+		EClass IF = eINSTANCE.getIf();
+
+		EReference IF__THEN_PART = eINSTANCE.getIf_ThenPart();
+
+		EReference IF__ELSE_PART = eINSTANCE.getIf_ElsePart();
+
+		EClass REPEAT = eINSTANCE.getRepeat();
+
+		EReference REPEAT__BLOCK = eINSTANCE.getRepeat_Block();
+
+		EClass WHILE = eINSTANCE.getWhile();
+
+		EReference WHILE__BLOCK = eINSTANCE.getWhile_Block();
+
+		EClass PARAMETER = eINSTANCE.getParameter();
+
+		EAttribute PARAMETER__NAME = eINSTANCE.getParameter_Name();
+
+		EClass PARAMETER_CALL = eINSTANCE.getParameterCall();
+
+		EReference PARAMETER_CALL__PARAMETER = eINSTANCE.getParameterCall_Parameter();
+
+		EClass PLUS = eINSTANCE.getPlus();
+
+		EClass MINUS = eINSTANCE.getMinus();
+
+		EClass MULT = eINSTANCE.getMult();
+
+		EClass DIV = eINSTANCE.getDiv();
+
+		EClass EQUALS = eINSTANCE.getEquals();
+
+		EClass GREATER = eINSTANCE.getGreater();
+
+		EClass LOWER = eINSTANCE.getLower();
+
+		EClass COS = eINSTANCE.getCos();
+
+		EClass SIN = eINSTANCE.getSin();
+
+		EClass TAN = eINSTANCE.getTan();
+
+		EClass LOGO_PROGRAM = eINSTANCE.getLogoProgram();
+
+		EReference LOGO_PROGRAM__INSTRUCTIONS = eINSTANCE.getLogoProgram_Instructions();
+
+		EClass TURTLE = eINSTANCE.getTurtle();
+
+		EReference TURTLE__POSITION = eINSTANCE.getTurtle_Position();
+
+		EAttribute TURTLE__HEADING = eINSTANCE.getTurtle_Heading();
+
+		EAttribute TURTLE__PEN_UP = eINSTANCE.getTurtle_PenUp();
+
+		EReference TURTLE__DRAWINGS = eINSTANCE.getTurtle_Drawings();
+
+		EReference TURTLE__CALL_STACK = eINSTANCE.getTurtle_CallStack();
+
+		EClass POINT = eINSTANCE.getPoint();
+
+		EAttribute POINT__X = eINSTANCE.getPoint_X();
+
+		EAttribute POINT__Y = eINSTANCE.getPoint_Y();
+
+		EClass SEGMENT = eINSTANCE.getSegment();
+
+		EReference SEGMENT__BEGIN = eINSTANCE.getSegment_Begin();
+
+		EReference SEGMENT__END = eINSTANCE.getSegment_End();
+
+		EClass CALL_STACK = eINSTANCE.getCallStack();
+
+		EReference CALL_STACK__FRAMES = eINSTANCE.getCallStack_Frames();
+
+		EClass STACK_FRAME = eINSTANCE.getStackFrame();
+
+		EReference STACK_FRAME__VARIABLES = eINSTANCE.getStackFrame_Variables();
+
+		EClass VARIABLE = eINSTANCE.getVariable();
+
+		EAttribute VARIABLE__NAME = eINSTANCE.getVariable_Name();
+
+		EAttribute VARIABLE__VALUE = eINSTANCE.getVariable_Value();
+	}
 }

@@ -99,8 +99,8 @@ public class OrOpImpl extends ExpressionOpImpl implements OrOp {
 
   public Value evaluateExpression(State state) {
     Value result;
-    BooleanValue left = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))))));
-    BooleanValue right = ((BooleanValue) (((BooleanValue) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))))));
+    BooleanValue left = ((BooleanValue) (rev.$((Expression)this.obj.getLeft()).evaluateExpression(((State) (state)))));
+    BooleanValue right = ((BooleanValue) (rev.$((Expression)this.obj.getRight()).evaluateExpression(((State) (state)))));
     BooleanValue res = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
     res.setValue(((left.isValue()) || (right.isValue())));
     result = ((BooleanValue) (res));

@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.PenDown;
 import kmLogo.Turtle;
 import kmLogo.revisitor.KmLogoRevisitor;
@@ -58,7 +59,7 @@ public class PenDownOpImpl extends PrimitiveOpImpl implements PenDownOp {
   public double eval(Turtle turtle) {
     double result;
     turtle.setPenUp(false);
-    result = 0.0;
+    result = ((Double) 0.0);
     return result;
   }
 }

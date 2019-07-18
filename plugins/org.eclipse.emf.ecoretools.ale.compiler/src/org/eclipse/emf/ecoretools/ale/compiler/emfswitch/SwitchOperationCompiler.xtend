@@ -64,7 +64,7 @@ class SwitchOperationCompiler {
 		IQueryEnvironment queryEnvironment,
 		List<ParseResult<ModelUnit>> parsedSemantics,
 		List<ResolvedClass> resolved,
-		Map<String, Class<?>> registeredServices,
+		Map<String, Pair<String, String>> registeredServices,
 		Dsl dsl, SwitchNamingUtils namingUtils
 	) {
 		this.packageRoot = packageRoot

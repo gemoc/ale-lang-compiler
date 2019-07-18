@@ -153,8 +153,8 @@ public class OrImpl extends ExpressionImpl implements Or {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		BooleanValue left = ((BooleanValue) (((BooleanValue) (((Expression) (this.getLeft())).evaluateExpression((State) (state))))));
-		BooleanValue right = ((BooleanValue) (((BooleanValue) (((Expression) (this.getRight())).evaluateExpression((State) (state))))));
+		BooleanValue left = ((BooleanValue) (((Expression) (this.getLeft())).evaluateExpression((State) (state))));
+		BooleanValue right = ((BooleanValue) (((Expression) (this.getRight())).evaluateExpression((State) (state))));
 		BooleanValue res = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		res.setValue(((left.isValue()) || (right.isValue())));
 		result = (Value) (res) ;

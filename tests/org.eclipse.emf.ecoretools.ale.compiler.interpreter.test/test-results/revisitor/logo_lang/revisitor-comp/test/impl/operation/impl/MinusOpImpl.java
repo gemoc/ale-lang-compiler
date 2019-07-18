@@ -1,5 +1,6 @@
 package test.impl.operation.impl;
 
+import java.lang.Double;
 import kmLogo.Expression;
 import kmLogo.Minus;
 import kmLogo.Turtle;
@@ -58,7 +59,7 @@ public class MinusOpImpl extends BinaryExpOpImpl implements MinusOp {
 
   public double eval(Turtle turtle) {
     double result;
-    result = (rev.$((Expression)this.obj.getLhs()).eval(((Turtle) (turtle)))) - (rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle))));
+    result = ((Double) ((rev.$((Expression)this.obj.getLhs()).eval(((Turtle) (turtle)))) - (rev.$((Expression)this.obj.getRhs()).eval(((Turtle) (turtle))))));
     return result;
   }
 }

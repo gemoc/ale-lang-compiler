@@ -24,6 +24,7 @@
 		<module>boa.lang.revisitor.benchmark</module>
 		<module>boa.lang.switch.benchmark</module>
 		<module>boa.lang.visitor.benchmark</module>
+		<module>boa.lang.interpreter.truffle</module>
 	</modules>
 
 </project>

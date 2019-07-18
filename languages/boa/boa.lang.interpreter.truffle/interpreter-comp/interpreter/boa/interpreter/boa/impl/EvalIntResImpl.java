@@ -3,7 +3,6 @@ package interpreter.boa.interpreter.boa.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
-import interpreter.boa.interpreter.boa.EvalIntRes;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
@@ -14,7 +13,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "EvalIntRes"
 )
-public class EvalIntResImpl extends EvalResImpl implements EvalIntRes {
+public class EvalIntResImpl extends EvalResImpl {
 	protected static final int VALUE_EDEFAULT = 0;
 
 	protected int value = VALUE_EDEFAULT;
@@ -29,10 +28,12 @@ public class EvalIntResImpl extends EvalResImpl implements EvalIntRes {
 		return BoaPackage.Literals.EVAL_INT_RES;
 	}
 
+	@TruffleBoundary
 	public int getValue() {
 		return value;
 	}
 
+	@TruffleBoundary
 	public void setValue(int newValue) {
 		int oldValue = value;
 		value = newValue;

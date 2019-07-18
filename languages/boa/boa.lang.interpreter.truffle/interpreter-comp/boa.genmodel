@@ -1,128 +1,280 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/boa.lang.interpreter.truffle/interpreter-comp"
-    complianceLevel="8.0" copyrightFields="false">
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/boa.lang.interpreter.truffle/interpreter-comp" complianceLevel="8.0" copyrightFields="false">
   <foreignModel>boa.ecore</foreignModel>
-  <genPackages prefix="Boa" basePackage="boa.interpreter" disposableProviderFactory="true"
-      ecorePackage="platform:/resource/boa.model/model/boa.ecore#/">
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//File">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//File/commands"/>
+  <genPackages prefix="Boa" basePackage="boa.interpreter" disposableProviderFactory="true">
+    <ecorePackage href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#/"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//File"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//File/commands"/>
+      </genFeatures>
     </genClasses>
-    <genClasses image="false" ecoreClass="platform:/resource/boa.model/model/boa.ecore#//TopLevelCmd"/>
-    <genClasses image="false" ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Expr"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Def">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Def/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Def/expr"/>
+    <genClasses image="false">
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//TopLevelCmd"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//App">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//App/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//App/rhs"/>
+    <genClasses image="false">
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Expr"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Var">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Var/name"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Def"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Def/name"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Def/expr"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//This"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Bool">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Bool/value"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//App"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//App/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//App/rhs"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Int">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Int/value"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Var"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Var/name"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Skip"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Project">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Project/exp"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Project/name"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//This"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//BObject">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//BObject/fields"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Bool"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Bool/value"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Field">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Field/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Field/value"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Int"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Int/value"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Copy">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Copy/copy"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Skip"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//With">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//With/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//With/rhs"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Project"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Project/exp"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Project/name"/>
+      </genFeatures>
     </genClasses>
-    <genClasses image="false" ecoreClass="platform:/resource/boa.model/model/boa.ecore#//ArithOp">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//ArithOp/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//ArithOp/rhs"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BObject"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BObject/fields"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Not">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Not/value"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Field"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Field/name"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Field/value"/>
+      </genFeatures>
     </genClasses>
-    <genClasses image="false" ecoreClass="platform:/resource/boa.model/model/boa.ecore#//CmpOp">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//CmpOp/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//CmpOp/rhs"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Copy"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Copy/copy"/>
+      </genFeatures>
     </genClasses>
-    <genClasses image="false" ecoreClass="platform:/resource/boa.model/model/boa.ecore#//BoolOp"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//If">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//If/cond"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//If/thn"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//If/els"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//With"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//With/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//With/rhs"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Let">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Let/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Let/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Let/rhs"/>
+    <genClasses image="false">
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//ArithOp"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//ArithOp/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//ArithOp/rhs"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Fun">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Fun/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Fun/body"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Not"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Not/value"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Assign">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Assign/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Assign/rhs"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//Assign/name"/>
+    <genClasses image="false">
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//CmpOp"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//CmpOp/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//CmpOp/rhs"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//ArithOpPlus"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//ArithOpMinus"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//ArithOpTimes"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//ArithOpDivide"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//ArithOpRemainder"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//BoolOpAnd">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//BoolOpAnd/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//BoolOpAnd/rhs"/>
+    <genClasses image="false">
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BoolOp"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//BoolOpOr">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//BoolOpOr/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//BoolOpOr/rhs"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//If"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//If/cond"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//If/thn"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//If/els"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Seq">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Seq/lhs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Seq/rhs"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Let"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Let/name"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Let/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Let/rhs"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//CmpOpEqual"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//CmpOpUnequal"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//CmpOpLess"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//Ctx">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Ctx/env"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//Ctx/th"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Fun"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Fun/name"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Fun/body"/>
+      </genFeatures>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//StringToEvalResMap">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//StringToEvalResMap/key"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//StringToEvalResMap/value"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Assign"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Assign/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Assign/rhs"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Assign/name"/>
+      </genFeatures>
     </genClasses>
-    <genClasses image="false" ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalRes"/>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalMapRes">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//EvalMapRes/values"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//ArithOpPlus"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalFunRes">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//EvalFunRes/exp"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//EvalFunRes/ctx"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//EvalFunRes/name"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//ArithOpMinus"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalBoundFunRes">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/boa.model/model/boa.ecore#//EvalBoundFunRes/th"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//ArithOpTimes"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalIntRes">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//EvalIntRes/value"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//ArithOpDivide"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/boa.model/model/boa.ecore#//EvalBoolRes">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/boa.model/model/boa.ecore#//EvalBoolRes/value"/>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//ArithOpRemainder"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BoolOpAnd"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BoolOpAnd/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BoolOpAnd/rhs"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BoolOpOr"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BoolOpOr/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//BoolOpOr/rhs"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Seq"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Seq/lhs"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Seq/rhs"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//CmpOpEqual"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//CmpOpUnequal"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//CmpOpLess"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Ctx"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Ctx/env"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//Ctx/th"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//StringToEvalResMap"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//StringToEvalResMap/key"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//StringToEvalResMap/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses image="false">
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalRes"/>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalMapRes"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalMapRes/values"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalFunRes"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalFunRes/exp"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalFunRes/ctx"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalFunRes/name"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalBoundFunRes"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalBoundFunRes/th"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalIntRes"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalIntRes/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalBoolRes"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/boa/boa.model/model/boa.ecore#//EvalBoolRes/value"/>
+      </genFeatures>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
