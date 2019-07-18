@@ -1,6 +1,10 @@
 language: java
 sudo: false # faster builds
 
+env:
+  global:
+    - JAVA_HOME=/usr/lib/jvm/java-8-oracle
+
 install: true
 script: "mvn -q clean package"
 
