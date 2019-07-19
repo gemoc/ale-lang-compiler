@@ -2,7 +2,6 @@ package fsm.interpreter.fsm.impl;
 
 import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.interpreter.fsm.FsmPackage;
@@ -39,12 +38,8 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	@Children
 	private TransitionImpl[] outgoingArr;
 
-	@Child
-	private TransitionDispatchFire dispatchTransitionFire;
-
 	protected StateImpl() {
 		super();
-		this.dispatchTransitionFire = fsm.interpreter.fsm.impl.TransitionDispatchFireNodeGen.create(); 
 	}
 
 	@Override
@@ -237,7 +232,7 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 			((BufferImpl) (this.getFsm().getOutputBuffer())).enqueue((String) (inputString));
 		}
 		else {
-			dispatchTransitionFire.executeDispatch(validTransition.getCachedFire(), new Object[] {});
+			((TransitionImpl) (validTransition)).fire();
 		}
 
 	}
