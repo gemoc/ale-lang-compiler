@@ -41,12 +41,15 @@ import java.io.IOException;
 @State(Scope.Benchmark)
 public class MyBenchmark {
 
-    public static final String TRUFFLEBENCH = "trufflebench";
+    private static final String TRUFFLEBENCH = "trufflebench";
     private Value mainMeth;
+
+    @Param({""})
+    public String programPath;
 
     @Setup(Level.Iteration)
     public void loadProgram() throws IOException {
-        String src = "";
+        String src = programPath;
         Source source = Source.newBuilder("trufflebench", src, "eval").build();
         Context context = Context.newBuilder().build();
         context.eval(source);
@@ -60,16 +63,16 @@ public class MyBenchmark {
         // Put your benchmark code here.
         return mainMeth.execute();
     }
-
-    public static void main(String[] args) throws IOException {
-        String src = "";
-        Source source = Source.newBuilder(TRUFFLEBENCH, src, "eval").build();
-        Context context = Context.newBuilder().build();
-        context.eval(source);
-        final Value fnc = context.getBindings("trufflebench");
-        Value a = fnc.getMember("main");
-        final Value execute = a.execute();
-        System.out.println(execute);
-    }
+//
+//    public static void main(String[] args) throws IOException {
+//        String src = pro;
+//        Source source = Source.newBuilder(TRUFFLEBENCH, src, "eval").build();
+//        Context context = Context.newBuilder().build();
+//        context.eval(source);
+//        final Value fnc = context.getBindings("trufflebench");
+//        Value a = fnc.getMember("main");
+//        final Value execute = a.execute();
+//        System.out.println(execute);
+//    }
 
 }

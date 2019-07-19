@@ -8,8 +8,20 @@ import com.oracle.truffle.api.interop.TruffleObject;
 import com.oracle.truffle.api.library.ExportLibrary;
 import com.oracle.truffle.api.library.ExportMessage;
 import com.oracle.truffle.api.nodes.RootNode;
+import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.impl.FileImpl;
+import org.apache.commons.io.IOUtils;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
+import java.nio.charset.Charset;
 import java.util.Collections;
+import java.util.Map;
+
 
 @TruffleLanguage.Registration(id = "trufflebench", name = "TruffleBench")
 public class TrufflebenchLanguage extends TruffleLanguage<Ctx> {
@@ -25,16 +37,24 @@ public class TrufflebenchLanguage extends TruffleLanguage<Ctx> {
 
     @Override
     protected CallTarget parse(ParsingRequest request) throws Exception {
-        System.out.println("parse");
+        LogService.MUTE = true;
+        EPackage.Registry.INSTANCE.put("http://www.example.org/boa", BoaPackage.eINSTANCE);
+        final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+        final Map<String, Object> m = reg.getExtensionToFactoryMap();
+        m.put("xmi", new XMIResourceFactoryImpl());
 
-        // TODO 1 - charger depuis request
+        final ResourceSetImpl resSet = new ResourceSetImpl();
+        final String program = IOUtils.toString(request.getSource().getInputStream(), Charset.defaultCharset());
+        final URI createFileURI = URI.createFileURI(program);
+        final Resource resource = resSet.getResource(createFileURI, true);
+        final FileImpl logoProgram = (FileImpl) resource.getContents().get(0);
 
         final RootNode main = new RootNode(this) {
-
             @Override
             public Object execute(VirtualFrame frame) {
-                // TODO 2 - définir comment appeler le code
-                return 43;
+                // TODO: check DCE.
+                logoProgram.eval();
+                return 42;
             }
         };
         this.getContextReference().get().setMain(main);
