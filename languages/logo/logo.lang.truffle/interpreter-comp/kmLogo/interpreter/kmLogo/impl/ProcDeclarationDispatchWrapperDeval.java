@@ -11,7 +11,7 @@ public class ProcDeclarationDispatchWrapperDeval {
 	private final CyclicAssumption callTargetStable;
 
 	protected ProcDeclarationDispatchWrapperDeval(ProcDeclarationImpl it) {
-		this.callTargetStable = new CyclicAssumption("ProcDeclarationDispatchWrapperDeval_3.763840276874876E7");
+		this.callTargetStable = new CyclicAssumption("ProcDeclarationDispatchWrapperDeval_4.176907334841356E7");
 		this.callTarget = Truffle.getRuntime().createCallTarget(new ProcDeclarationDevalRootNode(it));
 	}
 
