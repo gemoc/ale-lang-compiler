@@ -5,6 +5,12 @@
 	<groupId>boa.lang.revisitor</groupId>
 	<artifactId>boa.lang.revisitor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<parent>
+		<groupId>boa</groupId>
+		<artifactId>boa</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<build>
 		<sourceDirectory>revisitor-comp</sourceDirectory>
 		<plugins>
@@ -28,7 +34,7 @@
 	</build>
 
 	<properties>
-		<graalvm.version>19.0.0</graalvm.version>
+		<!-- <graalvm.version>19.0.0</graalvm.version> -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>

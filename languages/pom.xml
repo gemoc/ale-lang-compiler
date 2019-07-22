@@ -20,6 +20,7 @@
     <module>fsm</module>
     <module>logo</module>
     <module>minijava</module>
+    <module>lang.truffle.benchmark</module>
   </modules>
 	
 </project>

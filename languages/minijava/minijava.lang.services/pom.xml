@@ -5,6 +5,11 @@
 	<groupId>org.tetrabox.minijava.lang.services</groupId>
 	<artifactId>org.tetrabox.minijava.lang.services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<parent>
+		<groupId>minijava</groupId>
+		<artifactId>minijava</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>

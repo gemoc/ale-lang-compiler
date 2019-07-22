@@ -11,3 +11,12 @@ xtend-gen/
 
 graal_dumps/
 dumps/
+
+*.iml
+
+.settings/
+
+.project
+.classpath
+.factorypath
+.project

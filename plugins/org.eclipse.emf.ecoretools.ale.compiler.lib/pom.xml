@@ -5,11 +5,11 @@
 	<groupId>org.eclipse.emf.ecoretools.ale.compiler.lib</groupId>
 	<artifactId>org.eclipse.emf.ecoretools.ale.compiler.lib</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<properties>
-		<graalvm.version>19.0.0</graalvm.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
+	<parent>
+		<groupId>org.eclipse.emf.ecoretools.ale</groupId>
+		<artifactId>org.eclipse.emf.ecoretools.ale.plugins</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.emf</groupId>

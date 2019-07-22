@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/bak" />
+      <excludeFolder url="file://$MODULE_DIR$/genetics" />
+      <excludeFolder url="file://$MODULE_DIR$/genetics-minijava" />
+      <excludeFolder url="file://$MODULE_DIR$/oopsla_benchs" />
+      <excludeFolder url="file://$MODULE_DIR$/plzoo" />
+      <excludeFolder url="file://$MODULE_DIR$/plzoo-testbench-workspace" />
+      <excludeFolder url="file://$MODULE_DIR$/plzoo-workspace" />
+      <excludeFolder url="file://$MODULE_DIR$/runtime-EclipseXtext" />
+      <excludeFolder url="file://$MODULE_DIR$/runtime-New_configuration" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+      <excludeFolder url="file://$MODULE_DIR$/workspace-languages" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

@@ -5,6 +5,13 @@
 	<groupId>boa.lang.interpreter</groupId>
 	<artifactId>boa.lang.interpreter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<parent>
+		<groupId>boa</groupId>
+		<artifactId>boa</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<build>
 		<sourceDirectory>interpreter-comp</sourceDirectory>
 		<plugins>
@@ -28,9 +35,9 @@
 	</build>
 
 	<properties>
-		<graalvm.version>19.0.0</graalvm.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- <graalvm.version>19.0.0</graalvm.version> -->
+<!--		<maven.compiler.source>1.8</maven.compiler.source>-->
+<!--		<maven.compiler.target>1.8</maven.compiler.target>-->
 	</properties>
 
 	<dependencies>

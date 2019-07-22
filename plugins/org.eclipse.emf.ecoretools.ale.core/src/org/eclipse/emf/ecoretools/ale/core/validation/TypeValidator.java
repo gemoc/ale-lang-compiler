@@ -12,6 +12,7 @@ package org.eclipse.emf.ecoretools.ale.core.validation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecoretools.ale.implementation.Attribute;
@@ -57,7 +59,7 @@ import com.google.common.collect.Lists;
 public class TypeValidator implements IValidator {
 
 	public static final String INCOMPATIBLE_TYPE = "Expected %s but was %s";
-	public static final String BOOLEAN_TYPE = "Expected Boolean but was %s";
+	public static final String BOOLEAN_TYPE = "Expected ecore::EBoolean but was %s";
 	public static final String COLLECTION_TYPE = "Expected Collection but was %s";
 	public static final String VOID_RESULT_ASSIGN = "'result' is assigned in void operation";
 	public static final String EXTENDS_ITSELF = "Reopened %s is extending itself";
@@ -88,7 +90,7 @@ public class TypeValidator implements IValidator {
 		if(isExtendingItself(xtdClass)) {
 			msgs.add(new ValidationMessage(
 					ValidationMessageLevel.ERROR,
-					String.format(EXTENDS_ITSELF, xtdClass.getBaseClass().getName()),
+					String.format(EXTENDS_ITSELF, getQualifiedName(xtdClass.getBaseClass())),
 					base.getStartOffset(xtdClass),
 					base.getEndOffset(xtdClass)
 					));
@@ -108,7 +110,7 @@ public class TypeValidator implements IValidator {
 			if(!superTypes.contains(superBase) && baseCls != superBase) {
 				msgs.add(new ValidationMessage(
 						ValidationMessageLevel.ERROR,
-						String.format(INDIRECT_EXTENSION, superBase.getName(), baseCls.getName()),
+						String.format(INDIRECT_EXTENSION, getQualifiedName(superBase), getQualifiedName(baseCls)),
 						this.base.getStartOffset(xtdClass),
 						this.base.getEndOffset(xtdClass)
 						));
@@ -142,11 +144,11 @@ public class TypeValidator implements IValidator {
 				String types = 
 					inferredTypes
 					.stream()
-					.map(type -> type.toString())
+					.map(type -> getQualifiedName(type))
 					.collect(Collectors.joining(",","[","]"));
 				msgs.add(new ValidationMessage(
 						ValidationMessageLevel.ERROR,
-						String.format(INCOMPATIBLE_TYPE, att.getFeatureRef().getEType().getName(),types),
+						String.format(INCOMPATIBLE_TYPE, getQualifiedName(att.getFeatureRef().getEType()),types),
 						base.getStartOffset(att),
 						base.getEndOffset(att)
 						));
@@ -177,7 +179,7 @@ public class TypeValidator implements IValidator {
 		return validateAssignment(featRemove, featRemove.getTarget(), featRemove.getTargetFeature(), featRemove.getValue(), true);
 	}
 	
-	private List<IValidationMessage> validateAssignment(Statement stmt, Expression targetExp, String featureName, Expression valueExp, boolean checkIsCollection) {
+	private List<IValidationMessage> validateAssignment(Statement stmt, Expression targetExp, String featureName, Expression valueExp, boolean isInsert) {
 		List<IValidationMessage> msgs = new ArrayList<IValidationMessage>();
 		
 		/*
@@ -217,11 +219,11 @@ public class TypeValidator implements IValidator {
 		/*
 		 * Check targetExp.featureName is collection
 		 */
-		if(checkIsCollection && !isCollection && !featureTypes.isEmpty()) {
+		if(isInsert && !isCollection && !featureTypes.isEmpty()) {
 			String inferredToString = 
 					featureTypes
 					.stream()
-					.map(type -> type.toString())
+					.map(type -> getQualifiedName(type))
 					.collect(Collectors.joining(",","[","]"));
 			msgs.add(new ValidationMessage(
 					ValidationMessageLevel.ERROR,
@@ -234,35 +236,80 @@ public class TypeValidator implements IValidator {
 		/*
 		 * Check assignment type
 		 */
-		if(!featureTypes.isEmpty()){
+		if(!featureTypes.isEmpty()) {
+			
 			Set<IType> inferredTypes = base.getPossibleTypes(valueExp);
-			boolean isAnyAssignable = false;
-			for(IType featureType: featureTypes){
-				Optional<IType> existResult = inferredTypes.stream().filter(t -> featureType.isAssignableFrom(t)).findAny();
-				if(existResult.isPresent()){
-					isAnyAssignable = true;
-					break;
+
+			if(!isInsert && isCollection) {
+				for(IType inferredType: inferredTypes){
+					if(inferredType instanceof AbstractCollectionType) {
+						IType collectionType = ((AbstractCollectionType)inferredType).getCollectionType();
+					}
+				}
+				boolean isAnyAssignable = false;
+				for(IType featureType: featureTypes) {
+					Optional<IType> existResult = 
+							inferredTypes
+							.stream()
+							.filter(t -> t instanceof AbstractCollectionType)
+							.map(t -> ((AbstractCollectionType)t).getCollectionType())
+							.filter(t -> featureType.isAssignableFrom(t))
+							.findAny();
+					if(existResult.isPresent()){
+						isAnyAssignable = true;
+						break;
+					}
+				}
+				if(!isAnyAssignable) {
+					String inferredToString = 
+							inferredTypes
+							.stream()
+							.map(type -> getQualifiedName(type))
+							.collect(Collectors.joining(",","[","]"));
+					String featureToString = 
+							featureTypes
+							.stream()
+							.map(type -> getQualifiedName(type.getType()))
+							.collect(Collectors.joining(",","(",")"));
+					msgs.add(new ValidationMessage(
+							ValidationMessageLevel.ERROR,
+							String.format(INCOMPATIBLE_TYPE,"Collection"+featureToString,inferredToString),
+							base.getStartOffset(targetExp),
+							base.getEndOffset(targetExp)
+							));
 				}
 			}
-			if(!isAnyAssignable){
-				String inferredToString = 
-					inferredTypes
-					.stream()
-					.map(type -> type.toString())
-					.collect(Collectors.joining(",","[","]"));
-				String featureToString = 
-						featureTypes
-						.stream()
-						.map(type -> type.getType().getName())
-						.collect(Collectors.joining(",","[","]"));
+			else {
+				boolean isAnyAssignable = false;
+				for(IType featureType: featureTypes){
+					Optional<IType> existResult = inferredTypes.stream().filter(t -> featureType.isAssignableFrom(t)).findAny();
+					if(existResult.isPresent()){
+						isAnyAssignable = true;
+						break;
+					}
+				}
+				if(!isAnyAssignable){
+					String inferredToString = 
+							inferredTypes
+							.stream()
+							.map(type -> getQualifiedName(type))
+							.collect(Collectors.joining(",","[","]"));
+					String featureToString = 
+							featureTypes
+							.stream()
+							.map(type -> getQualifiedName(type.getType()))
+							.collect(Collectors.joining(",","[","]"));
+					
+					msgs.add(new ValidationMessage(
+							ValidationMessageLevel.ERROR,
+							String.format(INCOMPATIBLE_TYPE,featureToString,inferredToString),
+							base.getStartOffset(stmt),
+							base.getEndOffset(stmt)
+							));
+				}
 				
-				msgs.add(new ValidationMessage(
-						ValidationMessageLevel.ERROR,
-						String.format(INCOMPATIBLE_TYPE,featureToString,inferredToString),
-						base.getStartOffset(stmt),
-						base.getEndOffset(stmt)
-						));
 			}
+			
 		}
 		
 		return msgs;
@@ -272,7 +319,7 @@ public class TypeValidator implements IValidator {
 	public List<IValidationMessage> validateVariableAssignment(VariableAssignment varAssign) {
 		List<IValidationMessage> msgs = new ArrayList<IValidationMessage>();
 		
-		Set<IType> declaringTypes = findDeclaration(varAssign);
+		Set<IType> declaringTypes = findDeclaredTypes(varAssign);
 		if(varAssign.getName().equals("result")) {
 			Method op = base.getContainingOperation(varAssign);
 			EOperation eOp = ((Method)op).getOperationRef();
@@ -296,11 +343,11 @@ public class TypeValidator implements IValidator {
 						String types = 
 								inferredTypes
 								.stream()
-								.map(type -> type.toString())
+								.map(type -> getQualifiedName(type))
 								.collect(Collectors.joining(",","[","]"));
 						msgs.add(new ValidationMessage(
 								ValidationMessageLevel.ERROR,
-								String.format(INCOMPATIBLE_TYPE,returnType.getName(),types),
+								String.format(INCOMPATIBLE_TYPE,getQualifiedName(returnType),types),
 								base.getStartOffset(varAssign),
 								base.getEndOffset(varAssign)
 								));
@@ -310,36 +357,67 @@ public class TypeValidator implements IValidator {
 		}
 		else if(declaringTypes != null && !varAssign.getName().equals("self")) {
 			Set<IType> inferredTypes = base.getPossibleTypes(varAssign.getValue());
+			
 			if(inferredTypes != null && !declaringTypes.isEmpty()) {
-				Optional<IType> existResult = 
-					declaringTypes
-					.stream()
-					.filter(declType -> 
-					inferredTypes
-						.stream()
-						.filter(expectedType -> declType.isAssignableFrom(expectedType))
-						.findAny()
-						.isPresent()
-					)
-					.findAny();
-				if(!existResult.isPresent()){
-					String declaredToString = 
+				
+				IType declaredType = declaringTypes.iterator().next();
+				if(declaredType.getType() == EcorePackage.eINSTANCE.getEEList()) {
+					Optional<VariableDeclaration> declaration = findDeclaration(varAssign);
+					if(declaration.isPresent()) {
+						EClassifierType varTypeParam = new EClassifierType(base.getQryEnv(), declaration.get().getTypeParameter());
+						Optional<IType> existResult =
+								inferredTypes
+								.stream()
+								.filter(t -> t instanceof AbstractCollectionType)
+								.map(t -> ((AbstractCollectionType)t).getCollectionType())
+								.filter(t -> varTypeParam.isAssignableFrom(t))
+								.findAny();
+						if(!existResult.isPresent()) {
+							String inferredToString = 
+									inferredTypes
+									.stream()
+									.map(type -> getQualifiedName(type))
+									.collect(Collectors.joining(",","[","]"));
+							msgs.add(new ValidationMessage(
+									ValidationMessageLevel.ERROR,
+									String.format(INCOMPATIBLE_TYPE,"Collection("+getQualifiedName(varTypeParam)+")",inferredToString),
+									base.getStartOffset(varAssign),
+									base.getEndOffset(varAssign)
+									));
+						}
+					}
+				}
+				else {
+					Optional<IType> existResult = 
 							declaringTypes
 							.stream()
-							.map(type -> type.toString())
-							.collect(Collectors.joining(",","[","]"));
-					String inferredToString = 
+							.filter(declType -> 
 							inferredTypes
-							.stream()
-							.map(type -> type.toString())
-							.collect(Collectors.joining(",","[","]"));
-					
-					msgs.add(new ValidationMessage(
-							ValidationMessageLevel.ERROR,
-							String.format(INCOMPATIBLE_TYPE,declaredToString,inferredToString),
-							base.getStartOffset(varAssign),
-							base.getEndOffset(varAssign)
-							));
+								.stream()
+								.filter(expectedType -> declType.isAssignableFrom(expectedType))
+								.findAny()
+								.isPresent()
+							)
+							.findAny();
+					if(!existResult.isPresent()){
+						String declaredToString = 
+								declaringTypes
+								.stream()
+								.map(type -> getQualifiedName(type))
+								.collect(Collectors.joining(",","[","]"));
+						String inferredToString = 
+								inferredTypes
+								.stream()
+								.map(type -> getQualifiedName(type))
+								.collect(Collectors.joining(",","[","]"));
+						
+						msgs.add(new ValidationMessage(
+								ValidationMessageLevel.ERROR,
+								String.format(INCOMPATIBLE_TYPE,declaredToString,inferredToString),
+								base.getStartOffset(varAssign),
+								base.getEndOffset(varAssign)
+								));
+					}
 				}
 			}
 		}
@@ -352,28 +430,58 @@ public class TypeValidator implements IValidator {
 		List<IValidationMessage> msgs = new ArrayList<IValidationMessage>();
 		
 		if(varDecl.getInitialValue() != null) {
-			EClassifierType varType = new EClassifierType(base.getQryEnv(), varDecl.getType());
+			
+			EClassifier declaredType = varDecl.getType();
+			
 			Set<IType> inferredTypes = base.getPossibleTypes(varDecl.getInitialValue());
 			if(inferredTypes != null) {
-				Optional<IType> existResult =
-						inferredTypes
-						.stream()
-						.filter(t -> varType.isAssignableFrom(t) 
-								|| (t instanceof AbstractCollectionType && varDecl.getType() == EcorePackage.eINSTANCE.getEEList())) //TODO: check collection type parameter
-						.findAny();
-				if(!existResult.isPresent()){
-					String inferredToString = 
+				
+				if(declaredType == EcorePackage.eINSTANCE.getEEList()) {
+					EClassifierType varTypeParam = new EClassifierType(base.getQryEnv(), varDecl.getTypeParameter());
+					Optional<IType> existResult =
 							inferredTypes
 							.stream()
-							.map(type -> type.toString())
-							.collect(Collectors.joining(",","[","]"));
-					
-					msgs.add(new ValidationMessage(
-							ValidationMessageLevel.ERROR,
-							String.format(INCOMPATIBLE_TYPE,varDecl.getType().getName(),inferredToString),
-							base.getStartOffset(varDecl),
-							base.getEndOffset(varDecl)
-							));
+							.filter(t -> t instanceof AbstractCollectionType)
+							.map(t -> ((AbstractCollectionType)t).getCollectionType())
+							.filter(t -> varTypeParam.isAssignableFrom(t))
+							.findAny();
+					if(!existResult.isPresent()) {
+						String inferredToString = 
+								inferredTypes
+								.stream()
+								.map(type -> getQualifiedName(type))
+								.collect(Collectors.joining(",","[","]"));
+
+						msgs.add(new ValidationMessage(
+								ValidationMessageLevel.ERROR,
+								String.format(INCOMPATIBLE_TYPE,"Collection("+getQualifiedName(varTypeParam)+")",inferredToString),
+								base.getStartOffset(varDecl),
+								base.getEndOffset(varDecl)
+								));
+					}
+				}
+				else {
+					EClassifierType varType = new EClassifierType(base.getQryEnv(), varDecl.getType());
+					Optional<IType> existResult =
+							inferredTypes
+							.stream()
+							.filter(t -> varType.isAssignableFrom(t) 
+									|| (t instanceof AbstractCollectionType && varDecl.getType() == EcorePackage.eINSTANCE.getEEList())) //TODO: check collection type parameter
+							.findAny();
+					if(!existResult.isPresent()) {
+						String inferredToString = 
+								inferredTypes
+								.stream()
+								.map(type -> getQualifiedName(type))
+								.collect(Collectors.joining(",","[","]"));
+						
+						msgs.add(new ValidationMessage(
+								ValidationMessageLevel.ERROR,
+								String.format(INCOMPATIBLE_TYPE,getQualifiedName(varDecl.getType()),inferredToString),
+								base.getStartOffset(varDecl),
+								base.getEndOffset(varDecl)
+								));
+					}
 				}
 			}
 		}
@@ -399,7 +507,7 @@ public class TypeValidator implements IValidator {
 					base
 					.getPossibleTypes(loop.getCollectionExpression())
 					.stream()
-					.map(type -> type.toString())
+					.map(type -> getQualifiedName(type))
 					.collect(Collectors.joining(",","[","]"));
 			msgs.add(new ValidationMessage(
 					ValidationMessageLevel.ERROR,
@@ -442,7 +550,7 @@ public class TypeValidator implements IValidator {
 			String inferredToString = 
 					selectorTypes
 					.stream()
-					.map(type -> type.toString())
+					.map(type -> getQualifiedName(type))
 					.collect(Collectors.joining(",","[","]"));
 			msgs.add(new ValidationMessage(
 					ValidationMessageLevel.ERROR,
@@ -476,7 +584,40 @@ public class TypeValidator implements IValidator {
 		return false;
 	}
 	
-	private Set<IType> findDeclaration(VariableAssignment varAssign) {
+	private Optional<VariableDeclaration> findDeclaration(VariableAssignment varAssign) {
+		
+		String variableName = varAssign.getName();
+		
+		EObject currentObject = varAssign;
+		EObject currentScope = varAssign.eContainer();
+		
+		while(currentScope != null) {
+			if(currentScope instanceof Block) {
+				Block block = (Block) currentScope;
+				int index = block.getStatements().indexOf(currentObject);
+				if(index != -1) {
+					Optional<VariableDeclaration> candidate =
+						block.getStatements()
+						.stream()
+						.limit(index)
+						.filter(stmt -> stmt instanceof VariableDeclaration)
+						.map(stmt -> (VariableDeclaration) stmt)
+						.filter(varDecl -> varDecl.getName().equals(variableName))
+						.findFirst();
+					if(candidate.isPresent()) {
+						return candidate;
+					}
+				}
+			}
+			
+			currentObject = currentScope;
+			currentScope = currentScope.eContainer();
+		}
+		
+		return Optional.empty();
+	}
+	
+	private Set<IType> findDeclaredTypes(VariableAssignment varAssign) {
 		
 		Set<IType> res = new HashSet<IType>();
 		String variableName = varAssign.getName();
@@ -548,5 +689,33 @@ public class TypeValidator implements IValidator {
 		}
 		
 		return res;
+	}
+	
+	private static String getQualifiedName(EClassifier cls) {
+		return getQualifiedName(cls.getEPackage()) + "::" + cls.getName(); 
+	}
+	
+	private static String getQualifiedName(EPackage pkg) {
+		LinkedList<EPackage> pkgs = new LinkedList<>();
+		EPackage current = pkg;
+		while(current != null) {
+			pkgs.addFirst(current);
+			current = current.getESuperPackage();
+		}
+		
+		return pkgs
+			.stream()
+			.map(p -> p.getName())
+			.collect(Collectors.joining("::"));
+	}
+	
+	private static String getQualifiedName(IType type) {
+		
+		if(type instanceof EClassifierType) {
+			EClassifier cls = ((EClassifierType) type).getType();
+			return getQualifiedName(cls);
+		}
+		
+		return type.toString();
 	}
 }

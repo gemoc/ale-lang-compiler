@@ -5,9 +5,31 @@
 	<groupId>fsm.lang.interpreter.truffle</groupId>
 	<artifactId>fsm.lang.interpreter.truffle</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<parent>
+		<groupId>fsm</groupId>
+		<artifactId>fsm</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 	<build>
 		<sourceDirectory>interpreter-comp</sourceDirectory>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 				<artifactId>alecompiler-maven-plugin</artifactId>
@@ -24,12 +46,47 @@
 					<dslFile>${project.basedir}/src/fsm.dsl</dslFile>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<finalName>simplelanguage</finalName>
+							<artifactSet>
+								<excludes>
+									<exclude>junit:junit</exclude>
+									<exclude>org.graalvm.truffle:truffle-api</exclude>
+									<exclude>org.graalvm.truffle:truffle-dsl-processor</exclude>
+									<exclude>org.graalvm.truffle:truffle-tck</exclude>
+									<exclude>org.graalvm:graal-sdk</exclude>
+								</excludes>
+							</artifactSet>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	<properties>
-		<graalvm.version>19.1.0</graalvm.version>
+		<!-- <graalvm.version>19.1.0</graalvm.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.target>1.8</maven.compiler.target> -->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -99,6 +156,12 @@
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 </project>
