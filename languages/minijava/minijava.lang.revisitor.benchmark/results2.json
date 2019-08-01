@@ -1,0 +1,54 @@
+[
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "fr.mleduc.minijava.MinijavaRevisitorBenchmark.minijavaInterpreter",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.212.b04-0.fc29.x86_64/jre/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "1.8.0_212",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "25.212-b04",
+        "warmupIterations" : 0,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 1,
+        "measurementTime" : "1 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "program" : "/home/ale-lang/programs/minijava_binarytree.xmi"
+        },
+        "primaryMetric" : {
+            "score" : 8.173528829,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 8.173528829,
+                "50.0" : 8.173528829,
+                "90.0" : 8.173528829,
+                "95.0" : 8.173528829,
+                "99.0" : 8.173528829,
+                "99.9" : 8.173528829,
+                "99.99" : 8.173528829,
+                "99.999" : 8.173528829,
+                "99.9999" : 8.173528829,
+                "100.0" : 8.173528829
+            },
+            "scoreUnit" : "s/op",
+            "rawData" : [
+                [
+                    8.173528829
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+

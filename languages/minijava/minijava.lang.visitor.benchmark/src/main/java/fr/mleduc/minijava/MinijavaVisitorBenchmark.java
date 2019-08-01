@@ -50,37 +50,39 @@ import java.util.Map;
 @State(Scope.Benchmark)
 public class MinijavaVisitorBenchmark {
 
-    @Param({"programs/minijava_binarytree.xmi", "programs/minijava_fannkuchredux.xmi",
-            "programs/minijava_fibonacci.xmi", "programs/minijava_sort.xmi"})
-    public String program;
-    private ProgramOperationImpl minijavaProgram;
+	@Param({ "programs/minijava_binarytree.xmi", "programs/minijava_fannkuchredux.xmi",
+			"programs/minijava_fibonacci.xmi", "programs/minijava_sort.xmi" })
+	public String program;
+//	private ProgramOperationImpl minijavaProgramOp;
+	private Program minijavaProgram;
+	private VisitorImplementation visitor;
 
-    @Setup(Level.Iteration)
-    public void loadXMI() {
-    	EPackage.Registry.INSTANCE.put("http://miniJava.miniJava.miniJava/", MiniJavaPackage.eINSTANCE);
-        final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-        final Map<String, Object> m = reg.getExtensionToFactoryMap();
-        m.put("xmi", new XMIResourceFactoryImpl());
+	@Setup(Level.Iteration)
+	public void loadXMI() {
+		EPackage.Registry.INSTANCE.put("http://miniJava.miniJava.miniJava/", MiniJavaPackage.eINSTANCE);
+		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+		final Map<String, Object> m = reg.getExtensionToFactoryMap();
+		m.put("xmi", new XMIResourceFactoryImpl());
 
-        LogService.MUTE = true;
+		LogService.MUTE = true;
 
-        final ResourceSetImpl resSet = new ResourceSetImpl();
-        final URI createFileURI = URI.createFileURI(program);
-        final Resource resource = resSet.getResource(createFileURI, true);
-        
-        VisitorImplementation visitor = new VisitorImplementation();
-        this.minijavaProgram = (ProgramOperationImpl) ((Program) resource.getContents().get(0)).accept(visitor);
-        minijavaProgram.initialize(new BasicEList());
-    }
+		final ResourceSetImpl resSet = new ResourceSetImpl();
+		final URI createFileURI = URI.createFileURI(program);
+		final Resource resource = resSet.getResource(createFileURI, true);
 
-    @Benchmark
-    @BenchmarkMode(Mode.SingleShotTime)
-    @Measurement(iterations = 1, time = 1)
-    @Fork(value = 1)
-    @Warmup(iterations = 1)
-    public miniJava.visitor.miniJava.State logoInterpreter() {
+		this.visitor = new VisitorImplementation();
+		this.minijavaProgram = (Program) resource.getContents().get(0);
+		((ProgramOperationImpl) minijavaProgram.accept(visitor)).initialize(new BasicEList<>());
+	}
 
-        return minijavaProgram.execute();
-    }
+	@Benchmark
+	@BenchmarkMode(Mode.SingleShotTime)
+	@Measurement(iterations = 1, time = 1)
+	@Fork(value = 1)
+	@Warmup(iterations = 1)
+	public miniJava.visitor.miniJava.State minijavaInterpreter() {
+
+		return ((ProgramOperationImpl) minijavaProgram.accept(visitor)).execute();
+	}
 
 }

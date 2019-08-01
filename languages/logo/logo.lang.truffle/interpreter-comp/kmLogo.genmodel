@@ -2,239 +2,239 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/logo.lang.truffle/interpreter-comp" complianceLevel="8.0" copyrightFields="false">
   <foreignModel>kmLogo.ecore</foreignModel>
   <genPackages prefix="KmLogo" basePackage="kmLogo.interpreter" disposableProviderFactory="true">
-    <ecorePackage href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#/"/>
+    <ecorePackage href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#/"/>
     <genDataTypes>
-      <ecoreDataType href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Integer"/>
+      <ecoreDataType href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Integer"/>
     </genDataTypes>
     <genDataTypes>
-      <ecoreDataType href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Boolean"/>
+      <ecoreDataType href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Boolean"/>
     </genDataTypes>
     <genDataTypes>
-      <ecoreDataType href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//String"/>
+      <ecoreDataType href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//String"/>
     </genDataTypes>
     <genClasses image="false">
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Instruction"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Instruction"/>
     </genClasses>
     <genClasses image="false">
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Primitive"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Primitive"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Back"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Back"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Back/steps"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Back/steps"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Forward"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Forward"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Forward/steps"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Forward/steps"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Left"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Left"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Left/angle"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Left/angle"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Right"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Right"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Right/angle"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Right/angle"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//PenDown"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//PenDown"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//PenUp"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//PenUp"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Clear"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Clear"/>
     </genClasses>
     <genClasses image="false">
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Expression"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Expression"/>
     </genClasses>
     <genClasses image="false">
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//BinaryExp"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//BinaryExp"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//BinaryExp/lhs"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//BinaryExp/lhs"/>
       </genFeatures>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//BinaryExp/rhs"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//BinaryExp/rhs"/>
       </genFeatures>
     </genClasses>
     <genClasses image="false">
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//UnaryExpression"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//UnaryExpression"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//UnaryExpression/expression"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//UnaryExpression/expression"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Constant"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Constant"/>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Constant/value"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Constant/value"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcCall"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcCall"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcCall/actualArgs"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcCall/actualArgs"/>
       </genFeatures>
       <genFeatures notify="false" createChild="false" propertySortChoices="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcCall/declaration"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcCall/declaration"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration"/>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration/name"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration/name"/>
       </genFeatures>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration/args"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration/args"/>
       </genFeatures>
       <genFeatures notify="false" createChild="false" propertySortChoices="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration/procCall"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration/procCall"/>
       </genFeatures>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration/instructions"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ProcDeclaration/instructions"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Block"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Block"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Block/instructions"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Block/instructions"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//If"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//If"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//If/thenPart"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//If/thenPart"/>
       </genFeatures>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//If/elsePart"/>
-      </genFeatures>
-    </genClasses>
-    <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ControlStructure"/>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ControlStructure/condition"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//If/elsePart"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Repeat"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ControlStructure"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Repeat/block"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ControlStructure/condition"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//While"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Repeat"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//While/block"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Repeat/block"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Parameter"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//While"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//While/block"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Parameter"/>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Parameter/name"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Parameter/name"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ParameterCall"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ParameterCall"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ParameterCall/parameter"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//ParameterCall/parameter"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Plus"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Plus"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Minus"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Minus"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Mult"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Mult"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Div"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Div"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Equals"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Equals"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Greater"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Greater"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Lower"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Lower"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Cos"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Cos"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Sin"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Sin"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Tan"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Tan"/>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//LogoProgram"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//LogoProgram"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//LogoProgram/instructions"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//LogoProgram/instructions"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/position"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/position"/>
       </genFeatures>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/heading"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/heading"/>
       </genFeatures>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/penUp"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/penUp"/>
       </genFeatures>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/drawings"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/drawings"/>
       </genFeatures>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/callStack"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Turtle/callStack"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Point"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Point"/>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Point/x"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Point/x"/>
       </genFeatures>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Point/y"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Point/y"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Segment"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Segment"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Segment/begin"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Segment/begin"/>
       </genFeatures>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Segment/end"/>
-      </genFeatures>
-    </genClasses>
-    <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//CallStack"/>
-      <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//CallStack/frames"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Segment/end"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//StackFrame"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//CallStack"/>
       <genFeatures property="None" children="true" createChild="true">
-        <ecoreFeature xsi:type="ecore:EReference" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//StackFrame/variables"/>
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//CallStack/frames"/>
       </genFeatures>
     </genClasses>
     <genClasses>
-      <ecoreClass href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Variable"/>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//StackFrame"/>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//StackFrame/variables"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Variable"/>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Variable/name"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Variable/name"/>
       </genFeatures>
       <genFeatures createChild="false">
-        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/manuel/dev/java/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Variable/value"/>
+        <ecoreFeature xsi:type="ecore:EAttribute" href="/home/ale-lang/languages/logo/logo.model/model/ASMLogo.ecore#//Variable/value"/>
       </genFeatures>
     </genClasses>
   </genPackages>

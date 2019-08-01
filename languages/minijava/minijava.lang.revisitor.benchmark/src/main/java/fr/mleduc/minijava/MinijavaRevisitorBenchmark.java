@@ -53,8 +53,10 @@ public class MinijavaRevisitorBenchmark {
     @Param({"programs/minijava_binarytree.xmi", "programs/minijava_fannkuchredux.xmi",
             "programs/minijava_fibonacci.xmi", "programs/minijava_sort.xmi"})
     public String program;
-    private ProgramOp minijavaProgram;
-
+    private ProgramOp minijavaProgramOp;
+    private Program minijavaProgram;
+    Minijava_execImplementation rev = new Minijava_execImplementation() {};
+    
     @Setup(Level.Iteration)
     public void loadXMI() {
     	EPackage.Registry.INSTANCE.put("http://miniJava.miniJava.miniJava/", MiniJavaPackage.eINSTANCE);
@@ -68,9 +70,9 @@ public class MinijavaRevisitorBenchmark {
         final URI createFileURI = URI.createFileURI(program);
         final Resource resource = resSet.getResource(createFileURI, true);
         
-        Minijava_execImplementation rev = new Minijava_execImplementation() {};
-        this.minijavaProgram = rev.$((Program) resource.getContents().get(0));
-        minijavaProgram.initialize(new BasicEList());
+        this.minijavaProgram = (Program) resource.getContents().get(0);
+        this.minijavaProgramOp = rev.$(this.minijavaProgram);
+        minijavaProgramOp.initialize(new BasicEList<>());
     }
 
     @Benchmark
@@ -78,9 +80,9 @@ public class MinijavaRevisitorBenchmark {
     @Measurement(iterations = 1, time = 1)
     @Fork(value = 1)
     @Warmup(iterations = 1)
-    public miniJava.State logoInterpreter() {
+    public miniJava.State minijavaInterpreter() {
 
-        return minijavaProgram.execute();
+        return rev.$(this.minijavaProgram).execute();
     }
 
 }

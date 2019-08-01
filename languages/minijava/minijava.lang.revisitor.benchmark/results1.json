@@ -1,0 +1,45 @@
+[
+    {
+        "benchmark" : "fr.mleduc.minijava.MinijavaRevisitorBenchmark.minijavaInterpreter",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "warmupIterations" : 0,
+        "warmupTime" : "single-shot",
+        "measurementIterations" : 1,
+        "measurementTime" : "1 s",
+        "params" : {
+            "program" : "/home/ale-lang/programs/minijava_binarytree.xmi"
+        },
+        "primaryMetric" : {
+            "score" : 8.328696751,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 8.328696751,
+                "50.0" : 8.328696751,
+                "90.0" : 8.328696751,
+                "95.0" : 8.328696751,
+                "99.0" : 8.328696751,
+                "99.9" : 8.328696751,
+                "99.99" : 8.328696751,
+                "99.999" : 8.328696751,
+                "99.9999" : 8.328696751,
+                "100.0" : 8.328696751
+            },
+            "scoreUnit" : "s",
+            "rawData" : [
+                [
+                    8.328696751
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+

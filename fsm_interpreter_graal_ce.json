@@ -1,0 +1,54 @@
+[
+    {
+        "jmhVersion" : "1.21",
+        "benchmark" : "fr.mleduc.fsm.FsmInterpreterBenchmark.fsmInterpreter",
+        "mode" : "ss",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "benchmark_jvm/graal_ce/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "1.8.0_202",
+        "vmName" : "OpenJDK GraalVM CE 1.0.0-rc14",
+        "vmVersion" : "25.202-b08-jvmci-0.56",
+        "warmupIterations" : 0,
+        "warmupTime" : "single-shot",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 1,
+        "measurementTime" : "1 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "program" : "programs/buffers.xmi"
+        },
+        "primaryMetric" : {
+            "score" : 6.82503516,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 6.82503516,
+                "50.0" : 6.82503516,
+                "90.0" : 6.82503516,
+                "95.0" : 6.82503516,
+                "99.0" : 6.82503516,
+                "99.9" : 6.82503516,
+                "99.99" : 6.82503516,
+                "99.999" : 6.82503516,
+                "99.9999" : 6.82503516,
+                "100.0" : 6.82503516
+            },
+            "scoreUnit" : "s/op",
+            "rawData" : [
+                [
+                    6.82503516
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+

@@ -65,7 +65,7 @@ public class MinijavaInterpreterBenchmark {
         final URI createFileURI = URI.createFileURI(program);
         final Resource resource = resSet.getResource(createFileURI, true);
         this.minijavaProgram = (Program) resource.getContents().get(0);
-        minijavaProgram.initialize(new BasicEList());
+        minijavaProgram.initialize(new BasicEList<>());
     }
 
     @Benchmark
@@ -73,7 +73,7 @@ public class MinijavaInterpreterBenchmark {
     @Measurement(iterations = 1, time = 1)
     @Fork(value = 1)
     @Warmup(iterations = 1)
-    public miniJava.interpreter.miniJava.State logoInterpreter() {
+    public miniJava.interpreter.miniJava.State minijavaInterpreter() {
 
         return minijavaProgram.execute();
     }

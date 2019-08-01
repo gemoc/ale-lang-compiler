@@ -23,7 +23,7 @@ public class FsmVisitorBenchmark {
 
     @Setup(Level.Iteration)
     public void loadXMI() {
-        EPackage.Registry.INSTANCE.put("http://www.gemoc.org/fsm", FsmPackage.eINSTANCE);
+        EPackage.Registry.INSTANCE.put("http://www.example.org/fsm", FsmPackage.eINSTANCE);
 
         LogService.MUTE = true;
 
@@ -43,6 +43,6 @@ public class FsmVisitorBenchmark {
     @Fork(value = 1)
     @Warmup(iterations = 1)
     public void fsmInterpreter() {
-        ((SystemOperation) fsmProgram.accept(visitor)).main(30);
+        ((SystemOperation) fsmProgram.accept(visitor)).main(50000000);
     }
 }

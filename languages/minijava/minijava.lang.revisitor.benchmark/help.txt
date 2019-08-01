@@ -1,0 +1,66 @@
+Usage: java -jar ... [regexp*] [options]
+ [opt] means optional argument.
+ <opt> means required argument.
+ "+" means comma-separated list of values.
+ "time" arguments accept time suffixes, like "100ms".
+
+  [arguments]                 Benchmarks to run (regexp+). 
+  -bm <mode>                  Benchmark mode. Available modes are: [Throughput/thrpt, 
+                              AverageTime/avgt, SampleTime/sample, SingleShotTime/ss, 
+                              All/all] 
+  -bs <int>                   Batch size: number of benchmark method calls per 
+                              operation. (some benchmark modes can ignore this 
+                              setting) 
+  -e <regexp+>                Benchmarks to exclude from the run. 
+  -f [int]                    How many times to forks a single benchmark. Use 0 to 
+                              disable forking altogether (WARNING: disabling 
+                              forking may have detrimental impact on benchmark 
+                              and infrastructure reliability, you might want 
+                              to use different warmup mode instead). 
+  -foe [bool]                 Should JMH fail immediately if any benchmark had 
+                              experienced the unrecoverable error? 
+  -gc [bool]                  Should JMH force GC between iterations? 
+  -h                          Display help. 
+  -i <int>                    Number of measurement iterations to do. 
+  -jvm <string>               Custom JVM to use when forking (path to JVM executable). 
+                              
+  -jvmArgs <string>           Custom JVM args to use when forking. 
+  -jvmArgsAppend <string>     Custom JVM args to use when forking (append these) 
+                              
+  -jvmArgsPrepend <string>    Custom JVM args to use when forking (prepend these) 
+                              
+  -l                          List matching benchmarks and exit. 
+  -lprof                      List profilers. 
+  -lrf                        List result formats. 
+  -o <filename>               Redirect human-readable output to file. 
+  -opi <int>                  Operations per invocation. 
+  -p <param={v,}*>            Benchmark parameters. This option is expected to 
+                              be used once per parameter. Parameter name and parameter 
+                              values should be separated with equals sign. Parameter 
+                              values should be separated with commas. 
+  -prof <profiler+>           Use profilers to collect additional data. See the 
+                              list of available profilers first. 
+  -r <time>                   Time to spend at each measurement iteration. 
+  -rf <type>                  Result format type. See the list of available result 
+                              formats first. 
+  -rff <filename>             Write results to given file. 
+  -si [bool]                  Synchronize iterations? 
+  -t <int>                    Number of worker threads to run with. 
+  -tg <int+>                  Override thread group distribution for asymmetric 
+                              benchmarks. 
+  -tu <TU>                    Output time unit. Available time units are: [m, s, 
+                              ms, us, ns]. 
+  -v <mode>                   Verbosity mode. Available modes are: [SILENT, NORMAL, 
+                              EXTRA] 
+  -w <time>                   Time to spend at each warmup iteration. 
+  -wbs <int>                  Warmup batch size: number of benchmark method calls 
+                              per operation. (some benchmark modes can ignore 
+                              this setting) 
+  -wf <int>                   How many warmup forks to make for a single benchmark. 
+                              0 to disable warmup forks. 
+  -wi <int>                   Number of warmup iterations to do. 
+  -wm <mode>                  Warmup mode for warming up selected benchmarks. 
+                              Warmup modes are: [INDI, BULK, BULK_INDI]. 
+  -wmb <regexp+>              Warmup benchmarks to include in the run in addition 
+                              to already selected. JMH will not measure these benchmarks, 
+                              but only use them for the warmup. 

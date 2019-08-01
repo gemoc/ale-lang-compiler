@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<org.gemoc.models17.fsm.model:System xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.gemoc.models17.fsm.model="http://www.gemoc.org/fsm">
+<fsm:System xmi:version="2.0"
+	xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:fsm="http://www.example.org/fsm"
+	xsi:schemaLocation="http://www.example.org/fsm fsm.ecore">
   <ownedFsms name="fsm1" inputBuffer="//@ownedBuffers.3" outputBuffer="//@ownedBuffers.1" initialState="//@ownedFsms.0/@ownedStates.0">
     <ownedStates incoming="//@ownedFsms.0/@ownedTransitions.1" name="s1" outgoing="//@ownedFsms.0/@ownedTransitions.0"/>
     <ownedStates incoming="//@ownedFsms.0/@ownedTransitions.0" name="s2" outgoing="//@ownedFsms.0/@ownedTransitions.1"/>
@@ -26,4 +30,4 @@
   <ownedBuffers outgoingFSM="//@ownedFsms.1" incomingFSM="//@ownedFsms.0" name="b2"/>
   <ownedBuffers outgoingFSM="//@ownedFsms.2" incomingFSM="//@ownedFsms.1" name="b3"/>
   <ownedBuffers outgoingFSM="//@ownedFsms.0" incomingFSM="//@ownedFsms.3" name="b1"/>
-</org.gemoc.models17.fsm.model:System>
+</fsm:System>

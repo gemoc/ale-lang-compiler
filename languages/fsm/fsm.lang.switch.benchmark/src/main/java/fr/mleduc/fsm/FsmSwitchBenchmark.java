@@ -24,7 +24,7 @@ public class FsmSwitchBenchmark {
 
     @Setup(Level.Iteration)
     public void loadXMI() {
-        EPackage.Registry.INSTANCE.put("http://www.gemoc.org/fsm", FsmPackage.eINSTANCE);
+        EPackage.Registry.INSTANCE.put("http://www.example.org/fsm", FsmPackage.eINSTANCE);
 
         LogService.MUTE = true;
 
@@ -45,6 +45,6 @@ public class FsmSwitchBenchmark {
     @Warmup(iterations = 1)
     public void fsmInterpreter() {
 
-        ((SystemOperation) emfswitch.doSwitch(fsmProgram)).main(30);
+        ((SystemOperation) emfswitch.doSwitch(fsmProgram)).main(50000000);
     }
 }

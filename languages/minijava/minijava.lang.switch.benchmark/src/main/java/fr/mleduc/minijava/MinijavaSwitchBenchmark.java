@@ -53,7 +53,9 @@ public class MinijavaSwitchBenchmark {
     @Param({"programs/minijava_binarytree.xmi", "programs/minijava_fannkuchredux.xmi",
             "programs/minijava_fibonacci.xmi", "programs/minijava_sort.xmi"})
     public String program;
-    private ProgramOperation minijavaProgram;
+    private ProgramOperation minijavaProgramOp;
+    private Program minijavaProgram;
+    SwitchImplementation si = new SwitchImplementation() {};
 
     @Setup(Level.Iteration)
     public void loadXMI() {
@@ -68,9 +70,9 @@ public class MinijavaSwitchBenchmark {
         final URI createFileURI = URI.createFileURI(program);
         final Resource resource = resSet.getResource(createFileURI, true);
         
-        SwitchImplementation si = new SwitchImplementation() {};
-        this.minijavaProgram = (ProgramOperation) si.doSwitch((Program) resource.getContents().get(0));
-        minijavaProgram.initialize(new BasicEList());
+        this.minijavaProgram = (Program) resource.getContents().get(0);
+        this.minijavaProgramOp = (ProgramOperation) si.doSwitch(this.minijavaProgram);
+        minijavaProgramOp.initialize(new BasicEList<>());
     }
 
     @Benchmark
@@ -78,9 +80,9 @@ public class MinijavaSwitchBenchmark {
     @Measurement(iterations = 1, time = 1)
     @Fork(value = 1)
     @Warmup(iterations = 1)
-    public miniJava.State logoInterpreter() {
+    public miniJava.State minijavaInterpreter() {
 
-        return minijavaProgram.execute();
+        return ((ProgramOperation) si.doSwitch(this.minijavaProgram)).execute();
     }
 
 }
