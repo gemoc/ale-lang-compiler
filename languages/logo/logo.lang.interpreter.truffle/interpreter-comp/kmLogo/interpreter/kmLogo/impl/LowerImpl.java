@@ -3,13 +3,16 @@ package kmLogo.interpreter.kmLogo.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Lower;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.ecore.EClass;
 
 @NodeInfo(
 		description = "Lower"
 )
-public class LowerImpl extends BinaryExpImpl {
+public class LowerImpl extends BinaryExpImpl implements Lower {
 	protected LowerImpl() {
 		super();
 	}
@@ -20,9 +23,9 @@ public class LowerImpl extends BinaryExpImpl {
 		return KmLogoPackage.Literals.LOWER;
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
-		if ((((ExpressionImpl) (this.lhs)).eval((TurtleImpl) (turtle))) < (((ExpressionImpl) (this.rhs)).eval((TurtleImpl) (turtle)))) {
+		if ((((Expression) (this.lhs)).eval((Turtle) (turtle))) < (((Expression) (this.rhs)).eval((Turtle) (turtle)))) {
 			result = (double) (1.0) ;
 		}
 		else {

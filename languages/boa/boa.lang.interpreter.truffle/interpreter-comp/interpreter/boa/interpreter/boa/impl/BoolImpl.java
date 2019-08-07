@@ -4,6 +4,10 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Bool;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalBoolRes;
+import interpreter.boa.interpreter.boa.EvalRes;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
@@ -14,7 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Bool"
 )
-public class BoolImpl extends ExprImpl {
+public class BoolImpl extends ExprImpl implements Bool {
 	protected static final boolean VALUE_EDEFAULT = false;
 
 	protected boolean value = VALUE_EDEFAULT;
@@ -84,11 +88,11 @@ public class BoolImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		EvalBoolResImpl ret = ((EvalBoolResImpl) (BoaFactory.eINSTANCE.createEvalBoolRes()));
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 		ret.setValue(this.value);
-		result = (EvalResImpl) (ret) ;
+		result = (EvalRes) (ret) ;
 		return result;
 	}
 }

@@ -5,12 +5,13 @@ import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Point;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-public class PointImpl extends MinimalEObjectImpl.Container {
+public class PointImpl extends MinimalEObjectImpl.Container implements Point {
 	protected static final double X_EDEFAULT = 0.0;
 
 	protected static final double Y_EDEFAULT = 0.0;

@@ -6,6 +6,10 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import execboa.SerializeService;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.Def;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -20,13 +24,13 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 @NodeInfo(
 		description = "Def"
 )
-public class DefImpl extends TopLevelCmdImpl {
+public class DefImpl extends TopLevelCmdImpl implements Def {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
 	@Child
-	protected ExprImpl expr;
+	protected Expr expr;
 
 	protected DefImpl() {
 		super();
@@ -52,13 +56,13 @@ public class DefImpl extends TopLevelCmdImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getExpr() {
+	public Expr getExpr() {
 		return expr;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetExpr(ExprImpl newExpr, NotificationChain msgs) {
-		ExprImpl oldExpr = expr;
+	public NotificationChain basicSetExpr(Expr newExpr, NotificationChain msgs) {
+		Expr oldExpr = expr;
 		expr = newExpr;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.DEF__EXPR, oldExpr, newExpr);
@@ -71,7 +75,7 @@ public class DefImpl extends TopLevelCmdImpl {
 	}
 
 	@TruffleBoundary
-	public void setExpr(ExprImpl newExpr) {
+	public void setExpr(Expr newExpr) {
 		if (newExpr != expr) {
 			NotificationChain msgs = null;
 			if (expr != null)
@@ -116,7 +120,7 @@ public class DefImpl extends TopLevelCmdImpl {
 				setName((String) newValue);
 				return;
 			case BoaPackage.DEF__EXPR :
-				setExpr((ExprImpl) newValue);
+				setExpr((Expr) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -130,7 +134,7 @@ public class DefImpl extends TopLevelCmdImpl {
 				setName(NAME_EDEFAULT);
 				return;
 			case BoaPackage.DEF__EXPR :
-				setExpr((ExprImpl) null);
+				setExpr((Expr) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -148,9 +152,9 @@ public class DefImpl extends TopLevelCmdImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public void nextLine(CtxImpl ctx) {
-		EvalResImpl e = ((EvalResImpl) (((ExprImpl) (this.getExpr())).eval((CtxImpl) (ctx))));
-		LogService.log(((this.name) + (" = ")) + (SerializeService.serialize((EvalResImpl) (e))));
-		MapService.put((EMap) (ctx.getEnv()), (String) (this.name), (EvalResImpl) (e));
+	public void nextLine(Ctx ctx) {
+		EvalRes e = ((EvalRes) (((Expr) (this.getExpr())).eval((Ctx) (ctx))));
+		LogService.log(((this.name) + (" = ")) + (SerializeService.serialize((EvalRes) (e))));
+		MapService.put((EMap) (ctx.getEnv()), (String) (this.name), (EvalRes) (e));
 	}
 }

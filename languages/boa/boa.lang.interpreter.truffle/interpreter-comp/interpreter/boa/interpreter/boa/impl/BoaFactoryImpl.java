@@ -3,6 +3,7 @@ package interpreter.boa.interpreter.boa.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.EvalRes;
 import java.lang.Deprecated;
 import java.lang.IllegalArgumentException;
 import java.lang.Override;
@@ -293,7 +294,7 @@ public class BoaFactoryImpl extends EFactoryImpl implements BoaFactory {
 	}
 
 	@TruffleBoundary
-	public Map.Entry<String, EvalResImpl> createStringToEvalResMap() {
+	public Map.Entry<String, EvalRes> createStringToEvalResMap() {
 		StringToEvalResMapImpl stringToEvalResMap = new StringToEvalResMapImpl();
 		return stringToEvalResMap;
 	}

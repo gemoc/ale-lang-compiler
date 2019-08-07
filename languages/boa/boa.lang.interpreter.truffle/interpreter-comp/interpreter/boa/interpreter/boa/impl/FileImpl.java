@@ -6,6 +6,9 @@ import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.File;
+import interpreter.boa.interpreter.boa.TopLevelCmd;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
@@ -20,11 +23,11 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "File"
 )
-public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
-	protected EList<TopLevelCmdImpl> commands;
+public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements File {
+	protected EList<TopLevelCmd> commands;
 
 	@Children
-	private TopLevelCmdImpl[] commandsArr;
+	private TopLevelCmd[] commandsArr;
 
 	protected FileImpl() {
 		super();
@@ -37,9 +40,9 @@ public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public EList<TopLevelCmdImpl> getCommands() {
+	public EList<TopLevelCmd> getCommands() {
 		if (commands == null) {
-			commands = new EObjectContainmentEList<TopLevelCmdImpl>(TopLevelCmdImpl.class, this, BoaPackage.FILE__COMMANDS);
+			commands = new EObjectContainmentEList<TopLevelCmd>(TopLevelCmd.class, this, BoaPackage.FILE__COMMANDS);
 		}
 		return commands;
 	}
@@ -71,7 +74,7 @@ public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		switch (featureID) {
 			case BoaPackage.FILE__COMMANDS :
 				getCommands().clear();
-				getCommands().addAll((Collection<? extends TopLevelCmdImpl>) newValue);
+				getCommands().addAll((Collection<? extends TopLevelCmd>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -101,12 +104,12 @@ public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public void eval() {
 		if (this.commandsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.commands != null) this.commandsArr = this.commands.toArray(new TopLevelCmdImpl[0]);
-			else this.commandsArr = new TopLevelCmdImpl[] {};
+			if (this.commands != null) this.commandsArr = this.commands.toArray(new TopLevelCmd[0]);
+			else this.commandsArr = new TopLevelCmd[] {};
 		}
-		CtxImpl ctx = ((CtxImpl) (BoaFactory.eINSTANCE.createCtx()));
-		for (TopLevelCmdImpl it : this.commandsArr) {
-			((TopLevelCmdImpl) (it)).nextLine((CtxImpl) (ctx));
+		Ctx ctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
+		for (TopLevelCmd it : this.commandsArr) {
+			((TopLevelCmd) (it)).nextLine((Ctx) (ctx));
 		}
 
 	}

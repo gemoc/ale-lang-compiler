@@ -4,6 +4,10 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalIntRes;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Int;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
@@ -14,7 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Int"
 )
-public class IntImpl extends ExprImpl {
+public class IntImpl extends ExprImpl implements Int {
 	protected static final int VALUE_EDEFAULT = 0;
 
 	protected int value = VALUE_EDEFAULT;
@@ -84,11 +88,11 @@ public class IntImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		EvalIntResImpl ret = ((EvalIntResImpl) (BoaFactory.eINSTANCE.createEvalIntRes()));
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
 		ret.setValue(this.value);
-		result = (EvalResImpl) (ret) ;
+		result = (EvalRes) (ret) ;
 		return result;
 	}
 }

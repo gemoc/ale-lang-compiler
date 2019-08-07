@@ -3,6 +3,8 @@ package interpreter.boa.interpreter.boa.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.EvalBoundFunRes;
+import interpreter.boa.interpreter.boa.EvalRes;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -17,8 +19,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
 @NodeInfo(
 		description = "EvalBoundFunRes"
 )
-public class EvalBoundFunResImpl extends EvalFunResImpl {
-	protected EMap<String, EvalResImpl> th;
+public class EvalBoundFunResImpl extends EvalFunResImpl implements EvalBoundFunRes {
+	protected EMap<String, EvalRes> th;
 
 	protected EvalBoundFunResImpl() {
 		super();
@@ -31,9 +33,9 @@ public class EvalBoundFunResImpl extends EvalFunResImpl {
 	}
 
 	@TruffleBoundary
-	public EMap<String, EvalResImpl> getTh() {
+	public EMap<String, EvalRes> getTh() {
 		if (th == null) {
-			th = new EcoreEMap<String, EvalResImpl>(BoaPackage.Literals.STRING_TO_EVAL_RES_MAP, StringToEvalResMapImpl.class, this, BoaPackage.EVAL_BOUND_FUN_RES__TH);
+			th = new EcoreEMap<String, EvalRes>(BoaPackage.Literals.STRING_TO_EVAL_RES_MAP, StringToEvalResMapImpl.class, this, BoaPackage.EVAL_BOUND_FUN_RES__TH);
 		}
 		return th;
 	}

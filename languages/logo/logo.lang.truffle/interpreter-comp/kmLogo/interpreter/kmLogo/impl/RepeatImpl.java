@@ -5,7 +5,11 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Block;
+import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Repeat;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,9 +19,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Repeat"
 )
-public class RepeatImpl extends ControlStructureImpl {
+public class RepeatImpl extends ControlStructureImpl implements Repeat {
 	@Child
-	protected BlockImpl block;
+	protected Block block;
 
 	protected RepeatImpl() {
 		super();
@@ -30,13 +34,13 @@ public class RepeatImpl extends ControlStructureImpl {
 	}
 
 	@TruffleBoundary
-	public BlockImpl getBlock() {
+	public Block getBlock() {
 		return block;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetBlock(BlockImpl newBlock, NotificationChain msgs) {
-		BlockImpl oldBlock = block;
+	public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
+		Block oldBlock = block;
 		block = newBlock;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.REPEAT__BLOCK, oldBlock, newBlock);
@@ -49,7 +53,7 @@ public class RepeatImpl extends ControlStructureImpl {
 	}
 
 	@TruffleBoundary
-	public void setBlock(BlockImpl newBlock) {
+	public void setBlock(Block newBlock) {
 		if (newBlock != block) {
 			NotificationChain msgs = null;
 			if (block != null)
@@ -89,7 +93,7 @@ public class RepeatImpl extends ControlStructureImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.REPEAT__BLOCK :
-				setBlock((BlockImpl) newValue);
+				setBlock((Block) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -100,7 +104,7 @@ public class RepeatImpl extends ControlStructureImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.REPEAT__BLOCK :
-				setBlock((BlockImpl) null);
+				setBlock((Block) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -116,11 +120,11 @@ public class RepeatImpl extends ControlStructureImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
-		double time = ((double) (((ExpressionImpl) (this.condition)).eval((TurtleImpl) (turtle))));
+		double time = ((double) (((Expression) (this.condition)).eval((Turtle) (turtle))));
 		while ((time) > (0.0)) {
-			((BlockImpl) (this.getBlock())).eval((TurtleImpl) (turtle));
+			((Block) (this.getBlock())).eval((Turtle) (turtle));
 			time = (time) - (1.0);
 		}
 		result = (double) (0.0) ;

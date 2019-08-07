@@ -4,6 +4,8 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Expr;
+import interpreter.boa.interpreter.boa.Field;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -17,13 +19,13 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "Field"
 )
-public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Field {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
 	@Child
-	protected ExprImpl value;
+	protected Expr value;
 
 	protected FieldImpl() {
 		super();
@@ -49,13 +51,13 @@ public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getValue() {
+	public Expr getValue() {
 		return value;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetValue(ExprImpl newValue, NotificationChain msgs) {
-		ExprImpl oldValue = value;
+	public NotificationChain basicSetValue(Expr newValue, NotificationChain msgs) {
+		Expr oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.FIELD__VALUE, oldValue, newValue);
@@ -68,7 +70,7 @@ public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public void setValue(ExprImpl newValue) {
+	public void setValue(Expr newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
@@ -113,7 +115,7 @@ public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 				setName((String) newValue);
 				return;
 			case BoaPackage.FIELD__VALUE :
-				setValue((ExprImpl) newValue);
+				setValue((Expr) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,7 +129,7 @@ public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 				setName(NAME_EDEFAULT);
 				return;
 			case BoaPackage.FIELD__VALUE :
-				setValue((ExprImpl) null);
+				setValue((Expr) null);
 				return;
 		}
 		super.eUnset(featureID);

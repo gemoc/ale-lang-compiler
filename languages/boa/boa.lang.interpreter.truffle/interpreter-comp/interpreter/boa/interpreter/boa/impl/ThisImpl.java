@@ -5,6 +5,10 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalMapRes;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.This;
 import java.lang.Override;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -12,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 @NodeInfo(
 		description = "This"
 )
-public class ThisImpl extends ExprImpl {
+public class ThisImpl extends ExprImpl implements This {
 	protected ThisImpl() {
 		super();
 	}
@@ -23,11 +27,11 @@ public class ThisImpl extends ExprImpl {
 		return BoaPackage.Literals.THIS;
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		EvalMapResImpl ret = ((EvalMapResImpl) (BoaFactory.eINSTANCE.createEvalMapRes()));
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 		MapService.putAll((EMap) (ret.getValues()), (EMap) (ctx.getTh()));
-		result = (EvalResImpl) (ret) ;
+		result = (EvalRes) (ret) ;
 		return result;
 	}
 }

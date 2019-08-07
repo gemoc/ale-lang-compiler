@@ -3,13 +3,16 @@ package kmLogo.interpreter.kmLogo.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Plus;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.ecore.EClass;
 
 @NodeInfo(
 		description = "Plus"
 )
-public class PlusImpl extends BinaryExpImpl {
+public class PlusImpl extends BinaryExpImpl implements Plus {
 	protected PlusImpl() {
 		super();
 	}
@@ -20,9 +23,9 @@ public class PlusImpl extends BinaryExpImpl {
 		return KmLogoPackage.Literals.PLUS;
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
-		result = (double) ((((ExpressionImpl) (this.lhs)).eval((TurtleImpl) (turtle))) + (((ExpressionImpl) (this.rhs)).eval((TurtleImpl) (turtle)))) ;
+		result = (double) ((((Expression) (this.lhs)).eval((Turtle) (turtle))) + (((Expression) (this.rhs)).eval((Turtle) (turtle)))) ;
 		return result;
 	}
 }

@@ -5,7 +5,10 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Expression;
+import kmLogo.interpreter.kmLogo.Forward;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,9 +18,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Forward"
 )
-public class ForwardImpl extends PrimitiveImpl {
+public class ForwardImpl extends PrimitiveImpl implements Forward {
 	@Child
-	protected ExpressionImpl steps;
+	protected Expression steps;
 
 	protected ForwardImpl() {
 		super();
@@ -30,13 +33,13 @@ public class ForwardImpl extends PrimitiveImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getSteps() {
+	public Expression getSteps() {
 		return steps;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetSteps(ExpressionImpl newSteps, NotificationChain msgs) {
-		ExpressionImpl oldSteps = steps;
+	public NotificationChain basicSetSteps(Expression newSteps, NotificationChain msgs) {
+		Expression oldSteps = steps;
 		steps = newSteps;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.FORWARD__STEPS, oldSteps, newSteps);
@@ -49,7 +52,7 @@ public class ForwardImpl extends PrimitiveImpl {
 	}
 
 	@TruffleBoundary
-	public void setSteps(ExpressionImpl newSteps) {
+	public void setSteps(Expression newSteps) {
 		if (newSteps != steps) {
 			NotificationChain msgs = null;
 			if (steps != null)
@@ -89,7 +92,7 @@ public class ForwardImpl extends PrimitiveImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.FORWARD__STEPS :
-				setSteps((ExpressionImpl) newValue);
+				setSteps((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -100,7 +103,7 @@ public class ForwardImpl extends PrimitiveImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.FORWARD__STEPS :
-				setSteps((ExpressionImpl) null);
+				setSteps((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -116,10 +119,10 @@ public class ForwardImpl extends PrimitiveImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
-		double move = ((double) (((ExpressionImpl) (this.getSteps())).eval((TurtleImpl) (turtle))));
-		((TurtleImpl) (turtle)).forward((double) (move));
+		double move = ((double) (((Expression) (this.getSteps())).eval((Turtle) (turtle))));
+		((Turtle) (turtle)).forward((double) (move));
 		result = (double) (0.0) ;
 		return result;
 	}

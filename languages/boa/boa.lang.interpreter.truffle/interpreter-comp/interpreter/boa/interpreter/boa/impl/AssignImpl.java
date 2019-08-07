@@ -4,7 +4,12 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
+import interpreter.boa.interpreter.boa.Assign;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalMapRes;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -18,16 +23,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Assign"
 )
-public class AssignImpl extends ExprImpl {
+public class AssignImpl extends ExprImpl implements Assign {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
 	@Child
-	protected ExprImpl lhs;
+	protected Expr lhs;
 
 	@Child
-	protected ExprImpl rhs;
+	protected Expr rhs;
 
 	protected AssignImpl() {
 		super();
@@ -40,13 +45,13 @@ public class AssignImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getLhs() {
+	public Expr getLhs() {
 		return lhs;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetLhs(ExprImpl newLhs, NotificationChain msgs) {
-		ExprImpl oldLhs = lhs;
+	public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
+		Expr oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.ASSIGN__LHS, oldLhs, newLhs);
@@ -59,7 +64,7 @@ public class AssignImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setLhs(ExprImpl newLhs) {
+	public void setLhs(Expr newLhs) {
 		if (newLhs != lhs) {
 			NotificationChain msgs = null;
 			if (lhs != null)
@@ -74,13 +79,13 @@ public class AssignImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getRhs() {
+	public Expr getRhs() {
 		return rhs;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetRhs(ExprImpl newRhs, NotificationChain msgs) {
-		ExprImpl oldRhs = rhs;
+	public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
+		Expr oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.ASSIGN__RHS, oldRhs, newRhs);
@@ -93,7 +98,7 @@ public class AssignImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setRhs(ExprImpl newRhs) {
+	public void setRhs(Expr newRhs) {
 		if (newRhs != rhs) {
 			NotificationChain msgs = null;
 			if (rhs != null)
@@ -152,10 +157,10 @@ public class AssignImpl extends ExprImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.ASSIGN__LHS :
-				setLhs((ExprImpl) newValue);
+				setLhs((Expr) newValue);
 				return;
 			case BoaPackage.ASSIGN__RHS :
-				setRhs((ExprImpl) newValue);
+				setRhs((Expr) newValue);
 				return;
 			case BoaPackage.ASSIGN__NAME :
 				setName((String) newValue);
@@ -169,10 +174,10 @@ public class AssignImpl extends ExprImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.ASSIGN__LHS :
-				setLhs((ExprImpl) null);
+				setLhs((Expr) null);
 				return;
 			case BoaPackage.ASSIGN__RHS :
-				setRhs((ExprImpl) null);
+				setRhs((Expr) null);
 				return;
 			case BoaPackage.ASSIGN__NAME :
 				setName(NAME_EDEFAULT);
@@ -195,22 +200,22 @@ public class AssignImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		EvalResImpl vlhs = ((EvalResImpl) (((ExprImpl) (this.getLhs())).eval((CtxImpl) (ctx))));
-		EvalResImpl vrhs = ((EvalResImpl) (((ExprImpl) (this.getRhs())).eval((CtxImpl) (ctx))));
-		if (vlhs instanceof EvalMapResImpl) {
-			EvalMapResImpl mvlhs = ((EvalMapResImpl) (vlhs));
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.getLhs())).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (ctx))));
+		if (vlhs instanceof EvalMapRes) {
+			EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
 			if (MapService.containsKey((EMap) (mvlhs.getValues()), (String) (this.name))) {
-				MapService.put((EMap) (mvlhs.getValues()), (String) (this.name), (EvalResImpl) (vrhs));
-				result = (EvalResImpl) (vrhs) ;
+				MapService.put((EMap) (mvlhs.getValues()), (String) (this.name), (EvalRes) (vrhs));
+				result = (EvalRes) (vrhs) ;
 			}
 			else {
-				result = (EvalResImpl) (null) ;
+				result = (EvalRes) (null) ;
 			}
 		}
 		else {
-			result = (EvalResImpl) (null) ;
+			result = (EvalRes) (null) ;
 		}
 		return result;
 	}

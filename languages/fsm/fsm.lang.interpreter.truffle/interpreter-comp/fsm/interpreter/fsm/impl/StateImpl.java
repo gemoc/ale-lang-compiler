@@ -4,7 +4,11 @@ import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import fsm.interpreter.fsm.Buffer;
+import fsm.interpreter.fsm.FSM;
 import fsm.interpreter.fsm.FsmPackage;
+import fsm.interpreter.fsm.State;
+import fsm.interpreter.fsm.Transition;
 import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import java.lang.Override;
@@ -26,17 +30,17 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "State"
 )
-public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements State {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
-	protected EList<TransitionImpl> incoming;
+	protected EList<Transition> incoming;
 
-	protected EList<TransitionImpl> outgoing;
+	protected EList<Transition> outgoing;
 
 	@Children
-	private TransitionImpl[] outgoingArr;
+	private Transition[] outgoingArr;
 
 	protected StateImpl() {
 		super();
@@ -49,9 +53,9 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public EList<TransitionImpl> getIncoming() {
+	public EList<Transition> getIncoming() {
 		if (incoming == null) {
-			incoming = new EObjectWithInverseResolvingEList<TransitionImpl>(TransitionImpl.class, this, FsmPackage.STATE__INCOMING, FsmPackage.TRANSITION__TGT);
+			incoming = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, FsmPackage.STATE__INCOMING, FsmPackage.TRANSITION__TGT);
 		}
 		return incoming;
 	}
@@ -70,27 +74,27 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public EList<TransitionImpl> getOutgoing() {
+	public EList<Transition> getOutgoing() {
 		if (outgoing == null) {
-			outgoing = new EObjectWithInverseResolvingEList<TransitionImpl>(TransitionImpl.class, this, FsmPackage.STATE__OUTGOING, FsmPackage.TRANSITION__SRC);
+			outgoing = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, FsmPackage.STATE__OUTGOING, FsmPackage.TRANSITION__SRC);
 		}
 		return outgoing;
 	}
 
 	@TruffleBoundary
-	public FSMImpl getFsm() {
+	public FSM getFsm() {
 		if (eContainerFeatureID() != FsmPackage.STATE__FSM)
 			return null;
-		return (FSMImpl) eInternalContainer();
+		return (FSM) eInternalContainer();
 	}
 
-	public NotificationChain basicSetFsm(FSMImpl newFsm, NotificationChain msgs) {
+	public NotificationChain basicSetFsm(FSM newFsm, NotificationChain msgs) {
 		msgs = eBasicSetContainer((InternalEObject) newFsm, FsmPackage.STATE__FSM, msgs);
 		return msgs;
 	}
 
 	@TruffleBoundary
-	public void setFsm(FSMImpl newFsm) {
+	public void setFsm(FSM newFsm) {
 		if (newFsm != eInternalContainer() || (eContainerFeatureID() != FsmPackage.STATE__FSM && newFsm != null)) {
 			if (EcoreUtil.isAncestor(this, newFsm))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -98,7 +102,7 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newFsm != null)
-				msgs = ((InternalEObject) newFsm).eInverseAdd(this, FsmPackage.FSM__OWNED_STATES, FSMImpl.class, msgs);
+				msgs = ((InternalEObject) newFsm).eInverseAdd(this, FsmPackage.FSM__OWNED_STATES, FSM.class, msgs);
 			msgs = basicSetFsm(newFsm, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -118,7 +122,7 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 			case FsmPackage.STATE__FSM :
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetFsm((FSMImpl) otherEnd, msgs);
+				return basicSetFsm((FSM) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -142,7 +146,7 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case FsmPackage.STATE__FSM :
-				return eInternalContainer().eInverseRemove(this, FsmPackage.FSM__OWNED_STATES, FSMImpl.class, msgs);
+				return eInternalContainer().eInverseRemove(this, FsmPackage.FSM__OWNED_STATES, FSM.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -169,17 +173,17 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		switch (featureID) {
 			case FsmPackage.STATE__INCOMING :
 				getIncoming().clear();
-				getIncoming().addAll((Collection<? extends TransitionImpl>) newValue);
+				getIncoming().addAll((Collection<? extends Transition>) newValue);
 				return;
 			case FsmPackage.STATE__NAME :
 				setName((String) newValue);
 				return;
 			case FsmPackage.STATE__OUTGOING :
 				getOutgoing().clear();
-				getOutgoing().addAll((Collection<? extends TransitionImpl>) newValue);
+				getOutgoing().addAll((Collection<? extends Transition>) newValue);
 				return;
 			case FsmPackage.STATE__FSM :
-				setFsm((FSMImpl) newValue);
+				setFsm((FSM) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -199,7 +203,7 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 				getOutgoing().clear();
 				return;
 			case FsmPackage.STATE__FSM :
-				setFsm((FSMImpl) null);
+				setFsm((FSM) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -224,15 +228,15 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public void step(String inputString) {
 		if (this.outgoingArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.outgoing != null) this.outgoingArr = this.outgoing.toArray(new TransitionImpl[0]);
-			else this.outgoingArr = new TransitionImpl[] {};
+			if (this.outgoing != null) this.outgoingArr = this.outgoing.toArray(new Transition[0]);
+			else this.outgoingArr = new Transition[] {};
 		}
-		TransitionImpl validTransition = ((TransitionImpl) (CollectionService.head(CollectionService.select(this.outgoingArr, (t) -> EqualService.equals((inputString), (t.getTrigger()))))));
+		Transition validTransition = ((Transition) (CollectionService.head(CollectionService.select(this.outgoingArr, (t) -> EqualService.equals((inputString), (t.getTrigger()))))));
 		if (EqualService.equals((validTransition), (null))) {
-			((BufferImpl) (this.getFsm().getOutputBuffer())).enqueue((String) (inputString));
+			((Buffer) (this.getFsm().getOutputBuffer())).enqueue((String) (inputString));
 		}
 		else {
-			((TransitionImpl) (validTransition)).fire();
+			((Transition) (validTransition)).fire();
 		}
 
 	}

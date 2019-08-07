@@ -6,6 +6,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Parameter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -14,7 +15,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "Parameter"
 )
-public class ParameterImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class ParameterImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Parameter {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;

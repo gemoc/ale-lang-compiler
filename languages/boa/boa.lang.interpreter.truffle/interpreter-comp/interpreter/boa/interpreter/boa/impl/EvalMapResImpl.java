@@ -3,6 +3,8 @@ package interpreter.boa.interpreter.boa.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.EvalMapRes;
+import interpreter.boa.interpreter.boa.EvalRes;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -17,8 +19,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
 @NodeInfo(
 		description = "EvalMapRes"
 )
-public class EvalMapResImpl extends EvalResImpl {
-	protected EMap<String, EvalResImpl> values;
+public class EvalMapResImpl extends EvalResImpl implements EvalMapRes {
+	protected EMap<String, EvalRes> values;
 
 	protected EvalMapResImpl() {
 		super();
@@ -31,9 +33,9 @@ public class EvalMapResImpl extends EvalResImpl {
 	}
 
 	@TruffleBoundary
-	public EMap<String, EvalResImpl> getValues() {
+	public EMap<String, EvalRes> getValues() {
 		if (values == null) {
-			values = new EcoreEMap<String, EvalResImpl>(BoaPackage.Literals.STRING_TO_EVAL_RES_MAP, StringToEvalResMapImpl.class, this, BoaPackage.EVAL_MAP_RES__VALUES);
+			values = new EcoreEMap<String, EvalRes>(BoaPackage.Literals.STRING_TO_EVAL_RES_MAP, StringToEvalResMapImpl.class, this, BoaPackage.EVAL_MAP_RES__VALUES);
 		}
 		return values;
 	}

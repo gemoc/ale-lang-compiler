@@ -5,7 +5,11 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Block;
+import kmLogo.interpreter.kmLogo.Expression;
+import kmLogo.interpreter.kmLogo.If;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,12 +20,12 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "If"
 )
-public class IfImpl extends ControlStructureImpl {
+public class IfImpl extends ControlStructureImpl implements If {
 	@Child
-	protected BlockImpl thenPart;
+	protected Block thenPart;
 
 	@Child
-	protected BlockImpl elsePart;
+	protected Block elsePart;
 
 	protected IfImpl() {
 		super();
@@ -34,13 +38,13 @@ public class IfImpl extends ControlStructureImpl {
 	}
 
 	@TruffleBoundary
-	public BlockImpl getThenPart() {
+	public Block getThenPart() {
 		return thenPart;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetThenPart(BlockImpl newThenPart, NotificationChain msgs) {
-		BlockImpl oldThenPart = thenPart;
+	public NotificationChain basicSetThenPart(Block newThenPart, NotificationChain msgs) {
+		Block oldThenPart = thenPart;
 		thenPart = newThenPart;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.IF__THEN_PART, oldThenPart, newThenPart);
@@ -53,7 +57,7 @@ public class IfImpl extends ControlStructureImpl {
 	}
 
 	@TruffleBoundary
-	public void setThenPart(BlockImpl newThenPart) {
+	public void setThenPart(Block newThenPart) {
 		if (newThenPart != thenPart) {
 			NotificationChain msgs = null;
 			if (thenPart != null)
@@ -68,13 +72,13 @@ public class IfImpl extends ControlStructureImpl {
 	}
 
 	@TruffleBoundary
-	public BlockImpl getElsePart() {
+	public Block getElsePart() {
 		return elsePart;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetElsePart(BlockImpl newElsePart, NotificationChain msgs) {
-		BlockImpl oldElsePart = elsePart;
+	public NotificationChain basicSetElsePart(Block newElsePart, NotificationChain msgs) {
+		Block oldElsePart = elsePart;
 		elsePart = newElsePart;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.IF__ELSE_PART, oldElsePart, newElsePart);
@@ -87,7 +91,7 @@ public class IfImpl extends ControlStructureImpl {
 	}
 
 	@TruffleBoundary
-	public void setElsePart(BlockImpl newElsePart) {
+	public void setElsePart(Block newElsePart) {
 		if (newElsePart != elsePart) {
 			NotificationChain msgs = null;
 			if (elsePart != null)
@@ -131,10 +135,10 @@ public class IfImpl extends ControlStructureImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.IF__THEN_PART :
-				setThenPart((BlockImpl) newValue);
+				setThenPart((Block) newValue);
 				return;
 			case KmLogoPackage.IF__ELSE_PART :
-				setElsePart((BlockImpl) newValue);
+				setElsePart((Block) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -145,10 +149,10 @@ public class IfImpl extends ControlStructureImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.IF__THEN_PART :
-				setThenPart((BlockImpl) null);
+				setThenPart((Block) null);
 				return;
 			case KmLogoPackage.IF__ELSE_PART :
-				setElsePart((BlockImpl) null);
+				setElsePart((Block) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -166,14 +170,14 @@ public class IfImpl extends ControlStructureImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
-		if (!EqualService.equals((((ExpressionImpl) (this.condition)).eval((TurtleImpl) (turtle))), (0.0))) {
-			result = (double) (((BlockImpl) (this.getThenPart())).eval((TurtleImpl) (turtle))) ;
+		if (!EqualService.equals((((Expression) (this.condition)).eval((Turtle) (turtle))), (0.0))) {
+			result = (double) (((Block) (this.getThenPart())).eval((Turtle) (turtle))) ;
 		}
 		else {
 			if (!EqualService.equals((this.getElsePart()), (null))) {
-				result = (double) (((BlockImpl) (this.getElsePart())).eval((TurtleImpl) (turtle))) ;
+				result = (double) (((Block) (this.getElsePart())).eval((Turtle) (turtle))) ;
 			}
 			else {
 				result = (double) (0.0) ;

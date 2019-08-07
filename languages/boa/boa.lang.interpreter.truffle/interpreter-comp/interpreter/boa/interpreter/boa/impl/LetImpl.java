@@ -6,6 +6,10 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Expr;
+import interpreter.boa.interpreter.boa.Let;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -19,16 +23,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Let"
 )
-public class LetImpl extends ExprImpl {
+public class LetImpl extends ExprImpl implements Let {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
 	@Child
-	protected ExprImpl lhs;
+	protected Expr lhs;
 
 	@Child
-	protected ExprImpl rhs;
+	protected Expr rhs;
 
 	protected LetImpl() {
 		super();
@@ -54,13 +58,13 @@ public class LetImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getLhs() {
+	public Expr getLhs() {
 		return lhs;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetLhs(ExprImpl newLhs, NotificationChain msgs) {
-		ExprImpl oldLhs = lhs;
+	public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
+		Expr oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.LET__LHS, oldLhs, newLhs);
@@ -73,7 +77,7 @@ public class LetImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setLhs(ExprImpl newLhs) {
+	public void setLhs(Expr newLhs) {
 		if (newLhs != lhs) {
 			NotificationChain msgs = null;
 			if (lhs != null)
@@ -88,13 +92,13 @@ public class LetImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getRhs() {
+	public Expr getRhs() {
 		return rhs;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetRhs(ExprImpl newRhs, NotificationChain msgs) {
-		ExprImpl oldRhs = rhs;
+	public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
+		Expr oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.LET__RHS, oldRhs, newRhs);
@@ -107,7 +111,7 @@ public class LetImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setRhs(ExprImpl newRhs) {
+	public void setRhs(Expr newRhs) {
 		if (newRhs != rhs) {
 			NotificationChain msgs = null;
 			if (rhs != null)
@@ -156,10 +160,10 @@ public class LetImpl extends ExprImpl {
 				setName((String) newValue);
 				return;
 			case BoaPackage.LET__LHS :
-				setLhs((ExprImpl) newValue);
+				setLhs((Expr) newValue);
 				return;
 			case BoaPackage.LET__RHS :
-				setRhs((ExprImpl) newValue);
+				setRhs((Expr) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -173,10 +177,10 @@ public class LetImpl extends ExprImpl {
 				setName(NAME_EDEFAULT);
 				return;
 			case BoaPackage.LET__LHS :
-				setLhs((ExprImpl) null);
+				setLhs((Expr) null);
 				return;
 			case BoaPackage.LET__RHS :
-				setRhs((ExprImpl) null);
+				setRhs((Expr) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -196,14 +200,14 @@ public class LetImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		ExprImpl lhs = ((ExprImpl) (this.getLhs()));
-		EvalResImpl vlhs = ((EvalResImpl) (((ExprImpl) (lhs)).eval((CtxImpl) (ctx))));
-		CtxImpl nctx = ((CtxImpl) (BoaFactory.eINSTANCE.createCtx()));
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		Expr lhs = ((Expr) (this.getLhs()));
+		EvalRes vlhs = ((EvalRes) (((Expr) (lhs)).eval((Ctx) (ctx))));
+		Ctx nctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
 		MapService.putAll((EMap) (nctx.getEnv()), (EMap) (ctx.getEnv()));
-		MapService.put((EMap) (nctx.getEnv()), (String) (this.name), (EvalResImpl) (vlhs));
-		result = (EvalResImpl) (((ExprImpl) (this.getRhs())).eval((CtxImpl) (nctx))) ;
+		MapService.put((EMap) (nctx.getEnv()), (String) (this.name), (EvalRes) (vlhs));
+		result = (EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (nctx))) ;
 		return result;
 	}
 }

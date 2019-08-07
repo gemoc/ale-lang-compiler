@@ -25,10 +25,4 @@ public class ProcDeclarationOperation extends InstructionOperation {
 		}
 		return result;
 	}
-
-	public double deval(Turtle turtle) {
-		double result;
-		result = ((double) (((ProcDeclarationOperation) emfswitch.doSwitch(this.it)).eval((Turtle) (turtle))));
-		return result;
-	}
 }

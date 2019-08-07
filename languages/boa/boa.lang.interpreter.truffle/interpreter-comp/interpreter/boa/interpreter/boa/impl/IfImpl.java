@@ -4,6 +4,11 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalBoolRes;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Expr;
+import interpreter.boa.interpreter.boa.If;
 import java.lang.Object;
 import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
@@ -15,15 +20,15 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "If"
 )
-public class IfImpl extends ExprImpl {
+public class IfImpl extends ExprImpl implements If {
 	@Child
-	protected ExprImpl cond;
+	protected Expr cond;
 
 	@Child
-	protected ExprImpl thn;
+	protected Expr thn;
 
 	@Child
-	protected ExprImpl els;
+	protected Expr els;
 
 	protected IfImpl() {
 		super();
@@ -36,13 +41,13 @@ public class IfImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getCond() {
+	public Expr getCond() {
 		return cond;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetCond(ExprImpl newCond, NotificationChain msgs) {
-		ExprImpl oldCond = cond;
+	public NotificationChain basicSetCond(Expr newCond, NotificationChain msgs) {
+		Expr oldCond = cond;
 		cond = newCond;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.IF__COND, oldCond, newCond);
@@ -55,7 +60,7 @@ public class IfImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setCond(ExprImpl newCond) {
+	public void setCond(Expr newCond) {
 		if (newCond != cond) {
 			NotificationChain msgs = null;
 			if (cond != null)
@@ -70,13 +75,13 @@ public class IfImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getThn() {
+	public Expr getThn() {
 		return thn;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetThn(ExprImpl newThn, NotificationChain msgs) {
-		ExprImpl oldThn = thn;
+	public NotificationChain basicSetThn(Expr newThn, NotificationChain msgs) {
+		Expr oldThn = thn;
 		thn = newThn;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.IF__THN, oldThn, newThn);
@@ -89,7 +94,7 @@ public class IfImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setThn(ExprImpl newThn) {
+	public void setThn(Expr newThn) {
 		if (newThn != thn) {
 			NotificationChain msgs = null;
 			if (thn != null)
@@ -104,13 +109,13 @@ public class IfImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getEls() {
+	public Expr getEls() {
 		return els;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetEls(ExprImpl newEls, NotificationChain msgs) {
-		ExprImpl oldEls = els;
+	public NotificationChain basicSetEls(Expr newEls, NotificationChain msgs) {
+		Expr oldEls = els;
 		els = newEls;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.IF__ELS, oldEls, newEls);
@@ -123,7 +128,7 @@ public class IfImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setEls(ExprImpl newEls) {
+	public void setEls(Expr newEls) {
 		if (newEls != els) {
 			NotificationChain msgs = null;
 			if (els != null)
@@ -171,13 +176,13 @@ public class IfImpl extends ExprImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.IF__COND :
-				setCond((ExprImpl) newValue);
+				setCond((Expr) newValue);
 				return;
 			case BoaPackage.IF__THN :
-				setThn((ExprImpl) newValue);
+				setThn((Expr) newValue);
 				return;
 			case BoaPackage.IF__ELS :
-				setEls((ExprImpl) newValue);
+				setEls((Expr) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -188,13 +193,13 @@ public class IfImpl extends ExprImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.IF__COND :
-				setCond((ExprImpl) null);
+				setCond((Expr) null);
 				return;
 			case BoaPackage.IF__THN :
-				setThn((ExprImpl) null);
+				setThn((Expr) null);
 				return;
 			case BoaPackage.IF__ELS :
-				setEls((ExprImpl) null);
+				setEls((Expr) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -214,20 +219,20 @@ public class IfImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		EvalResImpl vcond = ((EvalResImpl) (((ExprImpl) (this.getCond())).eval((CtxImpl) (ctx))));
-		if (vcond instanceof EvalBoolResImpl) {
-			EvalBoolResImpl bvcond = ((EvalBoolResImpl) (vcond));
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalRes vcond = ((EvalRes) (((Expr) (this.getCond())).eval((Ctx) (ctx))));
+		if (vcond instanceof EvalBoolRes) {
+			EvalBoolRes bvcond = ((EvalBoolRes) (vcond));
 			if (bvcond.isValue()) {
-				result = (EvalResImpl) (((ExprImpl) (this.getThn())).eval((CtxImpl) (ctx))) ;
+				result = (EvalRes) (((Expr) (this.getThn())).eval((Ctx) (ctx))) ;
 			}
 			else {
-				result = (EvalResImpl) (((ExprImpl) (this.getEls())).eval((CtxImpl) (ctx))) ;
+				result = (EvalRes) (((Expr) (this.getEls())).eval((Ctx) (ctx))) ;
 			}
 		}
 		else {
-			result = (EvalResImpl) (null) ;
+			result = (EvalRes) (null) ;
 		}
 		return result;
 	}

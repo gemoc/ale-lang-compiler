@@ -65,10 +65,4 @@ public class ProcDeclarationOpImpl extends InstructionOpImpl implements ProcDecl
     }
     return result;
   }
-
-  public double deval(Turtle turtle) {
-    double result;
-    result = ((double) (rev.$((ProcDeclaration)this.obj).eval(((Turtle) (turtle)))));
-    return result;
-  }
 }

@@ -6,12 +6,13 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Variable;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-public class VariableImpl extends MinimalEObjectImpl.Container {
+public class VariableImpl extends MinimalEObjectImpl.Container implements Variable {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected static final double VALUE_EDEFAULT = 0.0;

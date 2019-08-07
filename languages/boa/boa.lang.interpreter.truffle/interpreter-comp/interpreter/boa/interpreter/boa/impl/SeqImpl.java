@@ -4,6 +4,10 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Expr;
+import interpreter.boa.interpreter.boa.Seq;
 import java.lang.Object;
 import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
@@ -15,12 +19,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Seq"
 )
-public class SeqImpl extends ExprImpl {
+public class SeqImpl extends ExprImpl implements Seq {
 	@Child
-	protected ExprImpl lhs;
+	protected Expr lhs;
 
 	@Child
-	protected ExprImpl rhs;
+	protected Expr rhs;
 
 	protected SeqImpl() {
 		super();
@@ -33,13 +37,13 @@ public class SeqImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getLhs() {
+	public Expr getLhs() {
 		return lhs;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetLhs(ExprImpl newLhs, NotificationChain msgs) {
-		ExprImpl oldLhs = lhs;
+	public NotificationChain basicSetLhs(Expr newLhs, NotificationChain msgs) {
+		Expr oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.SEQ__LHS, oldLhs, newLhs);
@@ -52,7 +56,7 @@ public class SeqImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setLhs(ExprImpl newLhs) {
+	public void setLhs(Expr newLhs) {
 		if (newLhs != lhs) {
 			NotificationChain msgs = null;
 			if (lhs != null)
@@ -67,13 +71,13 @@ public class SeqImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getRhs() {
+	public Expr getRhs() {
 		return rhs;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetRhs(ExprImpl newRhs, NotificationChain msgs) {
-		ExprImpl oldRhs = rhs;
+	public NotificationChain basicSetRhs(Expr newRhs, NotificationChain msgs) {
+		Expr oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.SEQ__RHS, oldRhs, newRhs);
@@ -86,7 +90,7 @@ public class SeqImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setRhs(ExprImpl newRhs) {
+	public void setRhs(Expr newRhs) {
 		if (newRhs != rhs) {
 			NotificationChain msgs = null;
 			if (rhs != null)
@@ -130,10 +134,10 @@ public class SeqImpl extends ExprImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.SEQ__LHS :
-				setLhs((ExprImpl) newValue);
+				setLhs((Expr) newValue);
 				return;
 			case BoaPackage.SEQ__RHS :
-				setRhs((ExprImpl) newValue);
+				setRhs((Expr) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -144,10 +148,10 @@ public class SeqImpl extends ExprImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.SEQ__LHS :
-				setLhs((ExprImpl) null);
+				setLhs((Expr) null);
 				return;
 			case BoaPackage.SEQ__RHS :
-				setRhs((ExprImpl) null);
+				setRhs((Expr) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -165,11 +169,11 @@ public class SeqImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		EvalResImpl vlhs = ((EvalResImpl) (((ExprImpl) (this.getLhs())).eval((CtxImpl) (ctx))));
-		EvalResImpl vrhs = ((EvalResImpl) (((ExprImpl) (this.getRhs())).eval((CtxImpl) (ctx))));
-		result = (EvalResImpl) (vrhs) ;
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.getLhs())).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (ctx))));
+		result = (EvalRes) (vrhs) ;
 		return result;
 	}
 }

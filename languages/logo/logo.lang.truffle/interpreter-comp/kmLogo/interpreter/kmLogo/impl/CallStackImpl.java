@@ -4,7 +4,9 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import kmLogo.interpreter.kmLogo.CallStack;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.StackFrame;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -13,8 +15,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-public class CallStackImpl extends MinimalEObjectImpl.Container {
-	protected EList<StackFrameImpl> frames;
+public class CallStackImpl extends MinimalEObjectImpl.Container implements CallStack {
+	protected EList<StackFrame> frames;
 
 	protected CallStackImpl() {
 		super();
@@ -27,9 +29,9 @@ public class CallStackImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public EList<StackFrameImpl> getFrames() {
+	public EList<StackFrame> getFrames() {
 		if (frames == null) {
-			frames = new EObjectContainmentEList<StackFrameImpl>(StackFrameImpl.class, this, KmLogoPackage.CALL_STACK__FRAMES);
+			frames = new EObjectContainmentEList<StackFrame>(StackFrame.class, this, KmLogoPackage.CALL_STACK__FRAMES);
 		}
 		return frames;
 	}
@@ -61,7 +63,7 @@ public class CallStackImpl extends MinimalEObjectImpl.Container {
 		switch (featureID) {
 			case KmLogoPackage.CALL_STACK__FRAMES :
 				getFrames().clear();
-				getFrames().addAll((Collection<? extends StackFrameImpl>) newValue);
+				getFrames().addAll((Collection<? extends StackFrame>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

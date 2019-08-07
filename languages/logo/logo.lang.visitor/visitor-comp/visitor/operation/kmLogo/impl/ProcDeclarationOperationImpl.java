@@ -27,10 +27,4 @@ public class ProcDeclarationOperationImpl extends InstructionOperationImpl imple
 		}
 		return result;
 	}
-
-	public double deval(Turtle turtle) {
-		double result;
-		result = ((double) (((ProcDeclarationOperation)this.it.accept(vis)).eval((Turtle) (turtle))));
-		return result;
-	}
 }

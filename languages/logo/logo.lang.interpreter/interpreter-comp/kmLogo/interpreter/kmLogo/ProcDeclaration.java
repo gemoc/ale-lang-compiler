@@ -16,6 +16,4 @@ public interface ProcDeclaration extends EObject, Instruction {
 	EList<Instruction> getInstructions();
 
 	double eval(Turtle turtle);
-
-	double deval(Turtle turtle);
 }

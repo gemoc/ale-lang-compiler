@@ -5,8 +5,14 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
+import interpreter.boa.interpreter.boa.BObject;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalMapRes;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Expr;
+import interpreter.boa.interpreter.boa.Field;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -22,11 +28,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
 @NodeInfo(
 		description = "BObject"
 )
-public class BObjectImpl extends ExprImpl {
-	protected EList<FieldImpl> fields;
+public class BObjectImpl extends ExprImpl implements BObject {
+	protected EList<Field> fields;
 
 	@Children
-	private FieldImpl[] fieldsArr;
+	private Field[] fieldsArr;
 
 	protected BObjectImpl() {
 		super();
@@ -39,9 +45,9 @@ public class BObjectImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public EList<FieldImpl> getFields() {
+	public EList<Field> getFields() {
 		if (fields == null) {
-			fields = new EObjectContainmentEList<FieldImpl>(FieldImpl.class, this, BoaPackage.BOBJECT__FIELDS);
+			fields = new EObjectContainmentEList<Field>(Field.class, this, BoaPackage.BOBJECT__FIELDS);
 		}
 		return fields;
 	}
@@ -73,7 +79,7 @@ public class BObjectImpl extends ExprImpl {
 		switch (featureID) {
 			case BoaPackage.BOBJECT__FIELDS :
 				getFields().clear();
-				getFields().addAll((Collection<? extends FieldImpl>) newValue);
+				getFields().addAll((Collection<? extends Field>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -100,19 +106,19 @@ public class BObjectImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
 		if (this.fieldsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.fields != null) this.fieldsArr = this.fields.toArray(new FieldImpl[0]);
-			else this.fieldsArr = new FieldImpl[] {};
+			if (this.fields != null) this.fieldsArr = this.fields.toArray(new Field[0]);
+			else this.fieldsArr = new Field[] {};
 		}
-		EvalMapResImpl ret = ((EvalMapResImpl) (BoaFactory.eINSTANCE.createEvalMapRes()));
-		for (FieldImpl x : this.fieldsArr) {
-			EvalResImpl v = ((EvalResImpl) (((ExprImpl) (x.getValue())).eval((CtxImpl) (ctx))));
-			MapService.put((EMap) (ret.getValues()), (String) (x.getName()), (EvalResImpl) (v));
+		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
+		for (Field x : this.fieldsArr) {
+			EvalRes v = ((EvalRes) (((Expr) (x.getValue())).eval((Ctx) (ctx))));
+			MapService.put((EMap) (ret.getValues()), (String) (x.getName()), (EvalRes) (v));
 		}
-		result = (EvalResImpl) (ret) ;
+		result = (EvalRes) (ret) ;
 
 		return result;
 	}

@@ -5,6 +5,11 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Parameter;
+import kmLogo.interpreter.kmLogo.ParameterCall;
+import kmLogo.interpreter.kmLogo.StackFrame;
+import kmLogo.interpreter.kmLogo.Turtle;
+import kmLogo.interpreter.kmLogo.Variable;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -14,8 +19,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "ParameterCall"
 )
-public class ParameterCallImpl extends ExpressionImpl {
-	protected ParameterImpl parameter;
+public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
+	protected Parameter parameter;
 
 	protected ParameterCallImpl() {
 		super();
@@ -28,10 +33,10 @@ public class ParameterCallImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ParameterImpl getParameter() {
+	public Parameter getParameter() {
 		if (parameter != null && parameter.eIsProxy()) {
 			InternalEObject oldParameter = (InternalEObject) parameter;
-			parameter = (ParameterImpl) eResolveProxy(oldParameter);
+			parameter = (Parameter) eResolveProxy(oldParameter);
 			if (parameter != oldParameter) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PARAMETER_CALL__PARAMETER, oldParameter, parameter));
@@ -40,13 +45,13 @@ public class ParameterCallImpl extends ExpressionImpl {
 		return parameter;
 	}
 
-	public ParameterImpl basicGetParameter() {
+	public Parameter basicGetParameter() {
 		return parameter;
 	}
 
 	@TruffleBoundary
-	public void setParameter(ParameterImpl newParameter) {
-		ParameterImpl oldParameter = parameter;
+	public void setParameter(Parameter newParameter) {
+		Parameter oldParameter = parameter;
 		parameter = newParameter;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, KmLogoPackage.PARAMETER_CALL__PARAMETER, oldParameter, parameter));
@@ -69,7 +74,7 @@ public class ParameterCallImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.PARAMETER_CALL__PARAMETER :
-				setParameter((ParameterImpl) newValue);
+				setParameter((Parameter) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -80,7 +85,7 @@ public class ParameterCallImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.PARAMETER_CALL__PARAMETER :
-				setParameter((ParameterImpl) null);
+				setParameter((Parameter) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -96,11 +101,11 @@ public class ParameterCallImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
 		result = (double) (0.0) ;
-		for (StackFrameImpl frame : turtle.getCallStack().getFrames()) {
-			for (VariableImpl var : frame.getVariables()) {
+		for (StackFrame frame : turtle.getCallStack().getFrames()) {
+			for (Variable var : frame.getVariables()) {
 				if (EqualService.equals((var.getName()), (this.getParameter().getName()))) {
 					result = (double) (var.getValue()) ;
 				}

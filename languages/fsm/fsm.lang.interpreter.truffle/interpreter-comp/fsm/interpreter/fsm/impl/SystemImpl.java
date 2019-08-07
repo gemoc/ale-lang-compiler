@@ -4,7 +4,10 @@ import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import fsm.interpreter.fsm.Buffer;
+import fsm.interpreter.fsm.FSM;
 import fsm.interpreter.fsm.FsmPackage;
+import fsm.interpreter.fsm.System;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
@@ -19,16 +22,16 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "System"
 )
-public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
-	protected EList<FSMImpl> ownedFsms;
+public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements System {
+	protected EList<FSM> ownedFsms;
 
-	protected EList<BufferImpl> ownedBuffers;
-
-	@Children
-	private BufferImpl[] ownedBuffersArr;
+	protected EList<Buffer> ownedBuffers;
 
 	@Children
-	private FSMImpl[] ownedFsmsArr;
+	private Buffer[] ownedBuffersArr;
+
+	@Children
+	private FSM[] ownedFsmsArr;
 
 	protected SystemImpl() {
 		super();
@@ -41,17 +44,17 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public EList<FSMImpl> getOwnedFsms() {
+	public EList<FSM> getOwnedFsms() {
 		if (ownedFsms == null) {
-			ownedFsms = new EObjectContainmentEList<FSMImpl>(FSMImpl.class, this, FsmPackage.SYSTEM__OWNED_FSMS);
+			ownedFsms = new EObjectContainmentEList<FSM>(FSM.class, this, FsmPackage.SYSTEM__OWNED_FSMS);
 		}
 		return ownedFsms;
 	}
 
 	@TruffleBoundary
-	public EList<BufferImpl> getOwnedBuffers() {
+	public EList<Buffer> getOwnedBuffers() {
 		if (ownedBuffers == null) {
-			ownedBuffers = new EObjectContainmentEList<BufferImpl>(BufferImpl.class, this, FsmPackage.SYSTEM__OWNED_BUFFERS);
+			ownedBuffers = new EObjectContainmentEList<Buffer>(Buffer.class, this, FsmPackage.SYSTEM__OWNED_BUFFERS);
 		}
 		return ownedBuffers;
 	}
@@ -87,11 +90,11 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		switch (featureID) {
 			case FsmPackage.SYSTEM__OWNED_FSMS :
 				getOwnedFsms().clear();
-				getOwnedFsms().addAll((Collection<? extends FSMImpl>) newValue);
+				getOwnedFsms().addAll((Collection<? extends FSM>) newValue);
 				return;
 			case FsmPackage.SYSTEM__OWNED_BUFFERS :
 				getOwnedBuffers().clear();
-				getOwnedBuffers().addAll((Collection<? extends BufferImpl>) newValue);
+				getOwnedBuffers().addAll((Collection<? extends Buffer>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -126,19 +129,19 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public void intialize() {
 		if (this.ownedBuffersArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.ownedBuffers != null) this.ownedBuffersArr = this.ownedBuffers.toArray(new BufferImpl[0]);
-			else this.ownedBuffersArr = new BufferImpl[] {};
+			if (this.ownedBuffers != null) this.ownedBuffersArr = this.ownedBuffers.toArray(new Buffer[0]);
+			else this.ownedBuffersArr = new Buffer[] {};
 		}
 		if (this.ownedFsmsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.ownedFsms != null) this.ownedFsmsArr = this.ownedFsms.toArray(new FSMImpl[0]);
-			else this.ownedFsmsArr = new FSMImpl[] {};
+			if (this.ownedFsms != null) this.ownedFsmsArr = this.ownedFsms.toArray(new FSM[0]);
+			else this.ownedFsmsArr = new FSM[] {};
 		}
-		for (FSMImpl fsm : this.ownedFsmsArr) {
-			((FSMImpl) (fsm)).initialize();
+		for (FSM fsm : this.ownedFsmsArr) {
+			((FSM) (fsm)).initialize();
 		}
-		for (BufferImpl b : this.ownedBuffersArr) {
-			((BufferImpl) (b)).initialize();
+		for (Buffer b : this.ownedBuffersArr) {
+			((Buffer) (b)).initialize();
 		}
 
 	}
@@ -146,22 +149,22 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public void main(int limit) {
 		if (this.ownedBuffersArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.ownedBuffers != null) this.ownedBuffersArr = this.ownedBuffers.toArray(new BufferImpl[0]);
-			else this.ownedBuffersArr = new BufferImpl[] {};
+			if (this.ownedBuffers != null) this.ownedBuffersArr = this.ownedBuffers.toArray(new Buffer[0]);
+			else this.ownedBuffersArr = new Buffer[] {};
 		}
 		if (this.ownedFsmsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.ownedFsms != null) this.ownedFsmsArr = this.ownedFsms.toArray(new FSMImpl[0]);
-			else this.ownedFsmsArr = new FSMImpl[] {};
+			if (this.ownedFsms != null) this.ownedFsmsArr = this.ownedFsms.toArray(new FSM[0]);
+			else this.ownedFsmsArr = new FSM[] {};
 		}
-		((SystemImpl) (this)).intialize();
+		((System) (this)).intialize();
 		boolean anFSMRan = ((boolean) (true));
 		int cptr = ((int) (0));
 		while (((anFSMRan) && ((cptr) < (limit)))) {
 			anFSMRan = false;
-			for (FSMImpl fsm : this.ownedFsmsArr) {
-				if (!(((BufferImpl) (fsm.getInputBuffer())).bisEmpty())) {
-					((FSMImpl) (fsm)).run();
+			for (FSM fsm : this.ownedFsmsArr) {
+				if (!(((Buffer) (fsm.getInputBuffer())).bisEmpty())) {
+					((FSM) (fsm)).run();
 					anFSMRan = true;
 				}
 				cptr = (cptr) + (1);

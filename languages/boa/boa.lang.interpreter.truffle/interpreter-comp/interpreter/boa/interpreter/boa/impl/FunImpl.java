@@ -5,6 +5,11 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalFunRes;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Expr;
+import interpreter.boa.interpreter.boa.Fun;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -17,13 +22,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Fun"
 )
-public class FunImpl extends ExprImpl {
+public class FunImpl extends ExprImpl implements Fun {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
 	@Child
-	protected ExprImpl body;
+	protected Expr body;
 
 	protected FunImpl() {
 		super();
@@ -49,13 +54,13 @@ public class FunImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getBody() {
+	public Expr getBody() {
 		return body;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetBody(ExprImpl newBody, NotificationChain msgs) {
-		ExprImpl oldBody = body;
+	public NotificationChain basicSetBody(Expr newBody, NotificationChain msgs) {
+		Expr oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.FUN__BODY, oldBody, newBody);
@@ -68,7 +73,7 @@ public class FunImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setBody(ExprImpl newBody) {
+	public void setBody(Expr newBody) {
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
@@ -113,7 +118,7 @@ public class FunImpl extends ExprImpl {
 				setName((String) newValue);
 				return;
 			case BoaPackage.FUN__BODY :
-				setBody((ExprImpl) newValue);
+				setBody((Expr) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -127,7 +132,7 @@ public class FunImpl extends ExprImpl {
 				setName(NAME_EDEFAULT);
 				return;
 			case BoaPackage.FUN__BODY :
-				setBody((ExprImpl) null);
+				setBody((Expr) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -145,13 +150,13 @@ public class FunImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		EvalFunResImpl ret = ((EvalFunResImpl) (BoaFactory.eINSTANCE.createEvalFunRes()));
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalFunRes ret = ((EvalFunRes) (BoaFactory.eINSTANCE.createEvalFunRes()));
 		ret.setExp(this.getBody());
 		ret.setCtx(ctx);
 		ret.setName(this.name);
-		result = (EvalResImpl) (ret) ;
+		result = (EvalRes) (ret) ;
 		return result;
 	}
 }

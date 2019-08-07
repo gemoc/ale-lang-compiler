@@ -1,16 +1,9 @@
 package interpreter.logo.interpreter.logo.language;
 
-import com.oracle.truffle.api.*;
-import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.interop.InteropLibrary;
-import com.oracle.truffle.api.interop.InvalidArrayIndexException;
-import com.oracle.truffle.api.interop.TruffleObject;
-import com.oracle.truffle.api.library.ExportLibrary;
-import com.oracle.truffle.api.library.ExportMessage;
-import com.oracle.truffle.api.nodes.RootNode;
-import kmLogo.interpreter.kmLogo.KmLogoPackage;
-import kmLogo.interpreter.kmLogo.impl.LogoProgramImpl;
-import kmLogo.interpreter.kmLogo.impl.TurtleImpl;
+import java.nio.charset.Charset;
+import java.util.Collections;
+import java.util.Map;
+
 import org.apache.commons.io.IOUtils;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -19,9 +12,22 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
-import java.nio.charset.Charset;
-import java.util.Collections;
-import java.util.Map;
+import com.oracle.truffle.api.CallTarget;
+import com.oracle.truffle.api.CompilerDirectives;
+import com.oracle.truffle.api.Scope;
+import com.oracle.truffle.api.Truffle;
+import com.oracle.truffle.api.TruffleLanguage;
+import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.interop.InteropLibrary;
+import com.oracle.truffle.api.interop.InvalidArrayIndexException;
+import com.oracle.truffle.api.interop.TruffleObject;
+import com.oracle.truffle.api.library.ExportLibrary;
+import com.oracle.truffle.api.library.ExportMessage;
+import com.oracle.truffle.api.nodes.RootNode;
+
+import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Turtle;
+import kmLogo.interpreter.kmLogo.impl.LogoProgramImpl;
 
 
 @TruffleLanguage.Registration(id = "trufflebench", name = "TruffleBench")
@@ -54,7 +60,7 @@ public class TrufflebenchLanguage extends TruffleLanguage<Ctx> {
         final RootNode main = new RootNode(this) {
             @Override
             public Object execute(VirtualFrame frame) {
-                final TurtleImpl eval = logoProgram.eval();
+                final Turtle eval = logoProgram.eval();
                 return eval.getDrawings().size();
             }
         };

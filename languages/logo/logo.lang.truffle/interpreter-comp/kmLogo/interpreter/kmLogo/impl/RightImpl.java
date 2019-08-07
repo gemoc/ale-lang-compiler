@@ -6,7 +6,10 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Right;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,9 +19,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Right"
 )
-public class RightImpl extends PrimitiveImpl {
+public class RightImpl extends PrimitiveImpl implements Right {
 	@Child
-	protected ExpressionImpl angle;
+	protected Expression angle;
 
 	protected RightImpl() {
 		super();
@@ -31,13 +34,13 @@ public class RightImpl extends PrimitiveImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getAngle() {
+	public Expression getAngle() {
 		return angle;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetAngle(ExpressionImpl newAngle, NotificationChain msgs) {
-		ExpressionImpl oldAngle = angle;
+	public NotificationChain basicSetAngle(Expression newAngle, NotificationChain msgs) {
+		Expression oldAngle = angle;
 		angle = newAngle;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.RIGHT__ANGLE, oldAngle, newAngle);
@@ -50,7 +53,7 @@ public class RightImpl extends PrimitiveImpl {
 	}
 
 	@TruffleBoundary
-	public void setAngle(ExpressionImpl newAngle) {
+	public void setAngle(Expression newAngle) {
 		if (newAngle != angle) {
 			NotificationChain msgs = null;
 			if (angle != null)
@@ -90,7 +93,7 @@ public class RightImpl extends PrimitiveImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.RIGHT__ANGLE :
-				setAngle((ExpressionImpl) newValue);
+				setAngle((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -101,7 +104,7 @@ public class RightImpl extends PrimitiveImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.RIGHT__ANGLE :
-				setAngle((ExpressionImpl) null);
+				setAngle((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -117,10 +120,10 @@ public class RightImpl extends PrimitiveImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
-		double angle = ((double) (((ExpressionImpl) (this.getAngle())).eval((TurtleImpl) (turtle))));
-		((TurtleImpl) (turtle)).rotate((Double) (-(angle)));
+		double angle = ((double) (((Expression) (this.getAngle())).eval((Turtle) (turtle))));
+		((Turtle) (turtle)).rotate((Double) (-(angle)));
 		result = (double) (0.0) ;
 		return result;
 	}

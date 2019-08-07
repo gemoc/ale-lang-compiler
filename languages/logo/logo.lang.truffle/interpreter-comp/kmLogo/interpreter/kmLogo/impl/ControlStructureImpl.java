@@ -5,6 +5,8 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.ControlStructure;
+import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -15,9 +17,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "ControlStructure"
 )
-public class ControlStructureImpl extends InstructionImpl {
+public class ControlStructureImpl extends InstructionImpl implements ControlStructure {
 	@Child
-	protected ExpressionImpl condition;
+	protected Expression condition;
 
 	protected ControlStructureImpl() {
 		super();
@@ -30,13 +32,13 @@ public class ControlStructureImpl extends InstructionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getCondition() {
+	public Expression getCondition() {
 		return condition;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetCondition(ExpressionImpl newCondition, NotificationChain msgs) {
-		ExpressionImpl oldCondition = condition;
+	public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
+		Expression oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.CONTROL_STRUCTURE__CONDITION, oldCondition, newCondition);
@@ -49,7 +51,7 @@ public class ControlStructureImpl extends InstructionImpl {
 	}
 
 	@TruffleBoundary
-	public void setCondition(ExpressionImpl newCondition) {
+	public void setCondition(Expression newCondition) {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
@@ -89,7 +91,7 @@ public class ControlStructureImpl extends InstructionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.CONTROL_STRUCTURE__CONDITION :
-				setCondition((ExpressionImpl) newValue);
+				setCondition((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -100,7 +102,7 @@ public class ControlStructureImpl extends InstructionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.CONTROL_STRUCTURE__CONDITION :
-				setCondition((ExpressionImpl) null);
+				setCondition((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);

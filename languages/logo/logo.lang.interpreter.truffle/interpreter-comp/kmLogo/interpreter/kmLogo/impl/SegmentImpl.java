@@ -4,6 +4,8 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.Override;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Point;
+import kmLogo.interpreter.kmLogo.Segment;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -11,10 +13,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-public class SegmentImpl extends MinimalEObjectImpl.Container {
-	protected PointImpl begin;
+public class SegmentImpl extends MinimalEObjectImpl.Container implements Segment {
+	protected Point begin;
 
-	protected PointImpl end;
+	protected Point end;
 
 	protected SegmentImpl() {
 		super();
@@ -27,13 +29,13 @@ public class SegmentImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public PointImpl getBegin() {
+	public Point getBegin() {
 		return begin;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetBegin(PointImpl newBegin, NotificationChain msgs) {
-		PointImpl oldBegin = begin;
+	public NotificationChain basicSetBegin(Point newBegin, NotificationChain msgs) {
+		Point oldBegin = begin;
 		begin = newBegin;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.SEGMENT__BEGIN, oldBegin, newBegin);
@@ -46,7 +48,7 @@ public class SegmentImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setBegin(PointImpl newBegin) {
+	public void setBegin(Point newBegin) {
 		if (newBegin != begin) {
 			NotificationChain msgs = null;
 			if (begin != null)
@@ -61,13 +63,13 @@ public class SegmentImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public PointImpl getEnd() {
+	public Point getEnd() {
 		return end;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetEnd(PointImpl newEnd, NotificationChain msgs) {
-		PointImpl oldEnd = end;
+	public NotificationChain basicSetEnd(Point newEnd, NotificationChain msgs) {
+		Point oldEnd = end;
 		end = newEnd;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.SEGMENT__END, oldEnd, newEnd);
@@ -80,7 +82,7 @@ public class SegmentImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setEnd(PointImpl newEnd) {
+	public void setEnd(Point newEnd) {
 		if (newEnd != end) {
 			NotificationChain msgs = null;
 			if (end != null)
@@ -124,10 +126,10 @@ public class SegmentImpl extends MinimalEObjectImpl.Container {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.SEGMENT__BEGIN :
-				setBegin((PointImpl) newValue);
+				setBegin((Point) newValue);
 				return;
 			case KmLogoPackage.SEGMENT__END :
-				setEnd((PointImpl) newValue);
+				setEnd((Point) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -138,10 +140,10 @@ public class SegmentImpl extends MinimalEObjectImpl.Container {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.SEGMENT__BEGIN :
-				setBegin((PointImpl) null);
+				setBegin((Point) null);
 				return;
 			case KmLogoPackage.SEGMENT__END :
-				setEnd((PointImpl) null);
+				setEnd((Point) null);
 				return;
 		}
 		super.eUnset(featureID);

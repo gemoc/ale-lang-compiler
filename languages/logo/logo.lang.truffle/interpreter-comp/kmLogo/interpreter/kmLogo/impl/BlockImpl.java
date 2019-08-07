@@ -7,7 +7,10 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import kmLogo.interpreter.kmLogo.Block;
+import kmLogo.interpreter.kmLogo.Instruction;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -18,11 +21,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
 @NodeInfo(
 		description = "Block"
 )
-public class BlockImpl extends InstructionImpl {
-	protected EList<InstructionImpl> instructions;
+public class BlockImpl extends InstructionImpl implements Block {
+	protected EList<Instruction> instructions;
 
 	@Children
-	private InstructionImpl[] instructionsArr;
+	private Instruction[] instructionsArr;
 
 	protected BlockImpl() {
 		super();
@@ -35,9 +38,9 @@ public class BlockImpl extends InstructionImpl {
 	}
 
 	@TruffleBoundary
-	public EList<InstructionImpl> getInstructions() {
+	public EList<Instruction> getInstructions() {
 		if (instructions == null) {
-			instructions = new EObjectContainmentEList<InstructionImpl>(InstructionImpl.class, this, KmLogoPackage.BLOCK__INSTRUCTIONS);
+			instructions = new EObjectContainmentEList<Instruction>(Instruction.class, this, KmLogoPackage.BLOCK__INSTRUCTIONS);
 		}
 		return instructions;
 	}
@@ -69,7 +72,7 @@ public class BlockImpl extends InstructionImpl {
 		switch (featureID) {
 			case KmLogoPackage.BLOCK__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends InstructionImpl>) newValue);
+				getInstructions().addAll((Collection<? extends Instruction>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -96,15 +99,15 @@ public class BlockImpl extends InstructionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
 		if (this.instructionsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new InstructionImpl[0]);
-			else this.instructionsArr = new InstructionImpl[] {};
+			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new Instruction[0]);
+			else this.instructionsArr = new Instruction[] {};
 		}
-		for (InstructionImpl inst : this.instructionsArr) {
-			((InstructionImpl) (inst)).eval((TurtleImpl) (turtle));
+		for (Instruction inst : this.instructionsArr) {
+			((Instruction) (inst)).eval((Turtle) (turtle));
 		}
 		result = (double) (0.0) ;
 

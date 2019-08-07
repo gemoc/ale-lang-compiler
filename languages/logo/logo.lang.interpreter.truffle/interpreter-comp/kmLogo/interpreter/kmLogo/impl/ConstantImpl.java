@@ -5,7 +5,9 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Constant;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -13,7 +15,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Constant"
 )
-public class ConstantImpl extends ExpressionImpl {
+public class ConstantImpl extends ExpressionImpl implements Constant {
 	protected static final double VALUE_EDEFAULT = 0.0;
 
 	protected double value = VALUE_EDEFAULT;
@@ -83,7 +85,7 @@ public class ConstantImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
 		result = (double) (this.value) ;
 		return result;

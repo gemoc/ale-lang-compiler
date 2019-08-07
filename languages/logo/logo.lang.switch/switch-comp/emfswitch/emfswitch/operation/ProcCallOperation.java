@@ -40,7 +40,7 @@ public class ProcCallOperation extends ExpressionOperation {
 		result = ((Double) (0.0));
 		if(this.it.getDeclaration() instanceof ProcDeclaration) {
 			ProcDeclaration decl = ((ProcDeclaration) (this.it.getDeclaration()));
-			((ProcDeclarationOperation) emfswitch.doSwitch(decl)).deval((Turtle) (turtle));
+			((ProcDeclarationOperation) emfswitch.doSwitch(decl)).eval((Turtle) (turtle));
 		}
 		turtle.getCallStack().getFrames().remove(newFrame);
 		return result;

@@ -5,6 +5,8 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.BinaryExp;
+import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -15,12 +17,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "BinaryExp"
 )
-public abstract class BinaryExpImpl extends ExpressionImpl {
+public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp {
 	@Child
-	protected ExpressionImpl lhs;
+	protected Expression lhs;
 
 	@Child
-	protected ExpressionImpl rhs;
+	protected Expression rhs;
 
 	protected BinaryExpImpl() {
 		super();
@@ -33,13 +35,13 @@ public abstract class BinaryExpImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getLhs() {
+	public Expression getLhs() {
 		return lhs;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetLhs(ExpressionImpl newLhs, NotificationChain msgs) {
-		ExpressionImpl oldLhs = lhs;
+	public NotificationChain basicSetLhs(Expression newLhs, NotificationChain msgs) {
+		Expression oldLhs = lhs;
 		lhs = newLhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.BINARY_EXP__LHS, oldLhs, newLhs);
@@ -52,7 +54,7 @@ public abstract class BinaryExpImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setLhs(ExpressionImpl newLhs) {
+	public void setLhs(Expression newLhs) {
 		if (newLhs != lhs) {
 			NotificationChain msgs = null;
 			if (lhs != null)
@@ -67,13 +69,13 @@ public abstract class BinaryExpImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getRhs() {
+	public Expression getRhs() {
 		return rhs;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetRhs(ExpressionImpl newRhs, NotificationChain msgs) {
-		ExpressionImpl oldRhs = rhs;
+	public NotificationChain basicSetRhs(Expression newRhs, NotificationChain msgs) {
+		Expression oldRhs = rhs;
 		rhs = newRhs;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.BINARY_EXP__RHS, oldRhs, newRhs);
@@ -86,7 +88,7 @@ public abstract class BinaryExpImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setRhs(ExpressionImpl newRhs) {
+	public void setRhs(Expression newRhs) {
 		if (newRhs != rhs) {
 			NotificationChain msgs = null;
 			if (rhs != null)
@@ -130,10 +132,10 @@ public abstract class BinaryExpImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.BINARY_EXP__LHS :
-				setLhs((ExpressionImpl) newValue);
+				setLhs((Expression) newValue);
 				return;
 			case KmLogoPackage.BINARY_EXP__RHS :
-				setRhs((ExpressionImpl) newValue);
+				setRhs((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -144,10 +146,10 @@ public abstract class BinaryExpImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.BINARY_EXP__LHS :
-				setLhs((ExpressionImpl) null);
+				setLhs((Expression) null);
 				return;
 			case KmLogoPackage.BINARY_EXP__RHS :
-				setRhs((ExpressionImpl) null);
+				setRhs((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);

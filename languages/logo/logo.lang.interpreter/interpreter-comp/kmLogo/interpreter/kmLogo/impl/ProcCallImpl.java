@@ -178,7 +178,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 		result = (double) (0.0) ;
 		if (this.getDeclaration() instanceof ProcDeclaration) {
 			ProcDeclaration decl = ((ProcDeclaration) (this.getDeclaration()));
-			((ProcDeclaration) (decl)).deval((Turtle) (turtle));
+			((ProcDeclaration) (decl)).eval((Turtle) (turtle));
 		}
 		turtle.getCallStack().getFrames().remove(newFrame);
 		return result;

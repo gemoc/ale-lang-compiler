@@ -43,7 +43,7 @@ public class ProcCallOperationImpl extends ExpressionOperationImpl implements Pr
 		result = ((Double) (0.0));
 		if(this.it.getDeclaration() instanceof ProcDeclaration) {
 			ProcDeclaration decl = ((ProcDeclaration) (this.it.getDeclaration()));
-			((ProcDeclarationOperation)decl.accept(vis)).deval((Turtle) (turtle));
+			((ProcDeclarationOperation)decl.accept(vis)).eval((Turtle) (turtle));
 		}
 		turtle.getCallStack().getFrames().remove(newFrame);
 		return result;

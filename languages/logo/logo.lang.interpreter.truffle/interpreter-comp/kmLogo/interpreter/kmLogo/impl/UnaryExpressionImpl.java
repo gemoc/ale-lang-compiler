@@ -5,7 +5,9 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.UnaryExpression;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,9 +17,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "UnaryExpression"
 )
-public abstract class UnaryExpressionImpl extends ExpressionImpl {
+public abstract class UnaryExpressionImpl extends ExpressionImpl implements UnaryExpression {
 	@Child
-	protected ExpressionImpl expression;
+	protected Expression expression;
 
 	protected UnaryExpressionImpl() {
 		super();
@@ -30,13 +32,13 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getExpression() {
+	public Expression getExpression() {
 		return expression;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetExpression(ExpressionImpl newExpression, NotificationChain msgs) {
-		ExpressionImpl oldExpression = expression;
+	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+		Expression oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.UNARY_EXPRESSION__EXPRESSION, oldExpression, newExpression);
@@ -49,7 +51,7 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setExpression(ExpressionImpl newExpression) {
+	public void setExpression(Expression newExpression) {
 		if (newExpression != expression) {
 			NotificationChain msgs = null;
 			if (expression != null)
@@ -89,7 +91,7 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.UNARY_EXPRESSION__EXPRESSION :
-				setExpression((ExpressionImpl) newValue);
+				setExpression((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -100,7 +102,7 @@ public abstract class UnaryExpressionImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.UNARY_EXPRESSION__EXPRESSION :
-				setExpression((ExpressionImpl) null);
+				setExpression((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);

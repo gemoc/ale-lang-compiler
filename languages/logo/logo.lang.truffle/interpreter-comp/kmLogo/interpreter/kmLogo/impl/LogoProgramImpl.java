@@ -7,8 +7,11 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import kmLogo.interpreter.kmLogo.Instruction;
 import kmLogo.interpreter.kmLogo.KmLogoFactory;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.LogoProgram;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -20,11 +23,11 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "LogoProgram"
 )
-public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
-	protected EList<InstructionImpl> instructions;
+public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements LogoProgram {
+	protected EList<Instruction> instructions;
 
 	@Children
-	private InstructionImpl[] instructionsArr;
+	private Instruction[] instructionsArr;
 
 	protected LogoProgramImpl() {
 		super();
@@ -37,9 +40,9 @@ public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer 
 	}
 
 	@TruffleBoundary
-	public EList<InstructionImpl> getInstructions() {
+	public EList<Instruction> getInstructions() {
 		if (instructions == null) {
-			instructions = new EObjectContainmentEList<InstructionImpl>(InstructionImpl.class, this, KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS);
+			instructions = new EObjectContainmentEList<Instruction>(Instruction.class, this, KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS);
 		}
 		return instructions;
 	}
@@ -71,7 +74,7 @@ public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer 
 		switch (featureID) {
 			case KmLogoPackage.LOGO_PROGRAM__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends InstructionImpl>) newValue);
+				getInstructions().addAll((Collection<? extends Instruction>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -98,37 +101,37 @@ public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer 
 		return super.eIsSet(featureID);
 	}
 
-	public TurtleImpl eval() {
-		TurtleImpl result;
+	public Turtle eval() {
+		Turtle result;
 		if (this.instructionsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new InstructionImpl[0]);
-			else this.instructionsArr = new InstructionImpl[] {};
+			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new Instruction[0]);
+			else this.instructionsArr = new Instruction[] {};
 		}
-		TurtleImpl turtle = ((TurtleImpl) (((LogoProgramImpl) (this)).createTurtle()));
-		result = (TurtleImpl) (turtle) ;
-		for (InstructionImpl it : this.instructionsArr) {
-			((InstructionImpl) (it)).eval((TurtleImpl) (turtle));
+		Turtle turtle = ((Turtle) (((LogoProgram) (this)).createTurtle()));
+		result = (Turtle) (turtle) ;
+		for (Instruction it : this.instructionsArr) {
+			((Instruction) (it)).eval((Turtle) (turtle));
 		}
-		result = (TurtleImpl) (turtle) ;
+		result = (Turtle) (turtle) ;
 
 		return result;
 	}
 
-	public TurtleImpl createTurtle() {
-		TurtleImpl result;
+	public Turtle createTurtle() {
+		Turtle result;
 		if (this.instructionsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new InstructionImpl[0]);
-			else this.instructionsArr = new InstructionImpl[] {};
+			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new Instruction[0]);
+			else this.instructionsArr = new Instruction[] {};
 		}
-		TurtleImpl turtle = ((TurtleImpl) (KmLogoFactory.eINSTANCE.createTurtle()));
+		Turtle turtle = ((Turtle) (KmLogoFactory.eINSTANCE.createTurtle()));
 		turtle.setPosition(KmLogoFactory.eINSTANCE.createPoint());
 		turtle.getPosition().setX(0.0);
 		turtle.getPosition().setY(0.0);
 		turtle.setCallStack(KmLogoFactory.eINSTANCE.createCallStack());
 		turtle.getCallStack().getFrames().add(KmLogoFactory.eINSTANCE.createStackFrame());
-		result = (TurtleImpl) (turtle) ;
+		result = (Turtle) (turtle) ;
 
 		return result;
 	}

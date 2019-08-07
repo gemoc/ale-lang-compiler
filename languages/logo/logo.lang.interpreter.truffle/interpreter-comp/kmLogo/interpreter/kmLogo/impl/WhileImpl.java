@@ -5,7 +5,11 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import kmLogo.interpreter.kmLogo.Block;
+import kmLogo.interpreter.kmLogo.Expression;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Turtle;
+import kmLogo.interpreter.kmLogo.While;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,9 +19,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "While"
 )
-public class WhileImpl extends ControlStructureImpl {
+public class WhileImpl extends ControlStructureImpl implements While {
 	@Child
-	protected BlockImpl block;
+	protected Block block;
 
 	protected WhileImpl() {
 		super();
@@ -30,13 +34,13 @@ public class WhileImpl extends ControlStructureImpl {
 	}
 
 	@TruffleBoundary
-	public BlockImpl getBlock() {
+	public Block getBlock() {
 		return block;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetBlock(BlockImpl newBlock, NotificationChain msgs) {
-		BlockImpl oldBlock = block;
+	public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
+		Block oldBlock = block;
 		block = newBlock;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.WHILE__BLOCK, oldBlock, newBlock);
@@ -49,7 +53,7 @@ public class WhileImpl extends ControlStructureImpl {
 	}
 
 	@TruffleBoundary
-	public void setBlock(BlockImpl newBlock) {
+	public void setBlock(Block newBlock) {
 		if (newBlock != block) {
 			NotificationChain msgs = null;
 			if (block != null)
@@ -89,7 +93,7 @@ public class WhileImpl extends ControlStructureImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.WHILE__BLOCK :
-				setBlock((BlockImpl) newValue);
+				setBlock((Block) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -100,7 +104,7 @@ public class WhileImpl extends ControlStructureImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.WHILE__BLOCK :
-				setBlock((BlockImpl) null);
+				setBlock((Block) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -116,10 +120,10 @@ public class WhileImpl extends ControlStructureImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
-		while ((((ExpressionImpl) (this.condition)).eval((TurtleImpl) (turtle))) > (0.0)) {
-			((BlockImpl) (this.getBlock())).eval((TurtleImpl) (turtle));
+		while ((((Expression) (this.condition)).eval((Turtle) (turtle))) > (0.0)) {
+			((Block) (this.getBlock())).eval((Turtle) (turtle));
 		}
 		result = (double) (0.0) ;
 		return result;

@@ -175,10 +175,4 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
 		}
 		return result;
 	}
-
-	public double deval(Turtle turtle) {
-		double result;
-		result = (double) (((ProcDeclaration) (this)).eval((Turtle) (turtle))) ;
-		return result;
-	}
 }

@@ -80,7 +80,7 @@ public class ProcCallOpImpl extends ExpressionOpImpl implements ProcCallOp {
     result = ((Double) (0.0));
     if(this.obj.getDeclaration() instanceof ProcDeclaration) {
       ProcDeclaration decl = ((ProcDeclaration) (this.obj.getDeclaration()));
-      rev.$((ProcDeclaration)decl).deval(((Turtle) (turtle)));
+      rev.$((ProcDeclaration)decl).eval(((Turtle) (turtle)));
     }
     turtle.getCallStack().getFrames().remove(newFrame);
     return result;

@@ -3,6 +3,7 @@ package interpreter.boa.interpreter.boa.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.EvalIntRes;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
@@ -13,7 +14,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "EvalIntRes"
 )
-public class EvalIntResImpl extends EvalResImpl {
+public class EvalIntResImpl extends EvalResImpl implements EvalIntRes {
 	protected static final int VALUE_EDEFAULT = 0;
 
 	protected int value = VALUE_EDEFAULT;

@@ -1,7 +1,6 @@
 package kmLogo.interpreter.kmLogo.impl;
 
 import com.oracle.truffle.api.CompilerDirectives;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
@@ -9,7 +8,12 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Collection;
+import kmLogo.interpreter.kmLogo.Instruction;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Parameter;
+import kmLogo.interpreter.kmLogo.ProcCall;
+import kmLogo.interpreter.kmLogo.ProcDeclaration;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -23,26 +27,22 @@ import org.eclipse.emf.ecore.util.InternalEList;
 @NodeInfo(
 		description = "ProcDeclaration"
 )
-public class ProcDeclarationImpl extends InstructionImpl {
+public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclaration {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
-	protected EList<ParameterImpl> args;
+	protected EList<Parameter> args;
 
-	protected EList<ProcCallImpl> procCall;
+	protected EList<ProcCall> procCall;
 
-	protected EList<InstructionImpl> instructions;
+	protected EList<Instruction> instructions;
 
 	@Children
-	private InstructionImpl[] instructionsArr;
-
-	@CompilationFinal
-	private ProcDeclarationDispatchWrapperDeval cachedDeval;
+	private Instruction[] instructionsArr;
 
 	protected ProcDeclarationImpl() {
 		super();
-		this.cachedDeval = new kmLogo.interpreter.kmLogo.impl.ProcDeclarationDispatchWrapperDeval(this);
 	}
 
 	@Override
@@ -65,25 +65,25 @@ public class ProcDeclarationImpl extends InstructionImpl {
 	}
 
 	@TruffleBoundary
-	public EList<ParameterImpl> getArgs() {
+	public EList<Parameter> getArgs() {
 		if (args == null) {
-			args = new EObjectContainmentEList<ParameterImpl>(ParameterImpl.class, this, KmLogoPackage.PROC_DECLARATION__ARGS);
+			args = new EObjectContainmentEList<Parameter>(Parameter.class, this, KmLogoPackage.PROC_DECLARATION__ARGS);
 		}
 		return args;
 	}
 
 	@TruffleBoundary
-	public EList<ProcCallImpl> getProcCall() {
+	public EList<ProcCall> getProcCall() {
 		if (procCall == null) {
-			procCall = new EObjectWithInverseResolvingEList<ProcCallImpl>(ProcCallImpl.class, this, KmLogoPackage.PROC_DECLARATION__PROC_CALL, KmLogoPackage.PROC_CALL__DECLARATION);
+			procCall = new EObjectWithInverseResolvingEList<ProcCall>(ProcCall.class, this, KmLogoPackage.PROC_DECLARATION__PROC_CALL, KmLogoPackage.PROC_CALL__DECLARATION);
 		}
 		return procCall;
 	}
 
 	@TruffleBoundary
-	public EList<InstructionImpl> getInstructions() {
+	public EList<Instruction> getInstructions() {
 		if (instructions == null) {
-			instructions = new EObjectContainmentEList<InstructionImpl>(InstructionImpl.class, this, KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS);
+			instructions = new EObjectContainmentEList<Instruction>(Instruction.class, this, KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS);
 		}
 		return instructions;
 	}
@@ -139,15 +139,15 @@ public class ProcDeclarationImpl extends InstructionImpl {
 				return;
 			case KmLogoPackage.PROC_DECLARATION__ARGS :
 				getArgs().clear();
-				getArgs().addAll((Collection<? extends ParameterImpl>) newValue);
+				getArgs().addAll((Collection<? extends Parameter>) newValue);
 				return;
 			case KmLogoPackage.PROC_DECLARATION__PROC_CALL :
 				getProcCall().clear();
-				getProcCall().addAll((Collection<? extends ProcCallImpl>) newValue);
+				getProcCall().addAll((Collection<? extends ProcCall>) newValue);
 				return;
 			case KmLogoPackage.PROC_DECLARATION__INSTRUCTIONS :
 				getInstructions().clear();
-				getInstructions().addAll((Collection<? extends InstructionImpl>) newValue);
+				getInstructions().addAll((Collection<? extends Instruction>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -189,34 +189,18 @@ public class ProcDeclarationImpl extends InstructionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public double eval(TurtleImpl turtle) {
+	public double eval(Turtle turtle) {
 		double result;
 		if (this.instructionsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new InstructionImpl[0]);
-			else this.instructionsArr = new InstructionImpl[] {};
+			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new Instruction[0]);
+			else this.instructionsArr = new Instruction[] {};
 		}
 		result = (double) (0.0) ;
-		for (InstructionImpl instr : this.instructionsArr) {
-			result = (double) (((InstructionImpl) (instr)).eval((TurtleImpl) (turtle))) ;
+		for (Instruction instr : this.instructionsArr) {
+			result = (double) (((Instruction) (instr)).eval((Turtle) (turtle))) ;
 		}
 
 		return result;
-	}
-
-	public double deval(TurtleImpl turtle) {
-		double result;
-		if (this.instructionsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new InstructionImpl[0]);
-			else this.instructionsArr = new InstructionImpl[] {};
-		}
-		result = (double) (((ProcDeclarationImpl) (this)).eval((TurtleImpl) (turtle))) ;
-
-		return result;
-	}
-
-	public ProcDeclarationDispatchWrapperDeval getCachedDeval() {
-		return this.cachedDeval;
 	}
 }

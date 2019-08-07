@@ -3,6 +3,7 @@ package interpreter.boa.interpreter.boa.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.EvalRes;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -18,12 +19,12 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "StringToEvalResMap"
 )
-public class StringToEvalResMapImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements BasicEMap.Entry<String, EvalResImpl> {
+public class StringToEvalResMapImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements BasicEMap.Entry<String, EvalRes> {
 	protected static final String KEY_EDEFAULT = null;
 
 	protected String key = KEY_EDEFAULT;
 
-	protected EvalResImpl value;
+	protected EvalRes value;
 
 	protected int hash = -1;
 
@@ -51,10 +52,10 @@ public class StringToEvalResMapImpl extends MinimalTruffleEObjectImpl.TruffleCon
 	}
 
 	@TruffleBoundary
-	public EvalResImpl getTypedValue() {
+	public EvalRes getTypedValue() {
 		if (value != null && value.eIsProxy()) {
 			InternalEObject oldValue = (InternalEObject) value;
-			value = (EvalResImpl) eResolveProxy(oldValue);
+			value = (EvalRes) eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE, oldValue, value));
@@ -63,13 +64,13 @@ public class StringToEvalResMapImpl extends MinimalTruffleEObjectImpl.TruffleCon
 		return value;
 	}
 
-	public EvalResImpl basicGetTypedValue() {
+	public EvalRes basicGetTypedValue() {
 		return value;
 	}
 
 	@TruffleBoundary
-	public void setTypedValue(EvalResImpl newValue) {
-		EvalResImpl oldValue = value;
+	public void setTypedValue(EvalRes newValue) {
+		EvalRes oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE, oldValue, value));
@@ -97,7 +98,7 @@ public class StringToEvalResMapImpl extends MinimalTruffleEObjectImpl.TruffleCon
 				setTypedKey((String) newValue);
 				return;
 			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE :
-				setTypedValue((EvalResImpl) newValue);
+				setTypedValue((EvalRes) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -111,7 +112,7 @@ public class StringToEvalResMapImpl extends MinimalTruffleEObjectImpl.TruffleCon
 				setTypedKey(KEY_EDEFAULT);
 				return;
 			case BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE :
-				setTypedValue((EvalResImpl) null);
+				setTypedValue((EvalRes) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -151,19 +152,19 @@ public class StringToEvalResMapImpl extends MinimalTruffleEObjectImpl.TruffleCon
 		setTypedKey(key);
 	}
 
-	public EvalResImpl getValue() {
+	public EvalRes getValue() {
 		return getTypedValue();
 	}
 
-	public EvalResImpl setValue(EvalResImpl value) {
-		EvalResImpl oldValue = getValue();
+	public EvalRes setValue(EvalRes value) {
+		EvalRes oldValue = getValue();
 		setTypedValue(value);
 		return oldValue;
 	}
 
 	@TruffleBoundary
-	public EMap<String, EvalResImpl> getEMap() {
+	public EMap<String, EvalRes> getEMap() {
 		EObject container = eContainer();
-		return container == null ? null : (EMap<String, EvalResImpl>)container.eGet(eContainmentFeature());
+		return container == null ? null : (EMap<String, EvalRes>)container.eGet(eContainmentFeature());
 	}
 }

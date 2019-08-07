@@ -5,6 +5,8 @@ import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.StackFrame;
+import kmLogo.interpreter.kmLogo.Variable;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -13,8 +15,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-public class StackFrameImpl extends MinimalEObjectImpl.Container {
-	protected EList<VariableImpl> variables;
+public class StackFrameImpl extends MinimalEObjectImpl.Container implements StackFrame {
+	protected EList<Variable> variables;
 
 	protected StackFrameImpl() {
 		super();
@@ -27,9 +29,9 @@ public class StackFrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public EList<VariableImpl> getVariables() {
+	public EList<Variable> getVariables() {
 		if (variables == null) {
-			variables = new EObjectContainmentEList<VariableImpl>(VariableImpl.class, this, KmLogoPackage.STACK_FRAME__VARIABLES);
+			variables = new EObjectContainmentEList<Variable>(Variable.class, this, KmLogoPackage.STACK_FRAME__VARIABLES);
 		}
 		return variables;
 	}
@@ -61,7 +63,7 @@ public class StackFrameImpl extends MinimalEObjectImpl.Container {
 		switch (featureID) {
 			case KmLogoPackage.STACK_FRAME__VARIABLES :
 				getVariables().clear();
-				getVariables().addAll((Collection<? extends VariableImpl>) newValue);
+				getVariables().addAll((Collection<? extends Variable>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

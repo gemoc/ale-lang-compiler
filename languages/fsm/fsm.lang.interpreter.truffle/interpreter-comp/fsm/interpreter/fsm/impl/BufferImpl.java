@@ -3,6 +3,8 @@ package fsm.interpreter.fsm.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.FsmService;
+import fsm.interpreter.fsm.Buffer;
+import fsm.interpreter.fsm.FSM;
 import fsm.interpreter.fsm.FsmPackage;
 import java.lang.Integer;
 import java.lang.Object;
@@ -20,7 +22,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "Buffer"
 )
-public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Buffer {
 	protected static final String INITIALVALUE_EDEFAULT = null;
 
 	protected static final String NAME_EDEFAULT = null;
@@ -33,9 +35,9 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 
 	protected String currentValues = CURRENTVALUES_EDEFAULT;
 
-	protected FSMImpl outgoingFSM;
+	protected FSM outgoingFSM;
 
-	protected FSMImpl incomingFSM;
+	protected FSM incomingFSM;
 
 	protected BufferImpl() {
 		super();
@@ -61,10 +63,10 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public FSMImpl getOutgoingFSM() {
+	public FSM getOutgoingFSM() {
 		if (outgoingFSM != null && outgoingFSM.eIsProxy()) {
 			InternalEObject oldOutgoingFSM = (InternalEObject) outgoingFSM;
-			outgoingFSM = (FSMImpl) eResolveProxy(oldOutgoingFSM);
+			outgoingFSM = (FSM) eResolveProxy(oldOutgoingFSM);
 			if (outgoingFSM != oldOutgoingFSM) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FsmPackage.BUFFER__OUTGOING_FSM, oldOutgoingFSM, outgoingFSM));
@@ -73,13 +75,13 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		return outgoingFSM;
 	}
 
-	public FSMImpl basicGetOutgoingFSM() {
+	public FSM basicGetOutgoingFSM() {
 		return outgoingFSM;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetOutgoingFSM(FSMImpl newOutgoingFSM, NotificationChain msgs) {
-		FSMImpl oldOutgoingFSM = outgoingFSM;
+	public NotificationChain basicSetOutgoingFSM(FSM newOutgoingFSM, NotificationChain msgs) {
+		FSM oldOutgoingFSM = outgoingFSM;
 		outgoingFSM = newOutgoingFSM;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FsmPackage.BUFFER__OUTGOING_FSM, oldOutgoingFSM, newOutgoingFSM);
@@ -92,13 +94,13 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public void setOutgoingFSM(FSMImpl newOutgoingFSM) {
+	public void setOutgoingFSM(FSM newOutgoingFSM) {
 		if (newOutgoingFSM != outgoingFSM) {
 			NotificationChain msgs = null;
 			if (outgoingFSM != null)
-				msgs = ((InternalEObject) outgoingFSM).eInverseRemove(this, FsmPackage.FSM__INPUT_BUFFER, FSMImpl.class, msgs);
+				msgs = ((InternalEObject) outgoingFSM).eInverseRemove(this, FsmPackage.FSM__INPUT_BUFFER, FSM.class, msgs);
 			if (newOutgoingFSM != null)
-				msgs = ((InternalEObject) newOutgoingFSM).eInverseAdd(this, FsmPackage.FSM__INPUT_BUFFER, FSMImpl.class, msgs);
+				msgs = ((InternalEObject) newOutgoingFSM).eInverseAdd(this, FsmPackage.FSM__INPUT_BUFFER, FSM.class, msgs);
 			msgs = basicSetOutgoingFSM(newOutgoingFSM, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -107,10 +109,10 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public FSMImpl getIncomingFSM() {
+	public FSM getIncomingFSM() {
 		if (incomingFSM != null && incomingFSM.eIsProxy()) {
 			InternalEObject oldIncomingFSM = (InternalEObject) incomingFSM;
-			incomingFSM = (FSMImpl) eResolveProxy(oldIncomingFSM);
+			incomingFSM = (FSM) eResolveProxy(oldIncomingFSM);
 			if (incomingFSM != oldIncomingFSM) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FsmPackage.BUFFER__INCOMING_FSM, oldIncomingFSM, incomingFSM));
@@ -119,13 +121,13 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		return incomingFSM;
 	}
 
-	public FSMImpl basicGetIncomingFSM() {
+	public FSM basicGetIncomingFSM() {
 		return incomingFSM;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetIncomingFSM(FSMImpl newIncomingFSM, NotificationChain msgs) {
-		FSMImpl oldIncomingFSM = incomingFSM;
+	public NotificationChain basicSetIncomingFSM(FSM newIncomingFSM, NotificationChain msgs) {
+		FSM oldIncomingFSM = incomingFSM;
 		incomingFSM = newIncomingFSM;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FsmPackage.BUFFER__INCOMING_FSM, oldIncomingFSM, newIncomingFSM);
@@ -138,13 +140,13 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public void setIncomingFSM(FSMImpl newIncomingFSM) {
+	public void setIncomingFSM(FSM newIncomingFSM) {
 		if (newIncomingFSM != incomingFSM) {
 			NotificationChain msgs = null;
 			if (incomingFSM != null)
-				msgs = ((InternalEObject) incomingFSM).eInverseRemove(this, FsmPackage.FSM__OUTPUT_BUFFER, FSMImpl.class, msgs);
+				msgs = ((InternalEObject) incomingFSM).eInverseRemove(this, FsmPackage.FSM__OUTPUT_BUFFER, FSM.class, msgs);
 			if (newIncomingFSM != null)
-				msgs = ((InternalEObject) newIncomingFSM).eInverseAdd(this, FsmPackage.FSM__OUTPUT_BUFFER, FSMImpl.class, msgs);
+				msgs = ((InternalEObject) newIncomingFSM).eInverseAdd(this, FsmPackage.FSM__OUTPUT_BUFFER, FSM.class, msgs);
 			msgs = basicSetIncomingFSM(newIncomingFSM, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -185,12 +187,12 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		switch (featureID) {
 			case FsmPackage.BUFFER__OUTGOING_FSM :
 				if (outgoingFSM != null)
-					msgs = ((InternalEObject) outgoingFSM).eInverseRemove(this, FsmPackage.FSM__INPUT_BUFFER, FSMImpl.class, msgs);
-				return basicSetOutgoingFSM((FSMImpl) otherEnd, msgs);
+					msgs = ((InternalEObject) outgoingFSM).eInverseRemove(this, FsmPackage.FSM__INPUT_BUFFER, FSM.class, msgs);
+				return basicSetOutgoingFSM((FSM) otherEnd, msgs);
 			case FsmPackage.BUFFER__INCOMING_FSM :
 				if (incomingFSM != null)
-					msgs = ((InternalEObject) incomingFSM).eInverseRemove(this, FsmPackage.FSM__OUTPUT_BUFFER, FSMImpl.class, msgs);
-				return basicSetIncomingFSM((FSMImpl) otherEnd, msgs);
+					msgs = ((InternalEObject) incomingFSM).eInverseRemove(this, FsmPackage.FSM__OUTPUT_BUFFER, FSM.class, msgs);
+				return basicSetIncomingFSM((FSM) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -238,10 +240,10 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 				setInitialValue((String) newValue);
 				return;
 			case FsmPackage.BUFFER__OUTGOING_FSM :
-				setOutgoingFSM((FSMImpl) newValue);
+				setOutgoingFSM((FSM) newValue);
 				return;
 			case FsmPackage.BUFFER__INCOMING_FSM :
-				setIncomingFSM((FSMImpl) newValue);
+				setIncomingFSM((FSM) newValue);
 				return;
 			case FsmPackage.BUFFER__NAME :
 				setName((String) newValue);
@@ -261,10 +263,10 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 				setInitialValue(INITIALVALUE_EDEFAULT);
 				return;
 			case FsmPackage.BUFFER__OUTGOING_FSM :
-				setOutgoingFSM((FSMImpl) null);
+				setOutgoingFSM((FSM) null);
 				return;
 			case FsmPackage.BUFFER__INCOMING_FSM :
-				setIncomingFSM((FSMImpl) null);
+				setIncomingFSM((FSM) null);
 				return;
 			case FsmPackage.BUFFER__NAME :
 				setName(NAME_EDEFAULT);
@@ -310,7 +312,7 @@ public class BufferImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	public void enqueue(String v) {
-		if (((BufferImpl) (this)).bisEmpty()) {
+		if (((Buffer) (this)).bisEmpty()) {
 			this.setCurrentValues(v);
 		}
 		else {

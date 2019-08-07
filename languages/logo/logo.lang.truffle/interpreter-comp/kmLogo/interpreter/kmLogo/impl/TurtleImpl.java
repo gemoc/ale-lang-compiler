@@ -6,8 +6,12 @@ import java.lang.Double;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import kmLogo.interpreter.kmLogo.CallStack;
 import kmLogo.interpreter.kmLogo.KmLogoFactory;
 import kmLogo.interpreter.kmLogo.KmLogoPackage;
+import kmLogo.interpreter.kmLogo.Point;
+import kmLogo.interpreter.kmLogo.Segment;
+import kmLogo.interpreter.kmLogo.Turtle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -19,7 +23,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices;
 
-public class TurtleImpl extends MinimalEObjectImpl.Container {
+public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 	protected static final double HEADING_EDEFAULT = 0.0;
 
 	protected static final boolean PENUP_EDEFAULT = false;
@@ -28,11 +32,11 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 
 	protected boolean penUp = PENUP_EDEFAULT;
 
-	protected PointImpl position;
+	protected Point position;
 
-	protected EList<SegmentImpl> drawings;
+	protected EList<Segment> drawings;
 
-	protected CallStackImpl callStack;
+	protected CallStack callStack;
 
 	protected TurtleImpl() {
 		super();
@@ -45,13 +49,13 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public PointImpl getPosition() {
+	public Point getPosition() {
 		return position;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetPosition(PointImpl newPosition, NotificationChain msgs) {
-		PointImpl oldPosition = position;
+	public NotificationChain basicSetPosition(Point newPosition, NotificationChain msgs) {
+		Point oldPosition = position;
 		position = newPosition;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.TURTLE__POSITION, oldPosition, newPosition);
@@ -64,7 +68,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setPosition(PointImpl newPosition) {
+	public void setPosition(Point newPosition) {
 		if (newPosition != position) {
 			NotificationChain msgs = null;
 			if (position != null)
@@ -105,21 +109,21 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public EList<SegmentImpl> getDrawings() {
+	public EList<Segment> getDrawings() {
 		if (drawings == null) {
-			drawings = new EObjectContainmentEList<SegmentImpl>(SegmentImpl.class, this, KmLogoPackage.TURTLE__DRAWINGS);
+			drawings = new EObjectContainmentEList<Segment>(Segment.class, this, KmLogoPackage.TURTLE__DRAWINGS);
 		}
 		return drawings;
 	}
 
 	@TruffleBoundary
-	public CallStackImpl getCallStack() {
+	public CallStack getCallStack() {
 		return callStack;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetCallStack(CallStackImpl newCallStack, NotificationChain msgs) {
-		CallStackImpl oldCallStack = callStack;
+	public NotificationChain basicSetCallStack(CallStack newCallStack, NotificationChain msgs) {
+		CallStack oldCallStack = callStack;
 		callStack = newCallStack;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KmLogoPackage.TURTLE__CALL_STACK, oldCallStack, newCallStack);
@@ -132,7 +136,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setCallStack(CallStackImpl newCallStack) {
+	public void setCallStack(CallStack newCallStack) {
 		if (newCallStack != callStack) {
 			NotificationChain msgs = null;
 			if (callStack != null)
@@ -184,7 +188,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case KmLogoPackage.TURTLE__POSITION :
-				setPosition((PointImpl) newValue);
+				setPosition((Point) newValue);
 				return;
 			case KmLogoPackage.TURTLE__HEADING :
 				setHeading((Double) newValue);
@@ -194,10 +198,10 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 				return;
 			case KmLogoPackage.TURTLE__DRAWINGS :
 				getDrawings().clear();
-				getDrawings().addAll((Collection<? extends SegmentImpl>) newValue);
+				getDrawings().addAll((Collection<? extends Segment>) newValue);
 				return;
 			case KmLogoPackage.TURTLE__CALL_STACK :
-				setCallStack((CallStackImpl) newValue);
+				setCallStack((CallStack) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -208,7 +212,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case KmLogoPackage.TURTLE__POSITION :
-				setPosition((PointImpl) null);
+				setPosition((Point) null);
 				return;
 			case KmLogoPackage.TURTLE__HEADING :
 				setHeading(HEADING_EDEFAULT);
@@ -220,7 +224,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 				getDrawings().clear();
 				return;
 			case KmLogoPackage.TURTLE__CALL_STACK :
-				setCallStack((CallStackImpl) null);
+				setCallStack((CallStack) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -246,18 +250,18 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 
 	@TruffleBoundary
 	public void move(double dx, double dy) {
-		PointImpl newPos = ((PointImpl) (KmLogoFactory.eINSTANCE.createPoint()));
+		Point newPos = ((Point) (KmLogoFactory.eINSTANCE.createPoint()));
 		newPos.setX((this.getPosition().getX()) + (dx));
 		newPos.setY((this.getPosition().getY()) + (dy));
 		if (this.penUp) {
 		}
 		else {
-			SegmentImpl newSegment = ((SegmentImpl) (KmLogoFactory.eINSTANCE.createSegment()));
+			Segment newSegment = ((Segment) (KmLogoFactory.eINSTANCE.createSegment()));
 			newSegment.setBegin(this.getPosition());
 			newSegment.setEnd(newPos);
 			this.getDrawings().add(newSegment);
 		}
-		PointImpl newPosCopy = ((PointImpl) (KmLogoFactory.eINSTANCE.createPoint()));
+		Point newPosCopy = ((Point) (KmLogoFactory.eINSTANCE.createPoint()));
 		newPosCopy.setX(newPos.getX());
 		newPosCopy.setY(newPos.getY());
 		this.setPosition(newPosCopy);
@@ -265,7 +269,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container {
 
 	@TruffleBoundary
 	public void forward(double steps) {
-		((TurtleImpl) (this)).move((Double) ((steps) * (TrigoServices.cosinus((double) (this.heading)))), (Double) ((steps) * (TrigoServices.sinus((double) (this.heading)))));
+		((Turtle) (this)).move((Double) ((steps) * (TrigoServices.cosinus((double) (this.heading)))), (Double) ((steps) * (TrigoServices.sinus((double) (this.heading)))));
 	}
 
 	@TruffleBoundary

@@ -3,6 +3,9 @@ package interpreter.boa.interpreter.boa.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalFunRes;
+import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -14,14 +17,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "EvalFunRes"
 )
-public class EvalFunResImpl extends EvalResImpl {
+public class EvalFunResImpl extends EvalResImpl implements EvalFunRes {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
-	protected ExprImpl exp;
+	protected Expr exp;
 
-	protected CtxImpl ctx;
+	protected Ctx ctx;
 
 	protected EvalFunResImpl() {
 		super();
@@ -34,10 +37,10 @@ public class EvalFunResImpl extends EvalResImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getExp() {
+	public Expr getExp() {
 		if (exp != null && exp.eIsProxy()) {
 			InternalEObject oldExp = (InternalEObject) exp;
-			exp = (ExprImpl) eResolveProxy(oldExp);
+			exp = (Expr) eResolveProxy(oldExp);
 			if (exp != oldExp) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.EVAL_FUN_RES__EXP, oldExp, exp));
@@ -46,23 +49,23 @@ public class EvalFunResImpl extends EvalResImpl {
 		return exp;
 	}
 
-	public ExprImpl basicGetExp() {
+	public Expr basicGetExp() {
 		return exp;
 	}
 
 	@TruffleBoundary
-	public void setExp(ExprImpl newExp) {
-		ExprImpl oldExp = exp;
+	public void setExp(Expr newExp) {
+		Expr oldExp = exp;
 		exp = newExp;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.EVAL_FUN_RES__EXP, oldExp, exp));
 	}
 
 	@TruffleBoundary
-	public CtxImpl getCtx() {
+	public Ctx getCtx() {
 		if (ctx != null && ctx.eIsProxy()) {
 			InternalEObject oldCtx = (InternalEObject) ctx;
-			ctx = (CtxImpl) eResolveProxy(oldCtx);
+			ctx = (Ctx) eResolveProxy(oldCtx);
 			if (ctx != oldCtx) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.EVAL_FUN_RES__CTX, oldCtx, ctx));
@@ -71,13 +74,13 @@ public class EvalFunResImpl extends EvalResImpl {
 		return ctx;
 	}
 
-	public CtxImpl basicGetCtx() {
+	public Ctx basicGetCtx() {
 		return ctx;
 	}
 
 	@TruffleBoundary
-	public void setCtx(CtxImpl newCtx) {
-		CtxImpl oldCtx = ctx;
+	public void setCtx(Ctx newCtx) {
+		Ctx oldCtx = ctx;
 		ctx = newCtx;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, BoaPackage.EVAL_FUN_RES__CTX, oldCtx, ctx));
@@ -119,10 +122,10 @@ public class EvalFunResImpl extends EvalResImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.EVAL_FUN_RES__EXP :
-				setExp((ExprImpl) newValue);
+				setExp((Expr) newValue);
 				return;
 			case BoaPackage.EVAL_FUN_RES__CTX :
-				setCtx((CtxImpl) newValue);
+				setCtx((Ctx) newValue);
 				return;
 			case BoaPackage.EVAL_FUN_RES__NAME :
 				setName((String) newValue);
@@ -136,10 +139,10 @@ public class EvalFunResImpl extends EvalResImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.EVAL_FUN_RES__EXP :
-				setExp((ExprImpl) null);
+				setExp((Expr) null);
 				return;
 			case BoaPackage.EVAL_FUN_RES__CTX :
-				setCtx((CtxImpl) null);
+				setCtx((Ctx) null);
 				return;
 			case BoaPackage.EVAL_FUN_RES__NAME :
 				setName(NAME_EDEFAULT);

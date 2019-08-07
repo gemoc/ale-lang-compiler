@@ -2,7 +2,11 @@ package fsm.interpreter.fsm.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
+import fsm.interpreter.fsm.Buffer;
+import fsm.interpreter.fsm.FSM;
 import fsm.interpreter.fsm.FsmPackage;
+import fsm.interpreter.fsm.State;
+import fsm.interpreter.fsm.Transition;
 import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import java.lang.Override;
@@ -19,7 +23,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "Transition"
 )
-public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Transition {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected static final String TRIGGER_EDEFAULT = null;
@@ -32,9 +36,9 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 
 	protected String action = ACTION_EDEFAULT;
 
-	protected StateImpl tgt;
+	protected State tgt;
 
-	protected StateImpl src;
+	protected State src;
 
 	protected TransitionImpl() {
 		super();
@@ -47,10 +51,10 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public StateImpl getTgt() {
+	public State getTgt() {
 		if (tgt != null && tgt.eIsProxy()) {
 			InternalEObject oldTgt = (InternalEObject) tgt;
-			tgt = (StateImpl) eResolveProxy(oldTgt);
+			tgt = (State) eResolveProxy(oldTgt);
 			if (tgt != oldTgt) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FsmPackage.TRANSITION__TGT, oldTgt, tgt));
@@ -59,13 +63,13 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		return tgt;
 	}
 
-	public StateImpl basicGetTgt() {
+	public State basicGetTgt() {
 		return tgt;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetTgt(StateImpl newTgt, NotificationChain msgs) {
-		StateImpl oldTgt = tgt;
+	public NotificationChain basicSetTgt(State newTgt, NotificationChain msgs) {
+		State oldTgt = tgt;
 		tgt = newTgt;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FsmPackage.TRANSITION__TGT, oldTgt, newTgt);
@@ -78,13 +82,13 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public void setTgt(StateImpl newTgt) {
+	public void setTgt(State newTgt) {
 		if (newTgt != tgt) {
 			NotificationChain msgs = null;
 			if (tgt != null)
-				msgs = ((InternalEObject) tgt).eInverseRemove(this, FsmPackage.STATE__INCOMING, StateImpl.class, msgs);
+				msgs = ((InternalEObject) tgt).eInverseRemove(this, FsmPackage.STATE__INCOMING, State.class, msgs);
 			if (newTgt != null)
-				msgs = ((InternalEObject) newTgt).eInverseAdd(this, FsmPackage.STATE__INCOMING, StateImpl.class, msgs);
+				msgs = ((InternalEObject) newTgt).eInverseAdd(this, FsmPackage.STATE__INCOMING, State.class, msgs);
 			msgs = basicSetTgt(newTgt, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -106,10 +110,10 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public StateImpl getSrc() {
+	public State getSrc() {
 		if (src != null && src.eIsProxy()) {
 			InternalEObject oldSrc = (InternalEObject) src;
-			src = (StateImpl) eResolveProxy(oldSrc);
+			src = (State) eResolveProxy(oldSrc);
 			if (src != oldSrc) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FsmPackage.TRANSITION__SRC, oldSrc, src));
@@ -118,13 +122,13 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		return src;
 	}
 
-	public StateImpl basicGetSrc() {
+	public State basicGetSrc() {
 		return src;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetSrc(StateImpl newSrc, NotificationChain msgs) {
-		StateImpl oldSrc = src;
+	public NotificationChain basicSetSrc(State newSrc, NotificationChain msgs) {
+		State oldSrc = src;
 		src = newSrc;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FsmPackage.TRANSITION__SRC, oldSrc, newSrc);
@@ -137,13 +141,13 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public void setSrc(StateImpl newSrc) {
+	public void setSrc(State newSrc) {
 		if (newSrc != src) {
 			NotificationChain msgs = null;
 			if (src != null)
-				msgs = ((InternalEObject) src).eInverseRemove(this, FsmPackage.STATE__OUTGOING, StateImpl.class, msgs);
+				msgs = ((InternalEObject) src).eInverseRemove(this, FsmPackage.STATE__OUTGOING, State.class, msgs);
 			if (newSrc != null)
-				msgs = ((InternalEObject) newSrc).eInverseAdd(this, FsmPackage.STATE__OUTGOING, StateImpl.class, msgs);
+				msgs = ((InternalEObject) newSrc).eInverseAdd(this, FsmPackage.STATE__OUTGOING, State.class, msgs);
 			msgs = basicSetSrc(newSrc, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -152,19 +156,19 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public FSMImpl getFsm() {
+	public FSM getFsm() {
 		if (eContainerFeatureID() != FsmPackage.TRANSITION__FSM)
 			return null;
-		return (FSMImpl) eInternalContainer();
+		return (FSM) eInternalContainer();
 	}
 
-	public NotificationChain basicSetFsm(FSMImpl newFsm, NotificationChain msgs) {
+	public NotificationChain basicSetFsm(FSM newFsm, NotificationChain msgs) {
 		msgs = eBasicSetContainer((InternalEObject) newFsm, FsmPackage.TRANSITION__FSM, msgs);
 		return msgs;
 	}
 
 	@TruffleBoundary
-	public void setFsm(FSMImpl newFsm) {
+	public void setFsm(FSM newFsm) {
 		if (newFsm != eInternalContainer() || (eContainerFeatureID() != FsmPackage.TRANSITION__FSM && newFsm != null)) {
 			if (EcoreUtil.isAncestor(this, newFsm))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -172,7 +176,7 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newFsm != null)
-				msgs = ((InternalEObject) newFsm).eInverseAdd(this, FsmPackage.FSM__OWNED_TRANSITIONS, FSMImpl.class, msgs);
+				msgs = ((InternalEObject) newFsm).eInverseAdd(this, FsmPackage.FSM__OWNED_TRANSITIONS, FSM.class, msgs);
 			msgs = basicSetFsm(newFsm, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -213,16 +217,16 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		switch (featureID) {
 			case FsmPackage.TRANSITION__TGT :
 				if (tgt != null)
-					msgs = ((InternalEObject) tgt).eInverseRemove(this, FsmPackage.STATE__INCOMING, StateImpl.class, msgs);
-				return basicSetTgt((StateImpl) otherEnd, msgs);
+					msgs = ((InternalEObject) tgt).eInverseRemove(this, FsmPackage.STATE__INCOMING, State.class, msgs);
+				return basicSetTgt((State) otherEnd, msgs);
 			case FsmPackage.TRANSITION__SRC :
 				if (src != null)
-					msgs = ((InternalEObject) src).eInverseRemove(this, FsmPackage.STATE__OUTGOING, StateImpl.class, msgs);
-				return basicSetSrc((StateImpl) otherEnd, msgs);
+					msgs = ((InternalEObject) src).eInverseRemove(this, FsmPackage.STATE__OUTGOING, State.class, msgs);
+				return basicSetSrc((State) otherEnd, msgs);
 			case FsmPackage.TRANSITION__FSM :
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetFsm((FSMImpl) otherEnd, msgs);
+				return basicSetFsm((FSM) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -246,7 +250,7 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case FsmPackage.TRANSITION__FSM :
-				return eInternalContainer().eInverseRemove(this, FsmPackage.FSM__OWNED_TRANSITIONS, FSMImpl.class, msgs);
+				return eInternalContainer().eInverseRemove(this, FsmPackage.FSM__OWNED_TRANSITIONS, FSM.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -280,16 +284,16 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case FsmPackage.TRANSITION__TGT :
-				setTgt((StateImpl) newValue);
+				setTgt((State) newValue);
 				return;
 			case FsmPackage.TRANSITION__NAME :
 				setName((String) newValue);
 				return;
 			case FsmPackage.TRANSITION__SRC :
-				setSrc((StateImpl) newValue);
+				setSrc((State) newValue);
 				return;
 			case FsmPackage.TRANSITION__FSM :
-				setFsm((FSMImpl) newValue);
+				setFsm((FSM) newValue);
 				return;
 			case FsmPackage.TRANSITION__TRIGGER :
 				setTrigger((String) newValue);
@@ -306,16 +310,16 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case FsmPackage.TRANSITION__TGT :
-				setTgt((StateImpl) null);
+				setTgt((State) null);
 				return;
 			case FsmPackage.TRANSITION__NAME :
 				setName(NAME_EDEFAULT);
 				return;
 			case FsmPackage.TRANSITION__SRC :
-				setSrc((StateImpl) null);
+				setSrc((State) null);
 				return;
 			case FsmPackage.TRANSITION__FSM :
-				setFsm((FSMImpl) null);
+				setFsm((FSM) null);
 				return;
 			case FsmPackage.TRANSITION__TRIGGER :
 				setTrigger(TRIGGER_EDEFAULT);
@@ -349,9 +353,9 @@ public class TransitionImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 
 	public void fire() {
 		LogService.log(((("Firing ") + (this.name)) + (" and entering ")) + (this.getTgt().getName()));
-		FSMImpl fsm = ((FSMImpl) (this.getSrc().getFsm()));
+		FSM fsm = ((FSM) (this.getSrc().getFsm()));
 		fsm.setCurrentState(this.getTgt());
-		((BufferImpl) (fsm.getOutputBuffer())).enqueue((String) (this.action));
+		((Buffer) (fsm.getOutputBuffer())).enqueue((String) (this.action));
 		fsm.setConsummedString((fsm.getConsummedString()) + (fsm.getUnderProcessTrigger()));
 	}
 }

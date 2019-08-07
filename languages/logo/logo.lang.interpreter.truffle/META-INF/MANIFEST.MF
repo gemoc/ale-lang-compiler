@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Interpreter
-Bundle-SymbolicName: logo.lang.interpreter
+Bundle-SymbolicName: logo.lang.interpreter.truffle
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: logo.model,
  logo.lang.services;bundle-version="1.0.0",

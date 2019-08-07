@@ -247,10 +247,9 @@ open class ProcCall {
 		result := 0.0;
 		if(self.declaration.oclIsKindOf(kmLogo::ProcDeclaration)) {
 			kmLogo::ProcDeclaration decl := self.declaration;
-			decl.deval(turtle);
+			decl.eval(turtle);
 		}
-		
-		
+			
 		turtle.callStack.frames -= newFrame;
 	}
 	
@@ -262,10 +261,6 @@ open class ProcDeclaration {
 		for(instr in self.instructions) {
 			result := instr.eval(turtle);
 		}
-	}
-	
-	def dispatch double deval(Turtle turtle) {
-		result := self.eval(turtle);
 	}
 }
 

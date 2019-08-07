@@ -6,6 +6,11 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
+import interpreter.boa.interpreter.boa.Copy;
+import interpreter.boa.interpreter.boa.Ctx;
+import interpreter.boa.interpreter.boa.EvalMapRes;
+import interpreter.boa.interpreter.boa.EvalRes;
+import interpreter.boa.interpreter.boa.Expr;
 import java.lang.Object;
 import java.lang.Override;
 import org.eclipse.emf.common.notify.Notification;
@@ -18,9 +23,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Copy"
 )
-public class CopyImpl extends ExprImpl {
+public class CopyImpl extends ExprImpl implements Copy {
 	@Child
-	protected ExprImpl copy;
+	protected Expr copy;
 
 	protected CopyImpl() {
 		super();
@@ -33,13 +38,13 @@ public class CopyImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public ExprImpl getCopy() {
+	public Expr getCopy() {
 		return copy;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetCopy(ExprImpl newCopy, NotificationChain msgs) {
-		ExprImpl oldCopy = copy;
+	public NotificationChain basicSetCopy(Expr newCopy, NotificationChain msgs) {
+		Expr oldCopy = copy;
 		copy = newCopy;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, BoaPackage.COPY__COPY, oldCopy, newCopy);
@@ -52,7 +57,7 @@ public class CopyImpl extends ExprImpl {
 	}
 
 	@TruffleBoundary
-	public void setCopy(ExprImpl newCopy) {
+	public void setCopy(Expr newCopy) {
 		if (newCopy != copy) {
 			NotificationChain msgs = null;
 			if (copy != null)
@@ -92,7 +97,7 @@ public class CopyImpl extends ExprImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.COPY__COPY :
-				setCopy((ExprImpl) newValue);
+				setCopy((Expr) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -103,7 +108,7 @@ public class CopyImpl extends ExprImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case BoaPackage.COPY__COPY :
-				setCopy((ExprImpl) null);
+				setCopy((Expr) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -119,17 +124,17 @@ public class CopyImpl extends ExprImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public EvalResImpl eval(CtxImpl ctx) {
-		EvalResImpl result;
-		EvalResImpl vcopy = ((EvalResImpl) (((ExprImpl) (this.getCopy())).eval((CtxImpl) (ctx))));
-		if (vcopy instanceof EvalMapResImpl) {
-			EvalMapResImpl mvcopy = ((EvalMapResImpl) (vcopy));
-			EvalMapResImpl ret = ((EvalMapResImpl) (BoaFactory.eINSTANCE.createEvalMapRes()));
+	public EvalRes eval(Ctx ctx) {
+		EvalRes result;
+		EvalRes vcopy = ((EvalRes) (((Expr) (this.getCopy())).eval((Ctx) (ctx))));
+		if (vcopy instanceof EvalMapRes) {
+			EvalMapRes mvcopy = ((EvalMapRes) (vcopy));
+			EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 			MapService.putAll((EMap) (ret.getValues()), (EMap) (mvcopy.getValues()));
-			result = (EvalResImpl) (ret) ;
+			result = (EvalRes) (ret) ;
 		}
 		else {
-			result = (EvalResImpl) (null) ;
+			result = (EvalRes) (null) ;
 		}
 		return result;
 	}
