@@ -78,7 +78,6 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 				val eClassifiersLst = pairEPackageGenModel.key.allClassifiers
 				for (EClassifier eclazz : eClassifiersLst.filter[!(it instanceof EDataType) || (it instanceof EEnum)]) {
-//					println('''>>>> «eclazz»''')
 					try {
 						val rc = resolved.filter [
 							it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name
@@ -87,9 +86,6 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 							eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
 						eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
 							srm.registeredServices, dsl, base, tsu, namingUtils)
-//						if(dsl.isTruffle && eclazz instanceof EEnum)
-//							eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
-
 					} catch (Exception e) {
 						e.printStackTrace
 					}
