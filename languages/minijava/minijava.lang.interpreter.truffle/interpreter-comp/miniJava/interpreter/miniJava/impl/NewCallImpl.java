@@ -4,13 +4,15 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.Override;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.NewCall;
+import miniJava.interpreter.miniJava.NewObject;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-public class NewCallImpl extends CallImpl {
-	protected NewObjectImpl newz;
+public class NewCallImpl extends CallImpl implements NewCall {
+	protected NewObject newz;
 
 	protected NewCallImpl() {
 		super();
@@ -23,10 +25,10 @@ public class NewCallImpl extends CallImpl {
 	}
 
 	@TruffleBoundary
-	public NewObjectImpl getNewz() {
+	public NewObject getNewz() {
 		if (newz != null && newz.eIsProxy()) {
 			InternalEObject oldNewz = (InternalEObject) newz;
-			newz = (NewObjectImpl) eResolveProxy(oldNewz);
+			newz = (NewObject) eResolveProxy(oldNewz);
 			if (newz != oldNewz) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.NEW_CALL__NEWZ, oldNewz, newz));
@@ -35,13 +37,13 @@ public class NewCallImpl extends CallImpl {
 		return newz;
 	}
 
-	public NewObjectImpl basicGetNewz() {
+	public NewObject basicGetNewz() {
 		return newz;
 	}
 
 	@TruffleBoundary
-	public void setNewz(NewObjectImpl newNewz) {
-		NewObjectImpl oldNewz = newz;
+	public void setNewz(NewObject newNewz) {
+		NewObject oldNewz = newz;
 		newz = newNewz;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.NEW_CALL__NEWZ, oldNewz, newz));
@@ -64,7 +66,7 @@ public class NewCallImpl extends CallImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.NEW_CALL__NEWZ :
-				setNewz((NewObjectImpl) newValue);
+				setNewz((NewObject) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -75,7 +77,7 @@ public class NewCallImpl extends CallImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.NEW_CALL__NEWZ :
-				setNewz((NewObjectImpl) null);
+				setNewz((NewObject) null);
 				return;
 		}
 		super.eUnset(featureID);

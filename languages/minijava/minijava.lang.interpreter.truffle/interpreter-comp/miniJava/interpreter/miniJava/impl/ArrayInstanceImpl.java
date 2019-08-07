@@ -5,7 +5,9 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.ArrayInstance;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -16,12 +18,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-public class ArrayInstanceImpl extends MinimalEObjectImpl.Container {
+public class ArrayInstanceImpl extends MinimalEObjectImpl.Container implements ArrayInstance {
 	protected static final int SIZE_EDEFAULT = 0;
 
 	protected int size = SIZE_EDEFAULT;
 
-	protected EList<ValueImpl> value;
+	protected EList<Value> value;
 
 	protected ArrayInstanceImpl() {
 		super();
@@ -34,9 +36,9 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public EList<ValueImpl> getValue() {
+	public EList<Value> getValue() {
 		if (value == null) {
-			value = new EObjectContainmentEList<ValueImpl>(ValueImpl.class, this, MiniJavaPackage.ARRAY_INSTANCE__VALUE);
+			value = new EObjectContainmentEList<Value>(Value.class, this, MiniJavaPackage.ARRAY_INSTANCE__VALUE);
 		}
 		return value;
 	}
@@ -83,7 +85,7 @@ public class ArrayInstanceImpl extends MinimalEObjectImpl.Container {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_INSTANCE__VALUE :
 				getValue().clear();
-				getValue().addAll((Collection<? extends ValueImpl>) newValue);
+				getValue().addAll((Collection<? extends Value>) newValue);
 				return;
 			case MiniJavaPackage.ARRAY_INSTANCE__SIZE :
 				setSize((Integer) newValue);

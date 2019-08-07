@@ -5,6 +5,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import miniJava.interpreter.miniJava.Import;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -14,7 +15,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "Import"
 )
-public class ImportImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class ImportImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Import {
 	protected static final String IMPORTEDNAMESPACE_EDEFAULT = null;
 
 	protected String importedNamespace = IMPORTEDNAMESPACE_EDEFAULT;

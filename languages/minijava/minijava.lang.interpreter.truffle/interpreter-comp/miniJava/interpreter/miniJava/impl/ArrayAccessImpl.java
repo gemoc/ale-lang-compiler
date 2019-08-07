@@ -5,7 +5,13 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.ArrayAccess;
+import miniJava.interpreter.miniJava.ArrayRefValue;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.IntegerValue;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,12 +22,12 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 @NodeInfo(
 		description = "ArrayAccess"
 )
-public class ArrayAccessImpl extends ExpressionImpl {
+public class ArrayAccessImpl extends ExpressionImpl implements ArrayAccess {
 	@Child
-	protected ExpressionImpl object;
+	protected Expression object;
 
 	@Child
-	protected ExpressionImpl index;
+	protected Expression index;
 
 	protected ArrayAccessImpl() {
 		super();
@@ -34,13 +40,13 @@ public class ArrayAccessImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getObject() {
+	public Expression getObject() {
 		return object;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetObject(ExpressionImpl newObject, NotificationChain msgs) {
-		ExpressionImpl oldObject = object;
+	public NotificationChain basicSetObject(Expression newObject, NotificationChain msgs) {
+		Expression oldObject = object;
 		object = newObject;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ARRAY_ACCESS__OBJECT, oldObject, newObject);
@@ -53,7 +59,7 @@ public class ArrayAccessImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setObject(ExpressionImpl newObject) {
+	public void setObject(Expression newObject) {
 		if (newObject != object) {
 			NotificationChain msgs = null;
 			if (object != null)
@@ -68,13 +74,13 @@ public class ArrayAccessImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getIndex() {
+	public Expression getIndex() {
 		return index;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetIndex(ExpressionImpl newIndex, NotificationChain msgs) {
-		ExpressionImpl oldIndex = index;
+	public NotificationChain basicSetIndex(Expression newIndex, NotificationChain msgs) {
+		Expression oldIndex = index;
 		index = newIndex;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ARRAY_ACCESS__INDEX, oldIndex, newIndex);
@@ -87,7 +93,7 @@ public class ArrayAccessImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setIndex(ExpressionImpl newIndex) {
+	public void setIndex(Expression newIndex) {
 		if (newIndex != index) {
 			NotificationChain msgs = null;
 			if (index != null)
@@ -131,10 +137,10 @@ public class ArrayAccessImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_ACCESS__OBJECT :
-				setObject((ExpressionImpl) newValue);
+				setObject((Expression) newValue);
 				return;
 			case MiniJavaPackage.ARRAY_ACCESS__INDEX :
-				setIndex((ExpressionImpl) newValue);
+				setIndex((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -145,10 +151,10 @@ public class ArrayAccessImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_ACCESS__OBJECT :
-				setObject((ExpressionImpl) null);
+				setObject((Expression) null);
 				return;
 			case MiniJavaPackage.ARRAY_ACCESS__INDEX :
-				setIndex((ExpressionImpl) null);
+				setIndex((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -166,13 +172,13 @@ public class ArrayAccessImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		ArrayRefValueImpl arrayVal = ((ArrayRefValueImpl) (((ArrayRefValueImpl) (((ExpressionImpl) (this.getObject())).evaluateExpression((StateImpl) (state))))));
-		IntegerValueImpl indexVal = ((IntegerValueImpl) (((IntegerValueImpl) (((ExpressionImpl) (this.getIndex())).evaluateExpression((StateImpl) (state))))));
+	public Value evaluateExpression(State state) {
+		Value result;
+		ArrayRefValue arrayVal = ((ArrayRefValue) (((ArrayRefValue) (((Expression) (this.getObject())).evaluateExpression((State) (state))))));
+		IntegerValue indexVal = ((IntegerValue) (((IntegerValue) (((Expression) (this.getIndex())).evaluateExpression((State) (state))))));
 		int v = ((int) (indexVal.getValue()));
-		ValueImpl vtmp = ((ValueImpl) (CollectionService.get(arrayVal.getInstance().getValue(), v)));
-		result = (ValueImpl) (((ValueImpl) (vtmp)).copyj()) ;
+		Value vtmp = ((Value) (CollectionService.get(arrayVal.getInstance().getValue(), v)));
+		result = (Value) (((Value) (vtmp)).copyj()) ;
 		return result;
 	}
 }

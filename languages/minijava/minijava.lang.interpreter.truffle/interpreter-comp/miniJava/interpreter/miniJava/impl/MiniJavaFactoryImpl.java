@@ -8,8 +8,12 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Map;
 import miniJava.interpreter.miniJava.AccessLevel;
+import miniJava.interpreter.miniJava.Clazz;
+import miniJava.interpreter.miniJava.Method;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolBinding;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -670,13 +674,13 @@ public class MiniJavaFactoryImpl extends EFactoryImpl implements MiniJavaFactory
 	}
 
 	@TruffleBoundary
-	public Map.Entry<SymbolImpl, SymbolBindingImpl> createSymbolToSymbolBindingMap() {
+	public Map.Entry<Symbol, SymbolBinding> createSymbolToSymbolBindingMap() {
 		SymbolToSymbolBindingMapImpl symbolToSymbolBindingMap = new SymbolToSymbolBindingMapImpl();
 		return symbolToSymbolBindingMap;
 	}
 
 	@TruffleBoundary
-	public Map.Entry<ClazzImpl, MethodImpl> createClazzToMethodMap() {
+	public Map.Entry<Clazz, Method> createClazzToMethodMap() {
 		ClazzToMethodMapImpl clazzToMethodMap = new ClazzToMethodMapImpl();
 		return clazzToMethodMap;
 	}

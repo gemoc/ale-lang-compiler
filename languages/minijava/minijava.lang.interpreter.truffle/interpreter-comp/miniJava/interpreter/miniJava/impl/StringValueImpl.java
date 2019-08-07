@@ -6,11 +6,13 @@ import java.lang.Override;
 import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.StringValue;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-public class StringValueImpl extends ValueImpl {
+public class StringValueImpl extends ValueImpl implements StringValue {
 	protected static final String VALUE_EDEFAULT = null;
 
 	protected String value = VALUE_EDEFAULT;
@@ -88,11 +90,11 @@ public class StringValueImpl extends ValueImpl {
 	}
 
 	@TruffleBoundary
-	public ValueImpl copyj() {
-		ValueImpl result;
-		StringValueImpl tmp = ((StringValueImpl) (MiniJavaFactory.eINSTANCE.createStringValue()));
+	public Value copyj() {
+		Value result;
+		StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
 		tmp.setValue(this.value);
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 		return result;
 	}
 }

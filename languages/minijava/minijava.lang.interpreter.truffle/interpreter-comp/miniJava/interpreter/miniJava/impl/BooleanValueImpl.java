@@ -5,13 +5,15 @@ import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import miniJava.interpreter.miniJava.BooleanValue;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-public class BooleanValueImpl extends ValueImpl {
+public class BooleanValueImpl extends ValueImpl implements BooleanValue {
 	protected static final boolean VALUE_EDEFAULT = false;
 
 	protected boolean value = VALUE_EDEFAULT;
@@ -89,11 +91,11 @@ public class BooleanValueImpl extends ValueImpl {
 	}
 
 	@TruffleBoundary
-	public ValueImpl copyj() {
-		ValueImpl result;
-		BooleanValueImpl tmp = ((BooleanValueImpl) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+	public Value copyj() {
+		Value result;
+		BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmp.setValue(this.value);
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 		return result;
 	}
 }

@@ -189,8 +189,9 @@ abstract class AbstractExpressionCompiler {
 				}
 			case "oclIsKindOf":
 				if (call.type == CallType.CALLORAPPLY) {
-					CodeBlock.of('''$L instanceof $L''', call.arguments.get(0).compileExpression(ctx),
-						call.arguments.get(1).compileExpression(ctx))
+					val exp = call.arguments.get(0).compileExpression(ctx)
+					val tp = call.arguments.get(1).compileExpression(ctx)
+					CodeBlock.of('''$L instanceof $L''', exp, tp)
 				} else {
 					CodeBlock.of('''/*OCLISKINDOF*/''')
 				}

@@ -5,7 +5,9 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.ArrayTypeRef;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.SingleTypeRef;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,9 +17,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "ArrayTypeRef"
 )
-public class ArrayTypeRefImpl extends TypeRefImpl {
+public class ArrayTypeRefImpl extends TypeRefImpl implements ArrayTypeRef {
 	@Child
-	protected SingleTypeRefImpl typeRef;
+	protected SingleTypeRef typeRef;
 
 	protected ArrayTypeRefImpl() {
 		super();
@@ -30,13 +32,13 @@ public class ArrayTypeRefImpl extends TypeRefImpl {
 	}
 
 	@TruffleBoundary
-	public SingleTypeRefImpl getTypeRef() {
+	public SingleTypeRef getTypeRef() {
 		return typeRef;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetTypeRef(SingleTypeRefImpl newTypeRef, NotificationChain msgs) {
-		SingleTypeRefImpl oldTypeRef = typeRef;
+	public NotificationChain basicSetTypeRef(SingleTypeRef newTypeRef, NotificationChain msgs) {
+		SingleTypeRef oldTypeRef = typeRef;
 		typeRef = newTypeRef;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ARRAY_TYPE_REF__TYPE_REF, oldTypeRef, newTypeRef);
@@ -49,7 +51,7 @@ public class ArrayTypeRefImpl extends TypeRefImpl {
 	}
 
 	@TruffleBoundary
-	public void setTypeRef(SingleTypeRefImpl newTypeRef) {
+	public void setTypeRef(SingleTypeRef newTypeRef) {
 		if (newTypeRef != typeRef) {
 			NotificationChain msgs = null;
 			if (typeRef != null)
@@ -89,7 +91,7 @@ public class ArrayTypeRefImpl extends TypeRefImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_TYPE_REF__TYPE_REF :
-				setTypeRef((SingleTypeRefImpl) newValue);
+				setTypeRef((SingleTypeRef) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -100,7 +102,7 @@ public class ArrayTypeRefImpl extends TypeRefImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_TYPE_REF__TYPE_REF :
-				setTypeRef((SingleTypeRefImpl) null);
+				setTypeRef((SingleTypeRef) null);
 				return;
 		}
 		super.eUnset(featureID);

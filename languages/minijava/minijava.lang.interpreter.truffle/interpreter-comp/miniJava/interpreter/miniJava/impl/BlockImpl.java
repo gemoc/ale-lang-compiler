@@ -7,7 +7,11 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.Frame;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Statement;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -20,11 +24,11 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "Block"
 )
-public class BlockImpl extends StatementImpl {
-	protected EList<StatementImpl> statements;
+public class BlockImpl extends StatementImpl implements Block {
+	protected EList<Statement> statements;
 
 	@Children
-	private StatementImpl[] statementsArr;
+	private Statement[] statementsArr;
 
 	protected BlockImpl() {
 		super();
@@ -37,9 +41,9 @@ public class BlockImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public EList<StatementImpl> getStatements() {
+	public EList<Statement> getStatements() {
 		if (statements == null) {
-			statements = new EObjectContainmentEList<StatementImpl>(StatementImpl.class, this, MiniJavaPackage.BLOCK__STATEMENTS);
+			statements = new EObjectContainmentEList<Statement>(Statement.class, this, MiniJavaPackage.BLOCK__STATEMENTS);
 		}
 		return statements;
 	}
@@ -71,7 +75,7 @@ public class BlockImpl extends StatementImpl {
 		switch (featureID) {
 			case MiniJavaPackage.BLOCK__STATEMENTS :
 				getStatements().clear();
-				getStatements().addAll((Collection<? extends StatementImpl>) newValue);
+				getStatements().addAll((Collection<? extends Statement>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -98,31 +102,31 @@ public class BlockImpl extends StatementImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public void evaluateStatementKeepContext(StateImpl state) {
+	public void evaluateStatementKeepContext(State state) {
 		if (this.statementsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.statements != null) this.statementsArr = this.statements.toArray(new StatementImpl[0]);
-			else this.statementsArr = new StatementImpl[] {};
+			if (this.statements != null) this.statementsArr = this.statements.toArray(new Statement[0]);
+			else this.statementsArr = new Statement[] {};
 		}
-		((StateImpl) (state)).pushNewContext();
-		FrameImpl currentFrame = ((FrameImpl) (((StateImpl) (state)).findCurrentFrame()));
+		((State) (state)).pushNewContext();
+		Frame currentFrame = ((Frame) (((State) (state)).findCurrentFrame()));
 		int lgt = ((int) (CollectionService.size(this.statementsArr)));
 		int i = ((int) (0));
 		while ((((i) < (lgt)) && (EqualService.equals((currentFrame.getReturnValue()), (null))))) {
-			((StatementImpl) (CollectionService.get(this.statementsArr, i))).evaluateStatement((StateImpl) (state));
+			((Statement) (CollectionService.get(this.statementsArr, i))).evaluateStatement((State) (state));
 			i = (i) + (1);
 		}
 
 	}
 
-	public void evaluateStatement(StateImpl state) {
+	public void evaluateStatement(State state) {
 		if (this.statementsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.statements != null) this.statementsArr = this.statements.toArray(new StatementImpl[0]);
-			else this.statementsArr = new StatementImpl[] {};
+			if (this.statements != null) this.statementsArr = this.statements.toArray(new Statement[0]);
+			else this.statementsArr = new Statement[] {};
 		}
-		((BlockImpl) (this)).evaluateStatementKeepContext((StateImpl) (state));
-		((StateImpl) (state)).popCurrentContext();
+		((Block) (this)).evaluateStatementKeepContext((State) (state));
+		((State) (state)).popCurrentContext();
 
 	}
 }

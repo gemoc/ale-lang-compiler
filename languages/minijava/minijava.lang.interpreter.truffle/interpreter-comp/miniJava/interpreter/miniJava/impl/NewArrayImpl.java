@@ -5,8 +5,22 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.ArrayInstance;
+import miniJava.interpreter.miniJava.ArrayRefValue;
+import miniJava.interpreter.miniJava.BooleanTypeRef;
+import miniJava.interpreter.miniJava.BooleanValue;
+import miniJava.interpreter.miniJava.ClassRef;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.IntegerTypeRef;
+import miniJava.interpreter.miniJava.IntegerValue;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.NewArray;
+import miniJava.interpreter.miniJava.NullValue;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.StringTypeRef;
+import miniJava.interpreter.miniJava.TypeRef;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,12 +30,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "NewArray"
 )
-public class NewArrayImpl extends ExpressionImpl {
+public class NewArrayImpl extends ExpressionImpl implements NewArray {
 	@Child
-	protected TypeRefImpl type;
+	protected TypeRef type;
 
 	@Child
-	protected ExpressionImpl size;
+	protected Expression size;
 
 	protected NewArrayImpl() {
 		super();
@@ -34,13 +48,13 @@ public class NewArrayImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public TypeRefImpl getType() {
+	public TypeRef getType() {
 		return type;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetType(TypeRefImpl newType, NotificationChain msgs) {
-		TypeRefImpl oldType = type;
+	public NotificationChain basicSetType(TypeRef newType, NotificationChain msgs) {
+		TypeRef oldType = type;
 		type = newType;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.NEW_ARRAY__TYPE, oldType, newType);
@@ -53,7 +67,7 @@ public class NewArrayImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setType(TypeRefImpl newType) {
+	public void setType(TypeRef newType) {
 		if (newType != type) {
 			NotificationChain msgs = null;
 			if (type != null)
@@ -68,13 +82,13 @@ public class NewArrayImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getSize() {
+	public Expression getSize() {
 		return size;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetSize(ExpressionImpl newSize, NotificationChain msgs) {
-		ExpressionImpl oldSize = size;
+	public NotificationChain basicSetSize(Expression newSize, NotificationChain msgs) {
+		Expression oldSize = size;
 		size = newSize;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.NEW_ARRAY__SIZE, oldSize, newSize);
@@ -87,7 +101,7 @@ public class NewArrayImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setSize(ExpressionImpl newSize) {
+	public void setSize(Expression newSize) {
 		if (newSize != size) {
 			NotificationChain msgs = null;
 			if (size != null)
@@ -131,10 +145,10 @@ public class NewArrayImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.NEW_ARRAY__TYPE :
-				setType((TypeRefImpl) newValue);
+				setType((TypeRef) newValue);
 				return;
 			case MiniJavaPackage.NEW_ARRAY__SIZE :
-				setSize((ExpressionImpl) newValue);
+				setSize((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -145,10 +159,10 @@ public class NewArrayImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.NEW_ARRAY__TYPE :
-				setType((TypeRefImpl) null);
+				setType((TypeRef) null);
 				return;
 			case MiniJavaPackage.NEW_ARRAY__SIZE :
-				setSize((ExpressionImpl) null);
+				setSize((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -166,32 +180,32 @@ public class NewArrayImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		ArrayInstanceImpl res = ((ArrayInstanceImpl) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
-		IntegerValueImpl sizeArray = ((IntegerValueImpl) (((IntegerValueImpl) (((ExpressionImpl) (this.getSize())).evaluateExpression((StateImpl) (state))))));
+	public Value evaluateExpression(State state) {
+		Value result;
+		ArrayInstance res = ((ArrayInstance) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
+		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((Expression) (this.getSize())).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
-		ValueImpl defaultValue = ((ValueImpl) (null));
-		if (this.getType() instanceof IntegerTypeRefImpl) {
-			IntegerValueImpl idv = ((IntegerValueImpl) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
+		Value defaultValue = ((Value) (null));
+		if (this.getType() instanceof IntegerTypeRef) {
+			IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 			idv.setValue(0);
 			defaultValue = idv;
 		}
 		else {
-			if (this.getType() instanceof BooleanTypeRefImpl) {
-				BooleanValueImpl idv = ((BooleanValueImpl) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+			if (this.getType() instanceof BooleanTypeRef) {
+				BooleanValue idv = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 				idv.setValue(false);
 				defaultValue = idv;
 			}
 			else {
-				if (this.getType() instanceof StringTypeRefImpl) {
-					NullValueImpl idv = ((NullValueImpl) (MiniJavaFactory.eINSTANCE.createNullValue()));
+				if (this.getType() instanceof StringTypeRef) {
+					NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
 					defaultValue = idv;
 				}
 				else {
-					if (this.getType() instanceof ClassRefImpl) {
-						NullValueImpl idv = ((NullValueImpl) (MiniJavaFactory.eINSTANCE.createNullValue()));
+					if (this.getType() instanceof ClassRef) {
+						NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
 						defaultValue = idv;
 					}
 				}
@@ -200,14 +214,14 @@ public class NewArrayImpl extends ExpressionImpl {
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			ValueImpl dv = ((ValueImpl) (defaultValue));
-			ValueImpl v = ((ValueImpl) (dv.copyj()));
+			Value dv = ((Value) (defaultValue));
+			Value v = ((Value) (((Value) (dv)).copyj()));
 			res.getValue().add(v);
 			i = (i) + (1);
 		}
-		ArrayRefValueImpl ret = ((ArrayRefValueImpl) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
+		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
 		ret.setInstance(res);
-		result = (ValueImpl) (ret) ;
+		result = (Value) (ret) ;
 		return result;
 	}
 }

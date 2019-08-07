@@ -7,6 +7,10 @@ import java.lang.Override;
 import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.StringConstant;
+import miniJava.interpreter.miniJava.StringValue;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -14,7 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "StringConstant"
 )
-public class StringConstantImpl extends ExpressionImpl {
+public class StringConstantImpl extends ExpressionImpl implements StringConstant {
 	protected static final String VALUE_EDEFAULT = null;
 
 	protected String value = VALUE_EDEFAULT;
@@ -84,11 +88,11 @@ public class StringConstantImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		StringValueImpl ret = ((StringValueImpl) (MiniJavaFactory.eINSTANCE.createStringValue()));
+	public Value evaluateExpression(State state) {
+		Value result;
+		StringValue ret = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
 		ret.setValue(this.value);
-		result = (ValueImpl) (ret) ;
+		result = (Value) (ret) ;
 		return result;
 	}
 }

@@ -4,7 +4,12 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolRef;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -13,8 +18,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "SymbolRef"
 )
-public class SymbolRefImpl extends ExpressionImpl {
-	protected SymbolImpl symbol;
+public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
+	protected Symbol symbol;
 
 	protected SymbolRefImpl() {
 		super();
@@ -27,10 +32,10 @@ public class SymbolRefImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public SymbolImpl getSymbol() {
+	public Symbol getSymbol() {
 		if (symbol != null && symbol.eIsProxy()) {
 			InternalEObject oldSymbol = (InternalEObject) symbol;
-			symbol = (SymbolImpl) eResolveProxy(oldSymbol);
+			symbol = (Symbol) eResolveProxy(oldSymbol);
 			if (symbol != oldSymbol) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_REF__SYMBOL, oldSymbol, symbol));
@@ -39,13 +44,13 @@ public class SymbolRefImpl extends ExpressionImpl {
 		return symbol;
 	}
 
-	public SymbolImpl basicGetSymbol() {
+	public Symbol basicGetSymbol() {
 		return symbol;
 	}
 
 	@TruffleBoundary
-	public void setSymbol(SymbolImpl newSymbol) {
-		SymbolImpl oldSymbol = symbol;
+	public void setSymbol(Symbol newSymbol) {
+		Symbol oldSymbol = symbol;
 		symbol = newSymbol;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.SYMBOL_REF__SYMBOL, oldSymbol, symbol));
@@ -68,7 +73,7 @@ public class SymbolRefImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.SYMBOL_REF__SYMBOL :
-				setSymbol((SymbolImpl) newValue);
+				setSymbol((Symbol) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -79,7 +84,7 @@ public class SymbolRefImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.SYMBOL_REF__SYMBOL :
-				setSymbol((SymbolImpl) null);
+				setSymbol((Symbol) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -95,9 +100,9 @@ public class SymbolRefImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		result = (ValueImpl) (((ValueImpl) (((ContextImpl) (((StateImpl) (state)).findCurrentContext())).findBinding((SymbolImpl) (this.getSymbol())).getValue())).copyj()) ;
+	public Value evaluateExpression(State state) {
+		Value result;
+		result = (Value) (((Value) (((Context) (((State) (state)).findCurrentContext())).findBinding((Symbol) (this.getSymbol())).getValue())).copyj()) ;
 		return result;
 	}
 }

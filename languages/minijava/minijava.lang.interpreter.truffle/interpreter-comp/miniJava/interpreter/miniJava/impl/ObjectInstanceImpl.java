@@ -4,7 +4,10 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Clazz;
+import miniJava.interpreter.miniJava.FieldBinding;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -15,10 +18,10 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-public class ObjectInstanceImpl extends MinimalEObjectImpl.Container {
-	protected EList<FieldBindingImpl> fieldbindings;
+public class ObjectInstanceImpl extends MinimalEObjectImpl.Container implements ObjectInstance {
+	protected EList<FieldBinding> fieldbindings;
 
-	protected ClazzImpl type;
+	protected Clazz type;
 
 	protected ObjectInstanceImpl() {
 		super();
@@ -31,18 +34,18 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public EList<FieldBindingImpl> getFieldbindings() {
+	public EList<FieldBinding> getFieldbindings() {
 		if (fieldbindings == null) {
-			fieldbindings = new EObjectContainmentEList<FieldBindingImpl>(FieldBindingImpl.class, this, MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS);
+			fieldbindings = new EObjectContainmentEList<FieldBinding>(FieldBinding.class, this, MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS);
 		}
 		return fieldbindings;
 	}
 
 	@TruffleBoundary
-	public ClazzImpl getType() {
+	public Clazz getType() {
 		if (type != null && type.eIsProxy()) {
 			InternalEObject oldType = (InternalEObject) type;
-			type = (ClazzImpl) eResolveProxy(oldType);
+			type = (Clazz) eResolveProxy(oldType);
 			if (type != oldType) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_INSTANCE__TYPE, oldType, type));
@@ -51,13 +54,13 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container {
 		return type;
 	}
 
-	public ClazzImpl basicGetType() {
+	public Clazz basicGetType() {
 		return type;
 	}
 
 	@TruffleBoundary
-	public void setType(ClazzImpl newType) {
-		ClazzImpl oldType = type;
+	public void setType(Clazz newType) {
+		Clazz oldType = type;
 		type = newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.OBJECT_INSTANCE__TYPE, oldType, type));
@@ -94,10 +97,10 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container {
 		switch (featureID) {
 			case MiniJavaPackage.OBJECT_INSTANCE__FIELDBINDINGS :
 				getFieldbindings().clear();
-				getFieldbindings().addAll((Collection<? extends FieldBindingImpl>) newValue);
+				getFieldbindings().addAll((Collection<? extends FieldBinding>) newValue);
 				return;
 			case MiniJavaPackage.OBJECT_INSTANCE__TYPE :
-				setType((ClazzImpl) newValue);
+				setType((Clazz) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -111,7 +114,7 @@ public class ObjectInstanceImpl extends MinimalEObjectImpl.Container {
 				getFieldbindings().clear();
 				return;
 			case MiniJavaPackage.OBJECT_INSTANCE__TYPE :
-				setType((ClazzImpl) null);
+				setType((Clazz) null);
 				return;
 		}
 		super.eUnset(featureID);

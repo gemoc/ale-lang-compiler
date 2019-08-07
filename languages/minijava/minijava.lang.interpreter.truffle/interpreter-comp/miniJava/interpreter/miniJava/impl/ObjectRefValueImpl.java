@@ -6,13 +6,16 @@ import java.lang.Override;
 import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
+import miniJava.interpreter.miniJava.ObjectRefValue;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-public class ObjectRefValueImpl extends ValueImpl {
-	protected ObjectInstanceImpl instance;
+public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
+	protected ObjectInstance instance;
 
 	protected ObjectRefValueImpl() {
 		super();
@@ -25,10 +28,10 @@ public class ObjectRefValueImpl extends ValueImpl {
 	}
 
 	@TruffleBoundary
-	public ObjectInstanceImpl getInstance() {
+	public ObjectInstance getInstance() {
 		if (instance != null && instance.eIsProxy()) {
 			InternalEObject oldInstance = (InternalEObject) instance;
-			instance = (ObjectInstanceImpl) eResolveProxy(oldInstance);
+			instance = (ObjectInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE, oldInstance, instance));
@@ -37,13 +40,13 @@ public class ObjectRefValueImpl extends ValueImpl {
 		return instance;
 	}
 
-	public ObjectInstanceImpl basicGetInstance() {
+	public ObjectInstance basicGetInstance() {
 		return instance;
 	}
 
 	@TruffleBoundary
-	public void setInstance(ObjectInstanceImpl newInstance) {
-		ObjectInstanceImpl oldInstance = instance;
+	public void setInstance(ObjectInstance newInstance) {
+		ObjectInstance oldInstance = instance;
 		instance = newInstance;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE, oldInstance, instance));
@@ -66,7 +69,7 @@ public class ObjectRefValueImpl extends ValueImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE :
-				setInstance((ObjectInstanceImpl) newValue);
+				setInstance((ObjectInstance) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -77,7 +80,7 @@ public class ObjectRefValueImpl extends ValueImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE :
-				setInstance((ObjectInstanceImpl) null);
+				setInstance((ObjectInstance) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -101,11 +104,11 @@ public class ObjectRefValueImpl extends ValueImpl {
 	}
 
 	@TruffleBoundary
-	public ValueImpl copyj() {
-		ValueImpl result;
-		ObjectRefValueImpl tmp = ((ObjectRefValueImpl) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
+	public Value copyj() {
+		Value result;
+		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(this.getInstance());
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 		return result;
 	}
 }

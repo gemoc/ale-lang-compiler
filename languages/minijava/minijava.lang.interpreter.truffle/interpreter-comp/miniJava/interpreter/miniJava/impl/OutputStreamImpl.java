@@ -7,6 +7,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Collection;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.OutputStream;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.util.EDataTypeEList;
@@ -15,7 +16,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "OutputStream"
 )
-public class OutputStreamImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class OutputStreamImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements OutputStream {
 	protected EList<String> stream;
 
 	protected OutputStreamImpl() {

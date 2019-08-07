@@ -6,6 +6,8 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.TypeRef;
+import miniJava.interpreter.miniJava.TypedDeclaration;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,9 +17,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "TypedDeclaration"
 )
-public class TypedDeclarationImpl extends NamedElementImpl {
+public class TypedDeclarationImpl extends NamedElementImpl implements TypedDeclaration {
 	@Child
-	protected TypeRefImpl typeRef;
+	protected TypeRef typeRef;
 
 	protected TypedDeclarationImpl() {
 		super();
@@ -30,13 +32,13 @@ public class TypedDeclarationImpl extends NamedElementImpl {
 	}
 
 	@TruffleBoundary
-	public TypeRefImpl getTypeRef() {
+	public TypeRef getTypeRef() {
 		return typeRef;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetTypeRef(TypeRefImpl newTypeRef, NotificationChain msgs) {
-		TypeRefImpl oldTypeRef = typeRef;
+	public NotificationChain basicSetTypeRef(TypeRef newTypeRef, NotificationChain msgs) {
+		TypeRef oldTypeRef = typeRef;
 		typeRef = newTypeRef;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.TYPED_DECLARATION__TYPE_REF, oldTypeRef, newTypeRef);
@@ -49,7 +51,7 @@ public class TypedDeclarationImpl extends NamedElementImpl {
 	}
 
 	@TruffleBoundary
-	public void setTypeRef(TypeRefImpl newTypeRef) {
+	public void setTypeRef(TypeRef newTypeRef) {
 		if (newTypeRef != typeRef) {
 			NotificationChain msgs = null;
 			if (typeRef != null)
@@ -89,7 +91,7 @@ public class TypedDeclarationImpl extends NamedElementImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.TYPED_DECLARATION__TYPE_REF :
-				setTypeRef((TypeRefImpl) newValue);
+				setTypeRef((TypeRef) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -100,7 +102,7 @@ public class TypedDeclarationImpl extends NamedElementImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.TYPED_DECLARATION__TYPE_REF :
-				setTypeRef((TypeRefImpl) null);
+				setTypeRef((TypeRef) null);
 				return;
 		}
 		super.eUnset(featureID);

@@ -7,8 +7,15 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.ArrayInstance;
+import miniJava.interpreter.miniJava.Call;
+import miniJava.interpreter.miniJava.Context;
+import miniJava.interpreter.miniJava.Frame;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
+import miniJava.interpreter.miniJava.OutputStream;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -24,19 +31,19 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "State"
 )
-public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
-	protected FrameImpl rootFrame;
+public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements State {
+	protected Frame rootFrame;
 
-	protected EList<ObjectInstanceImpl> objectsHeap;
+	protected EList<ObjectInstance> objectsHeap;
 
 	@Child
-	protected OutputStreamImpl outputStream;
+	protected OutputStream outputStream;
 
-	protected EList<ArrayInstanceImpl> arraysHeap;
+	protected EList<ArrayInstance> arraysHeap;
 
-	protected ContextImpl contextCache;
+	protected Context contextCache;
 
-	protected FrameImpl frameCache;
+	protected Frame frameCache;
 
 	protected StateImpl() {
 		super();
@@ -49,13 +56,13 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public FrameImpl getRootFrame() {
+	public Frame getRootFrame() {
 		return rootFrame;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetRootFrame(FrameImpl newRootFrame, NotificationChain msgs) {
-		FrameImpl oldRootFrame = rootFrame;
+	public NotificationChain basicSetRootFrame(Frame newRootFrame, NotificationChain msgs) {
+		Frame oldRootFrame = rootFrame;
 		rootFrame = newRootFrame;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.STATE__ROOT_FRAME, oldRootFrame, newRootFrame);
@@ -68,7 +75,7 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public void setRootFrame(FrameImpl newRootFrame) {
+	public void setRootFrame(Frame newRootFrame) {
 		if (newRootFrame != rootFrame) {
 			NotificationChain msgs = null;
 			if (rootFrame != null)
@@ -83,22 +90,22 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public EList<ObjectInstanceImpl> getObjectsHeap() {
+	public EList<ObjectInstance> getObjectsHeap() {
 		if (objectsHeap == null) {
-			objectsHeap = new EObjectContainmentEList<ObjectInstanceImpl>(ObjectInstanceImpl.class, this, MiniJavaPackage.STATE__OBJECTS_HEAP);
+			objectsHeap = new EObjectContainmentEList<ObjectInstance>(ObjectInstance.class, this, MiniJavaPackage.STATE__OBJECTS_HEAP);
 		}
 		return objectsHeap;
 	}
 
 	@TruffleBoundary
-	public OutputStreamImpl getOutputStream() {
+	public OutputStream getOutputStream() {
 		return outputStream;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetOutputStream(OutputStreamImpl newOutputStream,
+	public NotificationChain basicSetOutputStream(OutputStream newOutputStream,
 			NotificationChain msgs) {
-		OutputStreamImpl oldOutputStream = outputStream;
+		OutputStream oldOutputStream = outputStream;
 		outputStream = newOutputStream;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.STATE__OUTPUT_STREAM, oldOutputStream, newOutputStream);
@@ -111,7 +118,7 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public void setOutputStream(OutputStreamImpl newOutputStream) {
+	public void setOutputStream(OutputStream newOutputStream) {
 		if (newOutputStream != outputStream) {
 			NotificationChain msgs = null;
 			if (outputStream != null)
@@ -126,18 +133,18 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public EList<ArrayInstanceImpl> getArraysHeap() {
+	public EList<ArrayInstance> getArraysHeap() {
 		if (arraysHeap == null) {
-			arraysHeap = new EObjectContainmentEList<ArrayInstanceImpl>(ArrayInstanceImpl.class, this, MiniJavaPackage.STATE__ARRAYS_HEAP);
+			arraysHeap = new EObjectContainmentEList<ArrayInstance>(ArrayInstance.class, this, MiniJavaPackage.STATE__ARRAYS_HEAP);
 		}
 		return arraysHeap;
 	}
 
 	@TruffleBoundary
-	public ContextImpl getContextCache() {
+	public Context getContextCache() {
 		if (contextCache != null && contextCache.eIsProxy()) {
 			InternalEObject oldContextCache = (InternalEObject) contextCache;
-			contextCache = (ContextImpl) eResolveProxy(oldContextCache);
+			contextCache = (Context) eResolveProxy(oldContextCache);
 			if (contextCache != oldContextCache) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.STATE__CONTEXT_CACHE, oldContextCache, contextCache));
@@ -146,23 +153,23 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		return contextCache;
 	}
 
-	public ContextImpl basicGetContextCache() {
+	public Context basicGetContextCache() {
 		return contextCache;
 	}
 
 	@TruffleBoundary
-	public void setContextCache(ContextImpl newContextCache) {
-		ContextImpl oldContextCache = contextCache;
+	public void setContextCache(Context newContextCache) {
+		Context oldContextCache = contextCache;
 		contextCache = newContextCache;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.STATE__CONTEXT_CACHE, oldContextCache, contextCache));
 	}
 
 	@TruffleBoundary
-	public FrameImpl getFrameCache() {
+	public Frame getFrameCache() {
 		if (frameCache != null && frameCache.eIsProxy()) {
 			InternalEObject oldFrameCache = (InternalEObject) frameCache;
-			frameCache = (FrameImpl) eResolveProxy(oldFrameCache);
+			frameCache = (Frame) eResolveProxy(oldFrameCache);
 			if (frameCache != oldFrameCache) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.STATE__FRAME_CACHE, oldFrameCache, frameCache));
@@ -171,13 +178,13 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		return frameCache;
 	}
 
-	public FrameImpl basicGetFrameCache() {
+	public Frame basicGetFrameCache() {
 		return frameCache;
 	}
 
 	@TruffleBoundary
-	public void setFrameCache(FrameImpl newFrameCache) {
-		FrameImpl oldFrameCache = frameCache;
+	public void setFrameCache(Frame newFrameCache) {
+		Frame oldFrameCache = frameCache;
 		frameCache = newFrameCache;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.STATE__FRAME_CACHE, oldFrameCache, frameCache));
@@ -229,24 +236,24 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.STATE__ROOT_FRAME :
-				setRootFrame((FrameImpl) newValue);
+				setRootFrame((Frame) newValue);
 				return;
 			case MiniJavaPackage.STATE__OBJECTS_HEAP :
 				getObjectsHeap().clear();
-				getObjectsHeap().addAll((Collection<? extends ObjectInstanceImpl>) newValue);
+				getObjectsHeap().addAll((Collection<? extends ObjectInstance>) newValue);
 				return;
 			case MiniJavaPackage.STATE__OUTPUT_STREAM :
-				setOutputStream((OutputStreamImpl) newValue);
+				setOutputStream((OutputStream) newValue);
 				return;
 			case MiniJavaPackage.STATE__ARRAYS_HEAP :
 				getArraysHeap().clear();
-				getArraysHeap().addAll((Collection<? extends ArrayInstanceImpl>) newValue);
+				getArraysHeap().addAll((Collection<? extends ArrayInstance>) newValue);
 				return;
 			case MiniJavaPackage.STATE__CONTEXT_CACHE :
-				setContextCache((ContextImpl) newValue);
+				setContextCache((Context) newValue);
 				return;
 			case MiniJavaPackage.STATE__FRAME_CACHE :
-				setFrameCache((FrameImpl) newValue);
+				setFrameCache((Frame) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -257,22 +264,22 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.STATE__ROOT_FRAME :
-				setRootFrame((FrameImpl) null);
+				setRootFrame((Frame) null);
 				return;
 			case MiniJavaPackage.STATE__OBJECTS_HEAP :
 				getObjectsHeap().clear();
 				return;
 			case MiniJavaPackage.STATE__OUTPUT_STREAM :
-				setOutputStream((OutputStreamImpl) null);
+				setOutputStream((OutputStream) null);
 				return;
 			case MiniJavaPackage.STATE__ARRAYS_HEAP :
 				getArraysHeap().clear();
 				return;
 			case MiniJavaPackage.STATE__CONTEXT_CACHE :
-				setContextCache((ContextImpl) null);
+				setContextCache((Context) null);
 				return;
 			case MiniJavaPackage.STATE__FRAME_CACHE :
-				setFrameCache((FrameImpl) null);
+				setFrameCache((Frame) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -298,40 +305,40 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		return super.eIsSet(featureID);
 	}
 
-	public FrameImpl findCurrentFrame() {
-		FrameImpl result;
+	public Frame findCurrentFrame() {
+		Frame result;
 		if (EqualService.equals((this.getFrameCache()), (null))) {
-			this.setFrameCache(((FrameImpl) (this.getRootFrame())).findCurrentFrame());
+			this.setFrameCache(((Frame) (this.getRootFrame())).findCurrentFrame());
 		}
-		result = (FrameImpl) (this.getFrameCache()) ;
+		result = (Frame) (this.getFrameCache()) ;
 		return result;
 	}
 
-	public ContextImpl findCurrentContext() {
-		ContextImpl result;
+	public Context findCurrentContext() {
+		Context result;
 		if (EqualService.equals((this.getContextCache()), (null))) {
-			this.setContextCache(((FrameImpl) (this.getRootFrame())).findCurrentContext());
+			this.setContextCache(((Frame) (this.getRootFrame())).findCurrentContext());
 		}
-		result = (ContextImpl) (this.getContextCache()) ;
+		result = (Context) (this.getContextCache()) ;
 		return result;
 	}
 
 	public void pushNewContext() {
-		ContextImpl newContext = ((ContextImpl) (MiniJavaFactory.eINSTANCE.createContext()));
-		ContextImpl currCtx = ((ContextImpl) (((StateImpl) (this)).findCurrentContext()));
+		Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
+		Context currCtx = ((Context) (((State) (this)).findCurrentContext()));
 		if (!EqualService.equals((currCtx), (null))) {
 			currCtx.setChildContext(newContext);
 		}
 		else {
-			FrameImpl cf = ((FrameImpl) (((StateImpl) (this)).findCurrentFrame()));
+			Frame cf = ((Frame) (((State) (this)).findCurrentFrame()));
 			cf.setRootContext(newContext);
 		}
 		this.setContextCache(newContext);
 	}
 
 	public void popCurrentContext() {
-		ContextImpl currContext = ((ContextImpl) (((StateImpl) (this)).findCurrentContext()));
-		ContextImpl newCurrent = ((ContextImpl) (currContext.getParentContext()));
+		Context currContext = ((Context) (((State) (this)).findCurrentContext()));
+		Context newCurrent = ((Context) (currContext.getParentContext()));
 		currContext.setParentContext(null);
 		this.setContextCache(newCurrent);
 	}
@@ -341,19 +348,19 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		this.getOutputStream().getStream().add(str);
 	}
 
-	public void pushNewFrame(ObjectInstanceImpl receiver, CallImpl c, ContextImpl newContext) {
-		FrameImpl newFrame = ((FrameImpl) (MiniJavaFactory.eINSTANCE.createFrame()));
+	public void pushNewFrame(ObjectInstance receiver, Call c, Context newContext) {
+		Frame newFrame = ((Frame) (MiniJavaFactory.eINSTANCE.createFrame()));
 		newFrame.setInstance(receiver);
 		newFrame.setCall(c);
 		newFrame.setRootContext(newContext);
-		((StateImpl) (this)).findCurrentFrame().setChildFrame(newFrame);
+		((State) (this)).findCurrentFrame().setChildFrame(newFrame);
 		this.setFrameCache(newFrame);
 		this.setContextCache(null);
 	}
 
 	public void popCurrentFrame() {
-		FrameImpl newCurrent = ((FrameImpl) (((StateImpl) (this)).findCurrentFrame().getParentFrame()));
-		((StateImpl) (this)).findCurrentFrame().setParentFrame(null);
+		Frame newCurrent = ((Frame) (((State) (this)).findCurrentFrame().getParentFrame()));
+		((State) (this)).findCurrentFrame().setParentFrame(null);
 		this.setContextCache(null);
 		this.setFrameCache(newCurrent);
 	}

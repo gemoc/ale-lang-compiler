@@ -46,9 +46,9 @@ class InterpreterTypeSystemUtils extends CommonTypeSystemUtils {
 
 		if (gm !== null) {
 			if (e instanceof EClass) {
-				if(dsl.truffle)
-				ClassName.get(e.classImplementationPackageName(packageRoot), e.name+'Impl')
-				else
+//				if(dsl.truffle)
+//				ClassName.get(e.classImplementationPackageName(packageRoot), e.name+'Impl')
+//				else
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)
 			} else if (e instanceof EEnum) {
 				ClassName.get(e.classInterfacePackageName(packageRoot), e.name)

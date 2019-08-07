@@ -5,6 +5,8 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolBinding;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EMap;
@@ -17,10 +19,10 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "SymbolToSymbolBindingMap"
 )
-public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements BasicEMap.Entry<SymbolImpl, SymbolBindingImpl> {
-	protected SymbolImpl key;
+public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements BasicEMap.Entry<Symbol, SymbolBinding> {
+	protected Symbol key;
 
-	protected SymbolBindingImpl value;
+	protected SymbolBinding value;
 
 	protected int hash = -1;
 
@@ -35,10 +37,10 @@ public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.Truf
 	}
 
 	@TruffleBoundary
-	public SymbolImpl getTypedKey() {
+	public Symbol getTypedKey() {
 		if (key != null && key.eIsProxy()) {
 			InternalEObject oldKey = (InternalEObject) key;
-			key = (SymbolImpl) eResolveProxy(oldKey);
+			key = (Symbol) eResolveProxy(oldKey);
 			if (key != oldKey) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__KEY, oldKey, key));
@@ -47,23 +49,23 @@ public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.Truf
 		return key;
 	}
 
-	public SymbolImpl basicGetTypedKey() {
+	public Symbol basicGetTypedKey() {
 		return key;
 	}
 
 	@TruffleBoundary
-	public void setTypedKey(SymbolImpl newKey) {
-		SymbolImpl oldKey = key;
+	public void setTypedKey(Symbol newKey) {
+		Symbol oldKey = key;
 		key = newKey;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__KEY, oldKey, key));
 	}
 
 	@TruffleBoundary
-	public SymbolBindingImpl getTypedValue() {
+	public SymbolBinding getTypedValue() {
 		if (value != null && value.eIsProxy()) {
 			InternalEObject oldValue = (InternalEObject) value;
-			value = (SymbolBindingImpl) eResolveProxy(oldValue);
+			value = (SymbolBinding) eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE, oldValue, value));
@@ -72,13 +74,13 @@ public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.Truf
 		return value;
 	}
 
-	public SymbolBindingImpl basicGetTypedValue() {
+	public SymbolBinding basicGetTypedValue() {
 		return value;
 	}
 
 	@TruffleBoundary
-	public void setTypedValue(SymbolBindingImpl newValue) {
-		SymbolBindingImpl oldValue = value;
+	public void setTypedValue(SymbolBinding newValue) {
+		SymbolBinding oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE, oldValue, value));
@@ -105,10 +107,10 @@ public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.Truf
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__KEY :
-				setTypedKey((SymbolImpl) newValue);
+				setTypedKey((Symbol) newValue);
 				return;
 			case MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE :
-				setTypedValue((SymbolBindingImpl) newValue);
+				setTypedValue((SymbolBinding) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -119,10 +121,10 @@ public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.Truf
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__KEY :
-				setTypedKey((SymbolImpl) null);
+				setTypedKey((Symbol) null);
 				return;
 			case MiniJavaPackage.SYMBOL_TO_SYMBOL_BINDING_MAP__VALUE :
-				setTypedValue((SymbolBindingImpl) null);
+				setTypedValue((SymbolBinding) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -154,27 +156,27 @@ public class SymbolToSymbolBindingMapImpl extends MinimalTruffleEObjectImpl.Truf
 		this.hash = hash;
 	}
 
-	public SymbolImpl getKey() {
+	public Symbol getKey() {
 		return getTypedKey();
 	}
 
-	public void setKey(SymbolImpl key) {
+	public void setKey(Symbol key) {
 		setTypedKey(key);
 	}
 
-	public SymbolBindingImpl getValue() {
+	public SymbolBinding getValue() {
 		return getTypedValue();
 	}
 
-	public SymbolBindingImpl setValue(SymbolBindingImpl value) {
-		SymbolBindingImpl oldValue = getValue();
+	public SymbolBinding setValue(SymbolBinding value) {
+		SymbolBinding oldValue = getValue();
 		setTypedValue(value);
 		return oldValue;
 	}
 
 	@TruffleBoundary
-	public EMap<SymbolImpl, SymbolBindingImpl> getEMap() {
+	public EMap<Symbol, SymbolBinding> getEMap() {
 		EObject container = eContainer();
-		return container == null ? null : (EMap<SymbolImpl, SymbolBindingImpl>)container.eGet(eContainmentFeature());
+		return container == null ? null : (EMap<Symbol, SymbolBinding>)container.eGet(eContainmentFeature());
 	}
 }

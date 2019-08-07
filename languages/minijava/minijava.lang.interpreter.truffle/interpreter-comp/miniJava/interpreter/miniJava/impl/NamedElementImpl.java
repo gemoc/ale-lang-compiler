@@ -6,6 +6,7 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.NamedElement;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -14,7 +15,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "NamedElement"
 )
-public class NamedElementImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class NamedElementImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements NamedElement {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;

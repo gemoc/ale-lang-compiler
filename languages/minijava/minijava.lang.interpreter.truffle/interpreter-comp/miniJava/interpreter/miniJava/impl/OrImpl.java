@@ -5,8 +5,13 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.BooleanValue;
+import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Or;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,12 +21,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Or"
 )
-public class OrImpl extends ExpressionImpl {
+public class OrImpl extends ExpressionImpl implements Or {
 	@Child
-	protected ExpressionImpl left;
+	protected Expression left;
 
 	@Child
-	protected ExpressionImpl right;
+	protected Expression right;
 
 	protected OrImpl() {
 		super();
@@ -34,13 +39,13 @@ public class OrImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getLeft() {
+	public Expression getLeft() {
 		return left;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetLeft(ExpressionImpl newLeft, NotificationChain msgs) {
-		ExpressionImpl oldLeft = left;
+	public NotificationChain basicSetLeft(Expression newLeft, NotificationChain msgs) {
+		Expression oldLeft = left;
 		left = newLeft;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.OR__LEFT, oldLeft, newLeft);
@@ -53,7 +58,7 @@ public class OrImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setLeft(ExpressionImpl newLeft) {
+	public void setLeft(Expression newLeft) {
 		if (newLeft != left) {
 			NotificationChain msgs = null;
 			if (left != null)
@@ -68,13 +73,13 @@ public class OrImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getRight() {
+	public Expression getRight() {
 		return right;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetRight(ExpressionImpl newRight, NotificationChain msgs) {
-		ExpressionImpl oldRight = right;
+	public NotificationChain basicSetRight(Expression newRight, NotificationChain msgs) {
+		Expression oldRight = right;
 		right = newRight;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.OR__RIGHT, oldRight, newRight);
@@ -87,7 +92,7 @@ public class OrImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setRight(ExpressionImpl newRight) {
+	public void setRight(Expression newRight) {
 		if (newRight != right) {
 			NotificationChain msgs = null;
 			if (right != null)
@@ -131,10 +136,10 @@ public class OrImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.OR__LEFT :
-				setLeft((ExpressionImpl) newValue);
+				setLeft((Expression) newValue);
 				return;
 			case MiniJavaPackage.OR__RIGHT :
-				setRight((ExpressionImpl) newValue);
+				setRight((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -145,10 +150,10 @@ public class OrImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.OR__LEFT :
-				setLeft((ExpressionImpl) null);
+				setLeft((Expression) null);
 				return;
 			case MiniJavaPackage.OR__RIGHT :
-				setRight((ExpressionImpl) null);
+				setRight((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -166,13 +171,13 @@ public class OrImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		BooleanValueImpl left = ((BooleanValueImpl) (((ExpressionImpl) (this.getLeft())).evaluateExpression((StateImpl) (state))));
-		BooleanValueImpl right = ((BooleanValueImpl) (((ExpressionImpl) (this.getRight())).evaluateExpression((StateImpl) (state))));
-		BooleanValueImpl res = ((BooleanValueImpl) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+	public Value evaluateExpression(State state) {
+		Value result;
+		BooleanValue left = ((BooleanValue) (((Expression) (this.getLeft())).evaluateExpression((State) (state))));
+		BooleanValue right = ((BooleanValue) (((Expression) (this.getRight())).evaluateExpression((State) (state))));
+		BooleanValue res = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		res.setValue(((left.isValue()) || (right.isValue())));
-		result = (ValueImpl) (res) ;
+		result = (Value) (res) ;
 		return result;
 	}
 }

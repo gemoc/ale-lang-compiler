@@ -8,8 +8,16 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.Context;
+import miniJava.interpreter.miniJava.Import;
+import miniJava.interpreter.miniJava.Member;
+import miniJava.interpreter.miniJava.Method;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Program;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.TypeDeclaration;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -24,19 +32,19 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 @NodeInfo(
 		description = "Program"
 )
-public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
+public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements Program {
 	protected static final String NAME_EDEFAULT = null;
 
 	protected String name = NAME_EDEFAULT;
 
-	protected EList<ImportImpl> imports;
+	protected EList<Import> imports;
 
-	protected EList<TypeDeclarationImpl> classes;
+	protected EList<TypeDeclaration> classes;
 
-	protected StateImpl state;
+	protected State state;
 
 	@Children
-	private TypeDeclarationImpl[] classesArr;
+	private TypeDeclaration[] classesArr;
 
 	protected ProgramImpl() {
 		super();
@@ -62,26 +70,26 @@ public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	@TruffleBoundary
-	public EList<ImportImpl> getImports() {
+	public EList<Import> getImports() {
 		if (imports == null) {
-			imports = new EObjectContainmentEList<ImportImpl>(ImportImpl.class, this, MiniJavaPackage.PROGRAM__IMPORTS);
+			imports = new EObjectContainmentEList<Import>(Import.class, this, MiniJavaPackage.PROGRAM__IMPORTS);
 		}
 		return imports;
 	}
 
 	@TruffleBoundary
-	public EList<TypeDeclarationImpl> getClasses() {
+	public EList<TypeDeclaration> getClasses() {
 		if (classes == null) {
-			classes = new EObjectContainmentEList<TypeDeclarationImpl>(TypeDeclarationImpl.class, this, MiniJavaPackage.PROGRAM__CLASSES);
+			classes = new EObjectContainmentEList<TypeDeclaration>(TypeDeclaration.class, this, MiniJavaPackage.PROGRAM__CLASSES);
 		}
 		return classes;
 	}
 
 	@TruffleBoundary
-	public StateImpl getState() {
+	public State getState() {
 		if (state != null && state.eIsProxy()) {
 			InternalEObject oldState = (InternalEObject) state;
-			state = (StateImpl) eResolveProxy(oldState);
+			state = (State) eResolveProxy(oldState);
 			if (state != oldState) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.PROGRAM__STATE, oldState, state));
@@ -90,13 +98,13 @@ public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 		return state;
 	}
 
-	public StateImpl basicGetState() {
+	public State basicGetState() {
 		return state;
 	}
 
 	@TruffleBoundary
-	public void setState(StateImpl newState) {
-		StateImpl oldState = state;
+	public void setState(State newState) {
+		State oldState = state;
 		state = newState;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.PROGRAM__STATE, oldState, state));
@@ -142,14 +150,14 @@ public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 				return;
 			case MiniJavaPackage.PROGRAM__IMPORTS :
 				getImports().clear();
-				getImports().addAll((Collection<? extends ImportImpl>) newValue);
+				getImports().addAll((Collection<? extends Import>) newValue);
 				return;
 			case MiniJavaPackage.PROGRAM__CLASSES :
 				getClasses().clear();
-				getClasses().addAll((Collection<? extends TypeDeclarationImpl>) newValue);
+				getClasses().addAll((Collection<? extends TypeDeclaration>) newValue);
 				return;
 			case MiniJavaPackage.PROGRAM__STATE :
-				setState((StateImpl) newValue);
+				setState((State) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -169,7 +177,7 @@ public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 				getClasses().clear();
 				return;
 			case MiniJavaPackage.PROGRAM__STATE :
-				setState((StateImpl) null);
+				setState((State) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -192,41 +200,41 @@ public class ProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer {
 	}
 
 	public void main() {
-		((ProgramImpl) (this)).initialize(null);
-		((ProgramImpl) (this)).execute();
+		((Program) (this)).initialize(null);
+		((Program) (this)).execute();
 	}
 
 	public void initialize(EList args) {
-		ContextImpl rootCont = ((ContextImpl) (MiniJavaFactory.eINSTANCE.createContext()));
-		StateImpl state = ((StateImpl) (MiniJavaFactory.eINSTANCE.createState()));
+		Context rootCont = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
+		State state = ((State) (MiniJavaFactory.eINSTANCE.createState()));
 		state.setOutputStream(MiniJavaFactory.eINSTANCE.createOutputStream());
 		state.setRootFrame(MiniJavaFactory.eINSTANCE.createFrame());
 		state.getRootFrame().setRootContext(rootCont);
 		this.setState(state);
 	}
 
-	public StateImpl execute() {
-		StateImpl result;
-		MethodImpl main = ((MethodImpl) (((ProgramImpl) (this)).findMain()));
-		((BlockImpl) (main.getBody())).evaluateStatementKeepContext((StateImpl) (this.getState()));
-		result = (StateImpl) (this.getState()) ;
+	public State execute() {
+		State result;
+		Method main = ((Method) (((Program) (this)).findMain()));
+		((Block) (main.getBody())).evaluateStatementKeepContext((State) (this.getState()));
+		result = (State) (this.getState()) ;
 		return result;
 	}
 
-	public MethodImpl findMain() {
-		MethodImpl result;
+	public Method findMain() {
+		Method result;
 		if (this.classesArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.classes != null) this.classesArr = this.classes.toArray(new TypeDeclarationImpl[0]);
-			else this.classesArr = new TypeDeclarationImpl[] {};
+			if (this.classes != null) this.classesArr = this.classes.toArray(new TypeDeclaration[0]);
+			else this.classesArr = new TypeDeclaration[] {};
 		}
-		result = (MethodImpl) (null) ;
-		for (TypeDeclarationImpl clazz : this.classesArr) {
-			for (MemberImpl member : clazz.getMembers()) {
-				if (member instanceof MethodImpl) {
-					MethodImpl method = ((MethodImpl) (member));
+		result = (Method) (null) ;
+		for (TypeDeclaration clazz : this.classesArr) {
+			for (Member member : clazz.getMembers()) {
+				if (member instanceof Method) {
+					Method method = ((Method) (member));
 					if (EqualService.equals((method.getName()), ("main"))) {
-						result = (MethodImpl) (method) ;
+						result = (Method) (method) ;
 					}
 				}
 			}

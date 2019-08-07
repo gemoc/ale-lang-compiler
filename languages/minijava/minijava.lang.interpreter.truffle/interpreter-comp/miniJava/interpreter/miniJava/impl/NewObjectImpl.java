@@ -7,8 +7,24 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.Clazz;
+import miniJava.interpreter.miniJava.Context;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.Field;
+import miniJava.interpreter.miniJava.FieldBinding;
+import miniJava.interpreter.miniJava.Member;
+import miniJava.interpreter.miniJava.Method;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.NewCall;
+import miniJava.interpreter.miniJava.NewObject;
+import miniJava.interpreter.miniJava.ObjectInstance;
+import miniJava.interpreter.miniJava.ObjectRefValue;
+import miniJava.interpreter.miniJava.Parameter;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.SymbolBinding;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -23,13 +39,13 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "NewObject"
 )
-public class NewObjectImpl extends ExpressionImpl {
-	protected ClazzImpl type;
+public class NewObjectImpl extends ExpressionImpl implements NewObject {
+	protected Clazz type;
 
-	protected EList<ExpressionImpl> args;
+	protected EList<Expression> args;
 
 	@Children
-	private ExpressionImpl[] argsArr;
+	private Expression[] argsArr;
 
 	protected NewObjectImpl() {
 		super();
@@ -42,10 +58,10 @@ public class NewObjectImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ClazzImpl getType() {
+	public Clazz getType() {
 		if (type != null && type.eIsProxy()) {
 			InternalEObject oldType = (InternalEObject) type;
-			type = (ClazzImpl) eResolveProxy(oldType);
+			type = (Clazz) eResolveProxy(oldType);
 			if (type != oldType) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.NEW_OBJECT__TYPE, oldType, type));
@@ -54,22 +70,22 @@ public class NewObjectImpl extends ExpressionImpl {
 		return type;
 	}
 
-	public ClazzImpl basicGetType() {
+	public Clazz basicGetType() {
 		return type;
 	}
 
 	@TruffleBoundary
-	public void setType(ClazzImpl newType) {
-		ClazzImpl oldType = type;
+	public void setType(Clazz newType) {
+		Clazz oldType = type;
 		type = newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.NEW_OBJECT__TYPE, oldType, type));
 	}
 
 	@TruffleBoundary
-	public EList<ExpressionImpl> getArgs() {
+	public EList<Expression> getArgs() {
 		if (args == null) {
-			args = new EObjectContainmentEList<ExpressionImpl>(ExpressionImpl.class, this, MiniJavaPackage.NEW_OBJECT__ARGS);
+			args = new EObjectContainmentEList<Expression>(Expression.class, this, MiniJavaPackage.NEW_OBJECT__ARGS);
 		}
 		return args;
 	}
@@ -104,11 +120,11 @@ public class NewObjectImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.NEW_OBJECT__TYPE :
-				setType((ClazzImpl) newValue);
+				setType((Clazz) newValue);
 				return;
 			case MiniJavaPackage.NEW_OBJECT__ARGS :
 				getArgs().clear();
-				getArgs().addAll((Collection<? extends ExpressionImpl>) newValue);
+				getArgs().addAll((Collection<? extends Expression>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -119,7 +135,7 @@ public class NewObjectImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.NEW_OBJECT__TYPE :
-				setType((ClazzImpl) null);
+				setType((Clazz) null);
 				return;
 			case MiniJavaPackage.NEW_OBJECT__ARGS :
 				getArgs().clear();
@@ -140,25 +156,25 @@ public class NewObjectImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
+	public Value evaluateExpression(State state) {
+		Value result;
 		if (this.argsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.args != null) this.argsArr = this.args.toArray(new ExpressionImpl[0]);
-			else this.argsArr = new ExpressionImpl[] {};
+			if (this.args != null) this.argsArr = this.args.toArray(new Expression[0]);
+			else this.argsArr = new Expression[] {};
 		}
-		ObjectInstanceImpl res = ((ObjectInstanceImpl) (MiniJavaFactory.eINSTANCE.createObjectInstance()));
+		ObjectInstance res = ((ObjectInstance) (MiniJavaFactory.eINSTANCE.createObjectInstance()));
 		res.setType(this.getType());
 		state.getObjectsHeap().add(res);
 		int i = ((int) (0));
 		int z = ((int) (CollectionService.size(res.getType().getMembers())));
 		while ((i) < (z)) {
-			MemberImpl m = ((MemberImpl) (CollectionService.get(res.getType().getMembers(), i)));
-			if (m instanceof FieldImpl) {
-				FieldImpl f = ((FieldImpl) (m));
+			Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
+			if (m instanceof Field) {
+				Field f = ((Field) (m));
 				if (!EqualService.equals((f.getDefaultValue()), (null))) {
-					ValueImpl v = ((ValueImpl) (((ExpressionImpl) (f.getDefaultValue())).evaluateExpression((StateImpl) (state))));
-					FieldBindingImpl fb = ((FieldBindingImpl) (MiniJavaFactory.eINSTANCE.createFieldBinding()));
+					Value v = ((Value) (((Expression) (f.getDefaultValue())).evaluateExpression((State) (state))));
+					FieldBinding fb = ((FieldBinding) (MiniJavaFactory.eINSTANCE.createFieldBinding()));
 					fb.setField(f);
 					fb.setValue(v);
 					res.getFieldbindings().add(fb);
@@ -167,11 +183,11 @@ public class NewObjectImpl extends ExpressionImpl {
 			i = (i) + (1);
 		}
 		i = 0;
-		MethodImpl constructor = ((MethodImpl) (null));
+		Method constructor = ((Method) (null));
 		while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
-			MemberImpl m = ((MemberImpl) (CollectionService.get(res.getType().getMembers(), i)));
-			if (m instanceof MethodImpl) {
-				MethodImpl mtd = ((MethodImpl) (m));
+			Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
+			if (m instanceof Method) {
+				Method mtd = ((Method) (m));
 				if (((EqualService.equals((mtd.getName()), (null))) && (EqualService.equals((CollectionService.size(mtd.getParams())), (CollectionService.size(this.argsArr)))))) {
 					constructor = mtd;
 				}
@@ -179,28 +195,28 @@ public class NewObjectImpl extends ExpressionImpl {
 			i = (i) + (1);
 		}
 		if (!EqualService.equals((constructor), (null))) {
-			ContextImpl newContext = ((ContextImpl) (MiniJavaFactory.eINSTANCE.createContext()));
+			Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
 			i = 0;
 			z = CollectionService.size(this.argsArr);
 			while ((i) < (z)) {
-				ExpressionImpl arg = ((ExpressionImpl) (CollectionService.get(this.argsArr, i)));
-				ParameterImpl param = ((ParameterImpl) (CollectionService.get(constructor.getParams(), i)));
-				SymbolBindingImpl binding = ((SymbolBindingImpl) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
+				Expression arg = ((Expression) (CollectionService.get(this.argsArr, i)));
+				Parameter param = ((Parameter) (CollectionService.get(constructor.getParams(), i)));
+				SymbolBinding binding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
 				binding.setSymbol(param);
-				binding.setValue(((ExpressionImpl) (arg)).evaluateExpression((StateImpl) (state)));
+				binding.setValue(((Expression) (arg)).evaluateExpression((State) (state)));
 				i = (i) + (1);
 				newContext.getBindings().add(binding);
 			}
-			NewCallImpl call = ((NewCallImpl) (MiniJavaFactory.eINSTANCE.createNewCall()));
+			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this);
-			((StateImpl) (state)).pushNewFrame((ObjectInstanceImpl) (res), (NewCallImpl) (call), (ContextImpl) (newContext));
-			BlockImpl bd = ((BlockImpl) (constructor.getBody()));
-			bd.evaluateStatement((StateImpl) (state));
-			((StateImpl) (state)).popCurrentFrame();
+			((State) (state)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
+			Block bd = ((Block) (constructor.getBody()));
+			((Block) (bd)).evaluateStatement((State) (state));
+			((State) (state)).popCurrentFrame();
 		}
-		ObjectRefValueImpl tmp = ((ObjectRefValueImpl) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
+		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(res);
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 
 		return result;
 	}

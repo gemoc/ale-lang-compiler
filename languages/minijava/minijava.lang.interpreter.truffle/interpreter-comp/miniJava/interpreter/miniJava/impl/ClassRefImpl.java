@@ -4,7 +4,10 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.ClassRef;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.TypeDeclaration;
+import miniJava.interpreter.miniJava.TypeRef;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -14,8 +17,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "ClassRef"
 )
-public class ClassRefImpl extends SingleTypeRefImpl {
-	protected TypeDeclarationImpl referencedClass;
+public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
+	protected TypeDeclaration referencedClass;
 
 	protected ClassRefImpl() {
 		super();
@@ -28,10 +31,10 @@ public class ClassRefImpl extends SingleTypeRefImpl {
 	}
 
 	@TruffleBoundary
-	public TypeDeclarationImpl getReferencedClass() {
+	public TypeDeclaration getReferencedClass() {
 		if (referencedClass != null && referencedClass.eIsProxy()) {
 			InternalEObject oldReferencedClass = (InternalEObject) referencedClass;
-			referencedClass = (TypeDeclarationImpl) eResolveProxy(oldReferencedClass);
+			referencedClass = (TypeDeclaration) eResolveProxy(oldReferencedClass);
 			if (referencedClass != oldReferencedClass) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLASS_REF__REFERENCED_CLASS, oldReferencedClass, referencedClass));
@@ -40,13 +43,13 @@ public class ClassRefImpl extends SingleTypeRefImpl {
 		return referencedClass;
 	}
 
-	public TypeDeclarationImpl basicGetReferencedClass() {
+	public TypeDeclaration basicGetReferencedClass() {
 		return referencedClass;
 	}
 
 	@TruffleBoundary
-	public void setReferencedClass(TypeDeclarationImpl newReferencedClass) {
-		TypeDeclarationImpl oldReferencedClass = referencedClass;
+	public void setReferencedClass(TypeDeclaration newReferencedClass) {
+		TypeDeclaration oldReferencedClass = referencedClass;
 		referencedClass = newReferencedClass;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.CLASS_REF__REFERENCED_CLASS, oldReferencedClass, referencedClass));
@@ -69,7 +72,7 @@ public class ClassRefImpl extends SingleTypeRefImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.CLASS_REF__REFERENCED_CLASS :
-				setReferencedClass((TypeDeclarationImpl) newValue);
+				setReferencedClass((TypeDeclaration) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -80,7 +83,7 @@ public class ClassRefImpl extends SingleTypeRefImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.CLASS_REF__REFERENCED_CLASS :
-				setReferencedClass((TypeDeclarationImpl) null);
+				setReferencedClass((TypeDeclaration) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -96,10 +99,10 @@ public class ClassRefImpl extends SingleTypeRefImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public boolean compare(TypeRefImpl other) {
+	public boolean compare(TypeRef other) {
 		boolean result;
-		if (other instanceof ClassRefImpl) {
-			ClassRefImpl ocr = ((ClassRefImpl) (other));
+		if (other instanceof ClassRef) {
+			ClassRef ocr = ((ClassRef) (other));
 			result = (boolean) (EqualService.equals((this.getReferencedClass()), (ocr.getReferencedClass()))) ;
 		}
 		else {

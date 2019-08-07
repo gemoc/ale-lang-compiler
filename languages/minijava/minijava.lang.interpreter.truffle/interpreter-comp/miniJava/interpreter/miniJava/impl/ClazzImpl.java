@@ -5,6 +5,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Clazz;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -14,12 +15,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Clazz"
 )
-public class ClazzImpl extends TypeDeclarationImpl {
+public class ClazzImpl extends TypeDeclarationImpl implements Clazz {
 	protected static final boolean ISABSTRACT_EDEFAULT = false;
 
 	protected boolean isabstract = ISABSTRACT_EDEFAULT;
 
-	protected ClazzImpl superClass;
+	protected Clazz superClass;
 
 	protected ClazzImpl() {
 		super();
@@ -45,10 +46,10 @@ public class ClazzImpl extends TypeDeclarationImpl {
 	}
 
 	@TruffleBoundary
-	public ClazzImpl getSuperClass() {
+	public Clazz getSuperClass() {
 		if (superClass != null && superClass.eIsProxy()) {
 			InternalEObject oldSuperClass = (InternalEObject) superClass;
-			superClass = (ClazzImpl) eResolveProxy(oldSuperClass);
+			superClass = (Clazz) eResolveProxy(oldSuperClass);
 			if (superClass != oldSuperClass) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLAZZ__SUPER_CLASS, oldSuperClass, superClass));
@@ -57,13 +58,13 @@ public class ClazzImpl extends TypeDeclarationImpl {
 		return superClass;
 	}
 
-	public ClazzImpl basicGetSuperClass() {
+	public Clazz basicGetSuperClass() {
 		return superClass;
 	}
 
 	@TruffleBoundary
-	public void setSuperClass(ClazzImpl newSuperClass) {
-		ClazzImpl oldSuperClass = superClass;
+	public void setSuperClass(Clazz newSuperClass) {
+		Clazz oldSuperClass = superClass;
 		superClass = newSuperClass;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.CLAZZ__SUPER_CLASS, oldSuperClass, superClass));
@@ -91,7 +92,7 @@ public class ClazzImpl extends TypeDeclarationImpl {
 				setIsabstract((Boolean) newValue);
 				return;
 			case MiniJavaPackage.CLAZZ__SUPER_CLASS :
-				setSuperClass((ClazzImpl) newValue);
+				setSuperClass((Clazz) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -105,7 +106,7 @@ public class ClazzImpl extends TypeDeclarationImpl {
 				setIsabstract(ISABSTRACT_EDEFAULT);
 				return;
 			case MiniJavaPackage.CLAZZ__SUPER_CLASS :
-				setSuperClass((ClazzImpl) null);
+				setSuperClass((Clazz) null);
 				return;
 		}
 		super.eUnset(featureID);

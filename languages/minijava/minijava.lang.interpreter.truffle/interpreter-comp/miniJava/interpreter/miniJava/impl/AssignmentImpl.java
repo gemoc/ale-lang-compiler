@@ -5,8 +5,27 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.ArrayAccess;
+import miniJava.interpreter.miniJava.ArrayInstance;
+import miniJava.interpreter.miniJava.ArrayRefValue;
+import miniJava.interpreter.miniJava.Assignee;
+import miniJava.interpreter.miniJava.Assignment;
+import miniJava.interpreter.miniJava.Context;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.Field;
+import miniJava.interpreter.miniJava.FieldAccess;
+import miniJava.interpreter.miniJava.FieldBinding;
+import miniJava.interpreter.miniJava.IntegerValue;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
+import miniJava.interpreter.miniJava.ObjectRefValue;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolBinding;
+import miniJava.interpreter.miniJava.SymbolRef;
+import miniJava.interpreter.miniJava.Value;
+import miniJava.interpreter.miniJava.VariableDeclaration;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -18,12 +37,12 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "Assignment"
 )
-public class AssignmentImpl extends StatementImpl {
+public class AssignmentImpl extends StatementImpl implements Assignment {
 	@Child
-	protected AssigneeImpl assignee;
+	protected Assignee assignee;
 
 	@Child
-	protected ExpressionImpl value;
+	protected Expression value;
 
 	protected AssignmentImpl() {
 		super();
@@ -36,13 +55,13 @@ public class AssignmentImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public AssigneeImpl getAssignee() {
+	public Assignee getAssignee() {
 		return assignee;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetAssignee(AssigneeImpl newAssignee, NotificationChain msgs) {
-		AssigneeImpl oldAssignee = assignee;
+	public NotificationChain basicSetAssignee(Assignee newAssignee, NotificationChain msgs) {
+		Assignee oldAssignee = assignee;
 		assignee = newAssignee;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ASSIGNMENT__ASSIGNEE, oldAssignee, newAssignee);
@@ -55,7 +74,7 @@ public class AssignmentImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setAssignee(AssigneeImpl newAssignee) {
+	public void setAssignee(Assignee newAssignee) {
 		if (newAssignee != assignee) {
 			NotificationChain msgs = null;
 			if (assignee != null)
@@ -70,13 +89,13 @@ public class AssignmentImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getValue() {
+	public Expression getValue() {
 		return value;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetValue(ExpressionImpl newValue, NotificationChain msgs) {
-		ExpressionImpl oldValue = value;
+	public NotificationChain basicSetValue(Expression newValue, NotificationChain msgs) {
+		Expression oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ASSIGNMENT__VALUE, oldValue, newValue);
@@ -89,7 +108,7 @@ public class AssignmentImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setValue(ExpressionImpl newValue) {
+	public void setValue(Expression newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
@@ -133,10 +152,10 @@ public class AssignmentImpl extends StatementImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.ASSIGNMENT__ASSIGNEE :
-				setAssignee((AssigneeImpl) newValue);
+				setAssignee((Assignee) newValue);
 				return;
 			case MiniJavaPackage.ASSIGNMENT__VALUE :
-				setValue((ExpressionImpl) newValue);
+				setValue((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -147,10 +166,10 @@ public class AssignmentImpl extends StatementImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.ASSIGNMENT__ASSIGNEE :
-				setAssignee((AssigneeImpl) null);
+				setAssignee((Assignee) null);
 				return;
 			case MiniJavaPackage.ASSIGNMENT__VALUE :
-				setValue((ExpressionImpl) null);
+				setValue((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -168,32 +187,32 @@ public class AssignmentImpl extends StatementImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public void evaluateStatement(StateImpl state) {
-		ContextImpl context = ((ContextImpl) (((StateImpl) (state)).findCurrentContext()));
-		ValueImpl right = ((ValueImpl) (((ExpressionImpl) (this.getValue())).evaluateExpression((StateImpl) (state))));
-		AssigneeImpl assignee = ((AssigneeImpl) (this.getAssignee()));
-		if (assignee instanceof SymbolRefImpl) {
-			SymbolRefImpl assigneeSymbolRef = ((SymbolRefImpl) (assignee));
-			SymbolBindingImpl existingBinding = ((SymbolBindingImpl) (((ContextImpl) (context)).findBinding((SymbolImpl) (assigneeSymbolRef.getSymbol()))));
+	public void evaluateStatement(State state) {
+		Context context = ((Context) (((State) (state)).findCurrentContext()));
+		Value right = ((Value) (((Expression) (this.getValue())).evaluateExpression((State) (state))));
+		Assignee assignee = ((Assignee) (this.getAssignee()));
+		if (assignee instanceof SymbolRef) {
+			SymbolRef assigneeSymbolRef = ((SymbolRef) (assignee));
+			SymbolBinding existingBinding = ((SymbolBinding) (((Context) (context)).findBinding((Symbol) (assigneeSymbolRef.getSymbol()))));
 			existingBinding.setValue(right);
 		}
 		else {
-			if (assignee instanceof VariableDeclarationImpl) {
-				VariableDeclarationImpl assigneeVariableDeclaration = ((VariableDeclarationImpl) (assignee));
-				SymbolBindingImpl binding = ((SymbolBindingImpl) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
+			if (assignee instanceof VariableDeclaration) {
+				VariableDeclaration assigneeVariableDeclaration = ((VariableDeclaration) (assignee));
+				SymbolBinding binding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
 				binding.setSymbol(assigneeVariableDeclaration);
 				binding.setValue(right);
 				context.getBindings().add(binding);
 			}
 			else {
-				if (assignee instanceof FieldAccessImpl) {
-					FieldAccessImpl assigneeFieldAccess = ((FieldAccessImpl) (assignee));
-					FieldImpl f = ((FieldImpl) (assigneeFieldAccess.getField()));
-					ObjectRefValueImpl realReceiverValue = ((ObjectRefValueImpl) (((ObjectRefValueImpl) (((ExpressionImpl) (assigneeFieldAccess.getReceiver())).evaluateExpression((StateImpl) (state))))));
-					ObjectInstanceImpl realReceiver = ((ObjectInstanceImpl) (realReceiverValue.getInstance()));
-					FieldBindingImpl existingBinding = ((FieldBindingImpl) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (f))))));
+				if (assignee instanceof FieldAccess) {
+					FieldAccess assigneeFieldAccess = ((FieldAccess) (assignee));
+					Field f = ((Field) (assigneeFieldAccess.getField()));
+					ObjectRefValue realReceiverValue = ((ObjectRefValue) (((ObjectRefValue) (((Expression) (assigneeFieldAccess.getReceiver())).evaluateExpression((State) (state))))));
+					ObjectInstance realReceiver = ((ObjectInstance) (realReceiverValue.getInstance()));
+					FieldBinding existingBinding = ((FieldBinding) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (f))))));
 					if (EqualService.equals((existingBinding), (null))) {
-						FieldBindingImpl binding = ((FieldBindingImpl) (MiniJavaFactory.eINSTANCE.createFieldBinding()));
+						FieldBinding binding = ((FieldBinding) (MiniJavaFactory.eINSTANCE.createFieldBinding()));
 						binding.setField(f);
 						binding.setValue(right);
 						realReceiver.getFieldbindings().add(binding);
@@ -203,11 +222,11 @@ public class AssignmentImpl extends StatementImpl {
 					}
 				}
 				else {
-					if (assignee instanceof ArrayAccessImpl) {
-						ArrayAccessImpl assigneeArrayAccess = ((ArrayAccessImpl) (assignee));
-						ArrayRefValueImpl arrayRefValue = ((ArrayRefValueImpl) (((ArrayRefValueImpl) (((ExpressionImpl) (assigneeArrayAccess.getObject())).evaluateExpression((StateImpl) (state))))));
-						ArrayInstanceImpl array = ((ArrayInstanceImpl) (arrayRefValue.getInstance()));
-						IntegerValueImpl integerValue = ((IntegerValueImpl) (((IntegerValueImpl) (((ExpressionImpl) (assigneeArrayAccess.getIndex())).evaluateExpression((StateImpl) (state))))));
+					if (assignee instanceof ArrayAccess) {
+						ArrayAccess assigneeArrayAccess = ((ArrayAccess) (assignee));
+						ArrayRefValue arrayRefValue = ((ArrayRefValue) (((ArrayRefValue) (((Expression) (assigneeArrayAccess.getObject())).evaluateExpression((State) (state))))));
+						ArrayInstance array = ((ArrayInstance) (arrayRefValue.getInstance()));
+						IntegerValue integerValue = ((IntegerValue) (((IntegerValue) (((Expression) (assigneeArrayAccess.getIndex())).evaluateExpression((State) (state))))));
 						int index = ((int) (integerValue.getValue()));
 						CollectionService.set(array.getValue(), index, right);
 					}

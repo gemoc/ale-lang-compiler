@@ -4,13 +4,15 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Override;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Parameter;
+import miniJava.interpreter.miniJava.TypeRef;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 @NodeInfo(
 		description = "Parameter"
 )
-public class ParameterImpl extends SymbolImpl {
+public class ParameterImpl extends SymbolImpl implements Parameter {
 	protected ParameterImpl() {
 		super();
 	}
@@ -21,9 +23,9 @@ public class ParameterImpl extends SymbolImpl {
 		return MiniJavaPackage.Literals.PARAMETER;
 	}
 
-	public boolean compare(ParameterImpl other) {
+	public boolean compare(Parameter other) {
 		boolean result;
-		result = (boolean) (((EqualService.equals((this.name), (other.getName()))) && (((TypeRefImpl) (this.typeRef)).compare((TypeRefImpl) (other.getTypeRef()))))) ;
+		result = (boolean) (((EqualService.equals((this.name), (other.getName()))) && (((TypeRef) (this.typeRef)).compare((TypeRef) (other.getTypeRef()))))) ;
 		return result;
 	}
 }

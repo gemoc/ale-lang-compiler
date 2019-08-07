@@ -5,7 +5,13 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Assignment;
+import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.BooleanValue;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.ForStatement;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,18 +21,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "ForStatement"
 )
-public class ForStatementImpl extends StatementImpl {
+public class ForStatementImpl extends StatementImpl implements ForStatement {
 	@Child
-	protected AssignmentImpl declaration;
+	protected Assignment declaration;
 
 	@Child
-	protected ExpressionImpl condition;
+	protected Expression condition;
 
 	@Child
-	protected AssignmentImpl progression;
+	protected Assignment progression;
 
 	@Child
-	protected BlockImpl block;
+	protected Block block;
 
 	protected ForStatementImpl() {
 		super();
@@ -39,14 +45,13 @@ public class ForStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public AssignmentImpl getDeclaration() {
+	public Assignment getDeclaration() {
 		return declaration;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetDeclaration(AssignmentImpl newDeclaration,
-			NotificationChain msgs) {
-		AssignmentImpl oldDeclaration = declaration;
+	public NotificationChain basicSetDeclaration(Assignment newDeclaration, NotificationChain msgs) {
+		Assignment oldDeclaration = declaration;
 		declaration = newDeclaration;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FOR_STATEMENT__DECLARATION, oldDeclaration, newDeclaration);
@@ -59,7 +64,7 @@ public class ForStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setDeclaration(AssignmentImpl newDeclaration) {
+	public void setDeclaration(Assignment newDeclaration) {
 		if (newDeclaration != declaration) {
 			NotificationChain msgs = null;
 			if (declaration != null)
@@ -74,13 +79,13 @@ public class ForStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getCondition() {
+	public Expression getCondition() {
 		return condition;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetCondition(ExpressionImpl newCondition, NotificationChain msgs) {
-		ExpressionImpl oldCondition = condition;
+	public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
+		Expression oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FOR_STATEMENT__CONDITION, oldCondition, newCondition);
@@ -93,7 +98,7 @@ public class ForStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setCondition(ExpressionImpl newCondition) {
+	public void setCondition(Expression newCondition) {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
@@ -108,14 +113,13 @@ public class ForStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public AssignmentImpl getProgression() {
+	public Assignment getProgression() {
 		return progression;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetProgression(AssignmentImpl newProgression,
-			NotificationChain msgs) {
-		AssignmentImpl oldProgression = progression;
+	public NotificationChain basicSetProgression(Assignment newProgression, NotificationChain msgs) {
+		Assignment oldProgression = progression;
 		progression = newProgression;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FOR_STATEMENT__PROGRESSION, oldProgression, newProgression);
@@ -128,7 +132,7 @@ public class ForStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setProgression(AssignmentImpl newProgression) {
+	public void setProgression(Assignment newProgression) {
 		if (newProgression != progression) {
 			NotificationChain msgs = null;
 			if (progression != null)
@@ -143,13 +147,13 @@ public class ForStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public BlockImpl getBlock() {
+	public Block getBlock() {
 		return block;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetBlock(BlockImpl newBlock, NotificationChain msgs) {
-		BlockImpl oldBlock = block;
+	public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
+		Block oldBlock = block;
 		block = newBlock;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FOR_STATEMENT__BLOCK, oldBlock, newBlock);
@@ -162,7 +166,7 @@ public class ForStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setBlock(BlockImpl newBlock) {
+	public void setBlock(Block newBlock) {
 		if (newBlock != block) {
 			NotificationChain msgs = null;
 			if (block != null)
@@ -214,16 +218,16 @@ public class ForStatementImpl extends StatementImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.FOR_STATEMENT__DECLARATION :
-				setDeclaration((AssignmentImpl) newValue);
+				setDeclaration((Assignment) newValue);
 				return;
 			case MiniJavaPackage.FOR_STATEMENT__CONDITION :
-				setCondition((ExpressionImpl) newValue);
+				setCondition((Expression) newValue);
 				return;
 			case MiniJavaPackage.FOR_STATEMENT__PROGRESSION :
-				setProgression((AssignmentImpl) newValue);
+				setProgression((Assignment) newValue);
 				return;
 			case MiniJavaPackage.FOR_STATEMENT__BLOCK :
-				setBlock((BlockImpl) newValue);
+				setBlock((Block) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -234,16 +238,16 @@ public class ForStatementImpl extends StatementImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.FOR_STATEMENT__DECLARATION :
-				setDeclaration((AssignmentImpl) null);
+				setDeclaration((Assignment) null);
 				return;
 			case MiniJavaPackage.FOR_STATEMENT__CONDITION :
-				setCondition((ExpressionImpl) null);
+				setCondition((Expression) null);
 				return;
 			case MiniJavaPackage.FOR_STATEMENT__PROGRESSION :
-				setProgression((AssignmentImpl) null);
+				setProgression((Assignment) null);
 				return;
 			case MiniJavaPackage.FOR_STATEMENT__BLOCK :
-				setBlock((BlockImpl) null);
+				setBlock((Block) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -265,16 +269,16 @@ public class ForStatementImpl extends StatementImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public void evaluateStatement(StateImpl state) {
-		((StateImpl) (state)).pushNewContext();
-		((AssignmentImpl) (this.getDeclaration())).evaluateStatement((StateImpl) (state));
-		BooleanValueImpl continueFor = ((BooleanValueImpl) (((BooleanValueImpl) (((ExpressionImpl) (this.getCondition())).evaluateExpression((StateImpl) (state))))));
+	public void evaluateStatement(State state) {
+		((State) (state)).pushNewContext();
+		((Assignment) (this.getDeclaration())).evaluateStatement((State) (state));
+		BooleanValue continueFor = ((BooleanValue) (((BooleanValue) (((Expression) (this.getCondition())).evaluateExpression((State) (state))))));
 		while (continueFor.isValue()) {
-			((BlockImpl) (this.getBlock())).evaluateStatement((StateImpl) (state));
-			((AssignmentImpl) (this.getProgression())).evaluateStatement((StateImpl) (state));
-			BooleanValueImpl continueFor2 = ((BooleanValueImpl) (((BooleanValueImpl) (((ExpressionImpl) (this.getCondition())).evaluateExpression((StateImpl) (state))))));
+			((Block) (this.getBlock())).evaluateStatement((State) (state));
+			((Assignment) (this.getProgression())).evaluateStatement((State) (state));
+			BooleanValue continueFor2 = ((BooleanValue) (((BooleanValue) (((Expression) (this.getCondition())).evaluateExpression((State) (state))))));
 			continueFor = continueFor2;
 		}
-		((StateImpl) (state)).popCurrentContext();
+		((State) (state)).popCurrentContext();
 	}
 }

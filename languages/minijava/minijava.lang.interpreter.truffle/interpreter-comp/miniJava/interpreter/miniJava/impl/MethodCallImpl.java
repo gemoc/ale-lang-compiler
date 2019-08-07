@@ -8,8 +8,20 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Clazz;
+import miniJava.interpreter.miniJava.Context;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.Method;
+import miniJava.interpreter.miniJava.MethodCall;
+import miniJava.interpreter.miniJava.MethodCall2;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
+import miniJava.interpreter.miniJava.ObjectRefValue;
+import miniJava.interpreter.miniJava.Parameter;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.SymbolBinding;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -23,16 +35,16 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 @NodeInfo(
 		description = "MethodCall"
 )
-public class MethodCallImpl extends ExpressionImpl {
+public class MethodCallImpl extends ExpressionImpl implements MethodCall {
 	@Child
-	protected ExpressionImpl receiver;
+	protected Expression receiver;
 
-	protected MethodImpl method;
+	protected Method method;
 
-	protected EList<ExpressionImpl> args;
+	protected EList<Expression> args;
 
 	@Children
-	private ExpressionImpl[] argsArr;
+	private Expression[] argsArr;
 
 	protected MethodCallImpl() {
 		super();
@@ -45,13 +57,13 @@ public class MethodCallImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getReceiver() {
+	public Expression getReceiver() {
 		return receiver;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetReceiver(ExpressionImpl newReceiver, NotificationChain msgs) {
-		ExpressionImpl oldReceiver = receiver;
+	public NotificationChain basicSetReceiver(Expression newReceiver, NotificationChain msgs) {
+		Expression oldReceiver = receiver;
 		receiver = newReceiver;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.METHOD_CALL__RECEIVER, oldReceiver, newReceiver);
@@ -64,7 +76,7 @@ public class MethodCallImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setReceiver(ExpressionImpl newReceiver) {
+	public void setReceiver(Expression newReceiver) {
 		if (newReceiver != receiver) {
 			NotificationChain msgs = null;
 			if (receiver != null)
@@ -79,10 +91,10 @@ public class MethodCallImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public MethodImpl getMethod() {
+	public Method getMethod() {
 		if (method != null && method.eIsProxy()) {
 			InternalEObject oldMethod = (InternalEObject) method;
-			method = (MethodImpl) eResolveProxy(oldMethod);
+			method = (Method) eResolveProxy(oldMethod);
 			if (method != oldMethod) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.METHOD_CALL__METHOD, oldMethod, method));
@@ -91,22 +103,22 @@ public class MethodCallImpl extends ExpressionImpl {
 		return method;
 	}
 
-	public MethodImpl basicGetMethod() {
+	public Method basicGetMethod() {
 		return method;
 	}
 
 	@TruffleBoundary
-	public void setMethod(MethodImpl newMethod) {
-		MethodImpl oldMethod = method;
+	public void setMethod(Method newMethod) {
+		Method oldMethod = method;
 		method = newMethod;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.METHOD_CALL__METHOD, oldMethod, method));
 	}
 
 	@TruffleBoundary
-	public EList<ExpressionImpl> getArgs() {
+	public EList<Expression> getArgs() {
 		if (args == null) {
-			args = new EObjectContainmentEList<ExpressionImpl>(ExpressionImpl.class, this, MiniJavaPackage.METHOD_CALL__ARGS);
+			args = new EObjectContainmentEList<Expression>(Expression.class, this, MiniJavaPackage.METHOD_CALL__ARGS);
 		}
 		return args;
 	}
@@ -145,14 +157,14 @@ public class MethodCallImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.METHOD_CALL__RECEIVER :
-				setReceiver((ExpressionImpl) newValue);
+				setReceiver((Expression) newValue);
 				return;
 			case MiniJavaPackage.METHOD_CALL__METHOD :
-				setMethod((MethodImpl) newValue);
+				setMethod((Method) newValue);
 				return;
 			case MiniJavaPackage.METHOD_CALL__ARGS :
 				getArgs().clear();
-				getArgs().addAll((Collection<? extends ExpressionImpl>) newValue);
+				getArgs().addAll((Collection<? extends Expression>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -163,10 +175,10 @@ public class MethodCallImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.METHOD_CALL__RECEIVER :
-				setReceiver((ExpressionImpl) null);
+				setReceiver((Expression) null);
 				return;
 			case MiniJavaPackage.METHOD_CALL__METHOD :
-				setMethod((MethodImpl) null);
+				setMethod((Method) null);
 				return;
 			case MiniJavaPackage.METHOD_CALL__ARGS :
 				getArgs().clear();
@@ -189,46 +201,46 @@ public class MethodCallImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
+	public Value evaluateExpression(State state) {
+		Value result;
 		if (this.argsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.args != null) this.argsArr = this.args.toArray(new ExpressionImpl[0]);
-			else this.argsArr = new ExpressionImpl[] {};
+			if (this.args != null) this.argsArr = this.args.toArray(new Expression[0]);
+			else this.argsArr = new Expression[] {};
 		}
-		ObjectRefValueImpl realReceiver0 = ((ObjectRefValueImpl) (((ObjectRefValueImpl) (((ExpressionImpl) (this.getReceiver())).evaluateExpression((StateImpl) (state))))));
-		ObjectInstanceImpl realReceiver = ((ObjectInstanceImpl) (realReceiver0.getInstance()));
-		MethodImpl realMethod = ((MethodImpl) (((MethodImpl) (((MethodImpl) (this.getMethod())).findOverride((ClazzImpl) (realReceiver.getType()))))));
-		ContextImpl newContext = ((ContextImpl) (MiniJavaFactory.eINSTANCE.createContext()));
+		ObjectRefValue realReceiver0 = ((ObjectRefValue) (((ObjectRefValue) (((Expression) (this.getReceiver())).evaluateExpression((State) (state))))));
+		ObjectInstance realReceiver = ((ObjectInstance) (realReceiver0.getInstance()));
+		Method realMethod = ((Method) (((Method) (((Method) (this.getMethod())).findOverride((Clazz) (realReceiver.getType()))))));
+		Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
 		int argsLength = ((int) (CollectionService.size(this.argsArr)));
 		int i = ((int) (0));
 		while ((i) < (argsLength)) {
-			ExpressionImpl arg = ((ExpressionImpl) (CollectionService.get(this.argsArr, i)));
-			ParameterImpl param = ((ParameterImpl) (CollectionService.get(realMethod.getParams(), i)));
-			SymbolBindingImpl binding = ((SymbolBindingImpl) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
+			Expression arg = ((Expression) (CollectionService.get(this.argsArr, i)));
+			Parameter param = ((Parameter) (CollectionService.get(realMethod.getParams(), i)));
+			SymbolBinding binding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
 			binding.setSymbol(param);
-			binding.setValue(((ExpressionImpl) (arg)).evaluateExpression((StateImpl) (state)));
+			binding.setValue(((Expression) (arg)).evaluateExpression((State) (state)));
 			newContext.getBindings().add(binding);
 			i = (i) + (1);
 		}
-		MethodCall2Impl call = ((MethodCall2Impl) (MiniJavaFactory.eINSTANCE.createMethodCall2()));
+		MethodCall2 call = ((MethodCall2) (MiniJavaFactory.eINSTANCE.createMethodCall2()));
 		call.setMethodcall(this);
-		((StateImpl) (state)).pushNewFrame((ObjectInstanceImpl) (realReceiver), (MethodCall2Impl) (call), (ContextImpl) (newContext));
-		((MethodCallImpl) (this)).call((MethodImpl) (realMethod), (StateImpl) (state));
-		ValueImpl returnValue = ((ValueImpl) (((StateImpl) (state)).findCurrentFrame().getReturnValue()));
-		((StateImpl) (state)).popCurrentFrame();
-		result = (ValueImpl) (returnValue) ;
+		((State) (state)).pushNewFrame((ObjectInstance) (realReceiver), (MethodCall2) (call), (Context) (newContext));
+		((MethodCall) (this)).call((Method) (realMethod), (State) (state));
+		Value returnValue = ((Value) (((State) (state)).findCurrentFrame().getReturnValue()));
+		((State) (state)).popCurrentFrame();
+		result = (Value) (returnValue) ;
 
 		return result;
 	}
 
-	public void call(MethodImpl realMethod, StateImpl state) {
+	public void call(Method realMethod, State state) {
 		if (this.argsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.args != null) this.argsArr = this.args.toArray(new ExpressionImpl[0]);
-			else this.argsArr = new ExpressionImpl[] {};
+			if (this.args != null) this.argsArr = this.args.toArray(new Expression[0]);
+			else this.argsArr = new Expression[] {};
 		}
-		((MethodImpl) (realMethod)).call((StateImpl) (state));
+		((Method) (realMethod)).call((State) (state));
 
 	}
 }

@@ -5,8 +5,14 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.ArrayLength;
+import miniJava.interpreter.miniJava.ArrayRefValue;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.IntegerValue;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,9 +22,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "ArrayLength"
 )
-public class ArrayLengthImpl extends ExpressionImpl {
+public class ArrayLengthImpl extends ExpressionImpl implements ArrayLength {
 	@Child
-	protected ExpressionImpl array;
+	protected Expression array;
 
 	protected ArrayLengthImpl() {
 		super();
@@ -31,13 +37,13 @@ public class ArrayLengthImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getArray() {
+	public Expression getArray() {
 		return array;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetArray(ExpressionImpl newArray, NotificationChain msgs) {
-		ExpressionImpl oldArray = array;
+	public NotificationChain basicSetArray(Expression newArray, NotificationChain msgs) {
+		Expression oldArray = array;
 		array = newArray;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ARRAY_LENGTH__ARRAY, oldArray, newArray);
@@ -50,7 +56,7 @@ public class ArrayLengthImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setArray(ExpressionImpl newArray) {
+	public void setArray(Expression newArray) {
 		if (newArray != array) {
 			NotificationChain msgs = null;
 			if (array != null)
@@ -90,7 +96,7 @@ public class ArrayLengthImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_LENGTH__ARRAY :
-				setArray((ExpressionImpl) newValue);
+				setArray((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -101,7 +107,7 @@ public class ArrayLengthImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_LENGTH__ARRAY :
-				setArray((ExpressionImpl) null);
+				setArray((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -117,13 +123,13 @@ public class ArrayLengthImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		ArrayRefValueImpl arrayRef = ((ArrayRefValueImpl) (((ExpressionImpl) (this.getArray())).evaluateExpression((StateImpl) (state))));
+	public Value evaluateExpression(State state) {
+		Value result;
+		ArrayRefValue arrayRef = ((ArrayRefValue) (((Expression) (this.getArray())).evaluateExpression((State) (state))));
 		int size = ((int) (arrayRef.getInstance().getSize()));
-		IntegerValueImpl tmp = ((IntegerValueImpl) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
+		IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		tmp.setValue(size);
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 		return result;
 	}
 }

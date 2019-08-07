@@ -46,9 +46,9 @@ class CommonCompilerUtils {
 	}
 
 	def dispatch scopedInterfaceTypeRef(EClass clazz, String packageRoot) {
-		if(dsl.truffle)
-			ClassName.get(clazz.classImplementationPackageName(packageRoot), clazz.classImplementationClassName)
-		else
+//		if(dsl.truffle)
+//			ClassName.get(clazz.classImplementationPackageName(packageRoot), clazz.classImplementationClassName)
+//		else
 			ClassName.get(clazz.classInterfacePackageName(packageRoot), clazz.classInterfaceClassName)
 	}
 

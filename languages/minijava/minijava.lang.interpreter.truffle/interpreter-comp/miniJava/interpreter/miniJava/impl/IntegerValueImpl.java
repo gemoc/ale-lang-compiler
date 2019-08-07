@@ -5,13 +5,15 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import miniJava.interpreter.miniJava.IntegerValue;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-public class IntegerValueImpl extends ValueImpl {
+public class IntegerValueImpl extends ValueImpl implements IntegerValue {
 	protected static final int VALUE_EDEFAULT = 0;
 
 	protected int value = VALUE_EDEFAULT;
@@ -89,11 +91,11 @@ public class IntegerValueImpl extends ValueImpl {
 	}
 
 	@TruffleBoundary
-	public ValueImpl copyj() {
-		ValueImpl result;
-		IntegerValueImpl tmp = ((IntegerValueImpl) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
+	public Value copyj() {
+		Value result;
+		IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		tmp.setValue(this.value);
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 		return result;
 	}
 }

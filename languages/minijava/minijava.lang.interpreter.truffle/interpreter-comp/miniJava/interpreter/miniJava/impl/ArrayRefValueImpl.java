@@ -4,16 +4,19 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import miniJava.interpreter.miniJava.ArrayInstance;
+import miniJava.interpreter.miniJava.ArrayRefValue;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 
-public class ArrayRefValueImpl extends ValueImpl {
-	protected ArrayInstanceImpl instance;
+public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
+	protected ArrayInstance instance;
 
 	protected ArrayRefValueImpl() {
 		super();
@@ -26,10 +29,10 @@ public class ArrayRefValueImpl extends ValueImpl {
 	}
 
 	@TruffleBoundary
-	public ArrayInstanceImpl getInstance() {
+	public ArrayInstance getInstance() {
 		if (instance != null && instance.eIsProxy()) {
 			InternalEObject oldInstance = (InternalEObject) instance;
-			instance = (ArrayInstanceImpl) eResolveProxy(oldInstance);
+			instance = (ArrayInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE, oldInstance, instance));
@@ -38,13 +41,13 @@ public class ArrayRefValueImpl extends ValueImpl {
 		return instance;
 	}
 
-	public ArrayInstanceImpl basicGetInstance() {
+	public ArrayInstance basicGetInstance() {
 		return instance;
 	}
 
 	@TruffleBoundary
-	public void setInstance(ArrayInstanceImpl newInstance) {
-		ArrayInstanceImpl oldInstance = instance;
+	public void setInstance(ArrayInstance newInstance) {
+		ArrayInstance oldInstance = instance;
 		instance = newInstance;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE, oldInstance, instance));
@@ -67,7 +70,7 @@ public class ArrayRefValueImpl extends ValueImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE :
-				setInstance((ArrayInstanceImpl) newValue);
+				setInstance((ArrayInstance) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -78,7 +81,7 @@ public class ArrayRefValueImpl extends ValueImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE :
-				setInstance((ArrayInstanceImpl) null);
+				setInstance((ArrayInstance) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -95,11 +98,11 @@ public class ArrayRefValueImpl extends ValueImpl {
 	}
 
 	@TruffleBoundary
-	public ValueImpl copyj() {
-		ValueImpl result;
-		ArrayRefValueImpl tmp = ((ArrayRefValueImpl) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
+	public Value copyj() {
+		Value result;
+		ArrayRefValue tmp = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
 		tmp.setInstance(this.getInstance());
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 		return result;
 	}
 
@@ -110,8 +113,8 @@ public class ArrayRefValueImpl extends ValueImpl {
 		int i = ((int) (0));
 		int lgt = ((int) (CollectionService.size(this.getInstance().getValue())));
 		while ((i) < (lgt)) {
-			ValueImpl tmpv = ((ValueImpl) (CollectionService.get(this.getInstance().getValue(), i)));
-			res = (res) + (((ValueImpl) (tmpv)).customToString());
+			Value tmpv = ((Value) (CollectionService.get(this.getInstance().getValue(), i)));
+			res = (res) + (((Value) (tmpv)).customToString());
 			if ((i) < ((lgt) - (1))) {
 				res = (res) + (", ");
 			}

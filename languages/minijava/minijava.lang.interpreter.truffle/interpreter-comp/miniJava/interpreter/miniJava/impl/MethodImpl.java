@@ -9,7 +9,15 @@ import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.Clazz;
+import miniJava.interpreter.miniJava.Member;
+import miniJava.interpreter.miniJava.Method;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Parameter;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.TypeRef;
+import minijava.MapService;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -27,7 +35,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "Method"
 )
-public class MethodImpl extends MemberImpl {
+public class MethodImpl extends MemberImpl implements Method {
 	protected static final boolean ISABSTRACT_EDEFAULT = false;
 
 	protected static final boolean ISSTATIC_EDEFAULT = false;
@@ -36,15 +44,15 @@ public class MethodImpl extends MemberImpl {
 
 	protected boolean isstatic = ISSTATIC_EDEFAULT;
 
-	protected EList<ParameterImpl> params;
+	protected EList<Parameter> params;
 
 	@Child
-	protected BlockImpl body;
+	protected Block body;
 
-	protected EMap<ClazzImpl, MethodImpl> cache;
+	protected EMap<Clazz, Method> cache;
 
 	@Children
-	private ParameterImpl[] paramsArr;
+	private Parameter[] paramsArr;
 
 	protected MethodImpl() {
 		super();
@@ -83,21 +91,21 @@ public class MethodImpl extends MemberImpl {
 	}
 
 	@TruffleBoundary
-	public EList<ParameterImpl> getParams() {
+	public EList<Parameter> getParams() {
 		if (params == null) {
-			params = new EObjectContainmentEList<ParameterImpl>(ParameterImpl.class, this, MiniJavaPackage.METHOD__PARAMS);
+			params = new EObjectContainmentEList<Parameter>(Parameter.class, this, MiniJavaPackage.METHOD__PARAMS);
 		}
 		return params;
 	}
 
 	@TruffleBoundary
-	public BlockImpl getBody() {
+	public Block getBody() {
 		return body;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetBody(BlockImpl newBody, NotificationChain msgs) {
-		BlockImpl oldBody = body;
+	public NotificationChain basicSetBody(Block newBody, NotificationChain msgs) {
+		Block oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.METHOD__BODY, oldBody, newBody);
@@ -110,7 +118,7 @@ public class MethodImpl extends MemberImpl {
 	}
 
 	@TruffleBoundary
-	public void setBody(BlockImpl newBody) {
+	public void setBody(Block newBody) {
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
@@ -125,9 +133,9 @@ public class MethodImpl extends MemberImpl {
 	}
 
 	@TruffleBoundary
-	public EMap<ClazzImpl, MethodImpl> getCache() {
+	public EMap<Clazz, Method> getCache() {
 		if (cache == null) {
-			cache = new EcoreEMap<ClazzImpl, MethodImpl>(MiniJavaPackage.Literals.CLAZZ_TO_METHOD_MAP, ClazzToMethodMapImpl.class, this, MiniJavaPackage.METHOD__CACHE);
+			cache = new EcoreEMap<Clazz, Method>(MiniJavaPackage.Literals.CLAZZ_TO_METHOD_MAP, ClazzToMethodMapImpl.class, this, MiniJavaPackage.METHOD__CACHE);
 		}
 		return cache;
 	}
@@ -178,10 +186,10 @@ public class MethodImpl extends MemberImpl {
 				return;
 			case MiniJavaPackage.METHOD__PARAMS :
 				getParams().clear();
-				getParams().addAll((Collection<? extends ParameterImpl>) newValue);
+				getParams().addAll((Collection<? extends Parameter>) newValue);
 				return;
 			case MiniJavaPackage.METHOD__BODY :
-				setBody((BlockImpl) newValue);
+				setBody((Block) newValue);
 				return;
 			case MiniJavaPackage.METHOD__CACHE :
 				((Setting)getCache()).set(newValue);
@@ -204,7 +212,7 @@ public class MethodImpl extends MemberImpl {
 				getParams().clear();
 				return;
 			case MiniJavaPackage.METHOD__BODY :
-				setBody((BlockImpl) null);
+				setBody((Block) null);
 				return;
 			case MiniJavaPackage.METHOD__CACHE :
 				getCache().clear();
@@ -231,37 +239,37 @@ public class MethodImpl extends MemberImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public void evaluateStatement(StateImpl state) {
-		((BlockImpl) (this.getBody())).evaluateStatement((StateImpl) (state));
+	public void evaluateStatement(State state) {
+		((Block) (this.getBody())).evaluateStatement((State) (state));
 	}
 
-	public MethodImpl findOverride(ClazzImpl c) {
-		MethodImpl result;
+	public Method findOverride(Clazz c) {
+		Method result;
 		if (this.paramsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.params != null) this.paramsArr = this.params.toArray(new ParameterImpl[0]);
-			else this.paramsArr = new ParameterImpl[] {};
+			if (this.params != null) this.paramsArr = this.params.toArray(new Parameter[0]);
+			else this.paramsArr = new Parameter[] {};
 		}
-		if (!(this.getCache().containsKey((ClazzImpl) (c)))) {
-			MethodImpl that = ((MethodImpl) (this));
+		if (!(MapService.containsKey((EMap) (this.getCache()), (Clazz) (c)))) {
+			Method that = ((Method) (this));
 			if (CollectionService.exists(c.getMembers(), (x) -> EqualService.equals((x), (that)))) {
-				result = (MethodImpl) (this) ;
+				result = (Method) (this) ;
 			}
 			else {
 				int i = ((int) (0));
-				MethodImpl found = ((MethodImpl) (null));
+				Method found = ((Method) (null));
 				while ((((i) < (CollectionService.size(c.getMembers()))) && (EqualService.equals((found), (null))))) {
-					MemberImpl tmpm = ((MemberImpl) (CollectionService.get(c.getMembers(), i)));
-					if (tmpm instanceof MethodImpl) {
-						MethodImpl m = ((MethodImpl) (tmpm));
+					Member tmpm = ((Member) (CollectionService.get(c.getMembers(), i)));
+					if (tmpm instanceof Method) {
+						Method m = ((Method) (tmpm));
 						if (((EqualService.equals((m.getName()), (this.name))) && (EqualService.equals((CollectionService.size(m.getParams())), (CollectionService.size(this.paramsArr)))))) {
-							boolean compared = ((boolean) (((TypeRefImpl) (m.getTypeRef())).compare((TypeRefImpl) (this.typeRef))));
+							boolean compared = ((boolean) (((TypeRef) (m.getTypeRef())).compare((TypeRef) (this.typeRef))));
 							int j = ((int) (0));
 							int paramlgt = ((int) (CollectionService.size(m.getParams())));
 							boolean alltrue = ((boolean) (compared));
 							while ((((j) < (paramlgt)) && (alltrue))) {
-								ParameterImpl p1 = ((ParameterImpl) (CollectionService.get(m.getParams(), j)));
-								ParameterImpl tmpp = ((ParameterImpl) (CollectionService.head(CollectionService.select(this.paramsArr, (p2) -> ((ParameterImpl) (p1)).compare((ParameterImpl) (p2))))));
+								Parameter p1 = ((Parameter) (CollectionService.get(m.getParams(), j)));
+								Parameter tmpp = ((Parameter) (CollectionService.head(CollectionService.select(this.paramsArr, (p2) -> ((Parameter) (p1)).compare((Parameter) (p2))))));
 								alltrue = !EqualService.equals((tmpp), (null));
 								j = (j) + (1);
 							}
@@ -273,33 +281,33 @@ public class MethodImpl extends MemberImpl {
 					i = (i) + (1);
 				}
 				if (!EqualService.equals((found), (null))) {
-					result = (MethodImpl) (found) ;
+					result = (Method) (found) ;
 				}
 				else {
 					if (!EqualService.equals((c.getSuperClass()), (null))) {
-						result = (MethodImpl) (((MethodImpl) (this)).findOverride((ClazzImpl) (c.getSuperClass()))) ;
+						result = (Method) (((Method) (this)).findOverride((Clazz) (c.getSuperClass()))) ;
 					}
 					else {
-						result = (MethodImpl) (null) ;
+						result = (Method) (null) ;
 					}
 				}
 			}
-			this.getCache().put((ClazzImpl) (c), (MethodImpl) (result));
+			MapService.put((EMap) (this.getCache()), (Clazz) (c), (Method) (result));
 		}
 		else {
-			result = (MethodImpl) (this.getCache().getFromMap((ClazzImpl) (c))) ;
+			result = (Method) (MapService.getFromMap((EMap) (this.getCache()), (Clazz) (c))) ;
 		}
 
 		return result;
 	}
 
-	public void call(StateImpl state) {
+	public void call(State state) {
 		if (this.paramsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.params != null) this.paramsArr = this.params.toArray(new ParameterImpl[0]);
-			else this.paramsArr = new ParameterImpl[] {};
+			if (this.params != null) this.paramsArr = this.params.toArray(new Parameter[0]);
+			else this.paramsArr = new Parameter[] {};
 		}
-		((BlockImpl) (this.getBody())).evaluateStatement((StateImpl) (state));
+		((Block) (this.getBody())).evaluateStatement((State) (state));
 
 	}
 }

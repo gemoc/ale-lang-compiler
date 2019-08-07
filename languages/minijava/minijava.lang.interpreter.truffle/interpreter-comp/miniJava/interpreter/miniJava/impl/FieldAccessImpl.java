@@ -5,7 +5,15 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.Field;
+import miniJava.interpreter.miniJava.FieldAccess;
+import miniJava.interpreter.miniJava.FieldBinding;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
+import miniJava.interpreter.miniJava.ObjectRefValue;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -17,11 +25,11 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "FieldAccess"
 )
-public class FieldAccessImpl extends ExpressionImpl {
+public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
 	@Child
-	protected ExpressionImpl receiver;
+	protected Expression receiver;
 
-	protected FieldImpl field;
+	protected Field field;
 
 	protected FieldAccessImpl() {
 		super();
@@ -34,13 +42,13 @@ public class FieldAccessImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getReceiver() {
+	public Expression getReceiver() {
 		return receiver;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetReceiver(ExpressionImpl newReceiver, NotificationChain msgs) {
-		ExpressionImpl oldReceiver = receiver;
+	public NotificationChain basicSetReceiver(Expression newReceiver, NotificationChain msgs) {
+		Expression oldReceiver = receiver;
 		receiver = newReceiver;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FIELD_ACCESS__RECEIVER, oldReceiver, newReceiver);
@@ -53,7 +61,7 @@ public class FieldAccessImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setReceiver(ExpressionImpl newReceiver) {
+	public void setReceiver(Expression newReceiver) {
 		if (newReceiver != receiver) {
 			NotificationChain msgs = null;
 			if (receiver != null)
@@ -68,10 +76,10 @@ public class FieldAccessImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public FieldImpl getField() {
+	public Field getField() {
 		if (field != null && field.eIsProxy()) {
 			InternalEObject oldField = (InternalEObject) field;
-			field = (FieldImpl) eResolveProxy(oldField);
+			field = (Field) eResolveProxy(oldField);
 			if (field != oldField) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_ACCESS__FIELD, oldField, field));
@@ -80,13 +88,13 @@ public class FieldAccessImpl extends ExpressionImpl {
 		return field;
 	}
 
-	public FieldImpl basicGetField() {
+	public Field basicGetField() {
 		return field;
 	}
 
 	@TruffleBoundary
-	public void setField(FieldImpl newField) {
-		FieldImpl oldField = field;
+	public void setField(Field newField) {
+		Field oldField = field;
 		field = newField;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FIELD_ACCESS__FIELD, oldField, field));
@@ -122,10 +130,10 @@ public class FieldAccessImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.FIELD_ACCESS__RECEIVER :
-				setReceiver((ExpressionImpl) newValue);
+				setReceiver((Expression) newValue);
 				return;
 			case MiniJavaPackage.FIELD_ACCESS__FIELD :
-				setField((FieldImpl) newValue);
+				setField((Field) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -136,10 +144,10 @@ public class FieldAccessImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.FIELD_ACCESS__RECEIVER :
-				setReceiver((ExpressionImpl) null);
+				setReceiver((Expression) null);
 				return;
 			case MiniJavaPackage.FIELD_ACCESS__FIELD :
-				setField((FieldImpl) null);
+				setField((Field) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -157,13 +165,13 @@ public class FieldAccessImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		ObjectRefValueImpl tmp0 = ((ObjectRefValueImpl) (((ExpressionImpl) (this.getReceiver())).evaluateExpression((StateImpl) (state))));
-		ObjectInstanceImpl realReceiver = ((ObjectInstanceImpl) (tmp0.getInstance()));
-		FieldImpl fld = ((FieldImpl) (this.getField()));
-		FieldBindingImpl fb = ((FieldBindingImpl) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (fld))))));
-		result = (ValueImpl) (fb.getValue()) ;
+	public Value evaluateExpression(State state) {
+		Value result;
+		ObjectRefValue tmp0 = ((ObjectRefValue) (((Expression) (this.getReceiver())).evaluateExpression((State) (state))));
+		ObjectInstance realReceiver = ((ObjectInstance) (tmp0.getInstance()));
+		Field fld = ((Field) (this.getField()));
+		FieldBinding fb = ((FieldBinding) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (fld))))));
+		result = (Value) (fb.getValue()) ;
 		return result;
 	}
 }

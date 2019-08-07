@@ -3,14 +3,16 @@ package miniJava.interpreter.miniJava.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.MethodCall;
+import miniJava.interpreter.miniJava.MethodCall2;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-public class MethodCall2Impl extends CallImpl {
-	protected MethodCallImpl methodcall;
+public class MethodCall2Impl extends CallImpl implements MethodCall2 {
+	protected MethodCall methodcall;
 
 	protected MethodCall2Impl() {
 		super();
@@ -23,10 +25,10 @@ public class MethodCall2Impl extends CallImpl {
 	}
 
 	@TruffleBoundary
-	public MethodCallImpl getMethodcall() {
+	public MethodCall getMethodcall() {
 		if (methodcall != null && methodcall.eIsProxy()) {
 			InternalEObject oldMethodcall = (InternalEObject) methodcall;
-			methodcall = (MethodCallImpl) eResolveProxy(oldMethodcall);
+			methodcall = (MethodCall) eResolveProxy(oldMethodcall);
 			if (methodcall != oldMethodcall) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.METHOD_CALL2__METHODCALL, oldMethodcall, methodcall));
@@ -35,13 +37,13 @@ public class MethodCall2Impl extends CallImpl {
 		return methodcall;
 	}
 
-	public MethodCallImpl basicGetMethodcall() {
+	public MethodCall basicGetMethodcall() {
 		return methodcall;
 	}
 
 	@TruffleBoundary
-	public void setMethodcall(MethodCallImpl newMethodcall) {
-		MethodCallImpl oldMethodcall = methodcall;
+	public void setMethodcall(MethodCall newMethodcall) {
+		MethodCall oldMethodcall = methodcall;
 		methodcall = newMethodcall;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.METHOD_CALL2__METHODCALL, oldMethodcall, methodcall));
@@ -64,7 +66,7 @@ public class MethodCall2Impl extends CallImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.METHOD_CALL2__METHODCALL :
-				setMethodcall((MethodCallImpl) newValue);
+				setMethodcall((MethodCall) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -75,7 +77,7 @@ public class MethodCall2Impl extends CallImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.METHOD_CALL2__METHODCALL :
-				setMethodcall((MethodCallImpl) null);
+				setMethodcall((MethodCall) null);
 				return;
 		}
 		super.eUnset(featureID);

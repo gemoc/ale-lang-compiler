@@ -5,8 +5,13 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.BooleanValue;
+import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Not;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,9 +21,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Not"
 )
-public class NotImpl extends ExpressionImpl {
+public class NotImpl extends ExpressionImpl implements Not {
 	@Child
-	protected ExpressionImpl expression;
+	protected Expression expression;
 
 	protected NotImpl() {
 		super();
@@ -31,13 +36,13 @@ public class NotImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getExpression() {
+	public Expression getExpression() {
 		return expression;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetExpression(ExpressionImpl newExpression, NotificationChain msgs) {
-		ExpressionImpl oldExpression = expression;
+	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+		Expression oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.NOT__EXPRESSION, oldExpression, newExpression);
@@ -50,7 +55,7 @@ public class NotImpl extends ExpressionImpl {
 	}
 
 	@TruffleBoundary
-	public void setExpression(ExpressionImpl newExpression) {
+	public void setExpression(Expression newExpression) {
 		if (newExpression != expression) {
 			NotificationChain msgs = null;
 			if (expression != null)
@@ -90,7 +95,7 @@ public class NotImpl extends ExpressionImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.NOT__EXPRESSION :
-				setExpression((ExpressionImpl) newValue);
+				setExpression((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -101,7 +106,7 @@ public class NotImpl extends ExpressionImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.NOT__EXPRESSION :
-				setExpression((ExpressionImpl) null);
+				setExpression((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -117,12 +122,12 @@ public class NotImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		BooleanValueImpl left = ((BooleanValueImpl) (((ExpressionImpl) (this.getExpression())).evaluateExpression((StateImpl) (state))));
-		BooleanValueImpl tmp = ((BooleanValueImpl) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+	public Value evaluateExpression(State state) {
+		Value result;
+		BooleanValue left = ((BooleanValue) (((Expression) (this.getExpression())).evaluateExpression((State) (state))));
+		BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmp.setValue(!(left.isValue()));
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 		return result;
 	}
 }

@@ -4,7 +4,12 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Call;
+import miniJava.interpreter.miniJava.Context;
+import miniJava.interpreter.miniJava.Frame;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -14,16 +19,16 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
-public class FrameImpl extends MinimalEObjectImpl.Container {
-	protected CallImpl call;
+public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
+	protected Call call;
 
-	protected ObjectInstanceImpl instance;
+	protected ObjectInstance instance;
 
-	protected FrameImpl childFrame;
+	protected Frame childFrame;
 
-	protected ContextImpl rootContext;
+	protected Context rootContext;
 
-	protected ValueImpl returnValue;
+	protected Value returnValue;
 
 	protected FrameImpl() {
 		super();
@@ -36,13 +41,13 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public CallImpl getCall() {
+	public Call getCall() {
 		return call;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetCall(CallImpl newCall, NotificationChain msgs) {
-		CallImpl oldCall = call;
+	public NotificationChain basicSetCall(Call newCall, NotificationChain msgs) {
+		Call oldCall = call;
 		call = newCall;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FRAME__CALL, oldCall, newCall);
@@ -55,7 +60,7 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setCall(CallImpl newCall) {
+	public void setCall(Call newCall) {
 		if (newCall != call) {
 			NotificationChain msgs = null;
 			if (call != null)
@@ -70,10 +75,10 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public ObjectInstanceImpl getInstance() {
+	public ObjectInstance getInstance() {
 		if (instance != null && instance.eIsProxy()) {
 			InternalEObject oldInstance = (InternalEObject) instance;
-			instance = (ObjectInstanceImpl) eResolveProxy(oldInstance);
+			instance = (ObjectInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FRAME__INSTANCE, oldInstance, instance));
@@ -82,26 +87,26 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 		return instance;
 	}
 
-	public ObjectInstanceImpl basicGetInstance() {
+	public ObjectInstance basicGetInstance() {
 		return instance;
 	}
 
 	@TruffleBoundary
-	public void setInstance(ObjectInstanceImpl newInstance) {
-		ObjectInstanceImpl oldInstance = instance;
+	public void setInstance(ObjectInstance newInstance) {
+		ObjectInstance oldInstance = instance;
 		instance = newInstance;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FRAME__INSTANCE, oldInstance, instance));
 	}
 
 	@TruffleBoundary
-	public FrameImpl getChildFrame() {
+	public Frame getChildFrame() {
 		return childFrame;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetChildFrame(FrameImpl newChildFrame, NotificationChain msgs) {
-		FrameImpl oldChildFrame = childFrame;
+	public NotificationChain basicSetChildFrame(Frame newChildFrame, NotificationChain msgs) {
+		Frame oldChildFrame = childFrame;
 		childFrame = newChildFrame;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FRAME__CHILD_FRAME, oldChildFrame, newChildFrame);
@@ -114,13 +119,13 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setChildFrame(FrameImpl newChildFrame) {
+	public void setChildFrame(Frame newChildFrame) {
 		if (newChildFrame != childFrame) {
 			NotificationChain msgs = null;
 			if (childFrame != null)
-				msgs = ((InternalEObject) childFrame).eInverseRemove(this, MiniJavaPackage.FRAME__PARENT_FRAME, FrameImpl.class, msgs);
+				msgs = ((InternalEObject) childFrame).eInverseRemove(this, MiniJavaPackage.FRAME__PARENT_FRAME, Frame.class, msgs);
 			if (newChildFrame != null)
-				msgs = ((InternalEObject) newChildFrame).eInverseAdd(this, MiniJavaPackage.FRAME__PARENT_FRAME, FrameImpl.class, msgs);
+				msgs = ((InternalEObject) newChildFrame).eInverseAdd(this, MiniJavaPackage.FRAME__PARENT_FRAME, Frame.class, msgs);
 			msgs = basicSetChildFrame(newChildFrame, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -129,19 +134,19 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public FrameImpl getParentFrame() {
+	public Frame getParentFrame() {
 		if (eContainerFeatureID() != MiniJavaPackage.FRAME__PARENT_FRAME)
 			return null;
-		return (FrameImpl) eInternalContainer();
+		return (Frame) eInternalContainer();
 	}
 
-	public NotificationChain basicSetParentFrame(FrameImpl newParentFrame, NotificationChain msgs) {
+	public NotificationChain basicSetParentFrame(Frame newParentFrame, NotificationChain msgs) {
 		msgs = eBasicSetContainer((InternalEObject) newParentFrame, MiniJavaPackage.FRAME__PARENT_FRAME, msgs);
 		return msgs;
 	}
 
 	@TruffleBoundary
-	public void setParentFrame(FrameImpl newParentFrame) {
+	public void setParentFrame(Frame newParentFrame) {
 		if (newParentFrame != eInternalContainer() || (eContainerFeatureID() != MiniJavaPackage.FRAME__PARENT_FRAME && newParentFrame != null)) {
 			if (EcoreUtil.isAncestor(this, newParentFrame))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -149,7 +154,7 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newParentFrame != null)
-				msgs = ((InternalEObject) newParentFrame).eInverseAdd(this, MiniJavaPackage.FRAME__CHILD_FRAME, FrameImpl.class, msgs);
+				msgs = ((InternalEObject) newParentFrame).eInverseAdd(this, MiniJavaPackage.FRAME__CHILD_FRAME, Frame.class, msgs);
 			msgs = basicSetParentFrame(newParentFrame, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -158,13 +163,13 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public ContextImpl getRootContext() {
+	public Context getRootContext() {
 		return rootContext;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetRootContext(ContextImpl newRootContext, NotificationChain msgs) {
-		ContextImpl oldRootContext = rootContext;
+	public NotificationChain basicSetRootContext(Context newRootContext, NotificationChain msgs) {
+		Context oldRootContext = rootContext;
 		rootContext = newRootContext;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FRAME__ROOT_CONTEXT, oldRootContext, newRootContext);
@@ -177,7 +182,7 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setRootContext(ContextImpl newRootContext) {
+	public void setRootContext(Context newRootContext) {
 		if (newRootContext != rootContext) {
 			NotificationChain msgs = null;
 			if (rootContext != null)
@@ -192,13 +197,13 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public ValueImpl getReturnValue() {
+	public Value getReturnValue() {
 		return returnValue;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetReturnValue(ValueImpl newReturnValue, NotificationChain msgs) {
-		ValueImpl oldReturnValue = returnValue;
+	public NotificationChain basicSetReturnValue(Value newReturnValue, NotificationChain msgs) {
+		Value oldReturnValue = returnValue;
 		returnValue = newReturnValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FRAME__RETURN_VALUE, oldReturnValue, newReturnValue);
@@ -211,7 +216,7 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setReturnValue(ValueImpl newReturnValue) {
+	public void setReturnValue(Value newReturnValue) {
 		if (newReturnValue != returnValue) {
 			NotificationChain msgs = null;
 			if (returnValue != null)
@@ -233,11 +238,11 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 			case MiniJavaPackage.FRAME__CHILD_FRAME :
 				if (childFrame != null)
 					msgs = ((InternalEObject) childFrame).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MiniJavaPackage.FRAME__CHILD_FRAME, null, msgs);
-				return basicSetChildFrame((FrameImpl) otherEnd, msgs);
+				return basicSetChildFrame((Frame) otherEnd, msgs);
 			case MiniJavaPackage.FRAME__PARENT_FRAME :
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParentFrame((FrameImpl) otherEnd, msgs);
+				return basicSetParentFrame((Frame) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -265,7 +270,7 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case MiniJavaPackage.FRAME__PARENT_FRAME :
-				return eInternalContainer().eInverseRemove(this, MiniJavaPackage.FRAME__CHILD_FRAME, FrameImpl.class, msgs);
+				return eInternalContainer().eInverseRemove(this, MiniJavaPackage.FRAME__CHILD_FRAME, Frame.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -297,22 +302,22 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.FRAME__CALL :
-				setCall((CallImpl) newValue);
+				setCall((Call) newValue);
 				return;
 			case MiniJavaPackage.FRAME__INSTANCE :
-				setInstance((ObjectInstanceImpl) newValue);
+				setInstance((ObjectInstance) newValue);
 				return;
 			case MiniJavaPackage.FRAME__CHILD_FRAME :
-				setChildFrame((FrameImpl) newValue);
+				setChildFrame((Frame) newValue);
 				return;
 			case MiniJavaPackage.FRAME__PARENT_FRAME :
-				setParentFrame((FrameImpl) newValue);
+				setParentFrame((Frame) newValue);
 				return;
 			case MiniJavaPackage.FRAME__ROOT_CONTEXT :
-				setRootContext((ContextImpl) newValue);
+				setRootContext((Context) newValue);
 				return;
 			case MiniJavaPackage.FRAME__RETURN_VALUE :
-				setReturnValue((ValueImpl) newValue);
+				setReturnValue((Value) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -323,22 +328,22 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.FRAME__CALL :
-				setCall((CallImpl) null);
+				setCall((Call) null);
 				return;
 			case MiniJavaPackage.FRAME__INSTANCE :
-				setInstance((ObjectInstanceImpl) null);
+				setInstance((ObjectInstance) null);
 				return;
 			case MiniJavaPackage.FRAME__CHILD_FRAME :
-				setChildFrame((FrameImpl) null);
+				setChildFrame((Frame) null);
 				return;
 			case MiniJavaPackage.FRAME__PARENT_FRAME :
-				setParentFrame((FrameImpl) null);
+				setParentFrame((Frame) null);
 				return;
 			case MiniJavaPackage.FRAME__ROOT_CONTEXT :
-				setRootContext((ContextImpl) null);
+				setRootContext((Context) null);
 				return;
 			case MiniJavaPackage.FRAME__RETURN_VALUE :
-				setReturnValue((ValueImpl) null);
+				setReturnValue((Value) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -365,30 +370,30 @@ public class FrameImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public ContextImpl findCurrentContext() {
-		ContextImpl result;
+	public Context findCurrentContext() {
+		Context result;
 		if (!EqualService.equals((this.getChildFrame()), (null))) {
-			result = (ContextImpl) (((FrameImpl) (this.getChildFrame())).findCurrentContext()) ;
+			result = (Context) (((Frame) (this.getChildFrame())).findCurrentContext()) ;
 		}
 		else {
 			if (!EqualService.equals((this.getRootContext()), (null))) {
-				result = (ContextImpl) (((ContextImpl) (this.getRootContext())).findCurrentContext()) ;
+				result = (Context) (((Context) (this.getRootContext())).findCurrentContext()) ;
 			}
 			else {
-				result = (ContextImpl) (null) ;
+				result = (Context) (null) ;
 			}
 		}
 		return result;
 	}
 
 	@TruffleBoundary
-	public FrameImpl findCurrentFrame() {
-		FrameImpl result;
+	public Frame findCurrentFrame() {
+		Frame result;
 		if (!EqualService.equals((this.getChildFrame()), (null))) {
-			result = (FrameImpl) (((FrameImpl) (this.getChildFrame())).findCurrentFrame()) ;
+			result = (Frame) (((Frame) (this.getChildFrame())).findCurrentFrame()) ;
 		}
 		else {
-			result = (FrameImpl) (this) ;
+			result = (Frame) (this) ;
 		}
 		return result;
 	}

@@ -4,11 +4,12 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Override;
 import java.lang.String;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
-public class ValueImpl extends MinimalEObjectImpl.Container {
+public class ValueImpl extends MinimalEObjectImpl.Container implements Value {
 	protected ValueImpl() {
 		super();
 	}
@@ -27,10 +28,10 @@ public class ValueImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public ValueImpl copyj() {
-		ValueImpl result;
+	public Value copyj() {
+		Value result;
 		LogService.log("ERROR copyj not implemented");
-		result = (ValueImpl) (null) ;
+		result = (Value) (null) ;
 		return result;
 	}
 }

@@ -5,7 +5,12 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.BooleanValue;
+import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.WhileStatement;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -15,12 +20,12 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "WhileStatement"
 )
-public class WhileStatementImpl extends StatementImpl {
+public class WhileStatementImpl extends StatementImpl implements WhileStatement {
 	@Child
-	protected ExpressionImpl condition;
+	protected Expression condition;
 
 	@Child
-	protected BlockImpl block;
+	protected Block block;
 
 	protected WhileStatementImpl() {
 		super();
@@ -33,13 +38,13 @@ public class WhileStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getCondition() {
+	public Expression getCondition() {
 		return condition;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetCondition(ExpressionImpl newCondition, NotificationChain msgs) {
-		ExpressionImpl oldCondition = condition;
+	public NotificationChain basicSetCondition(Expression newCondition, NotificationChain msgs) {
+		Expression oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.WHILE_STATEMENT__CONDITION, oldCondition, newCondition);
@@ -52,7 +57,7 @@ public class WhileStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setCondition(ExpressionImpl newCondition) {
+	public void setCondition(Expression newCondition) {
 		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null)
@@ -67,13 +72,13 @@ public class WhileStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public BlockImpl getBlock() {
+	public Block getBlock() {
 		return block;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetBlock(BlockImpl newBlock, NotificationChain msgs) {
-		BlockImpl oldBlock = block;
+	public NotificationChain basicSetBlock(Block newBlock, NotificationChain msgs) {
+		Block oldBlock = block;
 		block = newBlock;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.WHILE_STATEMENT__BLOCK, oldBlock, newBlock);
@@ -86,7 +91,7 @@ public class WhileStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setBlock(BlockImpl newBlock) {
+	public void setBlock(Block newBlock) {
 		if (newBlock != block) {
 			NotificationChain msgs = null;
 			if (block != null)
@@ -130,10 +135,10 @@ public class WhileStatementImpl extends StatementImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.WHILE_STATEMENT__CONDITION :
-				setCondition((ExpressionImpl) newValue);
+				setCondition((Expression) newValue);
 				return;
 			case MiniJavaPackage.WHILE_STATEMENT__BLOCK :
-				setBlock((BlockImpl) newValue);
+				setBlock((Block) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -144,10 +149,10 @@ public class WhileStatementImpl extends StatementImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.WHILE_STATEMENT__CONDITION :
-				setCondition((ExpressionImpl) null);
+				setCondition((Expression) null);
 				return;
 			case MiniJavaPackage.WHILE_STATEMENT__BLOCK :
-				setBlock((BlockImpl) null);
+				setBlock((Block) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -165,11 +170,11 @@ public class WhileStatementImpl extends StatementImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public void evaluateStatement(StateImpl state) {
-		BooleanValueImpl continueWhile = ((BooleanValueImpl) (((BooleanValueImpl) (((ExpressionImpl) (this.getCondition())).evaluateExpression((StateImpl) (state))))));
+	public void evaluateStatement(State state) {
+		BooleanValue continueWhile = ((BooleanValue) (((BooleanValue) (((Expression) (this.getCondition())).evaluateExpression((State) (state))))));
 		while (continueWhile.isValue()) {
-			((BlockImpl) (this.getBlock())).evaluateStatement((StateImpl) (state));
-			BooleanValueImpl continueWhile2 = ((BooleanValueImpl) (((BooleanValueImpl) (((ExpressionImpl) (this.getCondition())).evaluateExpression((StateImpl) (state))))));
+			((Block) (this.getBlock())).evaluateStatement((State) (state));
+			BooleanValue continueWhile2 = ((BooleanValue) (((BooleanValue) (((Expression) (this.getCondition())).evaluateExpression((State) (state))))));
 			continueWhile = continueWhile2;
 		}
 	}

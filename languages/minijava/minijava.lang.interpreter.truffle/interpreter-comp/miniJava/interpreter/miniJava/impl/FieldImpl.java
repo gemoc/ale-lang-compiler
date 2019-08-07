@@ -5,6 +5,8 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.Field;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -15,9 +17,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Field"
 )
-public class FieldImpl extends MemberImpl {
+public class FieldImpl extends MemberImpl implements Field {
 	@Child
-	protected ExpressionImpl defaultValue;
+	protected Expression defaultValue;
 
 	protected FieldImpl() {
 		super();
@@ -30,14 +32,13 @@ public class FieldImpl extends MemberImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getDefaultValue() {
+	public Expression getDefaultValue() {
 		return defaultValue;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetDefaultValue(ExpressionImpl newDefaultValue,
-			NotificationChain msgs) {
-		ExpressionImpl oldDefaultValue = defaultValue;
+	public NotificationChain basicSetDefaultValue(Expression newDefaultValue, NotificationChain msgs) {
+		Expression oldDefaultValue = defaultValue;
 		defaultValue = newDefaultValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FIELD__DEFAULT_VALUE, oldDefaultValue, newDefaultValue);
@@ -50,7 +51,7 @@ public class FieldImpl extends MemberImpl {
 	}
 
 	@TruffleBoundary
-	public void setDefaultValue(ExpressionImpl newDefaultValue) {
+	public void setDefaultValue(Expression newDefaultValue) {
 		if (newDefaultValue != defaultValue) {
 			NotificationChain msgs = null;
 			if (defaultValue != null)
@@ -90,7 +91,7 @@ public class FieldImpl extends MemberImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.FIELD__DEFAULT_VALUE :
-				setDefaultValue((ExpressionImpl) newValue);
+				setDefaultValue((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -101,7 +102,7 @@ public class FieldImpl extends MemberImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.FIELD__DEFAULT_VALUE :
-				setDefaultValue((ExpressionImpl) null);
+				setDefaultValue((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);

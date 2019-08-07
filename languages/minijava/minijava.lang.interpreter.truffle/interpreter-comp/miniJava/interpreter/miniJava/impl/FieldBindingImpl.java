@@ -3,7 +3,10 @@ package miniJava.interpreter.miniJava.impl;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Field;
+import miniJava.interpreter.miniJava.FieldBinding;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -11,10 +14,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-public class FieldBindingImpl extends MinimalEObjectImpl.Container {
-	protected FieldImpl field;
+public class FieldBindingImpl extends MinimalEObjectImpl.Container implements FieldBinding {
+	protected Field field;
 
-	protected ValueImpl value;
+	protected Value value;
 
 	protected FieldBindingImpl() {
 		super();
@@ -27,10 +30,10 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public FieldImpl getField() {
+	public Field getField() {
 		if (field != null && field.eIsProxy()) {
 			InternalEObject oldField = (InternalEObject) field;
-			field = (FieldImpl) eResolveProxy(oldField);
+			field = (Field) eResolveProxy(oldField);
 			if (field != oldField) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_BINDING__FIELD, oldField, field));
@@ -39,26 +42,26 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container {
 		return field;
 	}
 
-	public FieldImpl basicGetField() {
+	public Field basicGetField() {
 		return field;
 	}
 
 	@TruffleBoundary
-	public void setField(FieldImpl newField) {
-		FieldImpl oldField = field;
+	public void setField(Field newField) {
+		Field oldField = field;
 		field = newField;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FIELD_BINDING__FIELD, oldField, field));
 	}
 
 	@TruffleBoundary
-	public ValueImpl getValue() {
+	public Value getValue() {
 		return value;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetValue(ValueImpl newValue, NotificationChain msgs) {
-		ValueImpl oldValue = value;
+	public NotificationChain basicSetValue(Value newValue, NotificationChain msgs) {
+		Value oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.FIELD_BINDING__VALUE, oldValue, newValue);
@@ -71,7 +74,7 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setValue(ValueImpl newValue) {
+	public void setValue(Value newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
@@ -115,10 +118,10 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.FIELD_BINDING__FIELD :
-				setField((FieldImpl) newValue);
+				setField((Field) newValue);
 				return;
 			case MiniJavaPackage.FIELD_BINDING__VALUE :
-				setValue((ValueImpl) newValue);
+				setValue((Value) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -129,10 +132,10 @@ public class FieldBindingImpl extends MinimalEObjectImpl.Container {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.FIELD_BINDING__FIELD :
-				setField((FieldImpl) null);
+				setField((Field) null);
 				return;
 			case MiniJavaPackage.FIELD_BINDING__VALUE :
-				setValue((ValueImpl) null);
+				setValue((Value) null);
 				return;
 		}
 		super.eUnset(featureID);

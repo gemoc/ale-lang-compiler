@@ -5,8 +5,12 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.IntConstant;
+import miniJava.interpreter.miniJava.IntegerValue;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -14,7 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "IntConstant"
 )
-public class IntConstantImpl extends ExpressionImpl {
+public class IntConstantImpl extends ExpressionImpl implements IntConstant {
 	protected static final int VALUE_EDEFAULT = 0;
 
 	protected int value = VALUE_EDEFAULT;
@@ -84,11 +88,11 @@ public class IntConstantImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		IntegerValueImpl ret = ((IntegerValueImpl) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
+	public Value evaluateExpression(State state) {
+		Value result;
+		IntegerValue ret = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		ret.setValue(this.value);
-		result = (ValueImpl) (ret) ;
+		result = (Value) (ret) ;
 		return result;
 	}
 }

@@ -4,6 +4,9 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import java.lang.Object;
 import java.lang.Override;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolBinding;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -11,10 +14,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-public class SymbolBindingImpl extends MinimalEObjectImpl.Container {
-	protected ValueImpl value;
+public class SymbolBindingImpl extends MinimalEObjectImpl.Container implements SymbolBinding {
+	protected Value value;
 
-	protected SymbolImpl symbol;
+	protected Symbol symbol;
 
 	protected SymbolBindingImpl() {
 		super();
@@ -27,13 +30,13 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public ValueImpl getValue() {
+	public Value getValue() {
 		return value;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetValue(ValueImpl newValue, NotificationChain msgs) {
-		ValueImpl oldValue = value;
+	public NotificationChain basicSetValue(Value newValue, NotificationChain msgs) {
+		Value oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.SYMBOL_BINDING__VALUE, oldValue, newValue);
@@ -46,7 +49,7 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setValue(ValueImpl newValue) {
+	public void setValue(Value newValue) {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
@@ -61,10 +64,10 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public SymbolImpl getSymbol() {
+	public Symbol getSymbol() {
 		if (symbol != null && symbol.eIsProxy()) {
 			InternalEObject oldSymbol = (InternalEObject) symbol;
-			symbol = (SymbolImpl) eResolveProxy(oldSymbol);
+			symbol = (Symbol) eResolveProxy(oldSymbol);
 			if (symbol != oldSymbol) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_BINDING__SYMBOL, oldSymbol, symbol));
@@ -73,13 +76,13 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container {
 		return symbol;
 	}
 
-	public SymbolImpl basicGetSymbol() {
+	public Symbol basicGetSymbol() {
 		return symbol;
 	}
 
 	@TruffleBoundary
-	public void setSymbol(SymbolImpl newSymbol) {
-		SymbolImpl oldSymbol = symbol;
+	public void setSymbol(Symbol newSymbol) {
+		Symbol oldSymbol = symbol;
 		symbol = newSymbol;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, MiniJavaPackage.SYMBOL_BINDING__SYMBOL, oldSymbol, symbol));
@@ -115,10 +118,10 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.SYMBOL_BINDING__VALUE :
-				setValue((ValueImpl) newValue);
+				setValue((Value) newValue);
 				return;
 			case MiniJavaPackage.SYMBOL_BINDING__SYMBOL :
-				setSymbol((SymbolImpl) newValue);
+				setSymbol((Symbol) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -129,10 +132,10 @@ public class SymbolBindingImpl extends MinimalEObjectImpl.Container {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.SYMBOL_BINDING__VALUE :
-				setValue((ValueImpl) null);
+				setValue((Value) null);
 				return;
 			case MiniJavaPackage.SYMBOL_BINDING__SYMBOL :
-				setSymbol((SymbolImpl) null);
+				setSymbol((Symbol) null);
 				return;
 		}
 		super.eUnset(featureID);

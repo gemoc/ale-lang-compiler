@@ -5,12 +5,17 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Override;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.ObjectInstance;
+import miniJava.interpreter.miniJava.ObjectRefValue;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.This;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.ecore.EClass;
 
 @NodeInfo(
 		description = "This"
 )
-public class ThisImpl extends ExpressionImpl {
+public class ThisImpl extends ExpressionImpl implements This {
 	protected ThisImpl() {
 		super();
 	}
@@ -21,12 +26,12 @@ public class ThisImpl extends ExpressionImpl {
 		return MiniJavaPackage.Literals.THIS;
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		ObjectInstanceImpl currentInstance = ((ObjectInstanceImpl) (((StateImpl) (state)).findCurrentFrame().getInstance()));
-		ObjectRefValueImpl tmp = ((ObjectRefValueImpl) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
+	public Value evaluateExpression(State state) {
+		Value result;
+		ObjectInstance currentInstance = ((ObjectInstance) (((State) (state)).findCurrentFrame().getInstance()));
+		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(currentInstance);
-		result = (ValueImpl) (tmp) ;
+		result = (Value) (tmp) ;
 		return result;
 	}
 }

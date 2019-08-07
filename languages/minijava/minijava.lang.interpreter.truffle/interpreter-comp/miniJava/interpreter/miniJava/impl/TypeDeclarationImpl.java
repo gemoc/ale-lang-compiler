@@ -6,7 +6,10 @@ import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
 import miniJava.interpreter.miniJava.AccessLevel;
+import miniJava.interpreter.miniJava.Interface;
+import miniJava.interpreter.miniJava.Member;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.TypeDeclaration;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -20,14 +23,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 @NodeInfo(
 		description = "TypeDeclaration"
 )
-public class TypeDeclarationImpl extends NamedElementImpl {
+public class TypeDeclarationImpl extends NamedElementImpl implements TypeDeclaration {
 	protected static final AccessLevel ACCESSLEVEL_EDEFAULT = AccessLevel.PRIVATE;
 
 	protected AccessLevel accessLevel = ACCESSLEVEL_EDEFAULT;
 
-	protected EList<InterfaceImpl> implementz;
+	protected EList<Interface> implementz;
 
-	protected EList<MemberImpl> members;
+	protected EList<Member> members;
 
 	protected TypeDeclarationImpl() {
 		super();
@@ -53,17 +56,17 @@ public class TypeDeclarationImpl extends NamedElementImpl {
 	}
 
 	@TruffleBoundary
-	public EList<InterfaceImpl> getImplementz() {
+	public EList<Interface> getImplementz() {
 		if (implementz == null) {
-			implementz = new EObjectResolvingEList<InterfaceImpl>(InterfaceImpl.class, this, MiniJavaPackage.TYPE_DECLARATION__IMPLEMENTZ);
+			implementz = new EObjectResolvingEList<Interface>(Interface.class, this, MiniJavaPackage.TYPE_DECLARATION__IMPLEMENTZ);
 		}
 		return implementz;
 	}
 
 	@TruffleBoundary
-	public EList<MemberImpl> getMembers() {
+	public EList<Member> getMembers() {
 		if (members == null) {
-			members = new EObjectContainmentEList<MemberImpl>(MemberImpl.class, this, MiniJavaPackage.TYPE_DECLARATION__MEMBERS);
+			members = new EObjectContainmentEList<Member>(Member.class, this, MiniJavaPackage.TYPE_DECLARATION__MEMBERS);
 		}
 		return members;
 	}
@@ -102,11 +105,11 @@ public class TypeDeclarationImpl extends NamedElementImpl {
 				return;
 			case MiniJavaPackage.TYPE_DECLARATION__IMPLEMENTZ :
 				getImplementz().clear();
-				getImplementz().addAll((Collection<? extends InterfaceImpl>) newValue);
+				getImplementz().addAll((Collection<? extends Interface>) newValue);
 				return;
 			case MiniJavaPackage.TYPE_DECLARATION__MEMBERS :
 				getMembers().clear();
-				getMembers().addAll((Collection<? extends MemberImpl>) newValue);
+				getMembers().addAll((Collection<? extends Member>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

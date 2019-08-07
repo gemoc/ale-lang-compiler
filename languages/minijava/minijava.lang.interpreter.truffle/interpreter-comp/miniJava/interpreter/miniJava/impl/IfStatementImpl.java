@@ -5,7 +5,12 @@ import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Block;
+import miniJava.interpreter.miniJava.BooleanValue;
+import miniJava.interpreter.miniJava.Expression;
+import miniJava.interpreter.miniJava.IfStatement;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,15 +21,15 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "IfStatement"
 )
-public class IfStatementImpl extends StatementImpl {
+public class IfStatementImpl extends StatementImpl implements IfStatement {
 	@Child
-	protected ExpressionImpl expression;
+	protected Expression expression;
 
 	@Child
-	protected BlockImpl thenBlock;
+	protected Block thenBlock;
 
 	@Child
-	protected BlockImpl elseBlock;
+	protected Block elseBlock;
 
 	protected IfStatementImpl() {
 		super();
@@ -37,13 +42,13 @@ public class IfStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getExpression() {
+	public Expression getExpression() {
 		return expression;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetExpression(ExpressionImpl newExpression, NotificationChain msgs) {
-		ExpressionImpl oldExpression = expression;
+	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+		Expression oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.IF_STATEMENT__EXPRESSION, oldExpression, newExpression);
@@ -56,7 +61,7 @@ public class IfStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setExpression(ExpressionImpl newExpression) {
+	public void setExpression(Expression newExpression) {
 		if (newExpression != expression) {
 			NotificationChain msgs = null;
 			if (expression != null)
@@ -71,13 +76,13 @@ public class IfStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public BlockImpl getThenBlock() {
+	public Block getThenBlock() {
 		return thenBlock;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetThenBlock(BlockImpl newThenBlock, NotificationChain msgs) {
-		BlockImpl oldThenBlock = thenBlock;
+	public NotificationChain basicSetThenBlock(Block newThenBlock, NotificationChain msgs) {
+		Block oldThenBlock = thenBlock;
 		thenBlock = newThenBlock;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.IF_STATEMENT__THEN_BLOCK, oldThenBlock, newThenBlock);
@@ -90,7 +95,7 @@ public class IfStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setThenBlock(BlockImpl newThenBlock) {
+	public void setThenBlock(Block newThenBlock) {
 		if (newThenBlock != thenBlock) {
 			NotificationChain msgs = null;
 			if (thenBlock != null)
@@ -105,13 +110,13 @@ public class IfStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public BlockImpl getElseBlock() {
+	public Block getElseBlock() {
 		return elseBlock;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetElseBlock(BlockImpl newElseBlock, NotificationChain msgs) {
-		BlockImpl oldElseBlock = elseBlock;
+	public NotificationChain basicSetElseBlock(Block newElseBlock, NotificationChain msgs) {
+		Block oldElseBlock = elseBlock;
 		elseBlock = newElseBlock;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.IF_STATEMENT__ELSE_BLOCK, oldElseBlock, newElseBlock);
@@ -124,7 +129,7 @@ public class IfStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setElseBlock(BlockImpl newElseBlock) {
+	public void setElseBlock(Block newElseBlock) {
 		if (newElseBlock != elseBlock) {
 			NotificationChain msgs = null;
 			if (elseBlock != null)
@@ -172,13 +177,13 @@ public class IfStatementImpl extends StatementImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.IF_STATEMENT__EXPRESSION :
-				setExpression((ExpressionImpl) newValue);
+				setExpression((Expression) newValue);
 				return;
 			case MiniJavaPackage.IF_STATEMENT__THEN_BLOCK :
-				setThenBlock((BlockImpl) newValue);
+				setThenBlock((Block) newValue);
 				return;
 			case MiniJavaPackage.IF_STATEMENT__ELSE_BLOCK :
-				setElseBlock((BlockImpl) newValue);
+				setElseBlock((Block) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -189,13 +194,13 @@ public class IfStatementImpl extends StatementImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.IF_STATEMENT__EXPRESSION :
-				setExpression((ExpressionImpl) null);
+				setExpression((Expression) null);
 				return;
 			case MiniJavaPackage.IF_STATEMENT__THEN_BLOCK :
-				setThenBlock((BlockImpl) null);
+				setThenBlock((Block) null);
 				return;
 			case MiniJavaPackage.IF_STATEMENT__ELSE_BLOCK :
-				setElseBlock((BlockImpl) null);
+				setElseBlock((Block) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -215,14 +220,14 @@ public class IfStatementImpl extends StatementImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public void evaluateStatement(StateImpl state) {
-		BooleanValueImpl booleanValue = ((BooleanValueImpl) (((BooleanValueImpl) (((ExpressionImpl) (this.getExpression())).evaluateExpression((StateImpl) (state))))));
+	public void evaluateStatement(State state) {
+		BooleanValue booleanValue = ((BooleanValue) (((BooleanValue) (((Expression) (this.getExpression())).evaluateExpression((State) (state))))));
 		if (booleanValue.isValue()) {
-			((BlockImpl) (this.getThenBlock())).evaluateStatement((StateImpl) (state));
+			((Block) (this.getThenBlock())).evaluateStatement((State) (state));
 		}
 		else {
 			if (!EqualService.equals((this.getElseBlock()), (null))) {
-				((BlockImpl) (this.getElseBlock())).evaluateStatement((StateImpl) (state));
+				((Block) (this.getElseBlock())).evaluateStatement((State) (state));
 			}
 		}
 	}

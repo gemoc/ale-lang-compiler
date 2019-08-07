@@ -6,7 +6,11 @@ import java.lang.IllegalArgumentException;
 import java.lang.Object;
 import java.lang.Override;
 import java.util.Collection;
+import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.Symbol;
+import miniJava.interpreter.miniJava.SymbolBinding;
+import minijava.MapService;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -24,14 +28,14 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 
-public class ContextImpl extends MinimalEObjectImpl.Container {
-	protected EList<SymbolBindingImpl> bindings;
+public class ContextImpl extends MinimalEObjectImpl.Container implements Context {
+	protected EList<SymbolBinding> bindings;
 
-	protected ContextImpl childContext;
+	protected Context childContext;
 
-	protected EMap<SymbolImpl, SymbolBindingImpl> cache;
+	protected EMap<Symbol, SymbolBinding> cache;
 
-	private SymbolBindingImpl[] bindingsArr;
+	private SymbolBinding[] bindingsArr;
 
 	protected ContextImpl() {
 		super();
@@ -44,28 +48,27 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public EList<SymbolBindingImpl> getBindings() {
+	public EList<SymbolBinding> getBindings() {
 		if (bindings == null) {
-			bindings = new EObjectContainmentEList<SymbolBindingImpl>(SymbolBindingImpl.class, this, MiniJavaPackage.CONTEXT__BINDINGS);
+			bindings = new EObjectContainmentEList<SymbolBinding>(SymbolBinding.class, this, MiniJavaPackage.CONTEXT__BINDINGS);
 		}
 		return bindings;
 	}
 
 	@TruffleBoundary
-	public ContextImpl getParentContext() {
+	public Context getParentContext() {
 		if (eContainerFeatureID() != MiniJavaPackage.CONTEXT__PARENT_CONTEXT)
 			return null;
-		return (ContextImpl) eInternalContainer();
+		return (Context) eInternalContainer();
 	}
 
-	public NotificationChain basicSetParentContext(ContextImpl newParentContext,
-			NotificationChain msgs) {
+	public NotificationChain basicSetParentContext(Context newParentContext, NotificationChain msgs) {
 		msgs = eBasicSetContainer((InternalEObject) newParentContext, MiniJavaPackage.CONTEXT__PARENT_CONTEXT, msgs);
 		return msgs;
 	}
 
 	@TruffleBoundary
-	public void setParentContext(ContextImpl newParentContext) {
+	public void setParentContext(Context newParentContext) {
 		if (newParentContext != eInternalContainer() || (eContainerFeatureID() != MiniJavaPackage.CONTEXT__PARENT_CONTEXT && newParentContext != null)) {
 			if (EcoreUtil.isAncestor(this, newParentContext))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -73,7 +76,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newParentContext != null)
-				msgs = ((InternalEObject) newParentContext).eInverseAdd(this, MiniJavaPackage.CONTEXT__CHILD_CONTEXT, ContextImpl.class, msgs);
+				msgs = ((InternalEObject) newParentContext).eInverseAdd(this, MiniJavaPackage.CONTEXT__CHILD_CONTEXT, Context.class, msgs);
 			msgs = basicSetParentContext(newParentContext, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -82,14 +85,13 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public ContextImpl getChildContext() {
+	public Context getChildContext() {
 		return childContext;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetChildContext(ContextImpl newChildContext,
-			NotificationChain msgs) {
-		ContextImpl oldChildContext = childContext;
+	public NotificationChain basicSetChildContext(Context newChildContext, NotificationChain msgs) {
+		Context oldChildContext = childContext;
 		childContext = newChildContext;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.CONTEXT__CHILD_CONTEXT, oldChildContext, newChildContext);
@@ -102,13 +104,13 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public void setChildContext(ContextImpl newChildContext) {
+	public void setChildContext(Context newChildContext) {
 		if (newChildContext != childContext) {
 			NotificationChain msgs = null;
 			if (childContext != null)
-				msgs = ((InternalEObject) childContext).eInverseRemove(this, MiniJavaPackage.CONTEXT__PARENT_CONTEXT, ContextImpl.class, msgs);
+				msgs = ((InternalEObject) childContext).eInverseRemove(this, MiniJavaPackage.CONTEXT__PARENT_CONTEXT, Context.class, msgs);
 			if (newChildContext != null)
-				msgs = ((InternalEObject) newChildContext).eInverseAdd(this, MiniJavaPackage.CONTEXT__PARENT_CONTEXT, ContextImpl.class, msgs);
+				msgs = ((InternalEObject) newChildContext).eInverseAdd(this, MiniJavaPackage.CONTEXT__PARENT_CONTEXT, Context.class, msgs);
 			msgs = basicSetChildContext(newChildContext, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -117,9 +119,9 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public EMap<SymbolImpl, SymbolBindingImpl> getCache() {
+	public EMap<Symbol, SymbolBinding> getCache() {
 		if (cache == null) {
-			cache = new EcoreEMap<SymbolImpl, SymbolBindingImpl>(MiniJavaPackage.Literals.SYMBOL_TO_SYMBOL_BINDING_MAP, SymbolToSymbolBindingMapImpl.class, this, MiniJavaPackage.CONTEXT__CACHE);
+			cache = new EcoreEMap<Symbol, SymbolBinding>(MiniJavaPackage.Literals.SYMBOL_TO_SYMBOL_BINDING_MAP, SymbolToSymbolBindingMapImpl.class, this, MiniJavaPackage.CONTEXT__CACHE);
 		}
 		return cache;
 	}
@@ -132,11 +134,11 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 			case MiniJavaPackage.CONTEXT__PARENT_CONTEXT :
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParentContext((ContextImpl) otherEnd, msgs);
+				return basicSetParentContext((Context) otherEnd, msgs);
 			case MiniJavaPackage.CONTEXT__CHILD_CONTEXT :
 				if (childContext != null)
 					msgs = ((InternalEObject) childContext).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MiniJavaPackage.CONTEXT__CHILD_CONTEXT, null, msgs);
-				return basicSetChildContext((ContextImpl) otherEnd, msgs);
+				return basicSetChildContext((Context) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -162,7 +164,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case MiniJavaPackage.CONTEXT__PARENT_CONTEXT :
-				return eInternalContainer().eInverseRemove(this, MiniJavaPackage.CONTEXT__CHILD_CONTEXT, ContextImpl.class, msgs);
+				return eInternalContainer().eInverseRemove(this, MiniJavaPackage.CONTEXT__CHILD_CONTEXT, Context.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -190,13 +192,13 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 		switch (featureID) {
 			case MiniJavaPackage.CONTEXT__BINDINGS :
 				getBindings().clear();
-				getBindings().addAll((Collection<? extends SymbolBindingImpl>) newValue);
+				getBindings().addAll((Collection<? extends SymbolBinding>) newValue);
 				return;
 			case MiniJavaPackage.CONTEXT__PARENT_CONTEXT :
-				setParentContext((ContextImpl) newValue);
+				setParentContext((Context) newValue);
 				return;
 			case MiniJavaPackage.CONTEXT__CHILD_CONTEXT :
-				setChildContext((ContextImpl) newValue);
+				setChildContext((Context) newValue);
 				return;
 			case MiniJavaPackage.CONTEXT__CACHE :
 				((Setting)getCache()).set(newValue);
@@ -213,10 +215,10 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 				getBindings().clear();
 				return;
 			case MiniJavaPackage.CONTEXT__PARENT_CONTEXT :
-				setParentContext((ContextImpl) null);
+				setParentContext((Context) null);
 				return;
 			case MiniJavaPackage.CONTEXT__CHILD_CONTEXT :
-				setChildContext((ContextImpl) null);
+				setChildContext((Context) null);
 				return;
 			case MiniJavaPackage.CONTEXT__CACHE :
 				getCache().clear();
@@ -242,46 +244,46 @@ public class ContextImpl extends MinimalEObjectImpl.Container {
 	}
 
 	@TruffleBoundary
-	public SymbolBindingImpl findBinding(SymbolImpl symbol) {
-		SymbolBindingImpl result;
+	public SymbolBinding findBinding(Symbol symbol) {
+		SymbolBinding result;
 		if (this.bindingsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.bindings != null) this.bindingsArr = this.bindings.toArray(new SymbolBindingImpl[0]);
-			else this.bindingsArr = new SymbolBindingImpl[] {};
+			if (this.bindings != null) this.bindingsArr = this.bindings.toArray(new SymbolBinding[0]);
+			else this.bindingsArr = new SymbolBinding[] {};
 		}
-		if (!(this.getCache().containsKey((SymbolImpl) (symbol)))) {
-			SymbolBindingImpl binding = ((SymbolBindingImpl) (CollectionService.head(CollectionService.select(this.bindingsArr, (x) -> EqualService.equals((x.getSymbol()), (symbol))))));
+		if (!(MapService.containsKey((EMap) (this.getCache()), (Symbol) (symbol)))) {
+			SymbolBinding binding = ((SymbolBinding) (CollectionService.head(CollectionService.select(this.bindingsArr, (x) -> EqualService.equals((x.getSymbol()), (symbol))))));
 			if (!EqualService.equals((binding), (null))) {
-				this.getCache().put((SymbolImpl) (symbol), (SymbolBindingImpl) (binding));
+				MapService.put((EMap) (this.getCache()), (Symbol) (symbol), (SymbolBinding) (binding));
 			}
 			else {
 				if (!EqualService.equals((this.getParentContext()), (null))) {
-					SymbolBindingImpl binding2 = ((SymbolBindingImpl) (((ContextImpl) (this.getParentContext())).findBinding((SymbolImpl) (symbol))));
-					this.getCache().put((SymbolImpl) (symbol), (SymbolBindingImpl) (binding2));
+					SymbolBinding binding2 = ((SymbolBinding) (((Context) (this.getParentContext())).findBinding((Symbol) (symbol))));
+					MapService.put((EMap) (this.getCache()), (Symbol) (symbol), (SymbolBinding) (binding2));
 				}
 				else {
 					LogService.log(("No binding for symbol ") + (symbol));
 				}
 			}
 		}
-		result = (SymbolBindingImpl) (this.getCache().get((SymbolImpl) (symbol))) ;
+		result = (SymbolBinding) (this.getCache().get((Symbol) (symbol))) ;
 
 		return result;
 	}
 
 	@TruffleBoundary
-	public ContextImpl findCurrentContext() {
-		ContextImpl result;
+	public Context findCurrentContext() {
+		Context result;
 		if (this.bindingsArr == null) {
 			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.bindings != null) this.bindingsArr = this.bindings.toArray(new SymbolBindingImpl[0]);
-			else this.bindingsArr = new SymbolBindingImpl[] {};
+			if (this.bindings != null) this.bindingsArr = this.bindings.toArray(new SymbolBinding[0]);
+			else this.bindingsArr = new SymbolBinding[] {};
 		}
 		if (!EqualService.equals((this.getChildContext()), (null))) {
-			result = (ContextImpl) (((ContextImpl) (this.getChildContext())).findCurrentContext()) ;
+			result = (Context) (((Context) (this.getChildContext())).findCurrentContext()) ;
 		}
 		else {
-			result = (ContextImpl) (this) ;
+			result = (Context) (this) ;
 		}
 
 		return result;

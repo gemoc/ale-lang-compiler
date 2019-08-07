@@ -6,7 +6,11 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import miniJava.interpreter.miniJava.Expression;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.PrintStatement;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -16,9 +20,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "PrintStatement"
 )
-public class PrintStatementImpl extends StatementImpl {
+public class PrintStatementImpl extends StatementImpl implements PrintStatement {
 	@Child
-	protected ExpressionImpl expression;
+	protected Expression expression;
 
 	protected PrintStatementImpl() {
 		super();
@@ -31,13 +35,13 @@ public class PrintStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public ExpressionImpl getExpression() {
+	public Expression getExpression() {
 		return expression;
 	}
 
 	@TruffleBoundary
-	public NotificationChain basicSetExpression(ExpressionImpl newExpression, NotificationChain msgs) {
-		ExpressionImpl oldExpression = expression;
+	public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs) {
+		Expression oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MiniJavaPackage.PRINT_STATEMENT__EXPRESSION, oldExpression, newExpression);
@@ -50,7 +54,7 @@ public class PrintStatementImpl extends StatementImpl {
 	}
 
 	@TruffleBoundary
-	public void setExpression(ExpressionImpl newExpression) {
+	public void setExpression(Expression newExpression) {
 		if (newExpression != expression) {
 			NotificationChain msgs = null;
 			if (expression != null)
@@ -90,7 +94,7 @@ public class PrintStatementImpl extends StatementImpl {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case MiniJavaPackage.PRINT_STATEMENT__EXPRESSION :
-				setExpression((ExpressionImpl) newValue);
+				setExpression((Expression) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -101,7 +105,7 @@ public class PrintStatementImpl extends StatementImpl {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case MiniJavaPackage.PRINT_STATEMENT__EXPRESSION :
-				setExpression((ExpressionImpl) null);
+				setExpression((Expression) null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -117,8 +121,8 @@ public class PrintStatementImpl extends StatementImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public void evaluateStatement(StateImpl state) {
-		String res = ((String) (((ValueImpl) (((ExpressionImpl) (this.getExpression())).evaluateExpression((StateImpl) (state)))).customToString()));
-		((StateImpl) (state)).println((String) (res));
+	public void evaluateStatement(State state) {
+		String res = ((String) (((Value) (((Expression) (this.getExpression())).evaluateExpression((State) (state)))).customToString()));
+		((State) (state)).println((String) (res));
 	}
 }

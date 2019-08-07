@@ -5,6 +5,7 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import miniJava.interpreter.miniJava.AccessLevel;
+import miniJava.interpreter.miniJava.Member;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -13,7 +14,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 @NodeInfo(
 		description = "Member"
 )
-public class MemberImpl extends TypedDeclarationImpl {
+public class MemberImpl extends TypedDeclarationImpl implements Member {
 	protected static final AccessLevel ACCESS_EDEFAULT = AccessLevel.PRIVATE;
 
 	protected AccessLevel access = ACCESS_EDEFAULT;

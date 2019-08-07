@@ -5,8 +5,12 @@ import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
+import miniJava.interpreter.miniJava.BoolConstant;
+import miniJava.interpreter.miniJava.BooleanValue;
 import miniJava.interpreter.miniJava.MiniJavaFactory;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
+import miniJava.interpreter.miniJava.State;
+import miniJava.interpreter.miniJava.Value;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -15,7 +19,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 @NodeInfo(
 		description = "BoolConstant"
 )
-public class BoolConstantImpl extends ExpressionImpl {
+public class BoolConstantImpl extends ExpressionImpl implements BoolConstant {
 	protected static final String VALUE_EDEFAULT = null;
 
 	protected String value = VALUE_EDEFAULT;
@@ -85,11 +89,11 @@ public class BoolConstantImpl extends ExpressionImpl {
 		return super.eIsSet(featureID);
 	}
 
-	public ValueImpl evaluateExpression(StateImpl state) {
-		ValueImpl result;
-		BooleanValueImpl ret = ((BooleanValueImpl) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
+	public Value evaluateExpression(State state) {
+		Value result;
+		BooleanValue ret = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		ret.setValue(EqualService.equals((this.value), ("true")));
-		result = (ValueImpl) (ret) ;
+		result = (Value) (ret) ;
 		return result;
 	}
 }
