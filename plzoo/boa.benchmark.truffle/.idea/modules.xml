@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/boa.benchmark.truffle.iml" filepath="$PROJECT_DIR$/boa.benchmark.truffle.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../boa.lang.truffle/boa.lang.truffle.iml" filepath="$PROJECT_DIR$/../boa.lang.truffle/boa.lang.truffle.iml" />
-    </modules>
-  </component>
-</project>
