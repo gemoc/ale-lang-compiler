@@ -29,6 +29,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
@@ -47,6 +48,7 @@ class InterpreterEClassImplementationCompiler {
 	extension EClassImplementationCompiler ecic
 	extension TruffleHelper th
 	extension EnumeratorService es
+	extension CompilerDsl compilerDsl = new CompilerDsl
 
 	var Dsl dsl
 	val String packageRoot
@@ -93,7 +95,7 @@ class InterpreterEClassImplementationCompiler {
 
 		val Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2 = [ builderTmp, field |
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
-			val isMutable = aleClass !== null && aleClass.mutable.exists[it == field.name]
+			val isMutable = true // aleClass !== null && aleClass.mutable.exists[it == field.name] // TODO
 			builderTmp.applyIfTrue(
 				dsl.isTruffle && !isMultiple && !isMutable &&
 					field.containment && !field.EType.EAnnotations.exists[it.source == 'RuntimeData'], [
@@ -447,5 +449,10 @@ class InterpreterEClassImplementationCompiler {
 		}
 
 		return builder
+	}
+	
+	def boolean isDispatch(Method method) {
+		// TODO réinitégrer au mm
+		false
 	}
 }

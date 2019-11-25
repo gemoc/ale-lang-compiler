@@ -4,9 +4,12 @@ import com.squareup.javapoet.ClassName
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreNotGenNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 class RevisitorNamingUtils extends EcoreNotGenNamingUtils {
+	
+	extension CompilerDsl compilerDsl = new CompilerDsl
 	
 	new(GenPackage genPackage) {
 		super(genPackage)

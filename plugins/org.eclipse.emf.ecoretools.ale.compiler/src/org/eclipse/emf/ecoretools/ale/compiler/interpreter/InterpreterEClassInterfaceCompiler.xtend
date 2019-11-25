@@ -13,11 +13,13 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassInterfaceCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
+import org.eclipse.emf.ecoretools.ale.implementation.Method
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
 
 class InterpreterEClassInterfaceCompiler {
 
@@ -25,6 +27,7 @@ class InterpreterEClassInterfaceCompiler {
 	extension CommonCompilerUtils ccu
 	extension JavaPoetUtils jpu
 	EClassInterfaceCompiler ecic
+	extension CompilerDsl compilerDsl = new CompilerDsl
 
 	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu) {
 		this.namingUtils = namingUtils
@@ -102,5 +105,10 @@ class InterpreterEClassInterfaceCompiler {
 			builder.returns(typeName)
 		else
 			builder
+	}
+	
+	def boolean isDispatch(Method method) {
+		// TODO réinitégrer au mm
+		false
 	}
 }

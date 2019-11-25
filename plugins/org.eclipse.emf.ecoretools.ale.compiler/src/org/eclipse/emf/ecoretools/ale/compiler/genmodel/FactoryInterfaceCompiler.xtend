@@ -10,12 +10,14 @@ import java.util.Map
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EFactory
 import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
 
 class FactoryInterfaceCompiler {
 	extension EcoreGenNamingUtils namingUtils
+	extension CompilerDsl compilerDsl = new CompilerDsl
 
 	new(EcoreGenNamingUtils namingUtils) {
 		this.namingUtils = namingUtils

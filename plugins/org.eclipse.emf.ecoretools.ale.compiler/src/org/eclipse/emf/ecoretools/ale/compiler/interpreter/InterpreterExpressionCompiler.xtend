@@ -97,4 +97,9 @@ class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 					hm).build
 		}
 	}
+	
+	def boolean isDispatch(Method method) {
+		// TODO réinitégrer au mm
+		false
+	}
 }

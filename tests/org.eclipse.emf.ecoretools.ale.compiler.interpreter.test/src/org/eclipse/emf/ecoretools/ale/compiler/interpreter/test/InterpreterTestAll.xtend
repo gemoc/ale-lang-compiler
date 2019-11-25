@@ -239,7 +239,7 @@ class InterpreterTestAll {
 
 		val tmpDir = Files.createTempDirectory('ale_compiler').toFile
 		val dsl = new Dsl('''«directory.path»/test.dsl''')
-		dsl.truffle = true
+		//dsl.truffle = true // TODO reintegrate truffle
 
 		val compiler = new ALEInterpreterImplementationCompiler(directory.name, tmpDir, dsl, new EcoreUtils,
 			directory.path.services)

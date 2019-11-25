@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecore.impl.EFactoryImpl
 import org.eclipse.emf.ecore.plugin.EcorePlugin
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
@@ -28,6 +29,7 @@ class FactoryImplementationCompiler {
 	extension CommonCompilerUtils ccu
 	extension TruffleHelper th
 	Dsl dsl
+	extension CompilerDsl compilerDsl = new CompilerDsl
 	
 	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, TruffleHelper th, Dsl dsl) {
 		this.namingUtils = namingUtils

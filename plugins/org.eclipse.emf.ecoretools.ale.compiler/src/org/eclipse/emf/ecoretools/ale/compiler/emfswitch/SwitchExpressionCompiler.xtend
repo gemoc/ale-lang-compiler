@@ -59,7 +59,7 @@ class SwitchExpressionCompiler extends AbstractExpressionCompiler {
 			val lc = rev.aleCls
 			method = methods.filter[it.eContainer === lc].head
 	
-			isDispatch = method !== null && method.isDispatch
+			isDispatch = method !== null //&& method.isDispatch // TODO : a re-reporter
 	
 			val revc = rev
 			rev = resolved.filter [

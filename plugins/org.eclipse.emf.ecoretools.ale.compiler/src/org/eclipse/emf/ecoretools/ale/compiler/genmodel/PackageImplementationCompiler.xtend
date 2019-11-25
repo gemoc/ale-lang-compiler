@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.impl.EPackageImpl
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 import static javax.lang.model.element.Modifier.*
@@ -23,6 +24,7 @@ import static javax.lang.model.element.Modifier.*
 class PackageImplementationCompiler {
 	protected extension EcoreGenNamingUtils namingUtils
 	val Dsl dsl
+	extension CompilerDsl compilerDsl = new CompilerDsl
 
 	new(EcoreGenNamingUtils namingUtils, Dsl dsl) {
 		this.namingUtils = namingUtils

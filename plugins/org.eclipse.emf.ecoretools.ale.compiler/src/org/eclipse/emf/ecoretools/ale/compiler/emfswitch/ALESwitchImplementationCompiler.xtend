@@ -6,29 +6,33 @@ import java.util.Comparator
 import java.util.Map
 import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
+import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
 class ALESwitchImplementationCompiler extends AbstractALECompiler {
+
+	extension CompilerDsl compilerDsl = new CompilerDsl
 
 	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
 		this(projectName, projectRoot, dsl, newHashMap, eu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu,
+		ServicesRegistrationManager srm) {
 		super(projectName, projectRoot, dsl, services, eu, srm)
-		
+
 	}
 
 	override compile(File projectRoot, String projectName) {
 		val compileDirectory = new File(projectRoot, "switch-comp")
-		
+
 		// clean previous compilation
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
 
 		val String packageRoot = dsl.rootPackage
-		
+
 		val snu = new SwitchNamingUtils(resolved.head.genCls.genPackage)
 
 		val sic = new SwitchImplementationCompiler(compileDirectory, syntaxes, packageRoot, resolved, snu)

@@ -6,15 +6,19 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 
 class ALEImplementationCompiler {
 
+
+	extension CompilerDsl compilerDsl = new CompilerDsl
+	
 	/**
 	 * 
 	 * @param dslStr absolute path to the dsl file

@@ -8,5 +8,5 @@ Require-Bundle: org.eclipse.emf.ecoretools.ale.core;bundle-version="0.0.1",
  org.eclipse.emf.ecoretools.ale.compiler;bundle-version="0.0.1",
  org.eclipse.emf.ecore.xmi;bundle-version="2.14.0",
  org.antlr.runtime;bundle-version="4.3.0",
- org.eclipse.acceleo.query;bundle-version="6.0.5",
+ org.eclipse.acceleo.query;bundle-version="6.0.3",
  org.junit.jupiter.api;bundle-version="5.1.0"

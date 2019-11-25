@@ -36,6 +36,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 
 class EClassImplementationCompiler {
 
@@ -46,6 +47,7 @@ class EClassImplementationCompiler {
 	val List<ResolvedClass> resolved
 	extension EnumeratorService es
 	extension TruffleHelper th
+	extension CompilerDsl compilerDsl = new CompilerDsl
 
 	new(CommonCompilerUtils ccu, EcoreGenNamingUtils anu, EClassGetterCompiler eClassGetterCompiler,
 		JavaPoetUtils jpu, List<ResolvedClass> resolved, EnumeratorService es, TruffleHelper th) {

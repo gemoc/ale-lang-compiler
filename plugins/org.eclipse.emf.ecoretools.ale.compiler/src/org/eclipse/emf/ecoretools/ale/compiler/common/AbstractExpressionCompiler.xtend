@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnumLiteral
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
+import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.implementation.Switch
 
@@ -372,12 +373,12 @@ abstract class AbstractExpressionCompiler {
 						((t as SequenceType).collectionType.type as EClass).instanceClassName !=
 							"java.util.Map$Entry") {
 						val rhs = (call.arguments.get(1) as StringLiteral).value
-						if (isTruffle && !(ctx.aleClass.mutable.contains(rhs))) {
-							registeredArray.add(rhs)
-							CodeBlock.of('''«lhs».«rhs»Arr''')
-						} else {
+//						if (isTruffle && !(ctx.aleClass.mutable.contains(rhs))) {
+//							registeredArray.add(rhs)
+//							CodeBlock.of('''«lhs».«rhs»Arr''')
+//						} else {
 							CodeBlock.of('''«lhs».get«rhs.toFirstUpper»()''')
-						}
+//						}
 					} else {
 						val Map<String, Object> hm = newHashMap(
 							'lhs' -> lhs,
@@ -456,4 +457,8 @@ abstract class AbstractExpressionCompiler {
 	
 	def CodeBlock implementationSpecificCall(Call call, CompilerExpressionCtx ctx, Iterable<Method> allMethods, ResolvedClass re)
 
+//	def mutable(ExtendedClass aleClass) {
+//		// TODO temporary
+//		true
+//	}
 }

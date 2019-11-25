@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: com.squareup.javapoet.wrapper
+Bundle-SymbolicName: com.squareup.javapoet.wrapper
+Export-Package: com.squareup.javapoet
+Bundle-Name: javapoet
+Bundle-Version: 1.0.0.201812211507
+Bundle-ClassPath: mvn/com.squareup.javapoet-1.11.1.jar
+Bundle-ManifestVersion: 2
+Bundle-Vendor: SQUAREUP
+
+

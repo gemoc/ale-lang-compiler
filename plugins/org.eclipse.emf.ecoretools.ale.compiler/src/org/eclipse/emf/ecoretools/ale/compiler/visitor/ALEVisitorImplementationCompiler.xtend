@@ -12,17 +12,20 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractALECompiler
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenmodelCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.FactoryInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 
 class ALEVisitorImplementationCompiler extends AbstractALECompiler {
+	
+	extension CompilerDsl compilerDsl = new CompilerDsl
 
 	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
 		this(projectName, projectRoot, dsl, newHashMap, eu, srm)
