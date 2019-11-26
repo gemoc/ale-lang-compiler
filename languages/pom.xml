@@ -5,7 +5,7 @@
 	<packaging>pom</packaging>
 
   <parent>
-    <groupId>org.eclipse.emf.ecoretools.ale</groupId>
+    <groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
     <artifactId>root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>

@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.eclipse.emf.ecoretools.ale</groupId>
+	<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 	<artifactId>root</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -194,7 +194,7 @@
 					</dependency-resolution>
 					<target>
 						<artifact>
-							<groupId>org.eclipse.emf.ecoretools.ale</groupId>
+							<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 							<artifactId>org.eclipse.emf.ecoretools.ale.target-platform</artifactId>
 							<version>0.0.1-SNAPSHOT</version>
 						</artifact>

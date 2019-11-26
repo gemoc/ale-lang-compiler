@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.eclipse.emf.ecoretools.ale</groupId>
+		<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 		<artifactId>root</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>org.eclipse.emf.ecoretools.ale.plugins</artifactId>
+	<artifactId>org.eclipse.emf.ecoretools.ale.compiler.plugins</artifactId>
 	<packaging>pom</packaging>
 
 	<modules>

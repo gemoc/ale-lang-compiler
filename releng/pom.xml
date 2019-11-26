@@ -5,18 +5,18 @@
 	<modelVersion>4.0.0</modelVersion>
 
    <parent>
-       <groupId>org.eclipse.emf.ecoretools.ale</groupId>
+       <groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
        <artifactId>root</artifactId>
-       <version>0.0.1-SNAPSHOT</version>
+       <version>1.0.0-SNAPSHOT</version>
    </parent>
 
-	<artifactId>org.eclipse.emf.ecoretools.ale.releng</artifactId>
+	<artifactId>org.eclipse.emf.ecoretools.ale.compiler.releng</artifactId>
 	<packaging>pom</packaging>
 
 	<modules>
-<!--         <module>org.eclipse.emf.ecoretools.ale.feature</module> -->
-<!-- 		<module>org.eclipse.emf.ecoretools.ale.updatesite</module> -->
-		<module>org.eclipse.emf.ecoretools.ale.target-platform</module>
+      <module>org.eclipse.emf.ecoretools.ale.compiler.feature</module>
+		<module>org.eclipse.emf.ecoretools.ale.compiler.updatesite</module>
+		<module>org.eclipse.emf.ecoretools.ale.compiler.target-platform</module>
 	</modules>
 
 	<build>

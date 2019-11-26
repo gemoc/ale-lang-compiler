@@ -5,28 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
    <parent>
-       <groupId>org.eclipse.emf.ecoretools.ale</groupId>
+       <groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
        <artifactId>root</artifactId>
        <version>0.0.1-SNAPSHOT</version>
    </parent>
 
-	<artifactId>org.eclipse.emf.ecoretools.ale.testsuites</artifactId>
+	<artifactId>org.eclipse.emf.ecoretools.ale.compiler.testsuites</artifactId>
 	<packaging>pom</packaging>
-
-<!-- 	<modules> -->
-<!-- 		<module>org.eclipse.emf.ecoretools.ale.tests</module> -->
-<!-- 		<module>org.eclipse.emf.ecoretools.ale.ide.ui.tests</module> -->
-<!-- 	</modules> -->
-
-<!-- 	<build> -->
-<!-- 		<plugins> -->
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.eclipse.tycho</groupId> -->
-<!-- 				<artifactId>tycho-maven-plugin</artifactId> -->
-<!-- 				<version>${tycho.version}</version> -->
-<!-- 				<extensions>true</extensions> -->
-<!-- 			</plugin> -->
-<!-- 		</plugins> -->
-<!-- 	</build> -->
-
 </project>
