@@ -3,6 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.eclipse.emf.ecoretools.ale.compiler.plugins</artifactId>
+	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
@@ -10,14 +12,12 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>org.eclipse.emf.ecoretools.ale.compiler.plugins</artifactId>
-	<packaging>pom</packaging>
 
 	<modules>
 		<module>org.eclipse.emf.ecoretools.ale.compiler</module>
 		<module>org.eclipse.emf.ecoretools.ale.compiler.lib</module>
 		<module>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</module>
-		<module>alecompiler-maven-plugin</module>
+		<!-- <module>alecompiler-maven-plugin</module> -->
 		<module>com.squareup.javapoet.wrapper</module>
 		<module>com.oracle.truffle.wrapper</module>
 		<module>org.eclipse.emf.ecoretools.ale.compiler.ui</module>

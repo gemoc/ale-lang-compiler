@@ -28,16 +28,16 @@
 	<repositories>
 		<repository>
 			<id>ale-lang-repo</id>
-			<url>http://www.kermeta.org/ale-lang/updates/latest/</url>
+			<url>http://www.kermeta.org/ale-lang/updates/2019-11-26/</url>
 			<layout>p2</layout>
 		</repository>
 	</repositories>
 
 	<modules>
-		<module>languages</module>
+		<!-- <module>languages</module> -->
 		<module>plugins</module>
 		<module>releng</module>
-		<module>tests</module>
+		<!-- <module>tests</module> -->
 	</modules>
 
 	<build>
