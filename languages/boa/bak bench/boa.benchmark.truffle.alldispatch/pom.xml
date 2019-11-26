@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>boa.benchmark.truffle.alldispatch</groupId>
 	<artifactId>boa.benchmark.truffle.alldispatch</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -60,7 +60,7 @@
 		<dependency>
 			<groupId>boa.lang.truffle</groupId>
 			<artifactId>boa.lang.truffle</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>fsm.service</groupId>
     <artifactId>fsm.service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <parent>
         <groupId>fsm</groupId>
         <artifactId>fsm</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <dependencies>
         <dependency>

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>petrinet.benchmark.interpreter</groupId>
 	<artifactId>petrinet.benchmark.interpreter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>petrinet.lang</groupId>
 			<artifactId>petrinet.lang</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

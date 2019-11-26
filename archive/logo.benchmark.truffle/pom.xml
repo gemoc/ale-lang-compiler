@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>logo.benchmark.truffle</groupId>
 	<artifactId>logo.benchmark.truffle</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>logo.lang.truffle</groupId>
 			<artifactId>logo.lang.truffle</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

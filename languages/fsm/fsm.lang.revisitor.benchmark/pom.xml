@@ -5,7 +5,7 @@
     <parent>
         <groupId>fsm</groupId>
         <artifactId>fsm</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -37,12 +37,12 @@
 		<dependency>
 			<groupId>fsm.model</groupId>
 			<artifactId>fsm.model</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
         <dependency>
             <groupId>fsm.lang.revisitor</groupId>
             <artifactId>fsm.lang.revisitor</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 	</dependencies>
 

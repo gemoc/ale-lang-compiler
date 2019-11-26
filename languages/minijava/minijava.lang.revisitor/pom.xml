@@ -4,19 +4,19 @@
 	<parent>
 		<groupId>minijava</groupId>
 		<artifactId>minijava</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>minijava.lang.revisitor</groupId>
 	<artifactId>minijava.lang.revisitor</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>revisitor-comp</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 				<artifactId>alecompiler-maven-plugin</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -42,12 +42,12 @@
 		<dependency>
 			<groupId>minijava.model</groupId>
 			<artifactId>minijava.model</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 			<artifactId>alecompiler-maven-plugin</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.eclipse.acceleo</groupId>
@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>org.tetrabox.minijava.lang.services</groupId>
 			<artifactId>org.tetrabox.minijava.lang.services</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -79,17 +79,17 @@
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.lib</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.core</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

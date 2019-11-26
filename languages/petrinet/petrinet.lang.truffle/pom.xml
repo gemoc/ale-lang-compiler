@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>petrinet.lang.truffle</groupId>
 	<artifactId>petrinet.lang.truffle</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>interpreter-comp</sourceDirectory>
 		<plugins>
@@ -59,12 +59,12 @@
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.lib</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

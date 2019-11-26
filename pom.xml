@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 	<artifactId>root</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 
 	<properties>
-		<tycho.version>0.26.0</tycho.version>
+		<tycho.version>1.5.1</tycho.version>
 		<xtend.version>2.10.0</xtend.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!--<eclipse-repo.url>http://download.eclipse.org/releases/neon</eclipse-repo.url> -->
@@ -188,7 +187,7 @@
 						<artifact>
 							<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 							<artifactId>org.eclipse.emf.ecoretools.ale.compiler.target-platform</artifactId>
-							<version>0.0.1-SNAPSHOT</version>
+							<version>1.0.0-SNAPSHOT</version>
 						</artifact>
 					</target>
 				</configuration>

@@ -4,10 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.oracle.truffle.wrapper</groupId>
 	<artifactId>com.oracle.truffle.wrapper</artifactId>
+	<packaging>eclipse-plugin</packaging>
 	<parent>
 		<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 		<artifactId>org.eclipse.emf.ecoretools.ale.compiler.plugins</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<build>

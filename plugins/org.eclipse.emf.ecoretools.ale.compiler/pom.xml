@@ -1,10 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 	<artifactId>org.eclipse.emf.ecoretools.ale.compiler</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>eclipse-plugin</packaging>
+
+
+	<parent>
+		<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
+		<artifactId>org.eclipse.emf.ecoretools.ale.compiler.plugins</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -13,14 +21,24 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.squareup.javapoet.wrapper</groupId>
+			<artifactId>com.squareup.javapoet.wrapper</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.truffle.wrapper</groupId>
+			<artifactId>com.oracle.truffle.wrapper</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
 			<version>2.17.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.emf.ecoretools.ale.core</groupId>
+			<groupId>org.eclipse.emf.ecoretools.ale</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.squareup</groupId>
@@ -42,37 +60,37 @@
 			<artifactId>org.eclipse.acceleo.query</artifactId>
 			<version>6.0.5-SNAPSHOT</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.eclipse.sirius</groupId> -->
-<!-- 			<artifactId>org.eclipse.sirius.common</artifactId> -->
-<!-- 			<version>6.2.1-SNAPSHOT</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.eclipse.sirius</groupId> -->
+		<!-- <artifactId>org.eclipse.sirius.common</artifactId> -->
+		<!-- <version>6.2.1-SNAPSHOT</version> -->
+		<!-- </dependency> -->
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-<!-- 		<pluginManagement> -->
-<!-- 			<plugins> -->
-<!-- 				<plugin> -->
-<!-- 					<groupId>org.sonarsource.scanner.maven</groupId> -->
-<!-- 					<artifactId>sonar-maven-plugin</artifactId> -->
-<!-- 					<version>3.6.0.1398</version> -->
-<!-- 				</plugin> -->
-<!-- 			</plugins> -->
-<!-- 		</pluginManagement> -->
+		<!-- <pluginManagement> -->
+		<!-- <plugins> -->
+		<!-- <plugin> -->
+		<!-- <groupId>org.sonarsource.scanner.maven</groupId> -->
+		<!-- <artifactId>sonar-maven-plugin</artifactId> -->
+		<!-- <version>3.6.0.1398</version> -->
+		<!-- </plugin> -->
+		<!-- </plugins> -->
+		<!-- </pluginManagement> -->
 		<plugins>
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.sonarsource.scanner.maven</groupId> -->
-<!-- 				<artifactId>sonar-maven-plugin</artifactId> -->
-<!-- 				<configuration> -->
-<!-- 					<sonar.projectKey>org.eclipse.emf.ecoretools.ale.compiler</sonar.projectKey> -->
-<!-- 					<sonar.host.url>http://localhost:9000</sonar.host.url> -->
-<!-- 					<sonar.login>0d2c1d9f4b24d3914a1047a607c45e6b1d0fb35c</sonar.login> -->
-<!-- 					<sonar.language>java</sonar.language> -->
-<!-- 					<sonar.scm.exclusions.disabled>true</sonar.scm.exclusions.disabled> -->
-<!-- 					<sonar.scm.provider></sonar.scm.provider> -->
-<!-- 				</configuration> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.sonarsource.scanner.maven</groupId> -->
+			<!-- <artifactId>sonar-maven-plugin</artifactId> -->
+			<!-- <configuration> -->
+			<!-- <sonar.projectKey>org.eclipse.emf.ecoretools.ale.compiler</sonar.projectKey> -->
+			<!-- <sonar.host.url>http://localhost:9000</sonar.host.url> -->
+			<!-- <sonar.login>0d2c1d9f4b24d3914a1047a607c45e6b1d0fb35c</sonar.login> -->
+			<!-- <sonar.language>java</sonar.language> -->
+			<!-- <sonar.scm.exclusions.disabled>true</sonar.scm.exclusions.disabled> -->
+			<!-- <sonar.scm.provider></sonar.scm.provider> -->
+			<!-- </configuration> -->
 
-<!-- 			</plugin> -->
+			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>xtend-maven-plugin</artifactId>
@@ -89,25 +107,25 @@
 					</execution>
 				</executions>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				<groupId>org.jacoco</groupId> -->
-<!-- 				<artifactId>jacoco-maven-plugin</artifactId> -->
-<!-- 				<version>0.8.3</version> -->
-<!-- 				<executions> -->
-<!-- 					<execution> -->
-<!-- 						<goals> -->
-<!-- 							<goal>prepare-agent</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 					<execution> -->
-<!-- 						<id>report</id> -->
-<!-- 						<phase>test</phase> -->
-<!-- 						<goals> -->
-<!-- 							<goal>report</goal> -->
-<!-- 						</goals> -->
-<!-- 					</execution> -->
-<!-- 				</executions> -->
-<!-- 			</plugin> -->
+			<!-- <plugin> -->
+			<!-- <groupId>org.jacoco</groupId> -->
+			<!-- <artifactId>jacoco-maven-plugin</artifactId> -->
+			<!-- <version>0.8.3</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <goals> -->
+			<!-- <goal>prepare-agent</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- <execution> -->
+			<!-- <id>report</id> -->
+			<!-- <phase>test</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>report</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
 	<repositories>
@@ -119,10 +137,10 @@
 			<id>Eclipse - Acceleo Release</id>
 			<url>https://repo.eclipse.org/content/repositories/acceleo-releases</url>
 		</repository>
-<!-- 		<repository> -->
-<!-- 			<id>Sirius</id> -->
-<!-- 			<layout>p2</layout> -->
-<!-- 			<url>https://download.eclipse.org/sirius/updates/releases/6.2.1/2019-06/</url> -->
-<!-- 		</repository> -->
+		<!-- <repository> -->
+		<!-- <id>Sirius</id> -->
+		<!-- <layout>p2</layout> -->
+		<!-- <url>https://download.eclipse.org/sirius/updates/releases/6.2.1/2019-06/</url> -->
+		<!-- </repository> -->
 	</repositories>
 </project>

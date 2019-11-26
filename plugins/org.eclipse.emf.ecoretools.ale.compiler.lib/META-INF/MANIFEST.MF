@@ -6,4 +6,5 @@ Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: org.eclipse.emf.ecoretools.ale.compiler.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.emf.ecoretools.ale.compiler.lib
-Require-Bundle: org.eclipse.emf.common
+Require-Bundle: org.eclipse.emf.common,
+ com.oracle.truffle.wrapper;bundle-version="1.0.0"

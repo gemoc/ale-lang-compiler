@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>boa.lang.visitor</groupId>
 	<artifactId>boa.lang.visitor</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<parent>
 		<groupId>boa</groupId>
 		<artifactId>boa</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<build>
@@ -17,7 +17,7 @@
 			<plugin>
 				<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 				<artifactId>alecompiler-maven-plugin</artifactId>
-				<version>0.0.1-SNAPSHOT</version>
+				<version>1.0.0-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -43,7 +43,7 @@
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 			<artifactId>alecompiler-maven-plugin</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.eclipse.acceleo</groupId>
@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>boa.lang.services</groupId>
 			<artifactId>boa.lang.services</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -75,17 +75,17 @@
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.lib</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.core</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</groupId>
 			<artifactId>org.eclipse.emf.ecoretools.ale.compiler.truffle.lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
