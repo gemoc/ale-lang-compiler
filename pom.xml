@@ -15,7 +15,7 @@
 		<tycho.version>0.26.0</tycho.version>
 		<xtend.version>2.10.0</xtend.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!--<eclipse-repo.url>http://download.eclipse.org/releases/neon</eclipse-repo.url>-->
+		<!--<eclipse-repo.url>http://download.eclipse.org/releases/neon</eclipse-repo.url> -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<tycho.scmUrl>scm:git:https://github.com/gemoc/ale-lang.git</tycho.scmUrl>
@@ -27,26 +27,18 @@
 	</properties>
 
 	<repositories>
-		<!--<repository>
-			<id>eclipse-repo</id>
-			<url>${eclipse-repo.url}</url>
+		<repository>
+			<id>ale-lang-repo</id>
+			<url>http://www.kermeta.org/ale-lang/updates/latest/</url>
 			<layout>p2</layout>
-		</repository>-->
-		<!--<repository>
-			<id>acceleo</id>
-			<url>http://download.eclipse.org/acceleo/updates/releases/</url>
-			<layout>p2</layout>
-		</repository>-->
+		</repository>
 	</repositories>
 
 	<modules>
-		<!-- BENCHMARK Modules -->
 		<module>languages</module>
-
 		<module>plugins</module>
 		<module>releng</module>
 		<module>tests</module>
-
 	</modules>
 
 	<build>
@@ -195,7 +187,7 @@
 					<target>
 						<artifact>
 							<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
-							<artifactId>org.eclipse.emf.ecoretools.ale.target-platform</artifactId>
+							<artifactId>org.eclipse.emf.ecoretools.ale.compiler.target-platform</artifactId>
 							<version>0.0.1-SNAPSHOT</version>
 						</artifact>
 					</target>
