@@ -39,8 +39,8 @@
 				 keyfile="${key.file}"
 				 passphrase=""
 			     trust="yes"
-			     command="rm -Rf ${deploy.path}/updates/latest;  
-						  mkdir ${deploy.path}/updates/latest;
+			     command="rm -Rf ${deploy.path}/updates/latest; 
+						  mkdir -p ${deploy.path}/updates/latest;
 						  rm -Rf ${deploy.path}/updates/${TODAY_UK};
 						  mkdir ${deploy.path}/updates/${TODAY_UK};"/>
 		<echo>Uploading to ${deploy.server}:${deploy.path}/update</echo>
