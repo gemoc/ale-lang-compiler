@@ -7,3 +7,4 @@ Export-Package: org.eclipse.emf.ecoretools.ale.compiler.truffle
 Require-Bundle: org.eclipse.emf.common,
  org.eclipse.emf.ecore,
  com.oracle.truffle.wrapper;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
