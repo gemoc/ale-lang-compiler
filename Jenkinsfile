@@ -32,6 +32,7 @@ pipeline {
 			when { buildingTag()}
 			steps{
 				withAnt(installation: 'Ant_1.8.4') {
+						sh 'printenv'
 				    sh "ant -Dkey.file=/builds/.ssh/id_rsa -f releng/promotion_build.xml upload"
 				}
 			}
