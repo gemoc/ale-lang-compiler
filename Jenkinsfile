@@ -15,6 +15,12 @@ pipeline {
 		stage('Build and verify') {
 			steps {
 				sh "mvn -Dmaven.test.failure.ignore clean verify --errors --show-version"
+				dir('ale-lang-compiler') {
+					sh "mvn install"
+				}
+				dir('languages') {
+					sh "mvn compile"
+				}
 			}
 			//post {
 			//	success {
