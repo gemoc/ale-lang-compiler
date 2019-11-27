@@ -98,7 +98,7 @@
 				</configuration>
 			</plugin>
 			<!-- enable source bundle generation -->
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-source-plugin</artifactId>
 				<version>${tycho.version}</version>
@@ -110,9 +110,9 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			<!-- enable source feature generation -->
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-source-feature-plugin</artifactId>
 				<version>${tycho.version}</version>
@@ -125,7 +125,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 			<!-- required in order to embed feature and bundle sources in the update 
 				site -->
 			<plugin>
