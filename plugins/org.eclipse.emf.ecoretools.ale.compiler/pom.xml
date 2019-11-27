@@ -19,48 +19,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<!-- <dependencies>
-		<dependency>
-			<groupId>org.eclipse.emf.ecoretools.ale</groupId>
-			<artifactId>org.eclipse.emf.ecoretools.ale.core</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.squareup.javapoet.wrapper</groupId>
-			<artifactId>com.squareup.javapoet.wrapper</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle.truffle.wrapper</groupId>
-			<artifactId>com.oracle.truffle.wrapper</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>org.eclipse.xtend.lib</artifactId>
-			<version>2.17.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.squareup</groupId>
-			<artifactId>javapoet</artifactId>
-			<version>1.11.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>org.eclipse.emf.codegen.ecore</artifactId>
-			<version>2.15.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.xtext</groupId>
-			<artifactId>org.eclipse.xtext</artifactId>
-			<version>2.14.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.acceleo</groupId>
-			<artifactId>org.eclipse.acceleo.query</artifactId>
-			<version>6.0.5-SNAPSHOT</version>
-		</dependency>
-	</dependencies> -->
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
