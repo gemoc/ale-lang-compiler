@@ -16,11 +16,11 @@ pipeline {
 			steps {
 				sh "mvn -Dmaven.test.failure.ignore clean verify --errors --show-version"
 			}
-			post {
-				success {
-					junit 'tests/**/target/surefire-reports/TEST-*.xml' 
-				}
-			}
+			//post {
+			//	success {
+			//		junit 'tests/**/target/surefire-reports/TEST-*.xml' 
+			//	}
+			//}
 	 	}
 		stage("Archive in Jenkins") {
 			steps {
