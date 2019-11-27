@@ -25,7 +25,7 @@ pipeline {
 		stage("Archive in Jenkins") {
 			steps {
 				echo "archive artifact"
-				archiveArtifacts 'releng/org.eclipse.emf.ecoretools.ale.compiler.updatesite/target/repository/**, **/screenshots/**'
+				archiveArtifacts 'releng/org.eclipse.emf.ecoretools.ale.compiler.updatesite/target/repository/**'
 			}
 		}
 		stage("Deploy") {
