@@ -1,7 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
@@ -27,7 +26,6 @@ public class FunImpl extends ExprImpl implements Fun {
 
 	protected String name = NAME_EDEFAULT;
 
-	@Child
 	protected Expr body;
 
 	protected FunImpl() {

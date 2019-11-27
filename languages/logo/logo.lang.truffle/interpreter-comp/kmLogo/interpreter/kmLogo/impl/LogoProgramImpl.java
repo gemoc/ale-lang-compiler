@@ -1,8 +1,6 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
@@ -25,9 +23,6 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 )
 public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements LogoProgram {
 	protected EList<Instruction> instructions;
-
-	@Children
-	private Instruction[] instructionsArr;
 
 	protected LogoProgramImpl() {
 		super();
@@ -103,28 +98,17 @@ public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer 
 
 	public Turtle eval() {
 		Turtle result;
-		if (this.instructionsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new Instruction[0]);
-			else this.instructionsArr = new Instruction[] {};
-		}
 		Turtle turtle = ((Turtle) (((LogoProgram) (this)).createTurtle()));
 		result = (Turtle) (turtle) ;
-		for (Instruction it : this.instructionsArr) {
+		for (Instruction it : this.getInstructions()) {
 			((Instruction) (it)).eval((Turtle) (turtle));
 		}
 		result = (Turtle) (turtle) ;
-
 		return result;
 	}
 
 	public Turtle createTurtle() {
 		Turtle result;
-		if (this.instructionsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new Instruction[0]);
-			else this.instructionsArr = new Instruction[] {};
-		}
 		Turtle turtle = ((Turtle) (KmLogoFactory.eINSTANCE.createTurtle()));
 		turtle.setPosition(KmLogoFactory.eINSTANCE.createPoint());
 		turtle.getPosition().setX(0.0);
@@ -132,7 +116,6 @@ public class LogoProgramImpl extends MinimalTruffleEObjectImpl.TruffleContainer 
 		turtle.setCallStack(KmLogoFactory.eINSTANCE.createCallStack());
 		turtle.getCallStack().getFrames().add(KmLogoFactory.eINSTANCE.createStackFrame());
 		result = (Turtle) (turtle) ;
-
 		return result;
 	}
 }

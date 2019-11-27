@@ -1,8 +1,6 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
@@ -37,9 +35,6 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
 	protected EList<ProcCall> procCall;
 
 	protected EList<Instruction> instructions;
-
-	@Children
-	private Instruction[] instructionsArr;
 
 	protected ProcDeclarationImpl() {
 		super();
@@ -191,16 +186,10 @@ public class ProcDeclarationImpl extends InstructionImpl implements ProcDeclarat
 
 	public double eval(Turtle turtle) {
 		double result;
-		if (this.instructionsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new Instruction[0]);
-			else this.instructionsArr = new Instruction[] {};
-		}
 		result = (double) (0.0) ;
-		for (Instruction instr : this.instructionsArr) {
+		for (Instruction instr : this.getInstructions()) {
 			result = (double) (((Instruction) (instr)).eval((Turtle) (turtle))) ;
 		}
-
 		return result;
 	}
 }

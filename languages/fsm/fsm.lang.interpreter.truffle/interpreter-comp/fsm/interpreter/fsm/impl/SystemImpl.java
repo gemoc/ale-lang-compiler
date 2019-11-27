@@ -1,8 +1,6 @@
 package fsm.interpreter.fsm.impl;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.interpreter.fsm.Buffer;
 import fsm.interpreter.fsm.FSM;
@@ -26,12 +24,6 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
 	protected EList<FSM> ownedFsms;
 
 	protected EList<Buffer> ownedBuffers;
-
-	@Children
-	private Buffer[] ownedBuffersArr;
-
-	@Children
-	private FSM[] ownedFsmsArr;
 
 	protected SystemImpl() {
 		super();
@@ -127,42 +119,21 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
 	}
 
 	public void intialize() {
-		if (this.ownedBuffersArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.ownedBuffers != null) this.ownedBuffersArr = this.ownedBuffers.toArray(new Buffer[0]);
-			else this.ownedBuffersArr = new Buffer[] {};
-		}
-		if (this.ownedFsmsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.ownedFsms != null) this.ownedFsmsArr = this.ownedFsms.toArray(new FSM[0]);
-			else this.ownedFsmsArr = new FSM[] {};
-		}
-		for (FSM fsm : this.ownedFsmsArr) {
+		for (FSM fsm : this.getOwnedFsms()) {
 			((FSM) (fsm)).initialize();
 		}
-		for (Buffer b : this.ownedBuffersArr) {
+		for (Buffer b : this.getOwnedBuffers()) {
 			((Buffer) (b)).initialize();
 		}
-
 	}
 
 	public void main(int limit) {
-		if (this.ownedBuffersArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.ownedBuffers != null) this.ownedBuffersArr = this.ownedBuffers.toArray(new Buffer[0]);
-			else this.ownedBuffersArr = new Buffer[] {};
-		}
-		if (this.ownedFsmsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.ownedFsms != null) this.ownedFsmsArr = this.ownedFsms.toArray(new FSM[0]);
-			else this.ownedFsmsArr = new FSM[] {};
-		}
 		((System) (this)).intialize();
 		boolean anFSMRan = ((boolean) (true));
 		int cptr = ((int) (0));
 		while (((anFSMRan) && ((cptr) < (limit)))) {
 			anFSMRan = false;
-			for (FSM fsm : this.ownedFsmsArr) {
+			for (FSM fsm : this.getOwnedFsms()) {
 				if (!(((Buffer) (fsm.getInputBuffer())).bisEmpty())) {
 					((FSM) (fsm)).run();
 					anFSMRan = true;
@@ -170,6 +141,5 @@ public class SystemImpl extends MinimalTruffleEObjectImpl.TruffleContainer imple
 				cptr = (cptr) + (1);
 			}
 		}
-
 	}
 }

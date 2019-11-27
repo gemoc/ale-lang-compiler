@@ -1,8 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import interpreter.boa.interpreter.boa.BObject;
@@ -30,9 +28,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 )
 public class BObjectImpl extends ExprImpl implements BObject {
 	protected EList<Field> fields;
-
-	@Children
-	private Field[] fieldsArr;
 
 	protected BObjectImpl() {
 		super();
@@ -108,18 +103,12 @@ public class BObjectImpl extends ExprImpl implements BObject {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		if (this.fieldsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.fields != null) this.fieldsArr = this.fields.toArray(new Field[0]);
-			else this.fieldsArr = new Field[] {};
-		}
 		EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
-		for (Field x : this.fieldsArr) {
+		for (Field x : this.getFields()) {
 			EvalRes v = ((EvalRes) (((Expr) (x.getValue())).eval((Ctx) (ctx))));
 			MapService.put((EMap) (ret.getValues()), (String) (x.getName()), (EvalRes) (v));
 		}
 		result = (EvalRes) (ret) ;
-
 		return result;
 	}
 }

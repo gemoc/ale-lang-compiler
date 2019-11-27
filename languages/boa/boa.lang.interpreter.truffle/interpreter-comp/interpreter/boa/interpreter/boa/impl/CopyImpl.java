@@ -1,7 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import interpreter.boa.interpreter.boa.BoaFactory;
@@ -24,7 +23,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 		description = "Copy"
 )
 public class CopyImpl extends ExprImpl implements Copy {
-	@Child
 	protected Expr copy;
 
 	protected CopyImpl() {

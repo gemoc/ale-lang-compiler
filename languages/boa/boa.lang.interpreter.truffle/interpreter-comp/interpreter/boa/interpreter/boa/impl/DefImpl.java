@@ -1,7 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import execboa.MapService;
 import execboa.SerializeService;
@@ -29,7 +28,6 @@ public class DefImpl extends TopLevelCmdImpl implements Def {
 
 	protected String name = NAME_EDEFAULT;
 
-	@Child
 	protected Expr expr;
 
 	protected DefImpl() {

@@ -3,28 +3,28 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/net/sf/jopt-simple/jopt-simple/4.6/jopt-simple-4.6.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/openjdk/jmh/jmh-generator-annprocess/1.21/jmh-generator-annprocess-1.21.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/ecoretools/ale/compiler/alecompiler-maven-plugin/0.0.1-SNAPSHOT/alecompiler-maven-plugin-0.0.1-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.equinox.common/3.10.0/org.eclipse.equinox.common-3.10.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/ecoretools/ale/compiler/org.eclipse.emf.ecoretools.ale.compiler/0.0.1-SNAPSHOT/org.eclipse.emf.ecoretools.ale.compiler-0.0.1-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/xtend/org.eclipse.xtend.lib/2.17.0/org.eclipse.xtend.lib-2.17.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/xtext/org.eclipse.xtext.xbase.lib/2.17.0/org.eclipse.xtext.xbase.lib-2.17.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/xtend/org.eclipse.xtend.lib.macro/2.17.0/org.eclipse.xtend.lib.macro-2.17.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/squareup/javapoet/1.11.1/javapoet-1.11.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.codegen.ecore/2.15.0/org.eclipse.emf.codegen.ecore-2.15.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/ecoretools/ale/compiler/alecompiler-maven-plugin/1.0.0-SNAPSHOT/alecompiler-maven-plugin-1.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/ecoretools/ale/core/1.0.0-201911271604/core-1.0.0-201911271604.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/ecoretools/ale/compiler/1.0.0-201911271620/compiler-1.0.0-201911271620.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/xtext/org.eclipse.xtext.xbase.lib/2.14.0/org.eclipse.xtext.xbase.lib-2.14.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/guava/guava/22.0-rc1-android/guava-22.0-rc1-android.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.codegen.ecore/2.19.0/org.eclipse.emf.codegen.ecore-2.19.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/jdt/org.eclipse.jdt.core/3.19.0/org.eclipse.jdt.core-3.19.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/jdt/org.eclipse.jdt.launching/3.15.0/org.eclipse.jdt.launching-3.15.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.debug.core/3.14.0/org.eclipse.debug.core-3.14.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/jdt/org.eclipse.jdt.debug/3.13.100/org.eclipse.jdt.debug-3.13.100.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.core.variables/3.4.600/org.eclipse.core.variables-3.4.600.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.ecore/2.19.0/org.eclipse.emf.ecore-2.19.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.common/2.16.0/org.eclipse.emf.common-2.16.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.codegen/2.19.0/org.eclipse.emf.codegen-2.19.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.ecore.xmi/2.16.0/org.eclipse.emf.ecore.xmi-2.16.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.text/3.9.0/org.eclipse.text-3.9.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.core.commands/3.9.500/org.eclipse.core.commands-3.9.500.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/xtext/org.eclipse.xtext/2.14.0/org.eclipse.xtext-2.14.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/xtext/org.eclipse.xtext.util/2.14.0/org.eclipse.xtext.util-2.14.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/log4j/log4j/1.2.16/log4j-1.2.16.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/inject/guice/3.0/guice-3.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/javax/inject/javax.inject/1/javax.inject-1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.equinox.common/3.10.0/org.eclipse.equinox.common-3.10.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.core.resources/3.13.100/org.eclipse.core.resources-3.13.100.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.core.expressions/3.6.500/org.eclipse.core.expressions-3.6.500.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.core.filesystem/1.7.500/org.eclipse.core.filesystem-1.7.500.jar" enabled="true" runInBatchMode="false"/>
@@ -37,14 +37,4 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/platform/org.eclipse.equinox.app/1.4.300/org.eclipse.equinox.app-1.4.300.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/graalvm/truffle/truffle-api/19.1.0/truffle-api-19.1.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/graalvm/sdk/graal-sdk/19.1.0/graal-sdk-19.1.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.ecore/2.15.0/org.eclipse.emf.ecore-2.15.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.common/2.16.0/org.eclipse.emf.common-2.16.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/org.eclipse.emf.ecore.xmi/2.15.0/org.eclipse.emf.ecore.xmi-2.15.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/ecoretools/ale/compiler/lib/org.eclipse.emf.ecoretools.ale.compiler.lib/0.0.1-SNAPSHOT/org.eclipse.emf.ecoretools.ale.compiler.lib-0.0.1-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/ecoretools/ale/core/org.eclipse.emf.ecoretools.ale.core/0.0.1-SNAPSHOT/org.eclipse.emf.ecoretools.ale.core-0.0.1-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/antlr/antlr4-runtime/4.7.1/antlr4-runtime-4.7.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/acceleo/org.eclipse.acceleo.query/6.0.8-SNAPSHOT/org.eclipse.acceleo.query-6.0.8-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/guava/guava/11.0/guava-11.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/eclipse/emf/ecoretools/ale/compiler/truffle/lib/org.eclipse.emf.ecoretools.ale.compiler.truffle.lib/0.0.1-SNAPSHOT/org.eclipse.emf.ecoretools.ale.compiler.truffle.lib-0.0.1-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

@@ -1,8 +1,6 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
@@ -33,9 +31,6 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 	protected EList<Expression> actualArgs;
 
 	protected ProcDeclaration declaration;
-
-	@Children
-	private Expression[] actualArgsArr;
 
 	protected ProcCallImpl() {
 		super();
@@ -185,15 +180,10 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 
 	public double eval(Turtle turtle) {
 		double result;
-		if (this.actualArgsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.actualArgs != null) this.actualArgsArr = this.actualArgs.toArray(new Expression[0]);
-			else this.actualArgsArr = new Expression[] {};
-		}
 		LogService.log(("Calling ") + (this.getDeclaration().getName()));
 		StackFrame newFrame = ((StackFrame) (KmLogoFactory.eINSTANCE.createStackFrame()));
 		int i = ((int) (0));
-		for (Expression exp : this.actualArgsArr) {
+		for (Expression exp : this.getActualArgs()) {
 			Variable newVar = ((Variable) (KmLogoFactory.eINSTANCE.createVariable()));
 			newVar.setName(CollectionService.get(this.getDeclaration().getArgs(), i).getName());
 			newVar.setValue(((Expression) (exp)).eval((Turtle) (turtle)));
@@ -207,7 +197,6 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 			((ProcDeclaration) (decl)).eval((Turtle) (turtle));
 		}
 		turtle.getCallStack().getFrames().remove(newFrame);
-
 		return result;
 	}
 }

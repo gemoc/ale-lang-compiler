@@ -1,8 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
@@ -25,9 +23,6 @@ import org.eclipse.emf.ecoretools.ale.compiler.truffle.MinimalTruffleEObjectImpl
 )
 public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer implements File {
 	protected EList<TopLevelCmd> commands;
-
-	@Children
-	private TopLevelCmd[] commandsArr;
 
 	protected FileImpl() {
 		super();
@@ -102,15 +97,9 @@ public class FileImpl extends MinimalTruffleEObjectImpl.TruffleContainer impleme
 	}
 
 	public void eval() {
-		if (this.commandsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.commands != null) this.commandsArr = this.commands.toArray(new TopLevelCmd[0]);
-			else this.commandsArr = new TopLevelCmd[] {};
-		}
 		Ctx ctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
-		for (TopLevelCmd it : this.commandsArr) {
+		for (TopLevelCmd it : this.getCommands()) {
 			((TopLevelCmd) (it)).nextLine((Ctx) (ctx));
 		}
-
 	}
 }

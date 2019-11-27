@@ -1,8 +1,6 @@
 package fsm.interpreter.fsm.impl;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import fsm.interpreter.fsm.Buffer;
 import fsm.interpreter.fsm.FSM;
@@ -38,9 +36,6 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
 	protected EList<Transition> incoming;
 
 	protected EList<Transition> outgoing;
-
-	@Children
-	private Transition[] outgoingArr;
 
 	protected StateImpl() {
 		super();
@@ -226,18 +221,12 @@ public class StateImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
 	}
 
 	public void step(String inputString) {
-		if (this.outgoingArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.outgoing != null) this.outgoingArr = this.outgoing.toArray(new Transition[0]);
-			else this.outgoingArr = new Transition[] {};
-		}
-		Transition validTransition = ((Transition) (CollectionService.head(CollectionService.select(this.outgoingArr, (t) -> EqualService.equals((inputString), (t.getTrigger()))))));
+		Transition validTransition = ((Transition) (CollectionService.head(CollectionService.select(this.getOutgoing(), (t) -> EqualService.equals((inputString), (t.getTrigger()))))));
 		if (EqualService.equals((validTransition), (null))) {
 			((Buffer) (this.getFsm().getOutputBuffer())).enqueue((String) (inputString));
 		}
 		else {
 			((Transition) (validTransition)).fire();
 		}
-
 	}
 }

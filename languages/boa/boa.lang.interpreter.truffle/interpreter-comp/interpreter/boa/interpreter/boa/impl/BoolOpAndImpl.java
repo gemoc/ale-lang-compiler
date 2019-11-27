@@ -1,7 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaFactory;
 import interpreter.boa.interpreter.boa.BoaPackage;
@@ -22,10 +21,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 		description = "BoolOpAnd"
 )
 public class BoolOpAndImpl extends BoolOpImpl implements BoolOpAnd {
-	@Child
 	protected Expr lhs;
 
-	@Child
 	protected Expr rhs;
 
 	protected BoolOpAndImpl() {

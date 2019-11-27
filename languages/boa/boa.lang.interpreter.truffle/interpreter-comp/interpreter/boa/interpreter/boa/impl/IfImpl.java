@@ -1,7 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
 import interpreter.boa.interpreter.boa.Ctx;
@@ -21,13 +20,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 		description = "If"
 )
 public class IfImpl extends ExprImpl implements If {
-	@Child
 	protected Expr cond;
 
-	@Child
 	protected Expr thn;
 
-	@Child
 	protected Expr els;
 
 	protected IfImpl() {

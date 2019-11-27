@@ -1,7 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.ArithOp;
 import interpreter.boa.interpreter.boa.BoaPackage;
@@ -18,10 +17,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 		description = "ArithOp"
 )
 public abstract class ArithOpImpl extends ExprImpl implements ArithOp {
-	@Child
 	protected Expr lhs;
 
-	@Child
 	protected Expr rhs;
 
 	protected ArithOpImpl() {

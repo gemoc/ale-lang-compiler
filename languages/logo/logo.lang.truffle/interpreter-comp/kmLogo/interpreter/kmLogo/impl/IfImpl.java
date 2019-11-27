@@ -1,7 +1,6 @@
 package kmLogo.interpreter.kmLogo.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
@@ -21,10 +20,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 		description = "If"
 )
 public class IfImpl extends ControlStructureImpl implements If {
-	@Child
 	protected Block thenPart;
 
-	@Child
 	protected Block elsePart;
 
 	protected IfImpl() {

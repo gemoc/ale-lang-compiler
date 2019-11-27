@@ -3,17 +3,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
-		<artifactId>org.eclipse.emf.ecoretools.ale.compiler.plugins</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent>
+	<!-- <parent> <groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId> 
+		<artifactId>org.eclipse.emf.ecoretools.ale.compiler.plugins</artifactId> 
+		</parent> -->
 
 	<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
 	<artifactId>alecompiler-maven-plugin</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<name>alecompiler-maven-plugin Maven Plugin</name>
+
+
 
 	<!-- FIXME change it to the project's website -->
 	<!-- <url>http://www.example.com</url> -->
@@ -27,9 +28,80 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.version>3.3.9</maven.version>
+		<xtend.version>2.14.0</xtend.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>m2-ale-lang</id>
+			<url>https://ci.inria.fr/gemoc/view/All/job/ale-lang/job/deploy-m2-repo/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecoretools.ale.updatesite/target/m2/</url>
+		</repository>
+		<repository>
+			<id>m2-ale-lang-compiler</id>
+			<url>https://ci.inria.fr/gemoc/view/All/job/ale-lang-compiler/job/master/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecoretools.ale.compiler.updatesite/target/m2/</url>
+		</repository>
+		<repository>
+			<id>Eclipse - Acceleo Snapshots</id>
+			<url>https://repo.eclipse.org/content/repositories/acceleo-snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>Eclipse - Acceleo Release</id>
+			<url>https://repo.eclipse.org/content/repositories/acceleo-releases</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>javapoet</artifactId>
+			<version>1.11.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.acceleo</groupId>
+			<artifactId>org.eclipse.acceleo.query</artifactId>
+			<version>6.0.9-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr4-runtime</artifactId>
+			<version>4.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf.ecoretools.ale</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0.0-201911271604</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf.ecoretools.ale</groupId>
+			<artifactId>compiler</artifactId>
+			<version>1.0.0-201911271620</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
@@ -81,21 +153,6 @@
 			<groupId>org.eclipse.platform</groupId>
 			<artifactId>org.eclipse.equinox.common</artifactId>
 			<version>3.10.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
-			<artifactId>org.eclipse.emf.ecoretools.ale.compiler</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.antlr</groupId>
-					<artifactId>antlr-runtime</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.eclipse.acceleo</groupId>
-					<artifactId>org.eclipse.core.runtime</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.platform</groupId>

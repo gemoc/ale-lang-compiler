@@ -1,7 +1,6 @@
 package interpreter.boa.interpreter.boa.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import interpreter.boa.interpreter.boa.BoaPackage;
 import interpreter.boa.interpreter.boa.Expr;
@@ -24,7 +23,6 @@ public class FieldImpl extends MinimalTruffleEObjectImpl.TruffleContainer implem
 
 	protected String name = NAME_EDEFAULT;
 
-	@Child
 	protected Expr value;
 
 	protected FieldImpl() {

@@ -1,8 +1,6 @@
 package kmLogo.interpreter.kmLogo.impl;
 
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Children;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
@@ -23,9 +21,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 )
 public class BlockImpl extends InstructionImpl implements Block {
 	protected EList<Instruction> instructions;
-
-	@Children
-	private Instruction[] instructionsArr;
 
 	protected BlockImpl() {
 		super();
@@ -101,16 +96,10 @@ public class BlockImpl extends InstructionImpl implements Block {
 
 	public double eval(Turtle turtle) {
 		double result;
-		if (this.instructionsArr == null) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			if (this.instructions != null) this.instructionsArr = this.instructions.toArray(new Instruction[0]);
-			else this.instructionsArr = new Instruction[] {};
-		}
-		for (Instruction inst : this.instructionsArr) {
+		for (Instruction inst : this.getInstructions()) {
 			((Instruction) (inst)).eval((Turtle) (turtle));
 		}
 		result = (double) (0.0) ;
-
 		return result;
 	}
 }

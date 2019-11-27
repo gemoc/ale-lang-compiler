@@ -31,6 +31,12 @@
 
 package fr.mleduc.minijava;
 
+import miniJava.MiniJavaPackage;
+import miniJava.Program;
+import miniJava.WhileStatement;
+import minijava_exec.impl.Minijava_execImplementation;
+import minijava_exec.impl.operation.ProgramOp;
+import minijava_exec.impl.operation.WhileStatementOp;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -39,11 +45,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import org.openjdk.jmh.annotations.*;
-
-import miniJava.MiniJavaPackage;
-import miniJava.Program;
-import minijava_exec.impl.Minijava_execImplementation;
-import minijava_exec.impl.operation.ProgramOp;
 
 import java.util.Map;
 
@@ -55,11 +56,11 @@ public class MinijavaRevisitorBenchmark {
     public String program;
     private ProgramOp minijavaProgramOp;
     private Program minijavaProgram;
-    Minijava_execImplementation rev = new Minijava_execImplementation() {};
-    
+    Minijava_execImplementation rev = new MyMinijava_execImplementation();
+
     @Setup(Level.Iteration)
     public void loadXMI() {
-    	EPackage.Registry.INSTANCE.put("http://miniJava.miniJava.miniJava/", MiniJavaPackage.eINSTANCE);
+        EPackage.Registry.INSTANCE.put("http://miniJava.miniJava.miniJava/", MiniJavaPackage.eINSTANCE);
         final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
         final Map<String, Object> m = reg.getExtensionToFactoryMap();
         m.put("xmi", new XMIResourceFactoryImpl());
@@ -69,7 +70,7 @@ public class MinijavaRevisitorBenchmark {
         final ResourceSetImpl resSet = new ResourceSetImpl();
         final URI createFileURI = URI.createFileURI(program);
         final Resource resource = resSet.getResource(createFileURI, true);
-        
+
         this.minijavaProgram = (Program) resource.getContents().get(0);
         this.minijavaProgramOp = rev.$(this.minijavaProgram);
         minijavaProgramOp.initialize(new BasicEList<>());
@@ -81,8 +82,10 @@ public class MinijavaRevisitorBenchmark {
     @Fork(value = 1)
     @Warmup(iterations = 1)
     public miniJava.State minijavaInterpreter() {
-
-        return rev.$(this.minijavaProgram).execute();
+        final ProgramOp $ = rev.$(this.minijavaProgram);
+        return $.execute();
     }
 
+    private static class MyMinijava_execImplementation implements Minijava_execImplementation {
+    }
 }

@@ -19,8 +19,7 @@ public class BoaRevisitorBenchmark {
     public String program;
     private File logoProgram;
 
-    private final Boa_exec_revisitorImplementation revisitor = new Boa_exec_revisitorImplementation() {
-    };
+    private final Boa_exec_revisitorImplementation revisitor = new MyBoa_exec_revisitorImplementation();
 
     @Setup(Level.Iteration)
     public void loadXMI() {
@@ -45,4 +44,8 @@ public class BoaRevisitorBenchmark {
 
         revisitor.$(logoProgram).eval();
     }
+
+    private static class MyBoa_exec_revisitorImplementation implements Boa_exec_revisitorImplementation {
+    }
+
 }

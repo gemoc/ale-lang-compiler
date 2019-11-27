@@ -1,7 +1,6 @@
 package kmLogo.interpreter.kmLogo.impl;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
-import com.oracle.truffle.api.nodes.Node.Child;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import java.lang.Object;
 import java.lang.Override;
@@ -18,10 +17,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 		description = "BinaryExp"
 )
 public abstract class BinaryExpImpl extends ExpressionImpl implements BinaryExp {
-	@Child
 	protected Expression lhs;
 
-	@Child
 	protected Expression rhs;
 
 	protected BinaryExpImpl() {
