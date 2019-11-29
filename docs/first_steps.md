@@ -51,7 +51,7 @@ compilationType=interpreter
 ```
 
 3. Create a genmodel file for `helloworld.ecore`
-3. Open `META-INF/MANIFEST.MF , and on the Dependencies table, add `org.eclipse.emf.ecore`, `helloworld`, and `org.eclipse.emf.ecoretools.ale.compiler.lib` on the project's required plugins. 
+3. Open `META-INF/MANIFEST.MF`, and on the Dependencies list, add `org.eclipse.emf.ecore`, `helloworld`, and `org.eclipse.emf.ecoretools.ale.compiler.lib` on the project's required plugins. 
 3. Right click on the dsl file and select **ALE > Generate Ale Implementation**
 4. Right click on the newly created `interpreter-comp` directory and select **Build Path > Use as Source Folder
 
