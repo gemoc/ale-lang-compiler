@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/nav.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+     <header {% unless site.description or site.github.project_tagline %} class="without-description" {% endunless %}>
+        <h1>ALE</h1>
+          <p>{{ site.description | default: site.github.project_tagline }}</p>
+
+ <nav class="header-nav">
+<!-- List of pages -->
+			{% assign all_pages = site.pages | where_exp: 'item', 'item.order' != null | sort: 'order' %}
+			{% for p in all_pages  %}
+			  <a class="header-nav-item" href="{{ p.url | relative_url }}">{{ p.title }}</a>
+			{% endfor %}
+</nav>
+
+			<a class=".header-logo" href="https://github.com/gemoc/ale-lang"> <img class="header-logo" src="img/GitHub-Mark-32px.png" alt="Github">  </a>
+
+      </header>
+
+<div class="padding-block">
+
+</div>
+
+    <div class="wrapper">
+
+<!-- Navigation menu -->
+      <nav class="global-nav">
+        <ul></ul>
+      </nav>
+<!-- -->
+      <section>
+
+      {{ content }}
+
+      </section>
+    </div>
+
+    <footer>
+    {% if site.github.is_project_page %}
+      <p>Project maintained by <a href="{{ site.github.owner_url }}">The GEMOC Initiative</a></p>
+    {% endif %}
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+  </body>
+</html>
+
