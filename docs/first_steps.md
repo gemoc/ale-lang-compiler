@@ -10,16 +10,15 @@ Requirements
 -------------
 
 * Have at least a basic knowledge of [EMF (Eclipse Modeling Framework)](https://www.eclipse.org/modeling/emf/).
-* Have [installed ALE]({{ site.baseurl }}{% link getting_started.md %}).
+* Have [installed ALE Compiler]({{ site.baseurl }}{% link getting_started.md %}).
 
 Objectives
 ----------
 
- * Discover the structure of an ALE project through a built-in example.
- * Launch your first ALE program.
+ * Compile an ALE project to Java.
+ * Execute a program using the compiled language.
 
-Get the HelloWorld example
---------------------------
+# Get the HelloWorld example from ALE
 
 ALE provides an `Hello world!` project template:
 
@@ -33,74 +32,60 @@ After a few seconds a new project called *helloworld* should be created in your 
 What we have inside
 -------------------
 
-The interesting files of the `helloworld` project are inside the folder `model`:
+For more details of the language's architecture, see [ALE first steps](http://gemoc.org/ale-lang/first_steps.html).
 
-| File               | Defines                                                                                 |
-| ------------------ | --------------------------------------------------------------------------------------- |
-| _HelloWorld.aird_  | Graphical representation of _HelloWorld.ecore_                                          |
-| _HelloWorld.ale_   | Semantics of _HelloWorld.ecore_                                                         |
-| _HelloWorld.dsl_   | Binding between the metamodel (_HelloWolrd.ecore_) and its semantics (_HelloWorld.ale_) |
-| _HelloWorld.ecore_ | Metamodel describing the EClass HelloWorld                                              |
-| _HelloWorld.xmi_   | Instance of the EClass HelloWorld                                                       |
+# Compile!
 
-By opening _HelloWorld.aird_ you will see the `HelloWorld` EClass and its properties:
+At this point you are able to interpret Helloworld programs using the ALE interpreter.
 
-<div align="center">
-	<img alt="HelloWorld EClass" src="img/HelloWorld.png"/>
-</div>
+## Compilation using the Eclipse IDE
 
-As you can see, all the members of `HelloWorld` are displayed in a bold font. That indicates that they are defined inside _HelloWorld.ale_.
 
-> ***Note:** if the members are not shown make sure that [the Behavior layer is activated]({{ site.baseurl }}{% link tutorial.md %}#implementation).*
-
- _HelloWorld.ale_ contains the following code:
+1. Create an Eclipse Plugin-in Project named 'helloworld.interpreter'
+2. Create `src/helloworld.dsl` in this project, with the following content:
 
 ```
-behavior HelloWorld;
-
-open class HelloWorld {             // 1
-
-    String msg := 'Hello world!';   // 2
-
-    override EString greeting() {   // 3
-        result := self.msg;         // 4
-    }
-
-    @main                           // 5
-    def void entryPoint() {
-        self.greeting().log();      // 6
-    }
-}
-```
-<ul style="list-style:none">
- <li>① Indicates that modify the <code>HelloWorld</code> EClass.</li> 
- <li>② Declare a <i>new</i> attribute of type <code>String</code>. Defining <code>msg</code> within <i>HelloWorls.ale</i> makes it a runtime data. In other words, it does not exist in the metamodel and will be created by the ALE interpreter during the execution.</li>
- <li>③ Specify the semantics of the <code>greeting</code> operation.</li>
- <li>④ Return the value of the <code>msg</code> attribute (there is no <code>return</code> statement in ALE).</li>
- <li>⑤ Indicate that the <code>entryPoint</code> operation is the entry point of the execution and should be called by the ALE interpreter.</li>
- <li>⑥ Print "Hello world!".</li>
-</ul>
-
-> ***Tip:** see the [Reference page]({{ site.baseurl }}{% link reference.md %}) for a detailed overview of ALE's syntax.*
-
-Run!
-----
-
-The execution can be launched through the contextual menu:
-
-1. Right-click on _HelloWorld.dsl_
-2. Select `Run As > ALE launch`, a dialog should open asking you to select the model to interpret
-3. Make sure _HelloWorld.xmi_ is selected then click on `OK`.
-4. Witness the result on the console:
-
-```
-Run helloworld.dsl
-------------
-Hello world!
+syntax=platform:/resource/helloworld/model/helloworld.ecore
+behavior=platform:/resource/helloworld/model/helloworld.ale
+compilationType=interpreter
 ```
 
-Conclusion
-----------
+3. Create a genmodel file for `helloworld.ecore`
+3. Open `META-INF/MANIFEST.MF , and on the Dependencies table, add `org.eclipse.emf.ecore`, `helloworld`, and `org.eclipse.emf.ecoretools.ale.compiler.lib` on the project's required plugins. 
+3. Right click on the dsl file and select **ALE > Generate Ale Implementation**
+4. Right click on the newly created `interpreter-comp` directory and select **Build Path > Use as Source Folder
 
-Now that we covered the basics of ALE you're ready to go further with the [MiniFsm tutorial]({{ site.baseurl }}{% link tutorial.md %}).
+You have generated a compiled version of the helloworld language following the Interpreter implementation pattern.
 
+By substituting `interpreter` by `visitor`, `switch` or `revisitor` in the steps above, you can freely compile your language to another implementation pattern.
+
+
+## Compilation with Maven
+
+**Prerequisite**: We do not cover the details of the integration of you project using maven but several example of ALE language with a maven integration can be found in the [ale compiler github repository](https://github.com/gemoc/ale-lang-compiler/tree/master/languages).
+
+Once your language integrated with maven, the automated compilation using the alecompiler-maven-plugin can be integrated by adding the following definition in your language's pom.xml:
+
+```xml
+<build>
+    <sourceDirectory>PATTERN-comp</sourceDirectory>
+    <plugins>
+        <plugin>
+            <groupId>org.eclipse.emf.ecoretools.ale.compiler</groupId>
+            <artifactId>alecompiler-maven-plugin</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <executions>
+                <execution>
+                    <phase>generate-sources</phase>
+                    <goals>
+                        <goal>ale-dsl-compile</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <dslFile>${project.basedir}/src/LANGUAGE.dsl</dslFile>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```

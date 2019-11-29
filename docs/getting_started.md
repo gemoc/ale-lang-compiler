@@ -15,7 +15,7 @@ The recommended package is [Eclipse IDE for Java and DSL developers](https://www
 2 - Install ALE
 ---------------
 
-Follows the [ALE installation steps](http://gemoc.org/ale-lang-compiler/getting_started.html).
+Follows the [ALE installation steps](http://gemoc.org/ale-lang/getting_started.html).
 
  
 3 - Install ALE Compiler
@@ -29,10 +29,10 @@ Follows the [ALE installation steps](http://gemoc.org/ale-lang-compiler/getting_
 5. Check `Action Language EMF Compiler`
 6. Click `Next` and `Finish`
 
-Install older ALE versions
+Install older ALE Compiler versions
 ==========================
 
-Archived versions of ALE can be found at the following URL:
+Archived versions of ALE Compiler can be found at the following URL:
 - [http://www.kermeta.org/ale-lang-compiler/updates/](http://www.kermeta.org/ale-lang-compiler/updates/)
 
 To install a version:
