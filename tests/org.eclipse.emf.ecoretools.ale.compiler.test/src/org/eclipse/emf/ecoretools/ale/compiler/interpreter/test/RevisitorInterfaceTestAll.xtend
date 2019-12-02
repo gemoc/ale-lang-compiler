@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter.test
+package org.eclipse.emf.ecoretools.ale.compiler.test
 
 import java.io.File
 import java.io.FileInputStream
