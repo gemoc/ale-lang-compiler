@@ -14,7 +14,9 @@ pipeline {
 		
 		stage('Build and verify') {
 			steps {
-				sh "mvn -Dmaven.test.failure.ignore clean verify --errors --show-version"
+				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
+					sh "mvn -Dmaven.test.failure.ignore clean verify --errors --show-version"
+				}
 				dir('alecompiler-maven-plugin') {
 					sh "mvn install"
 				}
