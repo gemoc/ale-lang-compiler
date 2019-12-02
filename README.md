@@ -7,14 +7,12 @@ Ale is a language to define behaviors on the top of Ecore models.
 
 Doc
 ===
-* [Website](http://gemoc.org/ale-lang/)
-* [Continous integration](https://ci.inria.fr/gemoc/job/ale-lang) 
-* [Update site](https://ci.inria.fr/gemoc/job/ale-lang/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecoretools.ale.updatesite/target/repository/) (nightly) resulting from the last successfull build in the CI.
+* [Website](http://gemoc.org/ale-lang-compiler/)
+* [Continous integration](https://ci.inria.fr/gemoc/job/ale-lang-compiler) 
+* [Update site](http://www.kermeta.org/ale-lang-compiler/updates/)
+* [Web site](http://www.kermeta.org/ale-lang-compiler/updates/)
 
 
+# Dependecies
 
-# Dev Dependencies
-
-## org.eclipse.sirius 6.2.0-SNAPSHOT
-
-https://git.eclipse.org/c/sirius/org.eclipse.sirius.git/ tag v6.2.0
+This project is a compiler for the [ALE metalanguage](http://www.kermeta.org/ale-lang-compiler/updates/).
