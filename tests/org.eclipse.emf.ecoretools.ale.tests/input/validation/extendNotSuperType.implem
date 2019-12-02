@@ -1,7 +1,0 @@
-behavior test.extendSameTypeThree;
-
-open class EOperation {
-}
-
-open class EClassifier extends EOperation {
-}

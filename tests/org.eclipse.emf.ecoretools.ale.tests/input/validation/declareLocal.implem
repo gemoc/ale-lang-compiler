@@ -1,6 +1,0 @@
-behavior test.typelocal;
-open class EClass {
-	def void op(String foo){
-		int correct := 0;
-	}
-}

@@ -1,8 +1,0 @@
-behavior test.self;
-open class ClassA {
-	
-	@main
-	def ClassA main() {
-		result := self;
-	}
-}

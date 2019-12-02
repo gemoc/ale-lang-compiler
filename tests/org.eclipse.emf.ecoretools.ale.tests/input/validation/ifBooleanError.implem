@@ -1,7 +1,0 @@
-behavior test.ifbool;
-open class EClass {
-	def void op(){
-		if(72 + 13){
-		}
-	}
-}

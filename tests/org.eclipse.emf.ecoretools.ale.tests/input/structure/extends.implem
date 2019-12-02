@@ -1,7 +1,0 @@
-behavior test.extendedextendedclass;
-
-import test.extendedclass as simpleExtension;
-
-open class EClass extends simpleExtension.EClass {
-	
-}

@@ -1,8 +1,0 @@
-behavior test.defmethod;
-
-open class EClass {
-	def void fooBar(EObject param1, double param2) {
-		EBoolean localVariable;
-		double loacalValue := param2 + 2.0;
-	}
-}

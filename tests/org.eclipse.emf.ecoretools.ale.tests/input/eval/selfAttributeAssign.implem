@@ -1,9 +1,0 @@
-behavior test.selfattassign;
-open class ClassA {
-	
-	@main
-	def int main() {
-		self.field := 1;
-		result := self.field;
-	}
-}

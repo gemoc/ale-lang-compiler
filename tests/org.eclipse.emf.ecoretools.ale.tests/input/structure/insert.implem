@@ -1,7 +1,0 @@
-behavior test.insert;
-
-open class EObject {
-	override EClass eClass() {
-		self.eSuperTypes += self;
-	}
-}

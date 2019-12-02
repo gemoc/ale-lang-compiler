@@ -1,9 +1,0 @@
-behavior test.featrm;
-class MyRuntimeClass {
-
-	EClass attrib;
-
-	def void op(){
-		self.attrib -= self;
-	}
-}

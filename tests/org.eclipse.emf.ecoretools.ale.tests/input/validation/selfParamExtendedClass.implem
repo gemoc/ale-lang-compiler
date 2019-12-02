@@ -1,5 +1,0 @@
-behavior test.declself;
-open class EClass {
-	def int op(int self){
-	}
-}

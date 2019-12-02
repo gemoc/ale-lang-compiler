@@ -21,6 +21,7 @@
 		<module>com.squareup.javapoet.wrapper</module>
 		<module>com.oracle.truffle.wrapper</module>
 		<module>org.eclipse.emf.ecoretools.ale.compiler.ui</module>
+		<module>fr.inria.gforge.spoon.wrapper</module>
 	</modules>
 
 	<build>

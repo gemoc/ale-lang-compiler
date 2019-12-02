@@ -1,9 +1,0 @@
-behavior test.localattr;
-open class ClassA {
-	
-	@main
-	def int main() {
-		ClassA var := self;
-		result := var.field;
-	}
-}

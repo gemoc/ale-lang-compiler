@@ -1,5 +1,0 @@
-behavior test.doubleattr; 
-open class EClass {
-	boolean newAttribute;
-	int newAttribute := 0;
-}

@@ -1,5 +1,0 @@
-behavior test.uniqueattributes;
-
-open class EClass {
-	unique EClass toEClass;
-}

@@ -1,6 +1,0 @@
-behavior test.assignself;
-open class EClass {
-	def void op(){
-		self := 'usurpation attempt';
-	}
-}

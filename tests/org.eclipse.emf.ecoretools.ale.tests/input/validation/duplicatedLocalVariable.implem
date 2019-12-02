@@ -1,7 +1,0 @@
-behavior test.doublelocal; 
-open class EClass {
-	def void op(){
-		int localVar;
-		int localVar := 2;
-	}
-}

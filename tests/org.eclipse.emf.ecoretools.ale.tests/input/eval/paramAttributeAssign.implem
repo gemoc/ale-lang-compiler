@@ -1,9 +1,0 @@
-behavior test.paramattrassign;
-open class ClassA {
-	
-	@main
-	def int main(ClassA arg) {
-		arg.field := 3;
-		result := arg.field;
-	}
-}

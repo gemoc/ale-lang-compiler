@@ -1,7 +1,0 @@
-class ClassA {
-	
-	@main
-	def String main() {
-		result := test::ClassA.create();
-	}
-}

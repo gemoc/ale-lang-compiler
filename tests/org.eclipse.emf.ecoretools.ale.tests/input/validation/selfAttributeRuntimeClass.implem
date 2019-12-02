@@ -1,4 +1,0 @@
-behavior test.declself;
-class MyRuntimeClass {
-	int self := 5;
-}

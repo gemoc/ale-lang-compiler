@@ -1,9 +1,0 @@
-behavior test.localvar;
-open class ClassA {
-	
-	@main
-	def String main() {
-		String var := 'foobar';
-		result := var;
-	}
-}

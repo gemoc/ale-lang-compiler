@@ -1,4 +1,0 @@
-behavior test.typeattr;
-open class EClass {
-	String wrong := 0;
-}

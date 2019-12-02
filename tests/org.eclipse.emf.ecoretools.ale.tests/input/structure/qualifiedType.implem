@@ -1,5 +1,0 @@
-behavior test.typeliteral;
-
-open class ClassA {
-	test::sub::ClassA clsAttr;
-}

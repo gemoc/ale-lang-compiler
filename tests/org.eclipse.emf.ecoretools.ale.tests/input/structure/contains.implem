@@ -1,5 +1,0 @@
-behavior test.containsattributes;
-
-open class EClass {
-	contains 1..* EClass toEClass;
-}

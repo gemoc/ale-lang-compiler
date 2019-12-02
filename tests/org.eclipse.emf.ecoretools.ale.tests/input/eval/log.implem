@@ -1,8 +1,0 @@
-behavior test.log;
-open class ClassA {
-	
-	@main
-	def void main() {
-		'foobar'.log();
-	}
-}

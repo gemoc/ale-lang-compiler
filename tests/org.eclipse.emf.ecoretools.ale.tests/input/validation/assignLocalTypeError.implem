@@ -1,7 +1,0 @@
-behavior test.assignlocal;
-open class EClass {
-	def void op(){
-		int wrong;
-		wrong := 'foobar';
-	}
-}

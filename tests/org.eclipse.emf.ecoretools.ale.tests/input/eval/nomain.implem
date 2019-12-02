@@ -1,8 +1,0 @@
-behavior test.nomain;
-open class ClassA {
-	
-	def String main() {
-		String var := 'foobar';
-		result := var;
-	}
-}

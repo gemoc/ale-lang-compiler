@@ -1,7 +1,0 @@
-behavior test.assignSubtype;
-open class EClass {
-	def void op(){
-		EClassifier cls := ecore::EClass.create();
-		cls := ecore::EClassifier.create();
-	}
-}

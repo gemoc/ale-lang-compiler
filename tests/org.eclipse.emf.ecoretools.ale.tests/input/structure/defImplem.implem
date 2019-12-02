@@ -1,8 +1,0 @@
-behavior test.defimpl;
-
-open class EObject {
-	override EClass eClass() {
-		self.log();
-		result := ecore::EModelElement;
-	}
-}

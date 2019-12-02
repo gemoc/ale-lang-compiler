@@ -1,7 +1,0 @@
-behavior test.foreach;
-open class EClass {
-	def void op(){
-		for(i in [0..10]){
-		}
-	}
-}

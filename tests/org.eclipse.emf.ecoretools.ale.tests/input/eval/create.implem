@@ -1,8 +1,0 @@
-behavior test.create;
-open class ClassA {
-	
-	@main
-	def ClassA main() {
-		result := test::ClassA.create();
-	}
-}

@@ -1,9 +1,0 @@
-behavior test.scopelocal;
-open class EClass {
-	def void op(){
-		int localVar;
-		if(true){
-			int localVar := 2;
-		}
-	}
-}
