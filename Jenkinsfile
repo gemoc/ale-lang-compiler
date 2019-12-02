@@ -24,11 +24,11 @@ pipeline {
 					sh "mvn compile"
 				}
 			}
-			//post {
-			//	success {
-			//		junit 'tests/**/target/surefire-reports/TEST-*.xml' 
-			//	}
-			//}
+			post {
+				success {
+					junit 'tests/**/target/surefire-reports/TEST-*.xml' 
+				}
+			}
 	 	}
 	 	stage("Build M2 Repo") {
 			steps{
