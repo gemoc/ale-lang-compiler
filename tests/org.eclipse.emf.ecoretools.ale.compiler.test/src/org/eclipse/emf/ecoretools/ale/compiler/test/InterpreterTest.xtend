@@ -29,7 +29,7 @@ import org.junit.jupiter.api.TestFactory
 
 import static spoon.testing.Assert.assertThat
 
-class InterpreterTestAll {
+class InterpreterTest {
 
 	static Map<String, Map<File, File>> compilations = newHashMap
 

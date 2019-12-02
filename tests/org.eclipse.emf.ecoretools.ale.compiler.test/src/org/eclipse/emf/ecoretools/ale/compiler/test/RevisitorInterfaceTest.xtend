@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 
-class RevisitorInterfaceTestAll {
+class RevisitorInterfaceTest {
 
 	def static void cleanupProject(File tmpDir) {
 		FileUtils.deleteDirectory(tmpDir);
