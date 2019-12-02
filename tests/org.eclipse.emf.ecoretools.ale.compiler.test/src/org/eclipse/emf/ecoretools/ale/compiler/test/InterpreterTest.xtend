@@ -41,7 +41,7 @@ class InterpreterTest {
 		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
-	private static final boolean DEBUG = true
+	private static final boolean DEBUG = false
 
 	def static void log(String txt) {
 		if(DEBUG) println(txt)
