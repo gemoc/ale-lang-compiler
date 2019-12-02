@@ -10,7 +10,6 @@ Doc
 * [Website](http://gemoc.org/ale-lang-compiler/)
 * [Continous integration](https://ci.inria.fr/gemoc/job/ale-lang-compiler) 
 * [Update site](http://www.kermeta.org/ale-lang-compiler/updates/)
-* [Web site](http://www.kermeta.org/ale-lang-compiler/updates/)
 
 
 # Dependecies
