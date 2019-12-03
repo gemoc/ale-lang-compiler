@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.If;
 import kmLogo.visitor.kmLogo.Turtle;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -22,14 +23,14 @@ public class IfOperationImpl extends ControlStructureOperationImpl implements If
 	public double eval(Turtle turtle) {
 		double result;
 		if(!EqualService.equals((((ExpressionOperation)this.it.getCondition().accept(vis)).eval((Turtle) (turtle))), (0.0))) {
-			result = ((BlockOperation)this.it.getThenPart().accept(vis)).eval((Turtle) (turtle));
+			result = ((double) (((BlockOperation)this.it.getThenPart().accept(vis)).eval((Turtle) (turtle))));
 		}
 		else {
 			if(!EqualService.equals((this.it.getElsePart()), (null))) {
-				result = ((BlockOperation)this.it.getElsePart().accept(vis)).eval((Turtle) (turtle));
+				result = ((double) (((BlockOperation)this.it.getElsePart().accept(vis)).eval((Turtle) (turtle))));
 			}
 			else {
-				result = 0.0;
+				result = ((Double) (0.0));
 			}
 		}
 		return result;

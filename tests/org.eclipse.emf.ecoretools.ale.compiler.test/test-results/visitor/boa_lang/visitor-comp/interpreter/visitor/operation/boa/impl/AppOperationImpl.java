@@ -43,10 +43,10 @@ public class AppOperationImpl extends ExprOperationImpl implements AppOperation 
 					tmp.setCtx(fun.getCtx());
 					tmp.setName(fun.getName());
 					MapService.replaceWith((EMap) (tmp.getTh()), (EMap) (fct.getTh()));
-					result = tmp;
+					result = ((EvalBoundFunRes) (tmp));
 				}
 				else {
-					result = fe;
+					result = ((EvalRes) (fe));
 				}
 			}
 			else {
@@ -63,22 +63,22 @@ public class AppOperationImpl extends ExprOperationImpl implements AppOperation 
 					tmp.setCtx(fun.getCtx());
 					tmp.setName(fun.getName());
 					MapService.replaceWith((EMap) (tmp.getTh()), (EMap) (ctx.getTh()));
-					result = tmp;
+					result = ((EvalBoundFunRes) (tmp));
 				}
 				else {
-					result = fe;
+					result = ((EvalRes) (fe));
 				}
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}
 
 	public EvalRes callFunc(EvalFunRes fct, Ctx callCtx) {
 		EvalRes result;
-		result = ((ExprOperation)fct.getExp().accept(vis)).eval((Ctx) (callCtx));
+		result = ((EvalRes) (((ExprOperation)fct.getExp().accept(vis)).eval((Ctx) (callCtx))));
 		return result;
 	}
 }

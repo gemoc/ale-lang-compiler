@@ -30,8 +30,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
 			referencedClass = (TypeDeclaration) eResolveProxy(oldReferencedClass);
 			if (referencedClass != oldReferencedClass) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLASS_REF__REFERENCED_CLASS,
-							oldReferencedClass, referencedClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.CLASS_REF__REFERENCED_CLASS, oldReferencedClass, referencedClass));
 			}
 		}
 		return referencedClass;
@@ -92,7 +91,7 @@ public class ClassRefImpl extends SingleTypeRefImpl implements ClassRef {
 		boolean result;
 		if (other instanceof ClassRef) {
 			ClassRef ocr = ((ClassRef) (other));
-			result = (boolean) (EqualService.equals((this.referencedClass), (ocr.getReferencedClass()))) ;
+			result = (boolean) (EqualService.equals((this.getReferencedClass()), (ocr.getReferencedClass()))) ;
 		}
 		else {
 			result = (boolean) (false) ;

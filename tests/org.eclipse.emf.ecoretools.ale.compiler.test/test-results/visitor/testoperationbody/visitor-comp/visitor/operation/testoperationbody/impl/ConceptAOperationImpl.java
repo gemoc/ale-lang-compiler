@@ -1,5 +1,6 @@
 package visitor.operation.testoperationbody.impl;
 
+import java.lang.Boolean;
 import testoperationbody.visitor.testoperationbody.ConceptA;
 import visitor.VisitorInterface;
 import visitor.operation.testoperationbody.ConceptAOperation;
@@ -16,7 +17,7 @@ public class ConceptAOperationImpl implements ConceptAOperation {
 
 	public boolean op() {
 		boolean result;
-		result = false;
+		result = ((Boolean) (false));
 		return result;
 	}
 }

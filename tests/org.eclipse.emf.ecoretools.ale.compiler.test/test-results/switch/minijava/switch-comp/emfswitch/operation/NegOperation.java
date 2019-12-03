@@ -23,7 +23,7 @@ public class NegOperation extends ExpressionOperation {
 		IntegerValue left = ((IntegerValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).evaluateExpression((State) (state))));
 		IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		tmp.setValue(-(left.getValue()));
-		result = tmp;
+		result = ((IntegerValue) (tmp));
 		return result;
 	}
 }

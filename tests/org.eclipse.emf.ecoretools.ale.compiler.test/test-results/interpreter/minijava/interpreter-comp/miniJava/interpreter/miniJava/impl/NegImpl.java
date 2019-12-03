@@ -108,7 +108,7 @@ public class NegImpl extends ExpressionImpl implements Neg {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		IntegerValue left = ((IntegerValue) (((Expression) (this.expression)).evaluateExpression((State) (state))));
+		IntegerValue left = ((IntegerValue) (((Expression) (this.getExpression())).evaluateExpression((State) (state))));
 		IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		tmp.setValue(-(left.getValue()));
 		result = (Value) (tmp) ;

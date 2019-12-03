@@ -28,14 +28,14 @@ public class AssignOperation extends ExprOperation {
 			EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
 			if(MapService.containsKey((EMap) (mvlhs.getValues()), (String) (this.it.getName()))) {
 				MapService.put((EMap) (mvlhs.getValues()), (String) (this.it.getName()), (EvalRes) (vrhs));
-				result = vrhs;
+				result = ((EvalRes) (vrhs));
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

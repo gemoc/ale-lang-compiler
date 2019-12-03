@@ -91,7 +91,7 @@ public class MainOperationImpl implements MainOperation {
 		}
 		int cptr = ((int) (1));
 		while ((cptr) < (((MainOperation)this.it.accept(vis)).ma())) {
-			cptr = (cptr) + (1);
+			cptr = ((Integer) ((cptr) + (1)));
 		}
 		boolean truz = ((boolean) (!(false)));
 		boolean gt = ((boolean) ((1) > (2)));
@@ -107,7 +107,7 @@ public class MainOperationImpl implements MainOperation {
 
 	public int ma() {
 		int result;
-		result = 452;
+		result = ((Integer) (452));
 		return result;
 	}
 }

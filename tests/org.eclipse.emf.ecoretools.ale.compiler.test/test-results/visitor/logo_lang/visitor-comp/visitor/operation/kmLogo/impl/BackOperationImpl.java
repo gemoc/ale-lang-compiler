@@ -23,7 +23,7 @@ public class BackOperationImpl extends PrimitiveOperationImpl implements BackOpe
 		double result;
 		double move = ((double) (((ExpressionOperation)this.it.getSteps().accept(vis)).eval((Turtle) (turtle))));
 		((TurtleOperation)turtle.accept(vis)).forward((Double) (-(move)));
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

@@ -154,14 +154,14 @@ public class ModuloImpl extends ExpressionImpl implements Modulo {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		Value left = ((Value) (((Expression) (this.left)).evaluateExpression((State) (state))));
-		Value right = ((Value) (((Expression) (this.right)).evaluateExpression((State) (state))));
+		Value left = ((Value) (((Expression) (this.getLeft())).evaluateExpression((State) (state))));
+		Value right = ((Value) (((Expression) (this.getRight())).evaluateExpression((State) (state))));
 		if (left instanceof IntegerValue) {
 			if (right instanceof IntegerValue) {
 				IntegerValue bleft = ((IntegerValue) (left));
 				IntegerValue bright = ((IntegerValue) (right));
 				IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
-				tmp.setValue(MathService.mod((Modulo) (this), (bleft.getValue()), (bright.getValue())));
+				tmp.setValue(MathService.mod((Modulo) (this), (int) (bleft.getValue()), (int) (bright.getValue())));
 				result = (Value) (tmp) ;
 			}
 			else {

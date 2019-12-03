@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Double;
 import kmLogo.Left;
 import kmLogo.Turtle;
 
@@ -17,9 +18,9 @@ public class LeftOperation extends PrimitiveOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		double angle = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getAngle())).eval((Turtle) turtle)));
-		((TurtleOperation) emfswitch.doSwitch(turtle)).rotate((double) angle);
-		result = 0.0;
+		double angle = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getAngle())).eval((Turtle) (turtle))));
+		((TurtleOperation) emfswitch.doSwitch(turtle)).rotate((double) (angle));
+		result = ((Double) (0.0));
 		return result;
 	}
 }

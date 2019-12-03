@@ -19,7 +19,7 @@ public class SymbolRefOperation extends ExpressionOperation {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		result = ((ValueOperation) emfswitch.doSwitch(((ContextOperation) emfswitch.doSwitch(((StateOperation) emfswitch.doSwitch(state)).findCurrentContext())).findBinding((Symbol) (this.it.getSymbol())).getValue())).copyj();
+		result = ((Value) (((ValueOperation) emfswitch.doSwitch(((ContextOperation) emfswitch.doSwitch(((StateOperation) emfswitch.doSwitch(state)).findCurrentContext())).findBinding((Symbol) (this.it.getSymbol())).getValue())).copyj()));
 		return result;
 	}
 }

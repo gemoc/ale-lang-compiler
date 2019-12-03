@@ -1,11 +1,11 @@
 package interpreter.emfswitch.operation;
 
+import boa.BoaFactory;
 import boa.Copy;
 import boa.Ctx;
 import boa.EvalMapRes;
 import boa.EvalRes;
 import execboa.MapService;
-import interpreter.emfswitch.BoaFactory;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
 import org.eclipse.emf.common.util.EMap;
 
@@ -27,10 +27,10 @@ public class CopyOperation extends ExprOperation {
 			EvalMapRes mvcopy = ((EvalMapRes) (vcopy));
 			EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 			MapService.putAll((EMap) (ret.getValues()), (EMap) (mvcopy.getValues()));
-			result = ret;
+			result = ((EvalMapRes) (ret));
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

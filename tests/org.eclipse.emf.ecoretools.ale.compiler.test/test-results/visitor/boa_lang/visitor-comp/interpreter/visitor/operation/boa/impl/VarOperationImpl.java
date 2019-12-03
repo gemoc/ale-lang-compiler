@@ -23,10 +23,10 @@ public class VarOperationImpl extends ExprOperationImpl implements VarOperation 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
 		if(MapService.containsKey((EMap) (ctx.getEnv()), (String) (this.it.getName()))) {
-			result = MapService.getFromMap((EMap) (ctx.getEnv()), (String) (this.it.getName()));
+			result = ((EvalRes) (MapService.getFromMap((EMap) (ctx.getEnv()), (String) (this.it.getName()))));
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

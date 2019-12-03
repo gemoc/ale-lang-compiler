@@ -23,7 +23,7 @@ public class RightOperationImpl extends PrimitiveOperationImpl implements RightO
 		double result;
 		double angle = ((double) (((ExpressionOperation)this.it.getAngle().accept(vis)).eval((Turtle) (turtle))));
 		((TurtleOperation)turtle.accept(vis)).rotate((Double) (-(angle)));
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

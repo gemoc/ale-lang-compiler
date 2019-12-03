@@ -21,7 +21,7 @@ public class WhileStatementOperation extends StatementOperation {
 		while (continueWhile.isValue()) {
 			((BlockOperation) emfswitch.doSwitch(this.it.getBlock())).evaluateStatement((State) (state));
 			BooleanValue continueWhile2 = ((BooleanValue) (((BooleanValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getCondition())).evaluateExpression((State) (state))))));
-			continueWhile = continueWhile2;
+			continueWhile = ((BooleanValue) (continueWhile2));
 		}
 	}
 }

@@ -25,7 +25,7 @@ public class FunOperationImpl extends ExprOperationImpl implements FunOperation 
 		ret.setExp(this.it.getBody());
 		ret.setCtx(ctx);
 		ret.setName(this.it.getName());
-		result = ret;
+		result = ((EvalFunRes) (ret));
 		return result;
 	}
 }

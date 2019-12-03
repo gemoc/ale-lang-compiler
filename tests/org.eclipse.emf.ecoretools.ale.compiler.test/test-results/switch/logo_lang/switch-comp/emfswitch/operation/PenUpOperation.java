@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Double;
 import kmLogo.PenUp;
 import kmLogo.Turtle;
 
@@ -18,7 +19,7 @@ public class PenUpOperation extends PrimitiveOperation {
 	public double eval(Turtle turtle) {
 		double result;
 		turtle.setPenUp(true);
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

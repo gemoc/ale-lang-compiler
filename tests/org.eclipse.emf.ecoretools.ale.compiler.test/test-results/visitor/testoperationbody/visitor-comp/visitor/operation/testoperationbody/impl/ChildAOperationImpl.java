@@ -21,7 +21,7 @@ public class ChildAOperationImpl extends ParentOperationImpl implements ChildAOp
 
 	public EnumA onlyA() {
 		EnumA result;
-		result = this.it.getValue();
+		result = ((EnumA) (this.it.getValue()));
 		return result;
 	}
 }

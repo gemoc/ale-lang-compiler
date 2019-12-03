@@ -49,8 +49,7 @@ public class StringToEvalResMapImpl extends MinimalEObjectImpl.Container impleme
 			value = (EvalRes) eResolveProxy(oldValue);
 			if (value != oldValue) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE,
-							oldValue, value));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.STRING_TO_EVAL_RES_MAP__VALUE, oldValue, value));
 			}
 		}
 		return value;

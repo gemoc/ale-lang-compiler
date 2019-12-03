@@ -163,28 +163,28 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
 	public Value evaluateExpression(State state) {
 		Value result;
 		ArrayInstance res = ((ArrayInstance) (MiniJavaFactory.eINSTANCE.createArrayInstance()));
-		IntegerValue sizeArray = ((IntegerValue) (((Expression) (this.size)).evaluateExpression((State) (state))));
+		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((Expression) (this.getSize())).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
 		Value defaultValue = ((Value) (null));
-		if (this.type instanceof IntegerTypeRef) {
+		if (this.getType() instanceof IntegerTypeRef) {
 			IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 			idv.setValue(0);
 			defaultValue = idv;
 		}
 		else {
-			if (this.type instanceof BooleanTypeRef) {
+			if (this.getType() instanceof BooleanTypeRef) {
 				BooleanValue idv = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 				idv.setValue(false);
 				defaultValue = idv;
 			}
 			else {
-				if (this.type instanceof StringTypeRef) {
+				if (this.getType() instanceof StringTypeRef) {
 					NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
 					defaultValue = idv;
 				}
 				else {
-					if (this.type instanceof ClassRef) {
+					if (this.getType() instanceof ClassRef) {
 						NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
 						defaultValue = idv;
 					}
@@ -194,7 +194,7 @@ public class NewArrayImpl extends ExpressionImpl implements NewArray {
 		int i = ((int) (0));
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
-			res.getValue().add(defaultValue.copyj());
+			res.getValue().add(((Value) (defaultValue)).copyj());
 			i = (i) + (1);
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));

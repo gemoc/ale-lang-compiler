@@ -108,7 +108,7 @@ public class NotImpl extends ExprImpl implements Not {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vvalue = ((EvalRes) (((Expr) (this.value)).eval((Ctx) (ctx))));
+		EvalRes vvalue = ((EvalRes) (((Expr) (this.getValue())).eval((Ctx) (ctx))));
 		if (vvalue instanceof EvalBoolRes) {
 			EvalBoolRes bvvalue = ((EvalBoolRes) (vvalue));
 			EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));

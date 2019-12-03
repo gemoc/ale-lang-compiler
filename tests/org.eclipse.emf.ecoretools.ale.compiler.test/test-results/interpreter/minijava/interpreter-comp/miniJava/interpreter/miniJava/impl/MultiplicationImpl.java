@@ -153,8 +153,8 @@ public class MultiplicationImpl extends ExpressionImpl implements Multiplication
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		Value left = ((Value) (((Expression) (this.left)).evaluateExpression((State) (state))));
-		Value right = ((Value) (((Expression) (this.right)).evaluateExpression((State) (state))));
+		Value left = ((Value) (((Expression) (this.getLeft())).evaluateExpression((State) (state))));
+		Value right = ((Value) (((Expression) (this.getRight())).evaluateExpression((State) (state))));
 		if (left instanceof IntegerValue) {
 			if (right instanceof IntegerValue) {
 				IntegerValue bleft = ((IntegerValue) (left));

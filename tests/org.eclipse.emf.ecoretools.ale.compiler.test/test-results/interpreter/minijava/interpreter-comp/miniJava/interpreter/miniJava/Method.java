@@ -1,7 +1,7 @@
 package miniJava.interpreter.miniJava;
 
-import java.util.Map.Entry;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 public interface Method extends EObject, Member {
@@ -19,7 +19,7 @@ public interface Method extends EObject, Member {
 
 	void setBody(Block value);
 
-	EList<Entry<Clazz, Method>> getCache();
+	EMap<Clazz, Method> getCache();
 
 	void evaluateStatement(State state);
 

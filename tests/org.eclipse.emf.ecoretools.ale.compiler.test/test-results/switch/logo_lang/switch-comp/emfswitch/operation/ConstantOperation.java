@@ -17,7 +17,7 @@ public class ConstantOperation extends ExpressionOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = this.it.getValue();
+		result = ((double) (this.it.getValue()));
 		return result;
 	}
 }

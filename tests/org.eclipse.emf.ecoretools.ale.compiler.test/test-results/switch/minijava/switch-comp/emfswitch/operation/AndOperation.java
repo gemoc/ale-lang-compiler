@@ -28,14 +28,14 @@ public class AndOperation extends ExpressionOperation {
 				BooleanValue bright = ((BooleanValue) (right));
 				BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 				tmp.setValue(((bleft.isValue()) && (bright.isValue())));
-				result = tmp;
+				result = ((BooleanValue) (tmp));
 			}
 			else {
-				result = null;
+				result = ((Value) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((Value) (null));
 		}
 		return result;
 	}

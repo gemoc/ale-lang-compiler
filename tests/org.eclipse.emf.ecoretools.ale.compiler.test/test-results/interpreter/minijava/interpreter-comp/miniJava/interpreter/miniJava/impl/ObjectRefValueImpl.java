@@ -31,8 +31,7 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
 			instance = (ObjectInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE,
-							oldInstance, instance));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.OBJECT_REF_VALUE__INSTANCE, oldInstance, instance));
 			}
 		}
 		return instance;
@@ -91,14 +90,14 @@ public class ObjectRefValueImpl extends ValueImpl implements ObjectRefValue {
 
 	public String customToString() {
 		String result;
-		result = (String) (this.instance.toString()) ;
+		result = (String) (this.getInstance().toString()) ;
 		return result;
 	}
 
 	public Value copyj() {
 		Value result;
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
-		tmp.setInstance(this.instance);
+		tmp.setInstance(this.getInstance());
 		result = (Value) (tmp) ;
 		return result;
 	}

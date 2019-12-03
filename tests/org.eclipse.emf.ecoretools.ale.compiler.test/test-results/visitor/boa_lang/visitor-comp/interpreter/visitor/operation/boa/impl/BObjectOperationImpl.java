@@ -31,7 +31,7 @@ public class BObjectOperationImpl extends ExprOperationImpl implements BObjectOp
 			EvalRes v = ((EvalRes) (((ExprOperation)x.getValue().accept(vis)).eval((Ctx) (ctx))));
 			MapService.put((EMap) (ret.getValues()), (String) (x.getName()), (EvalRes) (v));
 		}
-		result = ret;
+		result = ((EvalMapRes) (ret));
 		return result;
 	}
 }

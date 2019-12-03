@@ -1,11 +1,11 @@
 package interpreter.emfswitch.operation;
 
+import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.With;
 import execboa.MapService;
-import interpreter.emfswitch.BoaFactory;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
 import org.eclipse.emf.common.util.EMap;
 
@@ -31,14 +31,14 @@ public class WithOperation extends ExprOperation {
 				EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 				MapService.putAll((EMap) (ret.getValues()), (EMap) (mvlhs.getValues()));
 				MapService.putAll((EMap) (ret.getValues()), (EMap) (mvrhs.getValues()));
-				result = ret;
+				result = ((EvalMapRes) (ret));
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

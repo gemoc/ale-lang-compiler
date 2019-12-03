@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.Forward;
 import kmLogo.visitor.kmLogo.Turtle;
 import visitor.VisitorInterface;
@@ -22,7 +23,7 @@ public class ForwardOperationImpl extends PrimitiveOperationImpl implements Forw
 		double result;
 		double move = ((double) (((ExpressionOperation)this.it.getSteps().accept(vis)).eval((Turtle) (turtle))));
 		((TurtleOperation)turtle.accept(vis)).forward((double) (move));
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

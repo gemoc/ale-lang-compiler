@@ -105,7 +105,7 @@ public class ReturnImpl extends StatementImpl implements Return {
 	}
 
 	public void evaluateStatement(State state) {
-		Value value = ((Value) (((Expression) (this.expression)).evaluateExpression((State) (state))));
+		Value value = ((Value) (((Expression) (this.getExpression())).evaluateExpression((State) (state))));
 		((State) (state)).findCurrentFrame().setReturnValue(value);
 	}
 }

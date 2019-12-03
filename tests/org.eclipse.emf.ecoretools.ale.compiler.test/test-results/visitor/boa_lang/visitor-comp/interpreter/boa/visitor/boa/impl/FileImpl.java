@@ -58,7 +58,7 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 		switch (featureID) {
 			case BoaPackage.FILE__COMMANDS :
 				getCommands().clear();
-				getCommands().addAll((Collection<? extends TopLevelCmd>)newValue);
+				getCommands().addAll((Collection<? extends TopLevelCmd>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

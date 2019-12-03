@@ -110,7 +110,7 @@ public class CopyImpl extends ExprImpl implements Copy {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vcopy = ((EvalRes) (((Expr) (this.copy)).eval((Ctx) (ctx))));
+		EvalRes vcopy = ((EvalRes) (((Expr) (this.getCopy())).eval((Ctx) (ctx))));
 		if (vcopy instanceof EvalMapRes) {
 			EvalMapRes mvcopy = ((EvalMapRes) (vcopy));
 			EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));

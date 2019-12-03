@@ -221,13 +221,13 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		ConceptA b = ((ConceptA) (TestoperationbodyFactory.eINSTANCE.createConceptA()));
 		EList<String> events = ((EList<String>) (CollectionService.createEList("event1", "event2")));
 		EList<Integer> ax = ((EList<Integer>) (CollectionService.createEList(1)));
-		for (int i1: this.getListint()) {
-			CollectionService.size(this.getListint());
-			CollectionService.get(this.getListint(), 0);
-			CollectionService.head(this.getListint());
-			CollectionService.isEmpty(this.getListint());
-			CollectionService.select(this.getListint(), (x) -> (x) > (3));
-			CollectionService.exists(this.getListint(), (x) -> (x) > (3));
+		for (int i1: this.listint) {
+			CollectionService.size(this.listint);
+			CollectionService.get(this.listint, 0);
+			CollectionService.head(this.listint);
+			CollectionService.isEmpty(this.listint);
+			CollectionService.select(this.listint, (x) -> (x) > (3));
+			CollectionService.exists(this.listint, (x) -> (x) > (3));
 		}
 		for (ConceptA i2 : this.getListconcepta()) {
 			CollectionService.size(this.getListconcepta());
@@ -267,9 +267,9 @@ public class MainImpl extends MinimalEObjectImpl.Container implements Main {
 		boolean truz = ((boolean) (!(false)));
 		boolean gt = ((boolean) ((1) > (2)));
 		boolean ne = ((boolean) (!EqualService.equals((((Main) (this)).ma()), (42))));
-		int x = ((int) ((CollectionService.get(this.getListint(), 0)) - (1)));
+		int x = ((int) ((CollectionService.get(this.listint, 0)) - (1)));
 		int xd = ((int) ((43) / (3)));
-		boolean eq = ((boolean) (EqualService.equals((((Main) (this)).ma()), (CollectionService.head(this.getListint())))));
+		boolean eq = ((boolean) (EqualService.equals((((Main) (this)).ma()), (CollectionService.head(this.listint)))));
 		boolean leq = ((boolean) ((12) <= (11)));
 		boolean geq = ((boolean) ((12.3) >= (11)));
 		double multpl = ((double) ((12.3) * (11.4)));

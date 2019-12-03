@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Boolean;
 import testoperationbody.ConceptA;
 
 public class ConceptAOperation {
@@ -15,7 +16,7 @@ public class ConceptAOperation {
 
 	public boolean op() {
 		boolean result;
-		result = false;
+		result = ((Boolean) (false));
 		return result;
 	}
 }

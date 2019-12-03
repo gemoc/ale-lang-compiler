@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Integer;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test1.ConceptB;
 
@@ -21,7 +22,7 @@ public class ConceptBOperation extends ConceptAOperation {
 
 	public int execB() {
 		int result;
-		result = 1;
+		result = ((Integer) (1));
 		return result;
 	}
 }

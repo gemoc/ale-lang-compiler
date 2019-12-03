@@ -1,11 +1,11 @@
 package interpreter.emfswitch.operation;
 
 import boa.ArithOpRemainder;
+import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalIntRes;
 import boa.EvalRes;
 import execboa.MathService;
-import interpreter.emfswitch.BoaFactory;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
 
 public class ArithOpRemainderOperation extends ArithOpOperation {
@@ -29,14 +29,14 @@ public class ArithOpRemainderOperation extends ArithOpOperation {
 				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
 				EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
 				ret.setValue(MathService.mod((ArithOpRemainder) (this.it), (int) (ivlhs.getValue()), (int) (ivrhs.getValue())));
-				result = ret;
+				result = ((EvalIntRes) (ret));
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

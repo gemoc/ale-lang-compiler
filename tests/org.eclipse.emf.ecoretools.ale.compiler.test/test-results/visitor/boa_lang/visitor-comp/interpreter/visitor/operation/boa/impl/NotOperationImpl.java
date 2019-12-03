@@ -27,10 +27,10 @@ public class NotOperationImpl extends ExprOperationImpl implements NotOperation 
 			EvalBoolRes bvvalue = ((EvalBoolRes) (vvalue));
 			EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 			ret.setValue(!(bvvalue.isValue()));
-			result = ret;
+			result = ((EvalBoolRes) (ret));
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

@@ -1,5 +1,6 @@
 package visitor.operation.test1.impl;
 
+import java.lang.Integer;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.LogService;
 import test1.visitor.test1.ConceptB;
 import visitor.VisitorInterface;
@@ -22,7 +23,7 @@ public class ConceptBOperationImpl extends ConceptAOperationImpl implements Conc
 
 	public int execB() {
 		int result;
-		result = 1;
+		result = ((Integer) (1));
 		return result;
 	}
 }

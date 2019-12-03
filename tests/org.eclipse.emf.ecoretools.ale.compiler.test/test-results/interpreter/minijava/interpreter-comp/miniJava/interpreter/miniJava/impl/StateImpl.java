@@ -130,8 +130,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 			contextCache = (Context) eResolveProxy(oldContextCache);
 			if (contextCache != oldContextCache) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.STATE__CONTEXT_CACHE,
-							oldContextCache, contextCache));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.STATE__CONTEXT_CACHE, oldContextCache, contextCache));
 			}
 		}
 		return contextCache;
@@ -154,8 +153,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 			frameCache = (Frame) eResolveProxy(oldFrameCache);
 			if (frameCache != oldFrameCache) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.STATE__FRAME_CACHE,
-							oldFrameCache, frameCache));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.STATE__FRAME_CACHE, oldFrameCache, frameCache));
 			}
 		}
 		return frameCache;
@@ -219,14 +217,14 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 				return;
 			case MiniJavaPackage.STATE__OBJECTS_HEAP :
 				getObjectsHeap().clear();
-				getObjectsHeap().addAll((Collection<? extends ObjectInstance>)newValue);
+				getObjectsHeap().addAll((Collection<? extends ObjectInstance>) newValue);
 				return;
 			case MiniJavaPackage.STATE__OUTPUT_STREAM :
 				setOutputStream((OutputStream) newValue);
 				return;
 			case MiniJavaPackage.STATE__ARRAYS_HEAP :
 				getArraysHeap().clear();
-				getArraysHeap().addAll((Collection<? extends ArrayInstance>)newValue);
+				getArraysHeap().addAll((Collection<? extends ArrayInstance>) newValue);
 				return;
 			case MiniJavaPackage.STATE__CONTEXT_CACHE :
 				setContextCache((Context) newValue);
@@ -284,19 +282,19 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 
 	public Frame findCurrentFrame() {
 		Frame result;
-		if (EqualService.equals((this.frameCache), (null))) {
-			this.setFrameCache(((Frame) (this.rootFrame)).findCurrentFrame());
+		if (EqualService.equals((this.getFrameCache()), (null))) {
+			this.setFrameCache(((Frame) (this.getRootFrame())).findCurrentFrame());
 		}
-		result = (Frame) (this.frameCache) ;
+		result = (Frame) (this.getFrameCache()) ;
 		return result;
 	}
 
 	public Context findCurrentContext() {
 		Context result;
-		if (EqualService.equals((this.contextCache), (null))) {
-			this.setContextCache(((Frame) (this.rootFrame)).findCurrentContext());
+		if (EqualService.equals((this.getContextCache()), (null))) {
+			this.setContextCache(((Frame) (this.getRootFrame())).findCurrentContext());
 		}
-		result = (Context) (this.contextCache) ;
+		result = (Context) (this.getContextCache()) ;
 		return result;
 	}
 
@@ -322,7 +320,7 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 
 	public void println(String str) {
 		LogService.log(str);
-		this.outputStream.getStream().add(str);
+		this.getOutputStream().getStream().add(str);
 	}
 
 	public void pushNewFrame(ObjectInstance receiver, Call c, Context newContext) {

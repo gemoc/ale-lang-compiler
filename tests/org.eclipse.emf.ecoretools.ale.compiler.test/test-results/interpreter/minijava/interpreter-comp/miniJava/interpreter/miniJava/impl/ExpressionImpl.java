@@ -18,7 +18,7 @@ public class ExpressionImpl extends StatementImpl implements Expression {
 	}
 
 	public void evaluateStatement(State state) {
-		this.evaluateExpression((State) (state));
+		((Expression) (this)).evaluateExpression((State) (state));
 	}
 
 	public Value evaluateExpression(State state) {

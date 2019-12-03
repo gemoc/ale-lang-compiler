@@ -22,7 +22,7 @@ public class IntOperation extends ExprOperation {
 		EvalRes result;
 		EvalIntRes ret = ((EvalIntRes) (BoaFactory.eINSTANCE.createEvalIntRes()));
 		ret.setValue(this.it.getValue());
-		result = ret;
+		result = ((EvalIntRes) (ret));
 		return result;
 	}
 }

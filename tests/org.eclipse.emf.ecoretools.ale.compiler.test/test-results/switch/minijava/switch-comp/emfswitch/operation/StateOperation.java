@@ -26,7 +26,7 @@ public class StateOperation {
 		if(EqualService.equals((this.it.getFrameCache()), (null))) {
 			this.it.setFrameCache(((FrameOperation) emfswitch.doSwitch(this.it.getRootFrame())).findCurrentFrame());
 		}
-		result = this.it.getFrameCache();
+		result = ((Frame) (this.it.getFrameCache()));
 		return result;
 	}
 
@@ -35,7 +35,7 @@ public class StateOperation {
 		if(EqualService.equals((this.it.getContextCache()), (null))) {
 			this.it.setContextCache(((FrameOperation) emfswitch.doSwitch(this.it.getRootFrame())).findCurrentContext());
 		}
-		result = this.it.getContextCache();
+		result = ((Context) (this.it.getContextCache()));
 		return result;
 	}
 

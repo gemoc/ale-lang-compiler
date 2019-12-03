@@ -19,7 +19,7 @@ public class ConceptAOperation {
 
 	public ConceptA fct2() {
 		ConceptA result;
-		result = FunctioncallFactory.eINSTANCE.createConceptA();
+		result = ((ConceptA) (FunctioncallFactory.eINSTANCE.createConceptA()));
 		return result;
 	}
 }

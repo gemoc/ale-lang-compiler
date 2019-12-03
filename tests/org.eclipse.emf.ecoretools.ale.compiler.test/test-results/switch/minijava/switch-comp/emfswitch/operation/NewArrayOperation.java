@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Integer;
 import miniJava.ArrayInstance;
 import miniJava.ArrayRefValue;
 import miniJava.BooleanTypeRef;
@@ -32,27 +33,27 @@ public class NewArrayOperation extends ExpressionOperation {
 		IntegerValue sizeArray = ((IntegerValue) (((IntegerValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getSize())).evaluateExpression((State) (state))))));
 		res.setSize(sizeArray.getValue());
 		state.getArraysHeap().add(res);
-		Value defaultValue = ((Value) (MiniJavaFactory.eINSTANCE.createValue()));
+		Value defaultValue = ((Value) (null));
 		if(this.it.getType() instanceof IntegerTypeRef) {
 			IntegerValue idv = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 			idv.setValue(0);
-			defaultValue = idv;
+			defaultValue = ((IntegerValue) (idv));
 		}
 		else {
 			if(this.it.getType() instanceof BooleanTypeRef) {
 				BooleanValue idv = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 				idv.setValue(false);
-				defaultValue = idv;
+				defaultValue = ((BooleanValue) (idv));
 			}
 			else {
 				if(this.it.getType() instanceof StringTypeRef) {
 					NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
-					defaultValue = idv;
+					defaultValue = ((NullValue) (idv));
 				}
 				else {
 					if(this.it.getType() instanceof ClassRef) {
 						NullValue idv = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
-						defaultValue = idv;
+						defaultValue = ((NullValue) (idv));
 					}
 				}
 			}
@@ -61,11 +62,11 @@ public class NewArrayOperation extends ExpressionOperation {
 		int sz = ((int) (res.getSize()));
 		while ((i) < (sz)) {
 			res.getValue().add(((ValueOperation) emfswitch.doSwitch(defaultValue)).copyj());
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
 		ArrayRefValue ret = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
 		ret.setInstance(res);
-		result = ret;
+		result = ((ArrayRefValue) (ret));
 		return result;
 	}
 }

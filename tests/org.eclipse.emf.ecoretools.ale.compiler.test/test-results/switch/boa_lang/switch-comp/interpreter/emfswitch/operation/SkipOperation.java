@@ -2,6 +2,7 @@ package interpreter.emfswitch.operation;
 
 import boa.BoaFactory;
 import boa.Ctx;
+import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.Skip;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
@@ -19,7 +20,7 @@ public class SkipOperation extends ExprOperation {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		result = BoaFactory.eINSTANCE.createEvalMapRes();
+		result = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 		return result;
 	}
 }

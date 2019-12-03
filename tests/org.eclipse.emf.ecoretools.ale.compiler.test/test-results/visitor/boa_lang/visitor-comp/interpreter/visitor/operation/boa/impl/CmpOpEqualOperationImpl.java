@@ -9,6 +9,7 @@ import interpreter.boa.visitor.boa.EvalRes;
 import interpreter.visitor.VisitorInterface;
 import interpreter.visitor.operation.boa.CmpOpEqualOperation;
 import interpreter.visitor.operation.boa.ExprOperation;
+import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
 
 public class CmpOpEqualOperationImpl extends CmpOpOperationImpl implements CmpOpEqualOperation {
 	private final CmpOpEqual it;
@@ -30,15 +31,15 @@ public class CmpOpEqualOperationImpl extends CmpOpOperationImpl implements CmpOp
 				EvalIntRes ivlhs = ((EvalIntRes) (vlhs));
 				EvalIntRes ivrhs = ((EvalIntRes) (vrhs));
 				EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
-				ret.setValue(org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService.equals((ivlhs.getValue()), (ivrhs.getValue())));
-				result = ret;
+				ret.setValue(EqualService.equals((ivlhs.getValue()), (ivrhs.getValue())));
+				result = ((EvalBoolRes) (ret));
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

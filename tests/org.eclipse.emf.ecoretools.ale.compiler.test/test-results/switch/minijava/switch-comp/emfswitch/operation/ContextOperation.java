@@ -1,10 +1,10 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import execboa.MapService;
 import miniJava.Context;
 import miniJava.Symbol;
 import miniJava.SymbolBinding;
-import minijava.MapService;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.CollectionService;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -37,17 +37,17 @@ public class ContextOperation {
 				}
 			}
 		}
-		result = this.it.getCache().get((Symbol) (symbol));
+		result = ((SymbolBinding) (this.it.getCache().get((Symbol) (symbol))));
 		return result;
 	}
 
 	public Context findCurrentContext() {
 		Context result;
 		if(!EqualService.equals((this.it.getChildContext()), (null))) {
-			result = ((ContextOperation) emfswitch.doSwitch(this.it.getChildContext())).findCurrentContext();
+			result = ((Context) (((ContextOperation) emfswitch.doSwitch(this.it.getChildContext())).findCurrentContext()));
 		}
 		else {
-			result = this.it;
+			result = ((Context) (this.it));
 		}
 		return result;
 	}

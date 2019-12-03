@@ -19,18 +19,18 @@ public class IfOperation extends ExprOperation {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vcond = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getCond())).eval((Ctx) ctx)));
+		EvalRes vcond = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getCond())).eval((Ctx) (ctx))));
 		if(vcond instanceof EvalBoolRes) {
 			EvalBoolRes bvcond = ((EvalBoolRes) (vcond));
 			if(bvcond.isValue()) {
-				result = ((ExprOperation) emfswitch.doSwitch(this.it.getThn())).eval((Ctx) ctx);
+				result = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getThn())).eval((Ctx) (ctx))));
 			}
 			else {
-				result = ((ExprOperation) emfswitch.doSwitch(this.it.getEls())).eval((Ctx) ctx);
+				result = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getEls())).eval((Ctx) (ctx))));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

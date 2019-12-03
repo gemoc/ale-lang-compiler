@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/emapvselistentry/visitor-comp" complianceLevel="8.0" copyrightFields="false">
+  <foreignModel>emapvselistentry.ecore</foreignModel>
+  <genPackages prefix="Emapvselistentry" basePackage="emapvselistentry.interpreter" disposableProviderFactory="true">
+    <ecorePackage href="assets/emapvselistentry/emapvselistentry.ecore#/"/>
+    <genClasses>
+      <ecoreClass href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass1"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass1/neweclass2"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass1/neweclass3"/>
+      </genFeatures>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass1/neweclass4"/>
+      </genFeatures>
+      <genFeatures property="None" children="true" createChild="true">
+        <ecoreFeature xsi:type="ecore:EReference" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass1/neweclass5"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass2"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass2/key"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass2/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass3"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass3/key"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass3/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass4"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass4/key"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass4/value"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass5"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass5/key"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/emapvselistentry/emapvselistentry.ecore#//NewEClass5/value"/>
+      </genFeatures>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

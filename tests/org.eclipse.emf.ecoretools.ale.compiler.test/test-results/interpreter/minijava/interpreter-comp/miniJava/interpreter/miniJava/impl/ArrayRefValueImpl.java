@@ -32,8 +32,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
 			instance = (ArrayInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE,
-							oldInstance, instance));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.ARRAY_REF_VALUE__INSTANCE, oldInstance, instance));
 			}
 		}
 		return instance;
@@ -93,7 +92,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
 	public Value copyj() {
 		Value result;
 		ArrayRefValue tmp = ((ArrayRefValue) (MiniJavaFactory.eINSTANCE.createArrayRefValue()));
-		tmp.setInstance(this.instance);
+		tmp.setInstance(this.getInstance());
 		result = (Value) (tmp) ;
 		return result;
 	}
@@ -104,7 +103,7 @@ public class ArrayRefValueImpl extends ValueImpl implements ArrayRefValue {
 		int i = ((int) (0));
 		int lgt = ((int) (CollectionService.size(this.getInstance().getValue())));
 		while ((i) < (lgt)) {
-			Value tmpv = ((Value) (CollectionService.get(this.instance.getValue(), i)));
+			Value tmpv = ((Value) (CollectionService.get(this.getInstance().getValue(), i)));
 			res = (res) + (((Value) (tmpv)).customToString());
 			if ((i) < ((lgt) - (1))) {
 				res = (res) + (", ");

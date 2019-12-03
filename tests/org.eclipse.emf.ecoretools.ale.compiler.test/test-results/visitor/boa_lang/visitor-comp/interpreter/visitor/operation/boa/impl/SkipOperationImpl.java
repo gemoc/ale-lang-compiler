@@ -2,6 +2,7 @@ package interpreter.visitor.operation.boa.impl;
 
 import interpreter.boa.visitor.boa.BoaFactory;
 import interpreter.boa.visitor.boa.Ctx;
+import interpreter.boa.visitor.boa.EvalMapRes;
 import interpreter.boa.visitor.boa.EvalRes;
 import interpreter.boa.visitor.boa.Skip;
 import interpreter.visitor.VisitorInterface;
@@ -20,7 +21,7 @@ public class SkipOperationImpl extends ExprOperationImpl implements SkipOperatio
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		result = BoaFactory.eINSTANCE.createEvalMapRes();
+		result = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 		return result;
 	}
 }

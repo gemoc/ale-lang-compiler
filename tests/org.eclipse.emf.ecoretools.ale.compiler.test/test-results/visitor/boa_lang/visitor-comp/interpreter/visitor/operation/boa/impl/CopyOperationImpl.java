@@ -29,10 +29,10 @@ public class CopyOperationImpl extends ExprOperationImpl implements CopyOperatio
 			EvalMapRes mvcopy = ((EvalMapRes) (vcopy));
 			EvalMapRes ret = ((EvalMapRes) (BoaFactory.eINSTANCE.createEvalMapRes()));
 			MapService.putAll((EMap) (ret.getValues()), (EMap) (mvcopy.getValues()));
-			result = ret;
+			result = ((EvalMapRes) (ret));
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

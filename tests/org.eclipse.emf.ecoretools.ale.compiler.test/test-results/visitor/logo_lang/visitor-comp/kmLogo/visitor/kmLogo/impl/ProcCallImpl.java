@@ -124,7 +124,7 @@ public class ProcCallImpl extends ExpressionImpl implements ProcCall {
 		switch (featureID) {
 			case KmLogoPackage.PROC_CALL__ACTUAL_ARGS :
 				getActualArgs().clear();
-				getActualArgs().addAll((Collection<? extends Expression>)newValue);
+				getActualArgs().addAll((Collection<? extends Expression>) newValue);
 				return;
 			case KmLogoPackage.PROC_CALL__DECLARATION :
 				setDeclaration((ProcDeclaration) newValue);

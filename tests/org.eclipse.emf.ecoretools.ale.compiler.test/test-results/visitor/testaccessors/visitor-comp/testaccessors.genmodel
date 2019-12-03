@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ASCII"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/testaccessors/visitor-comp" complianceLevel="8.0" copyrightFields="false">
+  <foreignModel>testaccessors.ecore</foreignModel>
+  <genPackages prefix="Testaccessors" basePackage="testaccessors.interpreter" disposableProviderFactory="true">
+    <ecorePackage href="assets/testaccessors/testaccessors.ecore#/"/>
+    <genClasses>
+      <ecoreClass href="assets/testaccessors/testaccessors.ecore#//EAcc"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/testaccessors/testaccessors.ecore#//EAcc/b"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/testaccessors/testaccessors.ecore#//EAcc/i"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/testaccessors/testaccessors.ecore#//EAcc/bs"/>
+      </genFeatures>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="assets/testaccessors/testaccessors.ecore#//EAcc/is"/>
+      </genFeatures>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

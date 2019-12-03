@@ -17,14 +17,14 @@ public class ValueOperation {
 
 	public String customToString() {
 		String result;
-		result = "ERROR customToString not overloaded";
+		result = ((String) ("ERROR customToString not overloaded"));
 		return result;
 	}
 
 	public Value copyj() {
 		Value result;
 		LogService.log("ERROR copyj not implemented");
-		result = null;
+		result = ((Value) (null));
 		return result;
 	}
 }

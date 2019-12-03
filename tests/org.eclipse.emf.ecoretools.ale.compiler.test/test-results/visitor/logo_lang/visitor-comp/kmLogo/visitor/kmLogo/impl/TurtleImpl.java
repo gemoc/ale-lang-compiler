@@ -181,7 +181,7 @@ public class TurtleImpl extends MinimalEObjectImpl.Container implements Turtle {
 				return;
 			case KmLogoPackage.TURTLE__DRAWINGS :
 				getDrawings().clear();
-				getDrawings().addAll((Collection<? extends Segment>)newValue);
+				getDrawings().addAll((Collection<? extends Segment>) newValue);
 				return;
 			case KmLogoPackage.TURTLE__CALL_STACK :
 				setCallStack((CallStack) newValue);

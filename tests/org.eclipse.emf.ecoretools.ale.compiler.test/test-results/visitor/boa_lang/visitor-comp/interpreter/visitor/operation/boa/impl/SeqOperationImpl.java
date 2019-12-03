@@ -22,7 +22,7 @@ public class SeqOperationImpl extends ExprOperationImpl implements SeqOperation 
 		EvalRes result;
 		EvalRes vlhs = ((EvalRes) (((ExprOperation)this.it.getLhs().accept(vis)).eval((Ctx) (ctx))));
 		EvalRes vrhs = ((EvalRes) (((ExprOperation)this.it.getRhs().accept(vis)).eval((Ctx) (ctx))));
-		result = vrhs;
+		result = ((EvalRes) (vrhs));
 		return result;
 	}
 }

@@ -29,16 +29,16 @@ public class PlusOperation extends ExpressionOperation {
 				IntegerValue bright = ((IntegerValue) (right));
 				IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 				tmp.setValue((bleft.getValue()) + (bright.getValue()));
-				result = tmp;
+				result = ((IntegerValue) (tmp));
 			}
 			else {
 				if(right instanceof StringValue) {
 					StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
 					tmp.setValue((((IntegerValueOperation) emfswitch.doSwitch(left)).customToString()) + (((StringValueOperation) emfswitch.doSwitch(right)).customToString()));
-					result = tmp;
+					result = ((StringValue) (tmp));
 				}
 				else {
-					result = null;
+					result = ((Value) (null));
 				}
 			}
 		}
@@ -46,10 +46,10 @@ public class PlusOperation extends ExpressionOperation {
 			if(((left instanceof StringValue) || (right instanceof StringValue))) {
 				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
 				tmp.setValue((((StringValueOperation) emfswitch.doSwitch(left)).customToString()) + (((StringValueOperation) emfswitch.doSwitch(right)).customToString()));
-				result = tmp;
+				result = ((StringValue) (tmp));
 			}
 			else {
-				result = null;
+				result = ((Value) (null));
 			}
 		}
 		return result;

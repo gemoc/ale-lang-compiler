@@ -1,12 +1,12 @@
 package interpreter.emfswitch.operation;
 
 import boa.App;
+import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalBoundFunRes;
 import boa.EvalFunRes;
 import boa.EvalRes;
 import execboa.MapService;
-import interpreter.emfswitch.BoaFactory;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
 import java.lang.String;
 import org.eclipse.emf.common.util.EMap;
@@ -41,10 +41,10 @@ public class AppOperation extends ExprOperation {
 					tmp.setCtx(fun.getCtx());
 					tmp.setName(fun.getName());
 					MapService.replaceWith((EMap) (tmp.getTh()), (EMap) (fct.getTh()));
-					result = tmp;
+					result = ((EvalBoundFunRes) (tmp));
 				}
 				else {
-					result = fe;
+					result = ((EvalRes) (fe));
 				}
 			}
 			else {
@@ -61,22 +61,22 @@ public class AppOperation extends ExprOperation {
 					tmp.setCtx(fun.getCtx());
 					tmp.setName(fun.getName());
 					MapService.replaceWith((EMap) (tmp.getTh()), (EMap) (ctx.getTh()));
-					result = tmp;
+					result = ((EvalBoundFunRes) (tmp));
 				}
 				else {
-					result = fe;
+					result = ((EvalRes) (fe));
 				}
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}
 
 	public EvalRes callFunc(EvalFunRes fct, Ctx callCtx) {
 		EvalRes result;
-		result = ((ExprOperation) emfswitch.doSwitch(fct.getExp())).eval((Ctx) (callCtx));
+		result = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(fct.getExp())).eval((Ctx) (callCtx))));
 		return result;
 	}
 }

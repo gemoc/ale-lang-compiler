@@ -13,7 +13,6 @@ import interpreter.boa.interpreter.boa.Project;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import org.eclipse.acceleo.query.runtime.impl.Nothing;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
@@ -139,11 +138,11 @@ public class ProjectImpl extends ExprImpl implements Project {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vexp = ((EvalRes) (((Expr) (this.exp)).eval((Ctx) (ctx))));
+		EvalRes vexp = ((EvalRes) (((Expr) (this.getExp())).eval((Ctx) (ctx))));
 		if (vexp instanceof EvalMapRes) {
 			EvalMapRes mvexp = ((EvalMapRes) (vexp));
 			if (MapService.containsKey((EMap) (mvexp.getValues()), (String) (this.name))) {
-				EvalRes x = ((EvalRes) (mvexp.getValues().get((String)this.name)));
+				EvalRes x = ((EvalRes) (mvexp.getValues().get((String) (this.name))));
 				if (x instanceof EvalFunRes) {
 					EvalFunRes func = ((EvalFunRes) (x));
 					result = (EvalRes) (((Project) (this)).project((EvalFunRes) (func), (EvalMapRes) (mvexp))) ;

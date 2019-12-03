@@ -76,8 +76,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
 			state = (State) eResolveProxy(oldState);
 			if (state != oldState) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.PROGRAM__STATE,
-							oldState, state));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.PROGRAM__STATE, oldState, state));
 			}
 		}
 		return state;
@@ -131,11 +130,11 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
 				return;
 			case MiniJavaPackage.PROGRAM__IMPORTS :
 				getImports().clear();
-				getImports().addAll((Collection<? extends Import>)newValue);
+				getImports().addAll((Collection<? extends Import>) newValue);
 				return;
 			case MiniJavaPackage.PROGRAM__CLASSES :
 				getClasses().clear();
-				getClasses().addAll((Collection<? extends TypeDeclaration>)newValue);
+				getClasses().addAll((Collection<? extends TypeDeclaration>) newValue);
 				return;
 			case MiniJavaPackage.PROGRAM__STATE :
 				setState((State) newValue);
@@ -195,8 +194,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
 	public State execute() {
 		State result;
 		Method main = ((Method) (((Program) (this)).findMain()));
-		((Block) (main.getBody())).evaluateStatementKeepContext((State) (this.state));
-		result = (State) (this.state) ;
+		((Block) (main.getBody())).evaluateStatementKeepContext((State) (this.getState()));
+		result = (State) (this.getState()) ;
 		return result;
 	}
 

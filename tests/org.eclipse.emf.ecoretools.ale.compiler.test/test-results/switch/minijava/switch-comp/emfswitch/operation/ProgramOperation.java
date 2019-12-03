@@ -39,19 +39,19 @@ public class ProgramOperation {
 		State result;
 		Method main = ((Method) (((ProgramOperation) emfswitch.doSwitch(this.it)).findMain()));
 		((BlockOperation) emfswitch.doSwitch(main.getBody())).evaluateStatementKeepContext((State) (this.it.getState()));
-		result = this.it.getState();
+		result = ((State) (this.it.getState()));
 		return result;
 	}
 
 	public Method findMain() {
 		Method result;
-		result = null;
+		result = ((Method) (null));
 		for (TypeDeclaration clazz: this.it.getClasses()) {
 			for (Member member: clazz.getMembers()) {
 				if(member instanceof Method) {
 					Method method = ((Method) (member));
 					if(EqualService.equals((method.getName()), ("main"))) {
-						result = method;
+						result = ((Method) (method));
 					}
 				}
 			}

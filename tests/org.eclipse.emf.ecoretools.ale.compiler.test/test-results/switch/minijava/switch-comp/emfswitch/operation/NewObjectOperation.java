@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Integer;
 import miniJava.Context;
 import miniJava.Expression;
 import miniJava.Field;
@@ -49,42 +50,42 @@ public class NewObjectOperation extends ExpressionOperation {
 					res.getFieldbindings().add(fb);
 				}
 			}
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
-		i = 0;
-		Method constructor = ((Method) (MiniJavaFactory.eINSTANCE.createMethod()));
+		i = ((Integer) (0));
+		Method constructor = ((Method) (null));
 		while ((((i) < (z)) && (EqualService.equals((constructor), (null))))) {
 			Member m = ((Member) (CollectionService.get(res.getType().getMembers(), i)));
 			if(m instanceof Method) {
 				Method mtd = ((Method) (m));
 				if(((EqualService.equals((mtd.getName()), (null))) && (EqualService.equals((CollectionService.size(mtd.getParams())), (CollectionService.size(this.it.getArgs())))))) {
-					constructor = mtd;
+					constructor = ((Method) (mtd));
 				}
 			}
-			i = (i) + (1);
+			i = ((Integer) ((i) + (1)));
 		}
-		if(((!EqualService.equals((constructor), (null))) && (!EqualService.equals((constructor.getBody()), (null))))) {
+		if(!EqualService.equals((constructor), (null))) {
 			Context newContext = ((Context) (MiniJavaFactory.eINSTANCE.createContext()));
-			i = 0;
-			z = CollectionService.size(this.it.getArgs());
+			i = ((Integer) (0));
+			z = ((Integer) (CollectionService.size(this.it.getArgs())));
 			while ((i) < (z)) {
 				Expression arg = ((Expression) (CollectionService.get(this.it.getArgs(), i)));
 				Parameter param = ((Parameter) (CollectionService.get(constructor.getParams(), i)));
 				SymbolBinding binding = ((SymbolBinding) (MiniJavaFactory.eINSTANCE.createSymbolBinding()));
 				binding.setSymbol(param);
 				binding.setValue(((ExpressionOperation) emfswitch.doSwitch(arg)).evaluateExpression((State) (state)));
-				i = (i) + (1);
+				i = ((Integer) ((i) + (1)));
 				newContext.getBindings().add(binding);
 			}
 			NewCall call = ((NewCall) (MiniJavaFactory.eINSTANCE.createNewCall()));
 			call.setNewz(this.it);
 			((StateOperation) emfswitch.doSwitch(state)).pushNewFrame((ObjectInstance) (res), (NewCall) (call), (Context) (newContext));
-			((BlockOperation) emfswitch.doSwitch(constructor.getBody())).evaluateStatement((State) (state));
+			constructor.getBody().evaluateStatement((State) (state));
 			((StateOperation) emfswitch.doSwitch(state)).popCurrentFrame();
 		}
 		ObjectRefValue tmp = ((ObjectRefValue) (MiniJavaFactory.eINSTANCE.createObjectRefValue()));
 		tmp.setInstance(res);
-		result = tmp;
+		result = ((ObjectRefValue) (tmp));
 		return result;
 	}
 }

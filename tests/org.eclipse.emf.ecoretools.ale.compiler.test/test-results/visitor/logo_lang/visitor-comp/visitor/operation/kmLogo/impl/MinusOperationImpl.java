@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.Minus;
 import kmLogo.visitor.kmLogo.Turtle;
 import visitor.VisitorInterface;
@@ -19,7 +20,7 @@ public class MinusOperationImpl extends BinaryExpOperationImpl implements MinusO
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = (((ExpressionOperation)this.it.getLhs().accept(vis)).eval((Turtle) (turtle))) - (((ExpressionOperation)this.it.getRhs().accept(vis)).eval((Turtle) (turtle)));
+		result = ((Double) ((((ExpressionOperation)this.it.getLhs().accept(vis)).eval((Turtle) (turtle))) - (((ExpressionOperation)this.it.getRhs().accept(vis)).eval((Turtle) (turtle)))));
 		return result;
 	}
 }

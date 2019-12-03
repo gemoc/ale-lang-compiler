@@ -24,7 +24,7 @@ public class OrOperation extends ExpressionOperation {
 		BooleanValue right = ((BooleanValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getRight())).evaluateExpression((State) (state))));
 		BooleanValue res = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		res.setValue(((left.isValue()) || (right.isValue())));
-		result = res;
+		result = ((BooleanValue) (res));
 		return result;
 	}
 }

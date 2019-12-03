@@ -243,12 +243,12 @@ public class ForStatementImpl extends StatementImpl implements ForStatement {
 
 	public void evaluateStatement(State state) {
 		((State) (state)).pushNewContext();
-		((Assignment) (this.declaration)).evaluateStatement((State) (state));
-		BooleanValue continueFor = ((BooleanValue) (((Expression) (this.condition)).evaluateExpression((State) (state))));
+		((Assignment) (this.getDeclaration())).evaluateStatement((State) (state));
+		BooleanValue continueFor = ((BooleanValue) (((BooleanValue) (((Expression) (this.getCondition())).evaluateExpression((State) (state))))));
 		while (continueFor.isValue()) {
-			((Block) (this.block)).evaluateStatement((State) (state));
-			((Assignment) (this.progression)).evaluateStatement((State) (state));
-			BooleanValue continueFor2 = ((BooleanValue) (((Expression) (this.condition)).evaluateExpression((State) (state))));
+			((Block) (this.getBlock())).evaluateStatement((State) (state));
+			((Assignment) (this.getProgression())).evaluateStatement((State) (state));
+			BooleanValue continueFor2 = ((BooleanValue) (((BooleanValue) (((Expression) (this.getCondition())).evaluateExpression((State) (state))))));
 			continueFor = continueFor2;
 		}
 		((State) (state)).popCurrentContext();

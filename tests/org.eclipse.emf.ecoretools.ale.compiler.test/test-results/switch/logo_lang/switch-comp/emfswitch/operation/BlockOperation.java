@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Double;
 import kmLogo.Block;
 import kmLogo.Instruction;
 import kmLogo.Turtle;
@@ -19,9 +20,9 @@ public class BlockOperation extends InstructionOperation {
 	public double eval(Turtle turtle) {
 		double result;
 		for (Instruction inst: this.it.getInstructions()) {
-			((InstructionOperation) emfswitch.doSwitch(inst)).eval((Turtle) turtle);
+			((InstructionOperation) emfswitch.doSwitch(inst)).eval((Turtle) (turtle));
 		}
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

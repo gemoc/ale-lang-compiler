@@ -52,7 +52,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 			if (concepta2 != null)
 				msgs = ((InternalEObject) concepta2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA2, null, msgs);
 			if (newConcepta2 != null)
-				msgs = ((InternalEObject)newConcepta2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA2, null, msgs);
+				msgs = ((InternalEObject) newConcepta2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA2, null, msgs);
 			msgs = basicSetConcepta2(newConcepta2, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -83,7 +83,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 			if (concepta1 != null)
 				msgs = ((InternalEObject) concepta1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA1, null, msgs);
 			if (newConcepta1 != null)
-				msgs = ((InternalEObject)newConcepta1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA1, null, msgs);
+				msgs = ((InternalEObject) newConcepta1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTA1, null, msgs);
 			msgs = basicSetConcepta1(newConcepta1, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -114,7 +114,7 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 			if (conceptb != null)
 				msgs = ((InternalEObject) conceptb).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTB, null, msgs);
 			if (newConceptb != null)
-				msgs = ((InternalEObject)newConceptb).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTB, null, msgs);
+				msgs = ((InternalEObject) newConceptb).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - FunctioncallPackage.CONCEPT_C__CONCEPTB, null, msgs);
 			msgs = basicSetConceptb(newConceptb, msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -195,11 +195,11 @@ public class ConceptCImpl extends MinimalEObjectImpl.Container implements Concep
 	}
 
 	public void exec1() {
-		((ConceptA)this.concepta1).fct1();
-		ConceptA tmpA = ((ConceptA) ((ConceptA)this.concepta1).fct2());
-		((ConceptA)this.concepta2).fct1();
-		ConceptA tmpB = ((ConceptA) ((ConceptA)this.concepta2).fct2());
-		((ConceptB)this.conceptb).fct1();
-		ConceptB tmpC = ((ConceptB) ((ConceptB)this.conceptb).fct2());
+		((ConceptA) (this.getConcepta1())).fct1();
+		ConceptA tmpA = ((ConceptA) (((ConceptA) (this.getConcepta1())).fct2()));
+		((ConceptA) (this.getConcepta2())).fct1();
+		ConceptA tmpB = ((ConceptA) (((ConceptA) (this.getConcepta2())).fct2()));
+		((ConceptB) (this.getConceptb())).fct1();
+		ConceptB tmpC = ((ConceptB) (((ConceptB) (this.getConceptb())).fct2()));
 	}
 }

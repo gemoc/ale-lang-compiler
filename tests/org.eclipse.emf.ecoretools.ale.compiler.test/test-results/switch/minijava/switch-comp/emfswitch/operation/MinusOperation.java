@@ -28,14 +28,14 @@ public class MinusOperation extends ExpressionOperation {
 				IntegerValue bright = ((IntegerValue) (right));
 				IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 				tmp.setValue((bleft.getValue()) - (bright.getValue()));
-				result = tmp;
+				result = ((IntegerValue) (tmp));
 			}
 			else {
-				result = null;
+				result = ((Value) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((Value) (null));
 		}
 		return result;
 	}

@@ -18,9 +18,9 @@ public class BackOperation extends PrimitiveOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		double move = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getSteps())).eval((Turtle) turtle)));
+		double move = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getSteps())).eval((Turtle) (turtle))));
 		((TurtleOperation) emfswitch.doSwitch(turtle)).forward((Double) (-(move)));
-		result = 0.0;
+		result = ((Double) (0.0));
 		return result;
 	}
 }

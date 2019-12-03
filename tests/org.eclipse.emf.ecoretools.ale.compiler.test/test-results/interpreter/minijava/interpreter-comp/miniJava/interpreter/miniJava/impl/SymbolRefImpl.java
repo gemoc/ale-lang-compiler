@@ -2,6 +2,7 @@ package miniJava.interpreter.miniJava.impl;
 
 import java.lang.Object;
 import java.lang.Override;
+import miniJava.interpreter.miniJava.Context;
 import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.State;
 import miniJava.interpreter.miniJava.Symbol;
@@ -30,8 +31,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
 			symbol = (Symbol) eResolveProxy(oldSymbol);
 			if (symbol != oldSymbol) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_REF__SYMBOL,
-							oldSymbol, symbol));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.SYMBOL_REF__SYMBOL, oldSymbol, symbol));
 			}
 		}
 		return symbol;
@@ -90,7 +90,7 @@ public class SymbolRefImpl extends ExpressionImpl implements SymbolRef {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		result = (Value) (((Context) (((State) (state)).findCurrentContext())).findBinding((Symbol) (this.getSymbol())).getValue().copyj());
+		result = (Value) (((Value) (((Context) (((State) (state)).findCurrentContext())).findBinding((Symbol) (this.getSymbol())).getValue())).copyj()) ;
 		return result;
 	}
 }

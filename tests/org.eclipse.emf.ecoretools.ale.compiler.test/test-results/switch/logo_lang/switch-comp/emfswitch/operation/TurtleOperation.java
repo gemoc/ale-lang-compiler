@@ -1,8 +1,8 @@
 package emfswitch.operation;
 
-import emfswitch.KmLogoFactory;
 import emfswitch.SwitchImplementation;
 import java.lang.Double;
+import kmLogo.KmLogoFactory;
 import kmLogo.Point;
 import kmLogo.Segment;
 import kmLogo.Turtle;
@@ -43,12 +43,12 @@ public class TurtleOperation {
 	public void rotate(double angle) {
 		double newAngle = ((double) ((this.it.getHeading()) + (angle)));
 		if((newAngle) > (360.0)) {
-			newAngle = (newAngle) - (360.0);
+			newAngle = ((Double) ((newAngle) - (360.0)));
 			this.it.setHeading(newAngle);
 		}
 		else {
 			if((newAngle) < (0.0)) {
-				newAngle = (360.0) + (newAngle);
+				newAngle = ((Double) ((360.0) + (newAngle)));
 				this.it.setHeading(newAngle);
 			}
 			else {

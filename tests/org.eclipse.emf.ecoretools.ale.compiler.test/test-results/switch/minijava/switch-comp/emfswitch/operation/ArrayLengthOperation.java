@@ -25,7 +25,7 @@ public class ArrayLengthOperation extends ExpressionOperation {
 		int size = ((int) (arrayRef.getInstance().getSize()));
 		IntegerValue tmp = ((IntegerValue) (MiniJavaFactory.eINSTANCE.createIntegerValue()));
 		tmp.setValue(size);
-		result = tmp;
+		result = ((IntegerValue) (tmp));
 		return result;
 	}
 }

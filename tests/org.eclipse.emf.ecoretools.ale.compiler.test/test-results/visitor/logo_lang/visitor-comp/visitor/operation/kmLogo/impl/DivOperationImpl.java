@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.Div;
 import kmLogo.visitor.kmLogo.Turtle;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -21,10 +22,10 @@ public class DivOperationImpl extends BinaryExpOperationImpl implements DivOpera
 	public double eval(Turtle turtle) {
 		double result;
 		if(!EqualService.equals((((ExpressionOperation)this.it.getRhs().accept(vis)).eval((Turtle) (turtle))), (0.0))) {
-			result = (((ExpressionOperation)this.it.getLhs().accept(vis)).eval((Turtle) (turtle))) / (((ExpressionOperation)this.it.getRhs().accept(vis)).eval((Turtle) (turtle)));
+			result = ((Double) ((((ExpressionOperation)this.it.getLhs().accept(vis)).eval((Turtle) (turtle))) / (((ExpressionOperation)this.it.getRhs().accept(vis)).eval((Turtle) (turtle)))));
 		}
 		else {
-			result = 0.0;
+			result = ((Double) (0.0));
 		}
 		return result;
 	}

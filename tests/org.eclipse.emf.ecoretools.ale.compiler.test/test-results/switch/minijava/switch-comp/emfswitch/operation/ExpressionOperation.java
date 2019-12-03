@@ -22,7 +22,7 @@ public class ExpressionOperation extends StatementOperation {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		result = null;
+		result = ((Value) (null));
 		return result;
 	}
 }

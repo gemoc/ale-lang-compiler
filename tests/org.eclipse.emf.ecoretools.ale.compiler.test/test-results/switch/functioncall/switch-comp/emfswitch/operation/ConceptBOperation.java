@@ -17,7 +17,7 @@ public class ConceptBOperation extends ConceptAOperation {
 
 	public ConceptB fct2() {
 		ConceptB result;
-		result = FunctioncallFactory.eINSTANCE.createConceptB();
+		result = ((ConceptB) (FunctioncallFactory.eINSTANCE.createConceptB()));
 		return result;
 	}
 }

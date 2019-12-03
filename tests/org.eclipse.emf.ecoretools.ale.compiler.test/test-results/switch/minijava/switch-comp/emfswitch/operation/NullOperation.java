@@ -3,6 +3,7 @@ package emfswitch.operation;
 import emfswitch.SwitchImplementation;
 import miniJava.MiniJavaFactory;
 import miniJava.Null;
+import miniJava.NullValue;
 import miniJava.State;
 import miniJava.Value;
 
@@ -19,7 +20,7 @@ public class NullOperation extends ExpressionOperation {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		result = MiniJavaFactory.eINSTANCE.createNullValue();
+		result = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
 		return result;
 	}
 }

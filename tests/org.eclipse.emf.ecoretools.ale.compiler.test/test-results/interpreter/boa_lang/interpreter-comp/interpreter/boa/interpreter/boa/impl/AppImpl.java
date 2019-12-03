@@ -157,8 +157,8 @@ public class AppImpl extends ExprImpl implements App {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((Expr) (this.lhs)).eval((Ctx) (ctx))));
-		EvalRes vrhs = ((EvalRes) (((Expr) (this.rhs)).eval((Ctx) (ctx))));
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.getLhs())).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (ctx))));
 		if (vlhs instanceof EvalFunRes) {
 			if (vlhs instanceof EvalBoundFunRes) {
 				EvalBoundFunRes fct = ((EvalBoundFunRes) (vlhs));

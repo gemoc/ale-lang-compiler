@@ -107,7 +107,7 @@ public class WhileImpl extends ControlStructureImpl implements While {
 	public double eval(Turtle turtle) {
 		double result;
 		while ((((Expression) (this.condition)).eval((Turtle) (turtle))) > (0.0)) {
-			((Block) (this.block)).eval((Turtle) (turtle));
+			((Block) (this.getBlock())).eval((Turtle) (turtle));
 		}
 		result = (double) (0.0) ;
 		return result;

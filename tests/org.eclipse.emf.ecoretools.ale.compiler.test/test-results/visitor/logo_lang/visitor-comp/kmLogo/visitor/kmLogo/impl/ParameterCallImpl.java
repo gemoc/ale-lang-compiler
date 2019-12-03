@@ -29,8 +29,7 @@ public class ParameterCallImpl extends ExpressionImpl implements ParameterCall {
 			parameter = (Parameter) eResolveProxy(oldParameter);
 			if (parameter != oldParameter) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PARAMETER_CALL__PARAMETER,
-							oldParameter, parameter));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, KmLogoPackage.PARAMETER_CALL__PARAMETER, oldParameter, parameter));
 			}
 		}
 		return parameter;

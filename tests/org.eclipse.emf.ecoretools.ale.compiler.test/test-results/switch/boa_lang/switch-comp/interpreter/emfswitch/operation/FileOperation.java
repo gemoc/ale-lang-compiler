@@ -21,7 +21,7 @@ public class FileOperation {
 		LogService.log("v2");
 		Ctx ctx = ((Ctx) (BoaFactory.eINSTANCE.createCtx()));
 		for (TopLevelCmd it: this.it.getCommands()) {
-			((TopLevelCmdOperation) emfswitch.doSwitch(it)).nextLine((Ctx) ctx);
+			((TopLevelCmdOperation) emfswitch.doSwitch(it)).nextLine((Ctx) (ctx));
 		}
 	}
 }

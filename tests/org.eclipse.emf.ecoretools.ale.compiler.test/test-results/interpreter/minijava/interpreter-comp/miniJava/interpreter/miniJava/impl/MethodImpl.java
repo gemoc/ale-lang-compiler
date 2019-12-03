@@ -1,5 +1,6 @@
 package miniJava.interpreter.miniJava.impl;
 
+import execboa.MapService;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.Override;
@@ -12,7 +13,6 @@ import miniJava.interpreter.miniJava.MiniJavaPackage;
 import miniJava.interpreter.miniJava.Parameter;
 import miniJava.interpreter.miniJava.State;
 import miniJava.interpreter.miniJava.TypeRef;
-import minijava.MapService;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -161,7 +161,7 @@ public class MethodImpl extends MemberImpl implements Method {
 				return;
 			case MiniJavaPackage.METHOD__PARAMS :
 				getParams().clear();
-				getParams().addAll((Collection<? extends Parameter>)newValue);
+				getParams().addAll((Collection<? extends Parameter>) newValue);
 				return;
 			case MiniJavaPackage.METHOD__BODY :
 				setBody((Block) newValue);
@@ -213,7 +213,7 @@ public class MethodImpl extends MemberImpl implements Method {
 	}
 
 	public void evaluateStatement(State state) {
-		((Block) (this.body)).evaluateStatement((State) (state));
+		((Block) (this.getBody())).evaluateStatement((State) (state));
 	}
 
 	public Method findOverride(Clazz c) {
@@ -263,12 +263,12 @@ public class MethodImpl extends MemberImpl implements Method {
 			MapService.put((EMap) (this.getCache()), (Clazz) (c), (Method) (result));
 		}
 		else {
-			result = (Method) (this.getCache().get((Clazz) (c))) ;
+			result = (Method) (MapService.getFromMap((EMap) (this.getCache()), (Clazz) (c))) ;
 		}
 		return result;
 	}
 
 	public void call(State state) {
-		((Block) (this.body)).evaluateStatement((State) (state));
+		((Block) (this.getBody())).evaluateStatement((State) (state));
 	}
 }

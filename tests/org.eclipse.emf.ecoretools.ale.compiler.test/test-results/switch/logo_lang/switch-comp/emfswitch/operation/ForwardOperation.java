@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Double;
 import kmLogo.Forward;
 import kmLogo.Turtle;
 
@@ -17,9 +18,9 @@ public class ForwardOperation extends PrimitiveOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		double move = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getSteps())).eval((Turtle) turtle)));
-		((TurtleOperation) emfswitch.doSwitch(turtle)).forward((double) move);
-		result = 0.0;
+		double move = ((double) (((ExpressionOperation) emfswitch.doSwitch(this.it.getSteps())).eval((Turtle) (turtle))));
+		((TurtleOperation) emfswitch.doSwitch(turtle)).forward((double) (move));
+		result = ((Double) (0.0));
 		return result;
 	}
 }

@@ -20,7 +20,7 @@ public class ChildAOperation extends ParentOperation {
 
 	public EnumA onlyA() {
 		EnumA result;
-		result = this.it.getValue();
+		result = ((EnumA) (this.it.getValue()));
 		return result;
 	}
 }

@@ -44,12 +44,12 @@ public class TurtleOperationImpl implements TurtleOperation {
 	public void rotate(double angle) {
 		double newAngle = ((double) ((this.it.getHeading()) + (angle)));
 		if((newAngle) > (360.0)) {
-			newAngle = (newAngle) - (360.0);
+			newAngle = ((Double) ((newAngle) - (360.0)));
 			this.it.setHeading(newAngle);
 		}
 		else {
 			if((newAngle) < (0.0)) {
-				newAngle = (360.0) + (newAngle);
+				newAngle = ((Double) ((360.0) + (newAngle)));
 				this.it.setHeading(newAngle);
 			}
 			else {

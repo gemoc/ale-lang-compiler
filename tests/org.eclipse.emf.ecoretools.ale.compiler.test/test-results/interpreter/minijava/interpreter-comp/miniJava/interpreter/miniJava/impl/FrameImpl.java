@@ -75,8 +75,7 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
 			instance = (ObjectInstance) eResolveProxy(oldInstance);
 			if (instance != oldInstance) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FRAME__INSTANCE,
-							oldInstance, instance));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FRAME__INSTANCE, oldInstance, instance));
 			}
 		}
 		return instance;
@@ -348,12 +347,12 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
 
 	public Context findCurrentContext() {
 		Context result;
-		if (!EqualService.equals((this.childFrame), (null))) {
-			result = (Context) (((Frame) (this.childFrame)).findCurrentContext()) ;
+		if (!EqualService.equals((this.getChildFrame()), (null))) {
+			result = (Context) (((Frame) (this.getChildFrame())).findCurrentContext()) ;
 		}
 		else {
-			if (!EqualService.equals((this.rootContext), (null))) {
-				result = (Context) (((Context) (this.rootContext)).findCurrentContext()) ;
+			if (!EqualService.equals((this.getRootContext()), (null))) {
+				result = (Context) (((Context) (this.getRootContext())).findCurrentContext()) ;
 			}
 			else {
 				result = (Context) (null) ;
@@ -364,8 +363,8 @@ public class FrameImpl extends MinimalEObjectImpl.Container implements Frame {
 
 	public Frame findCurrentFrame() {
 		Frame result;
-		if (!EqualService.equals((this.childFrame), (null))) {
-			result = (Frame) (((Frame) (this.childFrame)).findCurrentFrame()) ;
+		if (!EqualService.equals((this.getChildFrame()), (null))) {
+			result = (Frame) (((Frame) (this.getChildFrame())).findCurrentFrame()) ;
 		}
 		else {
 			result = (Frame) (this) ;

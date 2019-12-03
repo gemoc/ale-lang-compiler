@@ -1,5 +1,6 @@
 package interpreter.emfswitch.operation;
 
+import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalBoundFunRes;
 import boa.EvalFunRes;
@@ -7,7 +8,6 @@ import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.Project;
 import execboa.MapService;
-import interpreter.emfswitch.BoaFactory;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
 import java.lang.String;
 import org.eclipse.emf.common.util.EMap;
@@ -32,18 +32,18 @@ public class ProjectOperation extends ExprOperation {
 				EvalRes x = ((EvalRes) (mvexp.getValues().get((String) (this.it.getName()))));
 				if(x instanceof EvalFunRes) {
 					EvalFunRes func = ((EvalFunRes) (x));
-					result = ((ProjectOperation) emfswitch.doSwitch(this.it)).project((EvalFunRes) (func), (EvalMapRes) (mvexp));
+					result = ((EvalRes) (((ProjectOperation) emfswitch.doSwitch(this.it)).project((EvalFunRes) (func), (EvalMapRes) (mvexp))));
 				}
 				else {
-					result = x;
+					result = ((EvalRes) (x));
 				}
 			}
 			else {
-				result = null;
+				result = ((EvalRes) (null));
 			}
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}
@@ -55,7 +55,7 @@ public class ProjectOperation extends ExprOperation {
 		ret.setCtx(func.getCtx());
 		ret.setName(func.getName());
 		MapService.replaceWith((EMap) (ret.getTh()), (EMap) (mvexp.getValues()));
-		result = ret;
+		result = ((EvalBoundFunRes) (ret));
 		return result;
 	}
 }

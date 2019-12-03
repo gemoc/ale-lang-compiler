@@ -23,7 +23,7 @@ public class BoolOperationImpl extends ExprOperationImpl implements BoolOperatio
 		EvalRes result;
 		EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 		ret.setValue(this.it.isValue());
-		result = ret;
+		result = ((EvalBoolRes) (ret));
 		return result;
 	}
 }

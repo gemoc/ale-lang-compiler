@@ -19,7 +19,7 @@ public class NullValueOperation extends ValueOperation {
 	public Value copyj() {
 		Value result;
 		NullValue tmp = ((NullValue) (MiniJavaFactory.eINSTANCE.createNullValue()));
-		result = tmp;
+		result = ((NullValue) (tmp));
 		return result;
 	}
 }

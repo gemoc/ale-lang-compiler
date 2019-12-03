@@ -151,10 +151,10 @@ public class WhileStatementImpl extends StatementImpl implements WhileStatement 
 	}
 
 	public void evaluateStatement(State state) {
-		BooleanValue continueWhile = ((BooleanValue) (((Expression) (this.condition)).evaluateExpression((State) (state))));
+		BooleanValue continueWhile = ((BooleanValue) (((BooleanValue) (((Expression) (this.getCondition())).evaluateExpression((State) (state))))));
 		while (continueWhile.isValue()) {
-			((Block) (this.block)).evaluateStatement((State) (state));
-			BooleanValue continueWhile2 = ((BooleanValue) (((Expression) (this.condition)).evaluateExpression((State) (state))));
+			((Block) (this.getBlock())).evaluateStatement((State) (state));
+			BooleanValue continueWhile2 = ((BooleanValue) (((BooleanValue) (((Expression) (this.getCondition())).evaluateExpression((State) (state))))));
 			continueWhile = continueWhile2;
 		}
 	}

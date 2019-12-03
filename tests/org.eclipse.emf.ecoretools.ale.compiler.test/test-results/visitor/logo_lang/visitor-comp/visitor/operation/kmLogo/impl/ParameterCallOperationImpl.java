@@ -1,5 +1,6 @@
 package visitor.operation.kmLogo.impl;
 
+import java.lang.Double;
 import kmLogo.visitor.kmLogo.ParameterCall;
 import kmLogo.visitor.kmLogo.StackFrame;
 import kmLogo.visitor.kmLogo.Turtle;
@@ -21,11 +22,11 @@ public class ParameterCallOperationImpl extends ExpressionOperationImpl implemen
 
 	public double eval(Turtle turtle) {
 		double result;
-		result = 0.0;
+		result = ((Double) (0.0));
 		for(StackFrame frame: turtle.getCallStack().getFrames()) {
 			for(Variable var: frame.getVariables()) {
 				if(EqualService.equals((var.getName()), (this.it.getParameter().getName()))) {
-					result = var.getValue();
+					result = ((double) (var.getValue()));
 				}
 			}
 		}

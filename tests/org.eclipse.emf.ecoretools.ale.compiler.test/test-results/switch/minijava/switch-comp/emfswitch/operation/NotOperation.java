@@ -23,7 +23,7 @@ public class NotOperation extends ExpressionOperation {
 		BooleanValue left = ((BooleanValue) (((ExpressionOperation) emfswitch.doSwitch(this.it.getExpression())).evaluateExpression((State) (state))));
 		BooleanValue tmp = ((BooleanValue) (MiniJavaFactory.eINSTANCE.createBooleanValue()));
 		tmp.setValue(!(left.isValue()));
-		result = tmp;
+		result = ((BooleanValue) (tmp));
 		return result;
 	}
 }

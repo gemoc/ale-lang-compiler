@@ -158,8 +158,8 @@ public class InequalityImpl extends ExpressionImpl implements Inequality {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		Value left = ((Value) (((Expression) (this.left)).evaluateExpression((State) (state))));
-		Value right = ((Value) (((Expression) (this.right)).evaluateExpression((State) (state))));
+		Value left = ((Value) (((Expression) (this.getLeft())).evaluateExpression((State) (state))));
+		Value right = ((Value) (((Expression) (this.getRight())).evaluateExpression((State) (state))));
 		boolean tmp = ((boolean) (false));
 		if (left instanceof IntegerValue) {
 			if (right instanceof IntegerValue) {

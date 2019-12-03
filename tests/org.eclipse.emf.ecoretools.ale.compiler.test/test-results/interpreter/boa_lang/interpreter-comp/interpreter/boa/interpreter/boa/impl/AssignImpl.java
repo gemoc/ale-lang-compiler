@@ -180,8 +180,8 @@ public class AssignImpl extends ExprImpl implements Assign {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vlhs = ((EvalRes) (((Expr) (this.lhs)).eval((Ctx) (ctx))));
-		EvalRes vrhs = ((EvalRes) (((Expr) (this.rhs)).eval((Ctx) (ctx))));
+		EvalRes vlhs = ((EvalRes) (((Expr) (this.getLhs())).eval((Ctx) (ctx))));
+		EvalRes vrhs = ((EvalRes) (((Expr) (this.getRhs())).eval((Ctx) (ctx))));
 		if (vlhs instanceof EvalMapRes) {
 			EvalMapRes mvlhs = ((EvalMapRes) (vlhs));
 			if (MapService.containsKey((EMap) (mvlhs.getValues()), (String) (this.name))) {

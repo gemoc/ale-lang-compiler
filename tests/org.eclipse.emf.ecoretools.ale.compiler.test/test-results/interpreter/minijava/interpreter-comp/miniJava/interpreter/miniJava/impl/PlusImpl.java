@@ -154,8 +154,8 @@ public class PlusImpl extends ExpressionImpl implements Plus {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		Value left = ((Value) (((Expression) (this.left)).evaluateExpression((State) (state))));
-		Value right = ((Value) (((Expression) (this.right)).evaluateExpression((State) (state))));
+		Value left = ((Value) (((Expression) (this.getLeft())).evaluateExpression((State) (state))));
+		Value right = ((Value) (((Expression) (this.getRight())).evaluateExpression((State) (state))));
 		if (left instanceof IntegerValue) {
 			if (right instanceof IntegerValue) {
 				IntegerValue bleft = ((IntegerValue) (left));
@@ -167,7 +167,7 @@ public class PlusImpl extends ExpressionImpl implements Plus {
 			else {
 				if (right instanceof StringValue) {
 					StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-					tmp.setValue((left.customToString()) + (right.customToString()));
+					tmp.setValue((((IntegerValue) (left)).customToString()) + (((StringValue) (right)).customToString()));
 					result = (Value) (tmp) ;
 				}
 				else {
@@ -178,7 +178,7 @@ public class PlusImpl extends ExpressionImpl implements Plus {
 		else {
 			if (((left instanceof StringValue) || (right instanceof StringValue))) {
 				StringValue tmp = ((StringValue) (MiniJavaFactory.eINSTANCE.createStringValue()));
-				tmp.setValue((left.customToString()) + (right.customToString()));
+				tmp.setValue((((StringValue) (left)).customToString()) + (((StringValue) (right)).customToString()));
 				result = (Value) (tmp) ;
 			}
 			else {

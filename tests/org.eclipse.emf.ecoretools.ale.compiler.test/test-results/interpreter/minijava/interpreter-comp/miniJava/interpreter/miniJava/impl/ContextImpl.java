@@ -176,7 +176,7 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 		switch (featureID) {
 			case MiniJavaPackage.CONTEXT__BINDINGS :
 				getBindings().clear();
-				getBindings().addAll((Collection<? extends SymbolBinding>)newValue);
+				getBindings().addAll((Collection<? extends SymbolBinding>) newValue);
 				return;
 			case MiniJavaPackage.CONTEXT__PARENT_CONTEXT :
 				setParentContext((Context) newValue);
@@ -227,15 +227,15 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 
 	public SymbolBinding findBinding(Symbol symbol) {
 		SymbolBinding result;
-		if (!(MapService.containsKey((EMap) (this.cache), (Symbol) (symbol)))) {
+		if (!(MapService.containsKey((EMap) (this.getCache()), (Symbol) (symbol)))) {
 			SymbolBinding binding = ((SymbolBinding) (CollectionService.head(CollectionService.select(this.getBindings(), (x) -> EqualService.equals((x.getSymbol()), (symbol))))));
 			if (!EqualService.equals((binding), (null))) {
-				MapService.put((EMap) (this.cache), (Symbol) (symbol), (SymbolBinding) (binding));
+				MapService.put((EMap) (this.getCache()), (Symbol) (symbol), (SymbolBinding) (binding));
 			}
 			else {
 				if (!EqualService.equals((this.getParentContext()), (null))) {
-					SymbolBinding binding2 = ((SymbolBinding) (this.getParentContext().findBinding((Symbol) (symbol))));
-					MapService.put((EMap) (this.cache), (Symbol) (symbol), (SymbolBinding) (binding2));
+					SymbolBinding binding2 = ((SymbolBinding) (((Context) (this.getParentContext())).findBinding((Symbol) (symbol))));
+					MapService.put((EMap) (this.getCache()), (Symbol) (symbol), (SymbolBinding) (binding2));
 				}
 				else {
 					LogService.log(("No binding for symbol ") + (symbol));
@@ -248,8 +248,8 @@ public class ContextImpl extends MinimalEObjectImpl.Container implements Context
 
 	public Context findCurrentContext() {
 		Context result;
-		if (!EqualService.equals((this.childContext), (null))) {
-			result = (Context) (((Context) (this.childContext)).findCurrentContext()) ;
+		if (!EqualService.equals((this.getChildContext()), (null))) {
+			result = (Context) (((Context) (this.getChildContext())).findCurrentContext()) ;
 		}
 		else {
 			result = (Context) (this) ;

@@ -70,8 +70,7 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
 			field = (Field) eResolveProxy(oldField);
 			if (field != oldField) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_ACCESS__FIELD,
-							oldField, field));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, MiniJavaPackage.FIELD_ACCESS__FIELD, oldField, field));
 			}
 		}
 		return field;
@@ -150,9 +149,9 @@ public class FieldAccessImpl extends ExpressionImpl implements FieldAccess {
 
 	public Value evaluateExpression(State state) {
 		Value result;
-		ObjectRefValue tmp0 = ((ObjectRefValue) (((Expression) (this.receiver)).evaluateExpression((State) (state))));
+		ObjectRefValue tmp0 = ((ObjectRefValue) (((Expression) (this.getReceiver())).evaluateExpression((State) (state))));
 		ObjectInstance realReceiver = ((ObjectInstance) (tmp0.getInstance()));
-		Field fld = ((Field) (this.field));
+		Field fld = ((Field) (this.getField()));
 		FieldBinding fb = ((FieldBinding) (CollectionService.head(CollectionService.select(realReceiver.getFieldbindings(), (x) -> EqualService.equals((x.getField()), (fld))))));
 		result = (Value) (fb.getValue()) ;
 		return result;

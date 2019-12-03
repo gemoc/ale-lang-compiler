@@ -20,15 +20,15 @@ public class NotOperation extends ExprOperation {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		EvalRes vvalue = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getValue())).eval((Ctx) ctx)));
+		EvalRes vvalue = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(this.it.getValue())).eval((Ctx) (ctx))));
 		if(vvalue instanceof EvalBoolRes) {
 			EvalBoolRes bvvalue = ((EvalBoolRes) (vvalue));
 			EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 			ret.setValue(!(bvvalue.isValue()));
-			result = ret;
+			result = ((EvalBoolRes) (ret));
 		}
 		else {
-			result = null;
+			result = ((EvalRes) (null));
 		}
 		return result;
 	}

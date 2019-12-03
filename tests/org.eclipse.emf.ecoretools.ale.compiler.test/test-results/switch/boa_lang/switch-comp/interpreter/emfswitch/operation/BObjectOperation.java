@@ -1,12 +1,12 @@
 package interpreter.emfswitch.operation;
 
 import boa.BObject;
+import boa.BoaFactory;
 import boa.Ctx;
 import boa.EvalMapRes;
 import boa.EvalRes;
 import boa.Field;
 import execboa.MapService;
-import interpreter.emfswitch.BoaFactory;
 import interpreter.emfswitch.InterpreterSwitchImplementation;
 import java.lang.String;
 import org.eclipse.emf.common.util.EMap;
@@ -29,7 +29,7 @@ public class BObjectOperation extends ExprOperation {
 			EvalRes v = ((EvalRes) (((ExprOperation) emfswitch.doSwitch(x.getValue())).eval((Ctx) (ctx))));
 			MapService.put((EMap) (ret.getValues()), (String) (x.getName()), (EvalRes) (v));
 		}
-		result = ret;
+		result = ((EvalMapRes) (ret));
 		return result;
 	}
 }

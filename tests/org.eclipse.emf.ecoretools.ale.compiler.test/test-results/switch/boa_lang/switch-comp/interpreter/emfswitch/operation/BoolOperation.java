@@ -22,7 +22,7 @@ public class BoolOperation extends ExprOperation {
 		EvalRes result;
 		EvalBoolRes ret = ((EvalBoolRes) (BoaFactory.eINSTANCE.createEvalBoolRes()));
 		ret.setValue(this.it.isValue());
-		result = ret;
+		result = ((EvalBoolRes) (ret));
 		return result;
 	}
 }

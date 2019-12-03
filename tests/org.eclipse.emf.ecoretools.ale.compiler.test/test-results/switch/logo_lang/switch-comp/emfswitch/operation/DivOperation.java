@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Double;
 import kmLogo.Div;
 import kmLogo.Turtle;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -18,11 +19,11 @@ public class DivOperation extends BinaryExpOperation {
 
 	public double eval(Turtle turtle) {
 		double result;
-		if(!EqualService.equals((((ExpressionOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Turtle) turtle)), (0.0))) {
-			result = (((ExpressionOperation) emfswitch.doSwitch(this.it.getLhs())).eval((Turtle) turtle)) / (((ExpressionOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Turtle) turtle));
+		if(!EqualService.equals((((ExpressionOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Turtle) (turtle))), (0.0))) {
+			result = ((Double) ((((ExpressionOperation) emfswitch.doSwitch(this.it.getLhs())).eval((Turtle) (turtle))) / (((ExpressionOperation) emfswitch.doSwitch(this.it.getRhs())).eval((Turtle) (turtle)))));
 		}
 		else {
-			result = 0.0;
+			result = ((Double) (0.0));
 		}
 		return result;
 	}

@@ -57,7 +57,7 @@ public class BObjectImpl extends ExprImpl implements BObject {
 		switch (featureID) {
 			case BoaPackage.BOBJECT__FIELDS :
 				getFields().clear();
-				getFields().addAll((Collection<? extends Field>)newValue);
+				getFields().addAll((Collection<? extends Field>) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

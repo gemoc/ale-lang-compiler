@@ -1,6 +1,7 @@
 package emfswitch.operation;
 
 import emfswitch.SwitchImplementation;
+import java.lang.Boolean;
 import miniJava.ClassRef;
 import miniJava.TypeRef;
 import org.eclipse.emf.ecoretools.ale.compiler.lib.EqualService;
@@ -20,10 +21,10 @@ public class ClassRefOperation extends SingleTypeRefOperation {
 		boolean result;
 		if(other instanceof ClassRef) {
 			ClassRef ocr = ((ClassRef) (other));
-			result = EqualService.equals((this.it.getReferencedClass()), (ocr.getReferencedClass()));
+			result = ((Boolean) (EqualService.equals((this.it.getReferencedClass()), (ocr.getReferencedClass()))));
 		}
 		else {
-			result = false;
+			result = ((Boolean) (false));
 		}
 		return result;
 	}

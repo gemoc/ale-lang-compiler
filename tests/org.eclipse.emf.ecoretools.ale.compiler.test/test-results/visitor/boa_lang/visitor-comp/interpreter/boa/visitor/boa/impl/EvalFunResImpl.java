@@ -37,8 +37,7 @@ public class EvalFunResImpl extends EvalResImpl implements EvalFunRes {
 			exp = (Expr) eResolveProxy(oldExp);
 			if (exp != oldExp) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.EVAL_FUN_RES__EXP,
-							oldExp, exp));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.EVAL_FUN_RES__EXP, oldExp, exp));
 			}
 		}
 		return exp;
@@ -61,8 +60,7 @@ public class EvalFunResImpl extends EvalResImpl implements EvalFunRes {
 			ctx = (Ctx) eResolveProxy(oldCtx);
 			if (ctx != oldCtx) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.EVAL_FUN_RES__CTX,
-							oldCtx, ctx));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, BoaPackage.EVAL_FUN_RES__CTX, oldCtx, ctx));
 			}
 		}
 		return ctx;

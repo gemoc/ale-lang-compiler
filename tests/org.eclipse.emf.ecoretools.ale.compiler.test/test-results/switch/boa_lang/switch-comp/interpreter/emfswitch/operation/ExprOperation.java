@@ -20,7 +20,7 @@ public class ExprOperation extends TopLevelCmdOperation {
 
 	public EvalRes eval(Ctx ctx) {
 		EvalRes result;
-		result = null;
+		result = ((EvalRes) (null));
 		return result;
 	}
 
