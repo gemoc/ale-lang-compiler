@@ -9,7 +9,7 @@ import java.lang.String;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -47,10 +47,8 @@ public class EvalMapResImpl extends EvalResImpl implements EvalMapRes {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case BoaPackage.EVAL_MAP_RES__VALUES :
-				if (coreType)
-					return getValues();
-				else
-					return getValues().map();
+				if (coreType) return getValues();
+				else return getValues().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -59,7 +57,7 @@ public class EvalMapResImpl extends EvalResImpl implements EvalMapRes {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.EVAL_MAP_RES__VALUES :
-				((EStructuralFeature.Setting)getValues()).set(newValue);
+				((Setting)getValues()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

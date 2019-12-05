@@ -8,7 +8,7 @@ import java.lang.String;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -51,10 +51,8 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__CS :
-				if (coreType)
-					return getCs();
-				else
-					return getCs().map();
+				if (coreType) return getCs();
+				else return getCs().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -63,7 +61,7 @@ public class ConceptAImpl extends MinimalEObjectImpl.Container implements Concep
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case Test1Package.CONCEPT_A__CS :
-				((EStructuralFeature.Setting)getCs()).set(newValue);
+				((Setting)getCs()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

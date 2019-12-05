@@ -9,7 +9,7 @@ import java.lang.String;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
@@ -59,15 +59,11 @@ public class CtxImpl extends MinimalEObjectImpl.Container implements Ctx {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case BoaPackage.CTX__ENV :
-				if (coreType)
-					return getEnv();
-				else
-					return getEnv().map();
+				if (coreType) return getEnv();
+				else return getEnv().map();
 			case BoaPackage.CTX__TH :
-				if (coreType)
-					return getTh();
-				else
-					return getTh().map();
+				if (coreType) return getTh();
+				else return getTh().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -76,10 +72,10 @@ public class CtxImpl extends MinimalEObjectImpl.Container implements Ctx {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case BoaPackage.CTX__ENV :
-				((EStructuralFeature.Setting)getEnv()).set(newValue);
+				((Setting)getEnv()).set(newValue);
 				return;
 			case BoaPackage.CTX__TH :
-				((EStructuralFeature.Setting)getTh()).set(newValue);
+				((Setting)getTh()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
