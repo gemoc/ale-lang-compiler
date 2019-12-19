@@ -14,9 +14,9 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter.ALEInterpreterImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.legacy.visitor.ALEVisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
@@ -34,11 +34,11 @@ class InterpreterTest {
 	static Map<String, Map<File, File>> compilations = newHashMap
 
 	static val compilers = newHashMap(
-		"interpreter" -> [f|compileProjectInterpreter(f)],
+//		"interpreter" -> [f|compileProjectInterpreter(f)],
 //		"interpreter.truffle" -> [f|compileProjectInterpreterTruffle(f)]
 		"revisitor" -> [f|compileProjectRevisitor(f)],
-		"switch" -> [f|compileProjectSwitch(f)],
-		"visitor" -> [f|compileProjectVisitor(f)]
+		"switch" -> [f|compileProjectSwitch(f)]
+//		"visitor" -> [f|compileProjectVisitor(f)]
 	)
 
 	private static final boolean DEBUG = false
