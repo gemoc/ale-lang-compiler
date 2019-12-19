@@ -14,7 +14,6 @@ pipeline {
 		
 		stage('Build and verify') {
 			steps {
-				cleanWs()
 				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 					sh "mvn -Dmaven.test.failure.ignore clean verify --errors --show-version"
 				}
@@ -63,7 +62,8 @@ pipeline {
 			            body: '''Check console output at $BUILD_URL to view the results.''',
 			            recipientProviders: [[$class: 'CulpritsRecipientProvider'],[$class: 'RequesterRecipientProvider']], 
 			            to: 'didier.vojtisek@inria.fr'
-        }
+        
+				}
 		// changed { }
 		unstable {
 			echo 'Unstable' 
@@ -71,6 +71,7 @@ pipeline {
 			            body: '''Check console output at $BUILD_URL to view the results.''',
 			            recipientProviders: [[$class: 'CulpritsRecipientProvider'],[$class: 'RequesterRecipientProvider']], 
 			            to: 'didier.vojtisek@inria.fr'
+			cleanWs()
 		}
 		failure {
 			echo 'Failure' 
@@ -78,6 +79,7 @@ pipeline {
 			            body: '''Check console output at $BUILD_URL to view the results.''',
 			            recipientProviders: [[$class: 'CulpritsRecipientProvider'],[$class: 'RequesterRecipientProvider']], 
 			            to: 'didier.vojtisek@inria.fr'
+			cleanWs()
 		}
 	}
 }
