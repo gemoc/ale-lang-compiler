@@ -8,9 +8,9 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.interpreter.ALEInterpreterImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter.ALEInterpreterImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.visitor.ALEVisitorImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.legacy.visitor.ALEVisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 
@@ -29,7 +29,8 @@ class ALEImplementationCompiler {
 		ServicesRegistrationManager srm) throws FileNotFoundException {
 
 		val Job a = Job.create('''ALE Compilation''', [ monitor |
-			mavenCompile(projectRoot, projectName, srm, new EclipseWorkbenchDsl(dslStr));
+			val ewd = new EclipseWorkbenchDsl(dslStr)
+			mavenCompile(projectRoot, projectName, srm, ewd);
 		])
 		// FIXME: currently locking the whole workspace during compilation
 		a.rule = ResourcesPlugin.workspace.root

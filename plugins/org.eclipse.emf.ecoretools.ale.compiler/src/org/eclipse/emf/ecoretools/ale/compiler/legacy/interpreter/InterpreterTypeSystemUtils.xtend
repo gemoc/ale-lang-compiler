@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.TypeName
@@ -19,6 +19,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 
+@Deprecated
 class InterpreterTypeSystemUtils extends CommonTypeSystemUtils {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension AbstractNamingUtils namingUtils

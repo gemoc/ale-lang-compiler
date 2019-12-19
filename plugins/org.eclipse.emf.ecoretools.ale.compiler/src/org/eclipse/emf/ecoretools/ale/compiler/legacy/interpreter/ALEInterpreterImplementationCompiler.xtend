@@ -1,10 +1,9 @@
-package org.eclipse.emf.ecoretools.ale.compiler.visitor
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter
 
 import java.io.File
 import java.nio.file.Files
 import java.util.Comparator
 import java.util.Map
-import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
@@ -22,8 +21,11 @@ import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
 import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
+import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 
-class ALEVisitorImplementationCompiler extends AbstractALECompiler {
+@Deprecated
+class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 	
 	extension CompilerDsl compilerDsl = new CompilerDsl
 
@@ -31,12 +33,13 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		this(projectName, projectRoot, dsl, newHashMap, eu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, Dsl dsl,Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
 		super(projectName, projectRoot, dsl, services, eu, srm)
+		
 	}
 
-	override compile(File projectRoot, String projectName) {
-		val compilationDirectory = "visitor-comp"
+	override void compile(File projectRoot, String projectName) {
+		val compilationDirectory = "interpreter-comp"
 		val compileDirectory = new File(projectRoot, compilationDirectory)
 
 		// clean previous compilation
@@ -47,7 +50,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val egc = new EcoreGenmodelCompiler(compilationDirectory, "interpreter")
 
-		val namingUtils = new VisitorNamingUtils
+		val namingUtils = new InterpreterNamingUtils
 		val fic = new FactoryInterfaceCompiler(namingUtils)
 		val ccu = new CommonCompilerUtils(namingUtils, resolved, dsl)
 		val jpu = new JavaPoetUtils
@@ -57,48 +60,45 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 		val pic = new PackageInterfaceCompiler(namingUtils)
 		val pimplc = new PackageImplementationCompiler(namingUtils, dsl)
 
-		val acceptInterfaceCompiler = new AcceptInterfaceCompiler(compileDirectory, packageRoot)
-		acceptInterfaceCompiler.compile
-
-		val visitorInterfaceCompiler = new VisitorInterfaceCompiler(compileDirectory, syntaxes, packageRoot)
-		visitorInterfaceCompiler.compile
-
-		val visitorImplementationCompiler = new VisitorImplementationCompiler(compileDirectory, syntaxes, packageRoot)
-		visitorImplementationCompiler.compile
-
-		val eic = new VisitorEClassInterfaceCompiler(namingUtils, ccu)
+		val eic = new InterpreterEClassInterfaceCompiler(namingUtils, ccu)
 		val es = new EnumeratorService
-		val eimplc = new VisitorEClassImplementationCompiler(packageRoot, dsl, resolved, ccu, es)
-
-		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes, resolved)
-		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,
-			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices, new EnumeratorService)
+		val eimplc = new InterpreterEClassImplementationCompiler(packageRoot, resolved, ccu, es, th, dsl)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
+		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		base.validate(parsedSemantics)
+		val isTruffle = dsl.isTruffle
+		
+		val tsu =  new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, namingUtils, dsl)
+		
 		syntaxes.forEach [ key, pairEPackageGenModel |
 			try {
 				fic.compileFactoryInterface(pairEPackageGenModel.key, compileDirectory, packageRoot, dsl)
-				fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
+				fimplc.compileFactoryImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot, isTruffle)
 
 				pic.compilePackageInterface(pairEPackageGenModel.key, compileDirectory, packageRoot)
 				pimplc.compilePackageImplementation(pairEPackageGenModel.key, compileDirectory, packageRoot)
 
 				val eClassifiersLst = pairEPackageGenModel.key.allClassifiers
 				for (EClassifier eclazz : eClassifiersLst.filter[!(it instanceof EDataType) || (it instanceof EEnum)]) {
-					val rc = resolved.filter [
-						it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name
-					].head
-					eic.compileEClassInterface(eclazz, compileDirectory, packageRoot)
-					eimplc.compileEClassImplementation(eclazz, compileDirectory)
-					if(eclazz instanceof EClass) {
-						operationInterfaceCompiler.compile(eclazz, rc?.aleCls)
-						operationImplementationCompiler.compile(eclazz, rc?.aleCls)
+					try {
+						val rc = resolved.filter [
+							it.eCls.name == eclazz.name && it.eCls.EPackage.name == eclazz.EPackage.name
+						].head
+						if(eclazz.instanceClassName != "java.util.Map$Entry" /* && ! dsl.isTruffle*/)
+							eic.compileEClassInterface(eclazz, rc?.aleCls, compileDirectory, dsl, packageRoot)
+						eimplc.compileEClassImplementation(eclazz, rc?.aleCls, compileDirectory, syntaxes, resolved,
+							srm.registeredServices, dsl, base, tsu, namingUtils)
+					} catch (Exception e) {
+						e.printStackTrace
 					}
 				}
+
 			} catch (Exception e) {
 				e.printStackTrace
 			}
+
 		]
 	}
 }

@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.CodeBlock
@@ -34,6 +34,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.emf.ecoretools.ale.implementation.impl.MethodImpl
 import org.eclipse.xtext.EcoreUtil2
 
+@Deprecated
 class AleBodyCompiler {
 
 	extension InterpreterTypeSystemUtils tsu

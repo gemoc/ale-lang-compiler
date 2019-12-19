@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
@@ -21,6 +21,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.Method
 
 import static javax.lang.model.element.Modifier.*
 
+@Deprecated
 class InterpreterEClassInterfaceCompiler {
 
 	extension EcoreGenNamingUtils namingUtils

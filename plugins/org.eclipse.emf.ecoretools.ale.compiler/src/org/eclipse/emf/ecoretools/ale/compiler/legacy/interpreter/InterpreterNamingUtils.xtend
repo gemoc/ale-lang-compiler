@@ -1,10 +1,11 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter
 
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
 
+@Deprecated
 class InterpreterNamingUtils extends EcoreGenNamingUtils {
 	
 	override getIdentifier(){ "interpreter" }

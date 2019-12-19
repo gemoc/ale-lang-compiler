@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter
 
 import com.squareup.javapoet.CodeBlock
 import java.util.List
@@ -15,6 +15,7 @@ import org.eclipse.emf.ecoretools.ale.implementation.ExpressionStatement
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 
+@Deprecated
 class InterpreterExpressionCompiler extends AbstractExpressionCompiler {
 
 	extension InterpreterTypeSystemUtils tsu

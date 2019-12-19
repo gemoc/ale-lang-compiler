@@ -22,8 +22,8 @@ Export-Package: org.eclipse.emf.ecoretools.ale.compiler,
  org.eclipse.emf.ecoretools.ale.compiler.common,
  org.eclipse.emf.ecoretools.ale.compiler.emfswitch,
  org.eclipse.emf.ecoretools.ale.compiler.genmodel,
- org.eclipse.emf.ecoretools.ale.compiler.interpreter,
+ org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter,
  org.eclipse.emf.ecoretools.ale.compiler.revisitor,
  org.eclipse.emf.ecoretools.ale.compiler.utils,
- org.eclipse.emf.ecoretools.ale.compiler.visitor
+ org.eclipse.emf.ecoretools.ale.compiler.legacy.visitor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

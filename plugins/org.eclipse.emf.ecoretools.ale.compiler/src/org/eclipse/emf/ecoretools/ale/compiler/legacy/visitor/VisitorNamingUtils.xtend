@@ -1,8 +1,9 @@
-package org.eclipse.emf.ecoretools.ale.compiler.visitor
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.visitor
 
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
 
+@Deprecated
 class VisitorNamingUtils extends EcoreGenNamingUtils {
 
 	override getIdentifier() { "visitor" }

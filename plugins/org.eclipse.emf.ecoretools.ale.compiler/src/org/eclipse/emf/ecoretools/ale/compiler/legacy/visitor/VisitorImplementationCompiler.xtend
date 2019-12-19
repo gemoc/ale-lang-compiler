@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.visitor
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.visitor
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
@@ -12,6 +12,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 
 import static javax.lang.model.element.Modifier.*
 
+@Deprecated
 class VisitorImplementationCompiler {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils

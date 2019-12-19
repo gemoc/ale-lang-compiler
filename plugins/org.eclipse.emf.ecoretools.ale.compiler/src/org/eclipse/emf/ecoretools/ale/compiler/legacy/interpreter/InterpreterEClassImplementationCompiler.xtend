@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.interpreter
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter
 
 import com.squareup.javapoet.AnnotationSpec
 import com.squareup.javapoet.ArrayTypeName
@@ -40,6 +40,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
 
+@Deprecated
 class InterpreterEClassImplementationCompiler {
 	extension InterpreterNamingUtils namingUtils
 	extension JavaPoetUtils jpu = new JavaPoetUtils

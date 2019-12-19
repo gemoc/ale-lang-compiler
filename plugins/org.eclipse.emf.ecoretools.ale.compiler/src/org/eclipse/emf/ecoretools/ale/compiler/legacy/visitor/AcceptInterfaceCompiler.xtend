@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.visitor
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.visitor
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
@@ -8,6 +8,7 @@ import java.io.File
 
 import static javax.lang.model.element.Modifier.*
 
+@Deprecated
 class AcceptInterfaceCompiler {
 	extension VisitorNamingUtils namingUtils = new VisitorNamingUtils
 	val File directory

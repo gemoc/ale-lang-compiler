@@ -1,4 +1,4 @@
-package org.eclipse.emf.ecoretools.ale.compiler.visitor
+package org.eclipse.emf.ecoretools.ale.compiler.legacy.visitor
 
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
@@ -25,6 +25,7 @@ import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
 import static javax.lang.model.element.Modifier.*
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 
+@Deprecated
 class VisitorEClassImplementationCompiler {
 	extension VisitorNamingUtils namingUtils
 	extension JavaPoetUtils jpu
