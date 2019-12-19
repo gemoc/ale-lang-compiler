@@ -13,6 +13,7 @@ pipeline {
 	stages {
 		
 		stage('Build and verify') {
+			cleanWs()
 			steps {
 				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 					sh "mvn -Dmaven.test.failure.ignore clean verify --errors --show-version"
