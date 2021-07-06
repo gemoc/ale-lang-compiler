@@ -15,15 +15,15 @@ import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 class CommonCompilerUtils {
 	extension EcoreGenNamingUtils anu
 	val List<ResolvedClass> resolved
-	val Dsl dsl
+	val IAleEnvironment dsl
 
-	new(EcoreGenNamingUtils anu, List<ResolvedClass> resolved, Dsl dsl) {
+	new(EcoreGenNamingUtils anu, List<ResolvedClass> resolved, IAleEnvironment dsl) {
 		this.anu = anu
 		this.resolved = resolved
 		this.dsl = dsl

@@ -29,14 +29,14 @@ import org.eclipse.emf.ecore.util.InternalEList
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
+import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xbase.lib.Functions.Function2
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 
 class EClassImplementationCompiler {
 
@@ -60,11 +60,11 @@ class EClassImplementationCompiler {
 		this.th = th
 	}
 	
-	def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass,  String packageRoot, Dsl dsl) {
+	def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass,  String packageRoot, IAleEnvironment dsl) {
 		this.compileEcoreRelated(builder, eClass, null, packageRoot, dsl, null)
 	}
 	
-	def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass, String packageRoot, Dsl dsl, Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2) {
+	def TypeSpec.Builder compileEcoreRelated(TypeSpec.Builder builder, EClass eClass, ExtendedClass aleClass, String packageRoot, IAleEnvironment dsl, Function2<FieldSpec.Builder, EReference, FieldSpec.Builder> f2) {
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
 		val ePackageInterfaceType = eClass.packageIntClassName(packageRoot) 
 		
@@ -126,7 +126,7 @@ class EClassImplementationCompiler {
 	 	.addMethods(eMapMethods)
 	}
 	
-	private def getEMapMethods(EClass eClass, Dsl dsl, String packageRoot) {
+	private def getEMapMethods(EClass eClass, IAleEnvironment dsl, String packageRoot) {
 		val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
 
 		if (!isMapElement) {
@@ -311,7 +311,7 @@ class EClassImplementationCompiler {
 		}
 	}
 	
-	private def getEInverseAdd(EClass eClass, Dsl dsl, String packageRoot, boolean isTyped) {
+	private def getEInverseAdd(EClass eClass, IAleEnvironment dsl, String packageRoot, boolean isTyped) {
 		if (!eClass.EReferences.filter[it.EOpposite !== null].empty) {
 
 			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot)
@@ -364,7 +364,7 @@ class EClassImplementationCompiler {
 			Optional.empty
 	}
 	
-	private def getEBasicRemoveFromContainerFeature(EClass eClass, Dsl dsl, String packageRoot) {
+	private def getEBasicRemoveFromContainerFeature(EClass eClass, IAleEnvironment dsl, String packageRoot) {
 		val eBasicRemoveFromContainerFeatureFields = eClass.EReferences.filter [ field |
 			val isMultiple = field.upperBound > 1 || field.upperBound < 0
 			val existEOpposite = field.EOpposite !== null
@@ -397,7 +397,7 @@ class EClassImplementationCompiler {
 			Optional.empty
 	}
 	
-	private def getEInverseRemove(EClass eClass, Dsl dsl, String packageRoot, boolean isTyped) {
+	private def getEInverseRemove(EClass eClass, IAleEnvironment dsl, String packageRoot, boolean isTyped) {
 		if (!eClass.EReferences.filter[it.containment || it.EOpposite !== null].empty) {
 			val eInverseRemoveCodeMap = newHashMap("il" ->
 				ParameterizedTypeName.get(ClassName.get(InternalEList), WildcardTypeName.subtypeOf(Object)),
@@ -427,7 +427,7 @@ class EClassImplementationCompiler {
 	
 	
 	
-	private def getESet(EClass eClass, Dsl dsl, String packageRoot) {
+	private def getESet(EClass eClass, IAleEnvironment dsl, String packageRoot) {
 		if (!eClass.EStructuralFeatures.empty) {
 			val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry
 			val namedMap = produceFeatureSwitchMap(eClass, packageRoot)
@@ -456,7 +456,7 @@ class EClassImplementationCompiler {
 		esf.EType instanceof EEnum	
 	}
 	
-	private def getEIsSet(EClass eClass, Dsl dsl, String packageRoot) {
+	private def getEIsSet(EClass eClass, IAleEnvironment dsl, String packageRoot) {
 		if (!eClass.EStructuralFeatures.empty) {
 			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot)
 			
@@ -567,7 +567,7 @@ class EClassImplementationCompiler {
 				«ENDIF»
 		'''
 	}
-	private def getEGet(EClass eClass, Dsl dsl, String packageRoot, boolean isTyped) {
+	private def getEGet(EClass eClass, IAleEnvironment dsl, String packageRoot, boolean isTyped) {
 		if (!eClass.EStructuralFeatures.empty) {
 			val ePackageInterfaceType = eClass.packageIntClassName(packageRoot) 
 			val ret = MethodSpec.methodBuilder('eGet')
@@ -592,7 +592,7 @@ class EClassImplementationCompiler {
 		}
 	}
 	
-	private def getEUnset(EClass eClass, Dsl dsl, String packageRoot) {
+	private def getEUnset(EClass eClass, IAleEnvironment dsl, String packageRoot) {
 		if (!eClass.EStructuralFeatures.empty) {
 			val isMapElement = eClass.instanceClass !== null && eClass.instanceClass == Map.Entry			
 			val namedMap = produceFeatureSwitchMap(eClass, packageRoot)
@@ -629,7 +629,7 @@ class EClassImplementationCompiler {
 		}
 	}
 
-	private def getEStaticClass(EClass eClass, Dsl dsl, String packageRoot) {
+	private def getEStaticClass(EClass eClass, IAleEnvironment dsl, String packageRoot) {
 		MethodSpec.methodBuilder('eStaticClass').addAnnotation(Override).returns(EClass)
 			.addModifiers(PROTECTED)
 			.addTruffleBoundaryAnnotation(dsl)
@@ -667,7 +667,7 @@ class EClassImplementationCompiler {
 		return result;
 	}
 
-	private def Iterable<MethodSpec> getMethodsEReferences(EClass eClass, String packageRoot, Dsl dsl,
+	private def Iterable<MethodSpec> getMethodsEReferences(EClass eClass, String packageRoot, IAleEnvironment dsl,
 		ClassName ePackageInterfaceType, boolean isMapElement) {
 		eClass.allESFPlusInheritedESF
 			.map [ field |

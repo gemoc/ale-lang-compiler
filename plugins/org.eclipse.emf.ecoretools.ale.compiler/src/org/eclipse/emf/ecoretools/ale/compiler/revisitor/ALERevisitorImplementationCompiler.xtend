@@ -25,8 +25,9 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
+import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
@@ -42,7 +43,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableAssignment
 import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 import org.eclipse.xtext.xbase.lib.Functions.Function0
-import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 
 class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
@@ -52,11 +52,11 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	extension RevisitorTypeSystemUtils tsu
 	extension CommonTypeInferer cti
 
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, JavaPoetUtils jpu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, IAleEnvironment dsl, EcoreUtils eu, JavaPoetUtils jpu, ServicesRegistrationManager srm) {
 		this(projectName, projectRoot, dsl, newHashMap, eu, jpu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, JavaPoetUtils jpu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, IAleEnvironment dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, JavaPoetUtils jpu, ServicesRegistrationManager srm) {
 		super(projectName, projectRoot, dsl, services, eu, srm)
 		this.jpu = jpu
 		
@@ -70,7 +70,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 		if (compileDirectory.exists)
 			Files.walk(compileDirectory.toPath).sorted(Comparator.reverseOrder()).map[toFile].forEach[delete]
 
-		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		val base = new BaseValidator(this.dsl, #[new TypeValidator])
 		base.validate(parsedSemantics)
 
 		
@@ -287,7 +287,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 
 	@Deprecated
 	def getEcoreInterfacesPackage() {
-		val gm = syntaxes.get(dsl.allSyntaxes.head).value
+		val gm = syntaxes.get(dsl.metamodelsSources.head).value
 		gm.genPackages.head.qualifiedPackageName
 	}
 	
@@ -302,7 +302,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	}
 	
 	def computeFullInterfaceType(List<Pair<EClass, EClass>> pairs) {
-		val tmp = syntaxes.get(dsl.allSyntaxes.head)
+		val tmp = syntaxes.get(dsl.metamodelsSources.head)
 //		val syntax = tmp.key
 		val genSyntax = tmp.value.genPackages.head
 		val allClasses = pairs
@@ -360,7 +360,7 @@ class ALERevisitorImplementationCompiler extends AbstractALECompiler {
 	}
 	
 	def Set<Pair<EClass, EClass>> computeEClassPairs() {
-		val tmp = syntaxes.get(dsl.allSyntaxes.head)
+		val tmp = syntaxes.get(dsl.metamodelsSources.head)
 //		val syntax = tmp.key
 //		val genSyntax = tmp.value.genPackages.head
 //		val interfaceName = dsl.revisitorImplementationClass

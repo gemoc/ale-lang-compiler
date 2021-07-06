@@ -15,7 +15,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreGenNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
 
@@ -37,12 +37,12 @@ class InterpreterEClassInterfaceCompiler {
 		this.ecic = new EClassInterfaceCompiler(namingUtils, ccu)
 	}
 
-	def dispatch compileEClassInterface(EEnum eEnum, ExtendedClass aleClass, File directory, Dsl dsl,
+	def dispatch compileEClassInterface(EEnum eEnum, ExtendedClass aleClass, File directory, IAleEnvironment dsl,
 		String packageRoot) {
 		ecic.compileEClassInterface(eEnum, directory, packageRoot)
 	}
 
-	def dispatch compileEClassInterface(EClass eClass, ExtendedClass aleClass, File directory, Dsl dsl,
+	def dispatch compileEClassInterface(EClass eClass, ExtendedClass aleClass, File directory, IAleEnvironment dsl,
 		String packageRoot) {
 
 		// TODO: in case of truffle option: add parent interface com.oracle.truffle.api.nodes.NodeInterface
@@ -70,7 +70,7 @@ class InterpreterEClassInterfaceCompiler {
 
 	}
 
-	def getCached(ExtendedClass aleClass, Dsl dsl, String packageRoot) {
+	def getCached(ExtendedClass aleClass, IAleEnvironment dsl, String packageRoot) {
 		if (aleClass !== null) {
 			aleClass.methods.filter [
 				it.dispatch && dsl.isTruffle

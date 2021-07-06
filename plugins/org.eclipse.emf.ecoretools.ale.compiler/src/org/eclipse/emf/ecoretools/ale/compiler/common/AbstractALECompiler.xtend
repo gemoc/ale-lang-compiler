@@ -12,20 +12,19 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl
-import org.eclipse.emf.ecoretools.ale.core.interpreter.ExtensionEnvironment
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecoretools.ale.core.parser.DslBuilder
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
+import org.eclipse.emf.ecoretools.ale.core.parser.ParsedFile
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.ImplementationPackage
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
+import org.eclipse.emf.ecoretools.ale.core.interpreter.internal.ExtensionEnvironment
 
 abstract class AbstractALECompiler {
 	protected val ServicesRegistrationManager srm
 	protected extension EcoreUtils eu
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
-	val Dsl dsl
-	var List<ParseResult<ModelUnit>> parsedSemantics
+	val IAleEnvironment dsl
+	var List<ParsedFile<ModelUnit>> parsedSemantics
 	val IQueryEnvironment queryEnvironment
 	var List<ResolvedClass> resolved
 	protected val String projectName
@@ -55,7 +54,7 @@ abstract class AbstractALECompiler {
 		resolved
 	}
 	
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, IAleEnvironment dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
 		this.queryEnvironment = createQueryEnvironment(false, null)
 		queryEnvironment.registerEPackage(ImplementationPackage.eINSTANCE)
 		queryEnvironment.registerEPackage(AstPackage.eINSTANCE)
@@ -67,13 +66,13 @@ abstract class AbstractALECompiler {
 		this.dsl = dsl
 	}
 	
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, IAleEnvironment dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
 		this(projectName, projectRoot, dsl, eu, srm);
 
 		registeredServices.putAll(services)
 	}
 
-	def registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+	def registerServices(String projectName, List<ParsedFile<ModelUnit>> parsedSemantics) {
 		srm.registerServices(projectName, parsedSemantics)
 	}
 
@@ -102,15 +101,15 @@ abstract class AbstractALECompiler {
 		registerServices(projectName, parsedSemantics)
 
 		val aleClasses = newArrayList
-		for (ParseResult<ModelUnit> pr : parsedSemantics) {
+		for (ParsedFile<ModelUnit> pr : parsedSemantics) {
 			var root = pr.root
 			aleClasses += root.classExtensions
 		}
 
-		syntaxes = dsl.allSyntaxes.toMap([it], [
+		syntaxes = dsl.metamodelsSources.toMap([it], [
 			return (loadEPackage -> replaceAll(".ecore$", ".genmodel").loadGenmodel)
 		])
-		val syntax = syntaxes.get(dsl.allSyntaxes.head).key
+		val syntax = syntaxes.get(dsl.metamodelsSources.head).key
 		resolved = resolve(aleClasses, syntax, syntaxes)
 
 		// must be last !

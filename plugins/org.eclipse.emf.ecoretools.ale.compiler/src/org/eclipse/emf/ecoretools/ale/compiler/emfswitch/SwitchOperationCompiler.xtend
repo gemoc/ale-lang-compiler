@@ -21,8 +21,8 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
+import org.eclipse.emf.ecoretools.ale.core.parser.ParsedFile
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
@@ -55,21 +55,21 @@ class SwitchOperationCompiler {
 	val File directory
 	val BaseValidator base
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
-	val Dsl dsl
+	val IAleEnvironment dsl
 
 	new(
 		String packageRoot,
 		File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes,
 		IQueryEnvironment queryEnvironment,
-		List<ParseResult<ModelUnit>> parsedSemantics,
+		List<ParsedFile<ModelUnit>> parsedSemantics,
 		List<ResolvedClass> resolved,
 		Map<String, Pair<String, String>> registeredServices,
-		Dsl dsl, SwitchNamingUtils namingUtils
+		IAleEnvironment dsl, SwitchNamingUtils namingUtils
 	) {
 		this.packageRoot = packageRoot
 		this.directory = directory
-		base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		base = new BaseValidator(dsl, #[new TypeValidator])
 		base.validate(parsedSemantics)
 		this.tsu = new SwitchTypeSystemUtils(syntaxes, packageRoot, resolved)
 		this.cti = new CommonTypeInferer(base)
@@ -82,7 +82,7 @@ class SwitchOperationCompiler {
 
 	@Deprecated
 	def getEcoreInterfacesPackage() {
-		val gm = syntaxes.get(dsl.allSyntaxes.head).value
+		val gm = syntaxes.get(dsl.metamodelsSources.head).value
 		gm.genPackages.head.qualifiedPackageName
 	}
 

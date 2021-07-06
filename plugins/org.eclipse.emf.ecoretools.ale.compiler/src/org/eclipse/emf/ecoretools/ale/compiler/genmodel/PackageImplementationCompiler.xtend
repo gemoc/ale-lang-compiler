@@ -17,16 +17,16 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.impl.EPackageImpl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 import static javax.lang.model.element.Modifier.*
 
 class PackageImplementationCompiler {
 	protected extension EcoreGenNamingUtils namingUtils
-	val Dsl dsl
+	val IAleEnvironment dsl
 	extension CompilerDsl compilerDsl = new CompilerDsl
 
-	new(EcoreGenNamingUtils namingUtils, Dsl dsl) {
+	new(EcoreGenNamingUtils namingUtils, IAleEnvironment dsl) {
 		this.namingUtils = namingUtils
 		this.dsl = dsl
 	}

@@ -31,7 +31,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassImplementationComp
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.ExtendedClass
 import org.eclipse.emf.ecoretools.ale.implementation.Method
@@ -51,13 +51,13 @@ class InterpreterEClassImplementationCompiler {
 	extension EnumeratorService es
 	extension CompilerDsl compilerDsl = new CompilerDsl
 
-	var Dsl dsl
+	var IAleEnvironment dsl
 	val String packageRoot
 	var Set<Method> registreredDispatch = newHashSet
 	var Set<String> registreredArrays = newHashSet
 	val List<ResolvedClass> resolved
 
-	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es, TruffleHelper th, Dsl dsl) {
+	new(String packageRoot, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es, TruffleHelper th, IAleEnvironment dsl) {
 		this.packageRoot = packageRoot
 		this.resolved = resolved
 		this.namingUtils = new InterpreterNamingUtils
@@ -71,12 +71,12 @@ class InterpreterEClassImplementationCompiler {
 
 	def dispatch compileEClassImplementation(EClassifier eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Pair<String, String>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
+		Map<String, Pair<String, String>> registeredServices, IAleEnvironment dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
 	}
 
 	def dispatch compileEClassImplementation(EClass eClass, ExtendedClass aleClass, File directory,
 		Map<String, Pair<EPackage, GenModel>> syntaxes, List<ResolvedClass> resolved,
-		Map<String, Pair<String, String>> registeredServices, Dsl dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
+		Map<String, Pair<String, String>> registeredServices, IAleEnvironment dsl, BaseValidator base, InterpreterTypeSystemUtils tsu, InterpreterNamingUtils inu) {
 		this.dsl = dsl
 		val isTruffle = dsl.isTruffle
 		this.tsu = tsu

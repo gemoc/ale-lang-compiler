@@ -17,10 +17,12 @@ import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
+import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
+import org.eclipse.emf.ecoretools.ale.core.parser.ParsedFile
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
@@ -39,7 +41,6 @@ import org.eclipse.emf.ecoretools.ale.implementation.VariableDeclaration
 import org.eclipse.emf.ecoretools.ale.implementation.While
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 
 @Deprecated
 class OperationImplementationCompiler {
@@ -53,16 +54,17 @@ class OperationImplementationCompiler {
 	val File directory
 	val String packageRoot
 	val IQueryEnvironment queryEnvironment
-	val List<ParseResult<ModelUnit>> parsedSemantics
+	val List<ParsedFile<ModelUnit>> parsedSemantics
 	val List<ResolvedClass> resolved
 	val Map<String, Pair<String, String>> registeredServices
 	var BaseValidator base
 	val Map<String, Pair<EPackage, GenModel>> syntaxes
 	val EnumeratorService es
+	val IAleEnvironment env
 
 	new(File directory, String packageRoot, Map<String, Pair<EPackage, GenModel>> syntaxes,
-		IQueryEnvironment queryEnvironment, List<ParseResult<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved,
-		Map<String, Pair<String, String>> registeredServices, EnumeratorService es) {
+		IQueryEnvironment queryEnvironment, List<ParsedFile<ModelUnit>> parsedSemantics, List<ResolvedClass> resolved,
+		Map<String, Pair<String, String>> registeredServices, EnumeratorService es, IAleEnvironment env) {
 		this.directory = directory
 		this.packageRoot = packageRoot
 		this.queryEnvironment = queryEnvironment
@@ -71,11 +73,12 @@ class OperationImplementationCompiler {
 		this.registeredServices = registeredServices
 		this.syntaxes = syntaxes
 		this.es = es
+		this.env = env
 	}
 	
 	def compile(EClass eClass, ExtendedClass aleClass) {
 		
-		this.base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		this.base = new BaseValidator(this.env, #[new TypeValidator])
 		base.validate(parsedSemantics)
 		
 		this.cti = new CommonTypeInferer(base)

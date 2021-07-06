@@ -20,7 +20,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.core.validation.TypeValidator
 
@@ -29,11 +29,11 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 	
 	extension CompilerDsl compilerDsl = new CompilerDsl
 
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, IAleEnvironment dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
 		this(projectName, projectRoot, dsl, newHashMap, eu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl,Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, IAleEnvironment dsl,Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
 		super(projectName, projectRoot, dsl, services, eu, srm)
 		
 	}
@@ -66,7 +66,7 @@ class ALEInterpreterImplementationCompiler extends AbstractALECompiler {
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 
-		val base = new BaseValidator(queryEnvironment, #[new TypeValidator])
+		val base = new BaseValidator(this.dsl, #[new TypeValidator])
 		base.validate(parsedSemantics)
 		val isTruffle = dsl.isTruffle
 		

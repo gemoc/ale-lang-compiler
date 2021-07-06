@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.EcoreEMap
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 import static javax.lang.model.element.Modifier.*
 
@@ -37,9 +37,9 @@ class EClassGetterCompiler {
 	extension CommonCompilerUtils icu
 	extension TruffleHelper th
 	val List<ResolvedClass> resolved
-	val Dsl dsl
+	val IAleEnvironment dsl
 
-	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, List<ResolvedClass> resolved, Dsl dsl, TruffleHelper th) {
+	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, List<ResolvedClass> resolved, IAleEnvironment dsl, TruffleHelper th) {
 		this.namingUtils = namingUtils
 		this.icu = ccu
 		this.resolved = resolved

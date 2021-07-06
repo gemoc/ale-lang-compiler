@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EFactory
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 import static javax.lang.model.element.Modifier.*
 
@@ -23,7 +23,7 @@ class FactoryInterfaceCompiler {
 		this.namingUtils = namingUtils
 	}
 
-	def compileFactoryInterface(EPackage abstractSyntax, File directory, String packageRoot, Dsl dsl) {
+	def compileFactoryInterface(EPackage abstractSyntax, File directory, String packageRoot, IAleEnvironment dsl) {
 		val factoryInterfaceType = abstractSyntax.factoryIntClassName(packageRoot) 
 		val packageInterfaceType = abstractSyntax.packageIntClassName(packageRoot) 
 		

@@ -5,7 +5,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EcoreNotGenNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 class RevisitorNamingUtils extends EcoreNotGenNamingUtils {
 	
@@ -55,15 +55,15 @@ class RevisitorNamingUtils extends EcoreNotGenNamingUtils {
 
 	def String getVarName(EClass cls) '''it'''
 
-	def String getRevisitorImplementationPackage(Dsl dsl) {
+	def String getRevisitorImplementationPackage(IAleEnvironment dsl) {
 		'''«dsl.sourceFileName».impl'''
 	}
 
-	def String getRevisitorOperationInterfacePackage(Dsl dsl) {
+	def String getRevisitorOperationInterfacePackage(IAleEnvironment dsl) {
 		'''«dsl.revisitorImplementationPackage».operation'''
 	}
 
-	def String getRevisitorOperationImplementationPackage(Dsl dsl) {
+	def String getRevisitorOperationImplementationPackage(IAleEnvironment dsl) {
 		'''«dsl.revisitorOperationInterfacePackage».impl'''
 	}
 
@@ -75,15 +75,15 @@ class RevisitorNamingUtils extends EcoreNotGenNamingUtils {
 		'''«ecls.name»OpImpl'''
 	}
 
-	def ClassName getRevisitorOperationInterfaceClassName(Dsl dsl, EClass ecls) {
+	def ClassName getRevisitorOperationInterfaceClassName(IAleEnvironment dsl, EClass ecls) {
 		ClassName.get(dsl.revisitorOperationInterfacePackage, ecls.revisitorOperationInterfaceClassName)
 	}
 
-	def ClassName getRevisitorOperationImplementationClassName(Dsl dsl, EClass ecls) {
+	def ClassName getRevisitorOperationImplementationClassName(IAleEnvironment dsl, EClass ecls) {
 		ClassName.get(dsl.revisitorOperationImplementationPackage, ecls.revisitorOperationImplementationClassName)
 	}
 
-	def String getRevisitorImplementationClass(Dsl dsl) {
+	def String getRevisitorImplementationClass(IAleEnvironment dsl) {
 		val name = dsl.sourceFileName
 		val camelCased = name.split("\\.").map[toFirstUpper].join
 		'''«camelCased»Implementation'''

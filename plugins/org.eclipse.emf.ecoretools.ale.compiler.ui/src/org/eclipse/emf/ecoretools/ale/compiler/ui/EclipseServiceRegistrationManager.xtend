@@ -4,7 +4,7 @@ import java.lang.reflect.Modifier
 import java.util.List
 import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.core.interpreter.services.TrigoServices
-import org.eclipse.emf.ecoretools.ale.core.parser.visitor.ParseResult
+import org.eclipse.emf.ecoretools.ale.core.parser.ParsedFile
 import org.eclipse.emf.ecoretools.ale.implementation.ModelUnit
 import org.eclipse.sirius.common.tools.api.interpreter.ClassLoadingCallback
 import org.eclipse.sirius.common.tools.api.interpreter.JavaExtensionsManager
@@ -40,7 +40,7 @@ class EclipseServiceRegistrationManager extends ServicesRegistrationManager {
 		});
 	}
 	
-	override registerServices(String projectName, List<ParseResult<ModelUnit>> parsedSemantics) {
+	override registerServices(String projectName, List<ParsedFile<ModelUnit>> parsedSemantics) {
 		if (javaExtensions !== null) {
 			javaExtensions.updateScope(newHashSet(), #{projectName})
 

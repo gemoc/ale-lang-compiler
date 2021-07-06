@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl
 import org.eclipse.emf.ecore.plugin.EcorePlugin
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonCompilerUtils
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 import static javax.lang.model.element.Modifier.*
 
@@ -28,10 +28,10 @@ class FactoryImplementationCompiler {
 	extension EcoreGenNamingUtils namingUtils
 	extension CommonCompilerUtils ccu
 	extension TruffleHelper th
-	Dsl dsl
+	IAleEnvironment dsl
 	extension CompilerDsl compilerDsl = new CompilerDsl
 	
-	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, TruffleHelper th, Dsl dsl) {
+	new(EcoreGenNamingUtils namingUtils, CommonCompilerUtils ccu, TruffleHelper th, IAleEnvironment dsl) {
 		this.namingUtils = namingUtils
 		this.ccu = ccu
 		this.th = th

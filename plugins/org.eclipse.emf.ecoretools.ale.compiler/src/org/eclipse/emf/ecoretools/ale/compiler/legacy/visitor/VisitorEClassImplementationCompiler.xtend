@@ -19,11 +19,11 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassGetterCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.EClassImplementationCompiler
+import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 import static javax.lang.model.element.Modifier.*
-import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 
 @Deprecated
 class VisitorEClassImplementationCompiler {
@@ -32,10 +32,10 @@ class VisitorEClassImplementationCompiler {
 	extension EClassImplementationCompiler ecic
 
 	var Map<String, Pair<EPackage, GenModel>> syntaxes
-	val Dsl dsl
+	val IAleEnvironment dsl
 	val String packageRoot
 
-	new(String packageRoot, Dsl dsl, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es) {
+	new(String packageRoot, IAleEnvironment dsl, List<ResolvedClass> resolved, CommonCompilerUtils ccu, EnumeratorService es) {
 		this.packageRoot = packageRoot
 		this.dsl = dsl
 		this.namingUtils = new VisitorNamingUtils
@@ -76,7 +76,7 @@ class VisitorEClassImplementationCompiler {
 	}
 
 	def getEcoreInterfacesPackage() {
-		val gm = syntaxes.get(dsl.allSyntaxes.head).value
+		val gm = syntaxes.get(dsl.metamodelsSources.head).value
 		gm.genPackages.head.qualifiedPackageName
 	}
 

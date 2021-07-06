@@ -21,18 +21,18 @@ import org.eclipse.emf.ecoretools.ale.compiler.genmodel.PackageInterfaceCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.genmodel.TruffleHelper
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 @Deprecated
 class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 	
 	extension CompilerDsl compilerDsl = new CompilerDsl
 
-	new(String projectName, File projectRoot, Dsl dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, IAleEnvironment dsl, EcoreUtils eu, ServicesRegistrationManager srm) {
 		this(projectName, projectRoot, dsl, newHashMap, eu, srm)
 	}
 
-	new(String projectName, File projectRoot, Dsl dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
+	new(String projectName, File projectRoot, IAleEnvironment dsl, Map<String, Pair<String, String>> services, EcoreUtils eu, ServicesRegistrationManager srm) {
 		super(projectName, projectRoot, dsl, services, eu, srm)
 	}
 
@@ -73,7 +73,7 @@ class ALEVisitorImplementationCompiler extends AbstractALECompiler {
 
 		val operationInterfaceCompiler = new OperationInterfaceCompiler(compileDirectory, packageRoot, syntaxes, resolved)
 		val operationImplementationCompiler = new OperationImplementationCompiler(compileDirectory, packageRoot,
-			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices, new EnumeratorService)
+			syntaxes, queryEnvironment, parsedSemantics, resolved, registeredServices, new EnumeratorService, dsl)
 
 		egc.compileEcoreGenmodel(syntaxes.values.map[v|v.key].toList, compileDirectory.absolutePath, projectName)
 

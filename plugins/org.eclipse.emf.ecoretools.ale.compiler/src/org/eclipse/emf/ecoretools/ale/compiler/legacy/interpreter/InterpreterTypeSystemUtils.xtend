@@ -17,18 +17,18 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.AbstractNamingUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeSystemUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.EcoreUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 @Deprecated
 class InterpreterTypeSystemUtils extends CommonTypeSystemUtils {
 	extension EcoreUtils ecoreUtils = new EcoreUtils
 	extension AbstractNamingUtils namingUtils
 	val String packageRoot
-	val Dsl dsl
+	val IAleEnvironment dsl
 	
 
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, List<ResolvedClass> resolved,
-		AbstractNamingUtils nu, Dsl dsl) {
+		AbstractNamingUtils nu, IAleEnvironment dsl) {
 		super(syntaxes, resolved)
 		this.packageRoot = packageRoot
 		this.namingUtils = nu

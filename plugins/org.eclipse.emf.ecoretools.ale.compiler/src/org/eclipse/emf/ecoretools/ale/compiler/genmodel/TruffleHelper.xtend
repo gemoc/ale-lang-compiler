@@ -4,7 +4,7 @@ import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.MethodSpec
 import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 class TruffleHelper {
 	
@@ -15,7 +15,7 @@ class TruffleHelper {
 		this.jpu = jpu
 	}
 	
-	def addTruffleBoundaryAnnotation(MethodSpec.Builder builder, Dsl dsl) {
+	def addTruffleBoundaryAnnotation(MethodSpec.Builder builder, IAleEnvironment dsl) {
 		builder.addTruffleBoundaryAnnotation(dsl !== null && dsl.isTruffle)
 	}
 	

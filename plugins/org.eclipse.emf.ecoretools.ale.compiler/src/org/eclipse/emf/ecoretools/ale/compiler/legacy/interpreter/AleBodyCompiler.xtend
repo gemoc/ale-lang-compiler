@@ -16,7 +16,7 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.CommonTypeInferer
 import org.eclipse.emf.ecoretools.ale.compiler.common.CompilerExpressionCtx
 import org.eclipse.emf.ecoretools.ale.compiler.common.ResolvedClass
 import org.eclipse.emf.ecoretools.ale.compiler.utils.EnumeratorService
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 import org.eclipse.emf.ecoretools.ale.core.validation.BaseValidator
 import org.eclipse.emf.ecoretools.ale.implementation.Block
 import org.eclipse.emf.ecoretools.ale.implementation.ConditionalBlock
@@ -44,7 +44,7 @@ class AleBodyCompiler {
 	new(Map<String, Pair<EPackage, GenModel>> syntaxes, String packageRoot, BaseValidator base,
 		List<ResolvedClass> resolved, Set<Method> registreredDispatch, Set<String> registeredArray,
 		Map<String, Pair<String, String>> registeredServices, boolean isTruffle, CommonTypeInferer cti, EnumeratorService es,
-		InterpreterNamingUtils inu, Dsl dsl) {
+		InterpreterNamingUtils inu, IAleEnvironment dsl) {
 		tsu = new InterpreterTypeSystemUtils(syntaxes, packageRoot, resolved, inu, dsl)
 		aec = new InterpreterExpressionCompiler(packageRoot, resolved, registreredDispatch, registeredArray,
 			registeredServices, isTruffle, cti, es, tsu, inu)
@@ -138,7 +138,7 @@ class AleBodyCompiler {
 			builderSeed.addStatement('''$T $L = (($T) ($L))''', t, body.name, t,
 				body.initialValue.compileExpression(ctx))
 		} else {
-			val t = body.type.solveType
+			val t = body.type.EType.solveType
 			// TODO: the cast shold be conditional and only happend is a oclIsKindOf/oclIsTypeOf hapenned in a parent branch.
 			val cbb = CodeBlock.builder.addNamed('''$t:T $name:N = (($t:T) ($expr:L))''', newHashMap(
 				"t" -> t,

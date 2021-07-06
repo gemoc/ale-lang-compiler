@@ -9,10 +9,10 @@ import org.eclipse.emf.ecoretools.ale.compiler.common.JavaPoetUtils
 import org.eclipse.emf.ecoretools.ale.compiler.common.ServicesRegistrationManager
 import org.eclipse.emf.ecoretools.ale.compiler.emfswitch.ALESwitchImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.legacy.interpreter.ALEInterpreterImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.legacy.visitor.ALEVisitorImplementationCompiler
-import org.eclipse.emf.ecoretools.ale.core.parser.Dsl
+import org.eclipse.emf.ecoretools.ale.compiler.revisitor.ALERevisitorImplementationCompiler
 import org.eclipse.emf.ecoretools.ale.compiler.utils.CompilerDsl
+import org.eclipse.emf.ecoretools.ale.core.env.IAleEnvironment
 
 class ALEImplementationCompiler {
 
@@ -50,7 +50,7 @@ class ALEImplementationCompiler {
 	 * @param projectName project name
 	 */
 	def void mavenCompile(File projectRoot, String projectName, ServicesRegistrationManager srm,
-		Dsl dsl) throws FileNotFoundException, RuntimeException {
+		IAleEnvironment dsl) throws FileNotFoundException, RuntimeException {
 
 		val eu = new EcoreUtils
 		val compilationType = dsl.compilationType.toLowerCase
